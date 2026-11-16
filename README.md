@@ -17,6 +17,14 @@ three.js 换成 npm 依赖。`src/` 改完能重新构建成单文件，行为�
 另有参考件 `_refs/fps3ademo-saltline`（网友从 Claude Artifact 反推的版本，见根级 `_refs/`），
 用于对齐命名与文件边界——它本身也是半还原的（约一半符号仍是短名），所以只作参考不作权威。
 
+## 来源与版权
+
+`input/saltline.original.html` 不是本项目原创，是他人制作的浏览器游戏的发布产物。本项目做的是**语义还原**
+（把压缩 bundle 展开成可读源码），不改变、不新增游戏内容，全部逻辑、美术与音效仍源自原作品，版权归原作者。
+
+因此本仓库保持 private。要公开请先确认原作品的授权状态——完整源码公开相当于替代了原作者的发布物。
+`dist/saltline.html` 双击即可在浏览器打开游玩，无需本地服务器（three.js 已打包在内，仅字体走 Google Fonts）。
+
 ## 状态
 
 - [x] 归档原件、确认构建链（esbuild 0.28 + IIFE + charset=ascii + legal-comments=none）
