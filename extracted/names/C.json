@@ -1,0 +1,1858 @@
+{
+  "domain": "C-道具注册表与道具生成器",
+  "symbols": [
+    {
+      "compressed": "_i",
+      "name": "registerPropBuilder",
+      "kind": "function",
+      "module": "src/assets/props/index.js",
+      "doc": "把某个道具名对应的生成函数写进私有注册表，供工厂 build() 按名调度；未注册的道具会退化成占位方块"
+    },
+    {
+      "compressed": "Yg",
+      "name": "createPropFactory",
+      "kind": "function",
+      "module": "src/assets/props/index.js",
+      "doc": "道具工厂对象：暴露 names/has/build 三个入口，build 优先调用已注册生成器，抛错或未注册时退化为带尺寸与碰撞盒的占位方块，保证关卡布置不因缺道具而崩"
+    },
+    {
+      "compressed": "AA",
+      "name": "showcaseProps",
+      "kind": "function",
+      "module": "src/assets/props/index.js",
+      "doc": "道具陈列预览：把注册表里的道具按行排进场景（每行不超过 26 单位宽），返回相机位置与注视点，用于截图/调试素材"
+    },
+    {
+      "compressed": "$a",
+      "name": "createSeededRandom",
+      "kind": "function",
+      "module": "src/core/rng.js",
+      "doc": "由整数种子生成 mulberry32 系伪随机数发生器；道具生成器靠它保证同 seed 产出一致的外观细节"
+    },
+    {
+      "compressed": "h1",
+      "name": "hash2D",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "整数格点哈希：由两个浮点格坐标散列出 [0,1) 的确定性随机值，是二维值噪声的底座"
+    },
+    {
+      "compressed": "ri",
+      "name": "valueNoise2D",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "二维平滑值噪声：四角哈希 + smoothstep 双线性插值，用于混凝土污渍、锈斑等表面斑驳"
+    },
+    {
+      "compressed": "RA",
+      "name": "clamp01",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "把数值夹到 0..1 的小工具，配合 smoothstep 系列用于所有「渐变量」计算"
+    },
+    {
+      "compressed": "mn",
+      "name": "smoothstepRange",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "区间 smoothstep：先按 [edge0,edge1] 归一化再夹紧，返回 0..1 的 S 曲线，道具里几乎所有渐变（锥筒反光带、锈迹向上衰减）都用它"
+    },
+    {
+      "compressed": "Ir",
+      "name": "lerpVec3",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "三分量线性插值，配合顶点色回调使用：把基色按暴露度混向锈色/污色"
+    },
+    {
+      "compressed": "p3",
+      "name": "chamferedBoxGeometry",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "倒角方块几何：8 个角各拆成 3 个顶点形成 12 条倒角棱，低面数却不会出现硬边法线接缝；anchor='bottom' 时把原点移到底面，方便道具按地面摆放"
+    },
+    {
+      "compressed": "m3",
+      "name": "orientTrianglesOutward",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "三角绕序修正：用三角形质心相对参考点的有向体积判断整体朝向，需要时整片翻转索引与 UV，避免放样面朝内而黑掉"
+    },
+    {
+      "compressed": "la",
+      "name": "loftProfileSurface",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "截面放样：把二维截面对照着站点序列逐段投影成带状曲面（集装箱波纹板、天沟、包边都靠它），可选首尾封盖并统一朝外绕序"
+    },
+    {
+      "compressed": "CA",
+      "name": "corrugationWaveOffset",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "周期梯形波纹的高度函数：把沿板长的位置映射成「平台—斜坡—平台」的凹陷量，是集装箱侧板压型剖面的数学来源"
+    },
+    {
+      "compressed": "Uc",
+      "name": "buildCorrugationStations",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "按给定跨距与波纹参数生成站点数组（位置 + 该处波纹偏移），只保留落在有效区间内的站点，供放样使用"
+    },
+    {
+      "compressed": "pr",
+      "name": "createRoundedRectFanGeometry",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "圆角矩形（跑道形）三角扇面：四段四分之一圆弧拼出的平面片，用来做舷窗盖、圆形开孔的贴面而不是实体"
+    },
+    {
+      "compressed": "cn",
+      "name": "createPlaneGeometry",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "平面几何简写；道具里大量贴花、铭牌、玻璃片都用它，命名统一便于后续替换成带细分的版本"
+    },
+    {
+      "compressed": "Nc",
+      "name": "createPlaneGeometryWorldUV",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "UV 按世界尺寸缩放的平面：让警示条纹、锈迹贴图在任意大小的面上保持同一物理密度，而不是被拉伸"
+    },
+    {
+      "compressed": "PA",
+      "name": "flatShadeGeometry",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "去索引并重算法线，得到硬边平面着色；用于需要棱角分明的机械件（法兰、垫块）"
+    },
+    {
+      "compressed": "mr",
+      "name": "createSphereGeometry",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "带默认分段的球体简写，道具里用于球形护罩、焊点、橡胶垫脚"
+    },
+    {
+      "compressed": "g1",
+      "name": "createLatheGeometryFromProfile",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "把 [[半径, 高度], …] 剖面旋成回转体：系船柱、雷达罩、气瓶肩部这类有明确剖面线的零件都用它"
+    },
+    {
+      "compressed": "f1",
+      "name": "TEMP_EULER_A",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的欧拉角对象，避免每次变换都新建（道具生成一次会调用上万次 applyTransform）"
+    },
+    {
+      "compressed": "Fc",
+      "name": "TEMP_QUAT_A",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的四元数，与 TEMP_EULER_A 配套"
+    },
+    {
+      "compressed": "g3",
+      "name": "TEMP_MATRIX_A",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的 4x4 矩阵，applyTransform 的临时载体"
+    },
+    {
+      "compressed": "d1",
+      "name": "TEMP_POS_A",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的平移向量"
+    },
+    {
+      "compressed": "p1",
+      "name": "UNIT_SCALE",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "常量 (1,1,1)，所有变换合成的缩放分量，避免反复分配"
+    },
+    {
+      "compressed": "je",
+      "name": "applyTransform",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "就地把几何体平移+绕欧拉角旋转（r 缺省则只平移），是道具装配里最热的调用，因此复用临时对象"
+    },
+    {
+      "compressed": "_o",
+      "name": "composeTransformMatrix",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "由位移与欧拉角合成一个 4x4 变换矩阵，供装配器 push() 压栈时使用"
+    },
+    {
+      "compressed": "jn",
+      "name": "PartBuilder",
+      "kind": "class",
+      "module": "src/assets/geometry.js",
+      "doc": "第一代道具零件装配器：按材质分桶收集几何、维护变换矩阵栈、提供 box/cyl/tube/bar/beam/decal 语法糖，最后 parts()/group() 合并成少量 Mesh"
+    },
+    {
+      "compressed": "Zg",
+      "name": "buildPartsGroup",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "把分桶好的零件换成 Mesh 并组装成 Group；materialMap 允许按桶替换材质（集装箱按色号换漆就靠它）"
+    },
+    {
+      "compressed": "qi",
+      "name": "tagPropUserData",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "给生成好的道具打上 name / userData.size / userData.colliders，物理与关卡布置只认这三样"
+    },
+    {
+      "compressed": "m1",
+      "name": "MATERIAL_LOOKUP_CACHE",
+      "kind": "const",
+      "module": "src/render/materials.js",
+      "doc": "以材质库为键的 WeakMap 缓存：同一材质的铭牌/贴花材质只查一次，避免重复生成 canvas 纹理"
+    },
+    {
+      "compressed": "Mi",
+      "name": "getLabelMaterial",
+      "kind": "function",
+      "module": "src/render/materials.js",
+      "doc": "按文本+字体参数取（并缓存）铭牌材质，失败时退回 paint_white，保证贴图缺失不会打断道具生成"
+    },
+    {
+      "compressed": "Jn",
+      "name": "getDecalMaterial",
+      "kind": "function",
+      "module": "src/render/materials.js",
+      "doc": "按贴花名取（并缓存）贴花材质，同样带 paint_white 兜底"
+    },
+    {
+      "compressed": "Bc",
+      "name": "CONTAINER_WIDTH",
+      "kind": "const",
+      "module": "src/assets/props/container.js",
+      "doc": "集装箱外部宽度 2.438m（ISO 标准），集装箱生成器里所有横向尺寸都从它派生"
+    },
+    {
+      "compressed": "_3",
+      "name": "CONTAINER_SPECS",
+      "kind": "table",
+      "module": "src/assets/props/container.js",
+      "doc": "三种箱型的铭牌数据表（箱型代码、总重/皮重/净重、容积、默认漆色），共 3 条，用来生成门板上的 MAX GROSS / TARE / NET / CU.CAP. 铭牌"
+    },
+    {
+      "compressed": "v1",
+      "name": "CONTAINER_OWNER_CODES",
+      "kind": "table",
+      "module": "src/assets/props/container.js",
+      "doc": "6 个虚构箱主代号（SLTU/HBMU/…），按 seed 轮换印在箱门与侧板上，让堆场里的箱子看起来不重复"
+    },
+    {
+      "compressed": "v3",
+      "name": "CONTAINER_LOGO_DECALS",
+      "kind": "table",
+      "module": "src/assets/props/container.js",
+      "doc": "4 个箱主 logo 贴花名，配给箱体非门侧那面"
+    },
+    {
+      "compressed": "jg",
+      "name": "CONTAINER_PAINT_COLORS",
+      "kind": "table",
+      "module": "src/assets/props/container.js",
+      "doc": "8 种可用箱漆色名，用于随机上色与合法性校验（传入非法色名时回退到箱型默认色）"
+    },
+    {
+      "compressed": "Jt",
+      "name": "CONTAINER_BODY_MATERIAL_KEY",
+      "kind": "table",
+      "module": "src/assets/props/container.js",
+      "doc": "箱体的假材质键 {body:true}：整个箱体（波纹板、门、角柱）共用一个键才能合并成一个带顶点色的 Mesh，真正的漆材质在出实例时替换"
+    },
+    {
+      "compressed": "IA",
+      "name": "CONTAINER_VARIANT_COUNT",
+      "kind": "const",
+      "module": "src/assets/props/container.js",
+      "doc": "磨损变体数 6：seed 取模后共 6 种几何缓存，兼顾多样性与内存"
+    },
+    {
+      "compressed": "x3",
+      "name": "CONTAINER_PARTS_CACHE",
+      "kind": "const",
+      "module": "src/assets/props/container.js",
+      "doc": "集装箱零件缓存（材质库 → key → parts），key 由箱型/变体/开门角度/磨损档组成，同参数只建一次几何"
+    },
+    {
+      "compressed": "y3",
+      "name": "CORNER_BLOCK_LENGTH",
+      "kind": "const",
+      "module": "src/assets/props/container.js",
+      "doc": "角件沿箱长方向的尺寸 0.178m，决定角柱与角件的贴合位置"
+    },
+    {
+      "compressed": "bf",
+      "name": "CORNER_BLOCK_HEIGHT",
+      "kind": "const",
+      "module": "src/assets/props/container.js",
+      "doc": "上/下角件高度 0.118m，也是门框横档的基准高度"
+    },
+    {
+      "compressed": "b3",
+      "name": "CORNER_BLOCK_DEPTH",
+      "kind": "const",
+      "module": "src/assets/props/container.js",
+      "doc": "角件沿箱宽方向的尺寸 0.162m，决定角柱离侧板的距离"
+    },
+    {
+      "compressed": "Uo",
+      "name": "SIDE_CORRUGATION",
+      "kind": "table",
+      "module": "src/assets/props/container.js",
+      "doc": "侧板压型参数 {节距 0.278, 深度 0.036, 平台 0.072, 斜坡 0.068}，集装箱侧壁波纹的唯一真源"
+    },
+    {
+      "compressed": "x1",
+      "name": "FRONT_CORRUGATION",
+      "kind": "table",
+      "module": "src/assets/props/container.js",
+      "doc": "端门面压型参数（更密更浅的波纹），与侧板参数区分开才符合真实箱体"
+    },
+    {
+      "compressed": "y1",
+      "name": "ROOF_CORRUGATION",
+      "kind": "table",
+      "module": "src/assets/props/container.js",
+      "doc": "顶板压型参数，波距更大、深度更浅"
+    },
+    {
+      "compressed": "zA",
+      "name": "buildContainerParts",
+      "kind": "function",
+      "module": "src/assets/props/container.js",
+      "doc": "生成一个集装箱的全部几何与碰撞盒：角件/角柱、三面波纹板（带凹陷与锈迹顶点色）、门板（可开到指定角度并带锁杆）、内衬与铭牌贴花；结果按参数缓存复用"
+    },
+    {
+      "compressed": "M3",
+      "name": "createContainer",
+      "kind": "function",
+      "module": "src/assets/props/container.js",
+      "doc": "集装箱实例化入口：查零件缓存 → 按色号挑漆材质（顶点色相乘）→ 组装 Group 并打上尺寸/碰撞盒元数据"
+    },
+    {
+      "compressed": "ca",
+      "name": "getPropSize3",
+      "kind": "function",
+      "module": "src/assets/props/index.js",
+      "doc": "取道具注册表里的 [宽,高,深] 前三项，尺寸缺失时的统一读数口径"
+    },
+    {
+      "compressed": "hn",
+      "name": "PI",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "π 的本地别名（打包后按模块边界重复出现，等价于 Math.PI）"
+    },
+    {
+      "compressed": "S3",
+      "name": "buildJerseyBarrier",
+      "kind": "function",
+      "module": "src/assets/props/jersey_barrier.js",
+      "doc": "新泽西混凝土隔离墩：12 点梯形剖面放样 + 凿痕/污渍/缺角顶点色、顶部吊装孔与反光片，可选黄色警示带；碰撞盒分成底座与墙体两段"
+    },
+    {
+      "compressed": "w3",
+      "name": "addFloodlightHead",
+      "kind": "function",
+      "module": "src/assets/props/light_mast.js",
+      "doc": "在灯杆顶部装一只泛光灯头：外壳+发光面+散热鳍片+接线盒，按 yaw/tilt 定位，可复用成整排灯头"
+    },
+    {
+      "compressed": "T3",
+      "name": "buildLightMast",
+      "kind": "function",
+      "module": "src/assets/props/light_mast.js",
+      "doc": "高杆灯：混凝土基座、8.6° 收分的锥形杆身、法兰螺栓、爬梯与顶部横梁挂 4 只泛光灯；把灯位写进 userData.lamps 供光照系统点亮"
+    },
+    {
+      "compressed": "A3",
+      "name": "buildFencePanel",
+      "kind": "function",
+      "module": "src/assets/props/chainlink.js",
+      "doc": "3m 链网围栏单元：立柱、上下横管、轻微波浪的网面与顶部拉伸刺丝；posts/lean 参数控制单/双侧立柱与刺丝倾倒方向"
+    },
+    {
+      "compressed": "R3",
+      "name": "buildGuardBooth",
+      "kind": "function",
+      "module": "src/assets/props/guard_booth.js",
+      "doc": "岗亭：2.6×2.2m 带玻璃窗的板房，含窗框、窗台、屋顶飞檐、雨落管、桌面、显示器与「GATE CONTROL」铭牌，灯位写进 userData.lamps"
+    },
+    {
+      "compressed": "C3",
+      "name": "buildGateArm",
+      "kind": "function",
+      "module": "src/assets/props/gate_arm.js",
+      "doc": "道闸：机箱、可绕轴转动的起落杆（open 参数 0..1 控制角度）、红白相间反光段与配对立柱；抬起时补一段碰撞盒防止穿模"
+    },
+    {
+      "compressed": "P3",
+      "name": "buildMooringBollard",
+      "kind": "function",
+      "module": "src/assets/props/bollard.js",
+      "doc": "码头系船柱：双柱帽形回转体 + 锈蚀底座 + 螺栓，钢面用值噪声做出即将锈穿的斑驳"
+    },
+    {
+      "compressed": "I3",
+      "name": "buildBollardPost",
+      "kind": "function",
+      "module": "src/assets/props/bollard.js",
+      "doc": "1m 黄色警示立柱：分段圆柱，把两段反光带用深色顶点色标出来，顶部球头与四颗地脚螺栓固定"
+    },
+    {
+      "compressed": "Jg",
+      "name": "SIGN_DECAL_NAMES",
+      "kind": "table",
+      "module": "src/assets/props/sign_post.js",
+      "doc": "6 个可贴在标志牌上的警示图标贴花名（危险/禁入/高压/泊位/箭头/易燃），作为随机取用的白名单"
+    },
+    {
+      "compressed": "E3",
+      "name": "SIGN_TEXTS",
+      "kind": "table",
+      "module": "src/assets/props/sign_post.js",
+      "doc": "5 条英文安全标语，标志牌下副牌文案的随机池"
+    },
+    {
+      "compressed": "z3",
+      "name": "buildSignPost",
+      "kind": "function",
+      "module": "src/assets/props/sign_post.js",
+      "doc": "立式标志牌：混凝土墩+镀锌管、铝背板 + 主图标 + 副牌文字，带轻微歪斜与安装抱箍；牌面碰撞盒标了 bulletOnly，只挡子弹不挡人"
+    },
+    {
+      "compressed": "D3",
+      "name": "buildFloodlightStand",
+      "kind": "function",
+      "module": "src/assets/props/floodlight_stand.js",
+      "doc": "移动式泛光灯架：三脚架、可转动的双灯头与拖地电缆、沙袋压脚，灯位写入 userData.lamps"
+    },
+    {
+      "compressed": "b1",
+      "name": "getPropSize3Later",
+      "kind": "function",
+      "module": "src/assets/props/index.js",
+      "doc": "与 getPropSize3 完全等价的重复实现（打包按模块边界复制），供后半段道具生成器读取尺寸"
+    },
+    {
+      "compressed": "wi",
+      "name": "PI_LATER",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "π 的又一个模块内副本，与 PI 等价"
+    },
+    {
+      "compressed": "k3",
+      "name": "buildStairsMetal",
+      "kind": "function",
+      "module": "src/assets/props/stairs.js",
+      "doc": "12 级钢楼梯：花纹板踏步 + 黄色防滑边条、两侧斜梁与扶手（含竖杆与弯头），逐级写碰撞盒，末端带一小段平台"
+    },
+    {
+      "compressed": "F3",
+      "name": "buildCatwalk",
+      "kind": "function",
+      "module": "src/assets/props/catwalk.js",
+      "doc": "3m 走道板：格栅铺面（细密横条 + 纵向支撑）、边框、可选单/双侧黄色护栏与踢脚板，护栏段单独出碰撞盒"
+    },
+    {
+      "compressed": "L3",
+      "name": "addPalletDeck",
+      "kind": "function",
+      "module": "src/assets/props/pallet.js",
+      "doc": "在一个位置上拼出标准木托盘的上中下三层板条与垫块，货架上的货垛底座复用它"
+    },
+    {
+      "compressed": "DA",
+      "name": "addShelfLoad",
+      "kind": "function",
+      "module": "src/assets/props/shelf_rack.js",
+      "doc": "往货架层上码货：四种载荷形态（纸箱垛 / 缠膜托盘 / 四只化工桶 / 叠托盘），带贴花与薄膜缠绕细节"
+    },
+    {
+      "compressed": "U3",
+      "name": "buildShelfRack",
+      "kind": "function",
+      "module": "src/assets/props/shelf_rack.js",
+      "doc": "重型横梁式货架：橙色立柱 + 三层层梁 + 镀锌格栅与层板，每层两侧随机摆放载荷形态，并贴 BAY/MAX 2000 KG 铭牌"
+    },
+    {
+      "compressed": "N3",
+      "name": "buildReeferUnit",
+      "kind": "function",
+      "module": "src/assets/props/reefer_unit.js",
+      "doc": "冷藏箱机组：白色外壳、双风扇格栅、压缩机与铜管、控制面板指示灯、电源电缆与排水管；flip 参数决定机组朝向，装在集装箱端面"
+    },
+    {
+      "compressed": "es",
+      "name": "PI_RELAY",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "π 的模块内副本，继电器节点生成器专用"
+    },
+    {
+      "compressed": "Kg",
+      "name": "RELAY_COLOR_LIVE",
+      "kind": "const",
+      "module": "src/assets/props/relay_node.js",
+      "doc": "中继节点「通电」状态的青色电光颜色，是任务目标的常态色"
+    },
+    {
+      "compressed": "LA",
+      "name": "RELAY_COLOR_CUT",
+      "kind": "const",
+      "module": "src/assets/props/relay_node.js",
+      "doc": "中继节点「已切断」状态的余烬橙色，切断后先闪几下再熄灭"
+    },
+    {
+      "compressed": "kA",
+      "name": "RELAY_COLOR_CUTTING",
+      "kind": "const",
+      "module": "src/assets/props/relay_node.js",
+      "doc": "「正在被切断」时的爆闪色（偏白），与电弧闪烁频率一起构成切割反馈"
+    },
+    {
+      "compressed": "B3",
+      "name": "buildRelayNode",
+      "kind": "function",
+      "module": "src/assets/props/relay_node.js",
+      "doc": "任务目标中继柜：配电柜体+可开合检修门+接线端子与线缆、三脚桁架天线与避雷针；暴露 setState/update 做 live→cutting→cut 的电光与散热风扇动画，是三个 uplink 目标的实体"
+    },
+    {
+      "compressed": "At",
+      "name": "PI_TWO",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "π 的模块内副本（又一处），后续道具生成器统一用它做角度换算"
+    },
+    {
+      "compressed": "tt",
+      "name": "HALF_PI",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "π/2：道具里所有「绕 X 轴立起」的旋转都用它"
+    },
+    {
+      "compressed": "zi",
+      "name": "clampValue",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "数值夹紧 min/max 工具，后半段道具与关卡装配的统一钳位函数"
+    },
+    {
+      "compressed": "Za",
+      "name": "hash3D",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "三维格点整数哈希，产出 [0,1) 确定性随机值，是三维值噪声的底座"
+    },
+    {
+      "compressed": "gn",
+      "name": "valueNoise3D",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "三维平滑值噪声，用来给木箱/塑料桶/篷布等加不规则起伏与脏迹，避免平直几何的塑料感"
+    },
+    {
+      "compressed": "Mf",
+      "name": "createGeometryFromArrays",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "用裸数组直接组装 BufferGeometry；法线缺失时自动计算，是后半段所有手写几何的收口函数"
+    },
+    {
+      "compressed": "us",
+      "name": "revolveProfileGeometry",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "把 [半径, 高度] 剖面绕 Y 轴旋成回转体（油桶、气瓶、线缆盘、轮胎断面都靠它），自带沿剖面的弧长 UV"
+    },
+    {
+      "compressed": "Ge",
+      "name": "roundedBoxGeometry",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "圆角方块（8 角各 3 顶点，廉价倒角）；后半段道具默认的箱体基元，比纯 BoxGeometry 更有工业感"
+    },
+    {
+      "compressed": "eo",
+      "name": "roundedBoxGeometryGrid",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "带细分的圆角方块：用 BoxGeometry 顶点位移做出可被噪声扰动的圆角箱体（纸箱、篷布下的木箱、叉车机罩）"
+    },
+    {
+      "compressed": "to",
+      "name": "mapVertices",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "遍历顶点施加变形回调并回写，是所有「程序化揉形状」的入口"
+    },
+    {
+      "compressed": "gr",
+      "name": "recomputeSmoothNormals",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "按位置哈希合并重复顶点后求平均法线：顶点变形之后必须重算，否则倒角处会出现断裂的高光"
+    },
+    {
+      "compressed": "M1",
+      "name": "flipGeometryWinding",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "翻转三角绕序与法线，用来把一个几何反向成内侧/背面（篷布内壁、管道内壁）"
+    },
+    {
+      "compressed": "ev",
+      "name": "removeGeometryGroup",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "按 group 索引删掉一段三角面（并修正后续 group 的 start 偏移），用于把箱体的某一面挖掉做开口"
+    },
+    {
+      "compressed": "O3",
+      "name": "TEMP_QUAT_B",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的四元数，createCylinderBetween 的朝向计算载体"
+    },
+    {
+      "compressed": "FA",
+      "name": "UP_AXIS_VECTOR",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "常量 (0,1,0)：所有「两点之间拉一根柱子」都用它做起始朝向"
+    },
+    {
+      "compressed": "_1",
+      "name": "TEMP_DIR_B",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的方向向量"
+    },
+    {
+      "compressed": "H3",
+      "name": "TEMP_MATRIX_B",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的 4x4 矩阵"
+    },
+    {
+      "compressed": "vn",
+      "name": "createCylinderBetween",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "在两点之间生成一根圆柱（可两端不同半径、可封口），栏杆、管件、螺栓全靠它，避免手动算角度"
+    },
+    {
+      "compressed": "Mo",
+      "name": "createHollowPolygonExtrusion",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "把闭合二维多边形沿 Z 挤出成空心环带（可选倒角、封盖），用来做托盘垫块、箱盖、货箱翼板这类薄壁件"
+    },
+    {
+      "compressed": "vr",
+      "name": "createRibbonFromPolyline",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "沿三维折线生成有宽度的双面扁带：篷布绑带、开箱胶带、钢丝绳、垫片都用它"
+    },
+    {
+      "compressed": "_f",
+      "name": "createDecalPlane",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "贴花/铭牌专用的平面四边形（不投阴影），后半段装配器的 decal/label 全部基于它"
+    },
+    {
+      "compressed": "UA",
+      "name": "createCurvedDecalQuad",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "沿圆柱面弯曲的贴花四边形：贴在油桶、气瓶这种圆弧面上才不会被拉伸或切到表面"
+    },
+    {
+      "compressed": "ja",
+      "name": "createTorusGeometryWorldUV",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "UV 按世界尺寸展开的圆环（卡箍、吊环、轮胎侧壁的钢丝圈）"
+    },
+    {
+      "compressed": "Y3",
+      "name": "createSphereGeometryWorldUV",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "UV 按世界尺寸展开的球（线缆末端、球头手柄）"
+    },
+    {
+      "compressed": "NA",
+      "name": "bakeVertexColorTint",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "把色调（常数或回调）烘进顶点色属性：单个材质就能表现脏/旧/湿的差异，是控制道具 draw call 的关键手段"
+    },
+    {
+      "compressed": "V3",
+      "name": "PAINT_COLOR_ALIASES",
+      "kind": "table",
+      "module": "src/assets/props/paint.js",
+      "doc": "11 条漆色别名到「材质名 + 顶点色乘子」的映射（含 rust/black/olive 这类复合色），道具统一按别名取漆"
+    },
+    {
+      "compressed": "Ja",
+      "name": "resolvePaintColorAlias",
+      "kind": "function",
+      "module": "src/assets/props/paint.js",
+      "doc": "查漆色别名，未知别名回退到调用方给的默认色，保证 e.color 传错也不炸"
+    },
+    {
+      "compressed": "pI",
+      "name": "TEMP_MATRIX_C",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的 4x4 矩阵（装配器变换缓存）"
+    },
+    {
+      "compressed": "W3",
+      "name": "TEMP_QUAT_C",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的四元数"
+    },
+    {
+      "compressed": "G3",
+      "name": "TEMP_EULER_C",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的欧拉角"
+    },
+    {
+      "compressed": "q3",
+      "name": "TEMP_POS_C",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的位置向量"
+    },
+    {
+      "compressed": "Qg",
+      "name": "TEMP_SCALE_C",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的缩放向量"
+    },
+    {
+      "compressed": "BA",
+      "name": "composePropTransform",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "由 {p,r,s} 描述合成矩阵：装配器 push() 的变换 DSL，让道具代码写成「位移+旋转+缩放」三元组"
+    },
+    {
+      "compressed": "Kn",
+      "name": "PropAssembler",
+      "kind": "class",
+      "module": "src/assets/props/builder.js",
+      "doc": "第二代道具装配器：矩阵栈 push/pop、按材质+是否投影分桶、add/decal/label/cdecal 语法糖；finish() 时合并几何并按噪声+朝上程度统一施加脏污顶点色，最后写尺寸与碰撞盒"
+    },
+    {
+      "compressed": "X3",
+      "name": "ASSEMBLER_GEOMETRY_CACHE",
+      "kind": "const",
+      "module": "src/assets/props/index.js",
+      "doc": "道具几何缓存：同 key 的整件道具只生成一次，后续一律 clone，是堆场大量重复道具不卡的关键"
+    },
+    {
+      "compressed": "wf",
+      "name": "buildCachedPropClone",
+      "kind": "function",
+      "module": "src/assets/props/index.js",
+      "doc": "按 key 取缓存的道具并深拷贝，未命中时调用工厂生成后缓存"
+    },
+    {
+      "compressed": "j3",
+      "name": "smoothstepRangeAlt",
+      "kind": "const",
+      "module": "src/assets/props/builder.js",
+      "doc": "smoothstepRange 的重复实现（按模块边界复制），塑料桶液面渐变的过渡曲线"
+    },
+    {
+      "compressed": "$3",
+      "name": "createPlaneGeometryOffsetUV",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "UV 整体平移的平面：让木箱各面的木纹贴图错开，避免同一块面重复得一眼看出来"
+    },
+    {
+      "compressed": "w1",
+      "name": "FACE_ROTATIONS",
+      "kind": "table",
+      "module": "src/assets/geometry.js",
+      "doc": "四个水平朝向（+Z/-Z/+X/-X）的欧拉角表，箱体贴面/贴花按面取角度"
+    },
+    {
+      "compressed": "OA",
+      "name": "barrelProfile",
+      "kind": "function",
+      "module": "src/assets/props/barrel.js",
+      "doc": "200L 油桶的回转剖面（含两圈加强箍），open 时给出开口桶沿的剖面"
+    },
+    {
+      "compressed": "HA",
+      "name": "buildBarrel",
+      "kind": "function",
+      "module": "src/assets/props/barrel.js",
+      "doc": "钢桶：旋成桶身 + 随机凹坑 + 桶盖/呼吸阀 + 危险品与 UN 编号贴花；lying 参数把桶放倒（碰撞盒同步改尺寸），rust 色额外跳过贴花"
+    },
+    {
+      "compressed": "S1",
+      "name": "addEuroPallet",
+      "kind": "function",
+      "module": "src/assets/props/pallet.js",
+      "doc": "EUR 标准木托盘：三根纵梁 + 9 个垫块 + 上下板条 + 侧面 EUR 烙印，随机微位移制造手工感，broken 时缺一块板条"
+    },
+    {
+      "compressed": "VA",
+      "name": "buildPallet",
+      "kind": "function",
+      "module": "src/assets/props/pallet.js",
+      "doc": "单只木托盘道具，委托 addEuroPallet 生成"
+    },
+    {
+      "compressed": "WA",
+      "name": "buildPalletStack",
+      "kind": "function",
+      "module": "src/assets/props/pallet.js",
+      "doc": "叠放托盘垛（1..12 只，默认 8）：每层随机偏转与错位，中间层可能缺板条，最上层带倒角"
+    },
+    {
+      "compressed": "E1",
+      "name": "addWoodCrateBody",
+      "kind": "function",
+      "module": "src/assets/props/crate.js",
+      "doc": "板条木箱的通用构造：滑木 + 内衬箱体 + 四周板条（带缝隙与色差）+ 角部护铁 + FRAGILE/编号铭牌与箭头，木箱与其堆垛共用"
+    },
+    {
+      "compressed": "GA",
+      "name": "buildCrateWood",
+      "kind": "function",
+      "module": "src/assets/props/crate.js",
+      "doc": "单只出口板条木箱，按 seed 轮换警示语与批次编号"
+    },
+    {
+      "compressed": "qA",
+      "name": "buildCrateStack",
+      "kind": "function",
+      "module": "src/assets/props/crate.js",
+      "doc": "三层木箱堆垛：两只大箱错位叠放 + 顶端小箱，外侧用两条橙色打包带沿箱体轮廓缠绕"
+    },
+    {
+      "compressed": "XA",
+      "name": "buildIbcTote",
+      "kind": "function",
+      "module": "src/assets/props/ibc_tote.js",
+      "doc": "1000L IBC 吨桶：镀锌托盘/笼架、半透明塑料内胆（带液面高度与鼓胀）、红色桶盖与提手、侧面危险品与 IBC 1000 L 铭牌"
+    },
+    {
+      "compressed": "Z3",
+      "name": "createCableReelDiscGeometries",
+      "kind": "function",
+      "module": "src/assets/props/cable_reel.js",
+      "doc": "线缆盘木侧板的扇形拼板几何：把圆盘切成 9 瓣并给每瓣随机 UV 偏移，做出木板拼接而不是整圆"
+    },
+    {
+      "compressed": "YA",
+      "name": "buildCableReel",
+      "kind": "function",
+      "module": "src/assets/props/cable_reel.js",
+      "doc": "电缆盘：双面木侧板 + 内筒 + 缠绕的橡胶电缆（带外露线头）+ 地脚垫木与规格铭牌"
+    },
+    {
+      "compressed": "tv",
+      "name": "createTireProfileGeometry",
+      "kind": "function",
+      "module": "src/assets/props/tire.js",
+      "doc": "轮胎断面回转几何：带胎肩圆角与两道花纹槽的剖面，UV 沿胎面展开"
+    },
+    {
+      "compressed": "$A",
+      "name": "buildTireStack",
+      "kind": "function",
+      "module": "src/assets/props/tire.js",
+      "doc": "叠放轮胎（1..5 只）：每只随机转动，胎面用噪声做深浅，落地接触区压暗"
+    },
+    {
+      "compressed": "ZA",
+      "name": "buildJerryCan",
+      "kind": "function",
+      "module": "src/assets/props/jerry_can.js",
+      "doc": "20L 军用油桶：圆角桶体 + 三条提手 + 侧面 X 形加强筋 + 注油口，带易燃标志贴花"
+    },
+    {
+      "compressed": "jA",
+      "name": "buildTrafficCone",
+      "kind": "function",
+      "module": "src/assets/props/traffic_cone.js",
+      "doc": "交通锥：黑色橡胶底座 + 收分锥体，红白反光带用不同材质分段实现；lying 参数把锥放倒并换碰撞盒尺寸"
+    },
+    {
+      "compressed": "JA",
+      "name": "buildGasCylinders",
+      "kind": "function",
+      "module": "src/assets/props/gas_cylinders.js",
+      "doc": "三只工业气瓶立在有防滑板与护栏的支架里：瓶身/肩部/瓶阀分别配色，随机气种铭牌与瓶体环箍，配链条与减压阀"
+    },
+    {
+      "compressed": "KA",
+      "name": "buildPipeStack",
+      "kind": "function",
+      "module": "src/assets/props/pipe_stack.js",
+      "doc": "钢管堆：木枕木上三层（4+3+2）错位排布的锈蚀钢管，两端开口带内壁，两端装钢挡架，附 API 5L 规格铭牌"
+    },
+    {
+      "compressed": "J3",
+      "name": "registerLoftedProps",
+      "kind": "function",
+      "module": "src/assets/props/index.js",
+      "doc": "把油桶/托盘/木箱/吨桶/线缆盘/轮胎/油桶/锥/气瓶/钢管这批用 PropAssembler 写的道具登记进注册表，可重复变体的按参数拼 key 走缓存"
+    },
+    {
+      "compressed": "Q3",
+      "name": "smoothstepRangeAlt2",
+      "kind": "const",
+      "module": "src/assets/props/cardboard.js",
+      "doc": "smoothstepRange 的又一份模块内副本，用于纸箱受潮程度的分界过渡"
+    },
+    {
+      "compressed": "nv",
+      "name": "createPlaneGeometryOffsetUVAlt",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "与 createPlaneGeometryOffsetUV 等价的重复实现，纸箱各面贴图错位用"
+    },
+    {
+      "compressed": "QA",
+      "name": "buildTarpCargo",
+      "kind": "function",
+      "module": "src/assets/props/tarp_cargo.js",
+      "doc": "盖篷布的托盘货垛：托盘上四块高低不一的木箱把篷布顶成起伏曲面，篷布网格带褶皱/雨积水噪声、四周垂边与压绳，边角挂钢扣"
+    },
+    {
+      "compressed": "eR",
+      "name": "createSandbagGeometry",
+      "kind": "function",
+      "module": "src/assets/props/sandbags.js",
+      "doc": "单只沙袋几何：圆角方块去顶盖后做「中间鼓、两端收、底面压扁」的变形，再叠值噪声做布褶"
+    },
+    {
+      "compressed": "tR",
+      "name": "buildSandbags",
+      "kind": "function",
+      "module": "src/assets/props/sandbags.js",
+      "doc": "沙袋墙：交错层叠（偶数层 3 只、奇数层 5 只顺砌），每只随机尺寸/颜色/微倾，两侧补上缝合边，顶层扣掉一只留缺口"
+    },
+    {
+      "compressed": "K3",
+      "name": "SANDBAG_MATERIAL",
+      "kind": "table",
+      "module": "src/assets/props/sandbags.js",
+      "doc": "沙袋布材质配置（glove_fabric + 卡其色），复用帆布手套的织物着色"
+    },
+    {
+      "compressed": "Oc",
+      "name": "addCardboardBox",
+      "kind": "function",
+      "module": "src/assets/props/cardboard.js",
+      "doc": "单只纸箱：可选压溃/受潮顶点色、开箱（掀盖+外翻四片）、封箱胶带、贴纸铭牌与「此面朝上」箭头，是纸箱堆的基础件"
+    },
+    {
+      "compressed": "nR",
+      "name": "buildCardboardBoxes",
+      "kind": "function",
+      "module": "src/assets/props/cardboard.js",
+      "doc": "散堆纸箱道具：7 只大小不一的纸箱随机倾倒叠在一起，混合压溃、开箱、受潮三种状态"
+    },
+    {
+      "compressed": "eb",
+      "name": "registerFabricProps",
+      "kind": "function",
+      "module": "src/assets/props/index.js",
+      "doc": "登记篷布货垛、沙袋墙、散堆纸箱这三种软体/纸制品道具"
+    },
+    {
+      "compressed": "tb",
+      "name": "TEMP_QUAT_D",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的四元数，createRoundedBeamBetween 的朝向计算载体"
+    },
+    {
+      "compressed": "iR",
+      "name": "UP_AXIS_VECTOR_B",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "常量 (0,1,0) 的第二份副本"
+    },
+    {
+      "compressed": "T1",
+      "name": "TEMP_DIR_C",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的方向向量"
+    },
+    {
+      "compressed": "nb",
+      "name": "TEMP_MATRIX_D",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "复用的 4x4 矩阵"
+    },
+    {
+      "compressed": "zr",
+      "name": "createRoundedBeamBetween",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "在两点之间生成一根带圆角的方梁（可退化成硬边方料）：叉车护顶架、垃圾桶加强筋这类方截面杆件都靠它"
+    },
+    {
+      "compressed": "sR",
+      "name": "ensurePolygonCCW",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "按有向面积判断并统一多边形绕序为逆时针，挤出函数要求输入方向一致"
+    },
+    {
+      "compressed": "ib",
+      "name": "addForkliftWheel",
+      "kind": "function",
+      "module": "src/assets/props/forklift.js",
+      "doc": "装一只叉车轮：轮胎断面回转体 + 黄色轮辋 + 轮毂螺栓，按 ±side 决定轴向；第十个参数在源码中未使用"
+    },
+    {
+      "compressed": "oR",
+      "name": "buildForklift",
+      "kind": "function",
+      "module": "src/assets/props/forklift.js",
+      "doc": "平衡重叉车：四轮、配重、护顶架、座椅与方向盘、机罩、可升降的门架与货叉（forksUp 控制举升高度）、侧贴编号与 SALTLINE 标识"
+    },
+    {
+      "compressed": "rR",
+      "name": "buildGenerator",
+      "kind": "function",
+      "module": "src/assets/props/generator.js",
+      "doc": "柴油发电机组：底架油箱、带百叶散热窗的机罩、控制面板（指示灯/急停/插座）、排气管与消声器，带 GEN-01 铭牌与油渍"
+    },
+    {
+      "compressed": "aR",
+      "name": "buildDumpster",
+      "kind": "function",
+      "module": "src/assets/props/dumpster.js",
+      "doc": "工业垃圾箱：梯形箱体（环带挤出）+ 加强筋、一对盖板、四只脚轮、箱内探出的垃圾袋与纸板，侧面留污渍与泄漏痕"
+    },
+    {
+      "compressed": "lR",
+      "name": "buildToolboxCart",
+      "kind": "function",
+      "module": "src/assets/props/toolbox_cart.js",
+      "doc": "维修工具车：五层抽屉（其中一层半开并露出工具）、铝把手、万向轮，台面上散放扳手/螺丝刀/油壶/手套，带 MAINT 铭牌"
+    },
+    {
+      "compressed": "sb",
+      "name": "registerIndustrialProps",
+      "kind": "function",
+      "module": "src/assets/props/index.js",
+      "doc": "登记叉车、发电机、垃圾箱、工具车这四件大型可交互感道具"
+    },
+    {
+      "compressed": "cv",
+      "name": "PROPS_MODULE_EXPORTS",
+      "kind": "table",
+      "module": "src/assets/props/index.js",
+      "doc": "第二组道具模块的导出命名空间（create→C1 主工厂、showcase→mR 陈列预览），与前半段的 $g 同一约定，供自由变量分析生成 import/export"
+    },
+    {
+      "compressed": "cR",
+      "name": "NO_COLLIDER_PROPS",
+      "kind": "const",
+      "module": "src/assets/props/index.js",
+      "doc": "不需要物理碰撞的道具白名单（交通锥、油桶体积小、踩过去无妨），关卡布置时跳过碰撞体生成"
+    },
+    {
+      "compressed": "ob",
+      "name": "createLevelKit",
+      "kind": "function",
+      "module": "src/level/layout.js",
+      "doc": "关卡布置工具箱：提供静态/动态两个根节点与 add/box/slab/cyl/tube/rod/ibeam/quad/decal/label 造型语法、col 手动碰撞、place 摆道具并自动登记碰撞与 updater、stairs/catwalk 专用摆放、stack 集装箱堆叠（自动叠高、可带冷机）、isMetal 金属区查询"
+    }
+  ],
+  "params": {
+    "_i": ["propName", "builder"],
+    "Yg": ["ctx"],
+    "AA": ["ctx"],
+    "$a": ["seed"],
+    "h1": ["x", "y"],
+    "ri": ["x", "y"],
+    "RA": ["value"],
+    "mn": ["edge0", "edge1", "x"],
+    "Ir": ["from", "to", "t"],
+    "p3": ["width", "height", "depth", "radius", "anchor"],
+    "m3": ["positions", "uvs", "start", "end", "center", "inward"],
+    "la": ["profile", "stations", "project", "opts"],
+    "CA": ["x", "period", "amplitude", "flat", "slope"],
+    "Uc": ["min", "max", "pitch", "depth", "flat", "slope", "origin"],
+    "pr": ["width", "height", "segments"],
+    "cn": ["width", "height"],
+    "Nc": ["width", "height"],
+    "PA": ["geometry"],
+    "mr": ["radius", "widthSeg", "heightSeg", "phiLength", "phiStart", "thetaLength"],
+    "g1": ["profile", "segments"],
+    "je": ["geometry", "x", "y", "z", "rot"],
+    "_o": ["x", "y", "z", "rot"],
+    "jn": ["ctx"],
+    "Zg": ["parts", "materialMap"],
+    "qi": ["object", "name", "size", "colliders"],
+    "Mi": ["ctx", "text", "opts"],
+    "Jn": ["ctx", "decalName"],
+    "zA": ["ctx", "type", "variant", "doorsOpen", "wear"],
+    "M3": ["ctx", "type", "opts"],
+    "ca": ["propName"],
+    "S3": ["ctx", "opts"],
+    "w3": ["builder", "frameMat", "housingMat", "lensMat", "x", "y", "z", "yaw", "tilt"],
+    "T3": ["ctx", "opts"],
+    "A3": ["ctx", "opts"],
+    "R3": ["ctx", "opts"],
+    "C3": ["ctx", "opts"],
+    "P3": ["ctx", "opts"],
+    "I3": ["ctx", "opts"],
+    "z3": ["ctx", "opts"],
+    "D3": ["ctx", "opts"],
+    "b1": ["propName"],
+    "k3": ["ctx", "opts"],
+    "F3": ["ctx", "opts"],
+    "L3": ["builder", "mat", "x", "y", "z"],
+    "DA": ["builder", "mats", "kind", "x", "y", "z", "rand"],
+    "U3": ["ctx", "opts"],
+    "N3": ["ctx", "opts"],
+    "B3": ["ctx", "opts"],
+    "Za": ["x", "y", "z"],
+    "gn": ["x", "y", "z"],
+    "Mf": ["positions", "normals", "uvs", "indices"],
+    "us": ["profile", "segments"],
+    "Ge": ["width", "height", "depth", "radius", "anchor"],
+    "eo": ["width", "height", "depth", "radius", "segX", "segY", "segZ", "anchor"],
+    "to": ["geometry", "fn"],
+    "gr": ["geometry"],
+    "M1": ["geometry"],
+    "ev": ["geometry", "groupIndex"],
+    "vn": ["from", "to", "radius", "segments", "capped", "radiusTop"],
+    "Mo": ["polygon", "depth", "opts"],
+    "vr": ["points", "halfExtent", "doubleSided"],
+    "_f": ["width", "height"],
+    "UA": ["radius", "arcLength", "height", "segments"],
+    "ja": ["radius", "tube", "radialSeg", "tubularSeg", "arc"],
+    "Y3": ["radius", "widthSeg", "heightSeg"],
+    "NA": ["geometry", "tint"],
+    "Ja": ["alias", "fallback"],
+    "BA": ["transform"],
+    "Kn": ["ctx", "name", "seed"],
+    "wf": ["key", "factory"],
+    "j3": ["edge0", "edge1", "x"],
+    "$3": ["width", "height", "offsetX", "offsetY"],
+    "OA": ["open"],
+    "HA": ["ctx", "opts", "variant"],
+    "S1": ["builder", "rand", "opts"],
+    "VA": ["ctx", "opts", "variant"],
+    "WA": ["ctx", "opts"],
+    "E1": ["builder", "width", "height", "depth", "opts"],
+    "GA": ["ctx", "opts"],
+    "qA": ["ctx", "opts"],
+    "XA": ["ctx", "opts"],
+    "Z3": ["radius", "segments", "rand", "unused"],
+    "YA": ["ctx", "opts"],
+    "tv": ["outerRadius", "width", "rimRadius", "segments"],
+    "$A": ["ctx", "opts"],
+    "ZA": ["ctx", "opts", "variant"],
+    "jA": ["ctx", "opts", "variant"],
+    "JA": ["ctx", "opts"],
+    "KA": ["ctx", "opts"],
+    "J3": ["register"],
+    "Q3": ["edge0", "edge1", "x"],
+    "nv": ["width", "height", "offsetX", "offsetY"],
+    "QA": ["ctx", "opts"],
+    "eR": ["width", "height", "depth", "rand"],
+    "tR": ["ctx", "opts"],
+    "Oc": ["builder", "width", "height", "depth", "transform", "opts"],
+    "nR": ["ctx", "opts"],
+    "eb": ["register"],
+    "zr": ["from", "to", "width", "depth", "radius", "sharp"],
+    "sR": ["polygon"],
+    "ib": ["builder", "x", "radius", "width", "trackZ", "side", "rimRadius", "segments", "unused", "rand"],
+    "oR": ["ctx", "opts"],
+    "rR": ["ctx", "opts"],
+    "aR": ["ctx", "opts"],
+    "lR": ["ctx", "opts"],
+    "sb": ["register"],
+    "ob": ["ctx"]
+  },
+  "locals": {
+    "zA": {
+      "o": "propW",
+      "r": "propH",
+      "a": "spec",
+      "l": "rand",
+      "c": "builder",
+      "u": "steelMat",
+      "h": "woodMat",
+      "f": "halfWidth",
+      "p": "halfLen",
+      "d": "sideX",
+      "v": "panelStart",
+      "g": "panelEnd",
+      "x": "ribStartY",
+      "y": "ribEndY",
+      "b": "dents",
+      "m": "dentCount",
+      "A": "clearZones",
+      "_": "rustStreaks",
+      "M": "streakCount",
+      "E": "baseColor",
+      "w": "rustColor",
+      "S": "noiseSeed",
+      "z": "paintColorFn",
+      "H": "dentDepthFn",
+      "O": "holeColor",
+      "q": "profileHeightSpan",
+      "U": "rimStations",
+      "T": "doorsOpen",
+      "D": "doorZoneTopY",
+      "C": "doorFrameBottom",
+      "G": "doorFrameTop",
+      "j": "doorFrameSpan",
+      "N": "doorDepth",
+      "Q": "doorStartX",
+      "K": "paintFn",
+      "ie": "colliders",
+      "F": "placeDoorDecal",
+      "X": "ownerLabel",
+      "ne": "typeLabel",
+      "re": "logoDecal"
+    },
+    "M3": {
+      "n": "spec",
+      "s": "seed",
+      "o": "variant",
+      "r": "doorsOpen",
+      "a": "wear",
+      "l": "cacheKey",
+      "c": "partsCache",
+      "u": "cachedParts",
+      "h": "paintColor",
+      "f": "group",
+      "p": "size"
+    },
+    "S3": {
+      "t": "builder",
+      "n": "seed",
+      "s": "rand",
+      "o": "noiseOffset",
+      "r": "concreteMat",
+      "a": "profile",
+      "l": "stations",
+      "c": "dents",
+      "u": "shell",
+      "h": "fittingColor"
+    },
+    "T3": {
+      "t": "builder",
+      "n": "steelMat",
+      "s": "concreteMat",
+      "o": "steelDarkMat",
+      "r": "lensMat",
+      "a": "poleBaseY",
+      "l": "poleTopY",
+      "c": "poleRadiusBase",
+      "u": "poleRadiusTop",
+      "h": "poleRadiusAt",
+      "f": "poleSections",
+      "p": "plateX",
+      "d": "rungIndex",
+      "v": "crossbarY",
+      "g": "group"
+    },
+    "A3": {
+      "t": "builder",
+      "n": "rand",
+      "s": "steelMat",
+      "o": "concreteMat",
+      "r": "meshMat",
+      "a": "postsMode",
+      "l": "leanDir",
+      "c": "postXs",
+      "u": "meshPlane",
+      "h": "meshPos",
+      "f": "meshUv"
+    },
+    "R3": {
+      "t": "builder",
+      "n": "seed",
+      "s": "noiseOffset",
+      "o": "boothWidth",
+      "r": "boothDepth",
+      "a": "halfWidth",
+      "l": "halfDepth",
+      "c": "wallMat",
+      "u": "steelDarkMat",
+      "h": "steelGalvMat",
+      "f": "glassMat",
+      "p": "woodMat",
+      "d": "polymerMat",
+      "v": "paintColorFn",
+      "g": "baseHeight",
+      "x": "sillHeight",
+      "y": "glassTopY",
+      "b": "roofHeight",
+      "m": "doorLeftX",
+      "A": "doorRightX",
+      "_": "buildSideWall",
+      "M": "frontZ",
+      "E": "windowWidth",
+      "w": "windowCenterX",
+      "S": "deskX",
+      "z": "group"
+    },
+    "C3": {
+      "t": "builder",
+      "n": "openAmount",
+      "s": "orangeMat",
+      "o": "whiteMat",
+      "r": "redMat",
+      "a": "steelDarkMat",
+      "l": "steelGalvMat",
+      "c": "yellowMat",
+      "u": "housingX",
+      "h": "armY",
+      "f": "armLength",
+      "p": "armStartX",
+      "d": "stripeCount",
+      "v": "stripeWidth",
+      "g": "postX",
+      "x": "colliders"
+    },
+    "k3": {
+      "t": "builder",
+      "n": "treadMat",
+      "s": "frameMat",
+      "o": "railMat",
+      "r": "steelGalvMat",
+      "a": "stepCount",
+      "l": "stepRise",
+      "c": "stepRun",
+      "u": "startX",
+      "h": "halfWidth",
+      "f": "endX",
+      "p": "colliders",
+      "d": "landingX",
+      "v": "heightAt"
+    },
+    "F3": {
+      "t": "builder",
+      "n": "frameMat",
+      "s": "railMat",
+      "o": "deckMat",
+      "r": "railsMode",
+      "a": "railSides",
+      "l": "deckY",
+      "c": "colliders"
+    },
+    "U3": {
+      "t": "builder",
+      "n": "seed",
+      "s": "rand",
+      "o": "uprightMat",
+      "r": "beamMat",
+      "a": "steelGalvMat",
+      "l": "loadMats",
+      "c": "rackHeight",
+      "u": "halfWidth",
+      "h": "halfDepth",
+      "f": "edgeColor",
+      "p": "beamYs",
+      "d": "loadKinds"
+    },
+    "N3": {
+      "t": "builder",
+      "n": "seed",
+      "s": "noiseOffset",
+      "o": "shellMat",
+      "r": "steelDarkMat",
+      "a": "steelGalvMat",
+      "l": "greyMat",
+      "c": "brassMat",
+      "u": "rubberMat",
+      "h": "aluMat",
+      "f": "paintColorFn",
+      "p": "darkColor",
+      "d": "frontX",
+      "v": "controlPanelZ"
+    },
+    "B3": {
+      "t": "seed",
+      "n": "noiseOffset",
+      "s": "nodeLabel",
+      "o": "builder",
+      "r": "doorBuilder",
+      "a": "ledBuilder",
+      "l": "antennaBuilder",
+      "c": "cabinetMat",
+      "u": "steelDarkMat",
+      "h": "steelGalvMat",
+      "f": "aluMat",
+      "p": "rubberMat",
+      "d": "concreteMat",
+      "v": "paintColorFn",
+      "g": "darkColor",
+      "x": "emissiveOpts",
+      "y": "cabinetLeft",
+      "b": "cabinetRight",
+      "m": "cabinetBottom",
+      "A": "cabinetTop",
+      "_": "doorZ",
+      "M": "cabinetFrontZ",
+      "E": "panelThickness",
+      "w": "cabinetMidY",
+      "S": "cabinetHeight",
+      "T": "buildDoor",
+      "D": "doorOffset",
+      "C": "beaconX",
+      "G": "beaconY",
+      "j": "rackTopY",
+      "N": "mastTopY",
+      "Q": "mastFeet",
+      "K": "addMastRod",
+      "ie": "dishGeometry",
+      "F": "beaconPos",
+      "X": "group",
+      "ne": "dynamicGroup",
+      "re": "ledMaterial",
+      "$": "ledMesh",
+      "ue": "doorChildren",
+      "me": "ledChildren",
+      "ee": "tempColor",
+      "B": "setEmissive",
+      "P": "state",
+      "V": "elapsed",
+      "Y": "cutElapsed",
+      "L": "spinSpeed",
+      "Z": "gateAngle",
+      "J": "gateVelocity",
+      "oe": "gateTarget",
+      "fe": "userData"
+    },
+    "E1": {
+      "l": "rand",
+      "c": "ctx",
+      "u": "wallThickness",
+      "h": "battenWidth",
+      "f": "skidHeight",
+      "p": "bodyHeight",
+      "d": "bodyMidY",
+      "v": "tintFn",
+      "g": "boxGeom",
+      "x": "rowCount",
+      "y": "rowHeight",
+      "b": "colCount",
+      "m": "colWidth",
+      "A": "braceAngle",
+      "_": "braceLength",
+      "M": "plateSize",
+      "E": "plateTint",
+      "w": "frontZ",
+      "S": "labelHeight"
+    },
+    "XA": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "tintFn",
+      "o": "palletWidth",
+      "r": "bladderHeight",
+      "a": "bladderDepth",
+      "l": "bladderY",
+      "c": "bladderGeo",
+      "u": "fillLevel",
+      "h": "noiseOffset",
+      "f": "bladderMat",
+      "p": "cageHalfX",
+      "d": "cageHalfZ",
+      "v": "cageBottomY",
+      "g": "cageTopY",
+      "x": "barRadius"
+    },
+    "YA": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "discRadius",
+      "o": "centerY",
+      "r": "halfWidth",
+      "a": "flangeThickness",
+      "l": "tintFn",
+      "c": "tilt",
+      "u": "spokeCount",
+      "h": "innerRadius",
+      "f": "spokeStep",
+      "p": "cableRadius",
+      "d": "cableProfile",
+      "v": "noiseSeed",
+      "g": "cableZ",
+      "x": "cablePath"
+    },
+    "JA": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "segments",
+      "o": "tintFn",
+      "r": "bodyColors",
+      "a": "shoulderColors",
+      "l": "barCount",
+      "c": "capHeightAt",
+      "p": "bottleRadius",
+      "d": "bottleTopY",
+      "v": "valveHeight"
+    },
+    "KA": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "pipeRadius",
+      "o": "wallThickness",
+      "r": "skidHeight",
+      "a": "segments",
+      "l": "tintFn",
+      "c": "layerCounts",
+      "u": "rowOffset",
+      "p": "pipeDiameter"
+    },
+    "QA": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "noiseSeed",
+      "o": "palletHeight",
+      "r": "loadBlocks",
+      "a": "uvScale",
+      "l": "gridX",
+      "c": "gridZ",
+      "u": "minX",
+      "h": "maxX",
+      "f": "minZ",
+      "p": "maxZ",
+      "d": "skirtSteps",
+      "v": "tarpHeightAt",
+      "g": "positions",
+      "x": "uvs",
+      "y": "indices",
+      "b": "gridIndex",
+      "m": "perimeterLoop",
+      "A": "perimeterCount",
+      "_": "baseVertexCount",
+      "M": "cornerIndexMap",
+      "E": "tearAngle",
+      "S": "tarpGeo",
+      "z": "normalAttr",
+      "H": "posAttr",
+      "O": "offsetAlongNormal",
+      "q": "edgePaths",
+      "U": "strapZ",
+      "T": "strapPath",
+      "D": "strapStart",
+      "C": "strapEnd",
+      "G": "reportedSize",
+      "j": "cargoTopY"
+    },
+    "Oc": {
+      "f": "rand",
+      "p": "ctx",
+      "d": "noiseSeed",
+      "v": "crushVertex",
+      "g": "bodyGeo",
+      "x": "dampLine",
+      "y": "colorFn",
+      "b": "tapeOverhang",
+      "m": "frontZ",
+      "A": "labelHeight"
+    },
+    "tR": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "bagHeight",
+      "o": "courses",
+      "r": "fabricMat",
+      "a": "addBag"
+    },
+    "oR": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "forksUp",
+      "o": "forkLift",
+      "r": "halfForkLift",
+      "a": "paintMat",
+      "l": "paintTint",
+      "c": "tintFn",
+      "u": "frameMaterialName",
+      "h": "wearTint",
+      "f": "unitNumber",
+      "p": "frontWheelRadius",
+      "d": "frontWheelWidth",
+      "v": "frontAxleX",
+      "g": "frontTrack",
+      "x": "rearWheelRadius",
+      "y": "rearWheelWidth",
+      "b": "rearAxleX",
+      "m": "rearTrack",
+      "A": "hoodGeo",
+      "_": "seatGeo",
+      "M": "backrestGeo",
+      "E": "steerColumnAngle",
+      "w": "mastBase",
+      "S": "mastTop",
+      "z": "mastTopY",
+      "H": "colliders",
+      "O": "forkTipX",
+      "q": "forkY",
+      "N": "carriageOffset",
+      "Q": "totalHeight"
+    },
+    "rR": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "paintMat",
+      "o": "paintTint",
+      "r": "tintFn",
+      "a": "frameMaterialName",
+      "l": "halfDepth",
+      "c": "frontX",
+      "u": "bodyBottomY",
+      "h": "bodyTopY",
+      "f": "bodyMidY",
+      "p": "rearX",
+      "d": "socketX",
+      "v": "panelX",
+      "g": "panelNormal",
+      "x": "socketColors",
+      "y": "capY",
+      "b": "exhaustPos"
+    },
+    "aR": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "paintMat",
+      "o": "paintTint",
+      "r": "tintFn",
+      "a": "halfLength",
+      "l": "sideLowY",
+      "c": "sideHighY",
+      "u": "topInnerX",
+      "h": "topOuterX",
+      "f": "bottomInnerX",
+      "p": "bottomOuterX",
+      "d": "wallThickness",
+      "v": "sideProfile",
+      "g": "noiseSeed",
+      "x": "sideSlopeAngle",
+      "y": "frontSlopeAngle",
+      "b": "frontZAt",
+      "m": "lidY",
+      "A": "lidZ",
+      "_": "addLid"
+    },
+    "lR": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "paintMat",
+      "o": "paintTint",
+      "r": "tintFn",
+      "a": "centerX",
+      "l": "bodyLength",
+      "c": "bodyBottomY",
+      "u": "bodyTopY",
+      "h": "halfDepth",
+      "f": "drawerHeights",
+      "p": "openDrawerIndex",
+      "d": "drawerCursor",
+      "v": "topY",
+      "g": "gloveGeo",
+      "x": "gloveNoise"
+    },
+    "ob": {
+      "e": "staticRoot",
+      "t": "dynRoot",
+      "n": "metalRects",
+      "s": "updaters",
+      "o": "placed",
+      "r": "rand",
+      "a": "rnd",
+      "l": "materialOf",
+      "c": "interiorMaterialOf",
+      "u": "resolveMaterial",
+      "h": "addMesh",
+      "f": "box",
+      "p": "slab",
+      "d": "cyl",
+      "v": "tube",
+      "g": "rod",
+      "x": "ibeam",
+      "y": "quad",
+      "b": "decalQuad",
+      "m": "labelQuad",
+      "A": "col",
+      "_": "box3Temp",
+      "M": "addColliders",
+      "E": "place",
+      "w": "stairs",
+      "S": "catwalk",
+      "z": "containerAliases",
+      "H": "containerHeights",
+      "O": "containerLengths",
+      "q": "stackContainers",
+      "U": "isMetal"
+    },
+    "P3": {
+      "t": "builder",
+      "n": "noiseOffset",
+      "s": "bodyMat",
+      "o": "rustMat",
+      "r": "paintColorFn"
+    },
+    "I3": {
+      "t": "builder",
+      "n": "noiseOffset",
+      "s": "yellowMat",
+      "o": "steelMat",
+      "r": "postRadius",
+      "a": "isBand",
+      "l": "bandStations"
+    },
+    "z3": {
+      "t": "builder",
+      "n": "seed",
+      "s": "steelMat",
+      "o": "aluMat",
+      "r": "whiteMat",
+      "a": "yellowMat",
+      "l": "decalName",
+      "c": "tilt"
+    },
+    "D3": {
+      "t": "builder",
+      "n": "seed",
+      "s": "rand",
+      "o": "yellowMat",
+      "r": "steelDarkMat",
+      "a": "aluMat",
+      "l": "rubberMat",
+      "c": "lensMat",
+      "u": "lampYaw",
+      "h": "cosYaw",
+      "f": "sinYaw",
+      "p": "group"
+    },
+    "qA": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "upperCrate",
+      "o": "topCrate",
+      "r": "bandZAt"
+    },
+    "ZA": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "bodyMat",
+      "o": "bodyTint"
+    },
+    "jA": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "rand",
+      "o": "noiseOffset",
+      "r": "radiusAt",
+      "a": "tintFn",
+      "l": "coneSegment",
+      "c": "redMat",
+      "u": "greyMat"
+    },
+    "$A": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "tireCount",
+      "o": "tireIndex",
+      "r": "tireGeo",
+      "a": "tireTransform",
+      "l": "shade",
+      "c": "noiseOffset"
+    },
+    "HA": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "rand",
+      "o": "radialSegments",
+      "r": "bodyMat",
+      "a": "bodyTint",
+      "l": "shellGeo",
+      "c": "dents",
+      "u": "normals",
+      "h": "ringCount",
+      "f": "noiseOffset",
+      "p": "isRust"
+    },
+    "S1": {
+      "i": "builder",
+      "e": "rand",
+      "t": "broken",
+      "o": "boxGeom",
+      "r": "deckTint",
+      "a": "jitter",
+      "l": "blockOutline",
+      "u": "x",
+      "h": "z",
+      "f": "tint"
+    },
+    "DA": {
+      "i": "builder",
+      "e": "mats",
+      "t": "kind",
+      "n": "x",
+      "s": "y",
+      "o": "z",
+      "r": "rand",
+      "a": "loadBaseY",
+      "l": "layerCount",
+      "c": "boxHeight"
+    },
+    "nR": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "jitter",
+      "o": "tint"
+    },
+    "WA": {
+      "t": "assembler",
+      "n": "rand",
+      "s": "count",
+      "o": "layerIndex",
+      "r": "isTop"
+    }
+  }
+}

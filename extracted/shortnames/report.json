@@ -1,0 +1,7117 @@
+[
+ {
+  "function": "createWebAudioEngine",
+  "bytes": 38145,
+  "line": 37083,
+  "params": [
+   "ctx",
+   "webAudioCtx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$t",
+   "Ai",
+   "De",
+   "Hs",
+   "Ht",
+   "Je",
+   "Le",
+   "Ni",
+   "Ot",
+   "Pt",
+   "Tt",
+   "Ue",
+   "Vt",
+   "ct",
+   "ge",
+   "gt",
+   "he",
+   "it",
+   "ke",
+   "os",
+   "pe",
+   "rs",
+   "sn",
+   "ss",
+   "te",
+   "xn",
+   "ye"
+  ]
+ },
+ {
+  "function": "createEffects",
+  "bytes": 35610,
+  "line": 31066,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "B",
+   "I",
+   "J",
+   "L",
+   "P",
+   "Pe",
+   "R",
+   "Te",
+   "V",
+   "Y",
+   "Z",
+   "_e",
+   "ae",
+   "ce",
+   "ee",
+   "fe",
+   "k",
+   "le",
+   "oe",
+   "se",
+   "ve"
+  ]
+ },
+ {
+  "function": "buildQuayCrane",
+  "bytes": 35320,
+  "line": 22833,
+  "params": [
+   "ctx",
+   "lamps",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "Fe",
+   "I",
+   "Pe",
+   "R",
+   "Re",
+   "Te",
+   "_e",
+   "ae",
+   "ce",
+   "k",
+   "se",
+   "t",
+   "ve",
+   "ze"
+  ]
+ },
+ {
+  "function": "createDrone",
+  "bytes": 31071,
+  "line": 46369,
+  "params": [
+   "ctx",
+   "rigDef",
+   "materials",
+   "index"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "B",
+   "C",
+   "D",
+   "F",
+   "G",
+   "I",
+   "J",
+   "K",
+   "L",
+   "N",
+   "P",
+   "Q",
+   "R",
+   "T",
+   "V",
+   "X",
+   "Y",
+   "Z",
+   "ae",
+   "ce",
+   "dt",
+   "ee",
+   "fe",
+   "ie",
+   "j",
+   "k",
+   "le",
+   "me",
+   "ne",
+   "oe",
+   "re",
+   "se",
+   "ue"
+  ]
+ },
+ {
+  "function": "buildWorkshopShed",
+  "bytes": 30129,
+  "line": 18912,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "Fe",
+   "I",
+   "J",
+   "L",
+   "Ne",
+   "Pe",
+   "R",
+   "Re",
+   "Te",
+   "Z",
+   "_e",
+   "ae",
+   "ce",
+   "fe",
+   "k",
+   "le",
+   "oe",
+   "se",
+   "ve"
+  ]
+ },
+ {
+  "function": "createWeapon",
+  "bytes": 25138,
+  "line": 43035,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$i",
+   "$t",
+   "Ai",
+   "De",
+   "Hn",
+   "Hs",
+   "Ht",
+   "Je",
+   "Le",
+   "Me",
+   "Oe",
+   "Os",
+   "Ot",
+   "Pt",
+   "Rs",
+   "Ti",
+   "Tt",
+   "Ue",
+   "Un",
+   "Vt",
+   "Zo",
+   "ba",
+   "be",
+   "bt",
+   "ct",
+   "de",
+   "fo",
+   "ge",
+   "gt",
+   "he",
+   "ho",
+   "it",
+   "ke",
+   "ln",
+   "lu",
+   "nn",
+   "pe",
+   "pn",
+   "pt",
+   "ss",
+   "te",
+   "ut",
+   "we",
+   "xn",
+   "ya",
+   "ye",
+   "yr",
+   "zo"
+  ]
+ },
+ {
+  "function": "createDecalLibrary",
+  "bytes": 24912,
+  "line": 4292,
+  "params": [
+   "app",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "C",
+   "D",
+   "E",
+   "G",
+   "H",
+   "M",
+   "O",
+   "S",
+   "T",
+   "U",
+   "_",
+   "ax",
+   "b",
+   "g",
+   "j",
+   "m",
+   "q",
+   "v",
+   "w",
+   "x",
+   "y",
+   "z"
+  ]
+ },
+ {
+  "function": "buildContainerShip",
+  "bytes": 22184,
+  "line": 24811,
+  "params": [
+   "ctx",
+   "lamps"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "B",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "Y",
+   "Z",
+   "ee",
+   "fe",
+   "le",
+   "me",
+   "oe",
+   "ue"
+  ]
+ },
+ {
+  "function": "buildPac9Geometry",
+  "bytes": 21990,
+  "line": 40074,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "F",
+   "X",
+   "ne",
+   "re"
+  ]
+ },
+ {
+  "function": "createPostprocessing",
+  "bytes": 21735,
+  "line": 1824,
+  "params": [
+   "renderer",
+   "ctx",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "Be",
+   "Fe",
+   "I",
+   "Ie",
+   "Me",
+   "Ne",
+   "Oe",
+   "Pe",
+   "R",
+   "Re",
+   "Te",
+   "We",
+   "Xe",
+   "_e",
+   "ae",
+   "be",
+   "bt",
+   "ce",
+   "dt",
+   "fe",
+   "k",
+   "le",
+   "nn",
+   "oe",
+   "pt",
+   "se",
+   "ut",
+   "ve",
+   "we",
+   "xe",
+   "y",
+   "ze"
+  ]
+ },
+ {
+  "function": "buildForklift",
+  "bytes": 20715,
+  "line": 16000,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "F",
+   "K",
+   "P",
+   "R",
+   "X",
+   "ie",
+   "ne",
+   "re"
+  ]
+ },
+ {
+  "function": "buildHarborSkyline",
+  "bytes": 20300,
+  "line": 26118,
+  "params": [
+   "ctx",
+   "lamps"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "B",
+   "Be",
+   "C",
+   "D",
+   "F",
+   "Fe",
+   "G",
+   "I",
+   "Ie",
+   "J",
+   "K",
+   "L",
+   "Me",
+   "N",
+   "Ne",
+   "Oe",
+   "P",
+   "Pe",
+   "Q",
+   "R",
+   "Re",
+   "Te",
+   "V",
+   "We",
+   "X",
+   "Xe",
+   "Y",
+   "Z",
+   "_e",
+   "ae",
+   "be",
+   "ce",
+   "dt",
+   "ee",
+   "fe",
+   "ie",
+   "j",
+   "k",
+   "le",
+   "me",
+   "ne",
+   "oe",
+   "pt",
+   "re",
+   "se",
+   "ue",
+   "ut",
+   "ve",
+   "we",
+   "xe",
+   "ze"
+  ]
+ },
+ {
+  "function": "createGameFlow",
+  "bytes": 20265,
+  "line": 49144,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "Te",
+   "V",
+   "Y",
+   "Z",
+   "_e",
+   "ae",
+   "ce",
+   "fe",
+   "k",
+   "le",
+   "oe",
+   "se",
+   "ve"
+  ]
+ },
+ {
+  "function": "createRenderer",
+  "bytes": 19842,
+  "line": 2708,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "B",
+   "F",
+   "P",
+   "X",
+   "ee",
+   "ie",
+   "me",
+   "ne",
+   "re",
+   "ue"
+  ]
+ },
+ {
+  "function": "buildContainerParts",
+  "bytes": 19159,
+  "line": 8024,
+  "params": [
+   "ctx",
+   "type",
+   "variant",
+   "doorsOpen",
+   "wear"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "B",
+   "I",
+   "J",
+   "L",
+   "P",
+   "Pe",
+   "R",
+   "Te",
+   "V",
+   "Y",
+   "Z",
+   "_e",
+   "ae",
+   "ce",
+   "ee",
+   "fe",
+   "k",
+   "le",
+   "me",
+   "oe",
+   "px",
+   "py",
+   "se",
+   "ue",
+   "ve"
+  ]
+ },
+ {
+  "function": "buildRelayNode",
+  "bytes": 18613,
+  "line": 11578,
+  "params": [
+   "ctx",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "I",
+   "R",
+   "_e",
+   "ae",
+   "ce",
+   "k",
+   "le",
+   "se",
+   "ve"
+  ]
+ },
+ {
+  "function": "createHUD",
+  "bytes": 17212,
+  "line": 48129,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "Be",
+   "Fe",
+   "Ie",
+   "Me",
+   "Ne",
+   "Oe",
+   "Os",
+   "Pe",
+   "Re",
+   "Rs",
+   "Te",
+   "Ti",
+   "Un",
+   "We",
+   "Xe",
+   "_e",
+   "be",
+   "bt",
+   "ce",
+   "dt",
+   "ho",
+   "k",
+   "nn",
+   "pn",
+   "pt",
+   "ut",
+   "ve",
+   "we",
+   "xe",
+   "ze",
+   "zo"
+  ]
+ },
+ {
+  "function": "createWalker",
+  "bytes": 16825,
+  "line": 45692,
+  "params": [
+   "ctx",
+   "rigDef",
+   "materials",
+   "index"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "A",
+   "B",
+   "C",
+   "D",
+   "E",
+   "F",
+   "G",
+   "H",
+   "K",
+   "L",
+   "M",
+   "N",
+   "O",
+   "P",
+   "Q",
+   "S",
+   "T",
+   "U",
+   "V",
+   "X",
+   "Y",
+   "Z",
+   "_",
+   "b",
+   "ee",
+   "ie",
+   "j",
+   "m",
+   "me",
+   "ne",
+   "q",
+   "re",
+   "ue",
+   "w",
+   "y",
+   "z"
+  ]
+ },
+ {
+  "function": "createWalkerModel",
+  "bytes": 14857,
+  "line": 44322,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "o",
+   "r",
+   "s"
+  ]
+ },
+ {
+  "function": "createPhysics",
+  "bytes": 14472,
+  "line": 6581,
+  "params": [
+   "app"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "B",
+   "C",
+   "D",
+   "E",
+   "F",
+   "G",
+   "H",
+   "K",
+   "L",
+   "M",
+   "N",
+   "O",
+   "P",
+   "Q",
+   "S",
+   "T",
+   "U",
+   "V",
+   "X",
+   "Y",
+   "_",
+   "ee",
+   "ie",
+   "j",
+   "me",
+   "ne",
+   "q",
+   "re",
+   "ue",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "createDecalAtlas",
+  "bytes": 14416,
+  "line": 29231,
+  "params": [
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "C",
+   "D",
+   "E",
+   "F",
+   "G",
+   "H",
+   "M",
+   "O",
+   "S",
+   "T",
+   "U",
+   "X",
+   "_",
+   "az",
+   "j",
+   "me",
+   "ne",
+   "q",
+   "re",
+   "ue",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "createEnemies",
+  "bytes": 14363,
+  "line": 47459,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "T",
+   "X",
+   "ie",
+   "j",
+   "ne"
+  ]
+ },
+ {
+  "function": "createInput",
+  "bytes": 14122,
+  "line": 38600,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z",
+   "fe",
+   "le",
+   "oe"
+  ]
+ },
+ {
+  "function": "createMenus",
+  "bytes": 13953,
+  "line": 48746,
+  "params": [
+   "ctx",
+   "actions"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "C",
+   "D",
+   "G",
+   "T",
+   "U",
+   "qs"
+  ]
+ },
+ {
+  "function": "createPlayer",
+  "bytes": 13435,
+  "line": 39131,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "B",
+   "F",
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "X",
+   "Y",
+   "Z",
+   "ae",
+   "ce",
+   "ee",
+   "fe",
+   "k",
+   "le",
+   "me",
+   "ne",
+   "oe",
+   "re",
+   "se",
+   "ue"
+  ]
+ },
+ {
+  "function": "buildGuardBooth",
+  "bytes": 9954,
+  "line": 9414,
+  "params": [
+   "ctx",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "C",
+   "D",
+   "H",
+   "O",
+   "T",
+   "U",
+   "q"
+  ]
+ },
+ {
+  "function": "createDroneModel",
+  "bytes": 9954,
+  "line": 45115,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "c",
+   "f",
+   "h",
+   "l",
+   "u"
+  ]
+ },
+ {
+  "function": "placeYardLayout",
+  "bytes": 9704,
+  "line": 21181,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "l",
+   "o",
+   "s",
+   "u"
+  ]
+ },
+ {
+  "function": "updateAlive",
+  "bytes": 9487,
+  "line": 46748,
+  "params": [
+   "T"
+  ],
+  "shortParams": [
+   "T"
+  ],
+  "shortLocals": [
+   "$",
+   "B",
+   "C",
+   "D",
+   "F",
+   "G",
+   "I",
+   "J",
+   "K",
+   "L",
+   "N",
+   "P",
+   "Q",
+   "R",
+   "T",
+   "V",
+   "X",
+   "Y",
+   "Z",
+   "ae",
+   "ce",
+   "ee",
+   "fe",
+   "ie",
+   "j",
+   "k",
+   "le",
+   "me",
+   "ne",
+   "oe",
+   "re",
+   "se",
+   "ue"
+  ]
+ },
+ {
+  "function": "buildGenerator",
+  "bytes": 9461,
+  "line": 17091,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "S",
+   "_",
+   "m",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "createLevel",
+  "bytes": 9229,
+  "line": 21890,
+  "params": [
+   "game"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "H",
+   "O",
+   "U",
+   "q",
+   "z"
+  ]
+ },
+ {
+  "function": "createLevelKit",
+  "bytes": 9086,
+  "line": 18355,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "B",
+   "C",
+   "D",
+   "F",
+   "G",
+   "J",
+   "K",
+   "L",
+   "N",
+   "P",
+   "Q",
+   "T",
+   "V",
+   "X",
+   "Y",
+   "Z",
+   "ee",
+   "ie",
+   "j",
+   "me",
+   "ne",
+   "re",
+   "ue"
+  ]
+ },
+ {
+  "function": "buildQuayApron",
+  "bytes": 9010,
+  "line": 20801,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "E",
+   "H",
+   "S",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "buildMooringBoat",
+  "bytes": 8953,
+  "line": 25828,
+  "params": [
+   "ctx",
+   "lamps"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "C",
+   "D",
+   "G",
+   "T",
+   "U",
+   "j"
+  ]
+ },
+ {
+  "function": "updateAlive",
+  "bytes": 8879,
+  "line": 45984,
+  "params": [
+   "y"
+  ],
+  "shortParams": [
+   "y"
+  ],
+  "shortLocals": [
+   "$",
+   "A",
+   "B",
+   "C",
+   "D",
+   "E",
+   "F",
+   "G",
+   "H",
+   "K",
+   "L",
+   "M",
+   "N",
+   "O",
+   "P",
+   "Q",
+   "S",
+   "T",
+   "U",
+   "V",
+   "X",
+   "Y",
+   "Z",
+   "_",
+   "b",
+   "ee",
+   "ie",
+   "j",
+   "m",
+   "me",
+   "ne",
+   "q",
+   "re",
+   "ue",
+   "w",
+   "y",
+   "z"
+  ]
+ },
+ {
+  "function": "createMaterials",
+  "bytes": 8730,
+  "line": 6061,
+  "params": [
+   "app"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "O",
+   "Q",
+   "T",
+   "U",
+   "X",
+   "ie",
+   "j",
+   "ne",
+   "q",
+   "re",
+   "ue"
+  ]
+ },
+ {
+  "function": "update",
+  "bytes": 8651,
+  "line": 43552,
+  "params": [
+   "Me"
+  ],
+  "shortParams": [
+   "Me"
+  ],
+  "shortLocals": [
+   "$i",
+   "$t",
+   "Ai",
+   "De",
+   "Hn",
+   "Hs",
+   "Ht",
+   "Je",
+   "Le",
+   "Me",
+   "Oe",
+   "Os",
+   "Ot",
+   "Pt",
+   "Ti",
+   "Tt",
+   "Ue",
+   "Un",
+   "Vt",
+   "Zo",
+   "ba",
+   "be",
+   "bt",
+   "ct",
+   "de",
+   "fo",
+   "ge",
+   "gt",
+   "he",
+   "ho",
+   "it",
+   "ke",
+   "ln",
+   "lu",
+   "nn",
+   "pe",
+   "pn",
+   "pt",
+   "ss",
+   "te",
+   "ut",
+   "we",
+   "xn",
+   "ya",
+   "ye",
+   "yr",
+   "zo"
+  ]
+ },
+ {
+  "function": "startGame",
+  "bytes": 8464,
+  "line": 49957,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "dt",
+   "f",
+   "g",
+   "h",
+   "p",
+   "v",
+   "x"
+  ]
+ },
+ {
+  "function": "createApronMarkingsTexture",
+  "bytes": 8292,
+  "line": 27369,
+  "params": [
+   "size",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "C",
+   "D",
+   "E",
+   "G",
+   "H",
+   "M",
+   "O",
+   "S",
+   "T",
+   "U",
+   "_",
+   "ay",
+   "az",
+   "j",
+   "q",
+   "w",
+   "x0",
+   "y0",
+   "z"
+  ]
+ },
+ {
+  "function": "buildGloveHand",
+  "bytes": 8213,
+  "line": 42063,
+  "params": [
+   "handSpec"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "C",
+   "E",
+   "H",
+   "M",
+   "O",
+   "_",
+   "b",
+   "d",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y",
+   "z"
+  ]
+ },
+ {
+  "function": "buildTarpCargo",
+  "bytes": 7654,
+  "line": 15215,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "B",
+   "F",
+   "J",
+   "K",
+   "L",
+   "N",
+   "P",
+   "Q",
+   "V",
+   "X",
+   "Y",
+   "Z",
+   "ee",
+   "fe",
+   "ie",
+   "me",
+   "ne",
+   "oe",
+   "re",
+   "ue"
+  ]
+ },
+ {
+  "function": "buildReeferUnit",
+  "bytes": 7384,
+  "line": 11215,
+  "params": [
+   "ctx",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "g",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "buildDumpster",
+  "bytes": 7263,
+  "line": 17593,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "E",
+   "H",
+   "M",
+   "O",
+   "S",
+   "q",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "buildToolboxCart",
+  "bytes": 6869,
+  "line": 17959,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "_",
+   "b",
+   "m",
+   "y"
+  ]
+ },
+ {
+  "function": "impactAt",
+  "bytes": 6682,
+  "line": 31506,
+  "params": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y"
+  ],
+  "shortParams": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y"
+  ],
+  "shortLocals": [
+   "B",
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "Y",
+   "_e",
+   "ae",
+   "ce",
+   "ee",
+   "fe",
+   "k",
+   "le",
+   "oe",
+   "se",
+   "ve"
+  ]
+ },
+ {
+  "function": "addWoodCrateBody",
+  "bytes": 6574,
+  "line": 13598,
+  "params": [
+   "builder",
+   "width",
+   "height",
+   "depth",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "H",
+   "O",
+   "U",
+   "q",
+   "z"
+  ]
+ },
+ {
+  "function": "run",
+  "bytes": 6252,
+  "line": 2449,
+  "params": [
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "Be",
+   "Fe",
+   "I",
+   "Ie",
+   "Me",
+   "Ne",
+   "Oe",
+   "Pe",
+   "R",
+   "Re",
+   "Te",
+   "We",
+   "Xe",
+   "_e",
+   "ae",
+   "be",
+   "bt",
+   "ce",
+   "dt",
+   "fe",
+   "k",
+   "le",
+   "nn",
+   "oe",
+   "pt",
+   "se",
+   "ut",
+   "ve",
+   "we",
+   "xe",
+   "ze"
+  ]
+ },
+ {
+  "function": "updateHud",
+  "bytes": 6058,
+  "line": 48476,
+  "params": [
+   "k"
+  ],
+  "shortParams": [
+   "k"
+  ],
+  "shortLocals": [
+   "Be",
+   "Fe",
+   "Ie",
+   "Me",
+   "Ne",
+   "Oe",
+   "Os",
+   "Pe",
+   "Re",
+   "Rs",
+   "Te",
+   "Ti",
+   "Un",
+   "We",
+   "Xe",
+   "_e",
+   "be",
+   "bt",
+   "ce",
+   "dt",
+   "ho",
+   "k",
+   "nn",
+   "pn",
+   "pt",
+   "ut",
+   "ve",
+   "we",
+   "xe",
+   "ze",
+   "zo"
+  ]
+ },
+ {
+  "function": "buildFinger",
+  "bytes": 6002,
+  "line": 41611,
+  "params": [
+   "spec"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "C",
+   "D",
+   "E",
+   "G",
+   "H",
+   "M",
+   "N",
+   "O",
+   "Q",
+   "S",
+   "T",
+   "U",
+   "j",
+   "q",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "showcaseEffects",
+  "bytes": 5895,
+  "line": 32700,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "F",
+   "K",
+   "N",
+   "Q",
+   "X",
+   "fx",
+   "ie"
+  ]
+ },
+ {
+  "function": "buildIbcTote",
+  "bytes": 5579,
+  "line": 13987,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "_",
+   "b",
+   "m",
+   "y"
+  ]
+ },
+ {
+  "function": "explosionAt",
+  "bytes": 5464,
+  "line": 32091,
+  "params": [
+   "ee",
+   "_"
+  ],
+  "shortParams": [
+   "ee"
+  ],
+  "shortLocals": [
+   "B",
+   "I",
+   "J",
+   "L",
+   "P",
+   "Pe",
+   "R",
+   "Te",
+   "V",
+   "Y",
+   "Z",
+   "_e",
+   "ae",
+   "ce",
+   "ee",
+   "fe",
+   "k",
+   "le",
+   "oe",
+   "se",
+   "ve"
+  ]
+ },
+ {
+  "function": "addCardboardBox",
+  "bytes": 5226,
+  "line": 15542,
+  "params": [
+   "builder",
+   "width",
+   "height",
+   "depth",
+   "transform",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "E",
+   "H",
+   "M",
+   "S",
+   "_",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "update",
+  "bytes": 5186,
+  "line": 39322,
+  "params": [
+   "F"
+  ],
+  "shortParams": [
+   "F"
+  ],
+  "shortLocals": [
+   "B",
+   "F",
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "X",
+   "Y",
+   "Z",
+   "ae",
+   "ce",
+   "ee",
+   "fe",
+   "k",
+   "le",
+   "me",
+   "ne",
+   "oe",
+   "re",
+   "se",
+   "ue"
+  ]
+ },
+ {
+  "function": "createOpticLens",
+  "bytes": 5068,
+  "line": 42571,
+  "params": [
+   "windowOutline",
+   "lensOffset"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "r"
+  ]
+ },
+ {
+  "function": "buildMetalStairs",
+  "bytes": 5055,
+  "line": 10495,
+  "params": [
+   "ctx",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "g"
+  ]
+ },
+ {
+  "function": "buildLightMast",
+  "bytes": 5002,
+  "line": 9111,
+  "params": [
+   "ctx",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "m",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "createSeaSurface",
+  "bytes": 4972,
+  "line": 28195,
+  "params": [
+   "game",
+   "tex"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "M"
+  ]
+ },
+ {
+  "function": "buildGasCylinders",
+  "bytes": 4951,
+  "line": 14758,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "M",
+   "_",
+   "b",
+   "f",
+   "h",
+   "m",
+   "p",
+   "u",
+   "y"
+  ]
+ },
+ {
+  "function": "updateEmitters",
+  "bytes": 4949,
+  "line": 32378,
+  "params": [
+   "ee"
+  ],
+  "shortParams": [
+   "ee"
+  ],
+  "shortLocals": [
+   "B",
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z",
+   "ee",
+   "fe",
+   "oe"
+  ]
+ },
+ {
+  "function": "createMuzzleFlash",
+  "bytes": 4708,
+  "line": 42679,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "d",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "createSparkFlipbook",
+  "bytes": 4626,
+  "line": 29103,
+  "params": [
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "l"
+  ]
+ },
+ {
+  "function": "createRainSystem",
+  "bytes": 4521,
+  "line": 28502,
+  "params": [
+   "game",
+   "tex"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "H",
+   "O",
+   "S",
+   "q",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "buildShelfRack",
+  "bytes": 4500,
+  "line": 10983,
+  "params": [
+   "ctx",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "selfTest",
+  "bytes": 4497,
+  "line": 38248,
+  "params": [
+   "te"
+  ],
+  "shortParams": [
+   "te"
+  ],
+  "shortLocals": [
+   "$t",
+   "Ai",
+   "De",
+   "Hs",
+   "Ht",
+   "Je",
+   "Le",
+   "Ni",
+   "Ot",
+   "Pt",
+   "Tt",
+   "Ue",
+   "Vt",
+   "ct",
+   "ge",
+   "gt",
+   "he",
+   "it",
+   "ke",
+   "os",
+   "pe",
+   "rs",
+   "sn",
+   "ss",
+   "te",
+   "xn",
+   "ye"
+  ]
+ },
+ {
+  "function": "createFxBatch",
+  "bytes": 4425,
+  "line": 29832,
+  "params": [
+   "game",
+   "capacity",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "C",
+   "D",
+   "F",
+   "G",
+   "H",
+   "K",
+   "N",
+   "O",
+   "Q",
+   "S",
+   "T",
+   "U",
+   "X",
+   "ie",
+   "j",
+   "ne",
+   "q",
+   "z"
+  ]
+ },
+ {
+  "function": "addContainerWall",
+  "bytes": 4390,
+  "line": 26229,
+  "params": [
+   "D",
+   "C",
+   "G",
+   "_"
+  ],
+  "shortParams": [
+   "D",
+   "C",
+   "G"
+  ],
+  "shortLocals": [
+   "$",
+   "B",
+   "Be",
+   "C",
+   "D",
+   "F",
+   "Fe",
+   "G",
+   "I",
+   "Ie",
+   "J",
+   "K",
+   "L",
+   "Me",
+   "N",
+   "Ne",
+   "Oe",
+   "P",
+   "Pe",
+   "Q",
+   "R",
+   "Re",
+   "Te",
+   "V",
+   "We",
+   "X",
+   "Xe",
+   "Y",
+   "Z",
+   "_e",
+   "ae",
+   "be",
+   "ce",
+   "dt",
+   "ee",
+   "fe",
+   "ie",
+   "j",
+   "k",
+   "le",
+   "me",
+   "ne",
+   "oe",
+   "pt",
+   "re",
+   "se",
+   "ue",
+   "ut",
+   "ve",
+   "we",
+   "xe",
+   "ze"
+  ]
+ },
+ {
+  "function": "buildLabelAtlas",
+  "bytes": 4387,
+  "line": 18722,
+  "params": [
+   "root",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "S",
+   "_",
+   "b",
+   "m"
+  ]
+ },
+ {
+  "function": "buildCableReel",
+  "bytes": 4274,
+  "line": 14285,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "m",
+   "y"
+  ]
+ },
+ {
+  "function": "createGround",
+  "bytes": 4119,
+  "line": 28654,
+  "params": [
+   "game"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "E",
+   "H",
+   "M",
+   "O",
+   "S",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "createPlanarReflectionPass",
+  "bytes": 4097,
+  "line": 27927,
+  "params": [
+   "game",
+   "uniforms",
+   "exclude"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "E",
+   "M",
+   "_",
+   "g",
+   "w",
+   "x"
+  ]
+ },
+ {
+  "function": "buildPipeStack",
+  "bytes": 4072,
+  "line": 14987,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "S",
+   "_",
+   "b",
+   "d",
+   "f",
+   "g",
+   "h",
+   "m",
+   "p",
+   "v",
+   "w",
+   "x",
+   "y",
+   "z"
+  ]
+ },
+ {
+  "function": "chamferedBoxGeometry",
+  "bytes": 3951,
+  "line": 7256,
+  "params": [
+   "width",
+   "height",
+   "depth",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "ax",
+   "ay",
+   "az",
+   "b",
+   "m",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "placeGateArea",
+  "bytes": 3919,
+  "line": 21730,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "c",
+   "d",
+   "f",
+   "g",
+   "h",
+   "m",
+   "p",
+   "u",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "addGantryCrane",
+  "bytes": 3770,
+  "line": 26415,
+  "params": [
+   "D",
+   "C",
+   "G",
+   "j",
+   "N"
+  ],
+  "shortParams": [
+   "D",
+   "C",
+   "G",
+   "j",
+   "N"
+  ],
+  "shortLocals": [
+   "$",
+   "B",
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "X",
+   "ee",
+   "ie",
+   "j",
+   "me",
+   "ne",
+   "re",
+   "ue"
+  ]
+ },
+ {
+  "function": "showcaseRenderer",
+  "bytes": 3756,
+  "line": 3363,
+  "params": [
+   "app"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "h"
+  ]
+ },
+ {
+  "function": "buildBackdrop",
+  "bytes": 3724,
+  "line": 26886,
+  "params": [
+   "game",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "m"
+  ]
+ },
+ {
+  "function": "showcaseMaterials",
+  "bytes": 3628,
+  "line": 6405,
+  "params": [
+   "app"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "H",
+   "O",
+   "U",
+   "b",
+   "g",
+   "m",
+   "q",
+   "x",
+   "y",
+   "z"
+  ]
+ },
+ {
+  "function": "buildGateArm",
+  "bytes": 3605,
+  "line": 9917,
+  "params": [
+   "ctx",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "m",
+   "y"
+  ]
+ },
+ {
+  "function": "loftProfileSurface",
+  "bytes": 3546,
+  "line": 7412,
+  "params": [
+   "profile",
+   "stations",
+   "project",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "g",
+   "x"
+  ]
+ },
+ {
+  "function": "update",
+  "bytes": 3493,
+  "line": 38147,
+  "params": [
+   "te"
+  ],
+  "shortParams": [
+   "te"
+  ],
+  "shortLocals": [
+   "De",
+   "Le",
+   "Ot",
+   "ct",
+   "ge",
+   "gt",
+   "he",
+   "it",
+   "ke",
+   "pe",
+   "te",
+   "ye"
+  ]
+ },
+ {
+  "function": "buildBarrel",
+  "bytes": 3446,
+  "line": 13331,
+  "params": [
+   "ctx",
+   "opts",
+   "variant"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "b",
+   "d",
+   "g",
+   "m",
+   "v",
+   "w",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "buildJerseyBarrier",
+  "bytes": 3397,
+  "line": 8936,
+  "params": [
+   "ctx",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "d",
+   "f",
+   "g",
+   "m",
+   "p",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "buildMarkingsAtlas",
+  "bytes": 3391,
+  "line": 42406,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "f",
+   "g",
+   "h",
+   "p",
+   "u",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "createMarkingsMesh",
+  "bytes": 3183,
+  "line": 42493,
+  "params": [
+   "decals"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "M",
+   "dy",
+   "dz",
+   "u0",
+   "v0"
+  ]
+ },
+ {
+  "function": "buildFencePanel",
+  "bytes": 3171,
+  "line": 9306,
+  "params": [
+   "ctx",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "g",
+   "v"
+  ]
+ },
+ {
+  "function": "createCombat",
+  "bytes": 3098,
+  "line": 39588,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "f",
+   "h",
+   "l",
+   "n",
+   "o",
+   "r",
+   "s",
+   "u"
+  ]
+ },
+ {
+  "function": "createWetApron",
+  "bytes": 3047,
+  "line": 27806,
+  "params": [
+   "game",
+   "tex"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "r"
+  ]
+ },
+ {
+  "function": "showcaseWeapon",
+  "bytes": 2954,
+  "line": 43843,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "d",
+   "f",
+   "g",
+   "h",
+   "p",
+   "u",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "roundedBoxGeometry",
+  "bytes": 2935,
+  "line": 12509,
+  "params": [
+   "width",
+   "height",
+   "depth",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "_",
+   "b",
+   "d",
+   "g",
+   "m",
+   "p",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "buildJerryCan",
+  "bytes": 2805,
+  "line": 14563,
+  "params": [
+   "ctx",
+   "opts",
+   "variant"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "enableBenchmark",
+  "bytes": 2770,
+  "line": 50236,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "_",
+   "b",
+   "d",
+   "f",
+   "g",
+   "m",
+   "p",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "createGullFlock",
+  "bytes": 2745,
+  "line": 26808,
+  "params": [
+   "ctx",
+   "uTime",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "u"
+  ]
+ },
+ {
+  "function": "renderReflection",
+  "bytes": 2673,
+  "line": 27974,
+  "params": [
+   "g",
+   "x",
+   "boundsMin"
+  ],
+  "shortParams": [
+   "g",
+   "x"
+  ],
+  "shortLocals": [
+   "E",
+   "M",
+   "_",
+   "g",
+   "w",
+   "x"
+  ]
+ },
+ {
+  "function": "showcaseEnemies",
+  "bytes": 2650,
+  "line": 47991,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "c",
+   "l",
+   "u"
+  ]
+ },
+ {
+  "function": "createHollowPolygonExtrusion",
+  "bytes": 2568,
+  "line": 12809,
+  "params": [
+   "polygon",
+   "depth",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "ax",
+   "d",
+   "g",
+   "v"
+  ]
+ },
+ {
+  "function": "buildTouchUI",
+  "bytes": 2476,
+  "line": 38825,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z",
+   "fe",
+   "le",
+   "oe"
+  ]
+ },
+ {
+  "function": "showcaseGround",
+  "bytes": 2452,
+  "line": 28786,
+  "params": [
+   "game"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "o"
+  ]
+ },
+ {
+  "function": "poseRig",
+  "bytes": 2430,
+  "line": 47150,
+  "params": [
+   "T"
+  ],
+  "shortParams": [
+   "T"
+  ],
+  "shortLocals": [
+   "$",
+   "B",
+   "C",
+   "D",
+   "F",
+   "G",
+   "I",
+   "J",
+   "K",
+   "L",
+   "N",
+   "P",
+   "Q",
+   "R",
+   "T",
+   "V",
+   "X",
+   "Y",
+   "Z",
+   "ae",
+   "ce",
+   "ee",
+   "fe",
+   "ie",
+   "j",
+   "k",
+   "le",
+   "me",
+   "ne",
+   "oe",
+   "re",
+   "se",
+   "ue"
+  ]
+ },
+ {
+  "function": "buildSkinnedRig",
+  "bytes": 2423,
+  "line": 44028,
+  "params": [
+   "def",
+   "materials",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "p"
+  ]
+ },
+ {
+  "function": "update",
+  "bytes": 2400,
+  "line": 49782,
+  "params": [
+   "P"
+  ],
+  "shortParams": [
+   "P"
+  ],
+  "shortLocals": [
+   "P",
+   "V",
+   "Y"
+  ]
+ },
+ {
+  "function": "pickFirePos",
+  "bytes": 2347,
+  "line": 46681,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "C",
+   "D",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "T",
+   "ie",
+   "j"
+  ]
+ },
+ {
+  "function": "bakeTerrainNormals",
+  "bytes": 2340,
+  "line": 27287,
+  "params": [
+   "size"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "r"
+  ]
+ },
+ {
+  "function": "beveledBoxGeometry",
+  "bytes": 2330,
+  "line": 618,
+  "params": [
+   "width",
+   "height",
+   "depth",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "M",
+   "cx",
+   "cy",
+   "cz",
+   "d",
+   "g",
+   "ny",
+   "nz",
+   "p",
+   "px",
+   "py",
+   "v"
+  ]
+ },
+ {
+  "function": "roundedBoxGeometryGrid",
+  "bytes": 2330,
+  "line": 12596,
+  "params": [
+   "width",
+   "height",
+   "depth",
+   "_",
+   "_",
+   "_",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "x"
+  ]
+ },
+ {
+  "function": "getMaterial",
+  "bytes": 2322,
+  "line": 6238,
+  "params": [
+   "O",
+   "_"
+  ],
+  "shortParams": [
+   "O"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "G",
+   "K",
+   "N",
+   "O",
+   "Q",
+   "T",
+   "U",
+   "j",
+   "q"
+  ]
+ },
+ {
+  "function": "addEuroPallet",
+  "bytes": 2231,
+  "line": 13448,
+  "params": [
+   "builder",
+   "rand",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "f",
+   "h",
+   "u"
+  ]
+ },
+ {
+  "function": "updateDead",
+  "bytes": 2221,
+  "line": 47248,
+  "params": [
+   "T"
+  ],
+  "shortParams": [
+   "T"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "G",
+   "N",
+   "Q",
+   "T",
+   "j"
+  ]
+ },
+ {
+  "function": "buildCrateStack",
+  "bytes": 2204,
+  "line": 13900,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "f",
+   "h",
+   "l",
+   "u"
+  ]
+ },
+ {
+  "function": "loop",
+  "bytes": 2191,
+  "line": 37437,
+  "params": [
+   "te",
+   "he"
+  ],
+  "shortParams": [
+   "te",
+   "he"
+  ],
+  "shortLocals": [
+   "Le",
+   "Ue",
+   "ct",
+   "ge",
+   "he",
+   "ke",
+   "pe",
+   "te",
+   "ye"
+  ]
+ },
+ {
+  "function": "updateView",
+  "bytes": 2181,
+  "line": 39513,
+  "params": [
+   "F"
+  ],
+  "shortParams": [
+   "F"
+  ],
+  "shortLocals": [
+   "$",
+   "B",
+   "F",
+   "J",
+   "L",
+   "P",
+   "V",
+   "X",
+   "Y",
+   "Z",
+   "ee",
+   "me",
+   "ne",
+   "re",
+   "ue"
+  ]
+ },
+ {
+  "function": "generateSet",
+  "bytes": 2165,
+  "line": 6145,
+  "params": [
+   "O"
+  ],
+  "shortParams": [
+   "O"
+  ],
+  "shortLocals": [
+   "$",
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "O",
+   "Q",
+   "T",
+   "U",
+   "X",
+   "ie",
+   "j",
+   "ne",
+   "q",
+   "re",
+   "ue"
+  ]
+ },
+ {
+  "function": "fireShot",
+  "bytes": 2162,
+  "line": 43483,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "Me",
+   "Oe",
+   "Os",
+   "Rs",
+   "Ti",
+   "be",
+   "bt",
+   "ho",
+   "nn",
+   "pn",
+   "pt",
+   "ut",
+   "we"
+  ]
+ },
+ {
+  "function": "buildBollardPost",
+  "bytes": 2141,
+  "line": 10143,
+  "params": [
+   "ctx",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "g",
+   "u",
+   "v",
+   "x"
+  ]
+ },
+ {
+  "function": "muzzleFlash",
+  "bytes": 2133,
+  "line": 31975,
+  "params": [
+   "ee",
+   "B",
+   "_"
+  ],
+  "shortParams": [
+   "ee",
+   "B"
+  ],
+  "shortLocals": [
+   "B",
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "Y",
+   "Z",
+   "ee",
+   "fe",
+   "le",
+   "oe",
+   "se"
+  ]
+ },
+ {
+  "function": "play",
+  "bytes": 2071,
+  "line": 37345,
+  "params": [
+   "te",
+   "he"
+  ],
+  "shortParams": [
+   "te",
+   "he"
+  ],
+  "shortLocals": [
+   "$t",
+   "De",
+   "Ht",
+   "Le",
+   "Ot",
+   "Ue",
+   "ct",
+   "ge",
+   "gt",
+   "he",
+   "it",
+   "ke",
+   "pe",
+   "te",
+   "xn",
+   "ye"
+  ]
+ },
+ {
+  "function": "buildMooringBollard",
+  "bytes": 2065,
+  "line": 10052,
+  "params": [
+   "ctx",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "h",
+   "l",
+   "u"
+  ]
+ },
+ {
+  "function": "fitSunShadowFrustum",
+  "bytes": 2063,
+  "line": 1170,
+  "params": [
+   "sunLight",
+   "boundsMin",
+   "boundsMax",
+   "casterMin",
+   "casterMax"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "y"
+  ]
+ },
+ {
+  "function": "buildSandbags",
+  "bytes": 2057,
+  "line": 15474,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "c",
+   "d",
+   "f",
+   "g",
+   "h",
+   "l",
+   "p",
+   "u",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "updateEnemyLoops",
+  "bytes": 2008,
+  "line": 37675,
+  "params": [
+   "te"
+  ],
+  "shortParams": [
+   "te"
+  ],
+  "shortLocals": [
+   "ge",
+   "he",
+   "pe",
+   "te",
+   "ye"
+  ]
+ },
+ {
+  "function": "createBlinkerBatch",
+  "bytes": 1906,
+  "line": 22695,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "f",
+   "h",
+   "l",
+   "n",
+   "o",
+   "p",
+   "r",
+   "s",
+   "u"
+  ]
+ },
+ {
+  "function": "splashAt",
+  "bytes": 1888,
+  "line": 31394,
+  "params": [
+   "ee",
+   "_"
+  ],
+  "shortParams": [
+   "ee"
+  ],
+  "shortLocals": [
+   "B",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "Y",
+   "Z",
+   "ee",
+   "fe",
+   "le",
+   "oe"
+  ]
+ },
+ {
+  "function": "addForkliftWheel",
+  "bytes": 1881,
+  "line": 15914,
+  "params": [
+   "builder",
+   "wheelX",
+   "radius",
+   "width",
+   "trackZ",
+   "side",
+   "rimRadius",
+   "segments",
+   "unused",
+   "rand"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "g",
+   "p",
+   "v"
+  ]
+ },
+ {
+  "function": "buildDistantCrane",
+  "bytes": 1880,
+  "line": 24570,
+  "params": [
+   "batcher",
+   "mat",
+   "baseX",
+   "baseZ",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "c",
+   "d",
+   "f",
+   "h",
+   "p",
+   "u"
+  ]
+ },
+ {
+  "function": "addPortalFrame",
+  "bytes": 1877,
+  "line": 22873,
+  "params": [
+   "R",
+   "I"
+  ],
+  "shortParams": [
+   "R",
+   "I"
+  ],
+  "shortLocals": [
+   "I",
+   "R",
+   "ae",
+   "ce",
+   "k",
+   "se"
+  ]
+ },
+ {
+  "function": "recomputeSmoothNormals",
+  "bytes": 1872,
+  "line": 12667,
+  "params": [
+   "geometry"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "f",
+   "i2",
+   "p"
+  ]
+ },
+ {
+  "function": "mergeStaticMeshes",
+  "bytes": 1765,
+  "line": 831,
+  "params": [
+   "root",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "l",
+   "r",
+   "u"
+  ]
+ },
+ {
+  "function": "synthMusicPerc",
+  "bytes": 1727,
+  "line": 35860,
+  "params": [
+   "sampleRate",
+   "rand"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a"
+  ]
+ },
+ {
+  "function": "captureInteriorProbe",
+  "bytes": 1690,
+  "line": 3247,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "B",
+   "F",
+   "P",
+   "X",
+   "ee",
+   "ie",
+   "me",
+   "ne",
+   "re",
+   "ue"
+  ]
+ },
+ {
+  "function": "orientTrianglesOutward",
+  "bytes": 1690,
+  "line": 7371,
+  "params": [
+   "positions",
+   "uvs",
+   "start",
+   "end",
+   "center",
+   "inward"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "ny",
+   "nz"
+  ]
+ },
+ {
+  "function": "buildTrafficCone",
+  "bytes": 1681,
+  "line": 14688,
+  "params": [
+   "ctx",
+   "opts",
+   "variant"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "f",
+   "h",
+   "p"
+  ]
+ },
+ {
+  "function": "synthRain",
+  "bytes": 1677,
+  "line": 35539,
+  "params": [
+   "sampleRate",
+   "rand"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "u"
+  ]
+ },
+ {
+  "function": "buildBasicContainer",
+  "bytes": 1635,
+  "line": 8875,
+  "params": [
+   "ctx",
+   "type",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d"
+  ]
+ },
+ {
+  "function": "updateDynamicRes",
+  "bytes": 1580,
+  "line": 2918,
+  "params": [
+   "ie"
+  ],
+  "shortParams": [
+   "ie"
+  ],
+  "shortLocals": [
+   "F",
+   "X",
+   "ie",
+   "ne"
+  ]
+ },
+ {
+  "function": "fireShot",
+  "bytes": 1580,
+  "line": 47028,
+  "params": [
+   "T"
+  ],
+  "shortParams": [
+   "T"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "G",
+   "Q",
+   "T",
+   "j"
+  ]
+ },
+ {
+  "function": "createCableReelDiscGeometries",
+  "bytes": 1542,
+  "line": 14248,
+  "params": [
+   "radius",
+   "segments",
+   "rand",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "y"
+  ]
+ },
+ {
+  "function": "graffiti_tag",
+  "bytes": 1518,
+  "line": 5018,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "S",
+   "_",
+   "b",
+   "g",
+   "m",
+   "v",
+   "w",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "csc_plate",
+  "bytes": 1518,
+  "line": 5117,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "M",
+   "_",
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "renderAdvanced",
+  "bytes": 1512,
+  "line": 2999,
+  "params": [
+   "ie"
+  ],
+  "shortParams": [
+   "ie"
+  ],
+  "shortLocals": [
+   "F",
+   "X",
+   "ie",
+   "ne",
+   "re"
+  ]
+ },
+ {
+  "function": "registerDetailedProps",
+  "bytes": 1494,
+  "line": 15163,
+  "params": [
+   "register"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "e",
+   "n",
+   "t"
+  ]
+ },
+ {
+  "function": "updateDead",
+  "bytes": 1456,
+  "line": 45933,
+  "params": [
+   "y"
+  ],
+  "shortParams": [
+   "y"
+  ],
+  "shortLocals": [
+   "A",
+   "_",
+   "b",
+   "m",
+   "y"
+  ]
+ },
+ {
+  "function": "synthRainInterior",
+  "bytes": 1441,
+  "line": 35582,
+  "params": [
+   "sampleRate",
+   "rand"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "c"
+  ]
+ },
+ {
+  "function": "mergeGeometryParts",
+  "bytes": 1422,
+  "line": 793,
+  "params": [
+   "geometries"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "c",
+   "l",
+   "u"
+  ]
+ },
+ {
+  "function": "createDebrisGeometry",
+  "bytes": 1413,
+  "line": 30407,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "vx",
+   "vy",
+   "vz"
+  ]
+ },
+ {
+  "function": "update",
+  "bytes": 1403,
+  "line": 39032,
+  "params": [
+   "P"
+  ],
+  "shortParams": [
+   "P"
+  ],
+  "shortLocals": [
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z",
+   "oe"
+  ]
+ },
+ {
+  "function": "setShot",
+  "bytes": 1382,
+  "line": 43867,
+  "params": [
+   "u",
+   "_"
+  ],
+  "shortParams": [
+   "u"
+  ],
+  "shortLocals": [
+   "b",
+   "d",
+   "f",
+   "g",
+   "h",
+   "p",
+   "u",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "synthGullFire",
+  "bytes": 1375,
+  "line": 34633,
+  "params": [
+   "sr",
+   "rand",
+   "variant"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "sr"
+  ]
+ },
+ {
+  "function": "buildDoor",
+  "bytes": 1372,
+  "line": 11785,
+  "params": [
+   "le",
+   "R",
+   "I"
+  ],
+  "shortParams": [
+   "le",
+   "R",
+   "I"
+  ],
+  "shortLocals": [
+   "I",
+   "R",
+   "_e",
+   "ae",
+   "ce",
+   "k",
+   "le",
+   "se",
+   "ve"
+  ]
+ },
+ {
+  "function": "step",
+  "bytes": 1362,
+  "line": 32793,
+  "params": [
+   "N"
+  ],
+  "shortParams": [
+   "N"
+  ],
+  "shortLocals": [
+   "N",
+   "Q"
+  ]
+ },
+ {
+  "function": "addColliders",
+  "bytes": 1356,
+  "line": 18519,
+  "params": [
+   "T",
+   "D",
+   "_"
+  ],
+  "shortParams": [
+   "T",
+   "D"
+  ],
+  "shortLocals": [
+   "$",
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "T",
+   "X",
+   "ie",
+   "j",
+   "me",
+   "ne",
+   "re",
+   "ue"
+  ]
+ },
+ {
+  "function": "createValueNoise",
+  "bytes": 1352,
+  "line": 28869,
+  "params": [
+   "seed"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "b",
+   "c",
+   "d",
+   "f",
+   "g",
+   "h",
+   "l",
+   "m",
+   "p",
+   "r",
+   "u",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "findPathCells",
+  "bytes": 1349,
+  "line": 6994,
+  "params": [
+   "_",
+   "M"
+  ],
+  "shortParams": [
+   "_",
+   "M"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "E",
+   "G",
+   "H",
+   "M",
+   "N",
+   "O",
+   "S",
+   "T",
+   "U",
+   "_",
+   "j",
+   "q",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "updateBolts",
+  "bytes": 1346,
+  "line": 47715,
+  "params": [
+   "T"
+  ],
+  "shortParams": [
+   "T"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "T",
+   "ie",
+   "j"
+  ]
+ },
+ {
+  "function": "synthGullRotor",
+  "bytes": 1342,
+  "line": 34507,
+  "params": [
+   "sampleRate",
+   "rand"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "l"
+  ]
+ },
+ {
+  "function": "createRoundedRectFanGeometry",
+  "bytes": 1324,
+  "line": 7557,
+  "params": [
+   "width",
+   "height",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "t"
+  ]
+ },
+ {
+  "function": "H",
+  "bytes": 1305,
+  "line": 29325,
+  "params": [
+   "centerX",
+   "centerY",
+   "radius",
+   "rotation",
+   "jitter",
+   "segmentCount"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "F",
+   "X",
+   "me",
+   "ne",
+   "re",
+   "ue"
+  ]
+ },
+ {
+  "function": "updateAmbience",
+  "bytes": 1304,
+  "line": 37601,
+  "params": [
+   "te",
+   "he"
+  ],
+  "shortParams": [
+   "te",
+   "he"
+  ],
+  "shortLocals": [
+   "ge",
+   "he",
+   "pe",
+   "te",
+   "ye"
+  ]
+ },
+ {
+  "function": "bullet_concrete",
+  "bytes": 1285,
+  "line": 4890,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "_",
+   "b",
+   "g",
+   "m",
+   "v",
+   "w",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "makeLayer",
+  "bytes": 1279,
+  "line": 35540,
+  "params": [
+   "rnd"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "u"
+  ]
+ },
+ {
+  "function": "fireImpact",
+  "bytes": 1271,
+  "line": 32757,
+  "params": [
+   "N"
+  ],
+  "shortParams": [
+   "N"
+  ],
+  "shortLocals": [
+   "K",
+   "N",
+   "Q"
+  ]
+ },
+ {
+  "function": "synthHoundServo",
+  "bytes": 1239,
+  "line": 34556,
+  "params": [
+   "sampleRate",
+   "rand"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "r"
+  ]
+ },
+ {
+  "function": "synthWhiz",
+  "bytes": 1236,
+  "line": 34428,
+  "params": [
+   "sampleRate",
+   "rand",
+   "variant"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "l"
+  ]
+ },
+ {
+  "function": "pickSpawnPoint",
+  "bytes": 1235,
+  "line": 49499,
+  "params": [
+   "P",
+   "_"
+  ],
+  "shortParams": [
+   "P"
+  ],
+  "shortLocals": [
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "Y",
+   "Z",
+   "ae",
+   "fe",
+   "le",
+   "oe",
+   "se"
+  ]
+ },
+ {
+  "function": "synthAlert",
+  "bytes": 1185,
+  "line": 35043,
+  "params": [
+   "sampleRate",
+   "rand",
+   "variant"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "c",
+   "d",
+   "f",
+   "g",
+   "h",
+   "l",
+   "p",
+   "u",
+   "v",
+   "x"
+  ]
+ },
+ {
+  "function": "buildTireStack",
+  "bytes": 1166,
+  "line": 14531,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "f",
+   "h",
+   "p",
+   "u"
+  ]
+ },
+ {
+  "function": "synthRelayHum",
+  "bytes": 1166,
+  "line": 34597,
+  "params": [
+   "sampleRate",
+   "rand"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "r"
+  ]
+ },
+ {
+  "function": "createSandbagGeometry",
+  "bytes": 1147,
+  "line": 15446,
+  "params": [
+   "width",
+   "height",
+   "depth",
+   "rand"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "c",
+   "f",
+   "h",
+   "l",
+   "p",
+   "u"
+  ]
+ },
+ {
+  "function": "patchPac9DetailMaterial",
+  "bytes": 1128,
+  "line": 42883,
+  "params": [
+   "material",
+   "detailKind"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "t"
+  ]
+ },
+ {
+  "function": "getLabel",
+  "bytes": 1127,
+  "line": 5254,
+  "params": [
+   "v",
+   "_"
+  ],
+  "shortParams": [
+   "v"
+  ],
+  "shortLocals": [
+   "A",
+   "C",
+   "D",
+   "E",
+   "G",
+   "H",
+   "M",
+   "O",
+   "S",
+   "T",
+   "U",
+   "_",
+   "b",
+   "g",
+   "j",
+   "m",
+   "q",
+   "v",
+   "w",
+   "x",
+   "y",
+   "z"
+  ]
+ },
+ {
+  "function": "updateObjectives",
+  "bytes": 1120,
+  "line": 49674,
+  "params": [
+   "P"
+  ],
+  "shortParams": [
+   "P"
+  ],
+  "shortLocals": [
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z"
+  ]
+ },
+ {
+  "function": "dustAt",
+  "bytes": 1108,
+  "line": 31304,
+  "params": [
+   "ee",
+   "B",
+   "_",
+   "_",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "ee",
+   "B"
+  ],
+  "shortLocals": [
+   "B",
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z",
+   "ee",
+   "fe",
+   "oe"
+  ]
+ },
+ {
+  "function": "synthImpulseShed",
+  "bytes": 1087,
+  "line": 36228,
+  "params": [
+   "sampleRate",
+   "rand"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "l",
+   "o",
+   "r",
+   "s"
+  ]
+ },
+ {
+  "function": "synthDeathSting",
+  "bytes": 1081,
+  "line": 36146,
+  "params": [
+   "sampleRate",
+   "rand"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "c",
+   "u"
+  ]
+ },
+ {
+  "function": "synthMusicDrone",
+  "bytes": 1077,
+  "line": 35749,
+  "params": [
+   "sr",
+   "rand"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "h",
+   "l",
+   "r",
+   "sr",
+   "u"
+  ]
+ },
+ {
+  "function": "synthObjectiveAllSting",
+  "bytes": 1077,
+  "line": 36062,
+  "params": [
+   "sampleRate"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "n",
+   "t"
+  ]
+ },
+ {
+  "function": "createProps",
+  "bytes": 1070,
+  "line": 7125,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "e",
+   "n",
+   "o",
+   "s",
+   "t"
+  ]
+ },
+ {
+  "function": "crack",
+  "bytes": 1067,
+  "line": 4974,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "g",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "stackContainers",
+  "bytes": 1067,
+  "line": 18630,
+  "params": [
+   "T",
+   "D",
+   "C",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "T",
+   "D",
+   "C"
+  ],
+  "shortLocals": [
+   "$",
+   "B",
+   "C",
+   "D",
+   "F",
+   "G",
+   "J",
+   "K",
+   "L",
+   "N",
+   "P",
+   "Q",
+   "T",
+   "V",
+   "X",
+   "Y",
+   "Z",
+   "ee",
+   "ie",
+   "j",
+   "me",
+   "ne",
+   "re",
+   "ue"
+  ]
+ },
+ {
+  "function": "hazard_flammable",
+  "bytes": 1066,
+  "line": 4384,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "g",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "applySweptBiquad",
+  "bytes": 1066,
+  "line": 32973,
+  "params": [
+   "buf",
+   "type",
+   "cutoff",
+   "qParam",
+   "sampleRate",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "l",
+   "z2"
+  ]
+ },
+ {
+  "function": "makeLayer",
+  "bytes": 1048,
+  "line": 35583,
+  "params": [
+   "rnd"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "c"
+  ]
+ },
+ {
+  "function": "buildSideWall",
+  "bytes": 1045,
+  "line": 9470,
+  "params": [
+   "H",
+   "O"
+  ],
+  "shortParams": [
+   "H",
+   "O"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "H",
+   "O",
+   "T",
+   "U",
+   "q"
+  ]
+ },
+ {
+  "function": "synthImpulseOutdoor",
+  "bytes": 1040,
+  "line": 36186,
+  "params": [
+   "sampleRate",
+   "rand"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "l",
+   "o",
+   "r",
+   "s"
+  ]
+ },
+ {
+  "function": "emitRing",
+  "bytes": 1040,
+  "line": 41647,
+  "params": [
+   "M",
+   "E",
+   "w",
+   "S"
+  ],
+  "shortParams": [
+   "M",
+   "E",
+   "w",
+   "S"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "E",
+   "G",
+   "H",
+   "M",
+   "N",
+   "O",
+   "Q",
+   "S",
+   "T",
+   "U",
+   "j",
+   "q",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "pumpSpawnQueue",
+  "bytes": 1021,
+  "line": 49584,
+  "params": [
+   "P"
+  ],
+  "shortParams": [
+   "P"
+  ],
+  "shortLocals": [
+   "L",
+   "P",
+   "V",
+   "Y"
+  ]
+ },
+ {
+  "function": "synthStepConcrete",
+  "bytes": 1009,
+  "line": 33846,
+  "params": [
+   "sr",
+   "rand",
+   "variant"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "sr"
+  ]
+ },
+ {
+  "function": "addWarehouse",
+  "bytes": 995,
+  "line": 26660,
+  "params": [
+   "D",
+   "C",
+   "G",
+   "j",
+   "N",
+   "Q",
+   "K"
+  ],
+  "shortParams": [
+   "D",
+   "C",
+   "G",
+   "j",
+   "N",
+   "Q",
+   "K"
+  ],
+  "shortLocals": [
+   "$",
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "X",
+   "ie",
+   "j",
+   "ne",
+   "re"
+  ]
+ },
+ {
+  "function": "killHound",
+  "bytes": 985,
+  "line": 47215,
+  "params": [
+   "T"
+  ],
+  "shortParams": [
+   "T"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "G",
+   "N",
+   "T",
+   "j"
+  ]
+ },
+ {
+  "function": "tracer",
+  "bytes": 975,
+  "line": 31934,
+  "params": [
+   "alignDot",
+   "B",
+   "_"
+  ],
+  "shortParams": [
+   "B"
+  ],
+  "shortLocals": [
+   "B",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "Y",
+   "Z",
+   "fe",
+   "le",
+   "oe"
+  ]
+ },
+ {
+  "function": "valueNoise3",
+  "bytes": 965,
+  "line": 22385,
+  "params": [
+   "coordX",
+   "coordY",
+   "coordZ"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "f",
+   "h",
+   "u"
+  ]
+ },
+ {
+  "function": "buildThumb",
+  "bytes": 964,
+  "line": 41848,
+  "params": [
+   "thumbDirs"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "o"
+  ]
+ },
+ {
+  "function": "syncUi",
+  "bytes": 959,
+  "line": 48883,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "D",
+   "T",
+   "U"
+  ]
+ },
+ {
+  "function": "bullet_metal",
+  "bytes": 956,
+  "line": 4850,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "createRng",
+  "bytes": 938,
+  "line": 199,
+  "params": [
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "n",
+   "s"
+  ]
+ },
+ {
+  "function": "buildGrid",
+  "bytes": 938,
+  "line": 6876,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "E",
+   "H",
+   "M",
+   "S",
+   "_",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "resize",
+  "bytes": 927,
+  "line": 2392,
+  "params": [
+   "oe",
+   "fe"
+  ],
+  "shortParams": [
+   "oe",
+   "fe"
+  ],
+  "shortLocals": [
+   "I",
+   "R",
+   "fe",
+   "le",
+   "oe"
+  ]
+ },
+ {
+  "function": "boxGeometry",
+  "bytes": 920,
+  "line": 595,
+  "params": [
+   "width",
+   "height",
+   "depth",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "c",
+   "ny",
+   "vx",
+   "vy",
+   "vz"
+  ]
+ },
+ {
+  "function": "pollGamepad",
+  "bytes": 912,
+  "line": 39001,
+  "params": [
+   "P"
+  ],
+  "shortParams": [
+   "P"
+  ],
+  "shortLocals": [
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z",
+   "oe"
+  ]
+ },
+ {
+  "function": "leak_stain",
+  "bytes": 911,
+  "line": 4815,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "_",
+   "b",
+   "g",
+   "m",
+   "v",
+   "w",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "tubeGeometry",
+  "bytes": 908,
+  "line": 704,
+  "params": [
+   "points",
+   "_",
+   "_",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "h"
+  ]
+ },
+ {
+  "function": "showcaseBackdrop",
+  "bytes": 899,
+  "line": 27024,
+  "params": [
+   "game"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "s"
+  ]
+ },
+ {
+  "function": "buildCorrugationStations",
+  "bytes": 898,
+  "line": 7537,
+  "params": [
+   "min",
+   "max",
+   "pitch",
+   "depth",
+   "flat",
+   "slope",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "f"
+  ]
+ },
+ {
+  "function": "addStairFlight",
+  "bytes": 894,
+  "line": 23918,
+  "params": [
+   "R",
+   "I",
+   "se",
+   "ae",
+   "k",
+   "ce"
+  ],
+  "shortParams": [
+   "R",
+   "I",
+   "se",
+   "ae",
+   "k",
+   "ce"
+  ],
+  "shortLocals": [
+   "Fe",
+   "I",
+   "Pe",
+   "R",
+   "Re",
+   "Te",
+   "_e",
+   "ae",
+   "ce",
+   "k",
+   "se",
+   "ve",
+   "ze"
+  ]
+ },
+ {
+  "function": "updateTitleCam",
+  "bytes": 893,
+  "line": 49298,
+  "params": [
+   "P"
+  ],
+  "shortParams": [
+   "P"
+  ],
+  "shortLocals": [
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z"
+  ]
+ },
+ {
+  "function": "synthWind",
+  "bytes": 879,
+  "line": 35626,
+  "params": [
+   "sr",
+   "rand"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "a",
+   "r",
+   "sr"
+  ]
+ },
+ {
+  "function": "buildDrapedSlab",
+  "bytes": 873,
+  "line": 41530,
+  "params": [
+   "originX",
+   "originY",
+   "width",
+   "height",
+   "thickness",
+   "tint",
+   "heightFn",
+   "_",
+   "_",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "d",
+   "f",
+   "g",
+   "h",
+   "p",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "resetRun",
+  "bytes": 867,
+  "line": 49323,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "P",
+   "V",
+   "Y"
+  ]
+ },
+ {
+  "function": "ibeam",
+  "bytes": 861,
+  "line": 18432,
+  "params": [
+   "T",
+   "D",
+   "C",
+   "G",
+   "j",
+   "N",
+   "_"
+  ],
+  "shortParams": [
+   "T",
+   "D",
+   "C",
+   "G",
+   "j",
+   "N"
+  ],
+  "shortLocals": [
+   "$",
+   "B",
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "L",
+   "N",
+   "P",
+   "Q",
+   "T",
+   "V",
+   "X",
+   "Y",
+   "ee",
+   "ie",
+   "j",
+   "me",
+   "ne",
+   "re",
+   "ue"
+  ]
+ },
+ {
+  "function": "scorch",
+  "bytes": 856,
+  "line": 4939,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "_",
+   "b",
+   "g",
+   "m",
+   "v",
+   "w",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "addLid",
+  "bytes": 850,
+  "line": 17814,
+  "params": [
+   "M",
+   "E"
+  ],
+  "shortParams": [
+   "M",
+   "E"
+  ],
+  "shortLocals": [
+   "E",
+   "H",
+   "M",
+   "S",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "applySettings",
+  "bytes": 837,
+  "line": 48848,
+  "params": [
+   "U"
+  ],
+  "shortParams": [
+   "U"
+  ],
+  "shortLocals": [
+   "D",
+   "T",
+   "U"
+  ]
+ },
+ {
+  "function": "createEventBus",
+  "bytes": 835,
+  "line": 166,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "e",
+   "n",
+   "o",
+   "s",
+   "t"
+  ]
+ },
+ {
+  "function": "oil_stain",
+  "bytes": 830,
+  "line": 4782,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "_",
+   "b",
+   "g",
+   "m",
+   "v",
+   "w",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "finishMission",
+  "bytes": 830,
+  "line": 49752,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "L",
+   "P",
+   "V",
+   "Y"
+  ]
+ },
+ {
+  "function": "placeDoorDecal",
+  "bytes": 820,
+  "line": 8750,
+  "params": [
+   "$",
+   "ue",
+   "me",
+   "ee",
+   "B",
+   "P"
+  ],
+  "shortParams": [
+   "$",
+   "ue",
+   "me",
+   "ee",
+   "B",
+   "P"
+  ],
+  "shortLocals": [
+   "$",
+   "B",
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "Y",
+   "Z",
+   "ae",
+   "ce",
+   "ee",
+   "fe",
+   "k",
+   "le",
+   "me",
+   "oe",
+   "se",
+   "ue"
+  ]
+ },
+ {
+  "function": "advancePath",
+  "bytes": 813,
+  "line": 46657,
+  "params": [
+   "T",
+   "D"
+  ],
+  "shortParams": [
+   "T",
+   "D"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "T",
+   "ie",
+   "j"
+  ]
+ },
+ {
+  "function": "synthImpactMetal",
+  "bytes": 807,
+  "line": 34158,
+  "params": [
+   "sampleRate",
+   "rand",
+   "variant"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "r"
+  ]
+ },
+ {
+  "function": "addGableEnds",
+  "bytes": 800,
+  "line": 19192,
+  "params": [
+   "L",
+   "Z",
+   "J"
+  ],
+  "shortParams": [
+   "L",
+   "Z",
+   "J"
+  ],
+  "shortLocals": [
+   "J",
+   "L",
+   "Z",
+   "oe"
+  ]
+ },
+ {
+  "function": "valueNoise2",
+  "bytes": 799,
+  "line": 27083,
+  "params": [
+   "px",
+   "py",
+   "seed",
+   "wrap"
+  ],
+  "shortParams": [
+   "px",
+   "py"
+  ],
+  "shortLocals": [
+   "fx",
+   "fy",
+   "iy",
+   "px",
+   "py",
+   "s",
+   "sx",
+   "sy"
+  ]
+ },
+ {
+  "function": "addBag",
+  "bytes": 796,
+  "line": 15480,
+  "params": [
+   "l",
+   "c",
+   "u",
+   "h"
+  ],
+  "shortParams": [
+   "l",
+   "c",
+   "u",
+   "h"
+  ],
+  "shortLocals": [
+   "b",
+   "c",
+   "d",
+   "f",
+   "g",
+   "h",
+   "l",
+   "p",
+   "u",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "biquadCoeffs",
+  "bytes": 786,
+  "line": 32932,
+  "params": [
+   "type",
+   "cutoffHz",
+   "qFactor",
+   "sampleRate"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a2",
+   "b0",
+   "b2",
+   "c",
+   "f",
+   "h"
+  ]
+ },
+ {
+  "function": "synthObjectiveSting",
+  "bytes": 784,
+  "line": 36028,
+  "params": [
+   "sampleRate"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "n",
+   "t"
+  ]
+ },
+ {
+  "function": "resetWeapon",
+  "bytes": 780,
+  "line": 43414,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "Me"
+  ]
+ },
+ {
+  "function": "createSfxBaker",
+  "bytes": 775,
+  "line": 36892,
+  "params": [
+   "name",
+   "_",
+   "sampleRate"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "l"
+  ]
+ },
+ {
+  "function": "rust_run",
+  "bytes": 761,
+  "line": 4753,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "_",
+   "b",
+   "g",
+   "m",
+   "v",
+   "w",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "logo_c",
+  "bytes": 758,
+  "line": 4610,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "M",
+   "_",
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "valueNoise3D",
+  "bytes": 754,
+  "line": 12398,
+  "params": [
+   "px",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "px"
+  ],
+  "shortLocals": [
+   "f",
+   "fx",
+   "fy",
+   "fz",
+   "h",
+   "iy",
+   "n",
+   "o",
+   "px",
+   "py",
+   "t",
+   "u"
+  ]
+ },
+ {
+  "function": "nearestOpenCell",
+  "bytes": 753,
+  "line": 6913,
+  "params": [
+   "_",
+   "M"
+  ],
+  "shortParams": [
+   "_",
+   "M"
+  ],
+  "shortLocals": [
+   "D",
+   "E",
+   "H",
+   "M",
+   "O",
+   "S",
+   "T",
+   "U",
+   "_",
+   "q",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "mats",
+  "bytes": 748,
+  "line": 337,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "n",
+   "t"
+  ]
+ },
+ {
+  "function": "wallSpanZ",
+  "bytes": 734,
+  "line": 18977,
+  "params": [
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le"
+  ],
+  "shortParams": [
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le"
+  ],
+  "shortLocals": [
+   "I",
+   "J",
+   "L",
+   "R",
+   "Z",
+   "ae",
+   "fe",
+   "le",
+   "oe",
+   "se"
+  ]
+ },
+ {
+  "function": "wallSpanX",
+  "bytes": 734,
+  "line": 19029,
+  "params": [
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le"
+  ],
+  "shortParams": [
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le"
+  ],
+  "shortLocals": [
+   "I",
+   "J",
+   "L",
+   "R",
+   "Z",
+   "ae",
+   "fe",
+   "le",
+   "oe",
+   "se"
+  ]
+ },
+ {
+  "function": "logo_b",
+  "bytes": 730,
+  "line": 4574,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "_",
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "synthCompleteSting",
+  "bytes": 729,
+  "line": 36122,
+  "params": [
+   "sr"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "n",
+   "sr",
+   "t"
+  ]
+ },
+ {
+  "function": "buildImpulse",
+  "bytes": 721,
+  "line": 36229,
+  "params": [
+   "mixedHash",
+   "s"
+  ],
+  "shortParams": [
+   "s"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "l",
+   "o",
+   "r",
+   "s"
+  ]
+ },
+ {
+  "function": "makeDecalMaterial",
+  "bytes": 713,
+  "line": 4296,
+  "params": [
+   "v",
+   "_"
+  ],
+  "shortParams": [
+   "v"
+  ],
+  "shortLocals": [
+   "g",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "fenceRun",
+  "bytes": 710,
+  "line": 21738,
+  "params": [
+   "c",
+   "u",
+   "h",
+   "f",
+   "p"
+  ],
+  "shortParams": [
+   "c",
+   "u",
+   "h",
+   "f",
+   "p"
+  ],
+  "shortLocals": [
+   "b",
+   "c",
+   "d",
+   "f",
+   "g",
+   "h",
+   "m",
+   "p",
+   "u",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "addBoxFaces",
+  "bytes": 708,
+  "line": 26181,
+  "params": [
+   "D",
+   "C",
+   "G",
+   "j",
+   "N",
+   "Q",
+   "K",
+   "ie",
+   "F"
+  ],
+  "shortParams": [
+   "D",
+   "C",
+   "G",
+   "j",
+   "N",
+   "Q",
+   "K",
+   "ie",
+   "F"
+  ],
+  "shortLocals": [
+   "$",
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "X",
+   "ie",
+   "j",
+   "ne",
+   "re",
+   "ue"
+  ]
+ },
+ {
+  "function": "cutRelay",
+  "bytes": 707,
+  "line": 49712,
+  "params": [
+   "P"
+  ],
+  "shortParams": [
+   "P"
+  ],
+  "shortLocals": [
+   "P",
+   "V"
+  ]
+ },
+ {
+  "function": "debrisBurstAt",
+  "bytes": 704,
+  "line": 31357,
+  "params": [
+   "ee",
+   "_"
+  ],
+  "shortParams": [
+   "ee"
+  ],
+  "shortLocals": [
+   "B",
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z",
+   "ee",
+   "oe"
+  ]
+ },
+ {
+  "function": "synthMechanicalSlide",
+  "bytes": 703,
+  "line": 33534,
+  "params": [
+   "sr",
+   "rand",
+   "seconds",
+   "fromHz",
+   "toHz",
+   "ripple"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "sr"
+  ]
+ },
+ {
+  "function": "createShellGeometry",
+  "bytes": 701,
+  "line": 30601,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "s"
+  ]
+ },
+ {
+  "function": "setEmissive",
+  "bytes": 697,
+  "line": 12255,
+  "params": [
+   "le",
+   "R"
+  ],
+  "shortParams": [
+   "le",
+   "R"
+  ],
+  "shortLocals": [
+   "R",
+   "le"
+  ]
+ },
+ {
+  "function": "pushTri",
+  "bytes": 689,
+  "line": 7296,
+  "params": [
+   "idxA",
+   "idxB",
+   "idxC"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "ax",
+   "ay",
+   "az"
+  ]
+ },
+ {
+  "function": "queueWave",
+  "bytes": 682,
+  "line": 49563,
+  "params": [
+   "P"
+  ],
+  "shortParams": [
+   "P"
+  ],
+  "shortLocals": [
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z",
+   "fe",
+   "le",
+   "oe"
+  ]
+ },
+ {
+  "function": "makeIr",
+  "bytes": 678,
+  "line": 36187,
+  "params": [
+   "mixedHash",
+   "s"
+  ],
+  "shortParams": [
+   "s"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "l",
+   "o",
+   "r",
+   "s"
+  ]
+ },
+ {
+  "function": "buildCinematic",
+  "bytes": 664,
+  "line": 49260,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "P",
+   "V",
+   "Y"
+  ]
+ },
+ {
+  "function": "updateRadio",
+  "bytes": 656,
+  "line": 48634,
+  "params": [
+   "k"
+  ],
+  "shortParams": [
+   "k"
+  ],
+  "shortLocals": [
+   "ce",
+   "k",
+   "ve"
+  ]
+ },
+ {
+  "function": "ensureDepthCopy",
+  "bytes": 652,
+  "line": 2423,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "oe"
+  ]
+ },
+ {
+  "function": "pumpQueue",
+  "bytes": 652,
+  "line": 37137,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "ge",
+   "he",
+   "pe",
+   "te"
+  ]
+ },
+ {
+  "function": "applyBiquad",
+  "bytes": 642,
+  "line": 32956,
+  "params": [
+   "buf",
+   "type",
+   "cutoffHz",
+   "resonance",
+   "sampleRate"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a2",
+   "b0",
+   "b2",
+   "l",
+   "r",
+   "u",
+   "z2"
+  ]
+ },
+ {
+  "function": "logo_a",
+  "bytes": 633,
+  "line": 4534,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "layerGen",
+  "bytes": 626,
+  "line": 35752,
+  "params": [
+   "materialName"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "h",
+   "l",
+   "r",
+   "u"
+  ]
+ },
+ {
+  "function": "addEmitterAt",
+  "bytes": 624,
+  "line": 32345,
+  "params": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z"
+  ],
+  "shortParams": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z"
+  ],
+  "shortLocals": [
+   "B",
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z",
+   "ee",
+   "oe"
+  ]
+ },
+ {
+  "function": "addLampBar",
+  "bytes": 622,
+  "line": 24170,
+  "params": [
+   "R",
+   "I",
+   "se",
+   "ae",
+   "_"
+  ],
+  "shortParams": [
+   "R",
+   "I",
+   "se",
+   "ae"
+  ],
+  "shortLocals": [
+   "I",
+   "Pe",
+   "R",
+   "Te",
+   "_e",
+   "ae",
+   "ce",
+   "k",
+   "se",
+   "ve"
+  ]
+ },
+ {
+  "function": "emitParticle",
+  "bytes": 620,
+  "line": 31144,
+  "params": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "R",
+   "I",
+   "se",
+   "ae",
+   "k",
+   "ce",
+   "ve"
+  ],
+  "shortParams": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "R",
+   "I",
+   "se",
+   "ae",
+   "k",
+   "ce",
+   "ve"
+  ],
+  "shortLocals": [
+   "B",
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "Y",
+   "Z",
+   "_e",
+   "ae",
+   "ce",
+   "ee",
+   "fe",
+   "k",
+   "le",
+   "oe",
+   "se",
+   "ve"
+  ]
+ },
+ {
+  "function": "smokeAt",
+  "bytes": 620,
+  "line": 31274,
+  "params": [
+   "ee",
+   "_"
+  ],
+  "shortParams": [
+   "ee"
+  ],
+  "shortLocals": [
+   "B",
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z",
+   "ee",
+   "fe",
+   "oe"
+  ]
+ },
+ {
+  "function": "hasGridLine",
+  "bytes": 617,
+  "line": 6939,
+  "params": [
+   "_",
+   "M"
+  ],
+  "shortParams": [
+   "_",
+   "M"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "E",
+   "H",
+   "M",
+   "O",
+   "S",
+   "T",
+   "U",
+   "_",
+   "q",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "pushQuad",
+  "bytes": 607,
+  "line": 26159,
+  "params": [
+   "D",
+   "C",
+   "G"
+  ],
+  "shortParams": [
+   "D",
+   "C",
+   "G"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "X",
+   "ie",
+   "j",
+   "ne",
+   "re"
+  ]
+ },
+ {
+  "function": "update",
+  "bytes": 605,
+  "line": 26974,
+  "params": [
+   "b"
+  ],
+  "shortParams": [
+   "b"
+  ],
+  "shortLocals": [
+   "b",
+   "m"
+  ]
+ },
+ {
+  "function": "startRun",
+  "bytes": 604,
+  "line": 49395,
+  "params": [
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "P",
+   "V",
+   "Y"
+  ]
+ },
+ {
+  "function": "addGirtSpanZ",
+  "bytes": 590,
+  "line": 19081,
+  "params": [
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "_",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le"
+  ],
+  "shortLocals": [
+   "I",
+   "J",
+   "L",
+   "R",
+   "Z",
+   "ae",
+   "ce",
+   "fe",
+   "k",
+   "le",
+   "oe",
+   "se"
+  ]
+ },
+ {
+  "function": "addGirtSpanX",
+  "bytes": 590,
+  "line": 19094,
+  "params": [
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "_",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le"
+  ],
+  "shortLocals": [
+   "I",
+   "J",
+   "L",
+   "R",
+   "Z",
+   "ae",
+   "ce",
+   "fe",
+   "k",
+   "le",
+   "oe",
+   "se"
+  ]
+ },
+ {
+  "function": "makePitchGlide",
+  "bytes": 579,
+  "line": 33120,
+  "params": [
+   "sr",
+   "seconds",
+   "fromHz",
+   "toHz",
+   "_"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "s",
+   "sr"
+  ]
+ },
+ {
+  "function": "drawLogoLockup",
+  "bytes": 575,
+  "line": 4361,
+  "params": [
+   "v",
+   "g",
+   "x",
+   "y",
+   "b",
+   "m",
+   "A",
+   "_"
+  ],
+  "shortParams": [
+   "v",
+   "g",
+   "x",
+   "y",
+   "b",
+   "m",
+   "A",
+   "_"
+  ],
+  "shortLocals": [
+   "A",
+   "M",
+   "_",
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "addMooringLine",
+  "bytes": 570,
+  "line": 25734,
+  "params": [
+   "$",
+   "ue",
+   "me",
+   "ee"
+  ],
+  "shortParams": [
+   "$",
+   "ue",
+   "me",
+   "ee"
+  ],
+  "shortLocals": [
+   "$",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "ee",
+   "me",
+   "ue"
+  ]
+ },
+ {
+  "function": "berth4",
+  "bytes": 557,
+  "line": 4678,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "g",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "setFingerCurl",
+  "bytes": 551,
+  "line": 43186,
+  "params": [
+   "Me"
+  ],
+  "shortParams": [
+   "Me"
+  ],
+  "shortLocals": [
+   "Me",
+   "Oe",
+   "be",
+   "bt",
+   "nn",
+   "pt",
+   "ut",
+   "we"
+  ]
+ },
+ {
+  "function": "grime_streak",
+  "bytes": 549,
+  "line": 4729,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "_",
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "tintAt",
+  "bytes": 545,
+  "line": 26125,
+  "params": [
+   "D",
+   "C",
+   "G",
+   "j",
+   "_"
+  ],
+  "shortParams": [
+   "D",
+   "C",
+   "G",
+   "j"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "X",
+   "ie",
+   "j",
+   "ne",
+   "re"
+  ]
+ },
+ {
+  "function": "drawLabel",
+  "bytes": 542,
+  "line": 27410,
+  "params": [
+   "A",
+   "_",
+   "M",
+   "E",
+   "w",
+   "S"
+  ],
+  "shortParams": [
+   "A",
+   "_",
+   "M",
+   "E",
+   "w",
+   "S"
+  ],
+  "shortLocals": [
+   "A",
+   "E",
+   "H",
+   "M",
+   "O",
+   "S",
+   "_",
+   "q",
+   "w"
+  ]
+ },
+ {
+  "function": "emitDebris",
+  "bytes": 535,
+  "line": 31231,
+  "params": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "R",
+   "I",
+   "se",
+   "ae",
+   "k"
+  ],
+  "shortParams": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "R",
+   "I",
+   "se",
+   "ae",
+   "k"
+  ],
+  "shortLocals": [
+   "B",
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "Y",
+   "Z",
+   "_e",
+   "ae",
+   "ce",
+   "ee",
+   "fe",
+   "k",
+   "le",
+   "oe",
+   "se",
+   "ve"
+  ]
+ },
+ {
+  "function": "catenaryPoints",
+  "bytes": 534,
+  "line": 22620,
+  "params": [
+   "startPt",
+   "endPt",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "pt"
+  ]
+ },
+ {
+  "function": "createSeededRandom",
+  "bytes": 533,
+  "line": 4144,
+  "params": [
+   "seed"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "t"
+  ]
+ },
+ {
+  "function": "drawBayRow",
+  "bytes": 524,
+  "line": 27490,
+  "params": [
+   "A",
+   "_",
+   "M",
+   "E",
+   "w",
+   "S"
+  ],
+  "shortParams": [
+   "A",
+   "_",
+   "M",
+   "E",
+   "w",
+   "S"
+  ],
+  "shortLocals": [
+   "A",
+   "C",
+   "D",
+   "E",
+   "G",
+   "H",
+   "M",
+   "O",
+   "S",
+   "T",
+   "U",
+   "_",
+   "j",
+   "q",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "updateDead",
+  "bytes": 523,
+  "line": 39490,
+  "params": [
+   "F"
+  ],
+  "shortParams": [
+   "F"
+  ],
+  "shortLocals": [
+   "F",
+   "X"
+  ]
+ },
+ {
+  "function": "buildCanvasDecal",
+  "bytes": 520,
+  "line": 4324,
+  "params": [
+   "v",
+   "g",
+   "x",
+   "y",
+   "_"
+  ],
+  "shortParams": [
+   "v",
+   "g",
+   "x",
+   "y"
+  ],
+  "shortLocals": [
+   "A",
+   "M",
+   "_",
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "ao",
+  "bytes": 517,
+  "line": 32884,
+  "params": [
+   "seed"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "t"
+  ]
+ },
+ {
+  "function": "addStairLanding",
+  "bytes": 515,
+  "line": 23947,
+  "params": [
+   "R",
+   "I",
+   "se",
+   "ae"
+  ],
+  "shortParams": [
+   "R",
+   "I",
+   "se",
+   "ae"
+  ],
+  "shortLocals": [
+   "I",
+   "R",
+   "ae",
+   "ce",
+   "k",
+   "se"
+  ]
+ },
+ {
+  "function": "emitStreak",
+  "bytes": 507,
+  "line": 31165,
+  "params": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "R"
+  ],
+  "shortParams": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "R"
+  ],
+  "shortLocals": [
+   "B",
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "Y",
+   "Z",
+   "ee",
+   "fe",
+   "le",
+   "oe"
+  ]
+ },
+ {
+  "function": "arrow",
+  "bytes": 506,
+  "line": 4483,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "logo_d",
+  "bytes": 504,
+  "line": 4648,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "samplePath",
+  "bytes": 500,
+  "line": 49279,
+  "params": [
+   "P",
+   "V",
+   "Y"
+  ],
+  "shortParams": [
+   "P",
+   "V",
+   "Y"
+  ],
+  "shortLocals": [
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "Te",
+   "V",
+   "Y",
+   "Z",
+   "_e",
+   "ae",
+   "ce",
+   "fe",
+   "k",
+   "le",
+   "oe",
+   "se",
+   "ve"
+  ]
+ },
+ {
+  "function": "caution_stripes",
+  "bytes": 492,
+  "line": 4702,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "g",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "relayInRange",
+  "bytes": 492,
+  "line": 49656,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z"
+  ]
+ },
+ {
+  "function": "createRotorBellGeometry",
+  "bytes": 491,
+  "line": 45098,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "e"
+  ]
+ },
+ {
+  "function": "startMusic",
+  "bytes": 487,
+  "line": 37532,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "ge",
+   "he",
+   "pe",
+   "te"
+  ]
+ },
+ {
+  "function": "createShapeFromPoints",
+  "bytes": 483,
+  "line": 39823,
+  "params": [
+   "points",
+   "holes"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "n",
+   "s"
+  ]
+ },
+ {
+  "function": "readAdaptation",
+  "bytes": 480,
+  "line": 2658,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "fe",
+   "oe"
+  ]
+ },
+ {
+  "function": "syncRelayHums",
+  "bytes": 480,
+  "line": 37737,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "he",
+   "pe",
+   "te"
+  ]
+ },
+ {
+  "function": "addRollerDoor",
+  "bytes": 478,
+  "line": 23808,
+  "params": [
+   "R",
+   "I",
+   "se",
+   "ae",
+   "k",
+   "ce"
+  ],
+  "shortParams": [
+   "R",
+   "I",
+   "se",
+   "ae",
+   "k",
+   "ce"
+  ],
+  "shortLocals": [
+   "I",
+   "Pe",
+   "R",
+   "Te",
+   "_e",
+   "ae",
+   "ce",
+   "k",
+   "se",
+   "ve"
+  ]
+ },
+ {
+  "function": "hazard_voltage",
+  "bytes": 477,
+  "line": 4430,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "$a",
+  "bytes": 473,
+  "line": 7189,
+  "params": [
+   "seed"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "t"
+  ]
+ },
+ {
+  "function": "pickVoice",
+  "bytes": 470,
+  "line": 37329,
+  "params": [
+   "te",
+   "he",
+   "pe",
+   "ge"
+  ],
+  "shortParams": [
+   "te",
+   "he",
+   "pe",
+   "ge"
+  ],
+  "shortLocals": [
+   "De",
+   "Le",
+   "Ue",
+   "ct",
+   "ge",
+   "he",
+   "ke",
+   "pe",
+   "te",
+   "ye"
+  ]
+ },
+ {
+  "function": "hazard_general",
+  "bytes": 468,
+  "line": 4459,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "g",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "getDigit",
+  "bytes": 451,
+  "line": 5231,
+  "params": [
+   "v"
+  ],
+  "shortParams": [
+   "v"
+  ],
+  "shortLocals": [
+   "ax",
+   "g",
+   "v"
+  ]
+ },
+ {
+  "function": "update",
+  "bytes": 449,
+  "line": 32643,
+  "params": [
+   "ee"
+  ],
+  "shortParams": [
+   "ee"
+  ],
+  "shortLocals": [
+   "B",
+   "ee"
+  ]
+ },
+ {
+  "function": "paintColorFn",
+  "bytes": 441,
+  "line": 8071,
+  "params": [
+   "$",
+   "ue",
+   "me"
+  ],
+  "shortParams": [
+   "$",
+   "ue",
+   "me"
+  ],
+  "shortLocals": [
+   "$",
+   "B",
+   "P",
+   "ee",
+   "me",
+   "ue"
+  ]
+ },
+ {
+  "function": "place",
+  "bytes": 437,
+  "line": 18568,
+  "params": [
+   "T",
+   "D",
+   "C",
+   "_",
+   "_",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "T",
+   "D",
+   "C"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "T",
+   "ie",
+   "j"
+  ]
+ },
+ {
+  "function": "groundSurface",
+  "bytes": 432,
+  "line": 39304,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "F",
+   "X"
+  ]
+ },
+ {
+  "function": "registerBuffer",
+  "bytes": 430,
+  "line": 37092,
+  "params": [
+   "te",
+   "he"
+  ],
+  "shortParams": [
+   "te",
+   "he"
+  ],
+  "shortLocals": [
+   "Le",
+   "ge",
+   "he",
+   "pe",
+   "te",
+   "ye"
+  ]
+ },
+ {
+  "function": "writeTone",
+  "bytes": 427,
+  "line": 35048,
+  "params": [
+   "l",
+   "c",
+   "u",
+   "h"
+  ],
+  "shortParams": [
+   "l",
+   "c",
+   "u",
+   "h"
+  ],
+  "shortLocals": [
+   "c",
+   "d",
+   "f",
+   "g",
+   "h",
+   "l",
+   "p",
+   "u",
+   "v",
+   "x"
+  ]
+ },
+ {
+  "function": "emitSparkBurst",
+  "bytes": 421,
+  "line": 31183,
+  "params": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "R"
+  ],
+  "shortParams": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "R"
+  ],
+  "shortLocals": [
+   "B",
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "Y",
+   "Z",
+   "ee",
+   "fe",
+   "le",
+   "oe",
+   "se"
+  ]
+ },
+ {
+  "function": "refreshLookMode",
+  "bytes": 417,
+  "line": 49436,
+  "params": [
+   "P"
+  ],
+  "shortParams": [
+   "P"
+  ],
+  "shortLocals": [
+   "P",
+   "V"
+  ]
+ },
+ {
+  "function": "registerCharacterProps",
+  "bytes": 415,
+  "line": 15846,
+  "params": [
+   "register"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "e",
+   "t"
+  ]
+ },
+ {
+  "function": "requestLock",
+  "bytes": 415,
+  "line": 38786,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "P"
+  ]
+ },
+ {
+  "function": "createEl",
+  "bytes": 413,
+  "line": 48121,
+  "params": [
+   "tag",
+   "className",
+   "html"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "el"
+  ]
+ },
+ {
+  "function": "pushTri",
+  "bytes": 411,
+  "line": 12533,
+  "params": [
+   "p",
+   "d",
+   "v",
+   "g",
+   "x",
+   "y"
+  ],
+  "shortParams": [
+   "p",
+   "d",
+   "v",
+   "g",
+   "x",
+   "y"
+  ],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "_",
+   "b",
+   "d",
+   "g",
+   "m",
+   "p",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "makeTarget",
+  "bytes": 410,
+  "line": 6128,
+  "params": [
+   "O",
+   "q"
+  ],
+  "shortParams": [
+   "O",
+   "q"
+  ],
+  "shortLocals": [
+   "O",
+   "U",
+   "q"
+  ]
+ },
+ {
+  "function": "emitRipple",
+  "bytes": 410,
+  "line": 31216,
+  "params": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z",
+   "J",
+   "oe"
+  ],
+  "shortParams": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z",
+   "J",
+   "oe"
+  ],
+  "shortLocals": [
+   "B",
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z",
+   "ee",
+   "fe",
+   "oe"
+  ]
+ },
+ {
+  "function": "refreshMarkers",
+  "bytes": 410,
+  "line": 49373,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "P",
+   "V"
+  ]
+ },
+ {
+  "function": "heapPop",
+  "bytes": 409,
+  "line": 6978,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "E",
+   "M",
+   "S",
+   "_",
+   "w",
+   "z"
+  ]
+ },
+ {
+  "function": "quad",
+  "bytes": 408,
+  "line": 18478,
+  "params": [
+   "T",
+   "D",
+   "C",
+   "G",
+   "j",
+   "N",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "T",
+   "D",
+   "C",
+   "G",
+   "j",
+   "N"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "T",
+   "ie",
+   "j"
+  ]
+ },
+ {
+  "function": "addPiece",
+  "bytes": 407,
+  "line": 26140,
+  "params": [
+   "D",
+   "C"
+  ],
+  "shortParams": [
+   "D",
+   "C"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "ie",
+   "j"
+  ]
+ },
+ {
+  "function": "stopRelayHum",
+  "bytes": 406,
+  "line": 37760,
+  "params": [
+   "te"
+  ],
+  "shortParams": [
+   "te"
+  ],
+  "shortLocals": [
+   "he",
+   "pe",
+   "te"
+  ]
+ },
+ {
+  "function": "getCentroid",
+  "bytes": 404,
+  "line": 7464,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "g",
+   "x"
+  ]
+ }
+]

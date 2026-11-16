@@ -1,0 +1,539 @@
+{
+  "update": {
+    "h": "postFx",
+    "f": "heightKey"
+  },
+  "createRainSystem": {
+    "H": "skylightRects",
+    "O": "renderRes",
+    "S": "activeCam",
+    "q": "levelRect",
+    "w": "amount",
+    "z": "interiorBoxes"
+  },
+  "buildLabelAtlas": {
+    "A": "ancestor",
+    "E": "labelMesh",
+    "H": "vertexIndex",
+    "M": "vMin",
+    "_": "skipMerge",
+    "b": "item",
+    "e": "atlasScale",
+    "m": "aux",
+    "t": "maxAtlasWidth",
+    "w": "cacheKey",
+    "z": "uvAttr"
+  },
+  "placeGateArea": {
+    "b": "interpRatio",
+    "c": "posA",
+    "d": "runLength",
+    "f": "endZ",
+    "g": "panelScaleX",
+    "h": "posC",
+    "m": "fencePanel",
+    "p": "seedBase",
+    "u": "posB",
+    "v": "panelCount",
+    "x": "isAlongX",
+    "y": "panelIndex"
+  },
+  "createCombat": {
+    "a": "wallHit",
+    "c": "target",
+    "e": "stats",
+    "f": "impact",
+    "h": "killed",
+    "l": "blocker",
+    "n": "origin",
+    "o": "damage",
+    "r": "range",
+    "s": "dir",
+    "u": "tmpHit"
+  },
+  "showcaseWeapon": {
+    "b": "childObj",
+    "d": "playerState",
+    "f": "poseSpec",
+    "g": "camTarget",
+    "h": "shotOpts",
+    "p": "inputState",
+    "u": "poseName",
+    "v": "camPos",
+    "x": "fovDeg",
+    "y": "lookDir"
+  },
+  "updateDead": {
+    "F": "dt",
+    "X": "moveResult"
+  },
+  "addEuroPallet": {
+    "f": "depthArg",
+    "h": "extent",
+    "n": "doStamp",
+    "s": "useBevel",
+    "u": "amount",
+    "x": "posX",
+    "z": "posZ"
+  },
+  "showcaseGround": {
+    "a": "posX",
+    "c": "posZ",
+    "e": "placeholderPlane",
+    "h": "propMesh",
+    "l": "posY",
+    "n": "addProp",
+    "o": "asset",
+    "r": "propMat",
+    "s": "getMat",
+    "t": "propGroup",
+    "u": "rotY"
+  },
+  "mergeAttributes": {
+    "a": "mergedAttr",
+    "c": "attrIndex",
+    "d": "compIdx",
+    "e": "ArrayType",
+    "f": "vertexIdx",
+    "h": "vertexBase",
+    "l": "writeOffset",
+    "n": "normalized",
+    "o": "totalComponents",
+    "p": "vertexCount",
+    "r": "mergedArray",
+    "s": "gpuType",
+    "t": "itemSize",
+    "u": "attribute",
+    "v": "compValue"
+  },
+  "createBlinkerBatch": {
+    "a": "duty",
+    "c": "vertexCount",
+    "e": "blinkMat",
+    "f": "blinkGeo",
+    "h": "blinkBuf",
+    "i": "timeUniform",
+    "l": "flatGeo",
+    "n": "sourceGeo",
+    "o": "periodSec",
+    "p": "vertIdx",
+    "r": "phase",
+    "s": "colorRgb",
+    "t": "geometryList",
+    "u": "colorBuf"
+  },
+  "buildDistantCrane": {
+    "a": "partList",
+    "c": "minX",
+    "d": "maxZ",
+    "f": "maxX",
+    "h": "minZ",
+    "l": "addBox",
+    "o": "boomUp",
+    "p": "maxY",
+    "r": "tint",
+    "s": "scale",
+    "u": "minY",
+    "x": "baseX",
+    "z": "baseZ"
+  },
+  "roundedBoxGeometryGrid": {
+    "A": "clampedX",
+    "M": "clampedZ",
+    "S": "normY",
+    "_": "clampedY",
+    "a": "anchor",
+    "b": "coordY",
+    "c": "posAttr",
+    "d": "halfD",
+    "f": "halfW",
+    "g": "offsetVec",
+    "h": "uvAttr",
+    "l": "boxGeo",
+    "m": "coordZ",
+    "n": "radius",
+    "o": "segY",
+    "p": "halfH",
+    "r": "segZ",
+    "s": "segX",
+    "u": "normAttr",
+    "v": "insetCoord",
+    "w": "normX",
+    "x": "vertIdx",
+    "y": "coordX",
+    "z": "normZ"
+  },
+  "addFloodlightHead": {
+    "c": "finOffset",
+    "x": "posX",
+    "y": "posY",
+    "z": "posZ"
+  },
+  "buildDoor": {
+    "I": "isRightHinge",
+    "R": "cabinetX",
+    "_e": "slatIdx",
+    "ae": "doorZ",
+    "ce": "hingeX",
+    "k": "handleX",
+    "le": "cabBuilder",
+    "se": "doorX",
+    "ve": "grillY"
+  },
+  "buildSkipBin": {
+    "a": "binWidth",
+    "c": "paintMat",
+    "f": "zSign",
+    "h": "sideSign",
+    "l": "binHeight",
+    "n": "yawAngle",
+    "o": "binGroup",
+    "p": "dentV",
+    "r": "binLength",
+    "s": "paintName",
+    "u": "wornMat",
+    "x": "binX",
+    "z": "binZ"
+  },
+  "synthRifleTailOutdoor": {
+    "a": "buffer",
+    "c": "tailNoise",
+    "f": "tapGain",
+    "h": "tapTime",
+    "l": "tapList",
+    "n": "buildVariant",
+    "o": "seed",
+    "p": "tapCutoff",
+    "r": "seedRng",
+    "s": "baseSeed",
+    "sr": "sampleRate",
+    "u": "rumbleNoise"
+  },
+  "chooseQuality": {
+    "a": "loseCtx",
+    "o": "glCtx",
+    "r": "debugInfo",
+    "s": "probeCanvas",
+    "t": "gpuName"
+  },
+  "createCableReelDiscGeometries": {
+    "a": "sliceMinX",
+    "c": "xSamples",
+    "d": "halfChord",
+    "f": "uvArray",
+    "g": "uvOffsetY",
+    "h": "normArray",
+    "l": "sliceMaxX",
+    "n": "unusedOffset",
+    "o": "sliceWidth",
+    "p": "indexArray",
+    "r": "sliceIdx",
+    "s": "geometryList",
+    "u": "posArray",
+    "v": "uvOffsetX",
+    "x": "sliceGeo",
+    "y": "edgeX"
+  },
+  "bakeTerrainTexture": {
+    "a": "worldZ",
+    "c": "worldX",
+    "e": "pixelData",
+    "f": "wetness",
+    "h": "terrainH",
+    "l": "colIdx",
+    "n": "boundZ0",
+    "o": "cellSize",
+    "r": "rowIdx",
+    "s": "worldSpan",
+    "t": "boundX0",
+    "u": "pixelIdx"
+  },
+  "H": {
+    "$": "segRadius",
+    "C": "radius",
+    "D": "centerY",
+    "F": "targetCtx",
+    "G": "rotation",
+    "K": "tracePolygon",
+    "N": "segmentCount",
+    "Q": "segmentScale",
+    "T": "centerX",
+    "X": "scaleMul",
+    "ie": "toneBase",
+    "j": "jitter",
+    "me": "py",
+    "ne": "segIdx",
+    "re": "angle",
+    "ue": "px"
+  },
+  "synthAlert": {
+    "a": "writeTone",
+    "c": "durSec",
+    "d": "sampIdx",
+    "f": "sampleCount",
+    "g": "timeSec",
+    "h": "drift",
+    "l": "startSec",
+    "n": "buffer",
+    "o": "octaveFreq",
+    "p": "startSample",
+    "r": "phase",
+    "s": "baseFreq",
+    "sr": "sampleRate",
+    "u": "freq",
+    "v": "progress",
+    "x": "wave"
+  },
+  "n": {},
+  "createSkyDome": {
+    "e": "skyMat",
+    "n": "skyMesh",
+    "t": "skyGeo"
+  },
+  "addStairFlight": {
+    "Fe": "stepCoord",
+    "I": "startY",
+    "Pe": "stepFrac",
+    "R": "startX",
+    "Re": "stepSpan",
+    "Te": "stepIter",
+    "_e": "stepCount",
+    "ae": "endY",
+    "ce": "zSideB",
+    "k": "zSideA",
+    "se": "endX",
+    "ve": "riseHeight",
+    "ze": "railY"
+  },
+  "buildLaneSignpost": {
+    "a": "signWidth",
+    "c": "signThickness",
+    "f": "labelZ",
+    "h": "labelX",
+    "l": "signHeight",
+    "o": "postHeight",
+    "r": "isAlongX",
+    "s": "faceDir",
+    "u": "sideSign",
+    "x": "signX",
+    "z": "signZ"
+  },
+  "flipGeometryWinding": {
+    "a": "componentIdx",
+    "e": "normalArray",
+    "l": "swapValue",
+    "n": "cursor",
+    "o": "attrArray",
+    "r": "vertexCursor",
+    "s": "swapTmp",
+    "t": "indexArray"
+  },
+  "applySettings": {
+    "D": "qualityErr",
+    "T": "qualityPreset",
+    "U": "changedKey"
+  },
+  "flattenCapNormals": {
+    "a": "absNormalZ",
+    "c": "xyLen",
+    "e": "zMin",
+    "l": "vertZ",
+    "n": "posAttr",
+    "o": "vertIdx",
+    "r": "normalZ",
+    "s": "normAttr",
+    "t": "zMax"
+  },
+  "addPalletDeck": {
+    "o": "slatIdx",
+    "r": "blockIdx",
+    "x": "posX",
+    "y": "posY",
+    "z": "posZ"
+  },
+  "synthImpactWood": {
+    "n": "buffer",
+    "s": "pitchScale",
+    "sr": "sampleRate"
+  },
+  "beamBetween": {
+    "a": "sideVec",
+    "b": "endPt",
+    "c": "beamGeo",
+    "i": "startPt",
+    "l": "upVec",
+    "n": "beamDepth",
+    "o": "axisVec",
+    "r": "length",
+    "s": "bevel",
+    "t": "beamWidth"
+  },
+  "setEmissive": {
+    "R": "intensity",
+    "le": "emissiveColor"
+  },
+  "synthRifleDryFire": {
+    "sr": "sampleRate",
+    "t": "buffer"
+  },
+  "synthObjectiveSting": {
+    "e": "buffer",
+    "n": "noteIdx",
+    "sr": "sampleRate",
+    "t": "midiNote"
+  },
+  "pumpQueue": {
+    "ge": "synthErr",
+    "he": "job",
+    "pe": "sampleBuf",
+    "te": "startMs"
+  },
+  "makeDataTexture": {
+    "n": "anisoLevel",
+    "s": "tex",
+    "t": "repeatWrap"
+  },
+  "createSfxBaker": {
+    "a": "baked",
+    "e": "variant",
+    "l": "step",
+    "n": "recipe",
+    "o": "variantIdx",
+    "r": "generator",
+    "s": "rate",
+    "sr": "sampleRate"
+  },
+  "startRun": {
+    "P": "skipIntro",
+    "V": "quickStart",
+    "Y": "keepRetries"
+  },
+  "strutBetween": {
+    "a": "strutGeo",
+    "b": "endPt",
+    "i": "startPt",
+    "n": "radialSegments",
+    "o": "axisVec",
+    "r": "length",
+    "s": "openEnded",
+    "t": "radius"
+  },
+  "berth4": {
+    "b": "cutX",
+    "g": "canvasW",
+    "v": "c2d",
+    "x": "canvasH",
+    "y": "distressSeed"
+  },
+  "synthBellTone": {
+    "n": "buffer",
+    "o": "sampIdx",
+    "s": "attackSamples",
+    "sr": "sampleRate"
+  },
+  "emitDebris": {
+    "B": "burstDir",
+    "I": "sizeY",
+    "J": "sizeMin",
+    "L": "lifeMin",
+    "P": "count",
+    "R": "sizeX",
+    "V": "speedMin",
+    "Y": "speedMax",
+    "Z": "lifeMax",
+    "_e": "sizeScale",
+    "ae": "spreadAngle",
+    "ce": "emitIdx",
+    "ee": "originPos",
+    "fe": "spinMin",
+    "k": "debrisKind",
+    "le": "spinMax",
+    "oe": "sizeMax",
+    "se": "sizeZ",
+    "ve": "speed"
+  },
+  "logo_d": {
+    "A": "accentColor",
+    "b": "markCtx",
+    "g": "canvasW",
+    "m": "markHalfSize",
+    "v": "c2d",
+    "x": "canvasH",
+    "y": "distressSeed"
+  },
+  "composeTransformMatrix": {
+    "e": "posY",
+    "i": "posX",
+    "n": "eulerAngles",
+    "t": "posZ"
+  },
+  "je": {
+    "e": "offsetX",
+    "n": "offsetZ",
+    "s": "eulerAngles",
+    "t": "offsetY"
+  },
+  "addRollerDoor": {
+    "I": "doorY",
+    "Pe": "slatGeo",
+    "R": "doorX",
+    "Te": "slatIdx",
+    "_e": "slatCount",
+    "ae": "doorWidth",
+    "ce": "doorYaw",
+    "k": "doorHeight",
+    "se": "doorZ",
+    "ve": "slatGeos"
+  },
+  "createTiledPlane": {
+    "n": "uvAttr",
+    "s": "uvIdx",
+    "t": "planeGeo"
+  },
+  "createTiledSphere": {
+    "e": "sphereGeo",
+    "n": "uvIdx",
+    "t": "uvAttr"
+  },
+  "p": {
+    "A": "ay",
+    "C": "centroidZ",
+    "D": "centroidY",
+    "E": "e1y",
+    "H": "e2z",
+    "M": "e1x",
+    "O": "crossX",
+    "S": "e2x",
+    "T": "centroidX",
+    "U": "crossZ",
+    "_": "az",
+    "b": "idxC",
+    "m": "ax",
+    "q": "crossY",
+    "w": "e1z",
+    "x": "idxA",
+    "y": "idxB",
+    "z": "e2y"
+  },
+  "mixBufferAt": {
+    "a": "sampIdx",
+    "o": "offsetSamples",
+    "r": "copyLen",
+    "sr": "sampleRate"
+  },
+  "requestLock": {
+    "P": "lockPromise"
+  },
+  "quad": {
+    "C": "panelH",
+    "D": "panelW",
+    "F": "panelMesh",
+    "G": "posX",
+    "K": "rollAngle",
+    "N": "posZ",
+    "Q": "faceDir",
+    "T": "panelMat",
+    "ie": "planeGeo",
+    "j": "posY"
+  }
+}

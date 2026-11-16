@@ -1,0 +1,6898 @@
+[
+ {
+  "names": [
+   "oi",
+   "Mn",
+   "en",
+   "Pi",
+   "vf",
+   "zc",
+   "Pr"
+  ],
+  "bytes": 1677,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "test",
+   "medium",
+   "high",
+   "ultra"
+  ],
+  "props": [],
+  "head": "var oi = { min: new THREE.Vector3(-40, 0, -30), max: new THREE.Vector3(40, 30, 30), groundY: 0, seaY: -1.6, quayX: 30 }, Mn = { dir:"
+ },
+ {
+  "names": [
+   "zy"
+  ],
+  "bytes": 772,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "canvas",
+   "webgl2",
+   "webgl",
+   "WEBGL_debug_renderer_info",
+   "WEBGL_lose_context"
+  ],
+  "props": [],
+  "head": "function zy(i) { if (i && Pr[i]) return { ...Pr[i] }; if (/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent) || navigator.maxTouchPoints > 1 && M"
+ },
+ {
+  "names": [
+   "Dy"
+  ],
+  "bytes": 498,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Dy() { let i = new Map(); return { on(e, t) { return i.has(e) || i.set(e, []), i.get(e).push(t), () => this.off(e, t); }, off(e, "
+ },
+ {
+  "names": [
+   "il"
+  ],
+  "bytes": 477,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function il(i = 1337) { let e = i >>> 0, t = () => { e |= 0, e = e + 1831565813 | 0; let n = Math.imul(e ^ e >>> 15, 1 | e); return n = "
+ },
+ {
+  "names": [
+   "Zn",
+   "bi",
+   "Fo",
+   "sl",
+   "kn"
+  ],
+  "bytes": 277,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Zn = (i, e, t) => Math.min(t, Math.max(e, i)), bi = (i, e, t) => i + (e - i) * t, Fo = i => Math.min(1, Math.max(0, i)), sl = (i, e, t) => { let n"
+ },
+ {
+  "names": [
+   "Wt",
+   "dr"
+  ],
+  "bytes": 2312,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "idle"
+  ],
+  "props": [],
+  "head": "var Wt = () => {}, dr = { ground: () => ({ stub: !0, update: Wt, wetnessAt: () => .5, isPuddle: () => !1 }), backdrop: () "
+ },
+ {
+  "names": [
+   "sa"
+  ],
+  "bytes": 3045,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function sa(i, e = !1) { let t = i[0].index !== null, n = new Set(Object.keys(i[0].attributes)), s = new Set(Object.keys(i[0].morphAttributes)), o"
+ },
+ {
+  "names": [
+   "Ly"
+  ],
+  "bytes": 1500,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Ly(i) { let e, t, n, s = -1, o = 0; for (let c = 0; c < i.length; ++c) { let u = i[c]; if (e === void 0 && (e = u.array.con"
+ },
+ {
+  "names": [
+   "oa"
+  ],
+  "bytes": 29,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var oa = new THREE.Vector3();"
+ },
+ {
+  "names": [
+   "$e"
+  ],
+  "bytes": 468,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "center",
+   "bottom"
+  ],
+  "props": [],
+  "head": "function $e(i, e, t, n = \"center\") { let s = new THREE.BoxGeometry(i, e, t), o = s.attributes.uv, r = s.attributes.position, a = s.attributes.norm"
+ },
+ {
+  "names": [
+   "Wi"
+  ],
+  "bytes": 1355,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "center",
+   "bottom"
+  ],
+  "props": [],
+  "head": "function Wi(i, e, t, n = .02, s = \"center\") { n = Math.min(n, i / 2 - 1e-4, e / 2 - 1e-4, t / 2 - 1e-4); let o = new THREE.BoxGeometry(i, e, t, 3, 3, 3), "
+ },
+ {
+  "names": [
+   "ot"
+  ],
+  "bytes": 414,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "center",
+   "bottom"
+  ],
+  "props": [],
+  "head": "function ot(i, e, t, n = 16, s = !1, o = \"center\") { let r = new THREE.CylinderGeometry(i, e, t, n, 1, s), a = r.attributes.uv, l = r.attributes.posit"
+ },
+ {
+  "names": [
+   "Fn"
+  ],
+  "bytes": 457,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "catmullrom"
+  ],
+  "props": [],
+  "head": "function Fn(i, e = .03, t = 8, n = !1, s = 0) { let o = i.map(h => h.isVector3 ? h : new THREE.Vector3(h[0], h[1], h[2])), r = new THREE.CatmullRomCurve3("
+ },
+ {
+  "names": [
+   "ky",
+   "Fy",
+   "Uy",
+   "Ny",
+   "Fg"
+  ],
+  "bytes": 142,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var ky = new THREE.Matrix4(), Fy = new THREE.Quaternion(), Uy = new THREE.Euler(), Ny = new THREE.Vector3(), Fg = new THREE.Vector3();"
+ },
+ {
+  "names": [
+   "Dc"
+  ],
+  "bytes": 275,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "number"
+  ],
+  "props": [],
+  "head": "function Dc(i, { p: e = [0, 0, 0], r: t = [0, 0, 0], s: n = 1 } = {}) { return Uy.set(t[0], t[1], t[2]), Fy.setFromEuler(Uy), Ny.set(e[0], e[1], e[2]), "
+ },
+ {
+  "names": [
+   "Lc"
+  ],
+  "bytes": 350,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "function",
+   "color"
+  ],
+  "props": [],
+  "head": "function Lc(i, e) { let t = i.attributes.position, n = t.count, s = new Float32Array(n * 3); for (let o = 0; o < n; o++) { let r = typeof e == \""
+ },
+ {
+  "names": [
+   "Ii"
+  ],
+  "bytes": 887,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "color",
+   "position",
+   "normal",
+   "color"
+  ],
+  "props": [],
+  "head": "function Ii(i) { let e = i.filter(Boolean).map(l => (l.attributes.uv || l.setAttribute(\"uv\", new THREE.BufferAttribute(new Float32Array(l.attributes.position."
+ },
+ {
+  "names": [
+   "By"
+  ],
+  "bytes": 1219,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   ") + (r.receiveShadow ? "
+  ],
+  "props": [],
+  "head": "function By(i, { castShadow: e = !0, receiveShadow: t = !0 } = {}) { i.updateMatrixWorld(!0); let n = new Map(), s = []; i.traverse(r => { if "
+ },
+ {
+  "names": [
+   "Qi"
+  ],
+  "bytes": 145,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Qi(i, e, { cast: t = !0, recv: n = !0 } = {}) { let s = new THREE.Mesh(i, e); return s.castShadow = t, s.receiveShadow = n, s; }"
+ },
+ {
+  "names": [
+   "Vg"
+  ],
+  "bytes": 12,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Vg = {};"
+ },
+ {
+  "names": [
+   "Ug",
+   "Ng"
+  ],
+  "bytes": 954,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Ug = ` uniform sampler2D tNoise; float n2(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f); return texture2D(tNoise, (i + f + 0.5) / 256.0).r; "
+ },
+ {
+  "names": [
+   "Oy"
+  ],
+  "bytes": 566,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Oy() { let e = new Uint8Array(262144), t = 2654435769, n = () => (t ^= t << 13, t >>>= 0, t ^= t >>> 17, t ^= t << 5, t >>>= 0, t / 429496729"
+ },
+ {
+  "names": [
+   "H6",
+   "V6"
+  ],
+  "bytes": 4600,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var H6 = ` // SALTLINE_SKY precision highp float; varying vec3 vDir; uniform float uTime, uEnv, uFlash; uniform vec3 uFlashDir; ${Ug} ${Ng} void main(){ vec3"
+ },
+ {
+  "names": [
+   "W6"
+  ],
+  "bytes": 517,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function W6(i) { return { tNoise: { value: i }, uTime: { value: 0 }, uEnv: { value: 0 }, uFlash: { value: "
+ },
+ {
+  "names": [
+   "Hy"
+  ],
+  "bytes": 529,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "saltline-sky"
+  ],
+  "props": [],
+  "head": "function Hy(i) { let e = new THREE.ShaderMaterial({ name: \"saltline-sky\", side: THREE.BackSide, depthWrite: !1, depthTest: !0, f"
+ },
+ {
+  "names": [
+   "Vy"
+  ],
+  "bytes": 355,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Vy(i, e) { let t = new THREE.PMREMGenerator(i), n = e.material.clone(); n.uniforms.tNoise.value = e.material.uniforms.tNoise.value, n.uniforms."
+ },
+ {
+  "names": [
+   "Wy",
+   "xf"
+  ],
+  "bytes": 43,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "// SALTLINE_SHADOW"
+  ],
+  "props": [],
+  "head": "var Wy = \"// SALTLINE_SHADOW\", xf = null;"
+ },
+ {
+  "names": [
+   "Gy"
+  ],
+  "bytes": 1125,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Gy(i, e, t, n, s) { let o = Mn.dir.clone().normalize(), r = e.clone().add(t).multiplyScalar(.5); i.target.position.copy(r), i.position.copy(r)."
+ },
+ {
+  "names": [
+   "qy"
+  ],
+  "bytes": 3226,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "float getShadow(",
+   "vec2 cubeToUV",
+   "// cubeToUV()"
+  ],
+  "props": [],
+  "head": "function qy(i, { taps: e = 16, searchTaps: t = 8 } = {}) { let n = THREE.ShaderChunk.shadowmap_pars_fragment; xf === null && (xf = n); let s = xf, "
+ },
+ {
+  "names": [
+   "Xy"
+  ],
+  "bytes": 84,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Xy() { xf !== null && (THREE.ShaderChunk.shadowmap_pars_fragment = xf); }"
+ },
+ {
+  "names": [
+   "Yy"
+  ],
+  "bytes": 12,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Yy = Wy;"
+ },
+ {
+  "names": [
+   "Bg",
+   "n1",
+   "Zy",
+   "G6",
+   "Js",
+   "Og",
+   "q6",
+   "X6",
+   "Y6",
+   "$6",
+   "$y",
+   "Z6",
+   "j6",
+   "J6",
+   "K6",
+   "Q6",
+   "eA",
+   "tA",
+   "nA",
+   "iA"
+  ],
+  "bytes": 21138,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "// SALTLINE_POST",
+   "punchy"
+  ],
+  "props": [],
+  "head": "var Bg = \"// SALTLINE_POST\", n1 = \"0.05\", Zy = \"0.05\", G6 = \"varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }\", Js "
+ },
+ {
+  "names": [
+   "jy"
+  ],
+  "bytes": 17847,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "position",
+   "post-",
+   "EXT_color_buffer_float",
+   "depthcopy",
+   "depthhalf",
+   "blur-ao",
+   "blur-vol",
+   "composite"
+  ],
+  "props": [],
+  "head": "function jy(i, e, { noiseTex: t }) { let n = new THREE.BufferGeometry(); n.setAttribute(\"position\", new THREE.BufferAttribute(new Float32Array([-1, -1, 0,"
+ },
+ {
+  "names": [
+   "Jy",
+   "Ky"
+  ],
+  "bytes": 21,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Jy = 2, Ky = 1;"
+ },
+ {
+  "names": [
+   "Hg"
+  ],
+  "bytes": 16202,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [
+   "view",
+   "high-performance",
+   ", $ = (ie.getShaderInfoLog(ne) || ",
+   " + (ie.getShaderInfoLog(X) || ",
+   " + (ie.getProgramInfoLog(F) || ",
+   "material",
+   "post pass ",
+   "SALTLINE_SKY"
+  ],
+  "props": [],
+  "head": "async function Hg(i) { let e = i.params || {}, t = document.getElementById(\"view\"), n = new THREE.WebGLRenderer({ canvas: t, antialias: !1"
+ },
+ {
+  "names": [
+   "sA"
+  ],
+  "bytes": 2376,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "render-showcase",
+   "paint_orange",
+   "steel_worn",
+   "paint_teal",
+   "concrete",
+   "bottom",
+   "bottom",
+   "wood_pallet"
+  ],
+  "props": [],
+  "head": "function sA(i) { let e = new THREE.Group(); e.name = \"render-showcase\"; let t = h => (e.add(h), h), n = new THREE.SphereGeometry(.42, 48, 24); for ("
+ },
+ {
+  "names": [
+   "qg"
+  ],
+  "bytes": 12,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var qg = {};"
+ },
+ {
+  "names": [
+   "Qy",
+   "e3",
+   "t3",
+   "Tn"
+  ],
+  "bytes": 5509,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Qy = ` in vec3 position; out vec2 vUv; void main(){ vUv = position.xy * 0.5 + 0.5; gl_Position = vec4(position.xy, 0.0, 1.0); }`, e3 = ` precision highp f"
+ },
+ {
+  "names": [
+   "n3"
+  ],
+  "bytes": 2034,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var n3 = ` float fine = fbm(uv, vec2(260.0), 2, 1.0), mid = fbm(uv, vec2(16.0), 4, 2.0), big = fbm(uv, vec2(2.0), 4, 3.0); float chalk = smoothstep(0.3, 0.8"
+ },
+ {
+  "names": [
+   "i3",
+   "s3"
+  ],
+  "bytes": 815,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var i3 = ` precision highp float; uniform sampler2D tH; uniform vec2 uK; uniform float uTexel; in vec2 vUv; out vec4 o; float H(vec2 uv){ vec4 t = texture(tH, u"
+ },
+ {
+  "names": [
+   "o3",
+   "r3",
+   "oA",
+   "Ut",
+   "An",
+   "rA"
+  ],
+  "bytes": 577,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "Big Shoulders Display",
+   "Barlow Condensed",
+   "Arial Narrow",
+   "Helvetica Neue",
+   "Barlow Condensed",
+   "Arial Narrow",
+   "Helvetica Neue",
+   "IBM Plex Mono"
+  ],
+  "props": [],
+  "head": "var o3 = '\"Big Shoulders Display\", \"Barlow Condensed\", \"Arial Narrow\", Impact, \"Helvetica Neue\", Arial, sans-serif', r3 = '\"Barlow Condensed\", \"Arial Narrow\","
+ },
+ {
+  "names": [
+   "aA"
+  ],
+  "bytes": 231,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function aA(i) { let e = i >>> 0; return () => { e |= 0, e = e + 1831565813 | 0; let t = Math.imul(e ^ e >>> 15, 1 | e); return t = t + Math.imu"
+ },
+ {
+  "names": [
+   "lA"
+  ],
+  "bytes": 145,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function lA(i) { let e = 2166136261; for (let t = 0; t < i.length; t++) e ^= i.charCodeAt(t), e = Math.imul(e, 16777619); return e >>> 0; }"
+ },
+ {
+  "names": [
+   "Wg"
+  ],
+  "bytes": 104,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "canvas"
+  ],
+  "props": [],
+  "head": "function Wg(i, e) { let t = document.createElement(\"canvas\"); return t.width = i, t.height = e, t; }"
+ },
+ {
+  "names": [
+   "ra"
+  ],
+  "bytes": 289,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function ra(i, e, t, n, s, o = .35, r = 9) { i.beginPath(); for (let a = 0; a < r; a++) { let l = a / r * Math.PI * 2, c = n * (1 - o + s() * o * "
+ },
+ {
+  "names": [
+   "Ks"
+  ],
+  "bytes": 1110,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "destination-out",
+   "round",
+   "rgba(0,0,0,",
+   "), u.addColorStop(1, "
+  ],
+  "props": [],
+  "head": "function Ks(i, e, t, n, s) { if (n <= 0) return; i.save(), i.globalCompositeOperation = \"destination-out\"; let o = Math.floor(n * e * t / 700); for (let"
+ },
+ {
+  "names": [
+   "a3"
+  ],
+  "bytes": 145,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function a3(i, e, t, n, s, o) { i.font = `${s} ${t}px ${n}`; let r = 0; for (let a of e) r += i.measureText(a).width + o; return r - o; }"
+ },
+ {
+  "names": [
+   "qa"
+  ],
+  "bytes": 939,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "sans",
+   "mono",
+   "sans",
+   "mono",
+   "alphabetic",
+   "destination-out",
+   "center",
+   "right"
+  ],
+  "props": [],
+  "head": "function qa(i, e, t, n, s, o, r = {}) { let a = r.font === \"sans\" ? r3 : r.font === \"mono\" ? oA : o3, l = r.weight || 700, c = r.spacing !== void 0 ? "
+ },
+ {
+  "names": [
+   "l3"
+  ],
+  "bytes": 22091,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "decal",
+   "source-over",
+   "round",
+   "sans",
+   "hazard_flammable",
+   "center",
+   "hazard_voltage",
+   "hazard_general"
+  ],
+  "props": [],
+  "head": "function l3(i, e = 4) { let t = new Map(), n = [], s = 0; function o(v, g = {}) { let x = new THREE.CanvasTexture(v); x.colorSpace = THREE.S"
+ },
+ {
+  "names": [
+   "c3",
+   "cA",
+   "kc",
+   "aa",
+   "uA",
+   "i1",
+   "u3",
+   "s1",
+   "o1",
+   "hA",
+   "r1",
+   "a1",
+   "Nt",
+   "Xa",
+   "l1",
+   "fA",
+   "dA",
+   "pA",
+   "mA",
+   "gA",
+   "vA",
+   "xA",
+   "yA",
+   "bA"
+  ],
+  "bytes": 15193,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "asphalt",
+   "concrete",
+   "brick",
+   "epoxy",
+   "paint",
+   "hull",
+   "galv",
+   "metal"
+  ],
+  "props": [],
+  "head": "var c3 = { asphalt: { fn: \"asphalt\", size: 1, tile: 2, bump: 1.6, hero: !0 }, concrete: { fn: \"concrete\", "
+ },
+ {
+  "names": [
+   "h3"
+  ],
+  "bytes": 530,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "#include <common>",
+   "#include <project_vertex>",
+   "#include <common>",
+   "#include <map_fragment>",
+   "#include <roughnessmap_fragment>",
+   "#include <metalnessmap_fragment>",
+   "#include <normal_fragment_maps>",
+   "#include <aomap_fragment>"
+  ],
+  "props": [],
+  "head": "function h3(i, e) { Object.assign(i.uniforms, e), i.vertexShader = i.vertexShader.replace(\"#include <common>\", `#include <common> ` + dA).replace(\"#include <p"
+ },
+ {
+  "names": [
+   "Gg"
+  ],
+  "bytes": 7194,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [
+   " + (q.vertexColors ? ",
+   ") + (q.triplanar ? ",
+   " + (q.scale || 1) : ",
+   ") + (q.doubleSide ? ",
+   ") + (q.interior ? ",
+   ") + (q.color !== void 0 ? ",
+   " + q.color : ",
+   "gen:"
+  ],
+  "props": [],
+  "head": "async function Gg(i) { let e = i.renderer || i.render && i.render.renderer, t = i.params || {}, n = +(t.tex || 0) || i.quality && i.quality.tex || 102"
+ },
+ {
+  "names": [
+   "_A"
+  ],
+  "bytes": 148,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "gunmetal",
+   "anodized_black",
+   "polymer_black",
+   "polymer_tan",
+   "rubber",
+   "carbon",
+   "glove_fabric",
+   "armor_white"
+  ],
+  "props": [],
+  "head": "var _A = new Set([\"gunmetal\", \"anodized_black\", \"polymer_black\", \"polymer_tan\", \"rubber\", \"carbon\", \"glove_fabric\", \"armor_white\", \"armor_orange\"]);"
+ },
+ {
+  "names": [
+   "MA"
+  ],
+  "bytes": 204,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function MA(i) { let e = new THREE.SphereGeometry(i, 48, 32), t = e.attributes.uv; for (let n = 0; n < t.count; n++) t.setXY(n, t.getX(n) * 2 * Math.PI "
+ },
+ {
+  "names": [
+   "c1"
+  ],
+  "bytes": 177,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function c1(i, e) { let t = new THREE.PlaneGeometry(i, e), n = t.attributes.uv; for (let s = 0; s < n.count; s++) n.setXY(s, n.getX(s) * i, n.getY(s) * "
+ },
+ {
+  "names": [
+   "wA"
+  ],
+  "bytes": 2506,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "decals",
+   "decals",
+   "glass",
+   "chainlink",
+   "paint_blue",
+   "concrete",
+   "SALTLINE TERMINAL  B4-0271",
+   "white"
+  ],
+  "props": [],
+  "head": "function wA(i) { let e = i.mats, t = new THREE.Group(); i.scene.add(t); let n = i.params.only ? String(i.params.only).split(\",\").filter(Boolean) : nul"
+ },
+ {
+  "names": [
+   "u1",
+   "Ls",
+   "Ya",
+   "EA",
+   "ol",
+   "SA",
+   "qt",
+   "Qs",
+   "yf"
+  ],
+  "bytes": 151,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var u1 = .42, Ls = .5, Ya = -40, EA = 31, ol = -32, SA = 30, qt = Math.round((EA - Ya) / Ls), Qs = Math.round((SA - ol) / Ls), yf = .5;"
+ },
+ {
+  "names": [
+   "d3"
+  ],
+  "bytes": 12369,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "concrete",
+   "water",
+   "concrete",
+   "concrete",
+   "concrete"
+  ],
+  "props": [],
+  "head": "function d3(i) { let e = [], t = !0, n = new Uint8Array(qt * Qs), s = new THREE.Vector3(), o = { boxes: e, bounds: { min: "
+ },
+ {
+  "names": [
+   "f3"
+  ],
+  "bytes": 90,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function f3(i) { return i.isVector3 ? i.clone() : new THREE.Vector3(i[0], i[1], i[2]); }"
+ },
+ {
+  "names": [
+   "$g"
+  ],
+  "bytes": 12,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var $g = {};"
+ },
+ {
+  "names": [
+   "Gi",
+   "Xg"
+  ],
+  "bytes": 2015,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "paint_red",
+   "metal",
+   "paint_blue",
+   "metal",
+   "paint_green",
+   "metal",
+   "concrete",
+   "concrete"
+  ],
+  "props": [],
+  "head": "var Gi = { container20: [6.06, 2.59, 2.44, \"paint_red\", \"metal\"], container40: [12.19, 2.59, 2.44, \"paint_blue\", \"metal\"], container40hc: [12.19, 2."
+ },
+ {
+  "names": [
+   "_i"
+  ],
+  "bytes": 34,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function _i(i, e) { Xg[i] = e; }"
+ },
+ {
+  "names": [
+   "Yg"
+  ],
+  "bytes": 730,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "concrete",
+   "concrete",
+   "bottom"
+  ],
+  "props": [],
+  "head": "function Yg(i) { return { names: () => Object.keys(Gi), has: e => !!Gi[e], build(e, t = {}) { if (Xg[e]) try { let o = Xg[e](i, t); "
+ },
+ {
+  "names": [
+   "AA"
+  ],
+  "bytes": 584,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "container"
+  ],
+  "props": [],
+  "head": "function AA(i) { let e = i.params.names ? i.params.names.split(\",\") : Object.keys(Gi), t = 0, n = 0, s = 0, o = 0; for (let a of e) { le"
+ },
+ {
+  "names": [
+   "$a"
+  ],
+  "bytes": 240,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function $a(i) { let e = (i | 0) * 2654435761 | 0; return () => { e = e + 1831565813 | 0; let t = Math.imul(e ^ e >>> 15, 1 | e); return t = t +"
+ },
+ {
+  "names": [
+   "h1"
+  ],
+  "bytes": 105,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function h1(i, e) { let t = Math.sin(i * 127.1 + e * 311.7) * 43758.5453; return t - Math.floor(t); }"
+ },
+ {
+  "names": [
+   "ri"
+  ],
+  "bytes": 311,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function ri(i, e) { let t = Math.floor(i), n = Math.floor(e), s = i - t, o = e - n, r = s * s * (3 - 2 * s), a = o * o * (3 - 2 * o), "
+ },
+ {
+  "names": [
+   "RA",
+   "mn",
+   "Ir"
+  ],
+  "bytes": 236,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var RA = i => Math.max(0, Math.min(1, i)), mn = (i, e, t) => { let n = RA((t - i) / (e - i)); return n * n * (3 - 2 * n); }, Ir = (i, e, t) => [i["
+ },
+ {
+  "names": [
+   "p3"
+  ],
+  "bytes": 2294,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "center",
+   "position",
+   "normal"
+  ],
+  "props": [],
+  "head": "function p3(i, e, t, n = .01, s = \"center\") { n = Math.max(5e-4, Math.min(n, i / 2 - 1e-4, e / 2 - 1e-4, t / 2 - 1e-4)); let o = i / 2, r = e / 2, a"
+ },
+ {
+  "names": [
+   "m3"
+  ],
+  "bytes": 822,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function m3(i, e, t, n, s, o) { let r = 0; for (let a = t; a < n; a += 9) { let l = i[a + 3] - i[a], c = i[a + 4] - i[a + 1], u = i[a + 5] -"
+ },
+ {
+  "names": [
+   "la"
+  ],
+  "bytes": 1773,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "position"
+  ],
+  "props": [],
+  "head": "function la(i, e, t, { closed: n = !1, center: s = null, inward: o = !1, caps: r = !1 } = {}) { let a = [], l = [], c = i.length, u = n ? "
+ },
+ {
+  "names": [
+   "CA"
+  ],
+  "bytes": 200,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function CA(i, e, t, n, s) { let o = i % e; o < 0 && (o += e); let r = e - n - 2 * s; return o <= n ? 0 : o < n + s ? -t * (o - n) / s : o <= n + s + r "
+ },
+ {
+  "names": [
+   "Uc"
+  ],
+  "bytes": 373,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Uc(i, e, t, n, s, o, r = i) { let a = t - s - 2 * o, l = [0, s, s + o, s + o + a], c = [i], u = Math.floor((i - r) / t) - 1, h = Math"
+ },
+ {
+  "names": [
+   "pr"
+  ],
+  "bytes": 786,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "position"
+  ],
+  "props": [],
+  "head": "function pr(i, e, t = 5) { let n = [], s = Math.min(i, e) / 2, o = i / 2 - s, r = e / 2 - s; for (let u = 0; u < 4; u++) for (let h = 0; h <= t;"
+ },
+ {
+  "names": [
+   "cn"
+  ],
+  "bytes": 61,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function cn(i, e) { return new THREE.PlaneGeometry(i, e); }"
+ },
+ {
+  "names": [
+   "Nc"
+  ],
+  "bytes": 177,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Nc(i, e) { let t = new THREE.PlaneGeometry(i, e), n = t.attributes.uv; for (let s = 0; s < n.count; s++) n.setXY(s, n.getX(s) * i, n.getY(s) * "
+ },
+ {
+  "names": [
+   "PA"
+  ],
+  "bytes": 98,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function PA(i) { let e = i.index ? i.toNonIndexed() : i; return e.computeVertexNormals(), e; }"
+ },
+ {
+  "names": [
+   "mr"
+  ],
+  "bytes": 126,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function mr(i, e = 10, t = 6, n = Math.PI * 2, s = 0, o = Math.PI) { return new THREE.SphereGeometry(i, e, t, 0, n, s, o); }"
+ },
+ {
+  "names": [
+   "g1"
+  ],
+  "bytes": 106,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function g1(i, e = 16) { return new THREE.LatheGeometry(i.map(t => new THREE.Vector2(t[0], t[1])), e); }"
+ },
+ {
+  "names": [
+   "f1",
+   "Fc",
+   "g3",
+   "d1",
+   "p1"
+  ],
+  "bytes": 149,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var f1 = new THREE.Euler(), Fc = new THREE.Quaternion(), g3 = new THREE.Matrix4(), d1 = new THREE.Vector3(), p1 = new THREE.Vector3(1, 1, 1);"
+ },
+ {
+  "names": [
+   "je"
+  ],
+  "bytes": 191,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function je(i, e = 0, t = 0, n = 0, s = null) { return s ? (f1.set(s[0], s[1], s[2]), Fc.setFromEuler(f1)) : Fc.identity(), d1.set(e, t, n), g3.compose(d1, Fc"
+ },
+ {
+  "names": [
+   "_o"
+  ],
+  "bytes": 182,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function _o(i = 0, e = 0, t = 0, n = null) { return n ? (f1.set(n[0], n[1], n[2]), Fc.setFromEuler(f1)) : Fc.identity(), d1.set(i, e, t), new THREE.Matrix4()."
+ },
+ {
+  "names": [
+   "jn"
+  ],
+  "bytes": 2454,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [
+   "G",
+   "buckets",
+   "stack",
+   "m",
+   "defCol"
+  ],
+  "head": "var jn = class { constructor(e) { this.G = e, this.buckets = new Map(), this.stack = [], this.m = null, this.defCol = new Map(); } M(e, t) { retur"
+ },
+ {
+  "names": [
+   "Zg"
+  ],
+  "bytes": 209,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Zg(i, e) { let t = new THREE.Group(); for (let n of i) { let s = new THREE.Mesh(n.geo, e && e.get(n.mat) || n.mat); s.castShadow = n.cast, "
+ },
+ {
+  "names": [
+   "qi"
+  ],
+  "bytes": 98,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function qi(i, e, t, n) { return i.userData.size = t, i.userData.colliders = n, i.name = e, i; }"
+ },
+ {
+  "names": [
+   "m1"
+  ],
+  "bytes": 23,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var m1 = new WeakMap();"
+ },
+ {
+  "names": [
+   "Mi"
+  ],
+  "bytes": 409,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_white"
+  ],
+  "props": [],
+  "head": "function Mi(i, e, t) { let n = m1.get(i.mats); n || (n = new Map(), m1.set(i.mats, n)); let s = \"L|\" + e + \"|\" + JSON.stringify(t || {}); if (!n.has(s))"
+ },
+ {
+  "names": [
+   "Jn"
+  ],
+  "bytes": 340,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_white"
+  ],
+  "props": [],
+  "head": "function Jn(i, e) { let t = m1.get(i.mats); t || (t = new Map(), m1.set(i.mats, t)); let n = \"D|\" + e; if (!t.has(n)) { let s; try { s = i"
+ },
+ {
+  "names": [
+   "Bc",
+   "_3",
+   "v1",
+   "v3",
+   "jg",
+   "Jt",
+   "IA",
+   "x3",
+   "y3",
+   "bf",
+   "b3",
+   "Uo",
+   "x1",
+   "y1"
+  ],
+  "bytes": 998,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "blue",
+   "green",
+   "SLTU 482915 7",
+   "HBMU 307144 2",
+   "NRDU 665201 9",
+   "OKTU 119873 4",
+   "VSLU 850362 1",
+   "TQLU 274590 6"
+  ],
+  "props": [],
+  "head": "var Bc = 2.438, _3 = { container20: { type: \"22G1\", gross: \"30,480\", tare: \"2,230\", net: \"28,250\", cu: \"33.2\", def: \"r"
+ },
+ {
+  "names": [
+   "zA"
+  ],
+  "bytes": 13202,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "steel_galv",
+   "wood_pallet",
+   "container20",
+   "color",
+   "container40hc",
+   "container40hc",
+   "white",
+   "stencil"
+  ],
+  "props": [],
+  "head": "function zA(i, e, t, n, s) { let o = Gi[e][0], r = Gi[e][1], a = _3[e], l = $a(1e3 + t * 77 + e.length * 13), c = new jn(i), u = c.M(\"stee"
+ },
+ {
+  "names": [
+   "M3"
+  ],
+  "bytes": 854,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_"
+  ],
+  "props": [],
+  "head": "function M3(i, e, t = {}) { let n = _3[e], s = t.seed === void 0 ? 0 : Math.abs(Math.floor(t.seed)), o = s % IA, r = Math.round(THREE.MathUtils.cl"
+ },
+ {
+  "names": [
+   "ca",
+   "hn"
+  ],
+  "bytes": 48,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var ca = i => Gi[i].slice(0, 3), hn = Math.PI;"
+ },
+ {
+  "names": [
+   "S3"
+  ],
+  "bytes": 2302,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "concrete",
+   "steel_rust",
+   "hazard_stripes",
+   "jersey_barrier",
+   "jersey_barrier",
+   "concrete",
+   "concrete"
+  ],
+  "props": [],
+  "head": "function S3(i, e = {}) { let t = new jn(i), n = e.seed | 0, s = $a(n + 11), o = n * 3.7, r = t.M(\"concrete\", { vertexColors: !0 }), "
+ },
+ {
+  "names": [
+   "w3"
+  ],
+  "bytes": 817,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function w3(i, e, t, n, s, o, r, a, l) { i.push(_o(s, o, r, [0, a, 0])), i.push(_o(0, 0, 0, [0, 0, l])), i.box(t, .1, .34, .46, .09, 0, 0, { r: .014 }),"
+ },
+ {
+  "names": [
+   "T3"
+  ],
+  "bytes": 3339,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "steel_galv",
+   "concrete",
+   "steel_dark",
+   "hazard_voltage",
+   "light_mast",
+   "light_mast",
+   "concrete",
+   "metal"
+  ],
+  "props": [],
+  "head": "function T3(i, e = {}) { let t = new jn(i), n = t.M(\"steel_galv\"), s = t.M(\"concrete\", { vertexColors: !0 }), o = t.M(\"steel_dark\"), "
+ },
+ {
+  "names": [
+   "A3"
+  ],
+  "bytes": 2157,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "steel_galv",
+   "concrete",
+   "chainlink",
+   "both",
+   "both",
+   "left",
+   "right",
+   "fence_panel"
+  ],
+  "props": [],
+  "head": "function A3(i, e = {}) { let t = new jn(i), n = $a((e.seed | 0) + 5), s = t.M(\"steel_galv\"), o = t.M(\"concrete\", { vertexColors: !0 }), "
+ },
+ {
+  "names": [
+   "R3"
+  ],
+  "bytes": 6369,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_",
+   "white",
+   "grey",
+   "teal",
+   "white",
+   "steel_dark",
+   "steel_galv",
+   "glass"
+  ],
+  "props": [],
+  "head": "function R3(i, e = {}) { let t = new jn(i), n = e.seed | 0, s = n * 1.3, o = 2.6, r = 2.2, a = o / 2, l = r / 2, c = t.M(\"paint_\" "
+ },
+ {
+  "names": [
+   "C3"
+  ],
+  "bytes": 2331,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_orange",
+   "paint_white",
+   "paint_red",
+   "steel_dark",
+   "steel_galv",
+   "paint_yellow",
+   "concrete",
+   "hazard_general"
+  ],
+  "props": [],
+  "head": "function C3(i, e = {}) { let t = new jn(i), n = THREE.MathUtils.clamp(e.open || 0, 0, 1), s = t.M(\"paint_orange\", { vertexColors: !0 }), "
+ },
+ {
+  "names": [
+   "P3"
+  ],
+  "bytes": 1344,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "steel_dark",
+   "steel_rust",
+   "bollard_mooring",
+   "bollard_mooring",
+   "metal"
+  ],
+  "props": [],
+  "head": "function P3(i, e = {}) { let t = new jn(i), n = (e.seed | 0) * 2.1, s = t.M(\"steel_dark\", { vertexColors: !0 }), o = t.M(\"steel_rust\"), "
+ },
+ {
+  "names": [
+   "I3"
+  ],
+  "bytes": 1355,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_yellow",
+   "steel_galv",
+   "bollard_post",
+   "bollard_post",
+   "metal"
+  ],
+  "props": [],
+  "head": "function I3(i, e = {}) { let t = new jn(i), n = (e.seed | 0) * 1.7, s = t.M(\"paint_yellow\", { vertexColors: !0 }), o = t.M(\"steel_galv\")"
+ },
+ {
+  "names": [
+   "Jg",
+   "E3"
+  ],
+  "bytes": 210,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "hazard_general",
+   "no_entry",
+   "hazard_voltage",
+   "berth4",
+   "arrow",
+   "hazard_flammable",
+   "AUTHORISED PERSONNEL ONLY",
+   "NO PEDESTRIANS"
+  ],
+  "props": [],
+  "head": "var Jg = [\"hazard_general\", \"no_entry\", \"hazard_voltage\", \"berth4\", \"arrow\", \"hazard_flammable\"], E3 = [\"AUTHORISED PERSONNEL ONLY\", \"NO PEDESTRIANS\", \"HI-VIS"
+ },
+ {
+  "names": [
+   "z3"
+  ],
+  "bytes": 1548,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "steel_galv",
+   "aluminium",
+   "paint_white",
+   "paint_yellow",
+   "concrete",
+   "hazard",
+   "black",
+   "sans"
+  ],
+  "props": [],
+  "head": "function z3(i, e = {}) { let t = new jn(i), n = e.seed | 0, s = t.M(\"steel_galv\"), o = t.M(\"aluminium\"), r = t.M(\"paint_white\"), a = t.M(\""
+ },
+ {
+  "names": [
+   "D3"
+  ],
+  "bytes": 2484,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_yellow",
+   "steel_dark",
+   "aluminium",
+   "rubber",
+   "floodlight_stand",
+   "floodlight_stand",
+   "metal"
+  ],
+  "props": [],
+  "head": "function D3(i, e = {}) { let t = new jn(i), n = e.seed | 0, s = $a(n + 3), o = t.M(\"paint_yellow\"), r = t.M(\"steel_dark\"), a = t.M(\"alumin"
+ },
+ {
+  "names": [
+   "b1",
+   "wi"
+  ],
+  "bytes": 48,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var b1 = i => Gi[i].slice(0, 3), wi = Math.PI;"
+ },
+ {
+  "names": [
+   "k3"
+  ],
+  "bytes": 3104,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "diamond_plate",
+   "steel_dark",
+   "paint_yellow",
+   "steel_galv",
+   "metal",
+   "metal",
+   "metal",
+   "metal"
+  ],
+  "props": [],
+  "head": "function k3(i, e = {}) { let t = new jn(i), n = t.M(\"diamond_plate\"), s = t.M(\"steel_dark\"), o = t.M(\"paint_yellow\"), r = t.M(\"steel_galv\"), "
+ },
+ {
+  "names": [
+   "F3"
+  ],
+  "bytes": 1502,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "steel_dark",
+   "paint_yellow",
+   "steel_galv",
+   "both",
+   "both",
+   "left",
+   "right",
+   "metal"
+  ],
+  "props": [],
+  "head": "function F3(i, e = {}) { let t = new jn(i), n = t.M(\"steel_dark\"), s = t.M(\"paint_yellow\"), o = t.M(\"steel_galv\"), r = e.rails || \"both\", "
+ },
+ {
+  "names": [
+   "L3"
+  ],
+  "bytes": 444,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function L3(i, e, t, n, s) { for (let o = -2; o <= 2; o++) i.add(e, je($e(.14 + (o === 0 ? .02 : 0), .022, 1), t + o * .2525, n + .133, s)); for (let o of ["
+ },
+ {
+  "names": [
+   "DA"
+  ],
+  "bytes": 2291,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "cartons",
+   "wrapped",
+   "LOT ",
+   "black",
+   "sans",
+   "drums",
+   "pallets"
+  ],
+  "props": [],
+  "head": "function DA(i, e, t, n, s, o, r) { L3(i, e.wood, n, s, o); let a = s + .144; if (t === \"cartons\") { let l = 2 + Math.floor(r() * 2), c = .36; "
+ },
+ {
+  "names": [
+   "U3"
+  ],
+  "bytes": 2903,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_blue",
+   "paint_orange",
+   "steel_galv",
+   "wood_pallet",
+   "cardboard",
+   "polymer_tan",
+   "polymer_black",
+   "glass_dirty"
+  ],
+  "props": [],
+  "head": "function U3(i, e = {}) { let t = new jn(i), n = e.seed | 0, s = $a(n + 21), o = t.M(\"paint_blue\", { vertexColors: !0 }), r = t.M(\"pa"
+ },
+ {
+  "names": [
+   "N3"
+  ],
+  "bytes": 5069,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_white",
+   "steel_dark",
+   "steel_galv",
+   "paint_grey",
+   "brass",
+   "rubber",
+   "aluminium",
+   "KELVAR  MARINE  REFRIGERATION"
+  ],
+  "props": [],
+  "head": "function N3(i, e = {}) { let t = new jn(i), n = e.seed | 0, s = n * 2.3, o = t.M(\"paint_white\", { vertexColors: !0 }), r = t.M(\"stee"
+ },
+ {
+  "names": [
+   "es",
+   "Kg",
+   "LA",
+   "kA"
+  ],
+  "bytes": 119,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var es = Math.PI, Kg = new THREE.Color(16752680), LA = new THREE.Color(16721940), kA = new THREE.Color(16767392);"
+ },
+ {
+  "names": [
+   "B3"
+  ],
+  "bytes": 12659,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_grey",
+   "steel_dark",
+   "steel_galv",
+   "aluminium",
+   "rubber",
+   "concrete",
+   "caution_stripes",
+   "RELAY "
+  ],
+  "props": [],
+  "head": "function B3(i, e = {}) { let t = e.seed | 0, n = t * 1.9, s = e.id || e.label || \"ABC\"[t % 3], o = new jn(i), r = new jn(i), a = new jn(i)"
+ },
+ {
+  "names": [
+   "At",
+   "tt",
+   "zi"
+  ],
+  "bytes": 86,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var At = Math.PI, tt = Math.PI / 2, zi = (i, e, t) => Math.min(t, Math.max(e, i));"
+ },
+ {
+  "names": [
+   "Za"
+  ],
+  "bytes": 199,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Za(i, e, t) { let n = Math.imul(i, 374761393) ^ Math.imul(e, 668265263) ^ Math.imul(t, 2147483647); return n = Math.imul(n ^ n >>> 13, 1274126177),"
+ },
+ {
+  "names": [
+   "gn"
+  ],
+  "bytes": 468,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function gn(i, e = 0, t = 0) { let n = Math.floor(i), s = Math.floor(e), o = Math.floor(t), r = i - n, a = e - s, l = t - o; r = r * r *"
+ },
+ {
+  "names": [
+   "Mf"
+  ],
+  "bytes": 362,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "position",
+   "normal"
+  ],
+  "props": [],
+  "head": "function Mf(i, e, t, n) { let s = new THREE.BufferGeometry(); return s.setAttribute(\"position\", new THREE.BufferAttribute(new Float32Array(i), 3)), e && s.s"
+ },
+ {
+  "names": [
+   "us"
+  ],
+  "bytes": 1254,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function us(i, e = 16) { let t = i.length, n = [], s = [], o = [], r = [], a = [], l = [], c = [], u = 0, h = 0; for (le"
+ },
+ {
+  "names": [
+   "Ge"
+  ],
+  "bytes": 1754,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "center",
+   "bottom"
+  ],
+  "props": [],
+  "head": "function Ge(i, e, t, n = .008, s = \"center\") { let o = [i / 2, e / 2, t / 2]; n = Math.min(n, o[0] * .9, o[1] * .9, o[2] * .9); let r = [], a = [], "
+ },
+ {
+  "names": [
+   "eo"
+  ],
+  "bytes": 1240,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "center",
+   "bottom"
+  ],
+  "props": [],
+  "head": "function eo(i, e, t, n = .03, s = 3, o = 3, r = 3, a = \"center\") { let l = new THREE.BoxGeometry(i, e, t, s, o, r), c = l.attributes.position, u = l.a"
+ },
+ {
+  "names": [
+   "to"
+  ],
+  "bytes": 197,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function to(i, e) { let t = i.attributes.position, n = new THREE.Vector3(); for (let s = 0; s < t.count; s++) n.fromBufferAttribute(t, s), e(n, s), t.se"
+ },
+ {
+  "names": [
+   "gr"
+  ],
+  "bytes": 1111,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   " + Math.round(e.getY(f) * 2e3) + ",
+   "normal"
+  ],
+  "props": [],
+  "head": "function gr(i) { let e = i.attributes.position, t = i.index, n = e.count, s = new Map(), o = f => Math.round(e.getX(f) * 2e3) + \",\" + Math.rou"
+ },
+ {
+  "names": [
+   "M1"
+  ],
+  "bytes": 585,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function M1(i) { if (i.index) { let t = i.index.array; for (let n = 0; n < t.length; n += 3) { let s = t[n + 1]; t[n + 1] = t[n + 2], t[n "
+ },
+ {
+  "names": [
+   "ev"
+  ],
+  "bytes": 240,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function ev(i, e) { let t = i.groups[e]; if (!t) return i; let n = Array.from(i.index.array); n.splice(t.start, t.count), i.setIndex(n); for (let s of"
+ },
+ {
+  "names": [
+   "O3",
+   "FA",
+   "_1",
+   "H3"
+  ],
+  "bytes": 123,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var O3 = new THREE.Quaternion(), FA = new THREE.Vector3(0, 1, 0), _1 = new THREE.Vector3(), H3 = new THREE.Matrix4();"
+ },
+ {
+  "names": [
+   "vn"
+  ],
+  "bytes": 355,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function vn(i, e, t = .02, n = 6, s = !1, o = t) { _1.set(e[0] - i[0], e[1] - i[1], e[2] - i[2]); let r = _1.length(); _1.normalize(); let a = ot(o, t, "
+ },
+ {
+  "names": [
+   "Mo"
+  ],
+  "bytes": 1426,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Mo(i, e, { soft: t = .6, caps: n = !0 } = {}) { let s = i.length, o = [], r = [], a = [], l = [], c = e / 2, u = [], "
+ },
+ {
+  "names": [
+   "vr"
+  ],
+  "bytes": 799,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function vr(i, e, t = !0) { let n = i.length, s = [], o = [], r = [], a = 0, l = Math.hypot(e[0], e[1], e[2]) * 2; for (let p = 0; p < n"
+ },
+ {
+  "names": [
+   "_f"
+  ],
+  "bytes": 61,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function _f(i, e) { return new THREE.PlaneGeometry(i, e); }"
+ },
+ {
+  "names": [
+   "UA"
+  ],
+  "bytes": 433,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function UA(i, e, t, n = 4) { let s = [], o = [], r = [], a = []; for (let l = 0; l <= n; l++) { let c = (l / n - .5) * e / i, u = Mat"
+ },
+ {
+  "names": [
+   "ja"
+  ],
+  "bytes": 226,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function ja(i, e, t = 6, n = 12, s = At * 2) { let o = new THREE.TorusGeometry(i, e, t, n, s), r = o.attributes.uv; for (let a = 0; a < r.count; a++) r."
+ },
+ {
+  "names": [
+   "Y3"
+  ],
+  "bytes": 206,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Y3(i, e = 8, t = 6) { let n = new THREE.SphereGeometry(i, e, t), s = n.attributes.uv; for (let o = 0; o < s.count; o++) s.setXY(o, s.getX(o) * "
+ },
+ {
+  "names": [
+   "NA"
+  ],
+  "bytes": 791,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "color",
+   "function",
+   "number",
+   "number",
+   "number",
+   "number"
+  ],
+  "props": [],
+  "head": "function NA(i, e) { let t = i.attributes.position.count, n = i.attributes.color; if (n || (n = new THREE.BufferAttribute(new Float32Array(t * 3).fill(1)"
+ },
+ {
+  "names": [
+   "V3"
+  ],
+  "bytes": 347,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "paint_red",
+   "paint_blue",
+   "paint_green",
+   "paint_yellow",
+   "paint_orange",
+   "paint_white",
+   "paint_grey",
+   "paint_teal"
+  ],
+  "props": [],
+  "head": "var V3 = { red: [\"paint_red\", 1], blue: [\"paint_blue\", 1], green: [\"paint_green\", 1], yellow: [\"paint_yellow\", 1], orange: [\"paint_orange\", 1], whit"
+ },
+ {
+  "names": [
+   "Ja"
+  ],
+  "bytes": 55,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "blue"
+  ],
+  "props": [],
+  "head": "function Ja(i, e = \"blue\") { return V3[i] || V3[e]; }"
+ },
+ {
+  "names": [
+   "pI",
+   "W3",
+   "G3",
+   "q3",
+   "Qg"
+  ],
+  "bytes": 142,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var pI = new THREE.Matrix4(), W3 = new THREE.Quaternion(), G3 = new THREE.Euler(), q3 = new THREE.Vector3(), Qg = new THREE.Vector3();"
+ },
+ {
+  "names": [
+   "BA"
+  ],
+  "bytes": 266,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "number"
+  ],
+  "props": [],
+  "head": "function BA({ p: i = [0, 0, 0], r: e = [0, 0, 0], s: t = 1 } = {}) { return G3.set(e[0], e[1], e[2]), W3.setFromEuler(G3), q3.set(i[0], i[1], i[2]), typ"
+ },
+ {
+  "names": [
+   "Kn",
+   "X3"
+  ],
+  "bytes": 2898,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "string",
+   "metal"
+  ],
+  "props": [
+   "G",
+   "name",
+   "seed",
+   "rng",
+   "b",
+   "stack"
+  ],
+  "head": "var Kn = class { constructor(e, t, n = 1) { this.G = e, this.name = t, this.seed = Math.abs(n | 0), this.rng = il((this.seed + 1) * 7919 + t.length * "
+ },
+ {
+  "names": [
+   "wf"
+  ],
+  "bytes": 94,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function wf(i, e) { let t = X3.get(i); return t || (t = e(), X3.set(i, t)), t.clone(!0); }"
+ },
+ {
+  "names": [
+   "j3"
+  ],
+  "bytes": 95,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var j3 = (i, e, t) => { let n = zi((t - i) / (e - i), 0, 1); return n * n * (3 - 2 * n); };"
+ },
+ {
+  "names": [
+   "$3"
+  ],
+  "bytes": 222,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function $3(i, e, t = 0, n = 0) { let s = new THREE.PlaneGeometry(i, e), o = s.attributes.uv, r = s.attributes.position; for (let a = 0; a < o.count"
+ },
+ {
+  "names": [
+   "w1"
+  ],
+  "bytes": 84,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var w1 = { pz: [0, 0, 0], nz: [0, At, 0], px: [0, tt, 0], nx: [0, -tt, 0] };"
+ },
+ {
+  "names": [
+   "OA"
+  ],
+  "bytes": 467,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function OA(i) { let t = [[0, .016], [.262, .016], [.262, .016], [.268, .002], [.288, 0], [.295, .008], [.295, .022], [.284, .034]]; for (let n of [.305, .5"
+ },
+ {
+  "names": [
+   "HA"
+  ],
+  "bytes": 2394,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "barrel",
+   "blue",
+   "rust",
+   "number",
+   "steel_galv",
+   "steel_galv",
+   "hazard_flammable",
+   "white"
+  ],
+  "props": [],
+  "head": "function HA(i, e, t) { let n = new Kn(i, \"barrel\", t), s = n.rng, o = 22, [r, a] = Ja(e.color, \"blue\"); e.lying && n.push({ p: [-.45, .297, "
+ },
+ {
+  "names": [
+   "S1"
+  ],
+  "bytes": 1581,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "wood_pallet",
+   "wood_pallet",
+   "wood_pallet",
+   "wood_pallet",
+   "black",
+   "sans"
+  ],
+  "props": [],
+  "head": "function S1(i, e, { broken: t = !1, stamp: n = !0, bevel: s = !1 } = {}) { let o = s ? (u, h, f) => Ge(u, h, f, .004) : (u, h, f) => $e(u, h, f), r "
+ },
+ {
+  "names": [
+   "VA"
+  ],
+  "bytes": 138,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "pallet"
+  ],
+  "props": [],
+  "head": "function VA(i, e, t) { let n = new Kn(i, \"pallet\", t); return S1(n, n.rng, { broken: !!e.broken, bevel: !0 }), n.finish(); }"
+ },
+ {
+  "names": [
+   "WA"
+  ],
+  "bytes": 531,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "pallet_stack"
+  ],
+  "props": [],
+  "head": "function WA(i, e) { let t = new Kn(i, \"pallet_stack\", e.seed || 0), n = t.rng, s = zi(e.count | 0 || 8, 1, 12); for (let o = 0; o < s; o++) { le"
+ },
+ {
+  "names": [
+   "E1"
+  ],
+  "bytes": 4005,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "FRAGILE",
+   "wood_pallet",
+   "wood_dark",
+   "wood_pallet",
+   "wood_pallet",
+   "wood_pallet",
+   "wood_pallet",
+   "wood_pallet"
+  ],
+  "props": [],
+  "head": "function E1(i, e, t, n, { detail: s = !0, label: o = \"FRAGILE\", code: r = \"B4-117\", skids: a = !0 } = {}) { let l = i.rng, c = i.G, u = .022, "
+ },
+ {
+  "names": [
+   "GA"
+  ],
+  "bytes": 284,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "crate_wood",
+   "FRAGILE",
+   "THIS SIDE UP",
+   "KEEP DRY",
+   "MACHINE PARTS"
+  ],
+  "props": [],
+  "head": "function GA(i, e) { let t = new Kn(i, \"crate_wood\", e.seed || 0); return E1(t, 1.1, 1, .9, { label: e.label === void 0 ? [\"FRAGILE\", \"THIS SIDE UP\", \"KE"
+ },
+ {
+  "names": [
+   "qA"
+  ],
+  "bytes": 1407,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "crate_stack",
+   "HEAVY",
+   "SLT 04",
+   "FRAGILE",
+   "paint_orange",
+   "steel_worn",
+   "steel_dark"
+  ],
+  "props": [],
+  "head": "function qA(i, e) { let t = new Kn(i, \"crate_stack\", e.seed || 0), n = t.rng; E1(t, 1.2, .95, 1, { label: \"HEAVY\", code: \"SLT 04\" + t.seed % 2 "
+ },
+ {
+  "names": [
+   "XA"
+  ],
+  "bytes": 3645,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "ibc_tote",
+   "steel_galv",
+   "steel_galv",
+   "steel_galv",
+   "steel_galv",
+   "steel_galv",
+   "plastic_grey",
+   "plastic_red"
+  ],
+  "props": [],
+  "head": "function XA(i, e) { let t = new Kn(i, \"ibc_tote\", e.seed || 0), n = t.rng, s = () => n.range(.75, 1); for (let y of [-.44, 0, .44]) t.add(\"steel_gal"
+ },
+ {
+  "names": [
+   "Z3"
+  ],
+  "bytes": 827,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "position",
+   "normal"
+  ],
+  "props": [],
+  "head": "function Z3(i, e, t, n = 0) { let s = [], o = 2 * i / e; for (let r = 0; r < e; r++) { let a = -i + r * o + .003, l = -i + (r + 1) * o - .003,"
+ },
+ {
+  "names": [
+   "YA"
+  ],
+  "bytes": 2645,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "cable_reel",
+   "wood_dark",
+   "wood_dark",
+   "wood_dark",
+   "steel_dark",
+   "polymer_black",
+   "steel_galv",
+   "NYY-J 4x95 mm2  500 m"
+  ],
+  "props": [],
+  "head": "function YA(i, e) { let t = new Kn(i, \"cable_reel\", e.seed || 0), n = t.rng, s = .65, o = s, r = .4, a = .045, l = (y = 1) => { "
+ },
+ {
+  "names": [
+   "tv"
+  ],
+  "bytes": 1038,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function tv(i, e, t, n = 20) { let s = i - t, o = Math.min(.011, s * .08), r = [[t, e * .18], [t + s * .45, e * .035], [i - s * .2, e * .02], [i - s *"
+ },
+ {
+  "names": [
+   "$A"
+  ],
+  "bytes": 631,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "tire_stack",
+   "tire"
+  ],
+  "props": [],
+  "head": "function $A(i, e) { let t = new Kn(i, \"tire_stack\", e.seed || 0), n = t.rng, s = zi(e.count | 0 || 4, 1, 5); for (let o = 0; o < s; o++) { let r"
+ },
+ {
+  "names": [
+   "ZA"
+  ],
+  "bytes": 1731,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "jerry_can",
+   "olive",
+   "bottom",
+   "number",
+   "steel_dark",
+   "steel_galv",
+   "hazard_flammable",
+   "hazard_flammable"
+  ],
+  "props": [],
+  "head": "function ZA(i, e, t) { let n = new Kn(i, \"jerry_can\", t), [s, o] = Ja(e.color, \"olive\"), r = eo(.336, .36, .156, .022, 3, 3, 3, \"bottom\"), a = (x,"
+ },
+ {
+  "names": [
+   "jA"
+  ],
+  "bytes": 1075,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "traffic_cone",
+   "rubber",
+   "bottom",
+   "plastic_red",
+   "plastic_grey"
+  ],
+  "props": [],
+  "head": "function jA(i, e, t) { let n = new Kn(i, \"traffic_cone\", t), s = n.rng, o = t * 4.1; e.lying && (n.push({ p: [-.34, .18, 0], r: [0, s() * 6,"
+ },
+ {
+  "names": [
+   "JA"
+  ],
+  "bytes": 3412,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "gas_cylinders",
+   "diamond_plate",
+   "bottom",
+   "steel_dark",
+   "steel_dark",
+   "steel_dark",
+   "steel_dark",
+   "steel_galv"
+  ],
+  "props": [],
+  "head": "function JA(i, e) { let t = new Kn(i, \"gas_cylinders\", e.seed || 0), n = t.rng, s = 12, o = () => n.range(.6, .9); t.add(\"diamond_plate\", Ge(.9,"
+ },
+ {
+  "names": [
+   "KA"
+  ],
+  "bytes": 2627,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "pipe_stack",
+   "wood_dark",
+   "wood_pallet",
+   "steel_rust",
+   "steel_dark",
+   "steel_rust",
+   "steel_dark",
+   "steel_galv"
+  ],
+  "props": [],
+  "head": "function KA(i, e) { let t = new Kn(i, \"pipe_stack\", e.seed || 0), n = t.rng, s = .1365, o = .012, r = .08, a = 14, l = (h = 1) => { "
+ },
+ {
+  "names": [
+   "J3"
+  ],
+  "bytes": 928,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "barrel",
+   "pallet",
+   "pallet_stack",
+   "crate_wood",
+   "crate_stack",
+   "ibc_tote",
+   "cable_reel",
+   "tire_stack"
+  ],
+  "props": [],
+  "head": "function J3(i) { i(\"barrel\", (e, t = {}) => { let n = Math.abs(t.seed | 0) % 4; return wf(`barrel|${t.color}|${!!t.lying}|${!!t.open}|${n}`, () => HA("
+ },
+ {
+  "names": [
+   "Q3"
+  ],
+  "bytes": 95,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Q3 = (i, e, t) => { let n = zi((t - i) / (e - i), 0, 1); return n * n * (3 - 2 * n); };"
+ },
+ {
+  "names": [
+   "nv"
+  ],
+  "bytes": 222,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function nv(i, e, t = 0, n = 0) { let s = new THREE.PlaneGeometry(i, e), o = s.attributes.uv, r = s.attributes.position; for (let a = 0; a < o.count"
+ },
+ {
+  "names": [
+   "QA"
+  ],
+  "bytes": 5469,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "tarp_cargo",
+   "wood_pallet",
+   "wood_pallet",
+   "position",
+   "tarp",
+   "paint_orange",
+   "steel_worn",
+   "steel_dark"
+  ],
+  "props": [],
+  "head": "function QA(i, e) { let t = new Kn(i, \"tarp_cargo\", e.seed || 0), n = t.rng, s = t.seed * 1.7, o = .144, r = [[-1.06, -.12, -.58, .58, n.range"
+ },
+ {
+  "names": [
+   "eR"
+  ],
+  "bytes": 688,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function eR(i, e, t, n) { let s = ev(eo(i, e, t, Math.min(e * .46, .075), 3, 3, 3), 3), o = n() * 9, r = n.range(-.05, .05), a = n.range(.4, 1); "
+ },
+ {
+  "names": [
+   "tR"
+  ],
+  "bytes": 1268,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "sandbags",
+   "dirt"
+  ],
+  "props": [],
+  "head": "function tR(i, e) { let t = new Kn(i, \"sandbags\", e.seed || 0), n = t.rng, s = .18, o = zi(e.courses | 0 || 5, 1, 7), r = t.mat(K3[0], K3[1]),"
+ },
+ {
+  "names": [
+   "K3"
+  ],
+  "bytes": 48,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "glove_fabric"
+  ],
+  "props": [],
+  "head": "var K3 = [\"glove_fabric\", { color: 9207134 }];"
+ },
+ {
+  "names": [
+   "Oc"
+  ],
+  "bytes": 3270,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "bottom",
+   "color",
+   "cardboard",
+   "cardboard",
+   "cardboard",
+   "cardboard",
+   "cardboard",
+   "polymer_tan"
+  ],
+  "props": [],
+  "head": "function Oc(i, e, t, n, s, { crush: o = 0, damp: r = .3, open: a = !1, tape: l = !0, label: c = \"\", arrow: u = !1, tint: h = 1 } = {}) { let f ="
+ },
+ {
+  "names": [
+   "nR"
+  ],
+  "bytes": 1146,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "cardboard_boxes",
+   "FRAGILE",
+   "KEEP DRY"
+  ],
+  "props": [],
+  "head": "function nR(i, e) { let t = new Kn(i, \"cardboard_boxes\", e.seed || 0), n = t.rng, s = () => n.range(-.015, .015), o = () => n.range(.82, 1); ret"
+ },
+ {
+  "names": [
+   "eb"
+  ],
+  "bytes": 149,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "tarp_cargo",
+   "sandbags",
+   "cardboard_boxes"
+  ],
+  "props": [],
+  "head": "function eb(i) { i(\"tarp_cargo\", (e, t = {}) => QA(e, t)), i(\"sandbags\", (e, t = {}) => tR(e, t)), i(\"cardboard_boxes\", (e, t = {}) => nR(e, t)); }"
+ },
+ {
+  "names": [
+   "tb",
+   "iR",
+   "T1",
+   "nb"
+  ],
+  "bytes": 123,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var tb = new THREE.Quaternion(), iR = new THREE.Vector3(0, 1, 0), T1 = new THREE.Vector3(), nb = new THREE.Matrix4();"
+ },
+ {
+  "names": [
+   "zr"
+  ],
+  "bytes": 362,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function zr(i, e, t, n, s = .006, o = !1) { T1.set(e[0] - i[0], e[1] - i[1], e[2] - i[2]); let r = T1.length(); T1.normalize(); let a = o ? $e(t, r, n) "
+ },
+ {
+  "names": [
+   "sR"
+  ],
+  "bytes": 203,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var sR = i => { let e = 0; for (let t = 0; t < i.length; t++) { let n = i[t], s = i[(t + 1) % i.length]; e += n[0] * s[1] - s[0] * n[1]; } "
+ },
+ {
+  "names": [
+   "ib"
+  ],
+  "bytes": 1030,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "tire",
+   "paint_yellow",
+   "steel_dark",
+   "steel_dark",
+   "steel_galv"
+  ],
+  "props": [],
+  "head": "function ib(i, e, t, n, s, o, r, a, l, c) { let u = tv(t, n, r, a); i.push({ p: [e, t, o > 0 ? s - n / 2 : -(s - n / 2)], r: [o > 0 ? tt : -tt, 0, 0"
+ },
+ {
+  "names": [
+   "oR"
+  ],
+  "bytes": 13271,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "forklift",
+   "yellow",
+   "number",
+   "steel_dark",
+   "diamond_plate",
+   "diamond_plate",
+   "rubber",
+   "hazard_stripes"
+  ],
+  "props": [],
+  "head": "function oR(i, e) { let t = new Kn(i, \"forklift\", e.seed || 0), n = t.rng, s = zi(+e.forksUp || 0, 0, 1), o = s * 1.5, r = o / 2, [a, l] ="
+ },
+ {
+  "names": [
+   "rR"
+  ],
+  "bytes": 6348,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "generator",
+   "yellow",
+   "number",
+   "steel_dark",
+   "steel_galv",
+   "steel_galv",
+   "rust_run",
+   "GEN-0"
+  ],
+  "props": [],
+  "head": "function rR(i, e) { let t = new Kn(i, \"generator\", e.seed || 0), n = t.rng, [s, o] = Ja(e.color, \"yellow\"), r = (m = 1) => typeof o == \"number\" ? "
+ },
+ {
+  "names": [
+   "aR"
+  ],
+  "bytes": 4639,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "dumpster",
+   "green",
+   "number",
+   "steel_worn",
+   "steel_worn",
+   "B4 WASTE ",
+   "white",
+   "stencil"
+  ],
+  "props": [],
+  "head": "function aR(i, e) { let t = new Kn(i, \"dumpster\", e.seed || 0), n = t.rng, [s, o] = Ja(e.color, \"green\"), r = (M = 1) => typeof o == \"number\" ? o "
+ },
+ {
+  "names": [
+   "lR"
+  ],
+  "bytes": 4554,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "toolbox_cart",
+   "number",
+   "steel_dark",
+   "aluminium",
+   "steel_dark",
+   "polymer_black",
+   "steel_bare",
+   "steel_bare"
+  ],
+  "props": [],
+  "head": "function lR(i, e) { let t = new Kn(i, \"toolbox_cart\", e.seed || 0), n = t.rng, [s, o] = Ja(e.color, \"red\"), r = (y = 1) => typeof o == \"number\" ? "
+ },
+ {
+  "names": [
+   "sb"
+  ],
+  "bytes": 185,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "forklift",
+   "generator",
+   "dumpster",
+   "toolbox_cart"
+  ],
+  "props": [],
+  "head": "function sb(i) { i(\"forklift\", (e, t = {}) => oR(e, t)), i(\"generator\", (e, t = {}) => rR(e, t)), i(\"dumpster\", (e, t = {}) => aR(e, t)), i(\"toolbox_cart\", (e"
+ },
+ {
+  "names": [
+   "cv"
+  ],
+  "bytes": 12,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var cv = {};"
+ },
+ {
+  "names": [
+   "cR"
+  ],
+  "bytes": 48,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "traffic_cone",
+   "jerry_can"
+  ],
+  "props": [],
+  "head": "var cR = new Set([\"traffic_cone\", \"jerry_can\"]);"
+ },
+ {
+  "names": [
+   "ob"
+  ],
+  "bytes": 7771,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "level-static",
+   "level-dynamic",
+   "string",
+   " ? [0, 0, Math.PI / 2] : Q.axis === ",
+   " ? F.rotation.y = Math.PI : Q === ",
+   " ? F.rotation.y = Math.PI / 2 : Q === ",
+   " ? F.rotation.y = -Math.PI / 2 : Q === ",
+   "concrete"
+  ],
+  "props": [],
+  "head": "function ob(i) { let e = new THREE.Group(); e.name = \"level-static\"; let t = new THREE.Group(); t.name = \"level-dynamic\"; let n = [], s = [], "
+ },
+ {
+  "names": [
+   "Dr"
+  ],
+  "bytes": 11,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Dr = 4;"
+ },
+ {
+  "names": [
+   "rb"
+  ],
+  "bytes": 2874,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "label",
+   "canvas",
+   "source-over",
+   "label_atlas"
+  ],
+  "props": [],
+  "head": "function rb(i, { scale: e = .5, maxW: t = 2048 } = {}) { let n = { count: 0, material: null, update() {} }; if (typeof document > \"u\") ret"
+ },
+ {
+  "names": [
+   "no",
+   "No",
+   "yt",
+   "Yt",
+   "iv",
+   "A1",
+   "sv"
+  ],
+  "bytes": 424,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var no = { X0: -16, X1: 12, Z0: -28, Z1: -11, EAVE: 7, RIDGE: 9.5, ZR: -19.5, FLOOR: .03 }, No = [-16, -11.1, -6.2, -.8, 5.6"
+ },
+ {
+  "names": [
+   "ab"
+  ],
+  "bytes": 21704,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "corrugated_roof",
+   "corrugated_roof",
+   "concrete",
+   "concrete_painted",
+   "paint_grey",
+   "steel_galv",
+   "steel_galv",
+   "steel_dark"
+  ],
+  "props": [],
+  "head": "function ab(i) { let { M: e, MI: t, box: n, slab: s, cyl: o, rod: r, ibeam: a, col: l, add: c, G: "
+ },
+ {
+  "names": [
+   "Hc"
+  ],
+  "bytes": 139,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Hc(i, e, t, n, s = 0) { let o = new THREE.Group(); return o.position.set(e, s, t), o.rotation.y = n, i.staticRoot.add(o), o; }"
+ },
+ {
+  "names": [
+   "Rn"
+  ],
+  "bytes": 228,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "string"
+  ],
+  "props": [],
+  "head": "function Rn(i, e, t, n, s, o, r, a, l, c = 0, u = null) { let h = Qi(c ? Wi(n, s, o, c) : $e(n, s, o), typeof t == \"string\" ? i.M(t) : t); return h.position"
+ },
+ {
+  "names": [
+   "ov"
+  ],
+  "bytes": 207,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "string"
+  ],
+  "props": [],
+  "head": "function ov(i, e, t, n, s, o, r, a, l = null, c = 8) { let u = Qi(ot(n, n, s, c), typeof t == \"string\" ? i.M(t) : t); return u.position.set(o, r, a), l && u"
+ },
+ {
+  "names": [
+   "rv"
+  ],
+  "bytes": 285,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "metal"
+  ],
+  "props": [],
+  "head": "function rv(i, e, t, n, s, o, r, a = \"metal\", l = 0) { let c = Math.abs(Math.cos(n)), u = Math.abs(Math.sin(n)), h = Math.abs(Math.sin(2 * n)) > .2 ? "
+ },
+ {
+  "names": [
+   "Ka"
+  ],
+  "bytes": 1425,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_blue",
+   "steel_dark",
+   "chainlink",
+   "chainlink",
+   "steel_worn",
+   "steel_rust",
+   "metal"
+  ],
+  "props": [],
+  "head": "function Ka(i, e, t, n = 0, s = \"paint_blue\", o = 1) { let r = Hc(i, e, t, n), a = 2.2, l = 1.2, c = 1.25, u = i.M(s), h = i.M(\"steel_dark"
+ },
+ {
+  "names": [
+   "Qa"
+  ],
+  "bytes": 908,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_red",
+   "steel_dark",
+   "steel_worn",
+   "metal"
+  ],
+  "props": [],
+  "head": "function Qa(i, e, t, n = 0, s = \"paint_red\") { let o = Hc(i, e, t, n), r = 1.1, a = .8, l = .75, c = i.M(s); for (let h of [-1, 1]) Rn(i, o,"
+ },
+ {
+  "names": [
+   "Ef"
+  ],
+  "bytes": 548,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "steel_worn",
+   "steel_rust",
+   "wood_dark"
+  ],
+  "props": [],
+  "head": "function Ef(i, e, t, n = 0, s = 9) { let o = Hc(i, e, t, n), r = i.M(\"steel_worn\"), a = i.M(\"steel_rust\"); for (let l of [-1.1, 1.1]) Rn(i, o, \"wood"
+ },
+ {
+  "names": [
+   "e0"
+  ],
+  "bytes": 403,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "rubber",
+   "paint_yellow"
+  ],
+  "props": [],
+  "head": "function e0(i, e, t, n = 0) { let s = Hc(i, e, t, n), o = new THREE.Shape(); o.moveTo(-.16, 0), o.lineTo(.16, 0), o.lineTo(.16, .05), o.lineTo(-.1, .19)"
+ },
+ {
+  "names": [
+   "Sf"
+  ],
+  "bytes": 616,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "steel_galv",
+   "steel_dark",
+   "paint_yellow",
+   "black",
+   "stencil",
+   "metal"
+  ],
+  "props": [],
+  "head": "function Sf(i, e, t, n, s = \"x-\", o = 3.2) { let r = s[0] === \"x\"; i.cyl(\"steel_galv\", .045, o, e, o / 2, t, { seg: 8 }), i.box(\"steel_dark\", .3, .02,"
+ },
+ {
+  "names": [
+   "av"
+  ],
+  "bytes": 1269,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_grey",
+   "paint_teal",
+   "paint_grey",
+   "steel_rust",
+   "wood_dark",
+   "steel_dark",
+   "paint_yellow",
+   "rubber"
+  ],
+  "props": [],
+  "head": "function av(i, e, t, n = 2, s = !0, o = .02) { let u = [\"paint_grey\", \"paint_teal\", \"paint_grey\", \"steel_rust\"]; for (let d = 0; d < n; d++) { let v = H"
+ },
+ {
+  "names": [
+   "Lr"
+  ],
+  "bytes": 714,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "rubber"
+  ],
+  "props": [],
+  "head": "function Lr(i, e, t = .025, n = \"rubber\", s = null) { let o = []; for (let r = 0; r < e.length; r++) { let a = e[r]; if (o.push([a[0], a.length > 2 "
+ },
+ {
+  "names": [
+   "lv"
+  ],
+  "bytes": 319,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "concrete",
+   "paint_grey",
+   "steel_dark",
+   "hazard_stripes",
+   "metal"
+  ],
+  "props": [],
+  "head": "function lv(i, e, t, n = 0) { let s = Hc(i, e, t, n); return Rn(i, s, \"concrete\", .7, .12, .5, 0, .06, 0, .015), Rn(i, s, \"paint_grey\", .55, .9, .3, 0, .57,"
+ },
+ {
+  "names": [
+   "lb"
+  ],
+  "bytes": 81,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var lb = { X: 30, LADDER_Z: 20, RAILS: [18.5, 28.5], Z0: -30, Z1: 28 };"
+ },
+ {
+  "names": [
+   "cb"
+  ],
+  "bytes": 6887,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "concrete",
+   "concrete_dirty",
+   "steel_worn",
+   "steel_dark",
+   "steel_galv",
+   "paint_yellow",
+   "rust_run",
+   "concrete"
+  ],
+  "props": [],
+  "head": "function cb(i) { let { M: e, box: t, slab: n, cyl: s, rod: o, tube: r, col: a, add: l, place: c } = "
+ },
+ {
+  "names": [
+   "uR",
+   "ts",
+   "R1",
+   "mt"
+  ],
+  "bytes": 93,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var uR = Math.PI, ts = uR / 2, R1 = .535, mt = (i, e, t) => new THREE.Vector3(i, e, t);"
+ },
+ {
+  "names": [
+   "hR"
+  ],
+  "bytes": 7826,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "green",
+   "grey",
+   "orange",
+   "white",
+   "blue",
+   "white",
+   "teal",
+   "grey"
+  ],
+  "props": [],
+  "head": "function hR(i) { let e = i.place, t = i.stack; t(-19.45, -5.12, [[20, \"green\"], [20, \"grey\"], [20, \"orange\"]]), t(-13.3, -5.12, [[20, \"white\", { ree"
+ },
+ {
+  "names": [
+   "fR"
+  ],
+  "bytes": 3103,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "fence_panel",
+   "both",
+   "left",
+   "metal",
+   "metal",
+   "steel_dark",
+   "hazard_stripes",
+   "metal"
+  ],
+  "props": [],
+  "head": "function fR(i) { let e = i.place, t = -38, n = 30, s = -30, o = 28, r = 2, a = 8; function l(c, u, h, f, p) { let d = Math.hypot"
+ },
+ {
+  "names": [
+   "C1"
+  ],
+  "bytes": 7557,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [
+   "level",
+   "relay_node",
+   "relay_node",
+   "relay_node",
+   "rubber",
+   "[level] label atlas failed",
+   "level-merged",
+   "relay_a"
+  ],
+  "props": [],
+  "head": "async function C1(i) { let e = new THREE.Group(); e.name = \"level\", i.scene.add(e); let t = ob(i); hR(t), fR(t); let n = ab(t), s = cb(t), o ="
+ },
+ {
+  "names": [
+   "dR"
+  ],
+  "bytes": 135,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function dR(i, e) { for (; i && i !== e;) { if (i.userData && i.userData.noMerge) return !0; i = i.parent; } return !1; }"
+ },
+ {
+  "names": [
+   "pR"
+  ],
+  "bytes": 88,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function pR(i) { let e = 0; return i.traverse(t => { t.isMesh && e++; }), e; }"
+ },
+ {
+  "names": [
+   "mR"
+  ],
+  "bytes": 143,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [],
+  "props": [],
+  "head": "async function mR(i) { let e = await C1(i); return { cam: [-32, 1.7, 6], target: [0, 2.4, 6.4], update: t => e.update(t) }; }"
+ },
+ {
+  "names": [
+   "mv"
+  ],
+  "bytes": 12,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var mv = {};"
+ },
+ {
+  "names": [
+   "_t",
+   "al",
+   "hb",
+   "gR",
+   "ub",
+   "I1"
+  ],
+  "bytes": 245,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var _t = (i, e, t) => new THREE.Vector3(i, e, t), al = i => i.isVector3 ? i : new THREE.Vector3(i[0], i[1], i[2]), hb = new THREE.Vector3(0, 1, 0), gR = n"
+ },
+ {
+  "names": [
+   "t0"
+  ],
+  "bytes": 199,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function t0(i, e, t) { let n = Math.imul(i, 374761393) ^ Math.imul(e, 668265263) ^ Math.imul(t, 1274126177); return n = Math.imul(n ^ n >>> 13, 1274126177),"
+ },
+ {
+  "names": [
+   "rl"
+  ],
+  "bytes": 460,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function rl(i, e, t) { let n = Math.floor(i), s = Math.floor(e), o = Math.floor(t), r = i - n, a = e - s, l = t - o; r = r * r * (3 - 2 "
+ },
+ {
+  "names": [
+   "uv"
+  ],
+  "bytes": 116,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function uv(i) { let e = i >>> 0; return () => (e = Math.imul(e, 1664525) + 1013904223 >>> 0, e / 4294967296); }"
+ },
+ {
+  "names": [
+   "P1",
+   "fb"
+  ],
+  "bytes": 37,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var P1 = [1, 1, 1], fb = [1, 1, 1];"
+ },
+ {
+  "names": [
+   "hv"
+  ],
+  "bytes": 451,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function hv(i, e, t, n = fb, s = 1) { let o = rl(i * .31 + 11.3, e * .23 + 5.1, t * .31 + 3.7), r = rl(i * 1.7 + 40.2, 9.5, t * 1.7 + 17.9), a = 1 - s"
+ },
+ {
+  "names": [
+   "db"
+  ],
+  "bytes": 23,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var db = new WeakSet();"
+ },
+ {
+  "names": [
+   "so"
+  ],
+  "bytes": 115,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function so(i, e, t = {}) { let n = i.mats.get(e, { vertexColors: !0, ...t }); return db.add(n), n; }"
+ },
+ {
+  "names": [
+   "io"
+  ],
+  "bytes": 1243,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [
+   "b",
+   "tris",
+   "remap",
+   "dz",
+   "minSize"
+  ],
+  "head": "var io = class { constructor() { this.b = new Map(), this.tris = 0, this.remap = null, this.dz = 0, this.minSize = 0; } add(e, t, n) { if (!t) ret"
+ },
+ {
+  "names": [
+   "Ee"
+  ],
+  "bytes": 227,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Ee(i, e, t, n, s, o, r = 0) { let a = Math.abs(n - i), l = Math.abs(s - e), c = Math.abs(o - t), u = r > 0 ? Wi(a, l, c, r) : $e(a, l, c)"
+ },
+ {
+  "names": [
+   "xt"
+  ],
+  "bytes": 189,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   " ? c.rotateZ(Math.PI / 2) : n === "
+  ],
+  "props": [],
+  "head": "function xt(i, e, t, n, s, o, r, a = 12, l = !1) { let c = ot(i, e, t, a, l); return n === \"x\" ? c.rotateZ(Math.PI / 2) : n === \"z\" && c.rotateX(Math.PI / 2"
+ },
+ {
+  "names": [
+   "Ke"
+  ],
+  "bytes": 357,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Ke(i, e, t = .03, n = 5, s = !1) { i = al(i), e = al(e); let o = new THREE.Vector3().subVectors(e, i), r = o.length(); if (r < 1e-5) return n"
+ },
+ {
+  "names": [
+   "jt"
+  ],
+  "bytes": 484,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function jt(i, e, t = .3, n = .3, s = 0) { i = al(i), e = al(e); let o = new THREE.Vector3().subVectors(e, i), r = o.length(); o.multiplyScalar(1 / r)"
+ },
+ {
+  "names": [
+   "kr"
+  ],
+  "bytes": 165,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function kr(i, e = .03, t = 5) { let n = []; for (let s = 0; s < i.length - 1; s++) { let o = Ke(i[s], i[s + 1], e, t); o && n.push(o); } return"
+ },
+ {
+  "names": [
+   "ua"
+  ],
+  "bytes": 237,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function ua(i, e, t = 1, n = 10) { i = al(i), e = al(e); let s = []; for (let o = 0; o <= n; o++) { let r = o / n, a = new THREE.Vector3().lerpV"
+ },
+ {
+  "names": [
+   "ll"
+  ],
+  "bytes": 157,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function ll(i, e, t, n, s, o = 0, r = 0) { let a = new THREE.PlaneGeometry(i, e); return r && a.rotateX(r), o && a.rotateY(o), a.translate(t, n, s), a; }"
+ },
+ {
+  "names": [
+   "ns"
+  ],
+  "bytes": 615,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function ns(i, e, t, { h: n = 1.1, post: s = 2.2, r: o = .022, tint: r, mid: a = !0 } = {}) { t = t.map(al); for (let l = 0; l < t.length - 1; l++"
+ },
+ {
+  "names": [
+   "pb"
+  ],
+  "bytes": 1574,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "#include <begin_vertex>",
+   "#include <color_fragment>",
+   "saltline-blink",
+   "position",
+   "color",
+   "blink"
+  ],
+  "props": [],
+  "head": "function pb() { let i = { value: 0 }, e = new THREE.MeshBasicMaterial({ vertexColors: !0, fog: !1 }); e.onBeforeCompile = n =>"
+ },
+ {
+  "names": [
+   "Bn"
+  ],
+  "bytes": 115,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Bn = (i, e, t, n = .12) => { let s = new THREE.OctahedronGeometry(n, 0); return s.translate(i, e, t), s; };"
+ },
+ {
+  "names": [
+   "Bt",
+   "is",
+   "Di",
+   "fv",
+   "ai",
+   "On",
+   "wo",
+   "Xi",
+   "ks",
+   "wn",
+   "Ms",
+   "En",
+   "cl"
+  ],
+  "bytes": 204,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Bt = 18.5, is = 28.5, Di = 5.4, fv = 21.2, ai = 22.8, On = 1.8, wo = 12, Xi = 62, ks = 41, wn = [.82, .95, 1.12], Ms = [.6, .72, .86], "
+ },
+ {
+  "names": [
+   "z1"
+  ],
+  "bytes": 20676,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_grey",
+   "paint_yellow",
+   "paint_white",
+   "paint_red",
+   "steel_galv",
+   "steel_dark",
+   "hazard_stripes",
+   "glass"
+  ],
+  "props": [],
+  "head": "function z1(i, e, t = {}) { let n = !!t.into, s = t.dz || 0, o = t.into || new io(), r = n ? { add(R, I, se, ae, k) { R.translate(0,"
+ },
+ {
+  "names": [
+   "mb"
+  ],
+  "bytes": 1245,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function mb(i, e, t, n, { s = 1, up: o = !1, tint: r = [.3, .36, .44] } = {}) { let a = [], l = (c, u, h, f, p, d) => a.push(Ee(c, u, h, f, p, d)); "
+ },
+ {
+  "names": [
+   "rt",
+   "vR",
+   "Eo",
+   "qn",
+   "xR",
+   "Fs",
+   "Vc",
+   "gb",
+   "yR",
+   "hs",
+   "Tf",
+   "Bo",
+   "bR"
+  ],
+  "bytes": 441,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var rt = 41, vR = 8, Eo = -9, qn = 63, xR = -4.4, Fs = 13, Vc = -1.6, gb = (i, e, t) => { let n = Math.min(1, Math.max(0, (t - i) / (e - i)));"
+ },
+ {
+  "names": [
+   "fn"
+  ],
+  "bytes": 430,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function fn(i, e, t) { let n = (bR - e) * .22, s = Math.max(0, 1 - i / 22), o = Eo - i - n * s, r = Math.min(1, Math.max(0, (e - Vc) / (Fs - Vc)))"
+ },
+ {
+  "names": [
+   "ha"
+  ],
+  "bytes": 222,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function ha(i, e, t) { let s = fn(i + .05, e, t).sub(fn(Math.max(0, i - .05), e, t)), o = fn(i, e + .05, t).sub(fn(i, e - .05, t)), r = s.cross(o).nor"
+ },
+ {
+  "names": [
+   "ul"
+  ],
+  "bytes": 879,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "position",
+   "normal"
+  ],
+  "props": [],
+  "head": "function ul(i, e, t, n, s, o = .012, r = 6, a = 1) { let l = [], c = [], u = [], h = []; for (let d = 0; d <= a; d++) for (let v = 0; v <= r; v+"
+ },
+ {
+  "names": [
+   "D1",
+   "hl"
+  ],
+  "bytes": 1040,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "position",
+   "normal",
+   "color"
+  ],
+  "props": [
+   "p",
+   "n",
+   "u",
+   "c"
+  ],
+  "head": "var D1 = class { constructor() { this.p = [], this.n = [], this.u = [], this.c = []; } v(e, t, n, s, o) { this.p.push(e.x, e.y, e.z), th"
+ },
+ {
+  "names": [
+   "vb"
+  ],
+  "bytes": 14831,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "hull_paint",
+   "hull_red",
+   "paint_white",
+   "steel_dark",
+   "steel_galv",
+   "rope",
+   "rubber",
+   "KITTIWAKE"
+  ],
+  "props": [],
+  "head": "function vb(i, e) { let t = new io(), n = so(i, \"hull_paint\"), s = so(i, \"hull_red\"), o = so(i, \"paint_white\"), r = i.mats.get(\"steel_dark\"), "
+ },
+ {
+  "names": [
+   "xb"
+  ],
+  "bytes": 5942,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "plastic_grey",
+   "paint_orange",
+   "polymer_black",
+   "steel_galv",
+   "glass",
+   "centripetal",
+   "position",
+   "boat"
+  ],
+  "props": [],
+  "head": "function xb(i, e) { let t = new io(), n = so(i, \"plastic_grey\"), s = so(i, \"paint_orange\"), o = i.mats.get(\"polymer_black\"), r = i.mats.get(\"s"
+ },
+ {
+  "names": [
+   "dv",
+   "k1",
+   "yb",
+   "L1",
+   "_b",
+   "bb"
+  ],
+  "bytes": 691,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var dv = new THREE.Color(12172214), k1 = (i, e = 1) => { let t = new THREE.Color(i); return [e * t.r / dv.r, e * t.g / dv.g, e * t.b / dv.b]; }, y"
+ },
+ {
+  "names": [
+   "Mb"
+  ],
+  "bytes": 16766,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "paint_white",
+   "position",
+   "normal",
+   "skyline"
+  ],
+  "props": [],
+  "head": "function Mb(i, e) { let t = new io(), n = so(i, \"paint_white\"), s = uv(90417), o = [5.5, 4.3, 2.9], r = [8, .45, .25], a = [0, 0, 0]; fu"
+ },
+ {
+  "names": [
+   "wb"
+  ],
+  "bytes": 2053,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "position",
+   "aOrbit",
+   "aPar",
+   "#include <begin_vertex>",
+   "saltline-gulls",
+   "gulls"
+  ],
+  "props": [],
+  "head": "function wb(i, e, t = 12) { let n = uv(5521), s = [], o = [], r = []; for (let u = 0; u < t; u++) { let f = u % 3 === 0 ? [54 + n() * 30, 9 "
+ },
+ {
+  "names": [
+   "_R"
+  ],
+  "bytes": 42,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "crane",
+   "ship",
+   "boat"
+  ],
+  "props": [],
+  "head": "var _R = [\"crane\", \"ship\", \"boat\", \"sky\"];"
+ },
+ {
+  "names": [
+   "Eb"
+  ],
+  "bytes": 2539,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "backdrop",
+   "boat",
+   "rope",
+   "crane",
+   "ship",
+   ") && (u = Mb(i, o), s.add(u.root)), (n(",
+   "backdrop-lamps",
+   "backdrop"
+  ],
+  "props": [],
+  "head": "function Eb(i, { only: e = null, showcase: t = !1 } = {}) { let n = b => !e || e === b, s = new THREE.Group(); s.name = \"backdrop\"; let o = pb(), "
+ },
+ {
+  "names": [
+   "pv"
+  ],
+  "bytes": 44,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [],
+  "props": [],
+  "head": "async function pv(i) { return Eb(i, {}); }"
+ },
+ {
+  "names": [
+   "MR"
+  ],
+  "bytes": 582,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "[backdrop] "
+  ],
+  "props": [],
+  "head": "function MR(i) { let e = i.params && _R.includes(i.params.bshow) ? i.params.bshow : null, t = Eb(i, { only: e, showcase: !0 }); console."
+ },
+ {
+  "names": [
+   "vv"
+  ],
+  "bytes": 12,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var vv = {};"
+ },
+ {
+  "names": [
+   "F1"
+  ],
+  "bytes": 211,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function F1(i, e, t) { let n = Math.imul(i | 0, 374761393) ^ Math.imul(e | 0, 668265263) ^ Math.imul(t | 0, 1274126177); return n = Math.imul(n ^ n >>> 13, "
+ },
+ {
+  "names": [
+   "Ab"
+  ],
+  "bytes": 460,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Ab(i, e, t, n) { let s = Math.floor(i), o = Math.floor(e), r = i - s, a = e - o, l = r * r * (3 - 2 * r), c = a * a * (3 - 2 * a)"
+ },
+ {
+  "names": [
+   "fs"
+  ],
+  "bytes": 195,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function fs(i, e, t, n = 4, s = 0) { let o = 0, r = .5, a = 0; for (let l = 0; l < n; l++) o += r * Ab(i, e, t + l * 17, s), a += r, i *= 2, e *= 2,"
+ },
+ {
+  "names": [
+   "So",
+   "fl",
+   "wR",
+   "Li",
+   "Sb",
+   "Tb",
+   "ER"
+  ],
+  "bytes": 925,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var So = i => i < 0 ? 0 : i > 1 ? 1 : i, fl = (i, e, t) => { let n = So((t - i) / (e - i)); return n * n * (3 - 2 * n); }, wR = .385, Li = { "
+ },
+ {
+  "names": [
+   "SR"
+  ],
+  "bytes": 808,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function SR(i, e) { let t = .5 + (fs(i / 8.5, e / 8.5, 11, 4) - .47) * .3 + (fs(i / 2.4, e / 2.4, 23, 3) - .5) * .14; for (let n = 0; n < Sb.length; n++) { "
+ },
+ {
+  "names": [
+   "Rb"
+  ],
+  "bytes": 717,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Rb(i) { let e = new Uint8Array(i * i * 4), { x0: t, z0: n, size: s } = Li, o = s / i; for (let r = 0; r < i; r++) { "
+ },
+ {
+  "names": [
+   "U1"
+  ],
+  "bytes": 420,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function U1(i, e, t, n, s) { let o = (t - Li.x0) / Li.size * e - .5, r = (n - Li.z0) / Li.size * e - .5; o = o < 0 ? 0 : o > e - 1.001 ? e - 1.001 : o, "
+ },
+ {
+  "names": [
+   "Cb"
+  ],
+  "bytes": 1390,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Cb(i) { let e = new Uint8Array(i * i * 4), t = new Uint8Array(i * i * 4), n = new Float32Array(i * i), s = new Float32Array(i * i); for"
+ },
+ {
+  "names": [
+   "N1"
+  ],
+  "bytes": 411,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function N1(i, e, { repeat: t = !0, aniso: n = 1 } = {}) { let s = new THREE.DataTexture(i, e, e, THREE.RGBAFormat, THREE.UnsignedByteType); return s.wr"
+ },
+ {
+  "names": [
+   "fa"
+  ],
+  "bytes": 52,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var fa = { x0: -40, z0: -30, w: 70, h: 60 };"
+ },
+ {
+  "names": [
+   "Pb"
+  ],
+  "bytes": 6302,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "canvas",
+   "lighter",
+   "Big Shoulders Display",
+   "Barlow Condensed",
+   "Arial Narrow",
+   "butt",
+   "left",
+   "middle"
+  ],
+  "props": [],
+  "head": "function Pb(i, e = 1) { let t = document.createElement(\"canvas\"); t.width = t.height = i; let n = t.getContext(\"2d\"); n.fillStyle = \"#000\", n.fillRect(0"
+ },
+ {
+  "names": [
+   "TR",
+   "AR",
+   "RR"
+  ],
+  "bytes": 11198,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var TR = ` uniform float uTime, uRain, uWetG, uReflOn, uReflLod, uMarkRes, uMaskRes; uniform sampler2D uMask, uMarks, uDetail, uDetailN, uRefl; uniform vec3 uMa"
+ },
+ {
+  "names": [
+   "Ib"
+  ],
+  "bytes": 2499,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "apron_wet",
+   "#include <begin_vertex>",
+   "#include <common>",
+   "#include <map_fragment>",
+   "#include <roughnessmap_fragment>",
+   "float roughnessFactor = gRough;",
+   "#include <normal_fragment_maps>",
+   "#include <lights_physical_fragment>"
+  ],
+  "props": [],
+  "head": "function Ib(i, e) { let t = { uTime: { value: 0 }, uRain: { value: .6 }, uWetG: i.mats && i.mats.uniforms && i.m"
+ },
+ {
+  "names": [
+   "zb"
+  ],
+  "bytes": 2719,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "planarReflection"
+  ],
+  "props": [],
+  "head": "function zb(i, e, t) { let n = new THREE.PerspectiveCamera(); n.layers.set(0), n.matrixAutoUpdate = !0; let s = new THREE.WebGLRenderTarget(16, 16, { "
+ },
+ {
+  "names": [
+   "B1",
+   "Db"
+  ],
+  "bytes": 274,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var B1 = [[-.92, .39, 9.5, .06], [-.75, -.66, 5.7, .04], [-.99, .12, 3.3, .026], [-.5, .87, 2, .016]], Db = [[-.8, .6, 1.31, .02], [-.95, -.31, .83, .014], [-"
+ },
+ {
+  "names": [
+   "fi"
+  ],
+  "bytes": 64,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var fi = i => Number.isInteger(i) ? i.toFixed(1) : i.toFixed(5);"
+ },
+ {
+  "names": [
+   "Lb"
+  ],
+  "bytes": 218,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Lb(i, e, t) { let n = 1 - THREE.MathUtils.smoothstep(Math.hypot(i - 30, e), 50, 220), s = 0; for (let o of B1) s += o[3] * Math.sin(o[4] * (o[0"
+ },
+ {
+  "names": [
+   "CR",
+   "PR",
+   "IR",
+   "zR",
+   "DR",
+   "LR"
+  ],
+  "bytes": 3302,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var CR = B1.map(i => ` { float ph = ${fi(i[4])} * dot(vec2(${fi(i[0])}, ${fi(i[1])}), swp.xz) - ${fi(i[5])} * uTime; sdisp.y += ${fi(i[3])} * sin(ph); sdisp.xz"
+ },
+ {
+  "names": [
+   "gv"
+  ],
+  "bytes": 162,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function gv(i, e, t, n, s) { let o = [i], r = i, a = t; for (; r < e - .001;) r = Math.min(e, r + a), o.push(r), a = Math.min(s, a * n); return o;"
+ },
+ {
+  "names": [
+   "kb"
+  ],
+  "bytes": 3747,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "position",
+   "normal",
+   "#include <begin_vertex>",
+   "#include <common>",
+   "#include <map_fragment>",
+   "#include <roughnessmap_fragment>",
+   "float roughnessFactor = gRough;",
+   "#include <normal_fragment_maps>"
+  ],
+  "props": [],
+  "head": "function kb(i, e) { let t = oi.seaY, n = gv(27.5, 880, .75, 1.075, 120), s = gv(48, 880, .9, 1.085, 120), r = s.map(M => -M).reverse().concat(gv(-"
+ },
+ {
+  "names": [
+   "Ub",
+   "kR",
+   "FR",
+   "UR",
+   "NR"
+  ],
+  "bytes": 5140,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Ub = ` uniform vec3 uBoxMin[4]; uniform vec3 uBoxMax[4]; bool wInside(vec3 p){ for (int i = 0; i < 4; i++) { if (all(greaterThan(p, uBoxMin[i])) && all(le"
+ },
+ {
+  "names": [
+   "Fb"
+  ],
+  "bytes": 538,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "position",
+   "aSeed"
+  ],
+  "props": [],
+  "head": "function Fb(i, e, t) { let n = new THREE.InstancedBufferGeometry(); n.setAttribute(\"position\", new THREE.BufferAttribute(new Float32Array([-.5, 0, 0, .5, 0,"
+ },
+ {
+  "names": [
+   "Nb"
+  ],
+  "bytes": 3344,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "rain",
+   "rainSplash",
+   "thunder"
+  ],
+  "props": [],
+  "head": "function Nb(i, e) { let t = i.rng && i.rng.fork ? i.rng.fork() : Math.random, n = Math.max(.15, i.quality.rain || .5), s = Math.round(9e3 * n), o "
+ },
+ {
+  "names": [
+   "O1"
+  ],
+  "bytes": 2774,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [
+   "900 40px \"Big Shoulders Display\"",
+   "ground"
+  ],
+  "props": [],
+  "head": "async function O1(i) { let e = (i.quality.tex || 512) >= 1024, t = Math.min(8, i.renderer.capabilities.getMaxAnisotropy ? i.renderer.capabilities.getMaxAn"
+ },
+ {
+  "names": [
+   "BR"
+  ],
+  "bytes": 1783,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [
+   "PlaneGeometry",
+   "paint_red",
+   "paint_blue",
+   "paint_teal",
+   "paint_yellow",
+   "paint_white",
+   "paint_orange",
+   "plastic_blue"
+  ],
+  "props": [],
+  "head": "async function BR(i) { let e = i.scene.children.find(o => o.isMesh && o.geometry && o.geometry.type === \"PlaneGeometry\" && o.geometry.parameters && o.geometry"
+ },
+ {
+  "names": [
+   "Sv"
+  ],
+  "bytes": 12,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Sv = {};"
+ },
+ {
+  "names": [
+   "yv"
+  ],
+  "bytes": 976,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function yv(i) { let n = new Float32Array(4096), s = i >>> 0, o = () => { s |= 0, s = s + 1831565813 | 0; let l = Math.imul(s ^ s >>> 15, "
+ },
+ {
+  "names": [
+   "To",
+   "Wc",
+   "H1"
+  ],
+  "bytes": 142,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var To = (i, e, t) => { let n = (t - i) / (e - i); return n = n < 0 ? 0 : n > 1 ? 1 : n, n * n * (3 - 2 * n); }, Wc = 4, H1 = 2;"
+ },
+ {
+  "names": [
+   "Bb"
+  ],
+  "bytes": 2691,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Bb(i = 128) { let e = i * Wc, t = i * H1, n = new Uint8Array(e * t * 4), s = yv(9173), o = new Float32Array(i * i), r = new Float"
+ },
+ {
+  "names": [
+   "Af",
+   "bv",
+   "oo",
+   "_v",
+   "n0",
+   "OR",
+   "Mv",
+   "V1",
+   "Gc",
+   "W1"
+  ],
+  "bytes": 101,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Af = 4, bv = 2, oo = 0, _v = 1, n0 = 2, OR = 3, Mv = 4, V1 = 5, Gc = 6, W1 = 7;"
+ },
+ {
+  "names": [
+   "Ob"
+  ],
+  "bytes": 3015,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Ob(i = 128) { let e = i * Af, t = i * bv, n = new Uint8Array(e * t * 4), s = yv(4441), o = [0, 1].map(() => { let a = 7 + Math."
+ },
+ {
+  "names": [
+   "dl",
+   "xv",
+   "da"
+  ],
+  "bytes": 166,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var dl = 4, xv = 2, da = { bullet_metal: [0, 1], bullet_concrete: [2, 3], bullet_wood: [4], scorch: [5], soot: [6], bullet_glass: [7"
+ },
+ {
+  "names": [
+   "Hb"
+  ],
+  "bytes": 11121,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "canvas",
+   "canvas",
+   "canvas",
+   "rgb(128,128,128)",
+   "rgb(0,235,0)",
+   "round",
+   "round",
+   "rgba(14,13,12,0.4)"
+  ],
+  "props": [],
+  "head": "function Hb(i = 256) { let e = i * dl, t = i * xv, n = document.createElement(\"canvas\"); n.width = e, n.height = t; let s = document.createElement"
+ },
+ {
+  "names": [
+   "HR",
+   "Xb",
+   "VR",
+   "WR",
+   "Vb"
+  ],
+  "bytes": 5237,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var HR = ` attribute vec4 aPos; // xyz centre, w size (m) attribute vec4 aAxis; // mode 1: stretch axis (length = streak length); mode 2: plane normal; w ="
+ },
+ {
+  "names": [
+   "Ev"
+  ],
+  "bytes": 3337,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "position",
+   "aPos",
+   "aAxis",
+   "aCol",
+   "aMisc",
+   "fx_lit",
+   "fx_add"
+  ],
+  "props": [],
+  "head": "function Ev(i, e, { lit: t, tex: n, cols: s, rows: o, renderOrder: r, sun: a, sunDir: l, ambLo: c, ambHi: u }) { let h = new THREE.Instanced"
+ },
+ {
+  "names": [
+   "qc",
+   "Xc",
+   "GR",
+   "Rf",
+   "q1",
+   "qR",
+   "ws",
+   "Oo",
+   "X1",
+   "Y1",
+   "Wb"
+  ],
+  "bytes": 7799,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "dist",
+   "speed",
+   "trav",
+   "width"
+  ],
+  "props": [
+   "cap",
+   "sorted",
+   "n",
+   "freeTop",
+   "px",
+   "py",
+   "pz",
+   "vx",
+   "vy",
+   "vz",
+   "age",
+   "life"
+  ],
+  "head": "var qc = 1, Xc = 2, GR = 4, Rf = class { constructor(e, t) { this.cap = e, this.sorted = t, this.n = 0, this.freeTop = e; let n = () => ne"
+ },
+ {
+  "names": [
+   "XR"
+  ],
+  "bytes": 772,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   " + e.getY(o).toFixed(3) + "
+  ],
+  "props": [],
+  "head": "function XR() { let i = new THREE.BoxGeometry(1, 1, 1, 2, 1, 2), e = i.attributes.position, t = 1234.5, n = () => (t = Math.sin(t * 12.9898 + 78.2"
+ },
+ {
+  "names": [
+   "$1",
+   "wv",
+   "YR",
+   "Gb",
+   "qb",
+   "G1"
+  ],
+  "bytes": 3587,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "fx_debris",
+   "fx_debris",
+   "concrete"
+  ],
+  "props": [
+   "G",
+   "cap",
+   "next",
+   "live",
+   "mesh",
+   "px",
+   "py",
+   "pz",
+   "vx",
+   "vy",
+   "vz",
+   "ax"
+  ],
+  "head": "var $1 = class { constructor(e, t = 256) { this.G = e, this.cap = t, this.next = 0, this.live = 0; let n = new THREE.MeshStandardMaterial({ "
+ },
+ {
+  "names": [
+   "$R"
+  ],
+  "bytes": 412,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function $R() { let t = [[0, 0], [.006076, 0], [.0062, .0012], [.005083999999999999, .0022], [.005083999999999999, .0034], [.006013999999999999, .0046], [.005"
+ },
+ {
+  "names": [
+   "Z1"
+  ],
+  "bytes": 4557,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "brass",
+   "fx_shells",
+   "concrete",
+   "concrete",
+   "concrete",
+   "shell:bounce"
+  ],
+  "props": [
+   "G",
+   "cap",
+   "next",
+   "mesh",
+   "px",
+   "py",
+   "pz",
+   "vx",
+   "vy",
+   "vz",
+   "qx",
+   "qy"
+  ],
+  "head": "var Z1 = class { constructor(e, t = 60) { this.G = e, this.cap = t, this.next = 0; let n; try { n = e.mats.get(\"brass\"); } catch { "
+ },
+ {
+  "names": [
+   "ZR",
+   "Yb",
+   "j1"
+  ],
+  "bytes": 4529,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "position",
+   "normal",
+   ", this.uv), s.setAttribute(",
+   "fx_decals",
+   "fx_decals",
+   "bullet_wood"
+  ],
+  "props": [
+   "cap",
+   "next",
+   "count",
+   "atlas",
+   "pos",
+   "nor",
+   "uv",
+   "col",
+   "baseA",
+   "mesh",
+   "uvs"
+  ],
+  "head": "var ZR = { bullet_metal: .25, bullet_concrete: .34, bullet_wood: .24, scorch: 2.4, soot: .3, bullet_glass: .3 }, Yb = 14, j1 = cla"
+ },
+ {
+  "names": [
+   "$b",
+   "Zb",
+   "ht",
+   "Ze",
+   "Et",
+   "zt",
+   "J1",
+   "qe",
+   "Es",
+   "Ho",
+   "Ei",
+   "jR",
+   "K1",
+   "Ao"
+  ],
+  "bytes": 376,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var $b = 1400, Zb = 3200, ht = Math.random, Ze = (i, e) => i + (e - i) * Math.random(), Et = new THREE.Vector3(), zt = new THREE.Vector3(), J1 = new"
+ },
+ {
+  "names": [
+   "Yc"
+  ],
+  "bytes": 261,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Yc(i, e, t, n) { return i == null ? (Ao[0] = e, Ao[1] = t, Ao[2] = n) : Array.isArray(i) ? (Ao[0] = i[0], Ao[1] = i[1], Ao[2] = i[2]) : i.isColor ? ("
+ },
+ {
+  "names": [
+   "ro"
+  ],
+  "bytes": 289,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function ro(i, e, t) { let n = ht() * 2 - 1, s = ht() * 2 - 1, o = ht() * 2 - 1, r = Math.hypot(n, s, o) || 1, a = e * Math.cbrt(ht()) / r; "
+ },
+ {
+  "names": [
+   "Cf"
+  ],
+  "bytes": 25104,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [
+   "string",
+   "enemy",
+   "enemy",
+   "water",
+   "water",
+   "metal",
+   "bullet_metal",
+   "wood"
+  ],
+  "props": [],
+  "head": "async function Cf(i) { let e = i.scene || i.render && i.render.scene, t = new THREE.Vector3(-.8, 0, .3), n = new THREE.Vector3(Mn.color.r, Mn.color.g,"
+ },
+ {
+  "names": [
+   "JR"
+  ],
+  "bytes": 4221,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "concrete",
+   "paint_blue",
+   "wood_pallet",
+   "concrete",
+   "metal",
+   "wood",
+   "concrete",
+   "player"
+  ],
+  "props": [],
+  "head": "function JR(i) { let e = i.fx, t = i.params.fxshow || \"all\", n = new THREE.Group(), s = (N, Q, K, ie, F) => { let X = new THREE.Mesh(N, i.ma"
+ },
+ {
+  "names": [
+   "vt"
+  ],
+  "bytes": 21,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var vt = Math.PI * 2;"
+ },
+ {
+  "names": [
+   "ao"
+  ],
+  "bytes": 231,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function ao(i) { let e = i >>> 0; return () => { e |= 0, e = e + 1831565813 | 0; let t = Math.imul(e ^ e >>> 15, 1 | e); return t = t + Math.imu"
+ },
+ {
+  "names": [
+   "Kb"
+  ],
+  "bytes": 145,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Kb(i) { let e = 2166136261; for (let t = 0; t < i.length; t++) e ^= i.charCodeAt(t), e = Math.imul(e, 16777619); return e >>> 0; }"
+ },
+ {
+  "names": [
+   "St",
+   "Xt",
+   "Ns"
+  ],
+  "bytes": 153,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var St = (i, e) => new Float32Array(Math.max(1, Math.round(i * e))), Xt = (i, e, t) => e + (t - e) * i(), Ns = i => 440 * Math.pow(2, (i - 69) / 12);"
+ },
+ {
+  "names": [
+   "Qn"
+  ],
+  "bytes": 113,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Qn(i, e, t) { let n = St(i, e); for (let s = 0; s < n.length; s++) n[s] = t() * 2 - 1; return n; }"
+ },
+ {
+  "names": [
+   "Av"
+  ],
+  "bytes": 387,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Av(i, e, t, n) { let s = vt * Math.max(10, Math.min(e, n * .47)) / n, o = Math.cos(s), r = Math.sin(s), a = r / (2 * t), l, c, "
+ },
+ {
+  "names": [
+   "tn"
+  ],
+  "bytes": 242,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function tn(i, e, t, n, s) { let [o, r, a, l, c] = Av(e, t, n, s), u = 0, h = 0; for (let f = 0; f < i.length; f++) { let p = i[f], d = o "
+ },
+ {
+  "names": [
+   "di"
+  ],
+  "bytes": 500,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "function"
+  ],
+  "props": [],
+  "head": "function di(i, e, t, n, s, o = 1) { let r = i.length; for (let a = 0; a < o; a++) { let l = 0, c = 0, u = null; a > 0 && (l = di.z1, c ="
+ },
+ {
+  "names": [
+   "Vo"
+  ],
+  "bytes": 67,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Vo = (i, e, t = 1) => n => i * Math.pow(e / i, Math.pow(n, t));"
+ },
+ {
+  "names": [
+   "lo"
+  ],
+  "bytes": 91,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function lo(i, e, t) { for (let n = 0; n < i.length; n++) i[n] *= t(n / e); return i; }"
+ },
+ {
+  "names": [
+   "co"
+  ],
+  "bytes": 102,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var co = (i, e = 0) => e > 0 ? t => (1 - Math.exp(-t / e)) * Math.exp(-t / i) : t => Math.exp(-t / i);"
+ },
+ {
+  "names": [
+   "Se"
+  ],
+  "bytes": 179,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Se(i, e, t, n, s) { let o = Math.round(t * s), r = Math.min(e.length, i.length - o); for (let a = Math.max(0, -o); a < r; a++) i[o + a] += e[a]"
+ },
+ {
+  "names": [
+   "Us"
+  ],
+  "bytes": 190,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Us(i, e, t, n, s) { let o = i.length, r = Math.round(t * s) % o; r < 0 && (r += o); for (let a = 0; a < e.length; a++) i[r] += e[a] * n, ++r "
+ },
+ {
+  "names": [
+   "Qb"
+  ],
+  "bytes": 136,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Qb(i) { let e = 0; for (let t = 0; t < i.length; t++) { let n = Math.abs(i[t]); n > e && (e = n); } return e; }"
+ },
+ {
+  "names": [
+   "ml"
+  ],
+  "bytes": 81,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function ml(i, e) { for (let t = 0; t < i.length; t++) i[t] *= e; return i; }"
+ },
+ {
+  "names": [
+   "Wo"
+  ],
+  "bytes": 130,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Wo(i, e) { let t = 1 / Math.tanh(e); for (let n = 0; n < i.length; n++) i[n] = Math.tanh(i[n] * e) * t; return i; }"
+ },
+ {
+  "names": [
+   "em"
+  ],
+  "bytes": 279,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function em(i, e, t, n) { let s = Math.min(i.length >> 1, Math.round(t * e)), o = Math.min(i.length >> 1, Math.round(n * e)); for (let r = 0; r < s; r++"
+ },
+ {
+  "names": [
+   "at"
+  ],
+  "bytes": 253,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function at(i, e, t, n, s = {}) { let o = Qn(i, t, e); s.hp && tn(o, \"hp\", s.hp, .707, i), s.lp && tn(o, \"lp\", s.lp, .707, i), s.bp && tn(o, \"bp\", s.bp, s.q"
+ },
+ {
+  "names": [
+   "ei"
+  ],
+  "bytes": 264,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function ei(i, e, t, n, s, o, r = 6e-4) { let a = St(i, e), l = 0; for (let c = 0; c < a.length; c++) { let u = c / i; l += vt * (n + (t - n) * "
+ },
+ {
+  "names": [
+   "jc"
+  ],
+  "bytes": 247,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function jc(i, e, t, n, s = !0) { let o = St(i, e), r = 0, a = o.length; for (let l = 0; l < a; l++) { let c = l / a; r += vt * t * Math.pow"
+ },
+ {
+  "names": [
+   "dn"
+  ],
+  "bytes": 417,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function dn(i, e, t, n) { let s = St(i, e); for (let [r, a, l] of t) { if (r > i * .46) continue; let c = vt * r / i, u = n ? n() * vt : 0, "
+ },
+ {
+  "names": [
+   "Jc"
+  ],
+  "bytes": 580,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Jc(i, e, t, n, s = {}) { let o = St(i, t), r = s.from || 0, a = s.fall || 1; for (let l = 0; l < n; l++) { let c = r + (t - r - .02) * "
+ },
+ {
+  "names": [
+   "Rv"
+  ],
+  "bytes": 308,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Rv(i, e, t) { let n = i.length - e, s = new Float32Array(e); s.set(i.subarray(0, e)); for (let o = 0; o < n; o++) { let r = (o + .5) / n,"
+ },
+ {
+  "names": [
+   "Zc"
+  ],
+  "bytes": 107,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Zc(i, e, t, n, s = .4) { let o = Qn(i, e + s, t); return n(o), Rv(o, Math.round(i * e), !0); }"
+ },
+ {
+  "names": [
+   "Q1"
+  ],
+  "bytes": 157,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Q1(i, ...e) { let t = new Float32Array(i); for (let [n, s] of e) for (let o = 0; o < Math.min(i, n.length); o++) t[o] += n[o] * s; return t; }"
+ },
+ {
+  "names": [
+   "KR"
+  ],
+  "bytes": 1093,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function KR(i, e, t) { let n = [1, .955, 1.045, .985][t & 3], s = [1, 1.12, .9, 1.05][t & 3], o = St(i, .32); Se(o, at(i, e, .012, .0011, { hp: "
+ },
+ {
+  "names": [
+   "QR"
+  ],
+  "bytes": 761,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function QR(i, e, t) { let n = o => { let r = ao(o), a = St(i, 1.55), l = t ? [[.058, .5, 4200], [.097, .4, 3300], [.139, .28, 2500], [."
+ },
+ {
+  "names": [
+   "e8"
+  ],
+  "bytes": 742,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function* e8(i, e, t) { let n = function* (o) { let r = ao(o), a = St(i, 2.3), l = Qn(i, 2.25, r); di(l, \"lp\", Vo(2400, 260, .5), "
+ },
+ {
+  "names": [
+   "t8"
+  ],
+  "bytes": 352,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function t8(i, e) { let t = St(i, .13); return Se(t, dn(i, .05, [[2840, .004, 1], [4130, .004, .7], [6320, .003, .5], [1210, .008, .4]], e), 0, .7, i), Se(t"
+ },
+ {
+  "names": [
+   "e_"
+  ],
+  "bytes": 327,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function e_(i, e, t, n, s, o) { let r = Qn(i, t, e); di(r, \"bp\", Vo(n, s), 1.6, i); let a = .5, l = .5; for (let c = 0; c < r.length; c++) { c %"
+ },
+ {
+  "names": [
+   "n8"
+  ],
+  "bytes": 477,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function n8(i, e) { let t = St(i, .46); return Se(t, dn(i, .03, [[3300, .004, 1], [5100, .003, .6]], e), .004, .45, i), Se(t, at(i, e, .005, .001, { hp:"
+ },
+ {
+  "names": [
+   "i8"
+  ],
+  "bytes": 526,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function i8(i, e) { let t = St(i, .5); return Se(t, e_(i, e, .14, 1250, 2900, 240), 0, .55, i), Se(t, dn(i, .03, [[2600, .004, 1], [4300, .003, .5]], e), .0"
+ },
+ {
+  "names": [
+   "s8"
+  ],
+  "bytes": 527,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function s8(i, e) { let t = St(i, .38); Se(t, dn(i, .03, [[2900, .005, 1], [4600, .004, .6]], e), 0, .3, i), Se(t, at(i, e, .03, .01, { bp: 2200, q:"
+ },
+ {
+  "names": [
+   "o8"
+  ],
+  "bytes": 502,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function o8(i, e, t) { let n = St(i, .55), s = [1, 1.09, .93][t % 3], o = 0, r = 1, a = 2 + (t !== 1 ? 1 : 0); for (let l = 0; l < a; l++) {"
+ },
+ {
+  "names": [
+   "r8"
+  ],
+  "bytes": 500,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function r8(i, e, t) { let n = St(i, .3), s = [1, 1.07, .94, 1.03][t & 3]; Se(n, ei(i, .06, 112 * s, 58 * s, .018, .02, .002), 0, .75, i), Se(n, at(i, e"
+ },
+ {
+  "names": [
+   "t_"
+  ],
+  "bytes": 443,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function t_(i, e, t, n) { let s = St(i, t), o = Qn(i, t * .9, e); di(o, \"bp\", Vo(1500, 520), .8, i), Se(s, lo(o, i, co(.085 * n, .007)), 0, .9, i), Se(s"
+ },
+ {
+  "names": [
+   "a8"
+  ],
+  "bytes": 128,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function a8(i, e, t) { let n = t_(i, e, .46, 1 + t * .08); return Se(n, ei(i, .06, 100, 55, .02, .02, .002), 0, .5, i), n; }"
+ },
+ {
+  "names": [
+   "l8"
+  ],
+  "bytes": 450,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function l8(i, e, t) { let n = St(i, .38), s = [1, 1.08, .92][t % 3]; return Se(n, ei(i, .06, 120, 62, .018, .02, .002), 0, .6, i), Se(n, at(i, e, .04, "
+ },
+ {
+  "names": [
+   "c8"
+  ],
+  "bytes": 462,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function c8(i, e) { let t = St(i, .45); Se(t, ei(i, .14, 124, 44, .03, .045, .002), 0, 1, i), Se(t, at(i, e, .14, .035, { lp: 520 }), 0, 1, i), Se(t, "
+ },
+ {
+  "names": [
+   "u8"
+  ],
+  "bytes": 276,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function u8(i, e) { let t = St(i, .26); return Se(t, at(i, e, .2, .05, { bp: 900, q: .7, att: .02 }), 0, .6, i), Se(t, at(i, e, .1, .025, { "
+ },
+ {
+  "names": [
+   "h8"
+  ],
+  "bytes": 312,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function h8(i, e) { let t = St(i, .5); return Se(t, ei(i, .25, 92, 38, .04, .06, .0015), 0, 1.1, i), Se(t, at(i, e, .2, .04, { lp: 320 }), 0, 1.2, i),"
+ },
+ {
+  "names": [
+   "f8"
+  ],
+  "bytes": 271,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function f8(i) { let e = St(i, 2.4); for (let t = 0; t < e.length; t++) { let n = t / i; e[t] = (Math.sin(vt * 3150 * n) + .7 * Math.sin(vt * 4013 *"
+ },
+ {
+  "names": [
+   "d8"
+  ],
+  "bytes": 368,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function d8(i, e, t) { let n = St(i, .5), s = [640, 880, 745][t % 3] * Xt(e, .97, 1.03); return Se(n, at(i, e, .015, .003, { hp: 1500 }), 0, 1, i)"
+ },
+ {
+  "names": [
+   "p8"
+  ],
+  "bytes": 441,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function p8(i, e, t) { let n = St(i, .36), s = [1, 1.1, .9][t % 3]; return Se(n, at(i, e, .06, .013, { lp: 950 * s }), 0, 1.1, i), Se(n, ei(i, .05"
+ },
+ {
+  "names": [
+   "m8"
+  ],
+  "bytes": 404,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function m8(i, e, t) { let n = St(i, .26), s = t ? 1.14 : 1; return Se(n, dn(i, .2, [[238 * s, .03, 1], [512 * s, .022, .8], [893 * s, .016, .6], [1410 "
+ },
+ {
+  "names": [
+   "g8"
+  ],
+  "bytes": 114,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function g8(i, e, t) { let n = t_(i, e, .5, .8 + t * .2); return Se(n, jc(i, .035, 420, 1150), 0, .5, i), n; }"
+ },
+ {
+  "names": [
+   "v8"
+  ],
+  "bytes": 652,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function v8(i, e, t) { let n = St(i, .3), s = [1, 1.12, .9][t % 3]; Se(n, at(i, e, .03, .007, { hp: 4e3 }), 0, .9, i), Se(n, dn(i, .12, [[2920 * s"
+ },
+ {
+  "names": [
+   "x8"
+  ],
+  "bytes": 296,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function x8(i, e) { let t = St(i, .45); Se(t, at(i, e, .01, .002, { hp: 2500 }), 0, 1, i); for (let n = 0; n < 9; n++) { let s = Xt(e, 3200, 950"
+ },
+ {
+  "names": [
+   "y8"
+  ],
+  "bytes": 605,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function y8(i, e, t) { let n = St(i, .75), s = [3300, 2700, 3900][t % 3], o = [820, 1100, 700][t % 3], r = 0, a = Qn(i, .75, e); for (let l "
+ },
+ {
+  "names": [
+   "b8"
+  ],
+  "bytes": 456,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function b8(i, e, t) { let n = St(i, .3), s = Qn(i, .28, e), o = [5200, 4300, 6100][t % 3], r = [1300, 1e3, 1700][t % 3]; di(s, \"bp\", Vo(o, r, ."
+ },
+ {
+  "names": [
+   "Tv"
+  ],
+  "bytes": 41,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Tv = (i, e) => Math.round(i * e) / e;"
+ },
+ {
+  "names": [
+   "_8"
+  ],
+  "bytes": 739,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function* _8(i, e) { let n = i * 2, s = new Float32Array(n), o = [[184, 2.5], [207.5, 3.5], [233, 2], [258.5, 4.5]]; for (let [l, c] of o) { let"
+ },
+ {
+  "names": [
+   "M8"
+  ],
+  "bytes": 692,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function M8(i, e) { let n = i * 2, s = new Float32Array(n); for (let r = 0; r < n; r++) { let a = r / i, l = 1.1 * Math.sin(vt * .5 * a) + .5 "
+ },
+ {
+  "names": [
+   "w8"
+  ],
+  "bytes": 645,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function w8(i, e) { let n = i * 2, s = new Float32Array(n); for (let r = 0; r < n; r++) { let a = r / i, l = vt * 50 * a; s[r] = (Math.sin"
+ },
+ {
+  "names": [
+   "E8"
+  ],
+  "bytes": 769,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function E8(i, e, t) { let n = St(i, .3), s = t ? 1.07 : 1, o = 0; Se(n, at(i, e, .008, .0012, { hp: 3200 }), 0, 1.1, i); let r = St(i, .12)"
+ },
+ {
+  "names": [
+   "S8"
+  ],
+  "bytes": 561,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function S8(i, e, t) { let n = St(i, .48), s = t ? .94 : 1; return Se(n, at(i, e, .012, .002, { hp: 1500, lp: 6e3 }), 0, .7, i), Se(n, ei(i, ."
+ },
+ {
+  "names": [
+   "T8"
+  ],
+  "bytes": 546,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function T8(i, e, t) { let n = St(i, .42), s = [1, 1.07, .93][t % 3]; Se(n, jc(i, .035, 920 * s, 610 * s), 0, .06, i); let o = .03; return Se(n, ei("
+ },
+ {
+  "names": [
+   "A8"
+  ],
+  "bytes": 1126,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function A8(i, e) { let t = St(i, 1.5), n = [0, 0, 0, 0]; Se(t, at(i, e, .02, .004, { hp: 2500 }), 0, .9, i); let s = [184, 207, 233, 258]; fo"
+ },
+ {
+  "names": [
+   "R8"
+  ],
+  "bytes": 1005,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function R8(i, e) { let t = St(i, 1.9), n = 0, s = 0, o = St(i, 1.3); for (let r = 0; r < o.length; r++) { let a = r / i, l = 30 + 112"
+ },
+ {
+  "names": [
+   "C8"
+  ],
+  "bytes": 686,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function C8(i, e, t) { let n = St(i, .52), s = t ? 622 : 1320, o = s * 1.4142, r = 0, a = (l, c, u, h) => { let f = Math.round(c * i), "
+ },
+ {
+  "names": [
+   "P8"
+  ],
+  "bytes": 972,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function P8(i, e, t) { let n = St(i, .6), s = n.length, o = .55, r = 0, a = 0; for (let c = 0; c < s; c++) { let u = c / i, h = Ma"
+ },
+ {
+  "names": [
+   "I8"
+  ],
+  "bytes": 796,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function I8(i, e, t) { let n = St(i, 3), s = t ? .9 : 1; Se(n, at(i, e, .03, .006, { hp: 1500 }), 0, 1.8, i), Se(n, ei(i, 1.6, 96 * s, 27, .16, .3"
+ },
+ {
+  "names": [
+   "z8"
+  ],
+  "bytes": 949,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function z8(i, e) { let t = St(i, 1.7); Se(t, at(i, e, .01, .002, { hp: 2500 }), 0, 1, i); let n = Qn(i, .5, e); tn(n, \"bp\", 3e3, .8, i); let s "
+ },
+ {
+  "names": [
+   "D8"
+  ],
+  "bytes": 681,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function* D8(i, e, t) { let n = St(i, 6.5), s = Qn(i, 6.4, e); yield, di(s, \"lp\", Vo(t ? 520 : 380, 70, .6), .7, i), yield; let o = []; for (let a ="
+ },
+ {
+  "names": [
+   "jb"
+  ],
+  "bytes": 51,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var jb = [0, 1, .435, .268, .19, .145, .116, .097];"
+ },
+ {
+  "names": [
+   "L8"
+  ],
+  "bytes": 508,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function L8(i, e) { let t = St(i, 5), n = t.length; for (let s = 0; s < n; s++) { let o = s / i, r = .0025 * Math.sin(vt * 4.3 * o), a ="
+ },
+ {
+  "names": [
+   "k8"
+  ],
+  "bytes": 739,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function k8(i, e, t) { let n = St(i, 1.4), s = t ? 3 : 4, o = .02; for (let r = 0; r < s; r++) { let a = Xt(e, .17, .26) * (t ? 1.4 : 1), "
+ },
+ {
+  "names": [
+   "F8"
+  ],
+  "bytes": 383,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function F8(i, e, t) { let n = St(i, 1.1), s = t ? 1.19 : 1, o = .01, r = t ? 3 : 4; for (let a = 0; a < r; a++) Se(n, dn(i, .5, [[2310 * s, Xt("
+ },
+ {
+  "names": [
+   "U8"
+  ],
+  "bytes": 318,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function U8(i, e) { let t = St(i, 2.8), n = St(i, 2.2); return Se(n, dn(i, 2.2, [[47, .7, 1], [77, .55, .9], [121, .4, .7], [163, .3, .5], [214, .22, .4"
+ },
+ {
+  "names": [
+   "N8"
+  ],
+  "bytes": 199,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function N8(i, e) { let t = St(i, .09); return Se(t, dn(i, .08, [[1820, .009, 1], [2730, .007, .6], [640, .012, .5]], e), 0, 1, i), Se(t, at(i, e, .004, .00"
+ },
+ {
+  "names": [
+   "B8"
+  ],
+  "bytes": 123,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function B8(i, e) { let t = St(i, .06); return Se(t, dn(i, .05, [[3200, .008, 1], [4800, .005, .3]], e), 0, 1, i), t; }"
+ },
+ {
+  "names": [
+   "O8"
+  ],
+  "bytes": 948,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function* O8(i, e) { let n = function* (s) { let o = Zc(i, 6, s, u => { tn(u, \"hp\", 900, .6, i), tn(u, \"lp\", 8500, .6, i); }); yield; le"
+ },
+ {
+  "names": [
+   "H8"
+  ],
+  "bytes": 820,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function* H8(i, e) { let n = function* (s) { let o = Zc(i, 6, s, c => { tn(c, \"lp\", 1300, .6, i), tn(c, \"hp\", 110, .7, i); }), r = o.l"
+ },
+ {
+  "names": [
+   "V8"
+  ],
+  "bytes": 524,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function V8(i, e) { let s = Qn(i, 8.5, e), o = Float32Array.from(s); di(s, \"bp\", r => { let a = r * 8.5; return 380 + 190 * Math.sin(vt * a / 8)"
+ },
+ {
+  "names": [
+   "W8"
+  ],
+  "bytes": 622,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function* W8(i, e) { let s = Qn(i, 8.5, e), o = Qn(i, 8 + .5, e), r = Qn(i, 8 + .5, e); yield, tn(s, \"lp\", 1100, .6, i), tn(s, \"hp\", 70, .7, i), tn("
+ },
+ {
+  "names": [
+   "Fr",
+   "Cv"
+  ],
+  "bytes": 338,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Fr = { bpm: 100, bar: 2.4, loopBars: 8, sr: 32e3 }, Cv = [{ root: 38, tones: [0, 3, 7, 12, 10], base: 50 }, { root: 34"
+ },
+ {
+  "names": [
+   "Jb"
+  ],
+  "bytes": 477,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Jb(i, e, t, n, s, o, r) { let a = Math.round((t + s) * i), l = new Float32Array(a), c = [r(), r(), r()], u = [1 - o, 1, 1 + o * 1.1]; f"
+ },
+ {
+  "names": [
+   "G8"
+  ],
+  "bytes": 658,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function* G8(i, e) { let t = Fr.bar * 8, n = Math.round(t * i), s = function* (o) { let r = new Float32Array(n); for (let a = 0; a < 4; a+"
+ },
+ {
+  "names": [
+   "n_"
+  ],
+  "bytes": 521,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function n_(i, e, t) { let n = Math.round(.42 * i), s = new Float32Array(n), o = 0, r = 0, a = 0, l = 0, c = 0; for (let u = 0; u < "
+ },
+ {
+  "names": [
+   "q8"
+  ],
+  "bytes": 478,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function* q8(i) { let e = Fr.bar * 8, t = new Float32Array(Math.round(e * i)), n = [0, 0, 2, 0, 1, 0, 2, 0, 3, 0, 2, 0, 1, 0, 4, 2], s = [1, .45, "
+ },
+ {
+  "names": [
+   "X8"
+  ],
+  "bytes": 885,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function* X8(i, e) { let t = Fr.bar * 4, n = new Float32Array(Math.round(t * i)), s = () => Q1(Math.round(.9 * i), [ei(i, .9, 74, 34, .07, .24, .002),"
+ },
+ {
+  "names": [
+   "$c"
+  ],
+  "bytes": 632,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function $c(i, e, t) { let n = Math.round(t * i), s = new Float32Array(n), o = 0, r = 0, a = 0, l = 0, c = null; for (let u = 0; u <"
+ },
+ {
+  "names": [
+   "Y8"
+  ],
+  "bytes": 298,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function* Y8(i) { let e = Fr.bar * 8, t = new Float32Array(Math.round(e * i)); for (let n = 0; n < 4; n++) { let s = Cv[n]; for (let [o, r] of ["
+ },
+ {
+  "names": [
+   "Pf"
+  ],
+  "bytes": 261,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Pf(i, e, t) { let n = dn(i, t, [[e, t * .3, 1], [e * 2.003, t * .18, .4], [e * 3.01, t * .1, .18], [e * 4.2, t * .05, .1], [e * .5, t * .3, .25]]), "
+ },
+ {
+  "names": [
+   "$8"
+  ],
+  "bytes": 417,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function* $8(i) { let e = Fr.bar * 8, t = new Float32Array(Math.round(e * i)), n = (s, o, r) => { let a = Pf(i, Ns(o), 3.2); Us(t, a, s, r"
+ },
+ {
+  "names": [
+   "Z8"
+  ],
+  "bytes": 332,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function* Z8(i) { let e = St(i, 2.8); [57, 62, 65, 69].forEach((t, n) => { Se(e, Pf(i, Ns(t), 1.6), n * .15, .45 + n * .08, i), Se(e, n_(i, Ns(t), 1), n"
+ },
+ {
+  "names": [
+   "j8"
+  ],
+  "bytes": 485,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function* j8(i) { let e = St(i, 4.2); Se(e, ei(i, 1, 73.4, 36.7, .1, .3, .002), 0, .9, i), Se(e, ei(i, 1, 73.4, 36.7, .1, .3, .002), .6, .7, i); for (let "
+ },
+ {
+  "names": [
+   "J8"
+  ],
+  "bytes": 385,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function* J8(i) { let e = St(i, 6); Se(e, ei(i, 1.4, 73.4, 36.7, .15, .4, .003), 0, .9, i); for (let [t, n] of [[38, 1], [50, .8], [57, .7], [62, .7], [66"
+ },
+ {
+  "names": [
+   "K8"
+  ],
+  "bytes": 594,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function K8(i, e) { let t = St(i, 3.8), n = t.length, s = [0, 0, 0]; for (let o = 0; o < n; o++) { let r = o / i, a = Math.pow(2, -1.1 * M"
+ },
+ {
+  "names": [
+   "Q8"
+  ],
+  "bytes": 543,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Q8(i, e) { let t = (n, s) => { let o = St(i, 1.4), r = [[.062, .55], [.089, .42], [.118, .36], [.151, .26], [.178, .2], [.243, .1]]; fo"
+ },
+ {
+  "names": [
+   "eC"
+  ],
+  "bytes": 545,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function eC(i, e) { let t = (n, s) => { let o = St(i, 2.2), r = Qn(i, 2.18, n); di(r, \"lp\", Vo(5200, 650, .5), .7, i), Se(o, lo(r, i, co(.33, .0"
+ },
+ {
+  "names": [
+   "ki",
+   "Xn",
+   "pl",
+   "Go",
+   "i_",
+   "s_"
+  ],
+  "bytes": 7985,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "near",
+   "near",
+   "near",
+   "near",
+   "near",
+   "world",
+   "near",
+   "near"
+  ],
+  "props": [],
+  "head": "var ki = 44100, Xn = 32e3, pl = 22050, Go = { rifle_shot: { gen: KR, n: 4, sr: ki, peak: .97, bus: \"near\", max: 5,"
+ },
+ {
+  "names": [
+   "o_"
+  ],
+  "bytes": 316,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function o_(i, e, t) { let n = Array.isArray(e) ? e : [e]; if (!i.loop) for (let r of n) em(r, t, i.ir ? 0 : 3e-4, i.ir ? .05 : .012); let s = 0; for (l"
+ },
+ {
+  "names": [
+   "r_"
+  ],
+  "bytes": 256,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function r_(i, e = 0, t) { let n = Go[i]; if (!n) return null; let s = t || n.sr, o = e % n.n, r = n.gen(s, ao(Kb(i) + o * 7919), o); if (s_(r))"
+ },
+ {
+  "names": [
+   "a_"
+  ],
+  "bytes": 359,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function a_(i, e = 0, t) { let n = Go[i]; if (!n) return null; let s = t || n.sr, o = e % n.n, r = n.gen(s, ao(Kb(i) + o * 7919), o), a = null"
+ },
+ {
+  "names": [
+   "pi",
+   "Pv",
+   "l_",
+   "Iv",
+   "tC",
+   "nC",
+   "tm"
+  ],
+  "bytes": 1491,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "impact_metal",
+   "impact_concrete",
+   "impact_wood",
+   "impact_water",
+   "impact_glass",
+   "impact_concrete",
+   "impact_wood",
+   "step_metal"
+  ],
+  "props": [],
+  "head": "var pi = (i, e, t) => Math.min(t, Math.max(e, i)), Pv = (i, e, t) => { let n = pi((t - i) / (e - i), 0, 1); return n * n * (3 - 2 * n); }, l_ = { "
+ },
+ {
+  "names": [
+   "iC"
+  ],
+  "bytes": 398,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "none"
+  ],
+  "props": [],
+  "head": "function iC() { let i = () => {}, e = { setPos: i, setGain: i, setPitch: i, stop: i }; return { silent: !0, update: "
+ },
+ {
+  "names": [
+   "c_"
+  ],
+  "bytes": 331,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [
+   "interactive",
+   "[audio] WebAudio unavailable \\u2014 running silent"
+  ],
+  "props": [],
+  "head": "async function c_(i) { let e = typeof window < \"u\" && (window.AudioContext || window.webkitAudioContext), t = null; try { e && (t = new e({ la"
+ },
+ {
+  "names": [
+   "u_"
+  ],
+  "bytes": 32133,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "running",
+   "[audio] ready callback",
+   "[audio] synthesis failed for ",
+   "lowpass",
+   "ir_outdoor",
+   "ir_shed",
+   "HRTF",
+   "equalpower"
+  ],
+  "props": [],
+  "head": "function u_(i, e, t) { let n = i.events, s = Math.random, o = () => t ? !0 : e.state === \"running\", r = t ? t.bufs : new Map(), a = new Map(),"
+ },
+ {
+  "names": [
+   "h_",
+   "f_",
+   "d_",
+   "p_",
+   "m_",
+   "If",
+   "g_"
+  ],
+  "bytes": 675,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "forward",
+   "back",
+   "left",
+   "right",
+   "jump",
+   "sprint",
+   "sprint",
+   "crouch"
+  ],
+  "props": [],
+  "head": "var h_ = { KeyW: \"forward\", KeyS: \"back\", KeyA: \"left\", KeyD: \"right\", Space: \"jump\", ShiftLeft: \"sprint\", ShiftRight: \"sprint\", "
+ },
+ {
+  "names": [
+   "v_"
+  ],
+  "bytes": 11388,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "view",
+   "lock",
+   "touch",
+   "Touch controls active",
+   "drag",
+   " : f.locked ? ",
+   "Click the view to capture the mouse",
+   "active"
+  ],
+  "props": [],
+  "head": "function v_(i) { let e = i.renderer && i.renderer.domElement || document.getElementById(\"view\"), t = document.getElementById(\"ui\"), n = new Set(), "
+ },
+ {
+  "names": [
+   "Mt",
+   "rC"
+  ],
+  "bytes": 809,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Mt = { walk: 3.8, sprint: 6.4, crouch: 1.9, ads: 2.4, accelGround: 34, decelGround: 26, accelAir: 9, gravity: 21, jumpAp"
+ },
+ {
+  "names": [
+   "x_"
+  ],
+  "bytes": 9738,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "concrete",
+   "player:hit",
+   "player:dead",
+   "explosion",
+   "water",
+   "concrete",
+   "concrete",
+   "concrete"
+  ],
+  "props": [],
+  "head": "function x_(i) { let e = i.camera, t = () => i.render && i.render.post || n, n = {}, s = Pi.eye, o = Mt.standHeight, r = 0, a = 0, "
+ },
+ {
+  "names": [
+   "zv"
+  ],
+  "bytes": 2679,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "enemy:killed",
+   "weak",
+   "enemy",
+   "player",
+   "impact",
+   "player:hitEnemy",
+   "weak",
+   "player"
+  ],
+  "props": [],
+  "head": "function zv(i) { let e = { shots: 0, hits: 0, kills: 0 }; return i.events.on(\"enemy:killed\", () => { e.kills++; }), { stats: e, "
+ },
+ {
+  "names": [
+   "nm",
+   "zf"
+  ],
+  "bytes": 57,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var nm = new THREE.Vector3(), zf = new THREE.Vector3();"
+ },
+ {
+  "names": [
+   "Xv"
+  ],
+  "bytes": 12,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Xv = {};"
+ },
+ {
+  "names": [
+   "im",
+   "cC",
+   "b_"
+  ],
+  "bytes": 290,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var im = (i, e, t) => { let n = Math.sin(i * 12.9898 + e * 78.233 + t * 37.719) * 43758.5453; return n - Math.floor(n); }, cC = (i, e, t) => Math.ma"
+ },
+ {
+  "names": [
+   "sm"
+  ],
+  "bytes": 721,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "color"
+  ],
+  "props": [],
+  "head": "function sm(i, e, t = 0, n = null) { let s = i.attributes.position, o = i.attributes.normal, r = s.count, a = new Float32Array(r * 3); for (let "
+ },
+ {
+  "names": [
+   "y_",
+   "uC"
+  ],
+  "bytes": 55,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var y_ = new THREE.Euler(), uC = new THREE.Matrix4();"
+ },
+ {
+  "names": [
+   "Rt"
+  ],
+  "bytes": 213,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Rt(i, e, t, n, s, o, r, a, l = 0, c = null) { let u = Wi(i, e, t, n); return sm(u, a, l, cC), c && (y_.set(c[0], c[1], c[2]), u.applyMatrix4(uC.mak"
+ },
+ {
+  "names": [
+   "hC"
+  ],
+  "bytes": 246,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function hC(i, e) { let t = new THREE.Shape(); if (i.forEach((n, s) => s ? t.lineTo(n[0], n[1]) : t.moveTo(n[0], n[1])), t.closePath(), e) for (let n of e) "
+ },
+ {
+  "names": [
+   "__"
+  ],
+  "bytes": 262,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function __(i, e, t, n) { return new THREE.ExtrudeGeometry(hC(i, n), { depth: Math.max(1e-4, e - 2 * t), bevelEnabled: t > 0, bevelThickness: t, "
+ },
+ {
+  "names": [
+   "M_"
+  ],
+  "bytes": 533,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function M_(i) { i.computeBoundingBox(); let e = i.boundingBox.min.z, t = i.boundingBox.max.z, n = i.attributes.position, s = i.attributes.norma"
+ },
+ {
+  "names": [
+   "xr"
+  ],
+  "bytes": 163,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function xr(i, e, t, n, s, o = 0, r = null) { let a = __(i, t - e, n, r); return sm(a, s, o, b_), M_(a), a.translate(0, 0, e + n), a.rotateY(Math.PI / 2), a"
+ },
+ {
+  "names": [
+   "qo"
+  ],
+  "bytes": 140,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function qo(i, e, t, n, s, o = 0, r = null) { let a = __(i, t - e, n, r); return sm(a, s, o, b_), M_(a), a.translate(0, 0, -t + n), a; }"
+ },
+ {
+  "names": [
+   "Cn"
+  ],
+  "bytes": 1614,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "position",
+   "normal",
+   "color"
+  ],
+  "props": [],
+  "head": "function Cn(i, e, t, n = 0, s = 0, o = 0, r = null) { let a = [], l = [], c = [], u = [], h = 0; for (let p = 0; p < i.length - 1; p++) { "
+ },
+ {
+  "names": [
+   "Fi"
+  ],
+  "bytes": 250,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Fi(i, e, t, n, s, o, r = 12, a = 0) { let l = Math.min(i * .25, e * .25), c = e / 2, u = Cn([[0, -c], [i - l, -c], [i, -c + l], [i, c - l], ["
+ },
+ {
+  "names": [
+   "Dv"
+  ],
+  "bytes": 375,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Dv(i, e, t, n, s = 4) { let o = [], r = n / 2, a = t / 2 - r; for (let l = 0; l <= s; l++) { let c = -Math.PI / 2 + l / s * Math.PI; "
+ },
+ {
+  "names": [
+   "fC",
+   "mi"
+  ],
+  "bytes": 573,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "PAC-9 Longshore"
+  ],
+  "props": [],
+  "head": "var fC = (i, e, t, n, s) => [[i + s, e], [t - s, e], [t, e + s], [t, n - s], [t - s, n], [i + s, n], [i, n - s], [i, e + s]], mi = { name: \"PAC-9 Longshor"
+ },
+ {
+  "names": [
+   "w_"
+  ],
+  "bytes": 15437,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "poly",
+   "plain",
+   "bolt"
+  ],
+  "props": [],
+  "head": "function w_() { let i = [1, 1, 1], e = [1, 1, 1], t = [5.5, 5.5, 5.7], n = [.4, .4, .42], s = [1, 1, 1], o = [.022, .022, .023], r = ["
+ },
+ {
+  "names": [
+   "Kc"
+  ],
+  "bytes": 74,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Kc = i => (i.index ? i.index.count : i.attributes.position.count) / 3;"
+ },
+ {
+  "names": [
+   "ti",
+   "vl",
+   "rm",
+   "Bv",
+   "Fv",
+   "Lv",
+   "am",
+   "lm",
+   "dC",
+   "kf",
+   "gl",
+   "Df",
+   "pC",
+   "E_",
+   "mC",
+   "gC",
+   "um",
+   "xl",
+   "Ff",
+   "vC",
+   "Xo",
+   "S_",
+   "yl"
+  ],
+  "bytes": 2046,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "position",
+   "color"
+  ],
+  "props": [
+   "N",
+   "P",
+   "C",
+   "weld"
+  ],
+  "head": "var ti = THREE.Vector3, vl = THREE.Quaternion, rm = THREE.Matrix4, Bv = [31, 21.5, 12.5], Fv = [5.6, 5.3, 5], Lv = [3.2, 3.1, 3], am = [12.5, 10, 7."
+ },
+ {
+  "names": [
+   "I_"
+  ],
+  "bytes": 744,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "position",
+   "color"
+  ],
+  "props": [],
+  "head": "function I_(i, e, t) { let n = [], s = [], o = [], r = i.length, a = e.length; for (let c = 0; c < a; c++) for (let u = 0; u < r; u++) { "
+ },
+ {
+  "names": [
+   "Uv",
+   "cm"
+  ],
+  "bytes": 103,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Uv = [-1, -.9, -.5, 0, .5, .9, 1], cm = i => Math.abs(i) > .95 ? -1 : Math.abs(i) > .8 ? .82 : 1;"
+ },
+ {
+  "names": [
+   "Lf"
+  ],
+  "bytes": 416,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "function"
+  ],
+  "props": [],
+  "head": "function Lf(i, e, t, n, s, o, r, a = null, l = !1, c = Uv, u = Uv) { return I_(c, u, (h, f, p) => { let d = i + h * t, v = e + (l ? f : -f) * n, "
+ },
+ {
+  "names": [
+   "om",
+   "Nv",
+   "T_",
+   "A_",
+   "R_",
+   "xC"
+  ],
+  "bytes": 630,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var om = [{ base: [-.031, 0, -.094], len: [.044, .026, .022], rad: [.0096, .009, .0083, .0076] }, { base: [-.0105, .001, -.099], len: [.04"
+ },
+ {
+  "names": [
+   "z_"
+  ],
+  "bytes": 3912,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function z_(i) { let e = new yl(T_), { base: t, qs: n, len: s, rad: o } = i, r = i.pads || [1, 1, 0], a = i.patchJ ?? "
+ },
+ {
+  "names": [
+   "yC",
+   "bC"
+  ],
+  "bytes": 119,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var yC = i => new vl().setFromAxisAngle(new ti(0, 1, 0), i), bC = i => new vl().setFromAxisAngle(new ti(1, 0, 0), i);"
+ },
+ {
+  "names": [
+   "C_"
+  ],
+  "bytes": 233,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function C_(i, e) { let t = [yC(e[3] || 0)]; for (let n = 0; n < 3; n++) t.push(t[n].clone().multiply(bC(-e[n]))); return z_({ base: new ti(i.base[0],"
+ },
+ {
+  "names": [
+   "_C"
+  ],
+  "bytes": 253,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function _C(i, e) { let t = i.clone().negate(), n = new ti().crossVectors(e, t); n.lengthSq() < 1e-6 && n.set(1, 0, 0), n.normalize(); let s = new ti("
+ },
+ {
+  "names": [
+   "MC"
+  ],
+  "bytes": 598,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function MC(i) { let e = i.map(o => new ti(o[0], o[1], o[2]).normalize()), t = new ti(-.72, .69, 0), n = [], s = e[2].clone().sub(e[0]); s.lengt"
+ },
+ {
+  "names": [
+   "Qc",
+   "D_",
+   "Ov",
+   "Hv",
+   "L_",
+   "k_"
+  ],
+  "bytes": 268,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Qc = .006, D_ = i => -.0975 + .0125 * Math.pow((i + .008) / .04, 2), Ov = i => D_(i) + .006, Hv = i => .029 + .014 * xl(.05, .85, i), L_ = i => .018"
+ },
+ {
+  "names": [
+   "kv"
+  ],
+  "bytes": 158,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function kv(i, e) { let t = um((Qc - e) / (Qc - Ov(i))), n = Math.min(.999, Math.abs(i / Hv(t))); return L_(t) * Math.pow(1 - Math.pow(n, 2.5), .4); }"
+ },
+ {
+  "names": [
+   "wC"
+  ],
+  "bytes": 226,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function wC(i, e) { let t = um((Qc - e) / (Qc - Ov(i))), n = Hv(t), s = Math.min(.999, Math.abs(i / n)); return k_(t) * Math.pow(1 - Math.pow(s, 2.5"
+ },
+ {
+  "names": [
+   "EC"
+  ],
+  "bytes": 907,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function EC() { let e = new yl(24), t = new ti(), n = [[0, 0, 1, 1], [.1, 0, 1, 1], [.22, 0, 1, 1], [.36, 0, 1, 1], [.5, 0, 1, 1], [.64, 0, 1, 1], [.7"
+ },
+ {
+  "names": [
+   "SC"
+  ],
+  "bytes": 1364,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function SC(i) { let t = new yl(12), n = new ti(), s = new ti(), o = new ti(), r = new ti(), a = new ti(), l = new ti(i.x, i.y, i.z - "
+ },
+ {
+  "names": [
+   "P_"
+  ],
+  "bytes": 365,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function P_(i) { if (i.scale(-1, 1, 1), !i.index) { let t = i.attributes.position.count, n = new Uint32Array(t); for (let s = 0; s < t; s++) n[s"
+ },
+ {
+  "names": [
+   "Vv"
+  ],
+  "bytes": 5349,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "palm",
+   "guard",
+   "seam",
+   "heelPad",
+   "finger",
+   "thumb",
+   "cuff",
+   "strapTab"
+  ],
+  "props": [],
+  "head": "function Vv(i) { let e = [], t = i.debugParts || null, n = (d, v) => (e.push(v), t && t.push([d, v]), v); n(\"palm\", EC()); { let d = []; f"
+ },
+ {
+  "names": [
+   "hm",
+   "Uf",
+   "Nf"
+  ],
+  "bytes": 562,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var hm = { model: [8, 8, 330, 84], maker: [8, 100, 560, 40], cal: [8, 146, 560, 40], prop: [8, 192, 700, 40], safe: [8, 240, 90, 34], se"
+ },
+ {
+  "names": [
+   "TC"
+  ],
+  "bytes": 2305,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "canvas",
+   "middle",
+   "left",
+   "left",
+   "\"Barlow Condensed\", \"Arial Narrow\", Arial, sans-serif",
+   "\"IBM Plex Mono\", \"Courier New\", monospace",
+   "Big Shoulders Display",
+   "Barlow Condensed"
+  ],
+  "props": [],
+  "head": "function TC() { let i = document.createElement(\"canvas\"); i.width = Uf, i.height = Nf; let e = i.getContext(\"2d\"); e.clearRect(0, 0, Uf, Nf), e.textBase"
+ },
+ {
+  "names": [
+   "F_"
+  ],
+  "bytes": 1783,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "position"
+  ],
+  "props": [],
+  "head": "function F_(i) { let e = [], t = [], n = [], s = []; for (let [l, c, u, h, f, p, d = 0] of i) { let [v, g, x, y] = hm[l], b = f * x / "
+ },
+ {
+  "names": [
+   "U_"
+  ],
+  "bytes": 4474,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function U_(i, e) { let t = new THREE.Shape(); i.forEach((r, a) => a ? t.lineTo(r[0], r[1]) : t.moveTo(r[0], r[1])), t.closePath(); let n = new THREE.Shap"
+ },
+ {
+  "names": [
+   "N_"
+  ],
+  "bytes": 3908,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "position"
+  ],
+  "props": [],
+  "head": "function N_() { let i = [], e = [], t = [], n = [], s = (d, v, g, x, y) => { let b = i.length / 3; for (let m of [d, v, g, x]) i.p"
+ },
+ {
+  "names": [
+   "Wv",
+   "AC",
+   "RC",
+   "CC"
+  ],
+  "bytes": 3002,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Wv = { value: 1 }, AC = ` varying vec3 vObjP; varying vec3 vWNrm; varying vec3 vONrm; uniform float uKind; uniform float uRain; float dh3(vec3 p){ r"
+ },
+ {
+  "names": [
+   "Bf"
+  ],
+  "bytes": 736,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "#include <common>",
+   "#include <begin_vertex>",
+   "#include <common>",
+   "#include <roughnessmap_fragment>",
+   "#include <normal_fragment_maps>",
+   "pac9-detail-"
+  ],
+  "props": [],
+  "head": "function Bf(i, e) { return i.onBeforeCompile = t => { t.uniforms.uKind = { value: e }, t.uniforms.uRain = Wv, t.vertexShader = t.vertexShader.re"
+ },
+ {
+  "names": [
+   "gi",
+   "fm",
+   "Gv",
+   "B_",
+   "O_",
+   "H_",
+   "V_",
+   "eu",
+   "qv",
+   "tu",
+   "nu",
+   "W_",
+   "G_",
+   "Yo",
+   "pa"
+  ],
+  "bytes": 516,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var gi = THREE.Vector3, fm = THREE.Quaternion, Gv = 30, B_ = 150, O_ = 720, H_ = 26, V_ = 300, eu = { p: [.118, -.122, -.275], r: [.034, ."
+ },
+ {
+  "names": [
+   "ma"
+  ],
+  "bytes": 187,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function ma(i, e, t) { let n = t > .012 ? Math.ceil(t / .008) : 1, s = t / n; for (let o = 0; o < n; o++) i.v += ((e - i.x) * i.k - i.v * i.c) * s, i.x "
+ },
+ {
+  "names": [
+   "i0"
+  ],
+  "bytes": 84,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var i0 = (i, e, t, n = \"XYZ\") => new fm().setFromEuler(new THREE.Euler(i, e, t, n));"
+ },
+ {
+  "names": [
+   "dm"
+  ],
+  "bytes": 19251,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [
+   "viewmodel-pac9",
+   "pac9_anodised",
+   "pac9_matte",
+   "pac9_phosphate",
+   "pac9_polymer",
+   "pac9_polymer_tan",
+   "brass",
+   "model"
+  ],
+  "props": [],
+  "head": "async function dm(i) { let e = new THREE.Group(); e.name = \"viewmodel-pac9\"; let t = w_(), n = { anodized_black: 2, gunmetal: 2, bra"
+ },
+ {
+  "names": [
+   "PC"
+  ],
+  "bytes": 2273,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [
+   " && (p.ads = !0, x = 52), u === ",
+   " && (d.sprinting = !0, d.speed = 6), u === ",
+   "reload",
+   "empty",
+   "empty",
+   "empty",
+   "fire"
+  ],
+  "props": [],
+  "head": "async function PC(i) { let e = await dm(i); i.weapon = e; let t = e.root, n = new gi(0, 1.68, 4), s = { south: [.28, -.01, 1], east: ["
+ },
+ {
+  "names": [
+   "ex"
+  ],
+  "bytes": 12,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var ex = {};"
+ },
+ {
+  "names": [
+   "iu"
+  ],
+  "bytes": 2188,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "rig: unknown parent bone ",
+   "rig: unknown bone ",
+   "position",
+   "normal",
+   "color",
+   "skinIndex",
+   "skinWeight"
+  ],
+  "props": [
+   "bones",
+   "index",
+   "slots",
+   "order"
+  ],
+  "head": "var iu = class { constructor() { this.bones = [], this.index = {}, this.slots = {}, this.order = []; } bone(e, t, n = 0, s = 0, o = 0) { let r = t"
+ },
+ {
+  "names": [
+   "pm"
+  ],
+  "bytes": 1494,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function pm(i, e, { castShadow: t = !0, receiveShadow: n = !0, radius: s = 1.5, center: o = [0, .5, 0], extra: r = null } = {}) { let a = i.bones.ma"
+ },
+ {
+  "names": [
+   "q_"
+  ],
+  "bytes": 659,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function q_(i, e, t, n, s, o, r, a) { let l = e * e + t * t, c = Math.sqrt(Math.max(l - o * o, 1e-6)); i.abd = Math.atan2(t, e) - Math.atan2(-c, s * o),"
+ },
+ {
+  "names": [
+   "Ss",
+   "vm",
+   "Ts",
+   "s0",
+   "ga",
+   "Of",
+   "As",
+   "Yn",
+   "an",
+   "IC",
+   "zC",
+   "va",
+   "ft",
+   "Ce",
+   "ds",
+   "Ro",
+   "Si",
+   "mm",
+   "gm",
+   "X_",
+   "DC",
+   "Y_",
+   "LC"
+  ],
+  "bytes": 805,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Ss = [1.15, 1.15, 1.15], vm = [.95, .96, .97], Ts = [1, .34, .08], s0 = [.1, .11, .12], ga = [.035, .035, .038], Of = [1, .7, .07], As = [1, 1, "
+ },
+ {
+  "names": [
+   "su"
+  ],
+  "bytes": 295,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function su(i, e, t, n = t, s = 8) { mm.set(i[0], i[1], i[2]), gm.set(e[0], e[1], e[2]); let o = mm.distanceTo(gm), r = ot(n, t, o, s); return X_.setF"
+ },
+ {
+  "names": [
+   "Ur",
+   "$_",
+   "Yv",
+   "kC",
+   "$v"
+  ],
+  "bytes": 636,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Ur = (i, e = 14, t = 10, n = 1, s = 1, o = 1) => { let r = new THREE.SphereGeometry(i, e, t); return r.scale(n, s, o), r; }, $_ = (i, e, t) => C"
+ },
+ {
+  "names": [
+   "Z_"
+  ],
+  "bytes": 8842,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "root",
+   "body",
+   "root",
+   "neck",
+   "body",
+   "head",
+   "neck",
+   "turret"
+  ],
+  "props": [],
+  "head": "function Z_() { let i = $v, e = new iu(); e.bone(\"root\", null, 0, 0, 0), e.bone(\"body\", \"root\", 0, i.stand, 0), e.bone(\"neck\", \"body\", 0, .06, .49), e.b"
+ },
+ {
+  "names": [
+   "xm"
+  ],
+  "bytes": 224,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var xm = { rotors: [[.33, .035, .3], [-.33, .035, .3], [.33, .035, -.3], [-.33, .035, -.3]], gimbal: [0, -.095, .275], ball: [0, -.072, 0], gun: [0, -.0"
+ },
+ {
+  "names": [
+   "FC"
+  ],
+  "bytes": 216,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function FC() { let i = [[.176, -.036], [.196, -.032], [.206, 0], [.202, .03], [.19, .04], [.178, .032], [.173, 0], [.176, -.036]].map(e => new THREE.Vector2("
+ },
+ {
+  "names": [
+   "j_"
+  ],
+  "bytes": 6004,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "root",
+   "body",
+   "root",
+   "rotor",
+   "body",
+   "gimbalYaw",
+   "body",
+   "ball"
+  ],
+  "props": [],
+  "head": "function j_() { let i = xm, e = new iu(), t = new iu(), n = (l, c, u, h, f) => { e.bone(l, c, u, h, f), t.bone(l, c, u, h, f); }; n(\"r"
+ },
+ {
+  "names": [
+   "Zv",
+   "Pn",
+   "$o",
+   "iz",
+   "Bs",
+   "Co",
+   "sz",
+   "ou",
+   "Hf",
+   "J_",
+   "ym",
+   "UC",
+   "K_",
+   "bl"
+  ],
+  "bytes": 849,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Zv = { hp: 45, boltDamage: 7, boltSpeed: 70, burst: 3, burstGap: .12, telegraph: .55, cooldown: [1.9, 3.3], rangeMin: 12, "
+ },
+ {
+  "names": [
+   "Q_"
+  ],
+  "bytes": 13747,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "black",
+   "stencil",
+   "gull",
+   "patrol",
+   "idle",
+   "enemy:hit",
+   "body",
+   "alert"
+  ],
+  "props": [],
+  "head": "function Q_(i, e, t, n) { let s = i.G, o = i.rng, r = t.lensBase.clone(), a = pm(e, { shell: t.shell, metal: t.metal, glow: t.gl"
+ },
+ {
+  "names": [
+   "Kv",
+   "Gt",
+   "ni",
+   "ps",
+   "ru",
+   "Po",
+   "Io",
+   "eM",
+   "Vf",
+   "jv",
+   "bm",
+   "_m",
+   "NC",
+   "Mm",
+   "uo",
+   "wm"
+  ],
+  "bytes": 958,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Kv = { hp: 140, shotDamage: 5, burst: 4, burstGap: .11, telegraph: .5, cooldown: [1.8, 3], runSpeed: 4.5, stalkSpeed: 2, "
+ },
+ {
+  "names": [
+   "xa"
+  ],
+  "bytes": 98,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function xa(i, e, t, n, s) { return i.v += ((e - i.x) * t - i.v * n) * s, i.x += i.v * s, i.x; }"
+ },
+ {
+  "names": [
+   "iM"
+  ],
+  "bytes": 24098,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   " + ni.legs[T]]), u.push(l[",
+   " + ni.legs[T]]), h.push(l[",
+   " + String(n + 3).padStart(2, ",
+   "black",
+   "stencil",
+   "hound",
+   "patrol",
+   "move"
+  ],
+  "props": [],
+  "head": "function iM(i, e, t, n) { let s = i.G, o = i.rng, r = t.lensBase.clone(), a = pm(e, { shell: t.shell, metal: t.metal, glow: t.gl"
+ },
+ {
+  "names": [
+   "sM"
+  ],
+  "bytes": 386,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function sM(i, e, t, n, s, o) { let r = i.x - t.x, a = i.y - t.y, l = i.z - t.z, c = r * e.x + a * e.y + l * e.z, u = r * r + a * a + l * l - "
+ },
+ {
+  "names": [
+   "au",
+   "Jv",
+   "tM"
+  ],
+  "bytes": 85,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var au = new THREE.Vector3(), Jv = new THREE.Vector3(), tM = new THREE.Vector3();"
+ },
+ {
+  "names": [
+   "nM"
+  ],
+  "bytes": 313,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function nM(i, e, t, n, s, o, r) { au.copy(n).sub(t), Jv.copy(i).sub(t); let a = au.dot(au), l = au.dot(e), c = au.dot(Jv), u = e.dot(Jv), h"
+ },
+ {
+  "names": [
+   "Ui",
+   "BC",
+   "oM",
+   "pz",
+   "Qv",
+   "rM",
+   "aM",
+   "lM",
+   "OC",
+   "mz",
+   "cM",
+   "uM"
+  ],
+  "bytes": 674,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var Ui = { gull: Zv, hound: Kv, sightRange: 45, sightCone: 200, loseSight: 4, searchTime: 8, hearRadius: 45, maxTokens: 2, m"
+ },
+ {
+  "names": [
+   "Em"
+  ],
+  "bytes": 12109,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [
+   "enemies",
+   "armor_white",
+   "gunmetal",
+   "gull",
+   "hound",
+   "gull",
+   "engage",
+   "engage"
+  ],
+  "props": [],
+  "head": "async function Em(i) { let e = il(+(i.params && i.params.eseed || 9001)), t = [], n = [], s = new THREE.Group(); s.name = \"enemies\", i.scene.add"
+ },
+ {
+  "names": [
+   "o0",
+   "r0",
+   "a0"
+  ],
+  "bytes": 85,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var o0 = new THREE.Vector3(), r0 = new THREE.Vector3(), a0 = new THREE.Vector3();"
+ },
+ {
+  "names": [
+   "HC"
+  ],
+  "bytes": 787,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function HC(i, e, t, n) { o0.copy(e).sub(i), r0.copy(n).sub(t), a0.copy(i).sub(t); let s = o0.dot(o0), o = r0.dot(r0), r = r0.dot(a0), a, l;"
+ },
+ {
+  "names": [
+   "VC"
+  ],
+  "bytes": 2022,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [
+   "both",
+   "gull",
+   "gull",
+   "hound",
+   "hound",
+   "fight",
+   "hound",
+   "alert"
+  ],
+  "props": [],
+  "head": "async function VC(i) { let e = await Em(i); i.enemies = e; let t = (l, c, u) => new THREE.Vector3(l, c, u), n = i.params.eshow || \"both\", s = [3, "
+ },
+ {
+  "names": [
+   "tx",
+   "nx",
+   "WC",
+   "GC",
+   "ix"
+  ],
+  "bytes": 185,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var tx = 4, nx = -90, WC = 450, GC = { 0: \"N\", 45: \"NE\", 90: \"E\", 135: \"SE\", 180: \"S\", 225: \"SW\", 270: \"W\", 315: \"NW\" },"
+ },
+ {
+  "names": [
+   "li"
+  ],
+  "bytes": 129,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function li(i, e, t) { let n = document.createElement(i); return e && (n.className = e), t != null && (n.innerHTML = t), n; }"
+ },
+ {
+  "names": [
+   "hM"
+  ],
+  "bytes": 14473,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "aria-hidden",
+   "true",
+   "h-compass",
+   "h-tape",
+   " style=",
+   "></i>`, _e ? o += `<b class=",
+   "card",
+   " style="
+  ],
+  "props": [],
+  "head": "function hM(i) { let e = document.getElementById(\"ui\"), t = li(\"div\", \"hud\"); t.setAttribute(\"aria-hidden\", \"true\"); let n = li(\"div\", \"h-compass\"), "
+ },
+ {
+  "names": [
+   "fM",
+   "XC",
+   "dM"
+  ],
+  "bytes": 172,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "saltline.settings.v1",
+   "auto",
+   "medium",
+   "high",
+   "ultra"
+  ],
+  "props": [],
+  "head": "var fM = \"saltline.settings.v1\", XC = { quality: \"auto\", sens: 1, invertY: !1, volume: .8, fov: Pi.fov }, dM = [\"low\", \"medium\", \"high"
+ },
+ {
+  "names": [
+   "YC"
+  ],
+  "bytes": 496,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "null",
+   "object",
+   "auto"
+  ],
+  "props": [],
+  "head": "function YC() { let i = { ...XC }; try { let e = JSON.parse(localStorage.getItem(fM) || \"null\"); e && typeof e == \"object\" && ((e.quality === "
+ },
+ {
+  "names": [
+   "Wf"
+  ],
+  "bytes": 88,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function Wf(i) { try { localStorage.setItem(fM, JSON.stringify(i)); } catch {} }"
+ },
+ {
+  "names": [
+   "$C",
+   "ZC"
+  ],
+  "bytes": 1159,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "keys",
+   "keys"
+  ],
+  "props": [],
+  "head": "var $C = ` <dl class=\"keys\"> <div><dt>Move</dt><dd><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></dd></div> <div><dt>Look</dt><dd>Mouse</dd></div> "
+ },
+ {
+  "names": [
+   "pM"
+  ],
+  "bytes": 12405,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "menu",
+   "none",
+   "m-veil",
+   "m-bars",
+   "m-screen m-title",
+   "title",
+   "Saltline",
+   "m-title-main"
+  ],
+  "props": [],
+  "head": "function pM(i, e) { let t = document.getElementById(\"ui\"), n = YC(), s = document.createElement(\"div\"); s.className = \"menu\", s.dataset.screen = \"no"
+ },
+ {
+  "names": [
+   "Yi",
+   "jC",
+   "_l"
+  ],
+  "bytes": 1119,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "NORTH",
+   "NORTH-EAST",
+   "EAST",
+   "SOUTH-EAST",
+   "SOUTH",
+   "SOUTH-WEST",
+   "WEST",
+   "NORTH-WEST"
+  ],
+  "props": [],
+  "head": "var Yi = { introSeconds: 3.5, retryIntroSeconds: 1.3, interactRange: 2.2, interactFacing: .45, cutSeconds: 2.4, patrol: { gull: 2,"
+ },
+ {
+  "names": [
+   "mM"
+  ],
+  "bytes": 16814,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "number",
+   "function",
+   "resume",
+   "resume",
+   "resume",
+   "resume",
+   "title",
+   "game:state"
+  ],
+  "props": [],
+  "head": "function mM(i) { let e = i.render && i.render.post || {}, t = typeof e.saturation == \"number\" ? e.saturation : 1, n = i.player, s = i.level, o"
+ },
+ {
+  "names": [
+   "gM"
+  ],
+  "bytes": 133,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var gM = { mats: qg, level: cv, backdrop: mv, ground: vv, fx: Sv, weapon: Xv, enemies: ex, props: $g, render: Vg };"
+ },
+ {
+  "names": [
+   "vM",
+   "xM",
+   "yM"
+  ],
+  "bytes": 130,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [
+   "boot",
+   "boot-msg",
+   "boot-fill"
+  ],
+  "props": [],
+  "head": "var vM = document.getElementById(\"boot\"), xM = document.getElementById(\"boot-msg\"), yM = document.getElementById(\"boot-fill\");"
+ },
+ {
+  "names": [
+   "bM"
+  ],
+  "bytes": 280,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "[fatal] ",
+   "fatal",
+   ", document.getElementById(",
+   ").appendChild(e)), e.textContent = "
+  ],
+  "props": [],
+  "head": "function bM(i) { window.__fatal = String(i), console.error(\"[fatal] \" + i); let e = document.getElementById(\"fatal\"); e || (e = document.createElement(\"di"
+ },
+ {
+  "names": [
+   "KC"
+  ],
+  "bytes": 50,
+  "kind": "VariableDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "var KC = () => new Promise(i => setTimeout(i, 0));"
+ },
+ {
+  "names": [
+   "Nr"
+  ],
+  "bytes": 121,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [],
+  "props": [],
+  "head": "async function Nr(i, e) { xM && (xM.textContent = i), yM && (yM.style.width = Math.round(e * 100) + \"%\"), await KC(); }"
+ },
+ {
+  "names": [
+   "QC"
+  ],
+  "bytes": 6420,
+  "kind": "FunctionDeclaration",
+  "async": true,
+  "strings": [
+   "#bench",
+   ", i.autostart = ",
+   "test",
+   "Waking the renderer",
+   "render",
+   "render",
+   "Mixing paint, rust and rain",
+   "mats"
+  ],
+  "props": [],
+  "head": "async function QC() { let i = Object.fromEntries(new URLSearchParams(location.search)), e = !!i.bench || location.hash === \"#bench\"; e && (i.noaudio = \""
+ },
+ {
+  "names": [
+   "eP"
+  ],
+  "bytes": 2203,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [
+   "bench",
+   "IBM Plex Mono",
+   "unknown",
+   "WEBGL_debug_renderer_info"
+  ],
+  "props": [],
+  "head": "function eP(i) { let e = document.createElement(\"pre\"); e.id = \"bench\", e.style.cssText = 'position:absolute;left:12px;top:12px;z-index:90;margin:0;padding:"
+ },
+ {
+  "names": [
+   "tP"
+  ],
+  "bytes": 360,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function tP() { let i = () => {}; return { move: { x: 0, y: 0 }, look: { dx: 0, dy: 0 }, fire: !1, ads: !1, "
+ },
+ {
+  "names": [
+   "nP"
+  ],
+  "bytes": 465,
+  "kind": "FunctionDeclaration",
+  "async": false,
+  "strings": [],
+  "props": [],
+  "head": "function nP(i) { return { pos: new THREE.Vector3(0, 0, 4), vel: new THREE.Vector3(), yaw: 0, pitch: 0, health: 100, maxHealth: 100, "
+ }
+]

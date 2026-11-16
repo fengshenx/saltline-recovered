@@ -1,0 +1,1312 @@
+{
+  "domain": "D-结构装配、船体、关卡布置",
+  "symbols": [
+    {
+      "compressed": "Dr",
+      "name": "LABEL_ATLAS_GUTTER",
+      "kind": "const",
+      "module": "src/assets/textures.js",
+      "doc": "铭牌图集每张贴图四周保留的像素边距，防止 mipmap 采样时相邻铭牌互相串色"
+    },
+    {
+      "compressed": "rb",
+      "name": "buildLabelAtlas",
+      "kind": "function",
+      "module": "src/assets/textures.js",
+      "doc": "把场景里所有 name='label' 的铭牌贴图重排进一张 canvas 图集并改写各网格 UV，把几十次铭牌绘制压成一次；失败时返回空句柄让调用方静默跳过"
+    },
+    {
+      "compressed": "no",
+      "name": "SHED_BOUNDS",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "修理车间（BERTH 4 WORKSHOP）的平面与剖面尺寸：墙体 x/z 范围、檐口与屋脊高度、屋脊 z、地坪厚度，整栋建筑的唯一定义源"
+    },
+    {
+      "compressed": "No",
+      "name": "SHED_BAY_XS",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "车间沿 x 方向的 6 道墙板分格线，同时是抗风柱、屋架与地坪分段的参照点"
+    },
+    {
+      "compressed": "yt",
+      "name": "SHED_DOOR_OPENING",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "车间南墙卷帘门洞的 x 区间与门高，墙板铺装时在此挖空"
+    },
+    {
+      "compressed": "Yt",
+      "name": "SHED_WINDOW_OPENING",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "车间东墙采光窗洞的 z 区间与窗高"
+    },
+    {
+      "compressed": "iv",
+      "name": "SHED_SKYLIGHT_HOLES",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "屋面天窗开洞表（南北坡、坡带序号、列序号共 8 处）；铺瓦楞板时跳过这些格子，并在洞下补漏痕贴花与滴水痕迹"
+    },
+    {
+      "compressed": "A1",
+      "name": "ROOF_BAND_FRACTIONS",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "屋面沿坡长方向的分带比例（0=屋脊，1=檐口），决定天窗与屋面檩条的分段位置"
+    },
+    {
+      "compressed": "sv",
+      "name": "ROOF_COLUMN_COUNT",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "屋面沿车间长度方向切分的列数，逐格铺屋面板并按 SHED_SKYLIGHT_HOLES 挖洞"
+    },
+    {
+      "compressed": "ab",
+      "name": "buildWorkshopShed",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "搭建 BERTH 4 修理车间：瓦楞墙板与屋面、卷帘门、通风机、吊灯、货架与地面杂物，返回天窗矩形、室内灯光与中继节点位置"
+    },
+    {
+      "compressed": "Hc",
+      "name": "makeStaticGroup",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "在静态根节点下建一个带位移与朝向的空组，作为多部件道具（货架、叉车、板垛等）的装配锚点"
+    },
+    {
+      "compressed": "Rn",
+      "name": "addRoundedBox",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "往父节点上挂一块可倒圆角的板件；墙板、柱脚、横梁、小箱件全用它拼，倒角参数统一由调用方给"
+    },
+    {
+      "compressed": "ov",
+      "name": "addCylinderMesh",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "往父节点上挂一根圆柱（管、杆、罐体、轮盘），统一处理分段数、旋转与轴向对齐"
+    },
+    {
+      "compressed": "rv",
+      "name": "addFootprintCollider",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "按道具朝向把方体投影成轴对齐碰撞盒（旋转时收缩到投影包络），避免旋转物件碰撞体过大或穿模"
+    },
+    {
+      "compressed": "Ka",
+      "name": "buildMeshCage",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "用角钢立柱、顶横梁和 chainlink 网片拼出的 2.2×1.25×1.2 m 笼式储物箱，配锈斑与磨损贴片，码头和堆场用它填充零散货位"
+    },
+    {
+      "compressed": "Qa",
+      "name": "buildSkipBin",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "1.1×0.8×0.75 m 开口废料斗：角钢骨架、顶沿加强、内部深色底，四周散布凹痕，堆场与码头通用道具"
+    },
+    {
+      "compressed": "Ef",
+      "name": "buildRebarBundle",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "枕木上分层码放并捆扎的细钢筋/管束（3.4 m 长，9 根），用低廉面数在堆场角落补出工地质感"
+    },
+    {
+      "compressed": "e0",
+      "name": "buildWheelChock",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "橡胶三角挡轮块，斜面贴黄色反光条；摆在叉车与货车轮胎下，暗示车辆是作业中而非摆设"
+    },
+    {
+      "compressed": "Sf",
+      "name": "buildLaneSignpost",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "行车道指示牌：镀锌立杆 + 黄底模版字标牌（LANE 1/2/3），带碰撞盒，用来给堆场分区命名"
+    },
+    {
+      "compressed": "av",
+      "name": "buildPlateStack",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "枕木上分层堆叠的 10.4×4.2 m 板料垛（每层带吊装缺口、黄色护角与橡胶挡边），返回垛高供上层堆叠"
+    },
+    {
+      "compressed": "Lr",
+      "name": "buildCableRun",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "沿二维折线铺软管/电缆，跨度大于 2.2 m 时自动插点加垂坠和横向摆动，让地面线缆看起来是自然摊开的"
+    },
+    {
+      "compressed": "lv",
+      "name": "buildUtilityStandpipe",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "混凝土底板上立起的灰色设备柱（给水/消防立管），正面贴黄黑警示条，配碰撞盒"
+    },
+    {
+      "compressed": "lb",
+      "name": "QUAY_DIMS",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "码头平台的关键尺寸：岸沿 x、舷梯 z、两条门机轨道 x、平台 z 范围"
+    },
+    {
+      "compressed": "cb",
+      "name": "buildQuayApron",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "搭建码头岸沿：混凝土护面与墙身、门机轨道、系缆桩、舷梯、靠泊轮胎护舷与栏杆，返回中继节点与撤离点"
+    },
+    {
+      "compressed": "uR",
+      "name": "PI",
+      "kind": "const",
+      "module": "src/level/layout.js",
+      "doc": "π 常量，布置表里用来表达整圈朝向"
+    },
+    {
+      "compressed": "ts",
+      "name": "HALF_PI",
+      "kind": "const",
+      "module": "src/level/layout.js",
+      "doc": "π/2；布置表里绝大多数道具的直角朝向都取它"
+    },
+    {
+      "compressed": "R1",
+      "name": "FORKLIFT_FORK_Y",
+      "kind": "const",
+      "module": "src/level/layout.js",
+      "doc": "叉车货叉举升高度（0.535 m），托盘与木箱按此高度摆放成被叉起的状态"
+    },
+    {
+      "compressed": "mt",
+      "name": "vec3",
+      "kind": "function",
+      "module": "src/level/layout.js",
+      "doc": "布置表里随手构造 Vector3 的简写别名"
+    },
+    {
+      "compressed": "hR",
+      "name": "placeYardLayout",
+      "kind": "function",
+      "module": "src/level/layout.js",
+      "doc": "堆场布置表：集装箱堆位、灯柱、围挡、杂物与地面标线的 place/stack 调用清单，是把美术意图落成坐标的地方"
+    },
+    {
+      "compressed": "fR",
+      "name": "placeGateArea",
+      "kind": "function",
+      "module": "src/level/layout.js",
+      "doc": "大门与围栏区布置：铁丝网围栏（带门洞）、道闸、门卫房、隔离墩与指示牌"
+    },
+    {
+      "compressed": "C1",
+      "name": "createLevel",
+      "kind": "function",
+      "module": "src/level/layout.js",
+      "doc": "装配整张关卡：建建筑/码头/堆场，合并静态网格、换合批材质、建标签图集，产出出生点、任务点、敌人刷新点、分区、掩体与演出数据"
+    },
+    {
+      "compressed": "dR",
+      "name": "hasNoMergeAncestor",
+      "kind": "function",
+      "module": "src/level/layout.js",
+      "doc": "沿父链检查是否存在 noMerge 标记，判断该节点能否被静态合批吞掉（动态件必须留在 dynRoot）"
+    },
+    {
+      "compressed": "pR",
+      "name": "countMeshes",
+      "kind": "function",
+      "module": "src/level/layout.js",
+      "doc": "递归统计子树网格数，用于关卡载入时的性能统计"
+    },
+    {
+      "compressed": "mR",
+      "name": "showcaseLevel",
+      "kind": "function",
+      "module": "src/level/layout.js",
+      "doc": "关卡模块的展示入口：只建关不跑游戏，返回固定机位与更新函数，供美术单独看结构"
+    },
+    {
+      "compressed": "mv",
+      "name": "backdropModule",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "背景（远景）模块注册表，用 getter 惰性暴露 create/showcase 两个入口"
+    },
+    {
+      "compressed": "_t",
+      "name": "newVec3",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "几何装配段通用的 Vector3 构造简写，避免到处写 new THREE.Vector3"
+    },
+    {
+      "compressed": "al",
+      "name": "toVec3",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "把 [x,y,z] 数组或已有 Vector3 统一成 Vector3，让几何工具同时接受两种写法"
+    },
+    {
+      "compressed": "hb",
+      "name": "UP_AXIS",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "世界向上轴常量，用于把圆柱从 y 轴旋转到任意两点连线"
+    },
+    {
+      "compressed": "gR",
+      "name": "ONE_SCALE",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "单位缩放常量，构造变换矩阵时复用，避免重复分配"
+    },
+    {
+      "compressed": "ub",
+      "name": "TMP_QUAT",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "临时四元数暂存对象，供几何变换复用"
+    },
+    {
+      "compressed": "I1",
+      "name": "TMP_MATRIX",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "临时 4x4 矩阵暂存对象，供几何变换复用"
+    },
+    {
+      "compressed": "t0",
+      "name": "hash3",
+      "kind": "function",
+      "module": "src/core/rng.js",
+      "doc": "三维整数哈希，输出 [0,1) 伪随机值；同坐标永远同结果，是程序化噪声与顶点扰动的基础"
+    },
+    {
+      "compressed": "rl",
+      "name": "valueNoise3",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "三维值噪声（三线性 + smoothstep 插值），给表面污渍、草色等提供低频不均匀扰动"
+    },
+    {
+      "compressed": "uv",
+      "name": "createSeededRng",
+      "kind": "function",
+      "module": "src/core/rng.js",
+      "doc": "线性同余伪随机数发生器工厂；同种子必得同序列，保证程序化场景每次生成一致"
+    },
+    {
+      "compressed": "P1",
+      "name": "TMP_TINT_OUT",
+      "kind": "const",
+      "module": "src/render/materials.js",
+      "doc": "顶点着色计算结果的三元缓存，逐顶点复用避免每顶点新分配数组"
+    },
+    {
+      "compressed": "fb",
+      "name": "WHITE_TINT",
+      "kind": "const",
+      "module": "src/render/materials.js",
+      "doc": "白色（不改变基色）的着色基准值，作为顶点着色的默认入参"
+    },
+    {
+      "compressed": "hv",
+      "name": "tintByHash",
+      "kind": "function",
+      "module": "src/render/materials.js",
+      "doc": "按顶点坐标哈希出亮度与锈色偏移，给合批后的大网格制造脏旧色差，否则整面墙会是一条纯色"
+    },
+    {
+      "compressed": "db",
+      "name": "TINTED_MATERIALS",
+      "kind": "const",
+      "module": "src/render/materials.js",
+      "doc": "登记表：标记哪些材质需要按顶点坐标写入随机顶点色，合批时据此决定是否补色"
+    },
+    {
+      "compressed": "so",
+      "name": "getTintedMaterial",
+      "kind": "function",
+      "module": "src/render/materials.js",
+      "doc": "取（或创建）带 vertexColors 的材质变体并登记到 TINTED_MATERIALS，是结构装配默认使用的材质入口"
+    },
+    {
+      "compressed": "io",
+      "name": "MeshBatcher",
+      "kind": "class",
+      "module": "src/assets/geometry.js",
+      "doc": "按材质归并几何体的批处理器：先攒后一次性合并，把上千个小件压成几十个 draw call；支持材质重映射、整体平移和最小尺寸剔除（远景只保留大块）"
+    },
+    {
+      "compressed": "Ee",
+      "name": "boxFromBounds",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "用两个对角点描述一个方盒几何，是整套结构装配最常用的写法（可直接给出局部坐标区间）"
+    },
+    {
+      "compressed": "xt",
+      "name": "cylinderFromAxis",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "沿 x/y/z 轴摆放的圆柱/圆盘几何，省去每次手写旋转"
+    },
+    {
+      "compressed": "Ke",
+      "name": "strutBetween",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "两点之间生成一根圆柱杆件（栏杆、桁架、拉索），自动求朝向与长度"
+    },
+    {
+      "compressed": "jt",
+      "name": "beamBetween",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "两点之间生成一根可带锥度的方截面梁（斜撑、箱型杆），用于桁架与结构斜撑"
+    },
+    {
+      "compressed": "kr",
+      "name": "strutsAlongPath",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "把一串点连成连续杆件数组，一次性交给批处理器，用于管线与弯曲钢筋"
+    },
+    {
+      "compressed": "ua",
+      "name": "catenaryPoints",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "在两点间生成带垂坠的控制点（抛物线近似），给电缆、缆绳做出自然下垂"
+    },
+    {
+      "compressed": "ll",
+      "name": "planeAt",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "建一个已定位定向的平面片，专用于贴标牌、贴花与窗面"
+    },
+    {
+      "compressed": "ns",
+      "name": "addRailing",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "沿折线加整套栏杆（立柱 + 上下横杆 + 可选中杆），按间距自动分柱，桥吊与船体的防护栏统一走它"
+    },
+    {
+      "compressed": "pb",
+      "name": "createBlinkerBatch",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "把所有闪烁灯具收进一批（顶点属性记录周期/相位），用固定着色器统一驱动明灭，避免几十个独立灯对象"
+    },
+    {
+      "compressed": "Bn",
+      "name": "makeBeaconGeo",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "一个八面体小球，用作航空障碍灯/警示灯灯头，给定坐标即生成"
+    },
+    {
+      "compressed": "Bt",
+      "name": "CRANE_PORTAL_X0",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "岸桥第一排支腿的 x 坐标（与码头轨道对齐）"
+    },
+    {
+      "compressed": "is",
+      "name": "CRANE_PORTAL_X1",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "岸桥第二排支腿的 x 坐标，两排间距由轨道决定，不可随意改"
+    },
+    {
+      "compressed": "Di",
+      "name": "CRANE_PORTAL_HALF_Z",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "岸桥门架沿 z 方向的半跨（支腿 z 偏移），决定横梁与梯子位置"
+    },
+    {
+      "compressed": "fv",
+      "name": "CRANE_GIRDER_Y0",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "岸桥主梁下弦高度"
+    },
+    {
+      "compressed": "ai",
+      "name": "CRANE_GIRDER_Y1",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "岸桥主梁上弦高度，与下弦一起围出主梁箱型断面"
+    },
+    {
+      "compressed": "On",
+      "name": "CRANE_BOOM_HALF_Z",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "岸桥臂架/大梁沿 z 方向的半宽，决定轨道与栏杆的横向位置"
+    },
+    {
+      "compressed": "wo",
+      "name": "CRANE_BOOM_X0",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "岸桥臂架（悬臂）起点 x，往岸内侧到这条线为止"
+    },
+    {
+      "compressed": "Xi",
+      "name": "CRANE_BOOM_X1",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "岸桥臂架外伸末端 x，伸到水面之上；臂架端部的灯、栏杆、检修平台都以此为准"
+    },
+    {
+      "compressed": "ks",
+      "name": "CRANE_HOUSE_X",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "岸桥机房（贴 SALTLINE 04 铭牌的白色小室）所在 x，吊具从它下方垂到舱口"
+    },
+    {
+      "compressed": "wn",
+      "name": "TINT_PANEL",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "浅灰面板的顶点色偏移三元组（RGB 通道各不同，制造冷暖层次），岸桥大面板通用"
+    },
+    {
+      "compressed": "Ms",
+      "name": "TINT_PANEL_DARK",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "深灰/背光面的顶点色偏移三元组，用来区分主梁的框与板"
+    },
+    {
+      "compressed": "En",
+      "name": "TINT_YELLOW",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "黄色漆面（栏杆、护边）的顶点色偏移，让同一材质的护栏有轻微深浅变化"
+    },
+    {
+      "compressed": "cl",
+      "name": "TINT_WHITE",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "白色漆面（机房外墙、舷窗框）的顶点色偏移"
+    },
+    {
+      "compressed": "z1",
+      "name": "buildQuayCrane",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "搭建 4 支腿岸桥（SALTLINE 04）：门架、主梁、臂架、机房、走梯、检修平台、灯具与吊具，返回根节点、碰撞盒与吊具对象；带 into 选项时只往外部批处理器灌几何（远景用）"
+    },
+    {
+      "compressed": "mb",
+      "name": "buildDistantCrane",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "极简版门式起重机剪影（只有箱型轮廓，无细节），用缩放与朝向做成远处集装箱码头的成排岸桥，返回臂架端高度以便挂障碍灯"
+    },
+    {
+      "compressed": "rt",
+      "name": "SHIP_CENTER_X",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "KITTIWAKE 号货船的中纵剖面 x，船体所有剖面点都以它为中线"
+    },
+    {
+      "compressed": "vR",
+      "name": "SHIP_HALF_BEAM",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "船体中段最大半宽（型宽一半），舷侧曲线在此处达到最宽"
+    },
+    {
+      "compressed": "Eo",
+      "name": "SHIP_STERN_Z",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "船尾所在的 z；船体沿 -z 方向从船尾延伸到船首"
+    },
+    {
+      "compressed": "qn",
+      "name": "SHIP_LENGTH",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "船体总长（沿 z 的站号终值），船体放样、栏杆、舱盖与编号全靠它定位"
+    },
+    {
+      "compressed": "xR",
+      "name": "SHIP_KEEL_Y",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "船舯处龙骨（船底）的 y，作为横剖面曲线的底部起点"
+    },
+    {
+      "compressed": "Fs",
+      "name": "SHIP_DECK_Y",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "主甲板高度 y；甲板上的集装箱、舱盖、桅杆都以它为基准"
+    },
+    {
+      "compressed": "Vc",
+      "name": "SHIP_WATERLINE_Y",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "设计水线高度 y，吃水与护舷、系缆设备都相对它布置"
+    },
+    {
+      "compressed": "gb",
+      "name": "smoothstep01",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "区间归一化 + smoothstep 的小工具，用于船体舷弧的平滑过渡"
+    },
+    {
+      "compressed": "yR",
+      "name": "deckSheerRise",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "舷弧：船首与船尾甲板相对中段抬高的量（两端各一项二次曲线），让船体侧影不是一条直板"
+    },
+    {
+      "compressed": "hs",
+      "name": "deckHeightAt",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "给定站号返回甲板高度（基高 + 舷弧）"
+    },
+    {
+      "compressed": "Tf",
+      "name": "bulwarkHeightAt",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "给定站号返回甲板以上舷墙高度；船首尾处降到 0，用来让舷墙自然收头"
+    },
+    {
+      "compressed": "Bo",
+      "name": "bulwarkTopAt",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "给定站号返回舷墙顶高度（甲板高度 + 舷墙高度），栏杆与系缆设备的落点"
+    },
+    {
+      "compressed": "bR",
+      "name": "SHIP_STERN_TOP_Y",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "船尾舷墙顶高度，作为船体放样时首尾收束的基准值"
+    },
+    {
+      "compressed": "fn",
+      "name": "hullPoint",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "船体放样函数：给（站号、高度、左右舷）返回船壳表面点；宽度沿船长按 sin 幂次收束，是整条船几何的唯一真源"
+    },
+    {
+      "compressed": "ha",
+      "name": "hullNormal",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "用有限差分数值求船壳表面法线并翻向船外，供外板、贴花、栏杆偏移使用"
+    },
+    {
+      "compressed": "ul",
+      "name": "hullPatchGeo",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "在船壳参数网格上贴出贴合曲面的补片（船名、锈痕、水线漆），自动沿法线外推避免 z-fighting"
+    },
+    {
+      "compressed": "D1",
+      "name": "SurfaceBuilder",
+      "kind": "class",
+      "module": "src/assets/geometry.js",
+      "doc": "按顶点攒 position/normal/uv/color 再一次性出 BufferGeometry 的曲面构造器，带四边面朝向自动纠正，用于船体这类必须逐面给色的曲面"
+    },
+    {
+      "compressed": "hl",
+      "name": "hash2",
+      "kind": "function",
+      "module": "src/core/rng.js",
+      "doc": "二维整数哈希，取 [0,1) 值；船体分块配色、锈斑分布按它在同坐标下稳定复现"
+    },
+    {
+      "compressed": "vb",
+      "name": "buildContainerShip",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "搭建 KITTIWAKE 号集装箱船：船体放样（水下/水线/舷侧分段配色）、甲板、舱盖、绑扎、上层建筑、桅杆、烟囱、救生艇与船名标识，返回根节点、雷达、碰撞盒"
+    },
+    {
+      "compressed": "xb",
+      "name": "buildMooringBoat",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "搭建岸桥旁系泊的橙色小工作艇：CatmullRom 曲线放样的船壳管体、护舷环、折角船底多边形、舷外机、探照灯与驾驶台；整船 noMerge 以便单独摇摆"
+    },
+    {
+      "compressed": "dv",
+      "name": "TINT_REF_COLOR",
+      "kind": "const",
+      "module": "src/assets/structures.js",
+      "doc": "顶点色的归一化参考色；把普通颜色除以它就能把色值压到以 1 为基准的着色范围"
+    },
+    {
+      "compressed": "k1",
+      "name": "normalizeTint",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "把 sRGB 整数色除以参考色得到顶点色三元组（可整体调亮/调暗），远景集装箱配色都走它"
+    },
+    {
+      "compressed": "yb",
+      "name": "HARBOR_CONTAINER_COLORS",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "远景码头集装箱的 18 色归一化调色板（海运公司涂装），供堆场随机取色"
+    },
+    {
+      "compressed": "L1",
+      "name": "DISTANT_CONTAINER_COLORS",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "远景集装箱/建筑的原色调色板（10 色，直接当顶点色），用于仓库与货堆的大色块"
+    },
+    {
+      "compressed": "_b",
+      "name": "smoothstepRange",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "区间归一化 + smoothstep，用于远景容器配色与高度衰减的平滑过渡"
+    },
+    {
+      "compressed": "bb",
+      "name": "distanceFade",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "按到场景原点的距离压暗远景物体的系数，充当廉价的空气透视"
+    },
+    {
+      "compressed": "Mb",
+      "name": "buildHarborSkyline",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "搭建对岸港口天际线：成片集装箱堆场（含门标、绑扎与箱门细节）、多台岸桥、仓库、灯柱、三角桅、灯塔与远景建筑，全部合并成一个 skyline 网格"
+    },
+    {
+      "compressed": "wb",
+      "name": "createGullFlock",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "用顶点属性驱动的海鸥群：每只鸟的盘旋参数存在 aOrbit/aPar 里，由顶点着色器算位置与拍翅，一次 draw call 就有一群会飞的海鸥"
+    },
+    {
+      "compressed": "_R",
+      "name": "BACKDROP_PARTS",
+      "kind": "table",
+      "module": "src/assets/structures.js",
+      "doc": "背景可单独挑选的部件名（岸桥/货船/小艇/天际线），调试与展示入口按它筛选"
+    },
+    {
+      "compressed": "Eb",
+      "name": "buildBackdrop",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "组装远景：岸桥、KITTIWAKE 号、系泊小艇、对岸天际线与海鸥，统一驱动吊具晃动、雷达旋转、船体涌动，并注册背景碰撞盒"
+    },
+    {
+      "compressed": "pv",
+      "name": "createBackdrop",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "背景模块的 create 入口：正式游戏里按全量建远景"
+    },
+    {
+      "compressed": "MR",
+      "name": "showcaseBackdrop",
+      "kind": "function",
+      "module": "src/assets/structures.js",
+      "doc": "背景模块的 showcase 入口：按 URL 参数只建单个部件并给出对应机位，供美术逐个检查"
+    },
+    {
+      "compressed": "vv",
+      "name": "groundModule",
+      "kind": "table",
+      "module": "src/level/world.js",
+      "doc": "地面/地形模块注册表，用 getter 惰性暴露 create/showcase 两个入口"
+    },
+    {
+      "compressed": "F1",
+      "name": "hashInt3",
+      "kind": "function",
+      "module": "src/core/rng.js",
+      "doc": "整数版三维哈希（先取整再混算），地形噪声的格点值来源"
+    },
+    {
+      "compressed": "Ab",
+      "name": "valueNoise2",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "二维值噪声（wrap 参数可做无缝平铺），地面起伏与积水量都用它取低频变化"
+    },
+    {
+      "compressed": "fs",
+      "name": "fbm2",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "二维分形噪声：多层倍频叠加并逐层减权，让地面细节既有大起伏又有碎颗粒"
+    },
+    {
+      "compressed": "So",
+      "name": "clamp01",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "把数值夹到 [0,1]，烘焙贴图通道时统一收口"
+    },
+    {
+      "compressed": "fl",
+      "name": "smoothstepClamped",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "钳位版 smoothstep，用于地面湿痕、车辙的软边过渡"
+    },
+    {
+      "compressed": "wR",
+      "name": "TERRAIN_BASE_HEIGHT",
+      "kind": "const",
+      "module": "src/level/world.js",
+      "doc": "地面基准高度；高于它算旱地、低于它算积水，是贴图里水/陆分界的判据"
+    },
+    {
+      "compressed": "Li",
+      "name": "TERRAIN_BOUNDS",
+      "kind": "table",
+      "module": "src/level/world.js",
+      "doc": "地面烘焙的覆盖范围（x0/z0/边长 80 m），决定高度图分辨率与世界坐标的换算"
+    },
+    {
+      "compressed": "Sb",
+      "name": "TERRAIN_DIPS",
+      "kind": "table",
+      "module": "src/level/world.js",
+      "doc": "26 个地面凹陷印章（中心 x/z、椭圆半径、深度），在水泥地上压出坑洼与积水洼；纯数据，改这里就能改地形"
+    },
+    {
+      "compressed": "Tb",
+      "name": "DIP_RADIUS_SCALE",
+      "kind": "const",
+      "module": "src/level/world.js",
+      "doc": "凹陷印章的半径缩放，整体调节坑洼大小"
+    },
+    {
+      "compressed": "ER",
+      "name": "DIP_DEPTH_BIAS",
+      "kind": "const",
+      "module": "src/level/world.js",
+      "doc": "每个凹陷额外加的深度偏置，避免浅坑在量化后消失"
+    },
+    {
+      "compressed": "SR",
+      "name": "terrainHeight",
+      "kind": "function",
+      "module": "src/level/world.js",
+      "doc": "地面高度场：分形基准 + 26 个凹陷印章 + 车辙沟槽 + 码头侧抬升，返回该点的相对高度"
+    },
+    {
+      "compressed": "Rb",
+      "name": "bakeTerrainTexture",
+      "kind": "function",
+      "module": "src/level/world.js",
+      "doc": "把高度场烘成一张 RGBA 数据贴图：R=高度、G=粗糙、B=积水、A=湿滑，供着色器直接采样"
+    },
+    {
+      "compressed": "U1",
+      "name": "sampleTerrainTexture",
+      "kind": "function",
+      "module": "src/level/world.js",
+      "doc": "按世界坐标双线性采样烘焙结果（可指定通道），让物理/寻路与视觉共用同一份地面数据"
+    },
+    {
+      "compressed": "Cb",
+      "name": "bakeTerrainNormals",
+      "kind": "function",
+      "module": "src/level/world.js",
+      "doc": "由高度场差分出法线与湿滑通道（环形采样保证无缝），输出两张 RGBA 贴图给地面材质"
+    },
+    {
+      "compressed": "N1",
+      "name": "makeDataTexture",
+      "kind": "function",
+      "module": "src/level/world.js",
+      "doc": "把字节数组包成 DataTexture（可平铺、带 mipmap 与各向异性），地面烘焙结果统一走它"
+    },
+    {
+      "compressed": "fa",
+      "name": "MARKING_BOUNDS",
+      "kind": "table",
+      "module": "src/level/world.js",
+      "doc": "地面标线画布覆盖的世界范围（x0/z0/宽/高），canvas 像素坐标与场地坐标的换算基准"
+    },
+    {
+      "compressed": "Pb",
+      "name": "paintMarkingsCanvas",
+      "kind": "function",
+      "module": "src/level/world.js",
+      "doc": "在 canvas 上绘制整片场地标线：泊位分格与编号（A0-D0）、SLOW 10、KEEP CLEAR、BERTH 4、车道虚线与轮胎印，返回给地面的 CanvasTexture"
+    }
+  ],
+  "params": {
+    "rb": ["root", "opts"],
+    "ab": ["ctx"],
+    "Hc": ["ctx", "x", "z", "yaw", "y"],
+    "Rn": ["ctx", "parent", "mat", "w", "h", "d", "x", "y", "z", "bevel", "rot"],
+    "ov": ["ctx", "parent", "mat", "radius", "height", "x", "y", "z", "rot", "seg"],
+    "rv": ["ctx", "x", "z", "yaw", "w", "d", "h", "surface", "y0"],
+    "Ka": ["ctx", "x", "z", "yaw", "paint", "seed"],
+    "Qa": ["ctx", "x", "z", "yaw", "paint"],
+    "Ef": ["ctx", "x", "z", "yaw", "rodCount"],
+    "e0": ["ctx", "x", "z", "yaw"],
+    "Sf": ["ctx", "x", "z", "text", "side", "height"],
+    "av": ["ctx", "x", "z", "layers", "alongX", "yawJitter"],
+    "Lr": ["ctx", "points", "radius", "material", "lift"],
+    "lv": ["ctx", "x", "z", "yaw"],
+    "cb": ["ctx"],
+    "mt": ["x", "y", "z"],
+    "hR": ["ctx"],
+    "fR": ["ctx"],
+    "C1": ["game"],
+    "dR": ["node", "root"],
+    "pR": ["root"],
+    "mR": ["game"],
+    "_t": ["x", "y", "z"],
+    "al": ["v"],
+    "t0": ["x", "y", "z"],
+    "rl": ["x", "y", "z"],
+    "uv": ["seed"],
+    "hv": ["x", "y", "z", "tint", "strength"],
+    "so": ["ctx", "name", "opts"],
+    "Ee": ["x0", "y0", "z0", "x1", "y1", "z1", "bevel"],
+    "xt": ["radiusTop", "radiusBottom", "height", "axis", "x", "y", "z", "seg", "open"],
+    "Ke": ["a", "b", "radius", "seg", "open"],
+    "jt": ["a", "b", "w", "h", "bevel"],
+    "kr": ["points", "radius", "seg"],
+    "ua": ["a", "b", "sag", "segments"],
+    "ll": ["w", "h", "x", "y", "z", "rotY", "rotX"],
+    "ns": ["ctx", "mat", "points", "opts"],
+    "pb": [],
+    "Bn": ["x", "y", "z", "radius"],
+    "z1": ["ctx", "lamps", "opts"],
+    "mb": ["batcher", "mat", "x", "z", "opts"],
+    "gb": ["edge0", "edge1", "value"],
+    "yR": ["station"],
+    "hs": ["station"],
+    "Tf": ["station"],
+    "Bo": ["station"],
+    "fn": ["station", "height", "side"],
+    "ha": ["station", "height", "side"],
+    "ul": ["station0", "station1", "y0", "y1", "side", "offset", "cols", "rows"],
+    "vb": ["ctx", "lamps"],
+    "xb": ["ctx", "lamps"],
+    "hl": ["a", "b"],
+    "k1": ["hex", "scale"],
+    "_b": ["edge0", "edge1", "value"],
+    "bb": ["x", "z"],
+    "Mb": ["ctx", "lamps"],
+    "wb": ["ctx", "uTime", "count"],
+    "Eb": ["game", "opts"],
+    "pv": ["game"],
+    "MR": ["game"],
+    "F1": ["x", "y", "seed"],
+    "Ab": ["x", "y", "seed", "wrap"],
+    "fs": ["x", "y", "seed", "octaves", "wrap"],
+    "So": ["v"],
+    "fl": ["edge0", "edge1", "value"],
+    "SR": ["x", "z"],
+    "Rb": ["size"],
+    "U1": ["data", "size", "x", "z", "channel"],
+    "Cb": ["size"],
+    "N1": ["data", "size", "opts"],
+    "Pb": ["size", "scale"]
+  },
+  "locals": {
+    "rb": {
+      "n": "fallback",
+      "s": "byMaterial",
+      "o": "entries",
+      "r": "cursorX",
+      "a": "cursorY",
+      "l": "rowHeight",
+      "c": "atlasWidth",
+      "u": "atlasHeight",
+      "h": "canvas",
+      "f": "ctx2d",
+      "p": "repaint",
+      "d": "baseMaterial",
+      "v": "atlasTexture",
+      "g": "atlasMaterial",
+      "x": "geometryCache",
+      "y": "elapsed"
+    },
+    "ab": {
+      "M": "matLit",
+      "MI": "matFlat",
+      "box": "addBox",
+      "slab": "addSlab",
+      "cyl": "addCyl",
+      "rod": "addRod",
+      "ibeam": "addIBeam",
+      "col": "addCollider",
+      "add": "addGeometry",
+      "G": "addGirtSpanZ",
+      "e": "matLit",
+      "t": "matFlat",
+      "n": "addBox",
+      "s": "addSlab",
+      "o": "addCyl",
+      "r": "addRod",
+      "a": "addIBeam",
+      "l": "addCollider",
+      "c": "addGeometry",
+      "u": "game",
+      "h": "shedX0",
+      "f": "shedX1",
+      "p": "shedZ0",
+      "d": "shedZ1",
+      "v": "eaveY",
+      "g": "ridgeY",
+      "x": "ridgeZ",
+      "y": "floorY",
+      "b": "halfDepth",
+      "m": "riseH",
+      "A": "roofAngle",
+      "_": "slopeLen",
+      "T": "wallThickness",
+      "E": "roofOuterMat",
+      "w": "roofInnerMat",
+      "S": "concreteMat",
+      "z": "concretePaintMat",
+      "H": "greyPaintMat",
+      "O": "galvFlatMat",
+      "q": "galvMat",
+      "U": "darkSteelMat",
+      "D": "wallSpanZ",
+      "C": "wallSpanX",
+      "j": "addGirtSpanX",
+      "N": "sillY",
+      "Q": "headerY",
+      "K": "doorOpening",
+      "ie": "fanHole",
+      "F": "addGableEnds",
+      "X": "skylights",
+      "ne": "columnWidth",
+      "re": "columnStartX",
+      "$": "girtZs",
+      "V": "halfPi",
+      "Y": "placeProp",
+      "ue": "fanGroup",
+      "me": "lampGlowMat",
+      "ee": "aluminiumMat",
+      "B": "pendantPositions",
+      "P": "shedLights"
+    },
+    "cb": {
+      "M": "matLit",
+      "box": "addBox",
+      "slab": "addSlab",
+      "cyl": "addCyl",
+      "rod": "addRod",
+      "tube": "addTube",
+      "col": "addCollider",
+      "add": "addGeometry",
+      "place": "placeProp",
+      "e": "matLit",
+      "t": "addBox",
+      "n": "addSlab",
+      "s": "addCyl",
+      "o": "addRod",
+      "r": "addTube",
+      "a": "addCollider",
+      "l": "addGeometry",
+      "c": "placeProp",
+      "u": "quayX",
+      "h": "ladderZ",
+      "f": "quayZ0",
+      "p": "quayZ1",
+      "d": "concreteMat",
+      "v": "dirtyConcreteMat",
+      "g": "wornSteelMat",
+      "x": "darkSteelMat",
+      "y": "galvMat",
+      "b": "yellowPaintMat",
+      "m": "ladderZ0",
+      "A": "ladderZ1",
+      "_": "tireGeo",
+      "M": "bollardZs"
+    },
+    "hR": {
+      "e": "placeProp",
+      "t": "stackContainers",
+      "n": "cableRun"
+    },
+    "fR": {
+      "e": "placeProp",
+      "t": "fenceX",
+      "n": "fenceXMax",
+      "s": "zSouth",
+      "o": "zNorth",
+      "r": "gateZ0",
+      "a": "gateZ1",
+      "l": "fenceRun"
+    },
+    "C1": {
+      "e": "levelRoot",
+      "t": "ctx",
+      "n": "shed",
+      "s": "quay",
+      "o": "relayYard",
+      "r": "relayShed",
+      "a": "relayQuay",
+      "l": "detachList",
+      "c": "materials",
+      "u": "colorSwap",
+      "h": "labelAtlas",
+      "f": "mergedRoot",
+      "p": "triCount",
+      "d": "playerStart",
+      "v": "objectives",
+      "g": "groundSpawn",
+      "x": "airSpawn",
+      "y": "enemySpawns",
+      "b": "zones",
+      "m": "interiorBoxes",
+      "A": "cinematicPath",
+      "_": "coverPoints",
+      "M": "nav",
+      "E": "snapToWalkable",
+      "w": "updateErrorLogged"
+    },
+    "z1": {
+      "n": "intoBatch",
+      "s": "depthOffset",
+      "o": "batcher",
+      "r": "lampTarget",
+      "a": "greyPaint",
+      "l": "yellowPaint",
+      "c": "whitePaint",
+      "u": "redPaint",
+      "h": "galvSteel",
+      "f": "darkSteel",
+      "p": "hazardPaint",
+      "d": "glassMat",
+      "v": "lampMat",
+      "g": "addGeom",
+      "x": "colliders",
+      "y": "addPortalFrame",
+      "b": "legSegmentYs",
+      "m": "hazardDecal",
+      "A": "boomEndX",
+      "_": "apexX",
+      "M": "apexY",
+      "E": "apexHalfZ",
+      "w": "houseX0",
+      "S": "houseX1",
+      "z": "houseY0",
+      "H": "houseY1",
+      "O": "houseHalfZ",
+      "q": "addRollerDoor",
+      "U": "logoADecal",
+      "T": "stairZ0",
+      "D": "stairZ1",
+      "C": "stairZ2",
+      "G": "stairX0",
+      "j": "stairX1",
+      "N": "addStairFlight",
+      "Q": "addStairLanding",
+      "K": "landingYs",
+      "ie": "addLampBar",
+      "F": "cabX0",
+      "X": "cabX1",
+      "ne": "cabZ0",
+      "re": "cabZ1",
+      "$": "cabY0",
+      "ue": "cabY1",
+      "me": "nameLabel",
+      "ee": "labelAspect",
+      "B": "craneMesh",
+      "P": "spreaderBatch",
+      "V": "addSpreaderGeom",
+      "Y": "spreaderDrop",
+      "L": "spreaderTopY",
+      "Z": "spreaderUpperY",
+      "J": "spreaderLowerY",
+      "oe": "spreaderFloorY",
+      "fe": "spreaderTint",
+      "le": "spreaderMesh"
+    },
+    "vb": {
+      "t": "batcher",
+      "n": "hullPaintMat",
+      "s": "hullRedMat",
+      "o": "whiteMat",
+      "r": "darkSteelMat",
+      "a": "galvMat",
+      "l": "ropeMat",
+      "c": "rubberMat",
+      "u": "hullTint",
+      "h": "addLampGeo",
+      "f": "addGeom",
+      "p": "stations",
+      "d": "profileFractions",
+      "v": "profileAt",
+      "g": "heightSegs",
+      "x": "bootRows",
+      "y": "bottomBuilder",
+      "b": "hullBuilder",
+      "m": "tintFor",
+      "A": "nameLabel",
+      "_": "rustDecal",
+      "M": "bowDeckY",
+      "E": "foremastZ",
+      "w": "foremastTopY",
+      "S": "mastBase",
+      "z": "mastTop",
+      "H": "containerTints",
+      "q": "whiteTint",
+      "U": "hatchZ0",
+      "T": "hatchZ1",
+      "C": "winchY",
+      "G": "winchZ",
+      "j": "winchHalfW",
+      "N": "mastPos",
+      "Q": "funnelZ",
+      "K": "logoBDecal",
+      "F": "hullMesh",
+      "X": "radarBatch",
+      "ne": "radarMesh",
+      "re": "colliders"
+    },
+    "xb": {
+      "t": "batcher",
+      "n": "plasticMat",
+      "s": "orangePaintMat",
+      "o": "blackPolymerMat",
+      "r": "galvMat",
+      "a": "glassMat",
+      "l": "addGeom",
+      "c": "hullTint",
+      "u": "seamTint",
+      "h": "darkTint",
+      "f": "hullProfile",
+      "p": "hullPath",
+      "d": "hullCurve",
+      "v": "hullTube",
+      "g": "ringCount",
+      "x": "rubRails",
+      "y": "gunwaleStations",
+      "b": "gunwaleHalfWidths",
+      "m": "gunwaleHeights",
+      "A": "gunwaleBases",
+      "_": "deckTris",
+      "M": "pushTri",
+      "E": "deckGeo",
+      "w": "windshieldGeo",
+      "S": "searchLightTorus",
+      "H": "hullMesh",
+      "O": "lampMesh",
+      "q": "boatGroup"
+    },
+    "Mb": {
+      "t": "batcher",
+      "n": "containerMat",
+      "s": "rng",
+      "o": "containerTint",
+      "r": "lampTint",
+      "a": "scratchTint",
+      "l": "tintAt",
+      "c": "addPiece",
+      "u": "positions",
+      "h": "normals",
+      "f": "uvs",
+      "p": "colors",
+      "d": "pushQuad",
+      "v": "shadeNormal",
+      "g": "tintQuad",
+      "x": "addBoxFaces",
+      "y": "addContainerWall",
+      "b": "wallXs",
+      "m": "wallZs",
+      "A": "craneTintA",
+      "_": "darkTint",
+      "M": "frameTint",
+      "E": "craneTintB",
+      "w": "houseTint",
+      "S": "addGantryCrane",
+      "z": "lampSink",
+      "H": "craneTintC",
+      "q": "addWarehouse",
+      "U": "breakBulkX",
+      "T": "skylineMesh"
+    },
+    "Eb": {
+      "n": "wantPart",
+      "s": "backdropRoot",
+      "o": "lamps",
+      "r": "boatPos",
+      "a": "boat",
+      "l": "crane",
+      "c": "ship",
+      "u": "skyline",
+      "h": "gulls",
+      "f": "lampMesh",
+      "p": "colliders",
+      "d": "addCollider",
+      "v": "triCount",
+      "g": "meshCount",
+      "x": "elapsed",
+      "y": "update"
+    },
+    "Pb": {
+      "t": "canvas",
+      "n": "ctx2d",
+      "s": "scaleX",
+      "o": "scaleY",
+      "r": "red",
+      "a": "green",
+      "l": "fontStack",
+      "c": "seed",
+      "u": "rand",
+      "h": "strokeLine",
+      "f": "strokeRect",
+      "p": "fillRect",
+      "d": "drawText",
+      "v": "hatchRect",
+      "g": "arrow",
+      "x": "bayRanges",
+      "y": "drawBays",
+      "b": "trackStroke",
+      "m": "texture"
+    }
+  }
+}

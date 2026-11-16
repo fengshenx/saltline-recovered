@@ -1,0 +1,953 @@
+{
+  "domain": "E-程序化纹理、噪声、贴花",
+  "symbols": [
+    {
+      "compressed": "Pb",
+      "name": "createApronMarkingsTexture",
+      "kind": "function",
+      "module": "src/assets/textures.js",
+      "doc": "把停机坪地面标线按世界坐标烘焙成一张画布贴图（车道线、SLOW/10 限速椭圆、BERTH 4 泊位号、KEEP CLEAR 斜纹区、400 段泊位排号、蓝色刹车痕与滴漏痕），供湿滑地面材质做磨损剥落混合"
+    },
+    {
+      "compressed": "TR",
+      "name": "APRON_WET_SURF",
+      "kind": "shader",
+      "module": "src/render/shaders/apron_wet.glsl",
+      "doc": "湿滑停机坪材质的 GLSL 公共层：哈希与值噪声、四抽样 B 样条双三次采样（放大时看不到数据图的纹素边）、单层稀疏雨滴涟漪的斜率"
+    },
+    {
+      "compressed": "AR",
+      "name": "APRON_WET_MAP_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/apron_wet.glsl",
+      "doc": "湿滑停机坪的表面片元体：沥青与混凝土底色、6 米伸缩缝加焦油灌缝、裂缝、标线剥落与轮胎橡胶、油污，以及积水—浸湿—潮湿的连续梯度、粗糙度与法线斜率"
+    },
+    {
+      "compressed": "RR",
+      "name": "APRON_WET_REFLECT_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/apron_wet.glsl",
+      "doc": "把平面反射图按粗糙度与掠射角取多级模糊 lod 混合进 radiance：积水是锐利镜面，湿沥青只是被纵向拉伸的柔光，避免变成第二面镜子"
+    },
+    {
+      "compressed": "Ib",
+      "name": "createWetApron",
+      "kind": "function",
+      "module": "src/level/world.js",
+      "doc": "创建停机坪地面（190×320 单面 plane）与注入了湿滑/反射着色器的 MeshStandardMaterial，返回材质、uniforms 和网格供地面系统每帧驱动"
+    },
+    {
+      "compressed": "zb",
+      "name": "createPlanarReflectionPass",
+      "kind": "function",
+      "module": "src/render/passes/planar_reflection.js",
+      "doc": "用镜像相机把场景再渲染一次得到平面反射贴图：含斜裁剪近平面修正与纹理矩阵、按画质档位缩放分辨率、渲染时临时隐藏自身相关网格，作为 prepass 挂在主循环上"
+    },
+    {
+      "compressed": "B1",
+      "name": "SEA_WAVE_MAIN",
+      "kind": "table",
+      "module": "src/level/world.js",
+      "doc": "海面主波浪谱：4 条方向/波长/振幅/相速的正弦波（方向已归一化并补出角频率与 ω），CPU 高度计算与顶点位移共用同一组参数"
+    },
+    {
+      "compressed": "Db",
+      "name": "SEA_WAVE_DETAIL",
+      "kind": "table",
+      "module": "src/level/world.js",
+      "doc": "海面细节波浪谱：7 条更短的波，只参与片元法线斜率计算，让远处海面不显得平滑呆板"
+    },
+    {
+      "compressed": "fi",
+      "name": "formatGlslFloat",
+      "kind": "function",
+      "module": "src/level/world.js",
+      "doc": "把波浪参数格式化成 GLSL float 字面量（整数补小数点、其余保留 5 位），保证模板拼出的着色器数值类型合法可读"
+    },
+    {
+      "compressed": "Lb",
+      "name": "seaHeightAt",
+      "kind": "function",
+      "module": "src/level/world.js",
+      "doc": "按主波浪谱解析求某点海面高度，近岸 50 米内平滑衰减到 0，供漂浮物与浪花贴合水面用"
+    },
+    {
+      "compressed": "CR",
+      "name": "SEA_WAVE_DISPLACE_VERT",
+      "kind": "shader",
+      "module": "src/render/shaders/sea.glsl",
+      "doc": "按主波浪谱逐波生成的顶点位移代码：沿波向正弦抬升，并附加 60% 幅度的水平轨道位移让浪形倾斜"
+    },
+    {
+      "compressed": "PR",
+      "name": "SEA_WAVE_MAIN_SLOPE_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/sea.glsl",
+      "doc": "主波浪的逐波斜率（解析导数）累加代码，供片元法线使用，远处也不依赖贴图分辨率"
+    },
+    {
+      "compressed": "IR",
+      "name": "SEA_WAVE_DETAIL_SLOPE_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/sea.glsl",
+      "doc": "细节波浪的斜率累加代码，只按近处权重参与法线，避免远处高频噪点闪烁"
+    },
+    {
+      "compressed": "zR",
+      "name": "SEA_SURF_DECL",
+      "kind": "shader",
+      "module": "src/render/shaders/sea.glsl",
+      "doc": "海面片元的 uniform 与全局变量声明（粗糙度、法线斜率 gNxz、遮蔽、到相机距离、太阳闪光强度），是表面体与后续 include 之间的契约"
+    },
+    {
+      "compressed": "DR",
+      "name": "SEA_SURF_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/sea.glsl",
+      "doc": "海面表面体：深色水体底色、码头墙与船体周围的泡沫和浮渣、风斑（cat's-paw）与长涌浪明暗、粗糙度随距离与风斑变化、岸边遮蔽"
+    },
+    {
+      "compressed": "LR",
+      "name": "SEA_HAZE_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/sea.glsl",
+      "doc": "海面远处与雾霾融合：按视线方位与太阳方向在两种霾色之间插值，让海平线不再是一条硬边"
+    },
+    {
+      "compressed": "gv",
+      "name": "buildSeaGridSteps",
+      "kind": "function",
+      "module": "src/level/world.js",
+      "doc": "生成海面网格的一维坐标序列：步长按比例几何递增并设上限，近处顶点密远处疏，在顶点预算内保住近处浪形"
+    },
+    {
+      "compressed": "kb",
+      "name": "createSeaSurface",
+      "kind": "function",
+      "module": "src/level/world.js",
+      "doc": "创建海面网格（分级网格加外围补片填满可视范围）、海面材质与码头裙板，含浪高位移、泡沫、太阳闪光与远雾融合着色"
+    },
+    {
+      "compressed": "Ub",
+      "name": "RAIN_COMMON_VERT",
+      "kind": "shader",
+      "module": "src/render/shaders/rain.glsl",
+      "doc": "雨系顶点着色器的公共部分：室内盒体包含判定与 Henyey-Greenstein 相函数（逆光时雨丝边缘发亮）"
+    },
+    {
+      "compressed": "kR",
+      "name": "RAIN_STREAK_VERT",
+      "kind": "shader",
+      "module": "src/render/shaders/rain.glsl",
+      "doc": "雨丝顶点着色器：种子在跟随相机的盒内循环下落，按室内盒体与天窗开口剔除并另有一条屋檐滴水管线，按距离维持最小屏幕宽度"
+    },
+    {
+      "compressed": "FR",
+      "name": "RAIN_STREAK_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/rain.glsl",
+      "doc": "雨丝片元着色器：横向与纵向双向软化的加色细条，不采样纹理"
+    },
+    {
+      "compressed": "UR",
+      "name": "RAIN_SPLASH_VERT",
+      "kind": "shader",
+      "module": "src/render/shaders/rain.glsl",
+      "doc": "溅水顶点着色器：只在积水掩膜处生成、按周期循环的水冠，靠近玩家更密，超出 15 米淡出"
+    },
+    {
+      "compressed": "NR",
+      "name": "RAIN_SPLASH_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/rain.glsl",
+      "doc": "溅水片元着色器：水冠圆弧加少量飞溅小点的软形状，alpha 随生命周期衰减"
+    },
+    {
+      "compressed": "Fb",
+      "name": "createRainInstanceGeometry",
+      "kind": "function",
+      "module": "src/render/wetness.js",
+      "doc": "构造雨丝与溅水共用的实例化四边形几何，每实例一个随机种子 aSeed；末尾 drips 个实例把种子写成负数，标记为屋檐滴水支线"
+    },
+    {
+      "compressed": "Nb",
+      "name": "createRainSystem",
+      "kind": "function",
+      "module": "src/render/wetness.js",
+      "doc": "创建雨丝与溅水两套加色实例网格及材质，按室内盒体、天窗开口与积水掩膜控制可见性，随画质缩放实例数，并定时发 thunder 事件驱动雷声与闪电"
+    },
+    {
+      "compressed": "O1",
+      "name": "createGroundSystem",
+      "kind": "function",
+      "module": "src/level/world.js",
+      "doc": "装配整套地面系统（标线、积水掩膜、细节图与法线图、湿滑停机坪、海面、雨、平面反射 prepass），并暴露海水高度、积水深度、湿度查询与雨量设置 API"
+    },
+    {
+      "compressed": "BR",
+      "name": "createGroundShowcase",
+      "kind": "function",
+      "module": "src/level/world.js",
+      "doc": "地面模块的演示场景：先移除占位平面再装配地面系统，摆一组集装箱/油桶/灯柱样张，返回固定机位以便单独观察湿滑地面与反射"
+    },
+    {
+      "compressed": "Sv",
+      "name": "FX_MODULE",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "fx 子模块的对外命名空间：create 惰性取到特效系统构造函数，showcase 取演示场景，供启动流程与场景注册表按名加载"
+    },
+    {
+      "compressed": "yv",
+      "name": "createValueNoise",
+      "kind": "function",
+      "module": "src/assets/noise.js",
+      "doc": "生成带 4096 项置换表的值噪声：出 noise/fbm/rnd 三件，让同一张程序化纹理里噪声采样与随机序列共享可复现的种子"
+    },
+    {
+      "compressed": "To",
+      "name": "smoothstepClamp",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "把 x 从 [edge0,edge1] 映射成 0..1 的平滑阶跃并两端钳制，纹理合成里所有软边界与遮罩都靠它"
+    },
+    {
+      "compressed": "Wc",
+      "name": "SMOKE_ATLAS_COLS",
+      "kind": "const",
+      "module": "src/assets/textures.js",
+      "doc": "烟雾翻页图集的列数（4 列 × 2 行 = 8 帧），纹理生成与 billboard 取帧共用"
+    },
+    {
+      "compressed": "H1",
+      "name": "SMOKE_ATLAS_ROWS",
+      "kind": "const",
+      "module": "src/assets/textures.js",
+      "doc": "烟雾翻页图集的行数"
+    },
+    {
+      "compressed": "Bb",
+      "name": "createSmokeFlipbook",
+      "kind": "function",
+      "module": "src/assets/textures.js",
+      "doc": "程序化生成 4×2 烟雾翻页图集：RG 存翻页法线、B 存遮蔽、A 存密度，并由高度图差分推法线，供受光烟雾/蒸汽 billboard 使用"
+    },
+    {
+      "compressed": "Af",
+      "name": "SPARK_ATLAS_COLS",
+      "kind": "const",
+      "module": "src/assets/textures.js",
+      "doc": "火花/光斑图集的列数（4 列 × 2 行 = 8 格）"
+    },
+    {
+      "compressed": "bv",
+      "name": "SPARK_ATLAS_ROWS",
+      "kind": "const",
+      "module": "src/assets/textures.js",
+      "doc": "火花/光斑图集的行数"
+    },
+    {
+      "compressed": "oo",
+      "name": "SPARK_CELL_FLASH",
+      "kind": "const",
+      "module": "src/assets/textures.js",
+      "doc": "火花图集格 0：软径向闪光，最亮的爆点核心"
+    },
+    {
+      "compressed": "_v",
+      "name": "SPARK_CELL_STREAK",
+      "kind": "const",
+      "module": "src/assets/textures.js",
+      "doc": "火花图集格 1：沿 x 拉长的光带，用于火花拖尾与曳光断片"
+    },
+    {
+      "compressed": "n0",
+      "name": "SPARK_CELL_BURST_A",
+      "kind": "const",
+      "module": "src/assets/textures.js",
+      "doc": "火花图集格 2：带放射状叶瓣的爆闪（随机叶数与角度变体 A）"
+    },
+    {
+      "compressed": "OR",
+      "name": "SPARK_CELL_BURST_B",
+      "kind": "const",
+      "module": "src/assets/textures.js",
+      "doc": "火花图集格 3：带放射状叶瓣的爆闪（变体 B），与 A 交替使用避免重复感"
+    },
+    {
+      "compressed": "Mv",
+      "name": "SPARK_CELL_RING",
+      "kind": "const",
+      "module": "src/assets/textures.js",
+      "doc": "火花图集格 4：一圈细环，用于冲击波与水花外环"
+    },
+    {
+      "compressed": "V1",
+      "name": "SPARK_CELL_PUFF",
+      "kind": "const",
+      "module": "src/assets/textures.js",
+      "doc": "火花图集格 5：被噪声侵蚀的软团，用作尘土与碎屑云"
+    },
+    {
+      "compressed": "Gc",
+      "name": "SPARK_CELL_DISC",
+      "kind": "const",
+      "module": "src/assets/textures.js",
+      "doc": "火花图集格 6：纯软圆盘，最廉价的光斑"
+    },
+    {
+      "compressed": "W1",
+      "name": "SPARK_CELL_SPIKE",
+      "kind": "const",
+      "module": "src/assets/textures.js",
+      "doc": "火花图集格 7：带圆顶的锥形光刺，用于枪口焰与火花锥"
+    },
+    {
+      "compressed": "Ob",
+      "name": "createSparkFlipbook",
+      "kind": "function",
+      "module": "src/assets/textures.js",
+      "doc": "程序化生成 4×2 火花/光斑图集（闪光、光带、两种爆闪、环、尘团、圆盘、光刺），灰度值写入 RGB，供加色 billboard 取帧"
+    },
+    {
+      "compressed": "dl",
+      "name": "DECAL_ATLAS_COLS",
+      "kind": "const",
+      "module": "src/render/decals.js",
+      "doc": "弹着贴花图集的列数（4 列 × 2 行 = 8 格）"
+    },
+    {
+      "compressed": "xv",
+      "name": "DECAL_ATLAS_ROWS",
+      "kind": "const",
+      "module": "src/render/decals.js",
+      "doc": "弹着贴花图集的行数"
+    },
+    {
+      "compressed": "da",
+      "name": "DECAL_ATLAS_FRAMES",
+      "kind": "table",
+      "module": "src/render/decals.js",
+      "doc": "贴花类型到图集格索引的映射表：金属 2 格、混凝土 2 格、木 1 格、焦痕 1 格、烟熏 1 格、玻璃 1 格，绘制图集与运行时取 uv 都以它为准"
+    },
+    {
+      "compressed": "Hb",
+      "name": "createDecalAtlas",
+      "kind": "function",
+      "module": "src/assets/textures.js",
+      "doc": "用 canvas 2D 程序化绘制弹孔图集：albedo（RGB 加透明度）、ORM 与由高度图差分求出的法线图，返回三张贴图与按格算 uv 矩形的函数"
+    },
+    {
+      "compressed": "HR",
+      "name": "FX_BILLBOARD_VERT",
+      "kind": "shader",
+      "module": "src/render/shaders/fx_billboard.glsl",
+      "doc": "特效 billboard 顶点着色器：支持面向相机、速度拉伸、贴面三种模式，图集取帧，并按距离维持最小屏幕宽度以免远处火花消失"
+    },
+    {
+      "compressed": "Xb",
+      "name": "FX_SOFT_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/fx_billboard.glsl",
+      "doc": "特效片元共用部分：用深度纹理做软相交淡出，让烟与贴花贴地时不出现硬切边"
+    },
+    {
+      "compressed": "VR",
+      "name": "FX_LIT_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/fx_billboard.glsl",
+      "doc": "受光特效片元：球面法线叠加翻页法线求光、前向散射、薄边透光，并带一条 alpha 混合的火焰分支（热核 / 橙皮 / 下方烟炱）"
+    },
+    {
+      "compressed": "WR",
+      "name": "FX_ADD_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/fx_billboard.glsl",
+      "doc": "加色特效片元：单通道强度乘颜色，最省的路径，用于火花与曳光"
+    },
+    {
+      "compressed": "Vb",
+      "name": "FX_SCRATCH_SIZE",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "复用的 Vector2，读取 drawingBuffer 尺寸时避免每次渲染都新建对象"
+    },
+    {
+      "compressed": "Ev",
+      "name": "createFxBatch",
+      "kind": "function",
+      "module": "src/render/fx.js",
+      "doc": "创建实例化 billboard 批次：aPos/aAxis/aCol/aMisc 四条实例流，受光与加色两种材质，深度软相交与像素尺寸按相机自动更新，供粒子、曳光、火焰统一提交"
+    },
+    {
+      "compressed": "qc",
+      "name": "PARTICLE_FLAG_BOUNCE",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "粒子标志位 1：落到地面高度时反弹并衰减"
+    },
+    {
+      "compressed": "Xc",
+      "name": "PARTICLE_FLAG_KILL_ON_GROUND",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "粒子标志位 2：触地立即回收，用于不该留在地上的火花"
+    },
+    {
+      "compressed": "GR",
+      "name": "PARTICLE_FLAG_STICK",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "粒子标志位 4：触地即停不再运动"
+    },
+    {
+      "compressed": "Rf",
+      "name": "ParticlePool",
+      "kind": "class",
+      "module": "src/render/fx.js",
+      "doc": "CPU 粒子池：位置/速度/阻力/重力/风/湍流/淡入淡出/色带/拉伸全字段并行数组，可选按相机距离排序后整批推进 billboard 批次，是烟雾、尘土、火花的共同引擎"
+    },
+    {
+      "compressed": "q1",
+      "name": "TracerPool",
+      "kind": "class",
+      "module": "src/render/fx.js",
+      "doc": "曳光弹池：把每发子弹的线段按弹速推进，画成亮核加淡拖尾的两段加色光带，首帧随机跳跃避免同步"
+    },
+    {
+      "compressed": "qR",
+      "name": "TRACER_FIELD_NAMES",
+      "kind": "table",
+      "module": "src/render/fx.js",
+      "doc": "曳光池所有并行数组的字段名清单，交换删除时按此列表整体搬移，避免漏搬某个字段"
+    },
+    {
+      "compressed": "ws",
+      "name": "FX_SCRATCH_MATRIX",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "复用的临时矩阵，组装碎块与弹壳的实例变换"
+    },
+    {
+      "compressed": "Oo",
+      "name": "FX_SCRATCH_QUAT",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "复用的临时四元数"
+    },
+    {
+      "compressed": "X1",
+      "name": "FX_SCRATCH_POS",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "复用的临时位置向量"
+    },
+    {
+      "compressed": "Y1",
+      "name": "FX_SCRATCH_SCALE",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "复用的临时缩放向量"
+    },
+    {
+      "compressed": "Wb",
+      "name": "FX_SCRATCH_AXIS",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "复用的临时旋转轴向量"
+    },
+    {
+      "compressed": "XR",
+      "name": "createDebrisGeometry",
+      "kind": "function",
+      "module": "src/render/fx.js",
+      "doc": "把 1×1×1 盒体的顶点做哈希抖动（角上略缩、各顶点不等量偏移并去索引化），得到看不出是盒子的碎块几何，一次生成全池共用"
+    },
+    {
+      "compressed": "$1",
+      "name": "DebrisPool",
+      "kind": "class",
+      "module": "src/render/fx.js",
+      "doc": "碎块池：实例化不规则碎块，带角速度、重力、落地反弹与静止淡出，接收阴影但不投射，用于爆炸与撞击的实心碎片"
+    },
+    {
+      "compressed": "wv",
+      "name": "SHELL_BOUNCE_PAYLOAD",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "弹壳落地事件的复用负载对象（位置加表面材质），避免每次反弹都新建对象触发 GC"
+    },
+    {
+      "compressed": "YR",
+      "name": "RAY_DOWN",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "向下射线方向常量，弹壳拾取地面高度与表面材质用"
+    },
+    {
+      "compressed": "Gb",
+      "name": "FX_SCRATCH_RAY_ORIGIN",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "复用的射线起点向量"
+    },
+    {
+      "compressed": "qb",
+      "name": "FX_SCRATCH_SHELL_QUAT",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "复用的弹壳姿态四元数"
+    },
+    {
+      "compressed": "G1",
+      "name": "FX_SCRATCH_EULER",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "复用的欧拉角，用来随机初始姿态与让弹壳侧躺"
+    },
+    {
+      "compressed": "$R",
+      "name": "createShellGeometry",
+      "kind": "function",
+      "module": "src/render/fx.js",
+      "doc": "用车削（LatheGeometry）拼出 5.56 弹壳外形：细颈、锥形壳体与底缘，10 段旋转保低面数"
+    },
+    {
+      "compressed": "Z1",
+      "name": "ShellPool",
+      "kind": "class",
+      "module": "src/render/fx.js",
+      "doc": "弹壳池：抛壳物理（重力、四元数角速度积分、反弹两次后侧躺），落地前射线查询表面并发 shell:bounce 事件，静止 4.7 秒后回收"
+    },
+    {
+      "compressed": "ZR",
+      "name": "DECAL_SIZES",
+      "kind": "table",
+      "module": "src/render/decals.js",
+      "doc": "各类贴花的基准世界尺寸（米）：金属 0.25、混凝土 0.34、木 0.24、焦痕 2.4、烟熏 0.3、玻璃 0.3，运行时再乘随机抖动与调用方缩放"
+    },
+    {
+      "compressed": "Yb",
+      "name": "DECAL_EVICT_FADE_COUNT",
+      "kind": "const",
+      "module": "src/render/decals.js",
+      "doc": "贴花池满时按写入顺序把最旧的 14 枚循环淡出，代价极低且看不出是新贴花挤掉了旧的"
+    },
+    {
+      "compressed": "j1",
+      "name": "DecalBatch",
+      "kind": "class",
+      "module": "src/render/decals.js",
+      "doc": "贴花批次：每个贴花一个四边形，按命中法线建切空间、随机转角与图集格、写入顶点色透明度，带 polygonOffset 与关闭深度写以防 z-fighting"
+    },
+    {
+      "compressed": "$b",
+      "name": "FX_LIT_PARTICLE_CAP",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "受光粒子池容量上限（烟雾、尘土这类要吃光照的粒子）"
+    },
+    {
+      "compressed": "Zb",
+      "name": "FX_ADD_PARTICLE_CAP",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "加色粒子池容量上限（火花、光斑这类只做加色的粒子）"
+    },
+    {
+      "compressed": "ht",
+      "name": "fxRandom",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "fx 模块统一的随机源引用，集中一处便于替换成可复现的伪随机"
+    },
+    {
+      "compressed": "Ze",
+      "name": "randRange",
+      "kind": "function",
+      "module": "src/render/fx.js",
+      "doc": "区间随机数，特效参数抖动统一走它以便将来换成种子随机"
+    },
+    {
+      "compressed": "Et",
+      "name": "FX_SCRATCH_VEC_A",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "fx 系统复用的临时向量 A，供 emit 系列避免每帧分配"
+    },
+    {
+      "compressed": "zt",
+      "name": "FX_SCRATCH_VEC_B",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "fx 系统复用的临时向量 B（方向类）"
+    },
+    {
+      "compressed": "J1",
+      "name": "FX_SCRATCH_VEC_C",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "fx 系统复用的临时向量 C"
+    },
+    {
+      "compressed": "qe",
+      "name": "FX_SCRATCH_VEC_D",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "fx 系统复用的临时向量 D"
+    },
+    {
+      "compressed": "Es",
+      "name": "FX_SCRATCH_VEC_E",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "fx 系统复用的临时向量 E"
+    },
+    {
+      "compressed": "Ho",
+      "name": "FX_SCRATCH_VEC_F",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "fx 系统复用的临时向量 F"
+    },
+    {
+      "compressed": "Ei",
+      "name": "UP_AXIS",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "世界向上轴常量"
+    },
+    {
+      "compressed": "jR",
+      "name": "DOWN_AXIS",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "世界向下轴常量（重力方向）"
+    },
+    {
+      "compressed": "K1",
+      "name": "FX_SCRATCH_COLOR",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "复用的临时 Color，用于解析十六进制或字符串颜色"
+    },
+    {
+      "compressed": "Ao",
+      "name": "FX_SCRATCH_RGB",
+      "kind": "const",
+      "module": "src/render/fx.js",
+      "doc": "复用的 RGB 三分量数组，颜色解析结果直接写这里，返回给调用方不再分配"
+    },
+    {
+      "compressed": "Yc",
+      "name": "toRgbTriple",
+      "kind": "function",
+      "module": "src/render/fx.js",
+      "doc": "把各种颜色写法（缺省数字三元、数组、THREE.Color、十六进制）统一解析成复用的 RGB 数组，特效 API 的入口参数都靠它归一化"
+    },
+    {
+      "compressed": "ro",
+      "name": "randomDirectionAround",
+      "kind": "function",
+      "module": "src/render/fx.js",
+      "doc": "在给定方向上做球面随机抖动并归一化，spread 控制张角，用于碎屑与火花的初速发散"
+    },
+    {
+      "compressed": "Cf",
+      "name": "createFxSystem",
+      "kind": "function",
+      "module": "src/render/fx.js",
+      "doc": "装配整套即时特效：受光/加色 billboard 批、粒子池、曳光、碎屑、弹壳与贴花，并把 emit 系列、update、clear 汇总成一个对外 API"
+    }
+  ],
+  "params": {
+    "Pb": ["size", "aniso"],
+    "fi": ["value"],
+    "Lb": ["x", "z", "time"],
+    "gv": ["start", "end", "step", "growth", "maxStep"],
+    "Ib": ["game", "tex"],
+    "zb": ["game", "uniforms", "exclude"],
+    "kb": ["game", "tex"],
+    "Fb": ["streaks", "drips", "rng"],
+    "Nb": ["game", "tex"],
+    "O1": ["game"],
+    "BR": ["game"],
+    "yv": ["seed"],
+    "To": ["edge0", "edge1", "x"],
+    "Bb": ["size"],
+    "Ob": ["size"],
+    "Hb": ["size"],
+    "Ev": ["game", "capacity", "opts"],
+    "Rf": ["capacity", "sorted"],
+    "q1": ["capacity"],
+    "XR": [],
+    "$1": ["game", "capacity"],
+    "$R": [],
+    "Z1": ["game", "capacity"],
+    "j1": ["game", "capacity"],
+    "Ze": ["min", "max"],
+    "Yc": ["color", "r", "g", "b"],
+    "ro": ["dir", "spread", "out"],
+    "Cf": ["game"]
+  },
+  "locals": {
+    "Pb": {
+      "t": "canvas",
+      "n": "ctx",
+      "s": "scaleX",
+      "o": "scaleY",
+      "r": "paintRed",
+      "a": "paintGreen",
+      "l": "font",
+      "c": "seedState",
+      "u": "rand",
+      "h": "drawLine",
+      "f": "strokeBox",
+      "p": "fillBox",
+      "d": "drawLabel",
+      "v": "hatchZone",
+      "g": "drawArrow",
+      "x": "bayGaps",
+      "y": "drawBayRow",
+      "b": "drawSkid",
+      "m": "texture"
+    },
+    "Ib": {
+      "t": "uniforms",
+      "n": "material",
+      "s": "geometry",
+      "o": "mesh"
+    },
+    "zb": {
+      "n": "mirrorCamera",
+      "s": "renderTarget",
+      "o": "cameraPos",
+      "r": "lookDir",
+      "a": "cameraRotation",
+      "l": "bufferSize",
+      "c": "mirrorPlane",
+      "u": "clipPlane",
+      "h": "clipVector",
+      "f": "textureMatrix",
+      "p": "prevVisible",
+      "d": "pass",
+      "b": "planarScale",
+      "m": "resolution",
+      "A": "targetWidth",
+      "_": "targetHeight",
+      "M": "projElements",
+      "E": "viewProjElements"
+    },
+    "kb": {
+      "t": "seaLevel",
+      "n": "xSteps",
+      "s": "zSteps",
+      "r": "zRows",
+      "a": "xCount",
+      "l": "zCount",
+      "c": "extraQuads",
+      "u": "positions",
+      "h": "indices",
+      "f": "writeIdx",
+      "p": "addQuad",
+      "d": "geometry",
+      "v": "normals",
+      "g": "hazeAway",
+      "x": "hazeToward",
+      "y": "uniforms",
+      "b": "material",
+      "m": "mesh",
+      "A": "skirtMaterial",
+      "_": "skirtMesh"
+    },
+    "Nb": {
+      "t": "rng",
+      "n": "rainQuality",
+      "s": "streakCount",
+      "o": "dripCount",
+      "r": "splashCount",
+      "a": "boxMin",
+      "l": "boxMax",
+      "c": "sunColor",
+      "u": "ambColor",
+      "h": "baseUniforms",
+      "f": "skylights",
+      "p": "streakUniforms",
+      "d": "streakMaterial",
+      "v": "streakMesh",
+      "g": "splashUniforms",
+      "x": "splashMaterial",
+      "y": "splashMesh",
+      "b": "rainLevel",
+      "m": "targetLevel",
+      "A": "thunderIn",
+      "_": "time",
+      "M": "bufferSize"
+    },
+    "O1": {
+      "e": "hiRes",
+      "t": "maxAniso",
+      "n": "maskSize",
+      "s": "maskData",
+      "o": "maskTexture",
+      "r": "detailSize",
+      "a": "detailCanvas",
+      "l": "detailNormalCanvas",
+      "c": "detailTexture",
+      "u": "detailNormalTexture",
+      "h": "marksTexture",
+      "f": "blackTexture",
+      "p": "textures",
+      "d": "root",
+      "v": "apron",
+      "g": "sea",
+      "x": "rain",
+      "y": "planar",
+      "b": "isIndoor",
+      "m": "inMaskRect",
+      "A": "time",
+      "_": "ground"
+    },
+    "Ev": {
+      "h": "geometry",
+      "f": "addInstanceAttribute",
+      "p": "posAttr",
+      "d": "axisAttr",
+      "v": "colorAttr",
+      "g": "miscAttr",
+      "x": "uniforms",
+      "y": "material",
+      "b": "mesh",
+      "m": "posArray",
+      "A": "axisArray",
+      "_": "colorArray",
+      "M": "miscArray",
+      "E": "batch",
+      "w": "attributes"
+    },
+    "Rf": {
+      "r": "px",
+      "a": "py",
+      "l": "pz",
+      "c": "vx",
+      "u": "vy",
+      "h": "vz",
+      "f": "age",
+      "p": "life",
+      "d": "order",
+      "v": "flags",
+      "g": "camX",
+      "x": "camY",
+      "y": "camZ",
+      "b": "writeIdx",
+      "m": "count",
+      "A": "idx"
+    },
+    "q1": {
+      "o": "count",
+      "r": "slot",
+      "l": "slot",
+      "a": "speed",
+      "f": "length",
+      "c": "len",
+      "u": "head",
+      "h": "tail"
+    },
+    "$1": {
+      "t": "state",
+      "n": "matrix",
+      "s": "live",
+      "o": "dirty",
+      "r": "slot",
+      "a": "slotState",
+      "l": "remaining",
+      "u": "restY",
+      "c": "fade"
+    },
+    "Z1": {
+      "t": "state",
+      "n": "matrix",
+      "s": "live",
+      "o": "dirty",
+      "r": "slot",
+      "a": "slotState",
+      "l": "scale",
+      "f": "qx",
+      "p": "qy",
+      "d": "qz",
+      "v": "qw",
+      "g": "halfDt",
+      "x": "nextQx",
+      "y": "nextQy",
+      "b": "nextQz",
+      "m": "nextQw",
+      "A": "invLen",
+      "_": "restY",
+      "M": "bounceCount"
+    },
+    "j1": {
+      "n": "atlas",
+      "s": "geometry",
+      "o": "indices",
+      "r": "material",
+      "a": "mesh",
+      "l": "type",
+      "c": "frame",
+      "u": "slot",
+      "h": "normalX",
+      "f": "normalY",
+      "p": "normalZ",
+      "d": "normalLen",
+      "M": "roll",
+      "E": "cosRoll",
+      "w": "sinRoll"
+    },
+    "Bb": {
+      "e": "width",
+      "t": "height",
+      "n": "data",
+      "s": "noise",
+      "o": "heightMap",
+      "r": "densityMap",
+      "a": "occlusionMap",
+      "c": "cell",
+      "l": "texture"
+    },
+    "Ob": {
+      "e": "width",
+      "t": "height",
+      "n": "data",
+      "s": "noise",
+      "o": "raySets",
+      "r": "texture",
+      "a": "cell",
+      "l": "col",
+      "c": "row",
+      "d": "dist",
+      "v": "falloff",
+      "g": "value"
+    },
+    "Hb": {
+      "e": "width",
+      "t": "height",
+      "n": "albedoCanvas",
+      "s": "ormCanvas",
+      "o": "normalCanvas",
+      "r": "albedoCtx",
+      "a": "ormCtx",
+      "l": "normalCtx",
+      "c": "drawRadial",
+      "h": "rand",
+      "f": "TAU",
+      "d": "drawCrack",
+      "p": "blobPath",
+      "v": "drawCell",
+      "g": "radialGradient",
+      "x": "mapTexture",
+      "y": "ormTexture",
+      "b": "uvPad",
+      "m": "uvRect",
+      "A": "normalTexture"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "saltline-recovered",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "extract": "node tools/extract.mjs",
+    "deob": "node tools/deobfuscate.mjs",
+    "apply": "node tools/apply-names.mjs",
+    "split": "node tools/split.mjs",
+    "link": "node tools/link.mjs",
+    "build": "node tools/build.mjs --minify",
+    "build:dev": "node tools/build.mjs --dev",
+    "pipeline": "npm run deob && npm run apply && npm run split && npm run build"
+  },
+  "devDependencies": {
+    "@babel/generator": "^8.1.2",
+    "@babel/parser": "^8.1.2",
+    "@babel/traverse": "^8.1.2",
+    "@babel/types": "^8.1.2",
+    "esbuild": "^0.28.2",
+    "prettier": "^3.10.1"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  }
+}

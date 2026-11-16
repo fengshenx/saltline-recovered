@@ -1,0 +1,558 @@
+{
+  "explosionAt": {
+    "ee": "blastPos",
+    "B": "blastSize",
+    "P": "blastPower",
+    "V": "posX",
+    "Y": "posY",
+    "L": "posZ",
+    "Z": "speedScale",
+    "J": "groundY",
+    "oe": "isNearGround",
+    "fe": "groundShade",
+    "le": "glowY",
+    "R": "emberCount",
+    "ae": "spawnIdx",
+    "k": "spawnSpeed",
+    "ce": "emitIdx",
+    "ve": "fxSlot",
+    "_e": "spawnSpread",
+    "Te": "particleIdx",
+    "I": "shardCount",
+    "se": "sparkCount",
+    "Pe": "rippleIdx"
+  },
+  "selfTest": {
+    "te": "testOpts",
+    "he": "sampleRate",
+    "pe": "seconds",
+    "ge": "offlineCtx",
+    "ye": "listenerMap",
+    "Le": "eventBus",
+    "ke": "camMatrix",
+    "Ue": "enemyStubs",
+    "ct": "interiorBox",
+    "De": "engineCtx",
+    "it": "audioEngine",
+    "gt": "frameDt",
+    "Ot": "stepCount",
+    "xn": "stepFrame",
+    "Tt": "frameIdx",
+    "$t": "startMs",
+    "Ht": "renderedBuffer",
+    "Je": "renderMs",
+    "Pt": "report",
+    "Vt": "leftChannel",
+    "ss": "rightChannel",
+    "Hs": "windowSize",
+    "Ai": "frameTime",
+    "sn": "subscriber",
+    "os": "leftSample",
+    "rs": "rightSample",
+    "Ni": "peakSample"
+  },
+  "createGround": {
+    "M": "sampleX",
+    "E": "sampleZ",
+    "w": "maskDepth",
+    "S": "stepIdx",
+    "H": "coarseWet",
+    "O": "detailWet",
+    "z": "fineWet"
+  },
+  "buildGateArm": {
+    "e": "armOpts",
+    "y": "offsetIdx",
+    "b": "heightFrac",
+    "m": "brightness"
+  },
+  "update": {
+    "te": "dt",
+    "he": "sampleRate",
+    "pe": "seconds",
+    "ge": "offlineCtx",
+    "ye": "listenerMap",
+    "Le": "eventBus",
+    "ke": "camMatrix",
+    "ct": "interiorBox",
+    "De": "engineCtx",
+    "it": "audioEngine",
+    "gt": "frameDt",
+    "Ot": "stepCount"
+  },
+  "buildTouchUI": {
+    "P": "touchRoot",
+    "V": "querySel",
+    "Y": "touchUiRef",
+    "L": "btnName",
+    "Z": "btnEl",
+    "oe": "evt",
+    "fe": "touchPt",
+    "J": "endHandler",
+    "le": "changedTouch"
+  },
+  "buildJerryCan": {
+    "r": "bodyGeo",
+    "a": "shoulderTaper",
+    "l": "handleLen",
+    "c": "handleH",
+    "u": "gripX",
+    "h": "gripY",
+    "f": "diagLen",
+    "p": "diagAngle",
+    "x": "vert",
+    "y": "sideOffset",
+    "b": "barSign",
+    "d": "spoutStart",
+    "v": "spoutDir",
+    "g": "spoutPoint"
+  },
+  "fireShot": {
+    "Me": "player",
+    "we": "cam",
+    "be": "spread",
+    "Oe": "spreadAngle",
+    "pt": "spreadRadius",
+    "ut": "hit",
+    "nn": "fxLayer",
+    "bt": "recoilScale",
+    "Os": "burstCount",
+    "pn": "recoilMul",
+    "Ti": "yawKick",
+    "ho": "flashUniforms",
+    "Rs": "flashScale"
+  },
+  "pickFirePos": {
+    "T": "player",
+    "D": "bestScore",
+    "C": "eyePos",
+    "G": "considerPoint",
+    "j": "coverPoints",
+    "N": "baseAngle",
+    "Q": "candidate",
+    "K": "bias",
+    "ie": "dist",
+    "F": "score",
+    "X": "dirX",
+    "ne": "dirZ",
+    "re": "otherHound",
+    "$": "otherPos",
+    "ue": "otherDirX",
+    "me": "otherDirZ",
+    "ee": "alignment"
+  },
+  "updateGait": {
+    "T": "dt",
+    "D": "velX",
+    "C": "velZ",
+    "G": "isMoving",
+    "j": "blend",
+    "N": "stepDur",
+    "Q": "pairPick",
+    "K": "reachMax",
+    "F": "pairIdx",
+    "X": "reach",
+    "ne": "footKey",
+    "re": "stepDist",
+    "ie": "thresh"
+  },
+  "bakeTerrainNormals": {
+    "e": "detailBytes",
+    "t": "normalBytes",
+    "n": "heightField",
+    "s": "wetField",
+    "r": "row",
+    "a": "col",
+    "l": "uCoord",
+    "c": "vCoord",
+    "u": "cellIdx",
+    "h": "heightVal",
+    "f": "detailVal",
+    "p": "warpX",
+    "d": "warpZ",
+    "v": "ridge",
+    "g": "grain",
+    "o": "wrapIdx"
+  },
+  "createTireProfileGeometry": {
+    "s": "sidewallH",
+    "o": "grooveDepth",
+    "r": "profilePts",
+    "a": "tireGeo",
+    "l": "uvAttr",
+    "c": "ptCount",
+    "u": "arcLens",
+    "h": "treadMid",
+    "f": "treadHalf",
+    "p": "innerHalf",
+    "d": "uTiles",
+    "v": "ptIdx",
+    "g": "uOffset",
+    "x": "absOff",
+    "y": "vCoord",
+    "b": "segIdx",
+    "n": "radialSegs"
+  },
+  "buildBasicContainer": {
+    "t": "contOpts",
+    "d": "collider"
+  },
+  "setShot": {
+    "u": "shotName",
+    "h": "shotOpts",
+    "f": "pose",
+    "p": "input",
+    "d": "player",
+    "v": "camPos",
+    "g": "camTarget",
+    "x": "fov",
+    "y": "lookDir",
+    "b": "node"
+  },
+  "step": {
+    "N": "dt",
+    "Q": "blastScale"
+  },
+  "updateAmbience": {
+    "te": "dt",
+    "he": "volumeScale",
+    "pe": "indoorDamp",
+    "ge": "noiseOffset",
+    "ye": "spreadRadius"
+  },
+  "createRibbonFromPolyline": {
+    "n": "ptCount",
+    "s": "positions",
+    "o": "uvs",
+    "r": "indices",
+    "a": "arcLen",
+    "l": "vMax",
+    "p": "ptIdx",
+    "d": "baseIdx",
+    "c": "ribbonGeo",
+    "t": "doubleSided",
+    "u": "backGeo",
+    "h": "indexArr",
+    "f": "normalAttr"
+  },
+  "synthGullFire": {
+    "n": "buf",
+    "s": "pitchScale",
+    "o": "phase",
+    "r": "chirpBuf",
+    "a": "sampleIdx",
+    "l": "tSec",
+    "c": "freq",
+    "u": "sawWave"
+  },
+  "createSandbagGeometry": {
+    "s": "bagGeo",
+    "o": "noiseOff",
+    "r": "skew",
+    "a": "sag",
+    "l": "vert",
+    "c": "normX",
+    "u": "normZ",
+    "h": "normY",
+    "f": "taper",
+    "p": "noise"
+  },
+  "createRoundedRectFanGeometry": {
+    "n": "arcPts",
+    "s": "radius",
+    "o": "halfSpanX",
+    "r": "halfSpanY",
+    "u": "quad",
+    "h": "segIdx",
+    "f": "angle",
+    "a": "positions",
+    "l": "uvs",
+    "c": "fanGeo"
+  },
+  "addWarehouse": {
+    "D": "xMin",
+    "C": "xMax",
+    "G": "zMin",
+    "j": "zMax",
+    "N": "baseY",
+    "Q": "wallTint",
+    "K": "doorFrac",
+    "ie": "zSpan",
+    "F": "doorZ",
+    "X": "zCursor",
+    "ne": "stackH",
+    "re": "leftTint",
+    "$": "rightTint"
+  },
+  "synthMusicDrone": {
+    "t": "loopDur",
+    "n": "sampleCount",
+    "s": "layerGen",
+    "o": "seedOffset",
+    "r": "buffer",
+    "a": "chordIdx",
+    "l": "chord",
+    "c": "startT",
+    "u": "interval",
+    "h": "gainScale"
+  },
+  "buildGrid": {
+    "_": "obstacle",
+    "M": "colMin",
+    "E": "colMax",
+    "w": "rowMin",
+    "S": "rowMax",
+    "z": "row",
+    "H": "col"
+  },
+  "pollGamepad": {
+    "P": "dt",
+    "V": "pads",
+    "Y": "pad",
+    "J": "padIdx",
+    "L": "lookX",
+    "Z": "lookY",
+    "oe": "btn"
+  },
+  "updateTitleCam": {
+    "P": "dt",
+    "V": "loopDur",
+    "Y": "rawT",
+    "L": "easedT",
+    "Z": "cam",
+    "J": "elapsed"
+  },
+  "createRainInstanceGeometry": {
+    "n": "rainGeo",
+    "s": "seeds",
+    "o": "instIdx"
+  },
+  "synthStepConcrete": {
+    "n": "buf",
+    "s": "pitchScale",
+    "o": "gravelNoise",
+    "r": "grainGain",
+    "a": "sampleIdx"
+  },
+  "showcaseBackdrop": {
+    "e": "partName",
+    "t": "backdrop",
+    "n": "shotMap",
+    "s": "frameDt"
+  },
+  "resetWeapon": {
+    "Me": "animKey"
+  },
+  "synthWind": {
+    "s": "windBuf",
+    "o": "gustBuf",
+    "r": "bufIdx",
+    "a": "tSec"
+  },
+  "logo_c": {
+    "v": "decalId",
+    "g": "canvasW",
+    "x": "canvasH",
+    "y": "drawFn",
+    "b": "markCtx",
+    "m": "markSize",
+    "A": "markOpts",
+    "_": "spokeIdx",
+    "M": "spokeAngle"
+  },
+  "sampleTerrainTexture": {
+    "x": "worldX",
+    "z": "worldZ",
+    "o": "fxPos",
+    "r": "fzPos",
+    "a": "cellX",
+    "l": "cellZ",
+    "c": "xFrac",
+    "u": "zFrac",
+    "h": "baseIdx",
+    "f": "rowStride"
+  },
+  "fenceRun": {
+    "c": "x0",
+    "u": "z0",
+    "h": "x1",
+    "f": "z1",
+    "p": "seed",
+    "d": "runLen",
+    "v": "panelCount",
+    "g": "panelScale",
+    "x": "alongX",
+    "y": "panelIdx",
+    "b": "tFrac",
+    "m": "panel"
+  },
+  "synthCompleteSting": {
+    "e": "buf",
+    "t": "midiNote",
+    "n": "amp"
+  },
+  "getLabelMaterial": {
+    "n": "cache",
+    "s": "cacheKey",
+    "o": "entry"
+  },
+  "createShellGeometry": {
+    "t": "profile",
+    "n": "shellGeo",
+    "s": "pt"
+  },
+  "addGableEnds": {
+    "L": "xOffset",
+    "Z": "sideSign",
+    "J": "withFanHole",
+    "oe": "addGable",
+    "fe": "depth",
+    "le": "mat",
+    "R": "shiftX",
+    "I": "gableShape",
+    "ae": "holePath",
+    "se": "gableGeo"
+  },
+  "createSilentAudioEngine": {
+    "i": "noop",
+    "e": "soundHandle"
+  },
+  "addEmitterAt": {
+    "ee": "posX",
+    "B": "posY",
+    "P": "posZ",
+    "V": "emitterKind",
+    "Y": "ttlSec",
+    "L": "emitterScale",
+    "Z": "shadeVal",
+    "J": "freeEmitter",
+    "oe": "lightPool"
+  },
+  "synthMechanicalSlide": {
+    "r": "buf",
+    "a": "env",
+    "l": "target",
+    "c": "sampleIdx",
+    "u": "progress"
+  },
+  "addGirtSpanZ": {
+    "L": "zCenter",
+    "Z": "zSign",
+    "J": "xMin",
+    "oe": "xMax",
+    "fe": "yMin",
+    "le": "yMax",
+    "R": "tiltRatio",
+    "I": "ribSpacing",
+    "se": "ribDepth",
+    "ae": "segCount",
+    "k": "segIdx",
+    "ce": "yPos"
+  },
+  "addMooringLine": {
+    "$": "side",
+    "ue": "frameIdx",
+    "me": "endPoint",
+    "ee": "sagLen",
+    "B": "hullPt",
+    "P": "anchorPt",
+    "V": "hangDir",
+    "Y": "bollardGeo"
+  },
+  "tintAt": {
+    "D": "baseRgb",
+    "C": "pxX",
+    "G": "pxY",
+    "j": "pxZ",
+    "Q": "noiseA",
+    "K": "noiseB",
+    "ie": "shadeScale",
+    "F": "outR",
+    "X": "outG",
+    "ne": "outB",
+    "re": "rustMix"
+  },
+  "buildCanvasDecal": {
+    "v": "decalId",
+    "g": "canvasW",
+    "x": "canvasH",
+    "y": "drawFn",
+    "b": "decalOpts",
+    "m": "canvas",
+    "A": "g2d",
+    "_": "redraw",
+    "M": "decalMat"
+  },
+  "emitStreak": {
+    "ee": "startX",
+    "B": "startY",
+    "P": "startZ",
+    "V": "velX",
+    "Y": "velY",
+    "L": "velZ",
+    "Z": "lifeSec",
+    "J": "fadeSec",
+    "oe": "tintR",
+    "fe": "tintG",
+    "le": "tintB",
+    "R": "particleFlags",
+    "I": "slot"
+  },
+  "makePitchGlide": {
+    "o": "buf",
+    "r": "phase",
+    "a": "len",
+    "l": "sampleIdx",
+    "c": "tNorm"
+  },
+  "addRoundedBox": {
+    "w": "boxW",
+    "s": "boxH",
+    "d": "boxD",
+    "x": "posX",
+    "y": "posY",
+    "z": "posZ",
+    "c": "bevelR",
+    "u": "rotXyz",
+    "h": "slab"
+  },
+  "readAdaptation": {
+    "oe": "lum",
+    "fe": "autoExposure"
+  },
+  "buildPlateX": {
+    "a": "plateGeo",
+    "o": "shadeBias",
+    "r": "extrudeOpts"
+  },
+  "buildPlateZ": {
+    "a": "plateGeo",
+    "o": "shadeBias",
+    "r": "extrudeOpts"
+  },
+  "paintColorFn": {
+    "$": "surfU",
+    "ue": "surfV",
+    "me": "seedAdd",
+    "ee": "shadeMul",
+    "B": "rgbOut",
+    "P": "edgeWear"
+  },
+  "groundSurface": {
+    "F": "probeX",
+    "X": "probeZ"
+  },
+  "heapPop": {
+    "_": "topNode",
+    "M": "lastNode",
+    "E": "lastCost",
+    "w": "heapSize",
+    "S": "hole",
+    "z": "child"
+  },
+  "createPlaneGeometryWorldUV": {
+    "t": "planeGeo",
+    "n": "uvAttr",
+    "s": "uvIdx"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "createDrone": {
+    "s": "simState",
+    "T": "dt",
+    "P": "turretYawTarget"
+  },
+  "createGameFlow": {
+    "M": "setFlowState",
+    "k": "catmullRom",
+    "ce": "compPrev",
+    "ve": "compCurr",
+    "_e": "compNext",
+    "Te": "compNext2",
+    "fe": "spawnPoint",
+    "le": "candidateSpawn"
+  },
+  "createInput": {
+    "oe": "touchEvent",
+    "le": "changedTouch"
+  },
+  "updateAlive": {
+    "y": "dt",
+    "b": "playerRef",
+    "m": "simTime",
+    "A": "isEngaging",
+    "_": "isWounded",
+    "M": "speedCap",
+    "E": "steerTargetX",
+    "w": "steerTargetY",
+    "S": "steerTargetZ",
+    "z": "horizontalSpeed",
+    "H": "steerMagnitude",
+    "O": "velMagnitude",
+    "q": "desiredYaw",
+    "U": "yawDelta",
+    "T": "yawCos",
+    "D": "yawSin",
+    "C": "steerForward",
+    "G": "steerRight",
+    "j": "pitchTarget",
+    "N": "rollTarget",
+    "Q": "poseLerp",
+    "K": "rotorSpinStep",
+    "ie": "beaconCycle",
+    "F": "strobeScale",
+    "X": "aimLocalX",
+    "ne": "aimLocalZ",
+    "re": "aimLocalY",
+    "$": "gimbalYawTarget",
+    "ue": "gimbalPitchTarget",
+    "me": "gimbalLerp",
+    "ee": "lensTargetColor",
+    "B": "lensGlowScale"
+  },
+  "buildToolboxCart": {
+    "A": "drawerCenterY",
+    "_": "toolIndex",
+    "m": "drawerOpenOffset"
+  }
+}

@@ -1,0 +1,1355 @@
+{
+  "domain": "H-骨骼、敌人 AI、主流程与 UI",
+  "symbols": [
+    {
+      "compressed": "dm",
+      "name": "createPac9Viewmodel",
+      "kind": "function",
+      "module": "src/entities/weapon.js",
+      "doc": "构建 pac9 步枪的第一人称视图模型：程序化几何 + 双手手套手指绑定 + 金属铭牌贴花 + 枪口焰，并返回带开火/换弹/ADS/惯性摆动状态的 weapon 对象；整个模型挂在相机下，只走 viewmodel layer 以免被世界裁切"
+    },
+    {
+      "compressed": "ex",
+      "name": "weaponModule",
+      "kind": "const",
+      "module": "src/entities/weapon.js",
+      "doc": "武器模块的导出壳，通过 getter 暴露 TUNE 数值表、create 工厂与 showcase 展示场景"
+    },
+    {
+      "compressed": "PC",
+      "name": "showcaseWeapon",
+      "kind": "function",
+      "module": "src/entities/weapon.js",
+      "doc": "武器模型展示台：把枪摆成 hip/ads/sprint/fire/reload/empty 等固定姿势并锁帧，供截图与调参用；挂 window.__setShot 以便外部脚本切姿势"
+    },
+    {
+      "compressed": "iu",
+      "name": "Rig",
+      "kind": "class",
+      "module": "src/entities/rig.js",
+      "doc": "骨骼装配器：按名字登记骨骼（记录局部/世界偏移与父索引）、把几何按槽位(shell/metal/glow/lens)贴到骨骼上并写入 skinIndex/skinWeight 与 AO 顶点色，最后合并成单个 SkinnedMesh 的几何"
+    },
+    {
+      "compressed": "pm",
+      "name": "buildSkinnedRig",
+      "kind": "function",
+      "module": "src/entities/rig.js",
+      "doc": "把 Rig.build 的产物实例化成 THREE 场景对象：建 Bone 层级、SkinnedMesh、Skeleton，并手工写入包围球/包围盒以免蒙皮动画时被视锥剔除；extra 用于挂不参与蒙皮的附加网格（螺旋桨盘、探照锥）"
+    },
+    {
+      "compressed": "q_",
+      "name": "solveLegIK",
+      "kind": "function",
+      "module": "src/entities/rig.js",
+      "doc": "四足机器的两段式腿 IK 解析：由髋部到落足点的差向量反解髋开合角、大腿与小腿角，并把可达距离限幅到腿长范围内，保证脚不打滑也不穿透"
+    },
+    {
+      "compressed": "Ss",
+      "name": "RIG_SHELL_WHITE",
+      "kind": "table",
+      "module": "src/entities/rig.js",
+      "doc": "敌人装甲壳的主色顶点色（亮白），hound 与 gull 共用的机体外壳基色"
+    },
+    {
+      "compressed": "vm",
+      "name": "RIG_SHELL_COOL",
+      "kind": "table",
+      "module": "src/entities/rig.js",
+      "doc": "偏冷的装甲壳顶点色，用于通风口、次级面板等与主壳区分的小块"
+    },
+    {
+      "compressed": "Ts",
+      "name": "RIG_SHELL_RUST",
+      "kind": "table",
+      "module": "src/entities/rig.js",
+      "doc": "锈橙色装甲顶点色，用在底座、护边等易磨蚀部位，制造港口机械的旧化感"
+    },
+    {
+      "compressed": "s0",
+      "name": "RIG_SHELL_DARK",
+      "kind": "table",
+      "module": "src/entities/rig.js",
+      "doc": "深灰黑装甲顶点色，用于凹陷面板、散热格栅等视觉重量集中的暗部"
+    },
+    {
+      "compressed": "ga",
+      "name": "RIG_SHELL_SHADOW",
+      "kind": "table",
+      "module": "src/entities/rig.js",
+      "doc": "近黑的软管/缝隙顶点色，给管线与装甲接缝压暗，避免纯黑法线破面"
+    },
+    {
+      "compressed": "Of",
+      "name": "RIG_SHELL_HAZARD",
+      "kind": "table",
+      "module": "src/entities/rig.js",
+      "doc": "黄黑警示条用的琥珀顶点色，标记危险运动部件（螺旋桨尖、枪口段）"
+    },
+    {
+      "compressed": "As",
+      "name": "RIG_METAL_WHITE",
+      "kind": "table",
+      "module": "src/entities/rig.js",
+      "doc": "白色金属顶点色，用于螺栓、法兰等高频小件，保持与暗色机体对比"
+    },
+    {
+      "compressed": "Yn",
+      "name": "RIG_METAL_BRIGHT",
+      "kind": "table",
+      "module": "src/entities/rig.js",
+      "doc": "过曝级亮金属顶点色，用在液压杆、关节轴等需要高光的传动件上"
+    },
+    {
+      "compressed": "an",
+      "name": "RIG_METAL_BASE",
+      "kind": "table",
+      "module": "src/entities/rig.js",
+      "doc": "中灰金属顶点色，是敌人机械结构的默认金属基调"
+    },
+    {
+      "compressed": "IC",
+      "name": "RIG_METAL_CHROME",
+      "kind": "table",
+      "module": "src/entities/rig.js",
+      "doc": "近铬的极亮金属顶点色，只用于细钢索/拉杆等单条高光件"
+    },
+    {
+      "compressed": "zC",
+      "name": "RIG_METAL_BORE",
+      "kind": "table",
+      "module": "src/entities/rig.js",
+      "doc": "偏暖的亮金属顶点色，涂在枪管内壁模拟被高温烧灼的膛口"
+    },
+    {
+      "compressed": "va",
+      "name": "HALF_PI",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "四分之一圆弧常量，供圆柱绕轴翻转成 X/Z 朝向的几何助手复用，避免到处写 Math.PI/2"
+    },
+    {
+      "compressed": "ft",
+      "name": "createRoundedBox",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "带倒角的长方体生成器：机械件的边角必须有一致的小圆角才不显得是塑料玩具，默认 8mm 半径对应真实倒角尺度"
+    },
+    {
+      "compressed": "Ce",
+      "name": "transformGeom",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "把已经烘焙进 Rig 骨骼的几何模块平移旋转缩放到位，是骨骼部件摆放的唯一入口（位置+欧拉角+统一缩放）"
+    },
+    {
+      "compressed": "ds",
+      "name": "createCylinderY",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "沿 Y 轴的圆柱几何（默认朝向），机械件里最常见的轴对称体"
+    },
+    {
+      "compressed": "Ro",
+      "name": "createCylinderX",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "沿 X 轴的圆柱几何，绕 Z 转 -90° 得到，用于横向轴件与枪管"
+    },
+    {
+      "compressed": "Si",
+      "name": "createCylinderZ",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "沿 Z 轴的圆柱几何，绕 X 转 +90° 得到，用于前后向的轴件与镜头筒"
+    },
+    {
+      "compressed": "mm",
+      "name": "strutFrom",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "createStrut 的起点暂存向量，复用以避免每帧新分配"
+    },
+    {
+      "compressed": "gm",
+      "name": "strutTo",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "createStrut 的终点暂存向量"
+    },
+    {
+      "compressed": "X_",
+      "name": "strutQuat",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "createStrut 的朝向四元数暂存（把圆柱从 Y 轴旋到两点连线方向）"
+    },
+    {
+      "compressed": "DC",
+      "name": "AXIS_Y",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "单位 Y 轴常量，作为圆柱默认朝向上的参考方向"
+    },
+    {
+      "compressed": "Y_",
+      "name": "strutMatrix",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "createStrut 的复合变换矩阵暂存（中点位移 + 朝向 + 单位缩放）"
+    },
+    {
+      "compressed": "LC",
+      "name": "UNIT_SCALE",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "单位缩放常量，给矩阵 compose 补位，避免每次 new 一个 Vector3(1,1,1)"
+    },
+    {
+      "compressed": "su",
+      "name": "createStrut",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "两点之间的圆柱拉杆生成器：按两点距离决定长度并自动对齐朝向，用于液压杆、天线、钢索这类跨关节的连接件"
+    },
+    {
+      "compressed": "Ur",
+      "name": "createScaledSphere",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "可非均匀缩放的球体生成器，用一个球做出椭球壳体（浮筒、机头罩），比专门建几何省面"
+    },
+    {
+      "compressed": "$_",
+      "name": "makeBoltHexX",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "沿 X 轴的微型六角螺栓头（6 段圆柱），散落在装甲板上提供机械密度"
+    },
+    {
+      "compressed": "Yv",
+      "name": "makeBoltHexY",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "沿 Y 轴的微型六角螺栓头，用于朝上的安装面"
+    },
+    {
+      "compressed": "kC",
+      "name": "makeBoltHexZ",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "沿 Z 轴的微型六角螺栓头，用于朝前的安装面"
+    },
+    {
+      "compressed": "$v",
+      "name": "HOUND_RIG",
+      "kind": "table",
+      "module": "src/entities/hound.js",
+      "doc": "hound 四足机的骨架尺寸表：站高、大腿/小腿长、髋偏移、四条腿的落足点与内外侧符号、枪口与眼点局部坐标；骨骼与 IK 都以它为唯一尺度来源"
+    },
+    {
+      "compressed": "Z_",
+      "name": "buildHoundRig",
+      "kind": "function",
+      "module": "src/entities/hound.js",
+      "doc": "程序化搭建 hound 的整台机体：head/body/neck/turret/gun/antenna/beacon 加四条腿的 abd-thigh-shin 链，全部装甲板、螺栓、软管、发光线都按槽位塞进 Rig 后合并成一个蒙皮几何"
+    },
+    {
+      "compressed": "xm",
+      "name": "GULL_RIG",
+      "kind": "table",
+      "module": "src/entities/gull.js",
+      "doc": "gull 四旋翼机的锚点表：四个旋翼位置、云台/球机/机炮/枪口/探照灯的局部坐标，骨骼与部件摆放都引这张表"
+    },
+    {
+      "compressed": "FC",
+      "name": "createRotorBellGeometry",
+      "kind": "function",
+      "module": "src/entities/gull.js",
+      "doc": "用旋转体轮廓生成旋翼桨毂外罩（lathe），比堆圆柱更贴合曲线外壳，四个旋翼共用同一份几何"
+    },
+    {
+      "compressed": "j_",
+      "name": "buildGullRig",
+      "kind": "function",
+      "module": "src/entities/gull.js",
+      "doc": "程序化搭建 gull 无人机：机身、四旋翼、云台球机、探照灯、三色航行灯，并额外构建第二个 Rig 放不参与蒙皮的旋翼盘与探照锥（disc/cone 槽位）"
+    },
+    {
+      "compressed": "Zv",
+      "name": "GULL_TUNE",
+      "kind": "table",
+      "module": "src/entities/gull.js",
+      "doc": "gull 的战斗数值：血量、电浆弹伤害/弹速、三连发间隔、预警时长、冷却区间、环绕半径/高度范围、散布与爆炸参数"
+    },
+    {
+      "compressed": "Pn",
+      "name": "GULL_TUNE_ALIAS",
+      "kind": "const",
+      "module": "src/entities/gull.js",
+      "doc": "GULL_TUNE 在 gull AI 作用域内的短别名，所有数值读取都走它，改表即改行为"
+    },
+    {
+      "compressed": "$o",
+      "name": "gullScratch",
+      "kind": "const",
+      "module": "src/entities/gull.js",
+      "doc": "gull 每帧复用的临时向量（视线差、爆点、火花方向），避免在 AI 循环里分配对象"
+    },
+    {
+      "compressed": "iz",
+      "name": "gullSpareA",
+      "kind": "const",
+      "module": "src/entities/gull.js",
+      "doc": "gull 域预留的临时向量，当前代码里未被引用，保号以免后续改动破坏声明顺序"
+    },
+    {
+      "compressed": "Bs",
+      "name": "gullDir",
+      "kind": "const",
+      "module": "src/entities/gull.js",
+      "doc": "gull 的临时方向向量（射线方向、射击方向），每帧复用"
+    },
+    {
+      "compressed": "Co",
+      "name": "gullSteer",
+      "kind": "const",
+      "module": "src/entities/gull.js",
+      "doc": "gull 的期望加速度蓄水池：把悬停、环绕、闪避、受伤抖动全部累加后再限幅成加速度，是飞行手感的核心中间量"
+    },
+    {
+      "compressed": "sz",
+      "name": "gullSpareB",
+      "kind": "const",
+      "module": "src/entities/gull.js",
+      "doc": "gull 域预留的临时向量，当前代码里未被引用"
+    },
+    {
+      "compressed": "ou",
+      "name": "gullAimPoint",
+      "kind": "const",
+      "module": "src/entities/gull.js",
+      "doc": "gull 云台要看向的世界点（玩家、可疑点或巡逻扫视点），云台偏航/俯仰都朝它收敛"
+    },
+    {
+      "compressed": "Hf",
+      "name": "AXIS_UP",
+      "kind": "const",
+      "module": "src/entities/gull.js",
+      "doc": "单位 Y 轴常量，用于把局部偏移按偏航角旋转到世界方向（applyAxisAngle）"
+    },
+    {
+      "compressed": "J_",
+      "name": "AXIS_DOWN",
+      "kind": "const",
+      "module": "src/entities/gull.js",
+      "doc": "单位 -Y 轴常量，作为向下探测（防撞天花板/地面）的射线方向"
+    },
+    {
+      "compressed": "ym",
+      "name": "GULL_LENS_IDLE",
+      "kind": "table",
+      "module": "src/entities/gull.js",
+      "doc": "gull 镜头在非交战态的 RGB 发光色，冷白光表示还在巡逻"
+    },
+    {
+      "compressed": "UC",
+      "name": "GULL_LENS_ENGAGED",
+      "kind": "table",
+      "module": "src/entities/gull.js",
+      "doc": "gull 镜头在交战态的 RGB 发光色，炽白偏红作为攻击预警的视觉语言"
+    },
+    {
+      "compressed": "K_",
+      "name": "wrapAngle",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "把角度差归一化到 (-π, π]，角度控制环必须先过这一步才不会绕远路转圈"
+    },
+    {
+      "compressed": "bl",
+      "name": "clamp",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "数值限幅小工具（已存在同名语义的 Zn，此处为 gull 域内的局部副本）"
+    },
+    {
+      "compressed": "Q_",
+      "name": "createGull",
+      "kind": "function",
+      "module": "src/entities/gull.js",
+      "doc": "gull 敌机的完整实体工厂：装配蒙皮、注册 damage/_activate/_deactivate/_raycast/_update 接口，内部实现三态（巡逻/调查/交战）飞行 AI、云台瞄准、三连发点射与击落螺旋坠毁；对象池复用，不 new"
+    },
+    {
+      "compressed": "Kv",
+      "name": "HOUND_TUNE",
+      "kind": "table",
+      "module": "src/entities/hound.js",
+      "doc": "hound 的战斗数值：血量、单发伤害、四连发节奏、预警时长、奔跑/潜行/巡逻速度、转向率、散布、扑咬距离与冷却、重寻路间隔"
+    },
+    {
+      "compressed": "Gt",
+      "name": "HOUND_TUNE_ALIAS",
+      "kind": "const",
+      "module": "src/entities/hound.js",
+      "doc": "HOUND_TUNE 在 hound AI 作用域内的短别名"
+    },
+    {
+      "compressed": "ni",
+      "name": "HOUND_RIG_ALIAS",
+      "kind": "const",
+      "module": "src/entities/hound.js",
+      "doc": "HOUND_RIG 在 hound AI 作用域内的别名，用于读取站高、髋偏移、腿长等骨骼尺度"
+    },
+    {
+      "compressed": "ps",
+      "name": "houndBodyStart",
+      "kind": "const",
+      "module": "src/entities/hound.js",
+      "doc": "hound 受击/特效用的临时向量：机体质心一侧端点，兼作烟雾火花发射点"
+    },
+    {
+      "compressed": "ru",
+      "name": "houndBodyEnd",
+      "kind": "const",
+      "module": "src/entities/hound.js",
+      "doc": "hound 受击判定胶囊的另一端点，与 houndBodyStart 组成两条水平胶囊做身体命中测试"
+    },
+    {
+      "compressed": "Po",
+      "name": "houndDir",
+      "kind": "const",
+      "module": "src/entities/hound.js",
+      "doc": "hound 的临时方向向量（前进探测方向、射击方向）"
+    },
+    {
+      "compressed": "Io",
+      "name": "houndScratch",
+      "kind": "const",
+      "module": "src/entities/hound.js",
+      "doc": "hound 的多用途临时向量（探路射线起点、枪口世界坐标、候选开火点）"
+    },
+    {
+      "compressed": "eM",
+      "name": "houndTracerEnd",
+      "kind": "const",
+      "module": "src/entities/hound.js",
+      "doc": "hound 曳光弹的终点，由射线命中距离截断后传入特效"
+    },
+    {
+      "compressed": "Vf",
+      "name": "houndAimPoint",
+      "kind": "const",
+      "module": "src/entities/hound.js",
+      "doc": "hound 射击时瞄准的玩家胸口点，兼作视线测试的端点"
+    },
+    {
+      "compressed": "jv",
+      "name": "HOUND_UP",
+      "kind": "const",
+      "module": "src/entities/hound.js",
+      "doc": "单位 Y 轴常量，用于以向上方向发射火花/尘土粒子"
+    },
+    {
+      "compressed": "bm",
+      "name": "LEG_IK_OUT",
+      "kind": "table",
+      "module": "src/entities/hound.js",
+      "doc": "腿 IK 的输出复用对象：一次解算写入 abd/hip/knee 三个关节角与 reach 伸展比，随后直接赋给骨骼 rotation，避免每帧新建结果对象"
+    },
+    {
+      "compressed": "_m",
+      "name": "HOUND_LENS_IDLE",
+      "kind": "table",
+      "module": "src/entities/hound.js",
+      "doc": "hound 传感器在非交战态的 RGB 发光色"
+    },
+    {
+      "compressed": "NC",
+      "name": "HOUND_LENS_ENGAGED",
+      "kind": "table",
+      "module": "src/entities/hound.js",
+      "doc": "hound 传感器在交战态的 RGB 发光色，比巡逻态更红更亮，作为开火前兆"
+    },
+    {
+      "compressed": "Mm",
+      "name": "wrapAngleHound",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "hound 域内的角度差归一化副本，与 gull 侧逻辑相同"
+    },
+    {
+      "compressed": "uo",
+      "name": "clampHound",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "hound 域内的数值限幅副本"
+    },
+    {
+      "compressed": "wm",
+      "name": "HOUND_GAIT_PAIRS",
+      "kind": "table",
+      "module": "src/entities/hound.js",
+      "doc": "四足步态的对角腿分组（[0,3] 与 [1,2]），步态机每次只抬起其中一组，保证移动时始终有两点着地"
+    },
+    {
+      "compressed": "xa",
+      "name": "springStep",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "单轴弹簧积分器（stiffness/damping 参数化）：机体起伏、枪身俯仰顿挫这类第二序动画都靠它，短步长下无条件稳定"
+    },
+    {
+      "compressed": "iM",
+      "name": "createHound",
+      "kind": "function",
+      "module": "src/entities/hound.js",
+      "doc": "hound 四足机的完整实体工厂：装配蒙皮与脚步 IK、注册 damage/_activate/_deactivate/_raycast/_update，内部实现巡逻/调查/交战状态机、A* 寻路跟随、掩体选点、预警-点射-扑咬三套攻击、程序化步态与死亡垮塌"
+    },
+    {
+      "compressed": "sM",
+      "name": "raySphere",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "射线与球的最近正向交点求解，用于敌人弱点（头/镜头）的命中判定，只接受比已有命中更近的结果"
+    },
+    {
+      "compressed": "nM",
+      "name": "rayCapsule",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "射线与胶囊求交：先把射线投影到胶囊轴线上取最近点，再退化成 raySphere 测试，用于敌人躯干的宽松命中体"
+    },
+    {
+      "compressed": "au",
+      "name": "segDir",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "rayCapsule 内部复用的临时向量（胶囊轴方向）"
+    },
+    {
+      "compressed": "Jv",
+      "name": "rayToOrigin",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "rayCapsule 内部复用的临时向量（射线起点相对胶囊起点的偏移）"
+    },
+    {
+      "compressed": "tM",
+      "name": "segClosest",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "rayCapsule 内部复用的临时向量（轴线上离射线最近的点）"
+    },
+    {
+      "compressed": "Ui",
+      "name": "AI_TUNE",
+      "kind": "table",
+      "module": "src/entities/ai.js",
+      "doc": "敌人 AI 的共用调度参数：视野距离与视锥角、失去视野宽限、搜索时长、听觉半径、同时开火令牌上限与间隔、暴露度增减速率、各类型对象池容量与曳光弹/残骸上限"
+    },
+    {
+      "compressed": "BC",
+      "name": "SIGHT_COS_HALF",
+      "kind": "const",
+      "module": "src/entities/ai.js",
+      "doc": "视锥半角的余弦阈值，与玩家方向点乘直接比较即可判定是否在视野内（省掉逐帧 acos）"
+    },
+    {
+      "compressed": "oM",
+      "name": "boltEndPoint",
+      "kind": "const",
+      "module": "src/entities/ai.js",
+      "doc": "gull 电浆弹本帧终点，用于与玩家胶囊做距离平方判定"
+    },
+    {
+      "compressed": "pz",
+      "name": "boltSpare",
+      "kind": "const",
+      "module": "src/entities/ai.js",
+      "doc": "AI 域预留的临时向量，当前代码里未被引用"
+    },
+    {
+      "compressed": "Qv",
+      "name": "gullLightDir",
+      "kind": "const",
+      "module": "src/entities/ai.js",
+      "doc": "gull 探照灯的方向向量，由云台偏航/俯仰推出，用来把共享点光源投到地面或玩家身上"
+    },
+    {
+      "compressed": "rM",
+      "name": "boltQuat",
+      "kind": "const",
+      "module": "src/entities/ai.js",
+      "doc": "电浆弹实例化时的朝向四元数暂存（把 +Z 对齐到弹道方向）"
+    },
+    {
+      "compressed": "aM",
+      "name": "boltMatrix",
+      "kind": "const",
+      "module": "src/entities/ai.js",
+      "doc": "电浆弹写入 InstancedMesh 的变换矩阵暂存"
+    },
+    {
+      "compressed": "lM",
+      "name": "boltScale",
+      "kind": "const",
+      "module": "src/entities/ai.js",
+      "doc": "电浆弹实例的缩放暂存，Z 分量随生成后的飞行长度拉伸，做出拖尾"
+    },
+    {
+      "compressed": "OC",
+      "name": "AXIS_Z",
+      "kind": "const",
+      "module": "src/entities/ai.js",
+      "doc": "单位 Z 轴常量，作为电浆弹几何默认朝向的参考轴"
+    },
+    {
+      "compressed": "mz",
+      "name": "DOWN_SPARE",
+      "kind": "const",
+      "module": "src/entities/ai.js",
+      "doc": "AI 域预留的向下单位向量，当前代码里未被引用"
+    },
+    {
+      "compressed": "cM",
+      "name": "playerCapsuleLow",
+      "kind": "const",
+      "module": "src/entities/ai.js",
+      "doc": "玩家受击胶囊的下端点（脚踝高度），与上端点组成竖直胶囊"
+    },
+    {
+      "compressed": "uM",
+      "name": "playerCapsuleHigh",
+      "kind": "const",
+      "module": "src/entities/ai.js",
+      "doc": "玩家受击胶囊的上端点，蹲下时从 1.5m 收到 1.0m，让蹲伏真的能躲低飞的弹"
+    },
+    {
+      "compressed": "Em",
+      "name": "createEnemySystem",
+      "kind": "function",
+      "module": "src/entities/ai.js",
+      "doc": "敌人系统总装：按池容量预生成 gull/hound、统一调度开火令牌与警戒集结、维护电浆弹实例池与共享探照点光源，并对外提供 spawn/raycast/alert/clear/update 接口"
+    },
+    {
+      "compressed": "o0",
+      "name": "segA",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "线段距离计算的临时向量（第一段方向）"
+    },
+    {
+      "compressed": "r0",
+      "name": "segB",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "线段距离计算的临时向量（第二段方向）"
+    },
+    {
+      "compressed": "a0",
+      "name": "originDelta",
+      "kind": "const",
+      "module": "src/core/math.js",
+      "doc": "线段距离计算的临时向量（两段起点之差）"
+    },
+    {
+      "compressed": "HC",
+      "name": "segmentDistanceSq",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "两条线段最近距离的平方（含退化情形处理），用来判定电浆弹这一小段运动轨迹是否擦过玩家胶囊"
+    },
+    {
+      "compressed": "VC",
+      "name": "showcaseEnemies",
+      "kind": "function",
+      "module": "src/entities/ai.js",
+      "doc": "敌人展示台：按 eshow 参数(gull/hound/both/fight/dead)摆出对应阵容并快进若干帧，让截图能直接看到飞行/行走/交火/击毁姿态"
+    },
+    {
+      "compressed": "tx",
+      "name": "COMPASS_PX_PER_DEG",
+      "kind": "const",
+      "module": "src/ui/hud.js",
+      "doc": "罗盘刻度带的每度像素密度，决定刻度位置换算与目标标记的横向投影"
+    },
+    {
+      "compressed": "nx",
+      "name": "COMPASS_MIN_DEG",
+      "kind": "const",
+      "module": "src/ui/hud.js",
+      "doc": "罗盘刻度带起始角度（-90°），刻度带只生成这段区间以控制 DOM 数量"
+    },
+    {
+      "compressed": "WC",
+      "name": "COMPASS_MAX_DEG",
+      "kind": "const",
+      "module": "src/ui/hud.js",
+      "doc": "罗盘刻度带结束角度（450°），覆盖完整一圈加左右余量"
+    },
+    {
+      "compressed": "GC",
+      "name": "COMPASS_CARDINALS",
+      "kind": "table",
+      "module": "src/ui/hud.js",
+      "doc": "每 45° 的基本方位字母表，生成罗盘主刻度文字用"
+    },
+    {
+      "compressed": "ix",
+      "name": "PROMPT_RING_LENGTH",
+      "kind": "const",
+      "module": "src/ui/hud.js",
+      "doc": "交互提示圆环的周长（半径 19 的 SVG 圆周），用 stroke-dashoffset 直接表达按住进度"
+    },
+    {
+      "compressed": "li",
+      "name": "createEl",
+      "kind": "function",
+      "module": "src/ui/dom.js",
+      "doc": "最小 DOM 构造助手：一行建元素并设 class 与 innerHTML，UI 代码里所有节点的统一出口"
+    },
+    {
+      "compressed": "hM",
+      "name": "buildHud",
+      "kind": "function",
+      "module": "src/ui/hud.js",
+      "doc": "搭出整块 HUD（罗盘刻度带、任务/中继进度、准星、命中反馈、爆炸方向弧、交互提示、击杀播报、无线电字幕、血条、弹药与武器名），并返回增量更新的 hud 对象——所有变动先与缓存值比对，避免每帧写 DOM"
+    },
+    {
+      "compressed": "fM",
+      "name": "SETTINGS_STORAGE_KEY",
+      "kind": "const",
+      "module": "src/core/settings.js",
+      "doc": "设置持久化的 localStorage 键名，带版本后缀以便日后迁移"
+    },
+    {
+      "compressed": "XC",
+      "name": "DEFAULT_SETTINGS",
+      "kind": "table",
+      "module": "src/core/settings.js",
+      "doc": "设置默认值（画质 auto、灵敏度 1、不反转 Y、音量 0.8、FOV 取配置常量），也是读档时的兜底与字段白名单来源"
+    },
+    {
+      "compressed": "dM",
+      "name": "QUALITY_LEVELS",
+      "kind": "table",
+      "module": "src/core/settings.js",
+      "doc": "可选画质档位名（low/medium/high/ultra），既是校验白名单也是设置面板分段按钮的生成源"
+    },
+    {
+      "compressed": "YC",
+      "name": "loadSettings",
+      "kind": "function",
+      "module": "src/core/settings.js",
+      "doc": "从 localStorage 读设置并逐字段校验限幅（灵敏度 0.2–3、音量 0–1、FOV 60–95），任何解析失败或越界都静默回退默认值"
+    },
+    {
+      "compressed": "Wf",
+      "name": "saveSettings",
+      "kind": "function",
+      "module": "src/core/settings.js",
+      "doc": "把设置写回 localStorage，配额/隐私模式下的写入异常直接吞掉，不让设置失败拖垮游戏"
+    },
+    {
+      "compressed": "$C",
+      "name": "KEYBOARD_HELP_HTML",
+      "kind": "const",
+      "module": "src/ui/menus.js",
+      "doc": "键鼠操作说明的静态 HTML 片段（移动/开火/换弹/切断中继/蹲伏等），直接嵌进设置面板的 Controls 页"
+    },
+    {
+      "compressed": "ZC",
+      "name": "TOUCH_HELP_HTML",
+      "kind": "const",
+      "module": "src/ui/menus.js",
+      "doc": "触屏操作说明的静态 HTML 片段，列出手柄与拖拽视角约定"
+    },
+    {
+      "compressed": "pM",
+      "name": "buildMenus",
+      "kind": "function",
+      "module": "src/ui/menus.js",
+      "doc": "构建全部菜单层（标题/暂停/死亡/结算四个屏、设置与操作说明面板、地点卡），负责设置项双向同步、画质切换、全屏切换、键盘焦点圈闭与按钮动作分发，返回 menus 对象给主流程驱动"
+    },
+    {
+      "compressed": "Yi",
+      "name": "MISSION_FLOW",
+      "kind": "table",
+      "module": "src/core/loop.js",
+      "doc": "任务节奏表：开场时长、重生开场时长、交互距离与朝向阈值、切断中继耗时、开场巡逻数量、三波敌人配置、同时存活上限、刷怪间隔与远距离阈值、全暗后的追击强度、标题镜头速度与 FOV"
+    },
+    {
+      "compressed": "jC",
+      "name": "COMPASS_NAMES",
+      "kind": "table",
+      "module": "src/core/loop.js",
+      "doc": "八个方位的英文全称，用于把刷怪方向换算成无线电/警示里的口语方位"
+    },
+    {
+      "compressed": "_l",
+      "name": "CONTROL_RADIO_LINES",
+      "kind": "table",
+      "module": "src/core/loop.js",
+      "doc": "Control 的无线电台词表：开场简报、首次接敌、切断一/二中继、全暗撤离、重伤、通关，是唯一的剧情文本源"
+    },
+    {
+      "compressed": "mM",
+      "name": "createGameFlow",
+      "kind": "function",
+      "module": "src/core/loop.js",
+      "doc": "游戏主流程状态机：title/intro/playing/paused/dead/complete 六态推进，串联标题镜头、中继交互与切断、按镜头方向刷怪、全暗后的追击压力、音频强度与后处理淡入淡出，并输出胜负结算"
+    },
+    {
+      "compressed": "gM",
+      "name": "SHOWCASE_REGISTRY",
+      "kind": "table",
+      "module": "src/main.js",
+      "doc": "展示场景注册表：把 ?show= 的参数名映射到各模块的 showcase 入口（材质/关卡/背景/地面/特效/武器/敌人/道具/渲染），是调参与截图的总开关"
+    },
+    {
+      "compressed": "vM",
+      "name": "bootScreenEl",
+      "kind": "const",
+      "module": "src/ui/boot.js",
+      "doc": "启动遮罩元素（#boot），进度走完后加 done 类再隐藏，避免白屏闪烁"
+    },
+    {
+      "compressed": "xM",
+      "name": "bootMessageEl",
+      "kind": "const",
+      "module": "src/ui/boot.js",
+      "doc": "启动遮罩上的状态文案节点，逐阶段显示当前在做什么"
+    },
+    {
+      "compressed": "yM",
+      "name": "bootProgressEl",
+      "kind": "const",
+      "module": "src/ui/boot.js",
+      "doc": "启动遮罩上的进度条填充节点"
+    },
+    {
+      "compressed": "bM",
+      "name": "showFatalError",
+      "kind": "function",
+      "module": "src/ui/boot.js",
+      "doc": "致命错误兜底：把启动失败原因写进页面上的 #fatal 区块并记到 window.__fatal，保证黑屏时用户仍能看到原因"
+    },
+    {
+      "compressed": "KC",
+      "name": "yieldToPaint",
+      "kind": "function",
+      "module": "src/ui/boot.js",
+      "doc": "把控制权让给浏览器一帧（setTimeout 0），让启动进度条真的能重绘，否则同步阻塞的初始化阶段进度条会卡住不动"
+    },
+    {
+      "compressed": "Nr",
+      "name": "setBootProgress",
+      "kind": "function",
+      "module": "src/ui/boot.js",
+      "doc": "更新启动文案与进度并按需让出一帧，是 boot 序列里每个阶段之间的标准停顿点"
+    },
+    {
+      "compressed": "QC",
+      "name": "bootGame",
+      "kind": "function",
+      "module": "src/main.js",
+      "doc": "完整启动序列：解析 URL 参数与画质、按顺序加载渲染/材质/物理/关卡/背景/地面/特效/音频/玩家/战斗/武器/敌人/HUD/主流程（每步失败可回退到 stub），挂 setAnimationLoop 组织每帧更新顺序与 wetness 室内插值，并暴露 __stats/__ready 供自动化截图判定"
+    },
+    {
+      "compressed": "eP",
+      "name": "attachBenchOverlay",
+      "kind": "function",
+      "module": "src/ui/boot.js",
+      "doc": "压测叠层：沿镜头路径自动巡航并统计帧时均值/中位/p99 与 GPU 名，把结果打到左上角文本里，供 bench 模式对比画质档位"
+    },
+    {
+      "compressed": "tP",
+      "name": "createStubInput",
+      "kind": "function",
+      "module": "src/core/input.js",
+      "doc": "空输入桩：展示模式下没有真实输入系统时顶替，保持字段形状一致，所有按键查询恒为 false"
+    },
+    {
+      "compressed": "nP",
+      "name": "createStubPlayer",
+      "kind": "function",
+      "module": "src/entities/player.js",
+      "doc": "空玩家桩：展示模式没有真实玩家控制器时顶替，提供位置/朝向/血量等只读字段与空实现方法，让武器、HUD、敌人系统仍能正常运行"
+    }
+  ],
+  "params": {
+    "dm": ["ctx"],
+    "PC": ["ctx"],
+    "pm": ["def", "materials", "opts"],
+    "q_": ["out", "localX", "localY", "localZ", "side", "coxa", "thigh", "shin"],
+    "ft": ["width", "height", "depth", "radius"],
+    "Ce": ["geom", "x", "y", "z", "rx", "ry", "rz", "scale"],
+    "ds": ["radiusTop", "radiusBottom", "height", "segments"],
+    "Ro": ["radiusTop", "radiusBottom", "height", "segments"],
+    "Si": ["radiusTop", "radiusBottom", "height", "segments"],
+    "su": ["from", "to", "radiusA", "radiusB", "segments"],
+    "Ur": ["radius", "widthSegments", "heightSegments", "scaleX", "scaleY", "scaleZ"],
+    "$_": ["x", "y", "z"],
+    "Yv": ["x", "y", "z"],
+    "kC": ["x", "y", "z"],
+    "Z_": [],
+    "FC": [],
+    "j_": [],
+    "K_": ["angle", "ref"],
+    "bl": ["value", "min", "max"],
+    "Q_": ["ctx", "rigDef", "materials", "index"],
+    "Mm": ["angle", "ref"],
+    "uo": ["value", "min", "max"],
+    "xa": ["spring", "target", "stiffness", "damping", "dt"],
+    "iM": ["ctx", "rigDef", "materials", "index"],
+    "sM": ["origin", "dir", "center", "radius", "maxDist", "hit"],
+    "nM": ["origin", "dir", "segStart", "segEnd", "radius", "maxDist", "hit"],
+    "Em": ["ctx"],
+    "HC": ["aFrom", "aTo", "bFrom", "bTo"],
+    "VC": ["ctx"],
+    "li": ["tag", "className", "html"],
+    "hM": ["ctx"],
+    "YC": [],
+    "Wf": ["settings"],
+    "pM": ["ctx", "actions"],
+    "mM": ["ctx"],
+    "bM": ["error"],
+    "KC": [],
+    "Nr": ["message", "progress"],
+    "QC": [],
+    "eP": ["ctx"],
+    "tP": [],
+    "nP": ["ctx"]
+  },
+  "locals": {
+    "dm": {
+      "e": "root",
+      "t": "parts",
+      "n": "materialScales",
+      "s": "getMat",
+      "o": "makeMesh",
+      "r": "anodisedMat",
+      "a": "matteMat",
+      "l": "phosphateMat",
+      "c": "polymerMat",
+      "u": "tanPolymerMat",
+      "h": "boltMesh",
+      "f": "magGroup",
+      "p": "magRestPos",
+      "d": "roundMesh",
+      "v": "markingsMesh",
+      "g": "opticGlass",
+      "x": "flashMesh",
+      "y": "toHandSpace",
+      "b": "rightHandQuat",
+      "m": "rightGlove",
+      "A": "rightHandGroup",
+      "_": "gloveMat",
+      "M": "indexFingerMesh",
+      "E": "fingerRestAttrs",
+      "w": "fingerCurlAttrs",
+      "S": "fingerBlend",
+      "z": "setFingerCurl",
+      "H": "leftHandQuat",
+      "O": "leftGlove",
+      "q": "leftHandGroup",
+      "U": "handPivot",
+      "T": "makePose",
+      "D": "offsetPose",
+      "C": "boltHandQuat",
+      "G": "leftGripPose",
+      "j": "leftWorkPose",
+      "N": "leftReachPose",
+      "Q": "leftPullPose",
+      "K": "leftPushPose",
+      "ie": "leftTapPose",
+      "F": "leftSettlePose",
+      "X": "boltHandBaseQuat",
+      "ne": "boltHandPose",
+      "re": "boltHandPullPose",
+      "$": "reloadTrack",
+      "ue": "reloadEmptyTrack",
+      "me": "MAG_OUT_T",
+      "ee": "MAG_IN_T",
+      "B": "BOLT_PULL_T",
+      "P": "BOLT_FULL_T",
+      "V": "BOLT_RELEASE_T",
+      "Y": "trackPos",
+      "L": "trackQuat",
+      "Z": "magAttachQuat",
+      "J": "spareVecA",
+      "oe": "spareVecB",
+      "fe": "spareVecC",
+      "le": "sampleTrack",
+      "R": "boltHandInvQuat",
+      "I": "triCount",
+      "se": "meshCount",
+      "ae": "rand",
+      "k": "anim",
+      "ce": "debug",
+      "ve": "weapon",
+      "_e": "resetWeapon",
+      "Te": "spareMatrix",
+      "Pe": "toWorld",
+      "Re": "muzzleWorld",
+      "Fe": "startReload",
+      "ze": "shotDir",
+      "We": "muzzlePos",
+      "Ne": "hitPoint",
+      "dt": "ejectPos",
+      "xe": "ejectVel",
+      "Ie": "shotOrigin",
+      "Be": "fireShot",
+      "Xe": "update"
+    },
+    "PC": {
+      "e": "weapon",
+      "t": "root",
+      "n": "hipCamPos",
+      "s": "lookDirs",
+      "o": "shotPoses",
+      "r": "prevSetShot",
+      "a": "currentShot",
+      "l": "setShot",
+      "c": "firstShot"
+    },
+    "Z_": {
+      "i": "metrics",
+      "e": "rig",
+      "t": "addPart",
+      "n": "loopIndex",
+      "s": "loopItem",
+      "o": "loopOffset",
+      "r": "abdomenKey",
+      "a": "thighKey",
+      "l": "shinKey"
+    },
+    "j_": {
+      "i": "metrics",
+      "e": "rig",
+      "t": "fxRig",
+      "n": "addBone",
+      "s": "addPart",
+      "o": "rotorBell",
+      "l": "rotorIndex",
+      "c": "rotorX",
+      "u": "rotorY",
+      "h": "rotorZ",
+      "f": "signX",
+      "p": "signZ",
+      "v": "bladeIndex",
+      "g": "bladeAngle",
+      "d": "discGeom"
+    },
+    "Q_": {
+      "s": "ctx",
+      "o": "rand",
+      "r": "lensMat",
+      "a": "rig",
+      "l": "bones",
+      "c": "labelDef",
+      "u": "labelWidth",
+      "h": "labelHeight",
+      "f": "labelGeom",
+      "p": "labelMesh",
+      "d": "gull",
+      "v": "killGull",
+      "g": "updateDead",
+      "x": "updateAlive",
+      "b": "player",
+      "m": "time",
+      "A": "engaged",
+      "_": "damaged",
+      "M": "speedLimit",
+      "E": "goalX",
+      "w": "goalY",
+      "S": "goalZ",
+      "z": "horizSpeed",
+      "T": "cosYaw",
+      "D": "sinYaw",
+      "C": "accelFwd",
+      "G": "accelSide",
+      "j": "pitchTarget",
+      "N": "rollTarget",
+      "Q": "smooth",
+      "K": "rotorSpin",
+      "ie": "strobePhase",
+      "F": "strobeVisible",
+      "U": "yawDelta",
+      "X": "relX",
+      "ne": "relZ",
+      "re": "relY",
+      "$": "aimYaw",
+      "ue": "aimPitch",
+      "me": "aimSmooth",
+      "ee": "lensTarget",
+      "B": "lensGain",
+      "P": "shotRange",
+      "V": "leadTime",
+      "Y": "spreadScale"
+    },
+    "iM": {
+      "s": "ctx",
+      "o": "rand",
+      "r": "lensMat",
+      "a": "rig",
+      "l": "bones",
+      "c": "abdomenBones",
+      "u": "thighBones",
+      "h": "shinBones",
+      "f": "labelDef",
+      "p": "labelWidth",
+      "d": "labelHeight",
+      "v": "labelPlaneR",
+      "g": "labelPlaneL",
+      "x": "labelGeom",
+      "y": "labelMesh",
+      "b": "feet",
+      "m": "hound",
+      "A": "footLocalPos",
+      "_": "setGoal",
+      "M": "replanPath",
+      "E": "advancePath",
+      "w": "pickFirePos",
+      "S": "updateAlive",
+      "z": "fireShot",
+      "H": "updateGait",
+      "O": "poseRig",
+      "q": "killHound",
+      "U": "updateDead"
+    },
+    "Em": {
+      "e": "rand",
+      "t": "list",
+      "n": "wrecks",
+      "s": "group",
+      "o": "whiteEmissive",
+      "r": "glowMat",
+      "a": "alertEmissive",
+      "l": "lensMat",
+      "c": "toneMapped",
+      "u": "materials",
+      "h": "shared",
+      "f": "gullDef",
+      "p": "houndDef",
+      "d": "gullPool",
+      "v": "houndPool",
+      "g": "bolts",
+      "x": "boltGeom",
+      "y": "boltEmissiveSource",
+      "b": "boltMaterial",
+      "m": "boltMesh",
+      "A": "hitResult",
+      "_": "updateBolts",
+      "M": "lightHandle",
+      "E": "lightReady",
+      "w": "lightT",
+      "S": "lightPos",
+      "z": "lightGain",
+      "H": "updateGullLight",
+      "O": "nextId",
+      "q": "hearCooldown",
+      "U": "system"
+    },
+    "VC": {
+      "e": "enemies",
+      "t": "vec",
+      "n": "mode",
+      "s": "camPos",
+      "o": "camTarget",
+      "r": "preSeconds",
+      "a": "frozen",
+      "l": "hound",
+      "c": "gull",
+      "u": "step"
+    },
+    "hM": {
+      "e": "uiRoot",
+      "t": "root",
+      "n": "compass",
+      "s": "tape",
+      "o": "tapeHtml",
+      "r": "tapeWrap",
+      "a": "compassMarks",
+      "l": "heading",
+      "c": "objBlock",
+      "u": "objText",
+      "h": "relayRow",
+      "f": "relayCount",
+      "p": "relayPips",
+      "d": "warnEl",
+      "v": "crosshair",
+      "g": "crossParts",
+      "x": "hitEl",
+      "y": "arcsWrap",
+      "b": "arcs",
+      "m": "promptEl",
+      "A": "promptRing",
+      "_": "promptKey",
+      "M": "promptLabel",
+      "E": "feedEl",
+      "w": "msgEl",
+      "S": "healthEl",
+      "z": "hpNum",
+      "H": "hpSegments",
+      "O": "ammoEl",
+      "q": "ammoNum",
+      "U": "reserveNum",
+      "T": "pips",
+      "D": "weaponName",
+      "C": "cueEl",
+      "G": "marksEl",
+      "j": "comms",
+      "N": "commsText",
+      "Q": "visible",
+      "K": "tapeWidth",
+      "ie": "viewW",
+      "F": "viewH",
+      "X": "cache",
+      "ne": "pips",
+      "re": "objectiveText",
+      "$": "objectiveChars",
+      "ue": "objectiveProgress",
+      "me": "radioQueue",
+      "ee": "radioLine",
+      "B": "radioChars",
+      "P": "radioProgress",
+      "V": "radioHold",
+      "Y": "warnT",
+      "L": "messageT",
+      "Z": "feedItems",
+      "J": "markers",
+      "oe": "projected",
+      "fe": "lastFeedItem",
+      "le": "lastKillFrame",
+      "R": "relayout",
+      "I": "hud",
+      "se": "updateHud",
+      "ae": "updateRadio"
+    },
+    "pM": {
+      "t": "uiRoot",
+      "n": "settings",
+      "s": "root",
+      "o": "qs",
+      "r": "qsa",
+      "a": "panel",
+      "l": "locationCard",
+      "c": "field",
+      "u": "sensInput",
+      "h": "volumeInput",
+      "f": "fovInput",
+      "p": "screen",
+      "d": "lastFocus",
+      "v": "applySettings",
+      "g": "syncUi",
+      "x": "fsRow",
+      "y": "fsLabel",
+      "b": "fullscreenEl",
+      "m": "fsTarget",
+      "_": "reportFsUnavailable",
+      "M": "toggleFullscreen",
+      "E": "onFullscreenChange",
+      "w": "openPanel",
+      "S": "closePanel",
+      "z": "selectTab",
+      "H": "focusPrimary",
+      "O": "fmtTime",
+      "q": "menus"
+    },
+    "mM": {
+      "e": "post",
+      "t": "baseSaturation",
+      "n": "player",
+      "s": "level",
+      "o": "hud",
+      "r": "input",
+      "a": "safeCall",
+      "l": "menus",
+      "c": "run",
+      "u": "stateTime",
+      "h": "introSeconds",
+      "f": "introCardShown",
+      "p": "introRadioDone",
+      "d": "inputGraceT",
+      "v": "spareTimer",
+      "g": "lockSeen",
+      "x": "lastLookMode",
+      "y": "lookMsgT",
+      "b": "probePos",
+      "m": "probeLook",
+      "A": "objectives",
+      "_": "flow",
+      "E": "cinematic",
+      "w": "buildCinematic",
+      "S": "samplePath",
+      "z": "updateTitleCam",
+      "H": "resetRun",
+      "O": "setRelayState",
+      "q": "refreshMarkers",
+      "U": "startRun",
+      "T": "beginPlay",
+      "D": "objectiveText",
+      "C": "refreshLookMode",
+      "G": "pauseGame",
+      "j": "resumeGame",
+      "N": "spawnPoolFor",
+      "Q": "pickSpawnPoint",
+      "K": "spawnEnemy",
+      "ie": "spawnPatrols",
+      "F": "queueWave",
+      "X": "pumpSpawnQueue",
+      "ne": "aliveCount",
+      "re": "enemyNear",
+      "$": "relayInRange",
+      "ue": "updateObjectives",
+      "me": "cutRelay",
+      "ee": "finishMission",
+      "B": "update"
+    },
+    "QC": {
+      "i": "params",
+      "e": "benchMode",
+      "t": "game",
+      "n": "showcaseName",
+      "s": "camOverride",
+      "o": "applyShot",
+      "r": "loadModule",
+      "a": "fpsEma",
+      "l": "lastFrameTime",
+      "c": "interiorWetness",
+      "u": "updateModule",
+      "h": "now",
+      "f": "frameDt",
+      "p": "dt",
+      "d": "simulate",
+      "v": "interiorBox",
+      "g": "camPos",
+      "x": "insideInterior"
+    },
+    "eP": {
+      "e": "benchEl",
+      "t": "gpuName",
+      "n": "path",
+      "s": "samples",
+      "o": "elapsed",
+      "r": "lastReport",
+      "a": "lapSeconds",
+      "l": "posFrom",
+      "c": "posTo",
+      "u": "lookFrom",
+      "h": "lookTo",
+      "f": "dt",
+      "p": "segT",
+      "d": "seg",
+      "v": "t",
+      "g": "ease",
+      "x": "sortedFrames",
+      "y": "avgMs",
+      "b": "p99Ms",
+      "m": "medianMs",
+      "A": "stats",
+      "_": "bufferSize"
+    }
+  }
+}

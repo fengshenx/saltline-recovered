@@ -1,0 +1,32 @@
+{
+  "buildQuayCrane": {
+    "R": "stationX",
+    "I": "stationZ",
+    "Fe": "postX",
+    "ze": "postY"
+  },
+  "buildContainerParts": {
+    "T": "doorsAreOpen",
+    "ae": "placeDecalOnDoor",
+    "Pe": "decalPlaneWidth"
+  },
+  "createEnemies": {
+    "X": "horizDist",
+    "ne": "facingDot"
+  },
+  "createLevel": {
+    "q": "probeX",
+    "U": "probeZ"
+  },
+  "startGame": {
+    "dt": "showcaseError"
+  },
+  "addWoodCrateBody": {
+    "a": "withSkids",
+    "o": "labelText",
+    "r": "crateCode",
+    "s": "withDetail",
+    "T": "panelOffset",
+    "D": "panelPos"
+  }
+}

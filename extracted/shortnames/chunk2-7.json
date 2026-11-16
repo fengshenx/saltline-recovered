@@ -1,0 +1,1308 @@
+[
+ {
+  "function": "explosionAt",
+  "bytes": 5464,
+  "line": 30924,
+  "params": [
+   "ee",
+   "_"
+  ],
+  "shortParams": [
+   "ee"
+  ],
+  "shortLocals": [
+   "B",
+   "I",
+   "J",
+   "L",
+   "P",
+   "Pe",
+   "R",
+   "Te",
+   "V",
+   "Y",
+   "Z",
+   "_e",
+   "ae",
+   "ce",
+   "ee",
+   "fe",
+   "k",
+   "le",
+   "oe",
+   "se",
+   "ve"
+  ],
+  "code": "function explosionAt(ee, B = 1) {\n  let P = Math.max(0.4, Math.min(B, 4)),\n    V = ee.x,\n    Y = ee.y,\n    L = ee.z,\n    Z = Math.sqrt(P),\n    J = groundHeightAt(ee),\n    oe = Y - J < 1.4 * P,\n    fe = shadeAt(ee, Ei);\n  FX_SCRATCH_VEC_E.set(V, Y + 0.4, L), flashLight(FX_SCRATCH_VEC_E, 16769712, 320 * P, 10 + 9 * P, 0.08), flashLight(FX_SCRATCH_VEC_E, 16747056, 55 * P, 8 + 6 * P, 0.45);\n  let le = Y + 0.35 * P;\n  emitGlow(V, le, L, 0.055, 1.5 * P, 2.3 * P, 16, 13.5, 9.5, SPARK_CELL_FLASH), emitGlow(V, le, L, 0.05, 2.6 * P, 4.2 * P, 7, 5, 2.4, SPARK_CELL_BURST_A + (fxRandom() * 2 | 0)), emitGlow(V, le, L, 0.3, 3.5 * P, 5.5 * P, 0.35, 0.2, 0.08, SPARK_CELL_FLASH);\n  let R = Math.round(13 + 5 * P);\n  for (let ae = 0; ae < R; ae++) {\n    randomDirectionAround(Ei, 1.6, FX_SCRATCH_VEC_D), oe && FX_SCRATCH_VEC_D.y < -0.1 && (FX_SCRATCH_VEC_D.y = -FX_SCRATCH_VEC_D.y * 0.5);\n    let k = randRange(2.2, 7.5) * Z,\n      ce = randRange(0.7, 1.15),\n      ve = litEmitter.emit(V + FX_SCRATCH_VEC_D.x * 0.3 * P, le + FX_SCRATCH_VEC_D.y * 0.3 * P, L + FX_SCRATCH_VEC_D.z * 0.3 * P, FX_SCRATCH_VEC_D.x * k, FX_SCRATCH_VEC_D.y * k + 1.4, FX_SCRATCH_VEC_D.z * k, randRange(0.55, 1.05), 0.85 * P, randRange(1.8, 2.7) * P);\n    ve >= 0 && (litEmitter.frame[ve] = ae % 4 === 0 ? 7 : fxRandom() * 6 | 0, litEmitter.ramp[ve] = 2, litEmitter.r[ve] = 5.8 * ce, litEmitter.g[ve] = 2.4 * ce, litEmitter.b[ve] = 0.5 * ce, litEmitter.a[ve] = 0.96, litEmitter.shade[ve] = 2 + fe, litEmitter.drag[ve] = 4, litEmitter.grav[ve] = -2.6, litEmitter.wind[ve] = 0.6, litEmitter.turb[ve] = 1.5, litEmitter.rot[ve] = fxRandom() * 6.283, litEmitter.rotv[ve] = (fxRandom() - 0.5) * 2.5, litEmitter.sk[ve] = 3, litEmitter.fin[ve] = 0, litEmitter.fout[ve] = 0.6);\n  }\n  for (let ae = 0; ae < 5; ae++) {\n    randomDirectionAround(Ei, 1.4, FX_SCRATCH_VEC_D);\n    let k = randRange(2, 5) * Z,\n      ce = unlitEmitter.emit(V + FX_SCRATCH_VEC_D.x * 0.3 * P, le + FX_SCRATCH_VEC_D.y * 0.3 * P, L + FX_SCRATCH_VEC_D.z * 0.3 * P, FX_SCRATCH_VEC_D.x * k, Math.abs(FX_SCRATCH_VEC_D.y) * k + 1.2, FX_SCRATCH_VEC_D.z * k, randRange(0.3, 0.55), 0.6 * P, randRange(1.2, 1.8) * P);\n    ce >= 0 && (unlitEmitter.frame[ce] = SPARK_CELL_PUFF, unlitEmitter.ramp[ce] = 2, unlitEmitter.r[ce] = 2.4, unlitEmitter.g[ce] = 1.1, unlitEmitter.b[ce] = 0.3, unlitEmitter.drag[ce] = 4, unlitEmitter.grav[ce] = -2.5, unlitEmitter.rot[ce] = fxRandom() * 6.283, unlitEmitter.sk[ce] = 3, unlitEmitter.fout[ce] = 0.4);\n  }\n  let I = Math.round(11 + 5 * P);\n  for (let ae = 0; ae < I; ae++) {\n    let k = ae % 2 === 0;\n    randomDirectionAround(Ei, 1.4, FX_SCRATCH_VEC_D), oe && FX_SCRATCH_VEC_D.y < 0 && (FX_SCRATCH_VEC_D.y = -FX_SCRATCH_VEC_D.y * 0.4);\n    let ce = (k ? randRange(4.5, 9) : randRange(1.5, 5)) * Z,\n      ve = randRange(0.04, 0.1),\n      _e = k ? 0.75 : 0.3,\n      Te = emitParticle(V + FX_SCRATCH_VEC_D.x * _e * P, le + FX_SCRATCH_VEC_D.y * _e * P, L + FX_SCRATCH_VEC_D.z * _e * P, FX_SCRATCH_VEC_D.x * ce, FX_SCRATCH_VEC_D.y * ce + 0.8, FX_SCRATCH_VEC_D.z * ce, randRange(2.8, 4.8), (k ? 0.8 : 1.2) * P, randRange(2.6, 4.2) * P, ve, ve * 0.95, ve * 0.9, k ? 0.7 : 0.8, fe, 3.4, randRange(0.8, 1.7), 1, ae % 3 === 0 ? 7 : -1);\n    Te >= 0 && (litEmitter.fin[Te] = k ? 0.025 : 0.16, litEmitter.fout[Te] = 0.35, litEmitter.turb[Te] = 1.2);\n  }\n  addEmitterAt(V, Y + 0.3 * P, L, 'smolder', 1.3 + 0.3 * P, P, fe);\n  let se = Math.min(90, Math.round(34 * P));\n  for (let ae = 0; ae < se; ae++) {\n    randomDirectionAround(Ei, 1.5, FX_SCRATCH_VEC_D), oe && FX_SCRATCH_VEC_D.y < 0 && (FX_SCRATCH_VEC_D.y = -FX_SCRATCH_VEC_D.y);\n    let k = randRange(6, 26) * Z,\n      ce = emitStreak(V, Y + 0.05, L, FX_SCRATCH_VEC_D.x * k, FX_SCRATCH_VEC_D.y * k, FX_SCRATCH_VEC_D.z * k, randRange(0.5, 1.5), randRange(0.014, 0.028), 40, 23, 8, PARTICLE_FLAG_BOUNCE);\n    ce >= 0 && (unlitEmitter.drag[ce] = 1.4, unlitEmitter.stretch[ce] = 0.035);\n  }\n  for (let ae = 0; ae < 10 * P; ae++) {\n    randomDirectionAround(Ei, 1.2, FX_SCRATCH_VEC_D);\n    let k = randRange(1, 5),\n      ce = unlitEmitter.emit(V, Y + 0.3, L, FX_SCRATCH_VEC_D.x * k, Math.abs(FX_SCRATCH_VEC_D.y) * k + 1, FX_SCRATCH_VEC_D.z * k, randRange(1.4, 3), 0.035, 0.02);\n    ce >= 0 && (unlitEmitter.frame[ce] = SPARK_CELL_FLASH, unlitEmitter.ramp[ce] = 3, unlitEmitter.r[ce] = 9, unlitEmitter.g[ce] = 4, unlitEmitter.b[ce] = 1, unlitEmitter.drag[ce] = 1.2, unlitEmitter.grav[ce] = 0.6, unlitEmitter.turb[ce] = 3, unlitEmitter.wind[ce] = 1, unlitEmitter.fout[ce] = 0.5);\n  }\n  if (oe) {\n    let ae = J + 0.015;\n    emitRipple(V, ae, L, 0.32, 0.6 * P, 9 * P, 1.6, 1.2, 0.75);\n    let k = Math.round(12 + 3 * P);\n    for (let ce = 0; ce < k; ce++) {\n      let ve = (ce + fxRandom()) / k * 6.283,\n        _e = randRange(5, 10) * Z,\n        Te = randRange(0.42, 0.55),\n        Pe = emitParticle(V + Math.cos(ve) * 0.4 * P, ae + 0.2, L + Math.sin(ve) * 0.4 * P, Math.cos(ve) * _e, randRange(0.2, 0.9), Math.sin(ve) * _e, randRange(1.2, 2.2), 0.4 * P, randRange(1.2, 1.9) * P, Te, Te * 0.96, Te * 0.9, 0.26, fe, 3, 0.15, 0.7, -1);\n      Pe >= 0 && (litEmitter.fin[Pe] = 0.1);\n    }\n    FX_SCRATCH_VEC_F.set(V, J, L), decalPool.add(FX_SCRATCH_VEC_F, Ei, 'scorch', 2.3 * P, 1, 0.92);\n  }\n  FX_SCRATCH_VEC_F.set(V, Math.max(Y, J + 0.1), L), emitDebris(FX_SCRATCH_VEC_F, Ei, Math.round(13 + 6 * P), 4, 13 * Z, 0.04, 0.13, 0.025, 0.08, 0.04, 0.13, 0.07, 0.066, 0.062, 1.1, J), explosionEvent.pos.copy(ee), explosionEvent.size = B, ctx.events.emit('explosion', explosionEvent);\n}"
+ },
+ {
+  "function": "selfTest",
+  "bytes": 4355,
+  "line": 36694,
+  "params": [
+   "te"
+  ],
+  "shortParams": [
+   "te"
+  ],
+  "shortLocals": [
+   "$t",
+   "Ai",
+   "De",
+   "Hs",
+   "Ht",
+   "Je",
+   "Le",
+   "Ni",
+   "Ot",
+   "Pt",
+   "Tt",
+   "Ue",
+   "Vt",
+   "ct",
+   "ge",
+   "gt",
+   "he",
+   "it",
+   "ke",
+   "os",
+   "pe",
+   "rs",
+   "sn",
+   "ss",
+   "te",
+   "xn",
+   "ye"
+  ],
+  "code": "async function selfTest(te) {\n  te = te || {}, await readyPromise;\n  let he = webAudioCtx.sampleRate,\n    pe = te.seconds || 10,\n    ge = new OfflineAudioContext(2, he * pe, he),\n    ye = new Map(),\n    Le = {\n      on(Tt, Ai) {\n        ye.has(Tt) || ye.set(Tt, []), ye.get(Tt).push(Ai);\n      },\n      emit(Tt, Ai) {\n        for (let sn of ye.get(Tt) || []) sn(Ai);\n      }\n    },\n    ke = new Float32Array(16);\n  ke[0] = ke[5] = ke[10] = ke[15] = 1, ke[13] = 1.7;\n  let Ue = [{\n      type: 'gull',\n      alive: !0,\n      pos: {\n        x: 6,\n        y: 4,\n        z: -9\n      }\n    }, {\n      type: 'hound',\n      alive: !0,\n      pos: {\n        x: -8,\n        y: 0,\n        z: -14\n      }\n    }, {\n      type: 'gull',\n      alive: !0,\n      pos: {\n        x: 0,\n        y: 5,\n        z: -30\n      }\n    }],\n    ct = {\n      min: {\n        x: -99,\n        y: -9,\n        z: -99\n      },\n      max: {\n        x: 99,\n        y: 99,\n        z: 99\n      }\n    },\n    De = {\n      events: Le,\n      params: {},\n      camera: {\n        matrixWorld: {\n          elements: ke\n        }\n      },\n      enemies: {\n        list: []\n      },\n      level: {\n        interiorBoxes: te.interior ? [ct] : [{\n          min: {\n            x: 500,\n            y: 0,\n            z: 500\n          },\n          max: {\n            x: 501,\n            y: 1,\n            z: 501\n          }\n        }],\n        objectives: [{\n          id: 'A',\n          pos: {\n            x: 4,\n            y: 0,\n            z: 3\n          }\n        }]\n      }\n    },\n    it = createWebAudioEngine(De, ge, {\n      bufs: buffers\n    }),\n    gt = 0.02,\n    Ot = 0,\n    xn = Tt => {\n      let Ai = Tt * gt;\n      if (Tt === 0 && Le.emit('game:state', {\n        state: 'playing'\n      }), Ai < 3 && Tt % 23 === 0 && Le.emit('player:step', {\n        surface: 'concrete',\n        sprint: !1\n      }), Tt === 150) {\n        for (let sn of Ue) De.enemies.list.push(sn), Le.emit('enemy:spawn', {\n          enemy: sn\n        });\n        Le.emit('enemy:alert', {\n          enemy: Ue[0]\n        }), it.setIntensity(1);\n      }\n      Ai >= 3 && Ai < 6 && (Tt % 4 === 0 && (Ai < 4.2 || Ai > 4.8) && (Le.emit('weapon:fire', {}), Le.emit('impact', {\n        point: {\n          x: 4,\n          y: 1,\n          z: -12\n        },\n        surface: Tt % 8 ? 'metal' : 'concrete',\n        from: 'player'\n      }), Le.emit('shell:bounce', {\n        pos: {\n          x: 0.6,\n          y: 0,\n          z: 0.2\n        },\n        surface: 'concrete'\n      })), Tt % 13 === 0 && Le.emit('enemy:fire', {\n        enemy: Ue[0],\n        pos: Ue[0].pos,\n        type: 'gull'\n      }), Tt % 17 === 0 && Le.emit('enemy:fire', {\n        enemy: Ue[1],\n        pos: Ue[1].pos,\n        type: 'hound'\n      }), Tt % 25 === 0 && Le.emit('enemy:step', {\n        pos: Ue[1].pos,\n        type: 'hound'\n      })), Tt === 300 && Le.emit('explosion', {\n        pos: {\n          x: 3,\n          y: 0,\n          z: -5\n        },\n        size: 1.5\n      }), Tt === 350 && Le.emit('player:hit', {\n        amount: 20\n      }), Tt === 360 && (Ue[0].alive = !1, Le.emit('enemy:killed', {\n        enemy: Ue[0],\n        pos: Ue[0].pos,\n        type: 'gull'\n      })), Tt === 400 && (Le.emit('objective:done', {\n        id: 'A',\n        index: 0,\n        total: 3\n      }), it.setIntensity(0.15));\n    };\n  for (let Tt = 1; Tt * gt < pe - 0.01; Tt++) ge.suspend(Tt * gt).then(() => {\n    xn(Tt), it.update(gt), Ot++, ge.resume();\n  });\n  xn(0), it.update(gt);\n  let $t = performance.now(),\n    Ht = await ge.startRendering(),\n    Je = performance.now() - $t,\n    Pt = {\n      interior: !!te.interior,\n      renderMs: Math.round(Je),\n      steps: Ot,\n      peak: 0,\n      over: 0,\n      nan: 0,\n      rmsDb: [],\n      inst: it.debug()\n    },\n    Vt = Ht.getChannelData(0),\n    ss = Ht.getChannelData(1),\n    Hs = Math.round(he / 2);\n  for (let Tt = 0; Tt * Hs < Vt.length; Tt++) {\n    let Ai = 0;\n    for (let sn = Tt * Hs; sn < (Tt + 1) * Hs && sn < Vt.length; sn++) {\n      let os = Vt[sn],\n        rs = ss[sn];\n      (!(Math.abs(os) < 1e9) || !(Math.abs(rs) < 1e9)) && Pt.nan++;\n      let Ni = Math.max(Math.abs(os), Math.abs(rs));\n      Ni > Pt.peak && (Pt.peak = Ni), Ni >= 0.999 && Pt.over++, Ai += os * os + rs * rs;\n    }\n    Pt.rmsDb.push(+(10 * Math.log10(Ai / (2 * Hs) + 1e-12)).toFixed(1));\n  }\n  return Pt.peak = +Pt.peak.toFixed(3), Pt;\n}"
+ },
+ {
+  "function": "createGround",
+  "bytes": 3983,
+  "line": 27570,
+  "params": [
+   "game"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "E",
+   "H",
+   "M",
+   "O",
+   "S",
+   "w",
+   "z"
+  ],
+  "code": "/**\n * 装配整套地面系统（标线、积水掩膜、细节图与法线图、湿滑停机坪、海面、雨、平面反射 prepass），并暴露海水高度、积水深度、湿度查询与雨量设置 API\n * @module-ref src/world/ground/ground.js\n */\nasync function createGround(game) {\n  let hiRes = (game.quality.tex || 512) >= 1024,\n    maxAniso = Math.min(8, game.renderer.capabilities.getMaxAnisotropy ? game.renderer.capabilities.getMaxAnisotropy() : 1),\n    maskSize = hiRes ? 1024 : 512,\n    maskData = bakeTerrainTexture(maskSize),\n    maskTexture = makeDataTexture(maskData, maskSize, {\n      repeat: !1,\n      aniso: 2\n    }),\n    detailSize = hiRes ? 512 : 256,\n    {\n      det: detailCanvas,\n      nrm: detailNormalCanvas\n    } = bakeTerrainNormals(detailSize),\n    detailTexture = makeDataTexture(detailCanvas, detailSize, {\n      aniso: maxAniso\n    }),\n    detailNormalTexture = makeDataTexture(detailNormalCanvas, detailSize, {\n      aniso: maxAniso\n    });\n  try {\n    document.fonts && document.fonts.load && (await Promise.race([document.fonts.load('900 40px \"Big Shoulders Display\"'), new Promise(M => setTimeout(M, 350))]));\n  } catch {}\n  let marksTexture = createApronMarkingsTexture(hiRes ? 2048 : 1024, maxAniso),\n    blackTexture = new THREE.DataTexture(new Uint8Array([0, 0, 0, 255]), 1, 1);\n  blackTexture.needsUpdate = !0;\n  let textures = {\n      mask: maskTexture,\n      detail: detailTexture,\n      detailN: detailNormalTexture,\n      marks: marksTexture,\n      black: blackTexture\n    },\n    root = new THREE.Group();\n  root.name = 'ground';\n  let apron = createWetApron(game, textures),\n    sea = createSeaSurface(game, textures),\n    rain = createRainSystem(game, textures);\n  root.add(apron.mesh, sea.mesh, sea.skirt, rain.rain, rain.splash), game.scene.add(root);\n  let planar = createPlanarReflectionPass(game, apron.uniforms, [apron.mesh, sea.mesh, rain.rain, rain.splash]);\n  game.render && game.render.addPrePass && game.render.addPrePass(planar.pass);\n  let isIndoor = (M, E) => {\n      let w = game.level && game.level.interiorBoxes;\n      if (!w) return !1;\n      for (let S = 0; S < w.length; S++) {\n        let z = w[S];\n        if (z && z.min && M > z.min.x && M < z.max.x && E > z.min.z && E < z.max.z) return !0;\n      }\n      return !1;\n    },\n    inMaskRect = (M, E) => M > TERRAIN_BOUNDS.x0 && M < TERRAIN_BOUNDS.x0 + TERRAIN_BOUNDS.size && E > TERRAIN_BOUNDS.z0 && E < TERRAIN_BOUNDS.z0 + TERRAIN_BOUNDS.size,\n    time = 0,\n    ground = {\n      root: root,\n      apron: apron.mesh,\n      sea: sea.mesh,\n      rain: rain.rain,\n      planar: planar,\n      reflectionTarget: planar.target,\n      reflectionCamera: planar.camera,\n      maskTexture: maskTexture,\n      uniforms: apron.uniforms,\n      puddleDepth(M, E) {\n        return M > WORLD_BOUNDS.quayX || !inMaskRect(M, E) || isIndoor(M, E) ? -0.2 : 0.5 - sampleTerrainTexture(maskData, maskSize, M, E, 0);\n      },\n      isPuddle(M, E) {\n        return ground.puddleDepth(M, E) > 0.015;\n      },\n      wetnessAt(M, E) {\n        if (M > WORLD_BOUNDS.quayX) return 1;\n        if (isIndoor(M, E)) return 0.12;\n        if (!inMaskRect(M, E)) return 0.6;\n        let w = 0.5 - sampleTerrainTexture(maskData, maskSize, M, E, 0);\n        if (w > 0.015) return 1;\n        let S = THREE.MathUtils.smoothstep,\n          z = S(w, -0.11, 0),\n          H = S(w, -0.65, -0.02),\n          O = 1 - S(sampleTerrainTexture(maskData, maskSize, M, E, 1) + H * 0.55, 0.2, 0.42);\n        return Math.min(0.95, 0.25 + (1 - O) * 0.4 + z * 0.3);\n      },\n      seaHeight(M, E) {\n        return seaHeightAt(M, E, time);\n      },\n      setRain(M) {\n        rain.setRain(M);\n      },\n      get rainLevel() {\n        return rain.rainLevel;\n      },\n      setReflections(M) {\n        planar.enabled = !!M;\n      },\n      update(M) {\n        time += M, rain.update(M), apron.uniforms.uTime.value = time, apron.uniforms.uRain.value = rain.rainLevel, sea.uniforms.uTime.value = time;\n      }\n    };\n  return ground;\n}\n/**\n * 地面模块的演示场景：先移除占位平面再装配地面系统，摆一组集装箱/油桶/灯柱样张，返回固定机位以便单独观察湿滑地面与反射\n * @module-ref src/world/ground/ground.js\n */"
+ },
+ {
+  "function": "buildGateArm",
+  "bytes": 3513,
+  "line": 9661,
+  "params": [
+   "ctx",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "e",
+   "m",
+   "y"
+  ],
+  "code": "/**\n * 道闸：机箱、可绕轴转动的起落杆（open 参数 0..1 控制角度）、红白相间反光段与配对立柱；抬起时补一段碰撞盒防止穿模\n * @module-ref src/world/props/basic-builders.js\n */\nfunction buildGateArm(ctx, e = {}) {\n  let builder = new PartBuilder(ctx),\n    openAmount = THREE.MathUtils.clamp(e.open || 0, 0, 1),\n    orangeMat = builder.M('paint_orange', {\n      vertexColors: !0\n    }),\n    whiteMat = builder.M('paint_white'),\n    redMat = builder.M('paint_red'),\n    steelDarkMat = builder.M('steel_dark'),\n    steelGalvMat = builder.M('steel_galv'),\n    yellowMat = builder.M('paint_yellow'),\n    housingX = -2.5 + 0.19,\n    armY = 0.92;\n  builder.box(builder.M('concrete'), 0.5, 0.06, 0.46, housingX, 0.03, 0, {\n    r: 0.015\n  }), builder.box(orangeMat, 0.36, 1, 0.3, housingX, 0.56, 0, {\n    r: 0.02,\n    col: (y, b) => {\n      let m = 0.6 + 0.4 * smoothstepRange(0.05, 0.5, b);\n      return [m, m, m];\n    }\n  }), builder.box(steelDarkMat, 0.4, 0.04, 0.34, housingX, 1.075, 0, {\n    r: 0.012\n  }), builder.box(orangeMat, 0.3, 0.6, 0.012, housingX, 0.5, 0.151, {\n    r: 0.004,\n    col: [0.9, 0.9, 0.9]\n  }), builder.cyl(steelGalvMat, 0.012, 0.012, 0.016, housingX + 0.1, 0.5, 0.16, {\n    seg: 6,\n    rot: [PI / 2, 0, 0]\n  }), builder.decal(getDecalMaterial(ctx, 'hazard_general'), 0.14, housingX, 0.9, 0.153, null), builder.decal(getDecalMaterial(ctx, 'caution_stripes'), 0.08, housingX, 0.12, 0.153, null, 0.34), builder.cyl(steelDarkMat, 0.03, 0.03, 0.05, housingX, 1.12, 0, {\n    seg: 8\n  }), builder.add(ctx.mats.emissive(16734750, 2.2), je(cylinderGeometry(0.026, 0.026, 0.045, 8), housingX, 1.165, 0), null, !0), builder.push(composeTransformMatrix(housingX, armY, 0, [0, 0, openAmount * 1.48])), builder.cyl(steelDarkMat, 0.075, 0.075, 0.36, 0, 0, 0, {\n    seg: 10,\n    rot: [PI / 2, 0, 0]\n  });\n  for (let y of [-1, 1]) builder.box(steelDarkMat, 0.62, 0.11, 0.012, 0.05, 0, y * 0.175, {\n    r: 0.004\n  });\n  builder.box(steelDarkMat, 0.3, 0.16, 0.3, -0.33, -0.02, 0, {\n    r: 0.02\n  });\n  let armLength = 4.62,\n    armStartX = 0.12,\n    stripeCount = 9,\n    stripeWidth = armLength / stripeCount;\n  for (let y = 0; y < stripeCount; y++) builder.box(y % 2 ? whiteMat : redMat, stripeWidth + 0.001, 0.1 - y * 0.003, 0.05, armStartX + stripeWidth * (y + 0.5), 0, 0, {\n    r: 0.008\n  });\n  builder.box(steelDarkMat, 0.03, 0.11, 0.06, armStartX + armLength + 0.012, 0, 0, {\n    r: 0.008\n  }), builder.add(ctx.mats.emissive(16722450, 1.5), je(boxGeometry(0.05, 0.03, 0.054), armStartX + armLength - 0.5, 0.058, 0), null, !0), builder.pop();\n  let postX = 2.5 - 0.1;\n  builder.box(builder.M('concrete'), 0.3, 0.05, 0.3, postX, 0.025, 0, {\n    r: 0.012\n  }), builder.cyl(yellowMat, 0.04, 0.04, 0.8, postX, 0.45, 0, {\n    seg: 8\n  }), builder.box(yellowMat, 0.14, 0.02, 0.16, postX, 0.855, 0, {\n    r: 0.005\n  });\n  for (let y of [-1, 1]) builder.box(yellowMat, 0.14, 0.14, 0.014, postX, 0.93, y * 0.073, {\n    r: 0.004\n  });\n  builder.cyl(steelGalvMat, 0.07, 0.07, 0.01, postX, 0.055, 0, {\n    seg: 8\n  });\n  let colliders = [{\n    min: [housingX - 0.2, 0, -0.17],\n    max: [housingX + 0.2, 1.1, 0.17],\n    surface: 'metal'\n  }, {\n    min: [postX - 0.07, 0, -0.08],\n    max: [postX + 0.07, 1, 0.08],\n    surface: 'metal'\n  }];\n  return openAmount < 0.5 && colliders.push({\n    min: [housingX, armY - 0.07, -0.04],\n    max: [postX, armY + 0.07, 0.04],\n    surface: 'metal'\n  }), tagPropUserData(builder.group(), 'gate_arm', getPropSize3('gate_arm'), colliders);\n}\n/**\n * 码头系船柱：双柱帽形回转体 + 锈蚀底座 + 螺栓，钢面用值噪声做出即将锈穿的斑驳\n * @module-ref src/world/props/basic-builders.js\n */"
+ },
+ {
+  "function": "update",
+  "bytes": 3493,
+  "line": 36593,
+  "params": [
+   "te"
+  ],
+  "shortParams": [
+   "te"
+  ],
+  "shortLocals": [
+   "De",
+   "Le",
+   "Ot",
+   "ct",
+   "ge",
+   "gt",
+   "he",
+   "it",
+   "ke",
+   "pe",
+   "te",
+   "ye"
+  ],
+  "code": "() => {\n  let h = app.render.post,\n    f = Math.round(app.camera.position.y * 1e3) % 10;\n  h.damage = f === 1 ? 0.8 : 0, h.lowHealth = f === 2 ? 0.85 : 0, h.ads = f === 3 ? 1 : 0, h.flash = f === 4 ? 0.35 : 0, h.fade = f === 5 ? 0.5 : 0;\n}"
+ },
+ {
+  "function": "buildTouchUI",
+  "bytes": 2476,
+  "line": 37271,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z",
+   "fe",
+   "le",
+   "oe"
+  ],
+  "code": "function buildTouchUI() {\n  let P = document.createElement('div');\n  P.className = 'touch', P.innerHTML = '<div class=\"t-stick\"><i class=\"t-ring\"></i><i class=\"t-nub\"></i></div><button class=\"t-btn t-fire\" data-a=\"fire\" aria-label=\"Fire\"><span>FIRE</span></button><button class=\"t-btn t-ads\" data-a=\"ads\" aria-label=\"Aim\"><span>AIM</span></button><button class=\"t-btn t-reload\" data-a=\"reload\" aria-label=\"Reload\"><span>RLD</span></button><button class=\"t-btn t-jump\" data-a=\"jump\" aria-label=\"Jump\"><span>JUMP</span></button><button class=\"t-btn t-interact\" data-a=\"interact\" aria-label=\"Interact\"><span>USE</span></button><button class=\"t-btn t-pause\" data-a=\"pause\" aria-label=\"Pause\"><span>II</span></button>', uiEl.appendChild(P);\n  let V = L => P.querySelector(L),\n    Y = {\n      root: P,\n      stick: V('.t-stick'),\n      nub: V('.t-nub'),\n      btn: {\n        fire: V('.t-fire'),\n        ads: V('.t-ads'),\n        reload: V('.t-reload'),\n        jump: V('.t-jump'),\n        interact: V('.t-interact'),\n        pause: V('.t-pause')\n      }\n    };\n  for (let L in Y.btn) {\n    let Z = Y.btn[L];\n    Z.addEventListener('touchstart', oe => {\n      oe.preventDefault(), oe.stopPropagation(), lastTouchAt = performance.now();\n      let fe = oe.changedTouches[0];\n      if (L === 'ads') {\n        touchAds = !touchAds, Z.classList.toggle('active', touchAds);\n        return;\n      }\n      L === 'fire' && (fireTouchId = fe.identifier, fireTouchX = fe.clientX, fireTouchY = fe.clientY), Z.classList.add('active'), setSourceAction('touch', L, !0);\n    }, {\n      passive: !1\n    });\n    let J = oe => {\n      if (oe.preventDefault(), oe.stopPropagation(), L !== 'ads') {\n        if (L === 'fire') {\n          let fe = !1;\n          for (let le of oe.changedTouches) le.identifier === fireTouchId && (fe = !0);\n          if (!fe) return;\n          fireTouchId = -1;\n        }\n        Z.classList.remove('active'), setSourceAction('touch', L, !1);\n      }\n    };\n    Z.addEventListener('touchend', J, {\n      passive: !1\n    }), Z.addEventListener('touchcancel', J, {\n      passive: !1\n    }), Z.addEventListener('touchmove', oe => {\n      if (oe.preventDefault(), L === 'fire') for (let fe of oe.changedTouches) fe.identifier === fireTouchId && (applyTouchLook(fe.clientX - fireTouchX, fe.clientY - fireTouchY), fireTouchX = fe.clientX, fireTouchY = fe.clientY);\n    }, {\n      passive: !1\n    }), Z.addEventListener('contextmenu', oe => oe.preventDefault());\n  }\n  return Y;\n}"
+ },
+ {
+  "function": "buildJerryCan",
+  "bytes": 2426,
+  "line": 13901,
+  "params": [
+   "ctx",
+   "opts",
+   "variant"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "f",
+   "g",
+   "h",
+   "l",
+   "p",
+   "r",
+   "u",
+   "v",
+   "x",
+   "y"
+  ],
+  "code": "/**\n * 20L 军用油桶：圆角桶体 + 三条提手 + 侧面 X 形加强筋 + 注油口，带易燃标志贴花\n * @module-ref src/world/props/detailed-builders.js\n */\nfunction buildJerryCan(ctx, opts, variant) {\n  let rand = new PropAssembler(ctx, 'jerry_can', variant),\n    [bodyMat, bodyTint] = resolvePaintColorAlias(opts.color, 'olive'),\n    r = roundedBoxGeometryGrid(0.336, 0.36, 0.156, 0.022, 3, 3, 3, 'bottom'),\n    a = (x, y) => y > 0.3 && x > 0.04 ? y - (x - 0.04) * 0.5 : y;\n  mapVertices(r, x => {\n    x.y = a(x.x, x.y), Math.abs(x.z) > 0.07 && Math.abs(x.x) < 0.14 && x.y > 0.04 && x.y < 0.3 && (x.z *= 1.02);\n  }), r.computeVertexNormals(), rand.add(bodyMat, r, null, bodyTint), rand.add(bodyMat, createHollowPolygonExtrusion([[-0.172, 0], [0.172, 0], [0.172, 0.297], [0.045, 0.364], [-0.172, 0.364]], 0.007, {\n    soft: 0\n  }), null, typeof bodyTint == 'number' ? 0.8 : bodyTint.map(x => x * 0.8));\n  let l = 0.24,\n    c = 0.2,\n    u = -0.025,\n    h = 0.165,\n    f = Math.hypot(l, c) - 0.02,\n    p = Math.atan2(c, l);\n  for (let x of [1, -1]) {\n    let y = x * 0.079;\n    for (let b of [1, -1]) rand.add(bodyMat, roundedBoxGeometry(l, 0.016, 0.007, 0.003), {\n      p: [u, h + b * c / 2, y]\n    }, bodyTint);\n    for (let b of [1, -1]) rand.add(bodyMat, roundedBoxGeometry(0.016, c, 0.007, 0.003), {\n      p: [u + b * l / 2, h, y]\n    }, bodyTint);\n    for (let b of [1, -1]) rand.add(bodyMat, roundedBoxGeometry(f, 0.018, 0.008, 0.003), {\n      p: [u, h, y],\n      r: [0, 0, b * p]\n    }, bodyTint);\n  }\n  for (let x of [-0.042, 0, 0.042]) rand.add(bodyMat, tubeGeometry([[-0.135, 0.35, x], [-0.125, 0.42, x], [-0.09, 0.44, x], [-0.02, 0.44, x], [0.01, 0.42, x], [0.02, 0.35, x]], 0.0105, 5, !1, 0.5), null, bodyTint);\n  let d = [0.1, 0.33, 0],\n    v = [0.42, 0.9, 0],\n    g = x => [d[0] + v[0] * x, d[1] + v[1] * x, 0];\n  return rand.add(bodyMat, createCylinderBetween(g(-0.02), g(0.07), 0.03, 8, !0), null, bodyTint), rand.add('steel_dark', createCylinderBetween(g(0.07), g(0.1), 0.036, 8, !0), null, 0.9), rand.add('steel_galv', roundedBoxGeometry(0.07, 0.008, 0.02, 0.002), {\n    p: g(0.108),\n    r: [0, 0, -0.44]\n  }, 0.8), rand.decal(ctx.mats.decal('hazard_flammable'), 0.055, {\n    p: [0.125, 0.25, 0.0795]\n  }), rand.decal(ctx.mats.decal('hazard_flammable'), 0.055, {\n    p: [-0.125, 0.25, -0.0795],\n    r: [0, PI_TWO, 0]\n  }), rand.finish();\n}\n/**\n * 交通锥：黑色橡胶底座 + 收分锥体，红白反光带用不同材质分段实现；lying 参数把锥放倒并换碰撞盒尺寸\n * @module-ref src/world/props/detailed-builders.js\n */"
+ },
+ {
+  "function": "fireShot",
+  "bytes": 2162,
+  "line": 41787,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "Me",
+   "Oe",
+   "Os",
+   "Rs",
+   "Ti",
+   "be",
+   "bt",
+   "ho",
+   "nn",
+   "pn",
+   "pt",
+   "ut",
+   "we"
+  ],
+  "code": "function fireShot() {\n  let Me = ctx.player,\n    we = ctx.camera;\n  weapon.ammo--, anim.burst++, anim.lastShot = anim.t, anim.heat = Math.min(1.3, anim.heat + 0.05);\n  let be = weapon.spread,\n    Oe = rand() * Math.PI * 2,\n    pt = Math.tan(be) * Math.sqrt(rand());\n  shotDir.set(Math.cos(Oe) * pt, Math.sin(Oe) * pt, -1).normalize().applyQuaternion(we.quaternion), shotOrigin.copy(Me.eye || we.position);\n  let ut = null;\n  try {\n    ut = ctx.combat.playerShot(shotOrigin, shotDir, {\n      damage: PAC9_DAMAGE,\n      range: PAC9_RANGE\n    });\n  } catch {}\n  ut && ut.point ? hitPoint.copy(ut.point) : hitPoint.copy(shotOrigin).addScaledVector(shotDir, PAC9_RANGE), muzzleWorld(muzzlePos);\n  let nn = ctx.fx;\n  nn && (nn.tracer && nn.tracer(muzzlePos, hitPoint), nn.shell && (toWorld(PAC9_DIMENSIONS.eject, ejectPos), ejectVel.set(2 + rand() * 1.2, 1.2 + rand() * 0.8, 0.5 - rand() * 0.6).applyQuaternion(we.quaternion), Me.vel && ejectVel.add(Me.vel), nn.shell(ejectPos, ejectVel))), ctx.render && ctx.render.lightPool && ctx.render.lightPool.flash(muzzlePos, 16756832, 45, 9, 0.05), ctx.events.emit('weapon:fire', {\n    origin: shotOrigin,\n    dir: shotDir,\n    muzzle: muzzlePos,\n    ads: anim.adsE\n  });\n  let bt = lerp(1, 0.55, anim.adsE) * (Me.crouching ? 0.85 : 1),\n    Os = anim.burst,\n    pn = Os <= 9 ? 1 : 0.38,\n    Ti = (Os < 4 ? (rand() - 0.5) * 0.0022 : Math.sin(Os * 0.57 + anim.recPhase) * 0.0042 + (rand() - 0.5) * 0.002) * bt;\n  Me.addRecoil && Me.addRecoil(0.0068 * pn * bt * (0.85 + rand() * 0.3), Ti), Me.addShake && Me.addShake(0.12 * bt), anim.kZ.v += 1.5 * lerp(1, 0.6, anim.adsE), anim.kP.v += 1.5 * bt, anim.kY.v += (rand() - 0.5) * 1 * bt, anim.kR.v += (rand() - 0.5) * 1.8 * bt, anim.bloom = Math.min(1, anim.bloom + 0.17), anim.flashT = anim.flashDur = 0.036 + rand() * 0.02;\n  let ho = flashMesh.material.uniforms;\n  ho.uSeed.value = rand() * 100, ho.uJet.value = 0.6 + rand() * 0.6, flashMesh.rotation.z = (rand() - 0.5) * 0.4;\n  let Rs = (0.8 + rand() * 0.5) * lerp(1, 0.62, anim.adsE);\n  flashMesh.scale.set(Rs, Rs, Rs * (0.8 + rand() * 0.5)), anim.boltT = 0, weapon.ammo <= 0 && (anim.boltLocked = !0, roundMesh.visible = !1);\n}"
+ },
+ {
+  "function": "pickFirePos",
+  "bytes": 1992,
+  "line": 44969,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "T",
+   "X",
+   "ee",
+   "ie",
+   "j",
+   "me",
+   "ne",
+   "re",
+   "ue"
+  ],
+  "code": "function pickFirePos() {\n  let T = simState.player;\n  if (!T) return;\n  let D = 1 / 0,\n    C = T.eye || T.pos,\n    G = (Q, K) => {\n      let ie = Math.hypot(Q.x - T.pos.x, Q.z - T.pos.z);\n      if (ie < HOUND_TUNE_ALIAS.rangeMin || ie > HOUND_TUNE_ALIAS.rangeMax || simState.physics.nav.isWalkable && !simState.physics.nav.isWalkable(Q.x, Q.z)) return;\n      let F = Math.hypot(Q.x - hound.pos.x, Q.z - hound.pos.z) * 0.9 + K + rand() * 3,\n        X = Q.x - T.pos.x,\n        ne = Q.z - T.pos.z;\n      for (let re of ctx.list) {\n        if (re === hound || !re.alive || re.type !== 'hound' || re.mode !== 'engage') continue;\n        let $ = re.es === 'move' ? re.firePos : re.pos,\n          ue = $.x - T.pos.x,\n          me = $.z - T.pos.z,\n          ee = (X * ue + ne * me) / (Math.hypot(X, ne) * Math.hypot(ue, me) + 1e-4);\n        ee > 0.86 && (F += 14 * (ee - 0.86) / 0.14), Math.hypot(Q.x - $.x, Q.z - $.z) < 3 && (F += 16);\n      }\n      F >= D || (houndAimPoint.set(Q.x, Q.y + 0.95, Q.z), simState.physics.lineOfSight(houndAimPoint, C) || (F += 22), F < D && (D = F, hound.firePos.set(Q.x, Q.y, Q.z)));\n    },\n    j = simState.level && simState.level.coverPoints;\n  if (j) for (let Q = 0; Q < j.length; Q++) G(j[Q], -2);\n  for (let Q = 0; Q < 7; Q++) {\n    let K = simState.physics.nav.randomPoint(T.pos, HOUND_TUNE_ALIAS.rangeMax);\n    K && G(K, 0);\n  }\n  let N = Math.atan2(hound.pos.z - T.pos.z, hound.pos.x - T.pos.x);\n  for (let Q = 0; Q < 5; Q++) {\n    let K = N + (rand() - 0.5) * 2.6,\n      ie = HOUND_TUNE_ALIAS.rangeMin + 1 + rand() * (HOUND_TUNE_ALIAS.rangeMax - HOUND_TUNE_ALIAS.rangeMin - 2);\n    houndScratch.set(T.pos.x + Math.cos(K) * ie, T.pos.y, T.pos.z + Math.sin(K) * ie), houndScratch.y = simState.physics.groundHeight(houndScratch.x, houndScratch.z, T.pos.y + 1), G(houndScratch, 1);\n  }\n  D === 1 / 0 && hound.firePos.copy(hound.pos), hound.firePlayer.copy(T.pos), setGoal(hound.firePos, !0), hound.es = 'move', hound.esT = 0, hound.moveT = 0, hound.bursts = 0;\n}"
+ },
+ {
+  "function": "updateGait",
+  "bytes": 1899,
+  "line": 45355,
+  "params": [
+   "T"
+  ],
+  "shortParams": [
+   "T"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "T",
+   "X",
+   "ie",
+   "j",
+   "ne",
+   "re"
+  ],
+  "code": "function updateGait(T) {\n  let D = Math.sin(hound.yaw) * hound.speed + hound.push.x,\n    C = Math.cos(hound.yaw) * hound.speed + hound.push.z,\n    G = hound.speed > 0.15 || Math.abs(hound.yawRate) > 0.25;\n  if (hound.sw < 0) {\n    hound.idleT = G ? 0 : hound.idleT + T;\n    let j = hound.speed + Math.abs(hound.yawRate) * 0.5,\n      N = clampHound(0.27 - j * 0.026, 0.14, 0.27),\n      Q = -1,\n      K = 0;\n    for (let F = 0; F < 2; F++) {\n      let X = 0;\n      for (let ne of HOUND_GAIT_PAIRS[F]) {\n        footLocalPos(houndBodyStart, ne, hound.pos.x + D * N, hound.pos.z + C * N, hound.yaw + hound.yawRate * N);\n        let re = Math.hypot(houndBodyStart.x - feet[ne].p.x, houndBodyStart.z - feet[ne].p.z);\n        re > X && (X = re);\n      }\n      F !== hound.lastPair && (X *= 1.25), X > K && (K = X, Q = F);\n    }\n    let ie = G ? 0.09 : hound.idleT > 0.25 ? 0.035 : 1e9;\n    if (Q >= 0 && K > ie) {\n      hound.sw = Q, hound.swT = 0, hound.swDur = N, hound.lift = 0.065 + Math.min(0.09, j * 0.02);\n      for (let F of HOUND_GAIT_PAIRS[Q]) {\n        let X = feet[F];\n        X.from.copy(X.p), footLocalPos(X.to, F, hound.pos.x + D * N * 1.5, hound.pos.z + C * N * 1.5, hound.yaw + hound.yawRate * N * 1.5), X.to.y = simState.physics.groundHeight(X.to.x, X.to.z, hound.pos.y + 0.6);\n      }\n    }\n  } else {\n    hound.swT += T / hound.swDur;\n    let j = hound.swT >= 1 ? 1 : hound.swT,\n      N = j * j * (3 - 2 * j);\n    for (let Q of HOUND_GAIT_PAIRS[hound.sw]) {\n      let K = feet[Q];\n      K.p.lerpVectors(K.from, K.to, N), K.p.y += Math.sin(Math.PI * j) * hound.lift;\n    }\n    if (hound.swT >= 1) {\n      let Q = feet[HOUND_GAIT_PAIRS[hound.sw][0]];\n      simState.events.emit('enemy:step', {\n        pos: Q.p,\n        type: 'hound',\n        enemy: hound,\n        speed: hound.speed\n      }), hound.sY.v -= 0.12 + hound.speed * 0.03, hound.lastPair = hound.sw, hound.sw = -1;\n    }\n  }\n}"
+ },
+ {
+  "function": "bakeTerrainNormals",
+  "bytes": 1713,
+  "line": 26232,
+  "params": [
+   "size"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "d",
+   "e",
+   "f",
+   "g",
+   "h",
+   "l",
+   "n",
+   "o",
+   "p",
+   "r",
+   "s",
+   "t",
+   "u",
+   "v"
+  ],
+  "code": "/**\n * 由高度场差分出法线与湿滑通道（环形采样保证无缝），输出两张 RGBA 贴图给地面材质\n * @module-ref src/world/ground/ground.js\n */\nfunction bakeTerrainNormals(size) {\n  let e = new Uint8Array(size * size * 4),\n    t = new Uint8Array(size * size * 4),\n    n = new Float32Array(size * size),\n    s = new Float32Array(size * size);\n  for (let r = 0; r < size; r++) for (let a = 0; a < size; a++) {\n    let l = a / size,\n      c = r / size,\n      u = r * size + a,\n      h = fbm2(l * 96, c * 96, 3, 2, 96) * 0.6 + fbm2(l * 40, c * 40, 9, 2, 40) * 0.4,\n      f = fbm2(l * 6, c * 6, 21, 4, 6),\n      p = (fbm2(l * 8, c * 8, 31, 2, 8) - 0.5) * 0.25,\n      d = (fbm2(l * 8, c * 8, 37, 2, 8) - 0.5) * 0.25,\n      v = 1 - Math.abs(2 * fbm2((l + p) * 5, (c + d) * 5, 43, 3, 5) - 1),\n      g = fbm2(l * 28, c * 28, 51, 3, 28);\n    e[u * 4] = Math.round(So(h) * 255), e[u * 4 + 1] = Math.round(So(f) * 255), e[u * 4 + 2] = Math.round(So(v) * 255), e[u * 4 + 3] = Math.round(So(g) * 255), n[u] = h, s[u] = fbm2(l * 9, c * 9, 71, 4, 9);\n  }\n  let o = r => (r + size) % size;\n  for (let r = 0; r < size; r++) for (let a = 0; a < size; a++) {\n    let l = r * size + a,\n      c = (n[r * size + o(a + 1)] - n[r * size + o(a - 1)]) * 2.2,\n      u = (n[o(r + 1) * size + a] - n[o(r - 1) * size + a]) * 2.2,\n      h = (s[r * size + o(a + 2)] - s[r * size + o(a - 2)]) * 9,\n      f = (s[o(r + 2) * size + a] - s[o(r - 2) * size + a]) * 9;\n    t[l * 4] = Math.round(So(0.5 - c) * 255), t[l * 4 + 1] = Math.round(So(0.5 - u) * 255), t[l * 4 + 2] = Math.round(So(0.5 - h) * 255), t[l * 4 + 3] = Math.round(So(0.5 - f) * 255);\n  }\n  return {\n    det: e,\n    nrm: t\n  };\n}\n/**\n * 把字节数组包成 DataTexture（可平铺、带 mipmap 与各向异性），地面烘焙结果统一走它\n * @module-ref src/world/ground/ground.js\n */"
+ },
+ {
+  "function": "createTireProfileGeometry",
+  "bytes": 1629,
+  "line": 13821,
+  "params": [
+   "outerRadius",
+   "width",
+   "rimRadius",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "b",
+   "c",
+   "d",
+   "f",
+   "g",
+   "h",
+   "l",
+   "n",
+   "o",
+   "p",
+   "r",
+   "s",
+   "u",
+   "v",
+   "x",
+   "y"
+  ],
+  "code": "/**\n * 轮胎断面回转几何：带胎肩圆角与两道花纹槽的剖面，UV 沿胎面展开\n * @module-ref src/world/props/basic-builders.js\n */\nfunction createTireProfileGeometry(outerRadius, width, rimRadius, n = 20) {\n  let s = outerRadius - rimRadius,\n    o = Math.min(0.011, s * 0.08),\n    r = [[rimRadius, width * 0.18], [rimRadius + s * 0.45, width * 0.035], [outerRadius - s * 0.2, width * 0.02], [outerRadius - s * 0.06, width * 0.07], [outerRadius, width * 0.17], [outerRadius, width * 0.17], [outerRadius, width * 0.355], [outerRadius - o, width * 0.385], [outerRadius, width * 0.415], [outerRadius, width * 0.585], [outerRadius - o, width * 0.615], [outerRadius, width * 0.645], [outerRadius, width * 0.83], [outerRadius, width * 0.83], [outerRadius - s * 0.06, width * 0.93], [outerRadius - s * 0.2, width * 0.98], [rimRadius + s * 0.45, width * 0.965], [rimRadius, width * 0.82], [rimRadius, width * 0.82], [rimRadius, width * 0.18]],\n    a = revolveProfileGeometry(r, n),\n    l = a.attributes.uv,\n    c = r.length,\n    u = [0];\n  for (let v = 1; v < c; v++) u.push(u[v - 1] + Math.hypot(r[v][0] - r[v - 1][0], r[v][1] - r[v - 1][1]));\n  let h = (u[8] + u[9]) / 2,\n    f = h - u[4],\n    p = u[4] - u[0],\n    d = Math.max(1, Math.round(2 * PI_TWO * outerRadius / 0.5)) * 0.5;\n  for (let v = 0; v < c; v++) {\n    let g = v >= c - 2 ? -(f + p) : u[v] - h,\n      x = Math.abs(g),\n      y = Math.sign(g) * (x <= f + 1e-6 ? x / f * 0.126 : 0.126 + Math.min(1, (x - f) / p) * 0.022);\n    for (let b = 0; b <= n; b++) l.setXY(v * (n + 1) + b, b / n * d, y);\n  }\n  return a;\n}\n/**\n * 叠放轮胎（1..5 只）：每只随机转动，胎面用噪声做深浅，落地接触区压暗\n * @module-ref src/world/props/detailed-builders.js\n */"
+ },
+ {
+  "function": "buildBasicContainer",
+  "bytes": 1579,
+  "line": 8643,
+  "params": [
+   "ctx",
+   "type",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "t"
+  ],
+  "code": "/**\n * 集装箱实例化入口：查零件缓存 → 按色号挑漆材质（顶点色相乘）→ 组装 Group 并打上尺寸/碰撞盒元数据\n * @module-ref src/world/props/basic-builders.js\n */\nfunction buildBasicContainer(ctx, type, t = {}) {\n  let spec = CONTAINER_SPECS[type],\n    seed = t.seed === void 0 ? 0 : Math.abs(Math.floor(t.seed)),\n    variant = seed % CONTAINER_VARIANT_COUNT,\n    doorsOpen = Math.round(THREE.MathUtils.clamp(t.doors || 0, 0, 1) * 10) / 10,\n    wear = Math.round(THREE.MathUtils.clamp(t.wear === void 0 ? 0.5 : t.wear, 0, 1) * 2) / 2,\n    cacheKey = type + '|' + variant + '|' + doorsOpen + '|' + wear,\n    partsCache = CONTAINER_PARTS_CACHE.get(ctx.mats);\n  partsCache || (partsCache = new Map(), CONTAINER_PARTS_CACHE.set(ctx.mats, partsCache)), partsCache.has(cacheKey) || partsCache.set(cacheKey, buildContainerParts(ctx, type, variant, doorsOpen, wear));\n  let cachedParts = partsCache.get(cacheKey),\n    paintColor = t.color;\n  CONTAINER_PAINT_COLORS.includes(paintColor) || (paintColor = t.seed === void 0 ? spec.def : CONTAINER_PAINT_COLORS[(seed * 7 + 3) % CONTAINER_PAINT_COLORS.length]);\n  let group = buildPartsGroup(cachedParts.parts, new Map([[CONTAINER_BODY_MATERIAL_KEY, ctx.mats.get('paint_' + paintColor, {\n      vertexColors: !0\n    })]])),\n    size = PROP_SIZES[type];\n  return group.userData.color = paintColor, group.userData.doors = doorsOpen, tagPropUserData(group, type, [size[0], size[1], size[2]], cachedParts.colliders.map(d => ({\n    min: d.min.slice(),\n    max: d.max.slice(),\n    surface: d.surface\n  })));\n}\n/**\n * 取道具注册表里的 [宽,高,深] 前三项，尺寸缺失时的统一读数口径\n * @module-ref src/world/props/registry.js\n */"
+ },
+ {
+  "function": "setShot",
+  "bytes": 1382,
+  "line": 42171,
+  "params": [
+   "u",
+   "_"
+  ],
+  "shortParams": [
+   "u"
+  ],
+  "shortLocals": [
+   "b",
+   "d",
+   "f",
+   "g",
+   "h",
+   "p",
+   "u",
+   "v",
+   "x",
+   "y"
+  ],
+  "code": "function setShot(u, h = {}) {\n  currentShot = u;\n  let f = shotPoses[u],\n    p = ctx.input,\n    d = ctx.player;\n  p.ads = !1, p.fire = !1, d.sprinting = !1, d.speed = 0, weapon.debug.reloadT = null, weapon.debug.flash = !1, weapon.debug.empty = !1, weapon.debug.freeze = !!f, weapon.reset();\n  let v, g, x;\n  if (f) ctx.scene.add(root), root.position.set(0, 1.25, 0), root.rotation.set(0, f[0], 0, 'YXZ'), root.traverse(y => y.layers.set(LAYER_WORLD)), v = f[1], g = f[2], x = f[3], h.wt != null && (weapon.debug.reloadT = +h.wt, weapon.debug.empty = !!h.wempty);else {\n    ctx.camera.add(root), root.traverse(b => b.layers.set(LAYER_VIEWMODEL));\n    let y = lookDirs[h.wlook] || lookDirs.south;\n    v = [hipCamPos.x, hipCamPos.y, hipCamPos.z], g = [hipCamPos.x + y[0] * 50, hipCamPos.y + y[1] * 50, hipCamPos.z + y[2] * 50], x = 74, u === 'ads' && (p.ads = !0, x = 52), u === 'sprint' && (d.sprinting = !0, d.speed = 6), u === 'fire' && (weapon.debug.flash = !0, h.wads && (p.ads = !0, x = 52)), (u === 'reload' || u === 'empty') && (weapon.debug.reloadT = h.wt != null ? +h.wt : 0.62, weapon.debug.empty = u === 'empty'), u === 'empty' && (weapon.ammo = 0);\n  }\n  return weapon.snap(), weapon.update(0.016), weapon.snap(), prevSetShot && prevSetShot({\n    cam: h.cam || [...v, ...g].join(','),\n    fov: h.fov || x,\n    exposure: h.exposure\n  }), {\n    cam: v,\n    target: g\n  };\n}"
+ },
+ {
+  "function": "step",
+  "bytes": 1362,
+  "line": 31626,
+  "params": [
+   "N"
+  ],
+  "shortParams": [
+   "N"
+  ],
+  "shortLocals": [
+   "N",
+   "Q"
+  ],
+  "code": "function step(N) {\n  if (time += N, holdMode === 'muzzle' && (fx.muzzleFlash(muzzlePos, muzzleDir, {\n    scale: 1\n  }), muzzlePos.x = 2.5, muzzleDir.set(-0.5, 0, 0.86), fx.muzzleFlash(muzzlePos, muzzleDir, {\n    scale: 1.6\n  }), muzzlePos.x = 0, muzzleDir.set(1, 0, 0)), doImpacts) for (impactTimer -= N; impactTimer <= 0;) impactTimer += mode === 'impact' ? 0.09 : 0.13, fireImpact(impactIndex++ % 8);\n  if (doTracers && (tracerTimer -= N, tracerTimer <= 0 && (tracerTimer += mode === 'tracer' ? 0.16 : 0.45, effectPos.set(-5 + rand() * 3, 1.2 + rand() * 0.8, 6 + rand() * 2), shotDir.copy(effectPos).sub(airGunPos).normalize(), fx.muzzleFlash(airGunPos, shotDir, {\n    scale: 1\n  }), fx.tracer(airGunPos, effectPos, {\n    color: 16730658,\n    speed: 120\n  }), mode === 'tracer' && (effectPos.set(6, 1 + rand() * 1.5, -6 - rand() * 6), aimPoint.set(-7, 1.6, 6.5), fx.tracer(aimPoint, effectPos, {\n    speed: 200\n  }))), shellTimer -= N, shellTimer <= 0 && (shellTimer += 0.22, effectPos.set(1.6 + rand() * 0.8, 1.6 + rand() * 0.8, 0.4 + (rand() - 0.5) * 0.8), fx.shell(ejectPos, effectPos))), doExplosions && (boomTimer -= N, boomTimer <= 0)) {\n    boomTimer += boomInterval;\n    let Q = +(ctx.params.fxsize || 0) || 1 + boomIndex++ % 3;\n    effectPos.set(mode === 'explosion' ? 0 : 7, 0.25, mode === 'explosion' ? 3.5 : -3.5), fx.explosion(effectPos, Q);\n  }\n}"
+ },
+ {
+  "function": "updateAmbience",
+  "bytes": 1304,
+  "line": 36047,
+  "params": [
+   "te",
+   "he"
+  ],
+  "shortParams": [
+   "te",
+   "he"
+  ],
+  "shortLocals": [
+   "ge",
+   "he",
+   "pe",
+   "te",
+   "ye"
+  ],
+  "code": "function updateAmbience(te, he) {\n  let pe = 1 - 0.7 * interior;\n  if ((ambientTimers.fog -= te) <= 0) {\n    ambientTimers.fog = 40 + rnd() * 30;\n    let ge = listenerPos.z + (rnd() * 2 - 1) * 250;\n    play('foghorn', {\n      pos: [listenerPos.x + 320, 8, ge],\n      ref: 400,\n      gain: 0.34 * he * pe,\n      pitch: rnd() < 0.3 ? 0.89 : 1,\n      jitter: 0.01\n    });\n  }\n  if ((ambientTimers.gull -= te) <= 0) {\n    ambientTimers.gull = 9 + rnd() * 16;\n    let ge = rnd() * 6.283,\n      ye = 35 + rnd() * 50;\n    play('gull_cry', {\n      pos: [listenerPos.x + Math.cos(ge) * ye, 14 + rnd() * 18, listenerPos.z + Math.sin(ge) * ye],\n      ref: ye,\n      roll: 1,\n      gain: (0.16 + rnd() * 0.16) * he * pe,\n      jitter: 0.1\n    });\n  }\n  if ((ambientTimers.hal -= te) <= 0 && (ambientTimers.hal = 6 + rnd() * 11, play('halyard', {\n    pos: [29 + rnd() * 8, 3 + rnd() * 6, -8 + rnd() * 32],\n    ref: 16,\n    roll: 0.5,\n    gain: (0.3 + rnd() * 0.3) * he * pe,\n    jitter: 0.08\n  })), (ambientTimers.bang -= te) <= 0) {\n    ambientTimers.bang = 28 + rnd() * 34;\n    let ge = 1.6 + rnd() * 3.2;\n    play('container_bang', {\n      pos: [listenerPos.x + Math.cos(ge) * 150, 4, listenerPos.z + Math.sin(ge) * 150],\n      ref: 150,\n      gain: (0.2 + rnd() * 0.16) * he * pe,\n      jitter: 0.12\n    });\n  }\n}"
+ },
+ {
+  "function": "createRibbonFromPolyline",
+  "bytes": 1195,
+  "line": 12336,
+  "params": [
+   "points",
+   "halfExtent",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "d",
+   "f",
+   "h",
+   "l",
+   "n",
+   "o",
+   "p",
+   "r",
+   "s",
+   "t",
+   "u"
+  ],
+  "code": "/**\n * 沿三维折线生成有宽度的双面扁带：篷布绑带、开箱胶带、钢丝绳、垫片都用它\n * @module-ref src/core/geometry.js\n */\nfunction createRibbonFromPolyline(points, halfExtent, t = !0) {\n  let n = points.length,\n    s = [],\n    o = [],\n    r = [],\n    a = 0,\n    l = Math.hypot(halfExtent[0], halfExtent[1], halfExtent[2]) * 2;\n  for (let p = 0; p < n; p++) p && (a += Math.hypot(points[p][0] - points[p - 1][0], points[p][1] - points[p - 1][1], points[p][2] - points[p - 1][2])), s.push(points[p][0] - halfExtent[0], points[p][1] - halfExtent[1], points[p][2] - halfExtent[2], points[p][0] + halfExtent[0], points[p][1] + halfExtent[1], points[p][2] + halfExtent[2]), o.push(a, 0, a, l);\n  for (let p = 0; p < n - 1; p++) {\n    let d = p * 2;\n    r.push(d, d + 1, d + 3, d, d + 3, d + 2);\n  }\n  let c = createGeometryFromArrays(s, null, o, r);\n  if (!t) return c;\n  let u = c.clone(),\n    h = u.index.array;\n  for (let p = 0; p < h.length; p += 3) {\n    let d = h[p + 1];\n    h[p + 1] = h[p + 2], h[p + 2] = d;\n  }\n  let f = u.attributes.normal.array;\n  for (let p = 0; p < f.length; p++) f[p] = -f[p];\n  return mergeGeometryParts([c, u]);\n}\n/**\n * 贴花/铭牌专用的平面四边形（不投阴影），后半段装配器的 decal/label 全部基于它\n * @module-ref src/core/geometry.js\n */"
+ },
+ {
+  "function": "synthGullFire",
+  "bytes": 1192,
+  "line": 33302,
+  "params": [
+   "sr",
+   "rand",
+   "variant"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "l",
+   "n",
+   "o",
+   "r",
+   "s",
+   "sr",
+   "u"
+  ],
+  "code": "/**\n * 海鸥无人机开火：高频电流爆裂加机械扫尾，与猎犬火力形成清晰的音色区分。\n * @module-ref src/audio/library.js\n */\nfunction synthGullFire(sr, rand, variant) {\n  let n = allocSamples(sr, 0.3),\n    s = variant ? 1.07 : 1,\n    o = 0;\n  mixBufferAt(n, makeFilteredNoise(sr, rand, 0.008, 0.0012, {\n    hp: 3200\n  }), 0, 1.1, sr);\n  let r = allocSamples(sr, 0.12);\n  for (let a = 0; a < r.length; a++) {\n    let l = a / sr,\n      c = (380 + 620 * Math.exp(-l / 0.018)) * s;\n    o += c / sr;\n    let u = 2 * (o - Math.floor(o)) - 1;\n    r[a] = (u + 0.5 * Math.sign(Math.sin(TAU * o * 2.02))) * Math.exp(-l / 0.024);\n  }\n  return applyBiquad(r, 'bp', 1500 * s, 0.9, sr), mixBufferAt(n, r, 0, 1.5, sr), mixBufferAt(n, makeFilteredNoise(sr, rand, 0.08, 0.014, {\n    bp: 2400 * s,\n    q: 1.4\n  }), 0, 0.7, sr), mixBufferAt(n, makeSweptSine(sr, 0.05, 240, 120, 0.012, 0.014), 0, 0.5, sr), mixBufferAt(n, makeModalResonance(sr, 0.05, [[3400 * s, 0.006, 1], [5200, 0.005, 0.6], [1900, 0.008, 0.5]], rand), 0.021, 0.2, sr), mixBufferAt(n, makeFilteredNoise(sr, rand, 0.15, 0.04, {\n    hp: 6e3\n  }), 0.002, 0.1, sr), softClip(scaleBuffer(n, 0.6), 1.6);\n}\n/**\n * 猎犬开火：更低沉厚重的能量爆发加机械后坐，威胁感强于海鸥，用于危险等级提示。\n * @module-ref src/audio/library.js\n */"
+ },
+ {
+  "function": "createSandbagGeometry",
+  "bytes": 1101,
+  "line": 14768,
+  "params": [
+   "width",
+   "height",
+   "depth",
+   "rand"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "f",
+   "h",
+   "l",
+   "o",
+   "p",
+   "r",
+   "s",
+   "u"
+  ],
+  "code": "/**\n * 单只沙袋几何：圆角方块去顶盖后做「中间鼓、两端收、底面压扁」的变形，再叠值噪声做布褶\n * @module-ref src/world/props/basic-builders.js\n */\nfunction createSandbagGeometry(width, height, depth, rand) {\n  let s = removeGeometryGroup(roundedBoxGeometryGrid(width, height, depth, Math.min(height * 0.46, 0.075), 3, 3, 3), 3),\n    o = rand() * 9,\n    r = rand.range(-0.05, 0.05),\n    a = rand.range(0.4, 1);\n  return mapVertices(s, l => {\n    let c = l.x / (width / 2),\n      u = l.z / (depth / 2),\n      h = l.y / (height / 2),\n      f = 1 - 0.22 * Math.pow(Math.abs(c), 2.5);\n    l.z *= f * (h < 0 ? 1.05 : 1), l.y = (l.y + height / 2) * (1 - 0.3 * Math.pow(Math.abs(c), 3)) - height / 2, h > 0 && (l.y += 0.016 * Math.cos(HALF_PI * c) * Math.cos(HALF_PI * u)), l.y -= a * 0.018 * Math.abs(c) * Math.abs(c) * (h > -0.9 ? 1 : 0) + r * l.x * 0.3;\n    let p = valueNoise3D(l.x * 9 + o, l.y * 9, l.z * 9 + o) - 0.5;\n    l.x += p * 0.014, l.z += p * 0.016, h > -0.9 && (l.y += p * 0.014);\n  }), recomputeSmoothNormals(s);\n}\n/**\n * 沙袋墙：交错层叠（偶数层 3 只、奇数层 5 只顺砌），每只随机尺寸/颜色/微倾，两侧补上缝合边，顶层扣掉一只留缺口\n * @module-ref src/world/props/character-builders.js\n */"
+ },
+ {
+  "function": "createRoundedRectFanGeometry",
+  "bytes": 1053,
+  "line": 7331,
+  "params": [
+   "width",
+   "height",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "f",
+   "h",
+   "l",
+   "n",
+   "o",
+   "r",
+   "s",
+   "t",
+   "u"
+  ],
+  "code": "/**\n * 圆角矩形（跑道形）三角扇面：四段四分之一圆弧拼出的平面片，用来做舷窗盖、圆形开孔的贴面而不是实体\n * @module-ref src/effects/particles.js\n */\nfunction createRoundedRectFanGeometry(width, height, t = 5) {\n  let n = [],\n    s = Math.min(width, height) / 2,\n    o = width / 2 - s,\n    r = height / 2 - s;\n  for (let u = 0; u < 4; u++) for (let h = 0; h <= t; h++) {\n    let f = (u + h / t) * Math.PI / 2;\n    n.push([Math.cos(f) * s + (u === 0 || u === 3 ? o : -o), Math.sin(f) * s + (u < 2 ? r : -r)]);\n  }\n  let a = [],\n    l = [];\n  for (let u = 0; u < n.length; u++) {\n    let h = n[u],\n      f = n[(u + 1) % n.length];\n    a.push(0, 0, 0, h[0], h[1], 0, f[0], f[1], 0), l.push(0.5, 0.5, h[0] / width + 0.5, h[1] / height + 0.5, f[0] / width + 0.5, f[1] / height + 0.5);\n  }\n  let c = new THREE.BufferGeometry();\n  return c.setAttribute('position', new THREE.BufferAttribute(new Float32Array(a), 3)), c.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(l), 2)), c.computeVertexNormals(), c;\n}\n/**\n * 平面几何简写；道具里大量贴花、铭牌、玻璃片都用它，命名统一便于后续替换成带细分的版本\n * @module-ref src/core/geometry.js\n */"
+ },
+ {
+  "function": "addWarehouse",
+  "bytes": 995,
+  "line": 25615,
+  "params": [
+   "D",
+   "C",
+   "G",
+   "j",
+   "N",
+   "Q",
+   "K"
+  ],
+  "shortParams": [
+   "D",
+   "C",
+   "G",
+   "j",
+   "N",
+   "Q",
+   "K"
+  ],
+  "shortLocals": [
+   "$",
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "X",
+   "ie",
+   "j",
+   "ne",
+   "re"
+  ],
+  "code": "function addWarehouse(D, C, G, j, N, Q, K) {\n  addPiece(boxFromBounds(D, -1.6, G, C, N, j), Q), addPiece(boxFromBounds(D, -1.6, G, C, 0.8, j + 0.2), [0.42, 0.14, 0.1]);\n  let ie = j - G,\n    F = G + ie * K;\n  addPiece(boxFromBounds(D + 2, N, F - 7, C - 2, N + 17, F + 7), [0.72, 0.73, 0.7]), addPiece(boxFromBounds((D + C) / 2 - 3, N + 17, F - 5, (D + C) / 2 + 3, N + 24, F + 1), [0.2, 0.3, 0.45]);\n  for (let X = G + 12; X < j - 12; X += 13.2) {\n    if (Math.abs(X + 6 - F) < 14) continue;\n    let ne = 2.6 * (2 + Math.floor(rng() * 4)),\n      re = DISTANT_CONTAINER_COLORS[Math.floor(rng() * DISTANT_CONTAINER_COLORS.length)];\n    addPiece(boxFromBounds(D + 1, N, X, (D + C) / 2 - 0.2, N + ne, X + 12.2), re);\n    let $ = DISTANT_CONTAINER_COLORS[Math.floor(rng() * DISTANT_CONTAINER_COLORS.length)];\n    addPiece(boxFromBounds((D + C) / 2 + 0.2, N, X, C - 1, N + ne - 2.6 * Math.floor(rng() * 2), X + 12.2), $);\n  }\n  lamps.add(makeBeaconGeo((D + C) / 2, N + 26, F, 0.4), [5, 4.6, 3.8], 0);\n}"
+ },
+ {
+  "function": "synthMusicDrone",
+  "bytes": 985,
+  "line": 34305,
+  "params": [
+   "sr",
+   "rand"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "h",
+   "l",
+   "n",
+   "o",
+   "r",
+   "s",
+   "sr",
+   "t",
+   "u"
+  ],
+  "code": "/**\n * 音乐持续低音层：每小节触发拨弦并铺超低八度，最后用动态低通扫一遍，提供不断线的底噪。\n * @module-ref src/audio/library.js\n */\nfunction* synthMusicDrone(sr, rand) {\n  let t = MUSIC_TIMING.bar * 8,\n    n = Math.round(t * sr),\n    s = function* (o) {\n      let r = new Float32Array(n);\n      for (let a = 0; a < 4; a++) {\n        let l = CHORD_PROGRESSIONS[a],\n          c = a * 4.8;\n        for (let [u, h] of [[0, 1], [7, 0.6], [12, 0.5], [l.tones[1] + 12, 0.28]]) mixBufferWrapped(r, synthBassPluck(sr, midiToFreq(l.root + u), 4.6, 1.3, 1.8, 0.0035, o), c - 0.5, h * 0.3, sr), yield;\n      }\n      return mixBufferWrapped(r, synthBassPluck(sr, midiToFreq(26), t - 0.2, 2.5, 0.2, 0.002, o), 0.1, 0.16, sr), yield, applySweptBiquad(r, 'lp', a => 560 + 300 * Math.sin(TAU * a * 2) + 120 * Math.sin(TAU * a * 5 + 1), 0.9, sr, 2), yield, r;\n    };\n  return [yield* s(ao(Math.floor(rand() * 1e9))), yield* s(ao(Math.floor(rand() * 1e9)))];\n}\n/**\n * 音乐打击音：带共振低通扫频的噪声短打，按音高与亮度参数派生出鼓组的不同音色。\n * @module-ref src/audio/library.js\n */"
+ },
+ {
+  "function": "buildGrid",
+  "bytes": 938,
+  "line": 6733,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "E",
+   "H",
+   "M",
+   "S",
+   "_",
+   "w",
+   "z"
+  ],
+  "code": "function buildGrid() {\n  blocked = new Uint8Array(NAV_COLS * NAV_ROWS), gridDirty = !1;\n  for (let _ of boxes) {\n    if (_.noNav || _.bulletOnly || _.max.y < STEP_HEIGHT + 0.05 || _.min.y > 1.5) continue;\n    let M = Math.max(0, Math.floor((_.min.x - NAV_CLEARANCE - NAV_MIN_X) / NAV_CELL_SIZE)),\n      E = Math.min(NAV_COLS - 1, Math.floor((_.max.x + NAV_CLEARANCE - NAV_MIN_X) / NAV_CELL_SIZE)),\n      w = Math.max(0, Math.floor((_.min.z - NAV_CLEARANCE - NAV_MIN_Z) / NAV_CELL_SIZE)),\n      S = Math.min(NAV_ROWS - 1, Math.floor((_.max.z + NAV_CLEARANCE - NAV_MIN_Z) / NAV_CELL_SIZE));\n    for (let z = w; z <= S; z++) for (let H = M; H <= E; H++) blocked[z * NAV_COLS + H] = 1;\n  }\n  for (let _ = 0; _ < NAV_ROWS; _++) for (let M = 0; M < NAV_COLS; M++) (NAV_MIN_X + (M + 0.5) * NAV_CELL_SIZE > WORLD_BOUNDS.quayX - NAV_CLEARANCE || M === 0 || _ === 0 || M === NAV_COLS - 1 || _ === NAV_ROWS - 1) && (blocked[_ * NAV_COLS + M] = 1);\n}"
+ },
+ {
+  "function": "pollGamepad",
+  "bytes": 912,
+  "line": 37447,
+  "params": [
+   "P"
+  ],
+  "shortParams": [
+   "P"
+  ],
+  "shortLocals": [
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z",
+   "oe"
+  ],
+  "code": "function pollGamepad(P) {\n  if (padX = padY = 0, !hasPads) return;\n  let V;\n  try {\n    V = navigator.getGamepads();\n  } catch {\n    hasPads = !1;\n    return;\n  }\n  let Y = null;\n  for (let J = 0; V && J < V.length; J++) if (V[J] && V[J].connected && V[J].mapping === 'standard') {\n    Y = V[J];\n    break;\n  }\n  if (!Y) {\n    state.gamepad && (state.gamepad = !1, sources.pad.clear());\n    return;\n  }\n  state.gamepad = !0, padX = deadzone(Y.axes[0] || 0), padY = -deadzone(Y.axes[1] || 0);\n  let L = deadzone(Y.axes[2] || 0),\n    Z = deadzone(Y.axes[3] || 0);\n  gameplay && (state.look.dx += L * Math.abs(L) * PAD_LOOK_RATE * P * state.sensitivity, state.look.dy += Z * Math.abs(Z) * PAD_LOOK_RATE * 0.7 * P * state.sensitivity * (state.invertY ? -1 : 1));\n  for (let J in gamepadActions) {\n    let oe = Y.buttons[J];\n    setSourceAction('pad', gamepadActions[J], !!oe && (oe.pressed || oe.value > 0.4));\n  }\n}"
+ },
+ {
+  "function": "updateTitleCam",
+  "bytes": 893,
+  "line": 47554,
+  "params": [
+   "P"
+  ],
+  "shortParams": [
+   "P"
+  ],
+  "shortLocals": [
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z"
+  ],
+  "code": "function updateTitleCam(P) {\n  let V = Math.max(26, cinematic.len / MISSION_FLOW.titleSpeed);\n  cinematic.t += P, cinematic.t >= V && (cinematic.t = 0);\n  let Y = cinematic.t / V,\n    L = Y * Y * (3 - 2 * Y) * 0.25 + Y * 0.75,\n    Z = ctx.camera,\n    J = ctx.time.t;\n  samplePath(cinematic.pos, L, probePos), samplePath(cinematic.look, L, probeLook), probePos.x += Math.sin(J * 0.31) * 0.05, probePos.y += Math.sin(J * 0.43 + 1.7) * 0.035, probePos.z += Math.sin(J * 0.27 + 0.6) * 0.05, probeLook.y += Math.sin(J * 0.19) * 0.12, probeLook.x += Math.sin(J * 0.13 + 2) * 0.2, Z.position.copy(probePos), Z.lookAt(probeLook), Z.rotation.z += Math.sin(J * 0.21) * 0.006, !ctx.params.fov && Math.abs(Z.fov - MISSION_FLOW.titleFov) > 0.01 && (Z.fov = MISSION_FLOW.titleFov, Z.updateProjectionMatrix()), post.fade = Math.max(1 - smoothstep(0, 1.8, cinematic.t), smoothstep(V - 1.6, V, cinematic.t));\n}"
+ },
+ {
+  "function": "createRainInstanceGeometry",
+  "bytes": 867,
+  "line": 27397,
+  "params": [
+   "streaks",
+   "drips",
+   "rng"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "n",
+   "o",
+   "s"
+  ],
+  "code": "/**\n * 构造雨丝与溅水共用的实例化四边形几何，每实例一个随机种子 aSeed；末尾 drips 个实例把种子写成负数，标记为屋檐滴水支线\n * @module-ref src/world/ground/water.js\n */\nfunction createRainInstanceGeometry(streaks, drips, rng) {\n  let n = new THREE.InstancedBufferGeometry();\n  n.setAttribute('position', new THREE.BufferAttribute(new Float32Array([-0.5, 0, 0, 0.5, 0, 0, -0.5, 1, 0, 0.5, 1, 0]), 3)), n.setIndex([0, 1, 2, 2, 1, 3]);\n  let s = new Float32Array((streaks + drips) * 4);\n  for (let o = 0; o < (streaks + drips) * 4; o++) s[o] = rng();\n  for (let o = streaks; o < streaks + drips; o++) s[o * 4 + 3] = -1;\n  return n.setAttribute('aSeed', new THREE.InstancedBufferAttribute(s, 4)), n.instanceCount = streaks + drips, n.boundingSphere = new THREE.Sphere(new THREE.Vector3(), 1e5), n;\n}\n/**\n * 创建雨丝与溅水两套加色实例网格及材质，按室内盒体、天窗开口与积水掩膜控制可见性，随画质缩放实例数，并定时发 thunder 事件驱动雷声与闪电\n * @module-ref src/world/ground/water.js\n */"
+ },
+ {
+  "function": "synthStepConcrete",
+  "bytes": 848,
+  "line": 32600,
+  "params": [
+   "sr",
+   "rand",
+   "variant"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "a",
+   "n",
+   "o",
+   "r",
+   "s",
+   "sr"
+  ],
+  "code": "/**\n * 混凝土脚步：低频脚步冲量加随机砂砾摩擦层，是最常听到的移动反馈。\n * @module-ref src/audio/library.js\n */\nfunction synthStepConcrete(sr, rand, variant) {\n  let n = allocSamples(sr, 0.3),\n    s = [1, 1.07, 0.94, 1.03][variant & 3];\n  mixBufferAt(n, makeSweptSine(sr, 0.06, 112 * s, 58 * s, 0.018, 0.02, 0.002), 0, 0.75, sr), mixBufferAt(n, makeFilteredNoise(sr, rand, 0.06, 0.016, {\n    lp: 720 * s\n  }), 0, 0.9, sr), mixBufferAt(n, makeFilteredNoise(sr, rand, 0.1, 0.028, {\n    bp: 2500 * s,\n    q: 0.7,\n    att: 0.004\n  }), 0.012, 0.22, sr);\n  let o = makeFilteredNoise(sr, rand, 0.2, 0.05, {\n      hp: 3800,\n      att: 0.01\n    }),\n    r = 1;\n  for (let a = 0; a < o.length; a++) a % 70 === 0 && (r = 0.3 + rand() * 0.7), o[a] *= r;\n  return mixBufferAt(n, o, 0.02, 0.16, sr), n;\n}\n/**\n * 脚步通用内核：落地冲量加颗粒摩擦，按 scale 调软硬与湿度，供水面脚步和击水复用。\n * @module-ref src/audio/library.js\n */"
+ },
+ {
+  "function": "showcaseBackdrop",
+  "bytes": 839,
+  "line": 25977,
+  "params": [
+   "game"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "e",
+   "n",
+   "s",
+   "t"
+  ],
+  "code": "/**\n * 背景模块的 showcase 入口：按 URL 参数只建单个部件并给出对应机位，供美术逐个检查\n * @module-ref src/world/backdrop/backdrop.js\n */\nfunction showcaseBackdrop(game) {\n  let e = game.params && BACKDROP_PARTS.includes(game.params.bshow) ? game.params.bshow : null,\n    t = buildBackdrop(game, {\n      only: e,\n      showcase: !0\n    });\n  console.log('[backdrop] ' + JSON.stringify(t.stats));\n  let n = {\n    crane: {\n      cam: [0, 1.7, 27],\n      target: [33, 13, 0]\n    },\n    ship: {\n      cam: [24, 1.7, -2],\n      target: [38, 9, -24]\n    },\n    boat: {\n      cam: [19.5, 1.7, 11.5],\n      target: [24, 0.9, 15]\n    },\n    sky: {\n      cam: [-32, 1.7, 6],\n      target: [30, 9, 0]\n    }\n  };\n  return {\n    ...(n[e] || n.crane),\n    update: s => t.update(s)\n  };\n}\n/**\n * 地面/地形模块注册表，用 getter 惰性暴露 create/showcase 两个入口\n * @module-ref src/world/ground/ground.js\n */"
+ },
+ {
+  "function": "resetWeapon",
+  "bytes": 780,
+  "line": 41718,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "Me"
+  ],
+  "code": "function resetWeapon() {\n  weapon.ammo = PAC9_MAG_SIZE, weapon.reserve = PAC9_RESERVE_AMMO, weapon.state = 'idle', weapon.ads = 0, Object.assign(anim, {\n    cooldown: 0,\n    prevFire: !1,\n    dryDone: !1,\n    autoReload: -1,\n    reload: null,\n    burst: 0,\n    lastShot: -9,\n    bloom: 0,\n    heat: 0,\n    smoke: 0,\n    adsLin: 0,\n    adsE: 0,\n    sprintT: 0,\n    reloadW: 0,\n    boltT: 9,\n    boltLocked: !1,\n    flashT: 0,\n    idleT: 0,\n    inspect: -1\n  });\n  for (let Me of ['kZ', 'kP', 'kY', 'kR', 'swY', 'swP', 'jY', 'jP', 'bump']) anim[Me].x = 0, anim[Me].v = 0;\n  roundMesh.visible = !0, magGroup.visible = !0, magGroup.position.copy(magRestPos), magGroup.quaternion.identity(), leftHandGroup.position.copy(leftGripPose.p), leftHandGroup.quaternion.copy(leftGripPose.q);\n}"
+ },
+ {
+  "function": "synthWind",
+  "bytes": 775,
+  "line": 34187,
+  "params": [
+   "sr",
+   "rand"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "a",
+   "o",
+   "r",
+   "s",
+   "sr"
+  ],
+  "code": "/**\n * 风循环：带通噪声的截止频率按 8 秒周期摆动，配合引擎的阵风曲线产生自然起伏。\n * @module-ref src/audio/library.js\n */\nfunction synthWind(sr, rand) {\n  let s = makeWhiteNoise(sr, 8.5, rand),\n    o = Float32Array.from(s);\n  applySweptBiquad(s, 'bp', r => {\n    let a = r * 8.5;\n    return 380 + 190 * Math.sin(TAU * a / 8) + 90 * Math.sin(TAU * a / 2.667 + 1);\n  }, 1.3, sr), applySweptBiquad(o, 'bp', r => {\n    let a = r * 8.5;\n    return 1350 + 260 * Math.sin(TAU * a / 4 + 2);\n  }, 9, sr);\n  for (let r = 0; r < s.length; r++) {\n    let a = r / sr;\n    s[r] = s[r] * (0.7 + 0.3 * Math.sin(TAU * a / 8 + 0.5)) + o[r] * 0.22 * Math.pow(0.5 + 0.5 * Math.sin(TAU * a / 4 + 1), 2);\n  }\n  return makeSeamlessLoop(s, sr * 8, !0);\n}\n/**\n * 海浪循环：低频涌动加周期性拍岸峰值，作为整个港口场景的空间底噪。\n * @module-ref src/audio/library.js\n */"
+ },
+ {
+  "function": "logo_c",
+  "bytes": 758,
+  "line": 4488,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "M",
+   "_",
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ],
+  "code": "() => buildCanvasDecal('logo_c', 640, 192, (v, g, x, y) => {\n  drawLogoLockup(v, g, x, INK_PALETTE.navy, (b, m, A) => {\n    b.beginPath(), b.arc(0, m * 0.25, m * 0.55, Math.PI, 0), b.closePath(), b.fill(), b.lineWidth = m * 0.1, b.lineCap = 'butt';\n    for (let _ = 0; _ < 7; _++) {\n      let M = Math.PI + (_ + 0.5) / 7 * Math.PI;\n      b.beginPath(), b.moveTo(Math.cos(M) * m * 0.7, m * 0.25 + Math.sin(M) * m * 0.7), b.lineTo(Math.cos(M) * m * 1.05, m * 0.25 + Math.sin(M) * m * 1.05), b.stroke();\n    }\n    b.fillRect(-m * 1.05, m * 0.42, m * 2.1, m * 0.13), b.fillRect(-m * 0.8, m * 0.68, m * 1.6, m * 0.1);\n  }, 'AUREL PACIFIC', 'DEEP SEA  \\xB7  REEFER  \\xB7  BULK'), applyCanvasDistress(v, g, x, 0.35, y);\n}, {\n  bleed: INK_PALETTE.navy,\n  text: !0\n})"
+ },
+ {
+  "function": "sampleTerrainTexture",
+  "bytes": 732,
+  "line": 26211,
+  "params": [
+   "data",
+   "size",
+   "x",
+   "z",
+   "channel"
+  ],
+  "shortParams": [
+   "x",
+   "z"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "f",
+   "h",
+   "l",
+   "o",
+   "r",
+   "u",
+   "x",
+   "z"
+  ],
+  "code": "/**\n * 按世界坐标双线性采样烘焙结果（可指定通道），让物理/寻路与视觉共用同一份地面数据\n * @module-ref src/world/ground/ground.js\n */\nfunction sampleTerrainTexture(data, size, x, z, channel) {\n  let o = (x - TERRAIN_BOUNDS.x0) / TERRAIN_BOUNDS.size * size - 0.5,\n    r = (z - TERRAIN_BOUNDS.z0) / TERRAIN_BOUNDS.size * size - 0.5;\n  o = o < 0 ? 0 : o > size - 1.001 ? size - 1.001 : o, r = r < 0 ? 0 : r > size - 1.001 ? size - 1.001 : r;\n  let a = o | 0,\n    l = r | 0,\n    c = o - a,\n    u = r - l,\n    h = (l * size + a) * 4 + channel,\n    f = size * 4;\n  return ((data[h] * (1 - c) + data[h + 4] * c) * (1 - u) + (data[h + f] * (1 - c) + data[h + f + 4] * c) * u) / 255;\n}\n/**\n * 由高度场差分出法线与湿滑通道（环形采样保证无缝），输出两张 RGBA 贴图给地面材质\n * @module-ref src/world/ground/ground.js\n */"
+ },
+ {
+  "function": "fenceRun",
+  "bytes": 710,
+  "line": 20763,
+  "params": [
+   "c",
+   "u",
+   "h",
+   "f",
+   "p"
+  ],
+  "shortParams": [
+   "c",
+   "u",
+   "h",
+   "f",
+   "p"
+  ],
+  "shortLocals": [
+   "b",
+   "c",
+   "d",
+   "f",
+   "g",
+   "h",
+   "m",
+   "p",
+   "u",
+   "v",
+   "x",
+   "y"
+  ],
+  "code": "function fenceRun(c, u, h, f, p) {\n  let d = Math.hypot(h - c, f - u),\n    v = Math.max(1, Math.round(d / 3.35)),\n    g = d / (v * 3),\n    x = Math.abs(h - c) > Math.abs(f - u);\n  for (let y = 0; y < v; y++) {\n    let b = (y + 0.5) / v,\n      m = placeProp('fence_panel', c + (h - c) * b, u + (f - u) * b, x ? 0 : ts, {\n        seed: p + y,\n        posts: y === v - 1 ? 'both' : 'left'\n      }, 0, {\n        noCol: !0\n      });\n    m.scale.x = g;\n  }\n  ctx.col(Math.min(c, h) - 0.05, 0, Math.min(u, f) - 0.05, Math.max(c, h) + 0.05, 2.4, Math.max(u, f) + 0.05, 'metal'), ctx.col(Math.min(c, h) - 0.3, 0, Math.min(u, f) - 0.3, Math.max(c, h) + 0.3, 7, Math.max(u, f) + 0.3, 'metal', {\n    playerOnly: !0\n  });\n}"
+ },
+ {
+  "function": "synthCompleteSting",
+  "bytes": 699,
+  "line": 34596,
+  "params": [
+   "sr"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "e",
+   "n",
+   "sr",
+   "t"
+  ],
+  "code": "/**\n * 通关结算提示音：完整和弦齐奏加尾声铃音，为整段任务收束。\n * @module-ref src/audio/library.js\n */\nfunction* synthCompleteSting(sr) {\n  let e = allocSamples(sr, 6);\n  mixBufferAt(e, makeSweptSine(sr, 1.4, 73.4, 36.7, 0.15, 0.4, 0.003), 0, 0.9, sr);\n  for (let [t, n] of [[38, 1], [50, 0.8], [57, 0.7], [62, 0.7], [66, 0.7], [69, 0.5]]) mixBufferAt(e, synthBrassNote(sr, midiToFreq(t), 5.6), 0, 0.14 * n, sr), yield;\n  return [62, 66, 69, 74, 78, 81].forEach((t, n) => {\n    mixBufferAt(e, synthBellTone(sr, midiToFreq(t), 3), 0.3 + n * 0.3, 0.42, sr), mixBufferAt(e, synthBellTone(sr, midiToFreq(t), 3), 0.75 + n * 0.3, 0.12, sr);\n  }), e;\n}\n/**\n * 死亡提示音：低频下坠、失谐三重奏与炸裂噪声，宣告失败但刻意不刺耳。\n * @module-ref src/audio/library.js\n */"
+ },
+ {
+  "function": "getLabelMaterial",
+  "bytes": 689,
+  "line": 7619,
+  "params": [
+   "ctx",
+   "text",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "n",
+   "o",
+   "s"
+  ],
+  "code": "/**\n * 按文本+字体参数取（并缓存）铭牌材质，失败时退回 paint_white，保证贴图缺失不会打断道具生成\n * @module-ref src/world/backdrop/cranes.js\n */\nfunction getLabelMaterial(ctx, text, opts) {\n  let n = MATERIAL_LOOKUP_CACHE.get(ctx.mats);\n  n || (n = new Map(), MATERIAL_LOOKUP_CACHE.set(ctx.mats, n));\n  let s = 'L|' + text + '|' + JSON.stringify(opts || {});\n  if (!n.has(s)) {\n    let o;\n    try {\n      o = ctx.mats.label(text, opts || {});\n    } catch {\n      o = null;\n    }\n    n.set(s, o && o.material ? o : {\n      material: ctx.mats.get('paint_white'),\n      aspect: Math.max(1, text.length * 0.6)\n    });\n  }\n  return n.get(s);\n}\n/**\n * 按贴花名取（并缓存）贴花材质，同样带 paint_white 兜底\n * @module-ref src/world/backdrop/cranes.js\n */"
+ },
+ {
+  "function": "createShellGeometry",
+  "bytes": 668,
+  "line": 29436,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "n",
+   "s",
+   "t"
+  ],
+  "code": "/**\n * 用车削（LatheGeometry）拼出 5.56 弹壳外形：细颈、锥形壳体与底缘，10 段旋转保低面数\n * @module-ref src/effects/effects.js\n */\nfunction createShellGeometry() {\n  let t = [[0, 0], [0.006076, 0], [0.0062, 0.0012], [0.005083999999999999, 0.0022], [0.005083999999999999, 0.0034], [0.006013999999999999, 0.0046], [0.005889999999999999, 0.036399999999999995], [0.004092, 0.0416], [0.003968, 0.052], [0.003224, 0.052], [0.0031, 0.044719999999999996]],\n    n = new THREE.LatheGeometry(t.map(s => new THREE.Vector2(s[0], s[1] - 0.052 / 2)), 10);\n  return n.computeVertexNormals(), n;\n}\n/**\n * 弹壳池：抛壳物理（重力、四元数角速度积分、反弹两次后侧躺），落地前射线查询表面并发 shell:bounce 事件，静止 4.7 秒后回收\n * @module-ref src/effects/pools.js\n */"
+ },
+ {
+  "function": "addGableEnds",
+  "bytes": 649,
+  "line": 18451,
+  "params": [
+   "L",
+   "Z",
+   "J"
+  ],
+  "shortParams": [
+   "L",
+   "Z",
+   "J"
+  ],
+  "shortLocals": [
+   "I",
+   "J",
+   "L",
+   "R",
+   "Z",
+   "ae",
+   "fe",
+   "le",
+   "oe",
+   "se"
+  ],
+  "code": "function addGableEnds(L, Z, J) {\n  let oe = (fe, le, R) => {\n    let I = new THREE.Shape();\n    if (I.moveTo(-(shedZ1 + 0.05), eaveY - 0.02), I.lineTo(-ridgeZ, ridgeY), I.lineTo(-(shedZ0 - 0.05), eaveY - 0.02), I.closePath(), J) {\n      let ae = new THREE.Path();\n      ae.absarc(-ridgeZ, fanHole.y, fanHole.r, 0, Math.PI * 2, !0), I.holes.push(ae);\n    }\n    let se = new THREE.ExtrudeGeometry(I, {\n      depth: fe,\n      bevelEnabled: !1,\n      curveSegments: 20\n    });\n    se.rotateY(Math.PI / 2), se.translate(L + R, 0, 0), addGeometry(se, le);\n  };\n  oe(0.04, roofOuterMat, Z > 0 ? 0.02 : -0.06), oe(0.03, roofInnerMat, Z > 0 ? -0.13 : 0.1);\n}"
+ },
+ {
+  "function": "createSilentAudioEngine",
+  "bytes": 641,
+  "line": 35480,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "e",
+   "i"
+  ],
+  "code": "/**\n * WebAudio 不可用（或被策略禁用）时的哑引擎：接口齐全但全部空实现，使上层游戏逻辑无需判断音频是否存在。\n * @module-ref src/audio/audio.js\n */\nfunction createSilentAudioEngine() {\n  let i = () => {},\n    e = {\n      setPos: i,\n      setGain: i,\n      setPitch: i,\n      stop: i\n    };\n  return {\n    silent: !0,\n    update: i,\n    resume: i,\n    play: i,\n    loop: () => e,\n    setIntensity: i,\n    setInterior: i,\n    setVolume: i,\n    setPaused: i,\n    debug: () => ({\n      state: 'none'\n    }),\n    names: Object.keys(SFX_RECIPES),\n    ready: Promise.resolve()\n  };\n}\n/**\n * 创建 AudioContext（interactive 延迟模式）并交给真正的引擎装配；构造失败或环境不支持时打印告警并退回哑引擎。\n * @module-ref src/audio/audio.js\n */"
+ },
+ {
+  "function": "addEmitterAt",
+  "bytes": 624,
+  "line": 31178,
+  "params": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z"
+  ],
+  "shortParams": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z"
+  ],
+  "shortLocals": [
+   "B",
+   "J",
+   "L",
+   "P",
+   "V",
+   "Y",
+   "Z",
+   "ee",
+   "oe"
+  ],
+  "code": "function addEmitterAt(ee, B, P, V, Y, L, Z) {\n  let J = null;\n  for (let oe = 0; oe < emitterPool.length; oe++) if (!emitterPool[oe].active) {\n    J = emitterPool[oe];\n    break;\n  }\n  if (!J) return NULL_EMITTER;\n  if (J.active = !0, J.kind = V, J.pos.set(ee, B, P), J.acc = 0, J.acc2 = 0, J.ttl = Y, J.scale = L, J.t = 0, J.drop = -1, J.shade = Z === void 0 ? shadeAt(J.pos, null) : Z, V === 'fire') {\n    let oe = getLightPool();\n    J.light = oe && oe.acquire ? oe.acquire() : null, J.light && (J.light.light.color.set(16747066), J.light.light.distance = 9, J.light.light.position.set(ee, B + 0.5, P));\n  }\n  return J;\n}"
+ },
+ {
+  "function": "synthMechanicalSlide",
+  "bytes": 606,
+  "line": 32313,
+  "params": [
+   "sr",
+   "rand",
+   "seconds",
+   "fromHz",
+   "toHz",
+   "ripple"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "l",
+   "r",
+   "sr",
+   "u"
+  ],
+  "code": "/**\n * 带通噪声扫频加梳状幅度起伏的金属滑动声，作为换弹时弹匣与枪机摩擦的共用底层音色。\n * @module-ref src/audio/library.js\n */\nfunction synthMechanicalSlide(sr, rand, seconds, fromHz, toHz, ripple) {\n  let r = makeWhiteNoise(sr, seconds, rand);\n  applySweptBiquad(r, 'bp', makeExpSweep(fromHz, toHz), 1.6, sr);\n  let a = 0.5,\n    l = 0.5;\n  for (let c = 0; c < r.length; c++) {\n    c % Math.round(sr / ripple) === 0 && (l = 0.25 + rand() * 0.75), a += (l - a) * 0.02;\n    let u = c / r.length;\n    r[c] *= a * Math.sin(Math.PI * Math.pow(u, 0.7));\n  }\n  return r;\n}\n/**\n * 退弹匣：锁扣金属撞击、弹匣滑出与空腔共鸣，让换弹动作听得出阶段。\n * @module-ref src/audio/library.js\n */"
+ },
+ {
+  "function": "addGirtSpanZ",
+  "bytes": 590,
+  "line": 18340,
+  "params": [
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "_",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le"
+  ],
+  "shortLocals": [
+   "I",
+   "J",
+   "L",
+   "R",
+   "Z",
+   "ae",
+   "ce",
+   "fe",
+   "k",
+   "le",
+   "oe",
+   "se"
+  ],
+  "code": "function addGirtSpanZ(L, Z, J, oe, fe, le, R = 0.25, I = 0.45, se = 0.26) {\n  let ae = Math.max(1, Math.floor((le - fe - 0.1) / I));\n  for (let k = 0; k <= ae; k++) {\n    let ce = fe + 0.08 + (le - fe - 0.16) * k / ae;\n    addBox(galvMat, oe - J, 0.018, se, (J + oe) / 2, ce, L - Z * 0.06, {\n      r: [Z * R, 0, 0]\n    });\n  }\n  for (let k of [J + 0.03, oe - 0.03, (J + oe) / 2]) addSlab(galvMat, k - 0.03, fe, L - Z * 0.2, k + 0.03, le, L + Z * 0.06);\n  addSlab(galvMat, J, fe - 0.05, L - Z * 0.2, oe, fe, L + Z * 0.07), addSlab(galvMat, J, le, L - Z * 0.2, oe, le + 0.05, L + Z * 0.07);\n}"
+ },
+ {
+  "function": "addMooringLine",
+  "bytes": 570,
+  "line": 24689,
+  "params": [
+   "$",
+   "ue",
+   "me",
+   "ee"
+  ],
+  "shortParams": [
+   "$",
+   "ue",
+   "me",
+   "ee"
+  ],
+  "shortLocals": [
+   "$",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "ee",
+   "me",
+   "ue"
+  ],
+  "code": "($, ue, me, ee) => {\n  let B = hullPoint($, ue, -1);\n  B.x -= 0.1, addGeom(ropeMat, strutsAlongPath(catenaryPoints(B, me, ee, 12), 0.042, 5));\n  let P = catenaryPoints(B, me, ee, 12)[3],\n    V = catenaryPoints(B, me, ee, 12)[4].clone().sub(P).normalize(),\n    Y = cylinderFromAxis(0.42, 0.42, 0.012, 'y', 0, 0, 0, 12);\n  Y.applyQuaternion(new THREE.Quaternion().setFromUnitVectors(newVec3(0, 1, 0), V)), Y.translate(P.x, P.y, P.z), addGeom(galvMat, Y), addGeom(darkSteelMat, boxFromBounds(B.x - 0.12, B.y - 0.28, B.z - 0.35, B.x + 0.12, B.y + 0.28, B.z + 0.35, 0.05));\n}"
+ },
+ {
+  "function": "tintAt",
+  "bytes": 545,
+  "line": 25080,
+  "params": [
+   "D",
+   "C",
+   "G",
+   "j",
+   "_"
+  ],
+  "shortParams": [
+   "D",
+   "C",
+   "G",
+   "j"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "X",
+   "ie",
+   "j",
+   "ne",
+   "re"
+  ],
+  "code": "function tintAt(D, C, G, j, N = 1) {\n  let Q = valueNoise3(C * 0.23 + 1.3, G * 0.31, j * 0.23 + 7.7),\n    K = valueNoise3(C * 1.9 + 4.1, 2.2, j * 1.9 + 9.3),\n    ie = N * (0.56 + 0.52 * Q) * (0.62 + 0.38 * _b(0, 5, G)),\n    F = D[0] * ie,\n    X = D[1] * ie,\n    ne = D[2] * ie;\n  if (K > 0.62) {\n    let re = Math.min(1, (K - 0.62) / 0.3) * 0.55;\n    F = F * (1 - re) + 0.3 * re * ie, X = X * (1 - re) + 0.15 * re * ie, ne = ne * (1 - re) + 0.08 * re * ie;\n  }\n  return scratchTint[0] = F, scratchTint[1] = X, scratchTint[2] = ne, scratchTint;\n}"
+ },
+ {
+  "function": "buildCanvasDecal",
+  "bytes": 520,
+  "line": 4202,
+  "params": [
+   "v",
+   "g",
+   "x",
+   "y",
+   "_"
+  ],
+  "shortParams": [
+   "v",
+   "g",
+   "x",
+   "y"
+  ],
+  "shortLocals": [
+   "A",
+   "M",
+   "_",
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ],
+  "code": "function buildCanvasDecal(v, g, x, y, b = {}) {\n  let m = createCanvas(g, x),\n    A = m.getContext('2d'),\n    _ = () => {\n      A.setTransform(1, 0, 0, 1, 0, 0), A.clearRect(0, 0, g, x), A.globalAlpha = 1, A.globalCompositeOperation = 'source-over', b.bleed && (A.fillStyle = toRgba(b.bleed, 0.012), A.fillRect(0, 0, g, x)), y(A, g, x, createSeededRandom(hashString(v) + 17));\n    };\n  _();\n  let M = makeDecalMaterial(m, b);\n  return b.text && fontRefreshers.push(() => {\n    _(), M.texture.needsUpdate = !0;\n  }), M;\n}"
+ },
+ {
+  "function": "emitStreak",
+  "bytes": 507,
+  "line": 29998,
+  "params": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "R"
+  ],
+  "shortParams": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "R"
+  ],
+  "shortLocals": [
+   "B",
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "Y",
+   "Z",
+   "ee",
+   "fe",
+   "le",
+   "oe"
+  ],
+  "code": "function emitStreak(ee, B, P, V, Y, L, Z, J, oe, fe, le, R) {\n  let I = unlitEmitter.emit(ee, B, P, V, Y, L, Z, J, J * 0.5);\n  return I < 0 ? -1 : (unlitEmitter.mode[I] = 1, unlitEmitter.frame[I] = SPARK_CELL_STREAK, unlitEmitter.stretch[I] = 0.03, unlitEmitter.grav[I] = 9.81, unlitEmitter.drag[I] = 0.9, unlitEmitter.ramp[I] = 1, unlitEmitter.r[I] = oe * 0.6, unlitEmitter.g[I] = fe * 0.6, unlitEmitter.b[I] = le * 0.6, unlitEmitter.fout[I] = 0.55, unlitEmitter.flags[I] = R, unlitEmitter.sk[I] = 1, I);\n}"
+ },
+ {
+  "function": "makePitchGlide",
+  "bytes": 501,
+  "line": 31940,
+  "params": [
+   "sr",
+   "seconds",
+   "fromHz",
+   "toHz",
+   "_"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "l",
+   "o",
+   "r",
+   "s",
+   "sr"
+  ],
+  "code": "/**\n * 带指数滑音的正弦（可加正弦窗），用于哨音、掠弹、金属余音这类音高变化明显的短音。\n * @module-ref src/audio/synthesis.js\n */\nfunction makePitchGlide(sr, seconds, fromHz, toHz, s = !0) {\n  let o = allocSamples(sr, seconds),\n    r = 0,\n    a = o.length;\n  for (let l = 0; l < a; l++) {\n    let c = l / a;\n    r += TAU * fromHz * Math.pow(toHz / fromHz, c) / sr, o[l] = Math.sin(r) * (s ? Math.sin(Math.PI * c) : 1);\n  }\n  return o;\n}\n/**\n * 模态共振合成：把 [频率, 衰减, 幅度] 列表叠成指数衰减的正弦簇，模拟金属板、墙面、木箱等物体的固有振动。\n * @module-ref src/audio/synthesis.js\n */"
+ },
+ {
+  "function": "addRoundedBox",
+  "bytes": 481,
+  "line": 19468,
+  "params": [
+   "ctx",
+   "parent",
+   "mat",
+   "w",
+   "s",
+   "d",
+   "x",
+   "y",
+   "z",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "w",
+   "s",
+   "d",
+   "x",
+   "y",
+   "z"
+  ],
+  "shortLocals": [
+   "c",
+   "d",
+   "h",
+   "s",
+   "u",
+   "w",
+   "x",
+   "y",
+   "z"
+  ],
+  "code": "/**\n * 往父节点上挂一块可倒圆角的板件；墙板、柱脚、横梁、小箱件全用它拼，倒角参数统一由调用方给\n * @module-ref src/effects/effects.js\n */\nfunction addRoundedBox(ctx, parent, mat, w, s, d, x, y, z, c = 0, u = null) {\n  let h = createShadowMesh(c ? beveledBoxGeometry(w, s, d, c) : boxGeometry(w, s, d), typeof mat == 'string' ? ctx.M(mat) : mat);\n  return h.position.set(x, y, z), u && h.rotation.set(u[0], u[1], u[2]), parent.add(h), h;\n}\n/**\n * 往父节点上挂一根圆柱（管、杆、罐体、轮盘），统一处理分段数、旋转与轴向对齐\n * @module-ref src/effects/effects.js\n */"
+ },
+ {
+  "function": "readAdaptation",
+  "bytes": 480,
+  "line": 2560,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "fe",
+   "oe"
+  ],
+  "code": "function readAdaptation() {\n  try {\n    renderer.readRenderTargetPixels(y.adapt[adaptIndex], 0, 0, 1, 1, readbackPixel);\n    let oe = THREE.DataUtils.fromHalfFloat(readbackPixel[0]),\n      fe = Math.min(TUNE.maxExposure, Math.max(TUNE.minExposure, Math.pow(TUNE.key / Math.max(oe, 1e-4), 0.85)));\n    return {\n      lum: +oe.toFixed(4),\n      auto: +fe.toFixed(3),\n      sunVis: +THREE.DataUtils.fromHalfFloat(readbackPixel[1]).toFixed(2)\n    };\n  } catch {\n    return null;\n  }\n}"
+ },
+ {
+  "function": "buildPlateX",
+  "bytes": 452,
+  "line": 38303,
+  "params": [
+   "points",
+   "zStart",
+   "zEnd",
+   "bevel",
+   "tint",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "o",
+   "r"
+  ],
+  "code": "/**\n * 沿 X 轴方向挤出的侧板（外形轮廓在 YZ 面），挤出后转 90 度对齐机匣侧面\n * @module-ref src/core/geometry.js\n */\nfunction buildPlateX(points, zStart, zEnd, bevel, tint, o = 0, r = null) {\n  let a = extrudeShape(points, zEnd - zStart, bevel, r);\n  return applyVertexShading(a, tint, o, isLateralNormal), flattenCapNormals(a), a.translate(0, 0, zStart + bevel), a.rotateY(Math.PI / 2), a;\n}\n/**\n * 沿 Z 轴（枪管方向）挤出的顶板/导轨齿，是 buildPlateX 的未旋转版本\n * @module-ref src/core/geometry.js\n */"
+ },
+ {
+  "function": "buildPlateZ",
+  "bytes": 452,
+  "line": 38317,
+  "params": [
+   "points",
+   "zStart",
+   "zEnd",
+   "bevel",
+   "tint",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "o",
+   "r"
+  ],
+  "code": "/**\n * 沿 Z 轴（枪管方向）挤出的顶板/导轨齿，是 buildPlateX 的未旋转版本\n * @module-ref src/core/geometry.js\n */\nfunction buildPlateZ(points, zStart, zEnd, bevel, tint, o = 0, r = null) {\n  let a = extrudeShape(points, zEnd - zStart, bevel, r);\n  return applyVertexShading(a, tint, o, isLateralNormal), flattenCapNormals(a), a.translate(0, 0, -zEnd + bevel), a;\n}\n/**\n * 把二维半径/轴向截面绕 Z 轴旋成回转体，逐段生成圆环与索引，可带中心偏移和自定义顶点色回调，枪管、弹匣、握把等圆柱件都走它\n * @module-ref src/weapons/geometry.js\n */"
+ },
+ {
+  "function": "paintColorFn",
+  "bytes": 441,
+  "line": 7839,
+  "params": [
+   "$",
+   "ue",
+   "me"
+  ],
+  "shortParams": [
+   "$",
+   "ue",
+   "me"
+  ],
+  "shortLocals": [
+   "$",
+   "B",
+   "P",
+   "ee",
+   "me",
+   "ue"
+  ],
+  "code": "($, ue, me) => {\n  let ee = 1 + (valueNoise2D($ * 0.9 + noiseSeed, ue * 1.7 + me * 0.4) - 0.5) * 0.16 * (0.5 + wear);\n  ee *= 0.94 + 0.06 * valueNoise2D($ * 6.1 + me * 3.3, ue * 5 + noiseSeed);\n  let B = [ee, ee, ee],\n    P = smoothstepRange(0.62, 0.02, ue) * (0.45 + 0.5 * wear) * (0.75 + 0.5 * valueNoise2D($ * 2.3 + me, noiseSeed));\n  return B = lerpVec3(B, [baseColor[0] * ee, baseColor[1] * ee, baseColor[2] * ee], Math.min(1, P)), B;\n}"
+ },
+ {
+  "function": "groundSurface",
+  "bytes": 432,
+  "line": 37750,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "F",
+   "X"
+  ],
+  "code": "function groundSurface() {\n  let F = player.pos.x,\n    X = player.pos.z;\n  try {\n    if (ctx.ground && ctx.ground.isPuddle && player.pos.y < 0.05 && ctx.ground.isPuddle(F, X)) return 'water';\n  } catch {}\n  if (surface && surface !== 'concrete') return surface;\n  try {\n    return ctx.level && ctx.level.groundSurfaceAt && ctx.level.groundSurfaceAt(F, X) || surface || 'concrete';\n  } catch {\n    return surface || 'concrete';\n  }\n}"
+ },
+ {
+  "function": "heapPop",
+  "bytes": 409,
+  "line": 6833,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "E",
+   "M",
+   "S",
+   "_",
+   "w",
+   "z"
+  ],
+  "code": "function heapPop() {\n  let _ = heapNode[0],\n    M = heapNode.pop(),\n    E = heapCost.pop(),\n    w = heapNode.length;\n  if (w) {\n    let S = 0;\n    for (;;) {\n      let z = 2 * S + 1;\n      if (z >= w || (z + 1 < w && heapCost[z + 1] < heapCost[z] && z++, heapCost[z] >= E)) break;\n      heapNode[S] = heapNode[z], heapCost[S] = heapCost[z], S = z;\n    }\n    heapNode[S] = M, heapCost[S] = E;\n  }\n  return _;\n}"
+ },
+ {
+  "function": "createPlaneGeometryWorldUV",
+  "bytes": 408,
+  "line": 7375,
+  "params": [
+   "width",
+   "height"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "n",
+   "s",
+   "t"
+  ],
+  "code": "/**\n * UV 按世界尺寸缩放的平面：让警示条纹、锈迹贴图在任意大小的面上保持同一物理密度，而不是被拉伸\n * @module-ref src/core/geometry.js\n */\nfunction createPlaneGeometryWorldUV(width, height) {\n  let t = new THREE.PlaneGeometry(width, height),\n    n = t.attributes.uv;\n  for (let s = 0; s < n.count; s++) n.setXY(s, n.getX(s) * width, n.getY(s) * height);\n  return t;\n}\n/**\n * 去索引并重算法线，得到硬边平面着色；用于需要棱角分明的机械件（法兰、垫块）\n * @module-ref src/core/geometry.js\n */"
+ }
+]

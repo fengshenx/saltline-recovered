@@ -1,0 +1,56 @@
+{
+  "buildContainerShip": {
+    "R": "hatchSideBoxGeo",
+    "ie": "addMooringLine"
+  },
+  "buildPac9Geometry": {
+    "$": "slotIdx",
+    "ue": "guardSlotZ"
+  },
+  "createHUD": {
+    "Be": "cueText",
+    "Fe": "headingDeg",
+    "Ie": "lowAmmo",
+    "Me": "isHurt",
+    "Ne": "magSize",
+    "Os": "markerScreenX",
+    "Re": "tapeOffsetPx",
+    "Rs": "markerLayoutKey",
+    "Ti": "isOffscreen",
+    "We": "crosshairVisible",
+    "Xe": "healthInt",
+    "bt": "markerPxOffset",
+    "dt": "ammoCount",
+    "ho": "nearCenterDim",
+    "ne": "pipEls",
+    "nn": "relBearingDeg",
+    "pn": "markerScreenY",
+    "ut": "distanceM",
+    "xe": "reserveCount",
+    "ze": "marksVisible",
+    "zo": "overflowScale"
+  },
+  "buildGuardBooth": {
+    "C": "mullionIdx",
+    "D": "mullionCount",
+    "T": "segEndX",
+    "e": "boothOpts"
+  },
+  "buildQuayApron": {},
+  "buildTarpCargo": {
+    "$": "vertexZ",
+    "B": "skirtStepIdx",
+    "J": "skirtX",
+    "L": "hemDrift",
+    "P": "stepT",
+    "V": "hemY",
+    "Y": "ribBulge",
+    "Z": "outwardOffset",
+    "ee": "ripplePhase",
+    "fe": "hemDrop",
+    "me": "hemBottomY",
+    "oe": "skirtZ",
+    "re": "vertexY",
+    "w": "vertexIndexAt"
+  }
+}

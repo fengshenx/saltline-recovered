@@ -1,0 +1,1337 @@
+[
+ {
+  "function": "update",
+  "bytes": 5186,
+  "line": 37768,
+  "params": [
+   "F"
+  ],
+  "shortParams": [
+   "F"
+  ],
+  "shortLocals": [
+   "B",
+   "F",
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "X",
+   "Y",
+   "Z",
+   "ae",
+   "ce",
+   "ee",
+   "fe",
+   "k",
+   "le",
+   "me",
+   "ne",
+   "oe",
+   "re",
+   "se",
+   "ue"
+  ],
+  "code": "() => {\n  let h = app.render.post,\n    f = Math.round(app.camera.position.y * 1e3) % 10;\n  h.damage = f === 1 ? 0.8 : 0, h.lowHealth = f === 2 ? 0.85 : 0, h.ads = f === 3 ? 1 : 0, h.flash = f === 4 ? 0.35 : 0, h.fade = f === 5 ? 0.5 : 0;\n}"
+ },
+ {
+  "function": "createRainSystem",
+  "bytes": 4521,
+  "line": 27418,
+  "params": [
+   "game",
+   "tex"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "H",
+   "O",
+   "S",
+   "q",
+   "w",
+   "z"
+  ],
+  "code": "/**\n * 创建雨丝与溅水两套加色实例网格及材质，按室内盒体、天窗开口与积水掩膜控制可见性，随画质缩放实例数，并定时发 thunder 事件驱动雷声与闪电\n * @module-ref src/world/ground/water.js\n */\nfunction createRainSystem(game, tex) {\n  let rng = game.rng && game.rng.fork ? game.rng.fork() : Math.random,\n    rainQuality = Math.max(0.15, game.quality.rain || 0.5),\n    streakCount = Math.round(9e3 * rainQuality),\n    dripCount = 260,\n    splashCount = Math.round(900 * rainQuality),\n    boxMin = [0, 1, 2, 3].map(() => new THREE.Vector3()),\n    boxMax = [0, 1, 2, 3].map(() => new THREE.Vector3()),\n    sunColor = SUN.color.clone().multiplyScalar(1.9),\n    ambColor = SKY_COLORS.fog.clone().multiplyScalar(0.15),\n    baseUniforms = {\n      uTime: {\n        value: 0\n      },\n      uRain: {\n        value: 0.6\n      },\n      uBoxMin: {\n        value: boxMin\n      },\n      uBoxMax: {\n        value: boxMax\n      },\n      uSunDir: {\n        value: SUN.dir.clone()\n      },\n      uSunCol: {\n        value: sunColor\n      },\n      uAmb: {\n        value: ambColor\n      }\n    },\n    skylights = [0, 1, 2, 3, 4, 5, 6, 7].map(() => new THREE.Vector4(0, 0, -1, -1)),\n    streakUniforms = {\n      ...baseUniforms,\n      uSky: {\n        value: skylights\n      },\n      uPix: {\n        value: 0.002\n      },\n      uDrip: {\n        value: 0\n      },\n      uVel: {\n        value: new THREE.Vector3(-2.6, -9.4, 1.1)\n      },\n      uBox: {\n        value: new THREE.Vector3(26, 15, 26)\n      }\n    },\n    streakMaterial = new THREE.ShaderMaterial({\n      uniforms: streakUniforms,\n      vertexShader: RAIN_STREAK_VERT,\n      fragmentShader: RAIN_STREAK_FRAG,\n      transparent: !0,\n      depthWrite: !1,\n      blending: THREE.AdditiveBlending,\n      side: THREE.DoubleSide,\n      fog: !1\n    }),\n    streakMesh = new THREE.Mesh(createRainInstanceGeometry(streakCount, dripCount, rng), streakMaterial);\n  streakMesh.frustumCulled = !1, streakMesh.renderOrder = 900, streakMesh.name = 'rain', streakMesh.matrixAutoUpdate = !1, streakMesh.castShadow = streakMesh.receiveShadow = !1;\n  let splashUniforms = {\n      ...baseUniforms,\n      uMask: {\n        value: tex.mask\n      },\n      uMaskRect: {\n        value: new THREE.Vector3(TERRAIN_BOUNDS.x0, TERRAIN_BOUNDS.z0, 1 / TERRAIN_BOUNDS.size)\n      }\n    },\n    splashMaterial = new THREE.ShaderMaterial({\n      uniforms: splashUniforms,\n      vertexShader: RAIN_SPLASH_VERT,\n      fragmentShader: RAIN_SPLASH_FRAG,\n      transparent: !0,\n      depthWrite: !1,\n      blending: THREE.AdditiveBlending,\n      side: THREE.DoubleSide,\n      fog: !1\n    }),\n    splashMesh = new THREE.Mesh(createRainInstanceGeometry(splashCount, 0, rng), splashMaterial);\n  splashMesh.frustumCulled = !1, splashMesh.renderOrder = 890, splashMesh.name = 'rainSplash', splashMesh.matrixAutoUpdate = !1;\n  let rainLevel = 0.6,\n    targetLevel = 0.6,\n    thunderIn = 22 + rng() * 25,\n    time = 0,\n    bufferSize = new THREE.Vector2();\n  return {\n    rain: streakMesh,\n    splash: splashMesh,\n    wind: streakUniforms.uVel.value,\n    setRain(w) {\n      targetLevel = Math.min(1, Math.max(0, w));\n    },\n    get rainLevel() {\n      return rainLevel;\n    },\n    update(w) {\n      time += w, rainLevel += (targetLevel - rainLevel) * Math.min(1, w * 0.8), baseUniforms.uTime.value = time, baseUniforms.uRain.value = rainLevel, streakMesh.visible = splashMesh.visible = rainLevel > 0.01;\n      let S = game.camera;\n      if (S) {\n        let O = game.render && game.render.resolution;\n        O && O.x > 8 ? bufferSize.copy(O) : game.renderer.getDrawingBufferSize(bufferSize), streakUniforms.uPix.value = 2 * Math.tan(S.fov * Math.PI / 360) / Math.max(1, bufferSize.y);\n      }\n      let z = game.level && game.level.interiorBoxes || [];\n      for (let O = 0; O < 4; O++) {\n        let q = z[O];\n        q && q.min && q.max ? (boxMin[O].set(q.min.x - 0.15, q.min.y - 1, q.min.z - 0.15), boxMax[O].set(q.max.x + 0.15, q.max.y + 0.3, q.max.z + 0.15)) : (boxMin[O].set(0, 0, 0), boxMax[O].set(0, 0, 0));\n      }\n      streakUniforms.uDrip.value = z.length ? 1 : 0;\n      let H = game.level && game.level.skylights || [];\n      for (let O = 0; O < 8; O++) {\n        let q = H[O];\n        q && q.w > 0 ? skylights[O].set(q.x, q.z, q.w * 0.5, (q.d || q.w) * 0.5) : skylights[O].set(0, 0, -1, -1);\n      }\n      thunderIn -= w, thunderIn <= 0 && (thunderIn = 30 + rng() * 30, game.events.emit('thunder', {\n        intensity: 0.3 + 0.7 * rng()\n      }));\n    }\n  };\n}\n/**\n * 装配整套地面系统（标线、积水掩膜、细节图与法线图、湿滑停机坪、海面、雨、平面反射 prepass），并暴露海水高度、积水深度、湿度查询与雨量设置 API\n * @module-ref src/world/ground/ground.js\n */"
+ },
+ {
+  "function": "buildLabelAtlas",
+  "bytes": 3989,
+  "line": 17981,
+  "params": [
+   "root",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "H",
+   "M",
+   "S",
+   "_",
+   "b",
+   "e",
+   "m",
+   "t",
+   "w",
+   "z"
+  ],
+  "code": "/**\n * 把场景里所有 name='label' 的铭牌贴图重排进一张 canvas 图集并改写各网格 UV，把几十次铭牌绘制压成一次；失败时返回空句柄让调用方静默跳过\n * @module-ref src/world/level/buildings.js\n */\nfunction buildLabelAtlas(root, {\n  scale: e = 0.5,\n  maxW: t = 2048\n} = {}) {\n  let fallback = {\n    count: 0,\n    material: null,\n    update() {}\n  };\n  if (typeof document > 'u') return fallback;\n  let byMaterial = new Map();\n  if (root.traverse(b => {\n    if (!b.isMesh || Array.isArray(b.material)) return;\n    let m = b.material;\n    if (!m || m.name !== 'label' || !m.map || !m.map.image || !m.map.image.width) return;\n    let A = b,\n      _ = !1;\n    for (; A;) {\n      if (A.userData && A.userData.noMerge) {\n        _ = !0;\n        break;\n      }\n      A = A.parent;\n    }\n    _ || (byMaterial.has(m) || byMaterial.set(m, []), byMaterial.get(m).push(b));\n  }), byMaterial.size < 2) return fallback;\n  let entries = [...byMaterial.keys()].map(b => {\n    let m = b.map.image;\n    return {\n      m: b,\n      img: m,\n      w: Math.max(4, Math.ceil(m.width * e)),\n      h: Math.max(4, Math.ceil(m.height * e))\n    };\n  });\n  entries.sort((b, m) => m.h - b.h || m.w - b.w);\n  let cursorX = 0,\n    cursorY = 0,\n    rowHeight = 0;\n  for (let b of entries) {\n    let m = Math.min(b.w, t - 2 * LABEL_ATLAS_GUTTER);\n    m < b.w && (b.h = Math.max(4, Math.round(b.h * m / b.w)), b.w = m), cursorX + b.w + 2 * LABEL_ATLAS_GUTTER > t && (cursorX = 0, cursorY += rowHeight, rowHeight = 0), b.x = cursorX + LABEL_ATLAS_GUTTER, b.y = cursorY + LABEL_ATLAS_GUTTER, cursorX += b.w + 2 * LABEL_ATLAS_GUTTER, rowHeight = Math.max(rowHeight, b.h + 2 * LABEL_ATLAS_GUTTER);\n  }\n  let atlasWidth = t,\n    atlasHeight = THREE.MathUtils.ceilPowerOfTwo(Math.max(16, cursorY + rowHeight));\n  if (atlasHeight > 4096) return fallback;\n  let canvas = document.createElement('canvas');\n  canvas.width = atlasWidth, canvas.height = atlasHeight;\n  let ctx2d = canvas.getContext('2d'),\n    repaint = () => {\n      ctx2d.setTransform(1, 0, 0, 1, 0, 0), ctx2d.globalAlpha = 1, ctx2d.globalCompositeOperation = 'source-over', ctx2d.clearRect(0, 0, atlasWidth, atlasHeight);\n      for (let b of entries) ctx2d.drawImage(b.img, b.x - LABEL_ATLAS_GUTTER, b.y - LABEL_ATLAS_GUTTER, b.w + 2 * LABEL_ATLAS_GUTTER, b.h + 2 * LABEL_ATLAS_GUTTER), ctx2d.clearRect(b.x, b.y, b.w, b.h), ctx2d.drawImage(b.img, b.x, b.y, b.w, b.h), b.version = b.m.map.version;\n    };\n  repaint();\n  let baseMaterial = entries[0].m,\n    atlasTexture = new THREE.CanvasTexture(canvas);\n  atlasTexture.colorSpace = baseMaterial.map.colorSpace, atlasTexture.anisotropy = baseMaterial.map.anisotropy, atlasTexture.generateMipmaps = !0, atlasTexture.minFilter = THREE.LinearMipmapLinearFilter;\n  let atlasMaterial = baseMaterial.clone();\n  atlasMaterial.map = atlasTexture, atlasMaterial.name = 'label_atlas';\n  let geometryCache = new Map();\n  for (let b of entries) {\n    let m = b.x / atlasWidth,\n      A = (b.x + b.w) / atlasWidth,\n      _ = 1 - b.y / atlasHeight,\n      M = 1 - (b.y + b.h) / atlasHeight;\n    for (let E of byMaterial.get(b.m)) {\n      let w = E.geometry.uuid + '|' + b.m.uuid,\n        S = geometryCache.get(w);\n      if (!S) {\n        S = E.geometry.clone();\n        let z = S.attributes.uv;\n        if (z) {\n          for (let H = 0; H < z.count; H++) z.setXY(H, m + THREE.MathUtils.clamp(z.getX(H), 0, 1) * (A - m), M + THREE.MathUtils.clamp(z.getY(H), 0, 1) * (_ - M));\n          z.needsUpdate = !0;\n        }\n        geometryCache.set(w, S);\n      }\n      E.geometry = S, E.material = atlasMaterial;\n    }\n  }\n  let elapsed = 0;\n  return {\n    count: entries.length,\n    material: atlasMaterial,\n    size: [atlasWidth, atlasHeight],\n    update(b) {\n      if (!(elapsed > 8)) {\n        elapsed += b;\n        for (let m of entries) if (m.m.map.version !== m.version) {\n          repaint(), atlasTexture.needsUpdate = !0;\n          break;\n        }\n      }\n    }\n  };\n}\n/**\n * 修理车间（BERTH 4 WORKSHOP）的平面与剖面尺寸：墙体 x/z 范围、檐口与屋脊高度、屋脊 z、地坪厚度，整栋建筑的唯一定义源\n * @module-ref src/world/level/buildings.js\n */"
+ },
+ {
+  "function": "placeGateArea",
+  "bytes": 3778,
+  "line": 20755,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "c",
+   "d",
+   "f",
+   "g",
+   "h",
+   "m",
+   "p",
+   "u",
+   "v",
+   "x",
+   "y"
+  ],
+  "code": "/**\n * 大门与围栏区布置：铁丝网围栏（带门洞）、道闸、门卫房、隔离墩与指示牌\n * @module-ref src/world/level/placement.js\n */\nfunction placeGateArea(ctx) {\n  let placeProp = ctx.place,\n    fenceX = -38,\n    fenceXMax = 30,\n    zSouth = -30,\n    zNorth = 28,\n    gateZ0 = 2,\n    gateZ1 = 8;\n  function fenceRun(c, u, h, f, p) {\n    let d = Math.hypot(h - c, f - u),\n      v = Math.max(1, Math.round(d / 3.35)),\n      g = d / (v * 3),\n      x = Math.abs(h - c) > Math.abs(f - u);\n    for (let y = 0; y < v; y++) {\n      let b = (y + 0.5) / v,\n        m = placeProp('fence_panel', c + (h - c) * b, u + (f - u) * b, x ? 0 : ts, {\n          seed: p + y,\n          posts: y === v - 1 ? 'both' : 'left'\n        }, 0, {\n          noCol: !0\n        });\n      m.scale.x = g;\n    }\n    ctx.col(Math.min(c, h) - 0.05, 0, Math.min(u, f) - 0.05, Math.max(c, h) + 0.05, 2.4, Math.max(u, f) + 0.05, 'metal'), ctx.col(Math.min(c, h) - 0.3, 0, Math.min(u, f) - 0.3, Math.max(c, h) + 0.3, 7, Math.max(u, f) + 0.3, 'metal', {\n      playerOnly: !0\n    });\n  }\n  fenceRun(fenceX, zSouth, fenceXMax, zSouth, 100), fenceRun(fenceX, zNorth, fenceXMax, zNorth, 200), fenceRun(fenceX, zSouth, fenceX, gateZ0, 300), fenceRun(fenceX, gateZ1, fenceX, zNorth, 400);\n  for (let c of [gateZ0 - 0.1, gateZ1 + 0.1]) ctx.box('steel_dark', 0.22, 3.4, 0.22, fenceX, 1.7, c, {\n    bevel: 0.02\n  }), ctx.box('hazard_stripes', 0.26, 1.2, 0.26, fenceX, 0.6, c, {\n    bevel: 0.02\n  }), ctx.col(fenceX - 0.13, 0, c - 0.13, fenceX + 0.13, 3.4, c + 0.13, 'metal');\n  {\n    let c = gateZ1 + 3.3,\n      u = fenceX + 0.28;\n    ctx.box('chainlink', 0.012, 2.1, 6, u, 1.25, c);\n    for (let h of [c - 3, c, c + 3]) ctx.box('steel_galv', 0.06, 2.2, 0.06, u, 1.25, h);\n    for (let h of [0.18, 2.32, 1.25]) ctx.box('steel_galv', 0.06, 0.06, 6.06, u, h, c);\n    ctx.rod('steel_galv', [u, 0.2, c - 3], [u, 2.3, c], 0.018), ctx.rod('steel_galv', [u, 0.2, c + 3], [u, 2.3, c], 0.018), ctx.slab('steel_dark', u - 0.05, 0, gateZ0 - 0.3, u + 0.05, 0.03, c + 3.2, {\n      cast: !1\n    });\n    for (let h of [c - 2.4, c + 2.4]) ctx.cyl('rubber', 0.09, 0.05, u, 0.1, h, {\n      axis: 'x',\n      seg: 10\n    });\n  }\n  ctx.col(fenceX - 0.4, 0, gateZ0, fenceX - 0.1, 7, gateZ1, 'metal', {\n    playerOnly: !0\n  }), placeProp('guard_booth', -35.2, 0.35, 0, {\n    seed: 1\n  }), placeProp('gate_arm', -36.3, 5, ts, {\n    seed: 2\n  });\n  for (let [c, u] of [[-37, 1.75], [-34.4, 2.3], [-37, 8.3], [-35.6, 8.9], [-34.4, 9.9], [-33.5, -1.1]]) placeProp('bollard_post', c, u, 0, {\n    seed: Math.round(c * 11 + u * 7)\n  });\n  placeProp('jersey_barrier', -34.7, 3.75, ts + 0.08, {\n    seed: 3\n  }), placeProp('jersey_barrier', -33.3, 8.3, ts - 0.06, {\n    seed: 4\n  }), placeProp('jersey_barrier', -30.6, 10.4, 0.03, {\n    seed: 5\n  }), placeProp('jersey_barrier', -27.3, 1.45, 0.05, {\n    seed: 6\n  }), placeProp('jersey_barrier', -32.2, 1.45, -0.04, {\n    seed: 7\n  }), placeProp('sign_post', -33.2, 9.6, ts, {\n    seed: 8,\n    sign: 'no_entry'\n  }), placeProp('sign_post', -25.3, 1.1, ts, {\n    seed: 9,\n    sign: 'berth4'\n  }), placeProp('sign_post', -36.6, -1.6, ts, {\n    seed: 10,\n    sign: 'hazard_general'\n  });\n  for (let [c, u] of [[-34.6, 5.6], [-28.3, 2], [-33.2, 6.5], [-26.6, 9.8], [-31.8, 9.9]]) placeProp('traffic_cone', c, u, 0, {\n    seed: Math.round(c * 5 + u * 3)\n  });\n  placeProp('light_mast', -27.6, -0.9, 0, {\n    seed: 11\n  }), placeProp('light_mast', -36.3, 12.4, 0, {\n    seed: 12\n  }), placeProp('barrel', -33.9, 2, 0, {\n    seed: 13,\n    color: 'yellow'\n  }), placeProp('pallet_stack', -36.4, 10.3, 0.2, {\n    seed: 14\n  }), ctx.decal('no_entry', 0.7, fenceX + 0.34, 1.5, gateZ1 + 3.3, 'x+'), ctx.decal('arrow', 2.2, -30.5, 0.006, 6, 'y+', 0);\n}\n/**\n * 装配整张关卡：建建筑/码头/堆场，合并静态网格、换合批材质、建标签图集，产出出生点、任务点、敌人刷新点、分区、掩体与演出数据\n * @module-ref src/world/level/level.js\n */"
+ },
+ {
+  "function": "createCombat",
+  "bytes": 3066,
+  "line": 38034,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "e",
+   "f",
+   "h",
+   "l",
+   "n",
+   "o",
+   "r",
+   "s",
+   "u"
+  ],
+  "code": "/**\n * 命中判定服务：玩家/敌人射击都走同一条射线，先打敌人骨骼盒再落到场景，负责弱点倍率、弹着点事件与爆炸范围伤害，保证敌我两套伤害口径一致\n * @module-ref src/combat/combat.js\n */\nfunction createCombat(ctx) {\n  let e = {\n    shots: 0,\n    hits: 0,\n    kills: 0\n  };\n  return ctx.events.on('enemy:killed', () => {\n    e.kills++;\n  }), {\n    stats: e,\n    reset() {\n      e.shots = e.hits = e.kills = 0;\n    },\n    playerShot(n, s, {\n      damage: o = 28,\n      range: r = 300,\n      impulse: a = 1\n    } = {}) {\n      e.shots++;\n      let l = ctx.physics.raycast(n, s, r),\n        c = ctx.enemies.raycast(n, s, l ? l.dist : r);\n      if (c) {\n        e.hits++;\n        let u = c.part === 'weak' ? 2.2 : 1,\n          h = c.enemy.damage(o * u, c.point, s, c.part) === !0,\n          f = {\n            point: c.point,\n            normal: c.normal || s.clone().negate(),\n            dist: c.dist,\n            surface: 'enemy',\n            enemy: c.enemy,\n            part: c.part,\n            dir: s,\n            from: 'player',\n            killed: h\n          };\n        return ctx.events.emit('impact', f), ctx.events.emit('player:hitEnemy', {\n          enemy: c.enemy,\n          part: c.part,\n          killed: h,\n          weak: c.part === 'weak'\n        }), f;\n      }\n      if (l) {\n        let u = {\n          point: l.point,\n          normal: l.normal,\n          dist: l.dist,\n          surface: l.surface,\n          enemy: null,\n          dir: s,\n          from: 'player'\n        };\n        return ctx.events.emit('impact', u), u;\n      }\n      return null;\n    },\n    enemyShot(n, s, {\n      damage: o = 6,\n      range: r = 200\n    } = {}) {\n      let a = ctx.physics.raycast(n, s, r),\n        l = a ? a.dist : r,\n        c = ctx.player;\n      if (c && c.alive) {\n        let u = COMBAT_SCRATCH_POINT.copy(c.pos);\n        u.y += 1;\n        let h = u.sub(n).dot(s);\n        if (h > 0 && h < l) {\n          COMBAT_SCRATCH_DIR.copy(n).addScaledVector(s, h);\n          let f = Math.abs(COMBAT_SCRATCH_DIR.y - (c.pos.y + 0.95));\n          if (Math.hypot(COMBAT_SCRATCH_DIR.x - c.pos.x, COMBAT_SCRATCH_DIR.z - c.pos.z) < 0.38 && f < 0.95) return c.damage(o, n), !0;\n        }\n      }\n      return a && ctx.events.emit('impact', {\n        point: a.point,\n        normal: a.normal,\n        dist: a.dist,\n        surface: a.surface,\n        enemy: null,\n        dir: s,\n        from: 'enemy'\n      }), !1;\n    },\n    explode(n, s = 5, o = 80, r = 'player') {\n      for (let l of ctx.enemies.list) {\n        if (!l.alive) continue;\n        let c = l.pos.distanceTo(n);\n        c < s && ctx.physics.lineOfSight(n, COMBAT_SCRATCH_POINT.copy(l.pos).setY(l.pos.y + 0.5)) && l.damage(o * (1 - c / s), l.pos, COMBAT_SCRATCH_DIR.copy(l.pos).sub(n).normalize(), 'body');\n      }\n      let a = ctx.player;\n      if (a && a.alive) {\n        let l = COMBAT_SCRATCH_POINT.copy(a.pos).setY(a.pos.y + 1).distanceTo(n);\n        l < s && ctx.physics.lineOfSight(n, COMBAT_SCRATCH_POINT.copy(a.pos).setY(a.pos.y + 1)) && a.damage(o * 0.5 * (1 - l / s), n);\n      }\n    }\n  };\n}\n/**\n * 命中解算复用的临时向量，避免每发子弹都分配 Vector3\n * @module-ref src/combat/combat.js\n */"
+ },
+ {
+  "function": "showcaseWeapon",
+  "bytes": 2954,
+  "line": 42147,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "d",
+   "f",
+   "g",
+   "h",
+   "p",
+   "u",
+   "v",
+   "x",
+   "y"
+  ],
+  "code": "/**\n * 武器模型展示台：把枪摆成 hip/ads/sprint/fire/reload/empty 等固定姿势并锁帧，供截图与调参用；挂 window.__setShot 以便外部脚本切姿势\n * @module-ref src/weapons/weapon.js\n */\nasync function showcaseWeapon(ctx) {\n  let weapon = await createWeapon(ctx);\n  ctx.weapon = weapon;\n  let root = weapon.root,\n    hipCamPos = new WeaponVec3(0, 1.68, 4),\n    lookDirs = {\n      south: [0.28, -0.01, 1],\n      east: [1, 0, 0.25],\n      north: [-0.2, -0.01, -1],\n      west: [-1, 0, 0.1],\n      nw: [-0.75, -0.01, -0.65]\n    },\n    shotPoses = {\n      side: [Math.PI, [1.12, 1.3, 0.11], [0, 1.235, 0.11], 30],\n      right: [0, [1.12, 1.3, -0.11], [0, 1.235, -0.11], 30],\n      top: [Math.PI * 0.86, [0.62, 1.8, -0.42], [0, 1.24, 0.12], 32],\n      hands: [Math.PI, [0.4, 1.4, 0.02], [0.02, 1.215, 0.25], 30],\n      rhand: [0, [0.36, 1.22, 0.27], [0.03, 1.16, 0.09], 30],\n      muzzle: [Math.PI, [0.26, 1.37, 0.98], [0, 1.262, 0.44], 30],\n      optic: [Math.PI, [0.2, 1.4, -0.26], [0, 1.31, 0.02], 30],\n      lower: [Math.PI, [0.34, 1.26, 0.04], [0, 1.2, 0.03], 30]\n    },\n    prevSetShot = window.__setShot,\n    currentShot = null;\n  function setShot(u, h = {}) {\n    currentShot = u;\n    let f = shotPoses[u],\n      p = ctx.input,\n      d = ctx.player;\n    p.ads = !1, p.fire = !1, d.sprinting = !1, d.speed = 0, weapon.debug.reloadT = null, weapon.debug.flash = !1, weapon.debug.empty = !1, weapon.debug.freeze = !!f, weapon.reset();\n    let v, g, x;\n    if (f) ctx.scene.add(root), root.position.set(0, 1.25, 0), root.rotation.set(0, f[0], 0, 'YXZ'), root.traverse(y => y.layers.set(LAYER_WORLD)), v = f[1], g = f[2], x = f[3], h.wt != null && (weapon.debug.reloadT = +h.wt, weapon.debug.empty = !!h.wempty);else {\n      ctx.camera.add(root), root.traverse(b => b.layers.set(LAYER_VIEWMODEL));\n      let y = lookDirs[h.wlook] || lookDirs.south;\n      v = [hipCamPos.x, hipCamPos.y, hipCamPos.z], g = [hipCamPos.x + y[0] * 50, hipCamPos.y + y[1] * 50, hipCamPos.z + y[2] * 50], x = 74, u === 'ads' && (p.ads = !0, x = 52), u === 'sprint' && (d.sprinting = !0, d.speed = 6), u === 'fire' && (weapon.debug.flash = !0, h.wads && (p.ads = !0, x = 52)), (u === 'reload' || u === 'empty') && (weapon.debug.reloadT = h.wt != null ? +h.wt : 0.62, weapon.debug.empty = u === 'empty'), u === 'empty' && (weapon.ammo = 0);\n    }\n    return weapon.snap(), weapon.update(0.016), weapon.snap(), prevSetShot && prevSetShot({\n      cam: h.cam || [...v, ...g].join(','),\n      fov: h.fov || x,\n      exposure: h.exposure\n    }), {\n      cam: v,\n      target: g\n    };\n  }\n  window.__setShot = u => {\n    u && u.wpose ? setShot(u.wpose, u) : prevSetShot && prevSetShot(u);\n  };\n  let firstShot = setShot(ctx.params.wpose || 'hip', ctx.params);\n  return {\n    cam: firstShot.cam,\n    target: firstShot.target,\n    update(u) {\n      weapon.update(u), currentShot === 'fire' && (weapon.debug.flash = !0);\n    }\n  };\n}\n/**\n * 武器模块的导出壳，通过 getter 暴露 TUNE 数值表、create 工厂与 showcase 展示场景\n * @module-ref src/weapons/weapon.js\n */"
+ },
+ {
+  "function": "updateDead",
+  "bytes": 2221,
+  "line": 45519,
+  "params": [
+   "T"
+  ],
+  "shortParams": [
+   "T"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "G",
+   "N",
+   "Q",
+   "T",
+   "j"
+  ],
+  "code": "function updateDead(F) {\n  player.vel.x = damp(player.vel.x, 0, 5, F), player.vel.z = damp(player.vel.z, 0, 5, F), player.vel.y -= PLAYER_TUNING.gravity * F;\n  try {\n    let X = ctx.physics.moveCapsule(player.pos, player.vel, F, PLAYER_SPEC.radius, 0.6, wasGround);\n    wasGround = !!(X && X.onGround);\n  } catch {}\n  player.pos.y < WORLD_BOUNDS.seaY - 1 && (player.pos.y = WORLD_BOUNDS.seaY - 1, player.vel.y = 0), player.speed = 0, player.sprinting = !1, bobAmount = damp(bobAmount, 0, 10, F), bobX *= 0.9, bobY *= 0.9;\n}"
+ },
+ {
+  "function": "addEuroPallet",
+  "bytes": 2135,
+  "line": 12822,
+  "params": [
+   "builder",
+   "rand",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "f",
+   "h",
+   "n",
+   "s",
+   "u",
+   "x",
+   "z"
+  ],
+  "code": "/**\n * EUR 标准木托盘：三根纵梁 + 9 个垫块 + 上下板条 + 侧面 EUR 烙印，随机微位移制造手工感，broken 时缺一块板条\n * @module-ref src/world/props/detailed-builders.js\n */\nfunction addEuroPallet(builder, rand, {\n  broken = !1,\n  stamp: n = !0,\n  bevel: s = !1\n} = {}) {\n  let boxGeom = s ? (u, h, f) => roundedBoxGeometry(u, h, f, 0.004) : (u, h, f) => boxGeometry(u, h, f),\n    deckTint = () => {\n      let u = rand.range(0.62, 1),\n        h = rand.range(0.9, 1);\n      return [u, u * (0.93 + 0.07 * h), u * (0.82 + 0.18 * h)];\n    },\n    jitter = (u = 0.003) => rand.range(-u, u);\n  for (let [x, z] of [[-0.45, 0.1], [0, 0.145], [0.45, 0.1]]) builder.add('wood_pallet', boxGeom(1.2, 0.022, z), {\n    p: [jitter(), 0.011, x + jitter()],\n    r: [0, jitter(0.006), 0]\n  }, deckTint());\n  let blockOutline = (u, h, f = 0.012) => [[-u / 2 + f, -h / 2], [u / 2 - f, -h / 2], [u / 2, -h / 2 + f], [u / 2, h / 2 - f], [u / 2 - f, h / 2], [-u / 2 + f, h / 2], [-u / 2, h / 2 - f], [-u / 2, -h / 2 + f]];\n  for (let x of [-0.5275, 0, 0.5275]) for (let z of [-0.45, 0, 0.45]) builder.add('wood_pallet', createHollowPolygonExtrusion(blockOutline(0.145, z === 0 ? 0.145 : 0.1), 0.078, {\n    caps: !1,\n    soft: 0\n  }), {\n    p: [x + jitter(), 0.061, z + jitter()],\n    r: [-HALF_PI, jitter(0.03), 0]\n  }, deckTint().map(f => f * 0.8));\n  for (let x of [-0.5275, 0, 0.5275]) builder.add('wood_pallet', boxGeom(0.145, 0.022, 1), {\n    p: [x + jitter(), 0.111, jitter()],\n    r: [0, jitter(0.006), 0]\n  }, deckTint());\n  if ([[-0.4275, 0.145], [-0.215, 0.1], [0, 0.145], [0.215, 0.1], [0.4275, 0.145]].forEach(([u, h], f) => {\n    broken && f === 3 || builder.add('wood_pallet', boxGeom(1.2, 0.022, h), {\n      p: [jitter(), 0.133, u + jitter(0.006)],\n      r: [jitter(0.004), jitter(0.008), 0]\n    }, deckTint());\n  }), n) {\n    let x = builder.G.mats.label('EUR', {\n      color: 'black',\n      font: 'sans',\n      distress: 0.6\n    });\n    builder.decal(x, 0.085, {\n      p: [-0.5275, 0.062, 0.5015]\n    }), builder.decal(x, 0.085, {\n      p: [0.5275, 0.062, -0.5015],\n      r: [0, PI_TWO, 0]\n    });\n  }\n}\n/**\n * 单只木托盘道具，委托 addEuroPallet 生成\n * @module-ref src/world/level/buildings.js\n */"
+ },
+ {
+  "function": "showcaseGround",
+  "bytes": 2100,
+  "line": 27694,
+  "params": [
+   "game"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "e",
+   "h",
+   "l",
+   "n",
+   "o",
+   "r",
+   "s",
+   "t",
+   "u"
+  ],
+  "code": "/**\n * 地面模块的演示场景：先移除占位平面再装配地面系统，摆一组集装箱/油桶/灯柱样张，返回固定机位以便单独观察湿滑地面与反射\n * @module-ref src/world/ground/ground.js\n */\nasync function showcaseGround(game) {\n  let e = game.scene.children.find(o => o.isMesh && o.geometry && o.geometry.type === 'PlaneGeometry' && o.geometry.parameters && o.geometry.parameters.width === 80);\n  e && game.scene.remove(e), game.ground = await createGround(game);\n  let t = new THREE.Group(),\n    n = (o, r, a, l, c, u = 0) => {\n      let h = new THREE.Mesh(o, r);\n      return h.position.set(a, l, c), h.rotation.y = u, h.castShadow = h.receiveShadow = !0, t.add(h), h;\n    },\n    s = o => game.mats.get(o);\n  return n(new THREE.BoxGeometry(6.06, 2.59, 2.44), s('paint_red'), 3, 1.295, -0.2), n(new THREE.BoxGeometry(6.06, 2.59, 2.44), s('paint_blue'), 9.4, 1.295, -0.2), n(new THREE.BoxGeometry(6.06, 2.59, 2.44), s('paint_teal'), 9.4, 3.885, -0.2), n(new THREE.BoxGeometry(12.19, 2.59, 2.44), s('paint_yellow'), 3, 1.295, 11.2), n(new THREE.BoxGeometry(6.06, 2.59, 2.44), s('paint_white'), 12.4, 1.295, 11.2), n(new THREE.BoxGeometry(1.1, 1.1, 1.1), s('paint_orange'), 5.6, 0.55, 4.7, 0.4), n(new THREE.CylinderGeometry(0.29, 0.29, 0.88, 20), s('plastic_blue'), 3.9, 0.44, 6.3), n(new THREE.CylinderGeometry(0.29, 0.29, 0.88, 20), s('steel_rust'), 4.6, 0.44, 6.6), n(new THREE.CylinderGeometry(0.06, 0.06, 5, 10), s('steel_galv'), 12.5, 2.5, 6.2), n(new THREE.BoxGeometry(0.08, 1.6, 0.08), game.mats.emissive(16726556, 6), 6.6, 0.82, 2.6), n(new THREE.BoxGeometry(0.08, 1.6, 0.08), game.mats.emissive(3524863, 5), 2.2, 0.82, 3.2), n(new THREE.BoxGeometry(2.4, 0.08, 0.06), game.mats.emissive(16773328, 6), 9.4, 2.2, 1.06), n(new THREE.BoxGeometry(0.3, 0.12, 0.3), game.mats.emissive(16760944, 12), 12.5, 5, 6.2), n(new THREE.BoxGeometry(0.06, 1.2, 0.06), game.mats.emissive(5832570, 5), 23, 0.62, 8.2), n(new THREE.BoxGeometry(1.2, 1.2, 1.2), s('steel_dark'), 22.4, 0.6, 9.6, 0.3), game.scene.add(t), {\n    cam: [-9, 1.65, 5.6],\n    target: [14, 0.4, 5]\n  };\n}\n/**\n * fx 子模块的对外命名空间：create 惰性取到特效系统构造函数，showcase 取演示场景，供启动流程与场景注册表按名加载\n * @module-ref src/effects/effects.js\n */"
+ },
+ {
+  "function": "mergeAttributes",
+  "bytes": 1797,
+  "line": 509,
+  "params": [
+   "attributes"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "d",
+   "e",
+   "f",
+   "h",
+   "l",
+   "n",
+   "o",
+   "p",
+   "r",
+   "s",
+   "t",
+   "u",
+   "v"
+  ],
+  "code": "/**\n * 合并同名 BufferAttribute：先校验 array 构造类型/itemSize/normalized/gpuType 全部一致，再一次性分配拷贝；交错属性逐分量展开，是几何合并的底层搬运工\n * @module-ref src/core/geometry.js\n */\nfunction mergeAttributes(attributes) {\n  let e,\n    t,\n    n,\n    s = -1,\n    o = 0;\n  for (let c = 0; c < attributes.length; ++c) {\n    let u = attributes[c];\n    if (e === void 0 && (e = u.array.constructor), e !== u.array.constructor) return console.error('THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.array must be of consistent array types across matching attributes.'), null;\n    if (t === void 0 && (t = u.itemSize), t !== u.itemSize) return console.error('THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.itemSize must be consistent across matching attributes.'), null;\n    if (n === void 0 && (n = u.normalized), n !== u.normalized) return console.error('THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.normalized must be consistent across matching attributes.'), null;\n    if (s === -1 && (s = u.gpuType), s !== u.gpuType) return console.error('THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.gpuType must be consistent across matching attributes.'), null;\n    o += u.count * t;\n  }\n  let r = new e(o),\n    a = new THREE.BufferAttribute(r, t, n),\n    l = 0;\n  for (let c = 0; c < attributes.length; ++c) {\n    let u = attributes[c];\n    if (u.isInterleavedBufferAttribute) {\n      let h = l / t;\n      for (let f = 0, p = u.count; f < p; f++) for (let d = 0; d < t; d++) {\n        let v = u.getComponent(f, d);\n        a.setComponent(f + h, d, v);\n      }\n    } else r.set(u.array, l);\n    l += u.count * t;\n  }\n  return s !== void 0 && (a.gpuType = s), a;\n}\n/**\n * 倒角盒逐顶点计算外扩方向时复用的临时向量，避免每顶点新建 Vector3 造成的分配压力\n * @module-ref src/core/geometry.js\n */"
+ },
+ {
+  "function": "createBlinkerBatch",
+  "bytes": 1797,
+  "line": 21675,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "e",
+   "f",
+   "h",
+   "i",
+   "l",
+   "n",
+   "o",
+   "p",
+   "r",
+   "s",
+   "t",
+   "u"
+  ],
+  "code": "/**\n * 把所有闪烁灯具收进一批（顶点属性记录周期/相位），用固定着色器统一驱动明灭，避免几十个独立灯对象\n * @module-ref src/world/backdrop/geometry.js\n */\nfunction createBlinkerBatch() {\n  let i = {\n      value: 0\n    },\n    e = new THREE.MeshBasicMaterial({\n      vertexColors: !0,\n      fog: !1\n    });\n  e.onBeforeCompile = n => {\n    n.uniforms.uTime = i, n.vertexShader = `attribute vec3 blink;\nuniform float uTime;\nvarying float vBlink;\n` + n.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>\n float bph = fract(uTime / max(blink.x, 0.001) + blink.y);\n vBlink = blink.x <= 0.0 ? 1.0 : mix(0.02, 1.0, smoothstep(0.0, 0.06, bph) * (1.0 - smoothstep(blink.z, blink.z + 0.12, bph)));`), n.fragmentShader = `varying float vBlink;\n` + n.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>\n diffuseColor.rgb *= vBlink;`);\n  }, e.customProgramCacheKey = () => 'saltline-blink';\n  let t = [];\n  return {\n    uTime: i,\n    mat: e,\n    add(n, s, o = 0, r = 0, a = 0.5) {\n      if (!n) return;\n      let l = n.index ? n.toNonIndexed() : n,\n        c = l.attributes.position.count,\n        u = new Float32Array(c * 3),\n        h = new Float32Array(c * 3);\n      for (let p = 0; p < c; p++) u[p * 3] = s[0], u[p * 3 + 1] = s[1], u[p * 3 + 2] = s[2], h[p * 3] = o, h[p * 3 + 1] = r, h[p * 3 + 2] = a;\n      let f = new THREE.BufferGeometry();\n      f.setAttribute('position', l.attributes.position), f.setAttribute('color', new THREE.BufferAttribute(u, 3)), f.setAttribute('blink', new THREE.BufferAttribute(h, 3)), t.push(f);\n    },\n    build() {\n      if (!t.length) return null;\n      let n = new THREE.Mesh(mergeGeometries(t.splice(0), !1), e);\n      return n.castShadow = !1, n.receiveShadow = !1, n;\n    }\n  };\n}\n/**\n * 一个八面体小球，用作航空障碍灯/警示灯灯头，给定坐标即生成\n * @module-ref src/world/backdrop/backdrop.js\n */"
+ },
+ {
+  "function": "buildDistantCrane",
+  "bytes": 1581,
+  "line": 23550,
+  "params": [
+   "batcher",
+   "mat",
+   "x",
+   "z",
+   "_"
+  ],
+  "shortParams": [
+   "x",
+   "z"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "d",
+   "f",
+   "h",
+   "l",
+   "o",
+   "p",
+   "r",
+   "s",
+   "u",
+   "x",
+   "z"
+  ],
+  "code": "/**\n * 极简版门式起重机剪影（只有箱型轮廓，无细节），用缩放与朝向做成远处集装箱码头的成排岸桥，返回臂架端高度以便挂障碍灯\n * @module-ref src/world/backdrop/cranes.js\n */\nfunction buildDistantCrane(batcher, mat, x, z, {\n  s = 1,\n  up: o = !1,\n  tint: r = [0.3, 0.36, 0.44]\n} = {}) {\n  let a = [],\n    l = (c, u, h, f, p, d) => a.push(boxFromBounds(c, u, h, f, p, d));\n  for (let c of [-5, 5]) for (let u of [-5.4, 5.4]) l(c - 0.6, 0, u - 0.6, c + 0.6, 24, u + 0.6);\n  for (let c of [-5.4, 5.4]) l(-5, 12.5, c - 0.45, 5, 13.5, c + 0.45), l(-5, 23, c - 0.4, 5, 23.8, c + 0.4), a.push(beamBetween([-5, 13.5, c], [5, 23, c], 0.4, 0.4));\n  for (let c of [-5, 5]) l(c - 0.45, 12.5, -5.4, c + 0.45, 13.5, 5.4), l(c - 0.45, 22.8, -5.4, c + 0.45, 23.8, 5.4), l(c - 0.45, 3.6, -5.4, c + 0.45, 4.6, 5.4);\n  l(-11.5, 21.2, -2.3, 6.3, 22.8, 2.3), l(-10.9, 22.8, -2.9, -3.1, 26, 2.9);\n  for (let c of [-1, 1]) a.push(beamBetween([5, 23.8, c * 5.4], [4.1, 30, c * 1.5], 0.6, 0.6)), a.push(beamBetween([-5, 23.8, c * 5.4], [4.1, 30, c * 1.5], 0.5, 0.5));\n  l(3.6, 29.6, -2, 4.6, 30.4, 2), o ? (a.push(beamBetween([6.6, 22, 0], [10.5, 52, 0], 4.6, 1.6)), a.push(beamBetween([4.1, 30, 0], [9.4, 44, 0], 0.3, 0.3))) : (l(6.6, 21.2, -2.3, 38.5, 22.8, 2.3), a.push(beamBetween([4.1, 30, 0], [20.5, 24.3, 0], 0.3, 0.3)), a.push(beamBetween([4.1, 30, 0], [34.5, 24.3, 0], 0.3, 0.3)), l(15, 18.3, 2.4, 19.5, 22.2, 4.4));\n  for (let c of a) c.scale(s, s, s), c.translate(x, 0, z), batcher.add(mat, c, r);\n  return o ? [x + 10.5 * s, 52.6 * s, z] : [x + 4.1 * s, 31 * s, z];\n}\n/**\n * KITTIWAKE 号货船的中纵剖面 x，船体所有剖面点都以它为中线\n * @module-ref src/world/backdrop/ships.js\n */"
+ },
+ {
+  "function": "roundedBoxGeometryGrid",
+  "bytes": 1526,
+  "line": 12100,
+  "params": [
+   "width",
+   "height",
+   "depth",
+   "_",
+   "_",
+   "_",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "M",
+   "S",
+   "_",
+   "a",
+   "b",
+   "c",
+   "d",
+   "f",
+   "g",
+   "h",
+   "l",
+   "m",
+   "n",
+   "o",
+   "p",
+   "r",
+   "s",
+   "u",
+   "v",
+   "w",
+   "x",
+   "y",
+   "z"
+  ],
+  "code": "/**\n * 带细分的圆角方块：用 BoxGeometry 顶点位移做出可被噪声扰动的圆角箱体（纸箱、篷布下的木箱、叉车机罩）\n * @module-ref src/world/props/detail-geometry.js\n */\nfunction roundedBoxGeometryGrid(width, height, depth, n = 0.03, s = 3, o = 3, r = 3, a = 'center') {\n  let l = new THREE.BoxGeometry(width, height, depth, s, o, r),\n    c = l.attributes.position,\n    u = l.attributes.normal,\n    h = l.attributes.uv,\n    f = width / 2,\n    p = height / 2,\n    d = depth / 2;\n  n = Math.min(n, f * 0.95, p * 0.95, d * 0.95);\n  let v = (x, y, b) => {\n      if (Math.abs(x) > y - 1e-6 || b < 3) return x;\n      let m = 2 * y / b;\n      return x * (y - n) / (y - m);\n    },\n    g = new THREE.Vector3();\n  for (let x = 0; x < c.count; x++) {\n    let y = v(c.getX(x), f, s),\n      b = v(c.getY(x), p, o),\n      m = v(c.getZ(x), d, r),\n      A = clampValue(y, -(f - n), f - n),\n      _ = clampValue(b, -(p - n), p - n),\n      M = clampValue(m, -(d - n), d - n);\n    g.set(y - A, b - _, m - M), (Math.abs(y) > f - 1e-5 ? 1 : 0) + (Math.abs(b) > p - 1e-5 ? 1 : 0) + (Math.abs(m) > d - 1e-5 ? 1 : 0) >= 2 && g.lengthSq() > 1e-12 && (g.normalize(), y = A + g.x * n, b = _ + g.y * n, m = M + g.z * n, u.setXYZ(x, g.x, g.y, g.z)), c.setXYZ(x, y, b, m);\n    let w = Math.abs(u.getX(x)),\n      S = Math.abs(u.getY(x)),\n      z = Math.abs(u.getZ(x));\n    w >= S && w >= z ? h.setXY(x, m, b) : S >= w && S >= z ? h.setXY(x, y, m) : h.setXY(x, y, b);\n  }\n  return a === 'bottom' && l.translate(0, height / 2, 0), l;\n}\n/**\n * 遍历顶点施加变形回调并回写，是所有「程序化揉形状」的入口\n * @module-ref src/core/geometry.js\n */"
+ },
+ {
+  "function": "addFloodlightHead",
+  "bytes": 1403,
+  "line": 8825,
+  "params": [
+   "builder",
+   "frameMat",
+   "housingMat",
+   "lensMat",
+   "x",
+   "y",
+   "z",
+   "yaw",
+   "tilt"
+  ],
+  "shortParams": [
+   "x",
+   "y",
+   "z"
+  ],
+  "shortLocals": [
+   "c",
+   "x",
+   "y",
+   "z"
+  ],
+  "code": "/**\n * 在灯杆顶部装一只泛光灯头：外壳+发光面+散热鳍片+接线盒，按 yaw/tilt 定位，可复用成整排灯头\n * @module-ref src/world/props/basic-builders.js\n */\nfunction addFloodlightHead(builder, frameMat, housingMat, lensMat, x, y, z, yaw, tilt) {\n  builder.push(composeTransformMatrix(x, y, z, [0, yaw, 0])), builder.push(composeTransformMatrix(0, 0, 0, [0, 0, tilt])), builder.box(housingMat, 0.1, 0.34, 0.46, 0.09, 0, 0, {\n    r: 0.014\n  }), builder.add(lensMat, je(createPlaneGeometry(0.4, 0.28), 0.1415, 0, 0, [0, PI / 2, 0]), null, !0), builder.box(housingMat, 0.012, 0.018, 0.47, 0.146, 0.156, 0, {\n    r: 0\n  }), builder.box(housingMat, 0.012, 0.018, 0.47, 0.146, -0.156, 0, {\n    r: 0\n  }), builder.box(housingMat, 0.012, 0.33, 0.018, 0.146, 0, 0.222, {\n    r: 0\n  }), builder.box(housingMat, 0.012, 0.33, 0.018, 0.146, 0, -0.222, {\n    r: 0\n  }), builder.box(housingMat, 0.09, 0.008, 0.48, 0.17, 0.175, 0, {\n    r: 0,\n    rot: [0, 0, -0.12]\n  });\n  for (let c = -3; c <= 3; c++) builder.add(housingMat, je(boxGeometry(0.045, 0.3, 0.008), 0.02, 0, c * 0.062));\n  builder.pop(), builder.box(frameMat, 0.03, 0.05, 0.56, 0.02, -0.02, 0, {\n    r: 0.004\n  });\n  for (let c of [-1, 1]) builder.box(frameMat, 0.1, 0.05, 0.012, 0.05, -0.02, c * 0.275, {\n    r: 0,\n    rot: [0, 0, tilt * 0.5]\n  });\n  builder.pop();\n}\n/**\n * 高杆灯：混凝土基座、8.6° 收分的锥形杆身、法兰螺栓、爬梯与顶部横梁挂 4 只泛光灯；把灯位写进 userData.lamps 供光照系统点亮\n * @module-ref src/world/props/basic-builders.js\n */"
+ },
+ {
+  "function": "buildDoor",
+  "bytes": 1372,
+  "line": 11330,
+  "params": [
+   "le",
+   "R",
+   "I"
+  ],
+  "shortParams": [
+   "le",
+   "R",
+   "I"
+  ],
+  "shortLocals": [
+   "I",
+   "R",
+   "_e",
+   "ae",
+   "ce",
+   "k",
+   "le",
+   "se",
+   "ve"
+  ],
+  "code": "(le, R, I) => {\n  let se = R + doorWidth / 2,\n    ae = 0;\n  le.box(cabinetMat, doorWidth, doorHeight, 0.024, se, doorCenterY, ae, {\n    r: 0.006\n  }), le.box(cabinetMat, doorWidth - 0.07, doorHeight - 0.07, 0.006, se, doorCenterY, ae + 0.013, {\n    r: 0.003\n  });\n  for (let ve of [doorCenterY + 0.36, doorCenterY - 0.4]) {\n    le.add(cabinetMat, je(createPlaneGeometry(doorWidth - 0.14, 0.3), se, ve, ae + 0.0165), darkColor);\n    for (let _e = 0; _e < 7; _e++) le.box(cabinetMat, doorWidth - 0.13, 0.034, 0.005, se, ve - 0.125 + _e * 0.042, ae + 0.027, {\n      r: 0,\n      rot: [0.75, 0, 0]\n    });\n    le.box(cabinetMat, 0.02, 0.31, 0.02, se - (doorWidth - 0.13) / 2, ve, ae + 0.022, {\n      r: 0.003\n    }), le.box(cabinetMat, 0.02, 0.31, 0.02, se + (doorWidth - 0.13) / 2, ve, ae + 0.022, {\n      r: 0.003\n    });\n  }\n  let k = I ? R + 0.07 : R + doorWidth - 0.07;\n  le.box(steelDarkMat, 0.045, 0.2, 0.02, k, doorCenterY - 0.02, ae + 0.026, {\n    r: 0.006\n  }), le.box(steelGalvMat, 0.028, 0.13, 0.018, k, doorCenterY + 0, ae + 0.042, {\n    r: 0.006\n  }), le.cyl(steelGalvMat, 0.012, 0.012, 0.012, k, doorCenterY - 0.09, ae + 0.04, {\n    seg: 8,\n    rot: [PI_RELAY / 2, 0, 0]\n  });\n  let ce = I ? R + doorWidth : R;\n  for (let ve of [doorCenterY - 0.5, doorCenterY, doorCenterY + 0.5]) le.cyl(steelGalvMat, 0.011, 0.011, 0.09, ce, ve, ae + 0.016, {\n    seg: 6\n  });\n}"
+ },
+ {
+  "function": "buildSkipBin",
+  "bytes": 1305,
+  "line": 19592,
+  "params": [
+   "ctx",
+   "x",
+   "z",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "x",
+   "z"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "f",
+   "h",
+   "l",
+   "n",
+   "o",
+   "p",
+   "r",
+   "s",
+   "u",
+   "x",
+   "z"
+  ],
+  "code": "/**\n * 1.1×0.8×0.75 m 开口废料斗：角钢骨架、顶沿加强、内部深色底，四周散布凹痕，堆场与码头通用道具\n * @module-ref src/world/level/placement.js\n */\nfunction buildSkipBin(ctx, x, z, n = 0, s = 'paint_red') {\n  let o = makeStaticGroup(ctx, x, z, n),\n    r = 1.1,\n    a = 0.8,\n    l = 0.75,\n    c = ctx.M(s);\n  for (let h of [-1, 1]) addRoundedBox(ctx, o, c, 0.09, 0.1, a, h * 0.36, 0.05, 0);\n  addRoundedBox(ctx, o, c, r, 0.04, a, 0, 0.12, 0);\n  for (let h of [-1, 1]) addRoundedBox(ctx, o, c, r, l - 0.1, 0.03, 0, 0.1 + (l - 0.1) / 2, h * (a / 2 - 0.015), 0.006);\n  for (let h of [-1, 1]) addRoundedBox(ctx, o, c, 0.03, l - 0.1, a, h * (r / 2 - 0.015), 0.1 + (l - 0.1) / 2, 0, 0.006);\n  for (let h of [-1, 1]) for (let f of [-1, 1]) addRoundedBox(ctx, o, c, 0.06, l, 0.06, h * (r / 2 - 0.02), l / 2, f * (a / 2 - 0.02), 0.01);\n  addRoundedBox(ctx, o, ctx.M('steel_dark'), r - 0.08, 0.04, a - 0.08, 0, l - 0.22, 0);\n  let u = ctx.M('steel_worn');\n  for (let h = 0; h < 12; h++) {\n    let f = h * 0.618 % 1,\n      p = h * 0.37 % 1;\n    addRoundedBox(ctx, o, u, 0.16, 0.11, 0.1, (f - 0.5) * (r - 0.3), l - 0.16 + h % 3 * 0.03, (p - 0.5) * (a - 0.25), 0.012, [p, f * 3, f]);\n  }\n  return addFootprintCollider(ctx, x, z, n, r, a, l, 'metal'), o;\n}\n/**\n * 枕木上分层码放并捆扎的细钢筋/管束（3.4 m 长，9 根），用低廉面数在堆场角落补出工地质感\n * @module-ref src/world/level/placement.js\n */"
+ },
+ {
+  "function": "synthRifleTailOutdoor",
+  "bytes": 1223,
+  "line": 32165,
+  "params": [
+   "sr",
+   "rand",
+   "indoor"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "f",
+   "h",
+   "l",
+   "n",
+   "o",
+   "p",
+   "r",
+   "s",
+   "sr",
+   "u"
+  ],
+  "code": "/**\n * 步枪尾音（室外开阔反射）配方：多组共振峰加延迟高通噪声模拟港口建筑回响，产出 2 个变体交替使用。\n * @module-ref src/audio/library.js\n */\nfunction synthRifleTailOutdoor(sr, rand, indoor) {\n  let n = o => {\n      let r = ao(o),\n        a = allocSamples(sr, 1.55),\n        l = indoor ? [[0.058, 0.5, 4200], [0.097, 0.4, 3300], [0.139, 0.28, 2500], [0.176, 0.2, 1900], [0.262, 0.1, 1300]] : [[0.066, 0.52, 4600], [0.088, 0.34, 3600], [0.124, 0.3, 2700], [0.169, 0.22, 2e3], [0.231, 0.12, 1400]];\n      for (let [h, f, p] of l) mixBufferAt(a, makeFilteredNoise(sr, r, 0.09, 0.016, {\n        hp: 420,\n        lp: p\n      }), h + randBetween(r, -0.004, 0.004), f * randBetween(r, 0.8, 1.1), sr);\n      let c = makeWhiteNoise(sr, 1.5, r);\n      applySweptBiquad(c, 'lp', makeExpSweep(3400, 380, 0.6), 0.6, sr), applyBiquad(c, 'hp', 130, 0.7, sr), mixBufferAt(a, applyEnvelope(c, sr, makeDecayEnv(0.3, 0.05)), 0.03, 0.55, sr);\n      let u = makeWhiteNoise(sr, 1.2, r);\n      return applyBiquad(u, 'lp', 150, 0.7, sr), mixBufferAt(a, applyEnvelope(u, sr, makeDecayEnv(0.26, 0.03)), 0.02, 0.9, sr), a;\n    },\n    s = Math.floor(rand() * 1e9);\n  return [n(s), n(s + 77)];\n}\n/**\n * 步枪尾音（室内近距离）配方：更短更闷的多重反射，逐段叠加谐波峰模拟近墙回弹；用生成器分帧烘焙以免阻塞主线程。\n * @module-ref src/audio/library.js\n */"
+ },
+ {
+  "function": "chooseQuality",
+  "bytes": 1158,
+  "line": 128,
+  "params": [
+   "presetName"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "o",
+   "r",
+   "s",
+   "t"
+  ],
+  "code": "/**\n * 启动时的画质裁决：显式预设名优先；其次按 UA/触屏尺寸判移动端降到 low；再用 WEBGL_debug_renderer_info 的 GPU 串识别软渲染与移动 GPU 降为 medium，其余给 high\n * @module-ref src/core/quality.js\n */\nfunction chooseQuality(presetName) {\n  if (presetName && QUALITY_PRESETS[presetName]) return {\n    ...QUALITY_PRESETS[presetName]\n  };\n  if (/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent) || navigator.maxTouchPoints > 1 && Math.min(screen.width, screen.height) < 900) return {\n    ...QUALITY_PRESETS.low\n  };\n  let t = '';\n  try {\n    let s = document.createElement('canvas'),\n      o = s.getContext('webgl2') || s.getContext('webgl');\n    if (o) {\n      let r = o.getExtension('WEBGL_debug_renderer_info');\n      t = String(r ? o.getParameter(r.UNMASKED_RENDERER_WEBGL) : o.getParameter(o.RENDERER));\n      let a = o.getExtension('WEBGL_lose_context');\n      a && a.loseContext();\n    }\n  } catch {}\n  return {\n    ...(/SwiftShader|llvmpipe|Software|Mali|Adreno|PowerVR/i.test(t) || /Intel/i.test(t) && !/Arc/i.test(t) ? QUALITY_PRESETS.medium : QUALITY_PRESETS.high)\n  };\n}\n/**\n * 基于 Map 的事件总线：on 返回退订闭包，emit 对每个 handler 单独 try/catch 以免一个订阅者抛错断掉武器/敌人等整条广播链\n * @module-ref src/core/events.js\n */"
+ },
+ {
+  "function": "createCableReelDiscGeometries",
+  "bytes": 1118,
+  "line": 13602,
+  "params": [
+   "radius",
+   "segments",
+   "rand",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "d",
+   "f",
+   "g",
+   "h",
+   "l",
+   "n",
+   "o",
+   "p",
+   "r",
+   "s",
+   "u",
+   "v",
+   "x",
+   "y"
+  ],
+  "code": "/**\n * 线缆盘木侧板的扇形拼板几何：把圆盘切成 9 瓣并给每瓣随机 UV 偏移，做出木板拼接而不是整圆\n * @module-ref src/enemies/models.js\n */\nfunction createCableReelDiscGeometries(radius, segments, rand, n = 0) {\n  let s = [],\n    o = 2 * radius / segments;\n  for (let r = 0; r < segments; r++) {\n    let a = -radius + r * o + 0.003,\n      l = -radius + (r + 1) * o - 0.003,\n      c = [a, (a + l) / 2, l],\n      u = [],\n      h = [],\n      f = [],\n      p = [],\n      d = y => Math.sqrt(Math.max(0, radius * radius - y * y)),\n      v = rand() * 2,\n      g = rand() * 2;\n    for (let y of c) u.push(y, -d(y), 0, y, d(y), 0), h.push(0, 0, 1, 0, 0, 1), f.push(-d(y) + v, y + g, d(y) + v, y + g);\n    p.push(0, 2, 3, 0, 3, 1, 2, 4, 5, 2, 5, 3);\n    let x = new THREE.BufferGeometry();\n    x.setAttribute('position', new THREE.BufferAttribute(new Float32Array(u), 3)), x.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(h), 3)), x.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(f), 2)), x.setIndex(p), s.push(x);\n  }\n  return s;\n}\n/**\n * 电缆盘：双面木侧板 + 内筒 + 缠绕的橡胶电缆（带外露线头）+ 地脚垫木与规格铭牌\n * @module-ref src/world/props/detailed-builders.js\n */"
+ },
+ {
+  "function": "bakeTerrainTexture",
+  "bytes": 1043,
+  "line": 26182,
+  "params": [
+   "size"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "e",
+   "f",
+   "h",
+   "l",
+   "n",
+   "o",
+   "r",
+   "s",
+   "t",
+   "u"
+  ],
+  "code": "/**\n * 把高度场烘成一张 RGBA 数据贴图：R=高度、G=粗糙、B=积水、A=湿滑，供着色器直接采样\n * @module-ref src/world/ground/ground.js\n */\nfunction bakeTerrainTexture(size) {\n  let e = new Uint8Array(size * size * 4),\n    {\n      x0: t,\n      z0: n,\n      size: s\n    } = TERRAIN_BOUNDS,\n    o = s / size;\n  for (let r = 0; r < size; r++) {\n    let a = n + (r + 0.5) * o;\n    for (let l = 0; l < size; l++) {\n      let c = t + (l + 0.5) * o,\n        u = (r * size + l) * 4,\n        h = terrainHeight(c, a);\n      e[u] = Math.round(So(0.5 + (h - TERRAIN_BASE_HEIGHT) * 2.5) * 255), e[u + 1] = Math.round(So(0.5 + (fbm2(c / 5.5, a / 5.5, 41, 3) - 0.5) * 1.5 + (0.5 - h) * 0.9) * 255);\n      let f = smoothstepClamped(0.6, 0.78, fbm2(c / 1.4, a / 1.4, 77, 4)) * smoothstepClamped(0.47, 0.62, fbm2(c / 9, a / 9, 91, 2));\n      e[u + 2] = Math.round(So(f) * 255), e[u + 3] = Math.round(So(fbm2(c / 22, a / 0.9, 57, 3) * 0.6 + fbm2(c / 13, a / 13, 63, 3) * 0.4) * 255);\n    }\n  }\n  return e;\n}\n/**\n * 按世界坐标双线性采样烘焙结果（可指定通道），让物理/寻路与视觉共用同一份地面数据\n * @module-ref src/world/ground/ground.js\n */"
+ },
+ {
+  "function": "H",
+  "bytes": 1000,
+  "line": 28181,
+  "params": [
+   "T",
+   "D",
+   "C",
+   "G",
+   "j",
+   "N"
+  ],
+  "shortParams": [
+   "T",
+   "D",
+   "C",
+   "G",
+   "j",
+   "N"
+  ],
+  "shortLocals": [
+   "$",
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "T",
+   "X",
+   "ie",
+   "j",
+   "me",
+   "ne",
+   "re",
+   "ue"
+  ],
+  "code": "(T, D, C, G, j, N) => {\n  for (let F of [albedoCtx, ormCtx]) F.save(), F.translate(T, D), F.rotate(G);\n  let Q = [];\n  for (let F = 0; F < N; F++) Q.push(1 + (rand() - 0.5) * j);\n  let K = (F, X) => {\n    F.beginPath();\n    for (let ne = 0; ne < N; ne++) {\n      let re = ne / N * TAU,\n        $ = C * Q[ne] * X,\n        ue = Math.cos(re) * $,\n        me = Math.sin(re) * $ * S;\n      ne ? F.lineTo(ue, me) : F.moveTo(ue, me);\n    }\n    F.closePath();\n  };\n  K(albedoCtx, 1), albedoCtx.lineJoin = 'miter', albedoCtx.strokeStyle = 'rgba(92,54,36,0.95)', albedoCtx.lineWidth = Math.max(1.5, C * 0.14), albedoCtx.stroke();\n  let ie = 150 + Math.floor(rand() * 50);\n  K(albedoCtx, 1), albedoCtx.fillStyle = radialGradient(albedoCtx, 0, C * 1.2, [[0, `rgb(${ie - 30},${ie - 26},${ie - 20})`], [0.7, `rgb(${ie + 30},${ie + 33},${ie + 36})`], [1, `rgb(${ie},${ie + 3},${ie + 6})`]]), albedoCtx.fill(), K(ormCtx, 1), ormCtx.fillStyle = 'rgb(0,85,255)', ormCtx.fill(), albedoCtx.restore(), ormCtx.restore();\n}"
+ },
+ {
+  "function": "synthAlert",
+  "bytes": 978,
+  "line": 33668,
+  "params": [
+   "sr",
+   "rand",
+   "variant"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "d",
+   "f",
+   "g",
+   "h",
+   "l",
+   "n",
+   "o",
+   "p",
+   "r",
+   "s",
+   "sr",
+   "u",
+   "v",
+   "x"
+  ],
+  "code": "/**\n * 警报：双振荡器颤音加 FM 抖动，用于敌人发现玩家与任务提示，提供两种音高变体区分敌人类型。\n * @module-ref src/audio/library.js\n */\nfunction synthAlert(sr, rand, variant) {\n  let n = allocSamples(sr, 0.52),\n    s = variant ? 622 : 1320,\n    o = s * 1.4142,\n    r = 0,\n    a = (l, c, u, h) => {\n      let f = Math.round(c * sr),\n        p = Math.round(l * sr);\n      for (let d = 0; d < f; d++) {\n        let v = d / f,\n          g = d / sr;\n        r += TAU * u * (1 + h * v) / sr;\n        let x = Math.sin(r + 1.6 * Math.sin(r * 0.25) + 0.4 * Math.sin(TAU * 71 * g));\n        n[p + d] += Math.tanh(x * 2.2) * Math.min(1, d / (0.004 * sr), (f - d) / (0.012 * sr));\n      }\n    };\n  return a(0, 0.09, s, 0), a(0.12, 0.17, o, -0.05), variant && a(0.3, 0.2, s * 0.5, 0.5), applyBiquad(n, 'bp', variant ? 1100 : 2100, 0.6, sr), mixBufferAt(n, makeFilteredNoise(sr, rand, 0.4, 0.2, {\n    hp: 4e3,\n    att: 0.02\n  }), 0, 0.03, sr), n;\n}\n/**\n * 敌人攻击预警：上扬的噪声与音高扫描，给玩家留出躲避窗口，是公平性的听觉保障。\n * @module-ref src/audio/library.js\n */"
+ },
+ {
+  "function": "n",
+  "bytes": 941,
+  "line": 34115,
+  "params": [
+   "s"
+  ],
+  "shortParams": [
+   "s"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "d",
+   "f",
+   "h",
+   "l",
+   "o",
+   "p",
+   "r",
+   "s",
+   "u"
+  ],
+  "code": "() => (t ^= t << 13, t >>>= 0, t ^= t >>> 17, t ^= t << 5, t >>>= 0, t / 4294967296)"
+ },
+ {
+  "function": "createSkyDome",
+  "bytes": 908,
+  "line": 1030,
+  "params": [
+   "noiseTex"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "e",
+   "n",
+   "t"
+  ],
+  "code": "/**\n * 建天空网格：BackSide 盒体 + 定制 ShaderMaterial，关深度写入与雾、renderOrder=-1000、matrixAutoUpdate 关掉（始终随相机不参与变换），返回 mesh/material/geometry 三件套以便同一材质再用于环境捕获\n * @module-ref src/render/sky.js\n */\nfunction createSkyDome(noiseTex) {\n  let e = new THREE.ShaderMaterial({\n      name: 'saltline-sky',\n      side: THREE.BackSide,\n      depthWrite: !1,\n      depthTest: !0,\n      fog: !1,\n      toneMapped: !1,\n      uniforms: createSkyUniforms(noiseTex),\n      vertexShader: SALTLINE_SKY_VERT,\n      fragmentShader: SALTLINE_SKY_FRAG\n    }),\n    t = new THREE.BoxGeometry(2, 2, 2),\n    n = new THREE.Mesh(t, e);\n  return n.name = 'sky', n.frustumCulled = !1, n.renderOrder = -1e3, n.castShadow = !1, n.receiveShadow = !1, n.matrixAutoUpdate = !1, {\n    mesh: n,\n    material: e,\n    geometry: t\n  };\n}\n/**\n * 把天空材质克隆一份置 uEnv=1，用 PMREMGenerator 烘成环境贴图（烘完即 dispose 临时材质与生成器），使场景 IBL 与可见天空严格一致\n * @module-ref src/render/sky.js\n */"
+ },
+ {
+  "function": "addStairFlight",
+  "bytes": 894,
+  "line": 22898,
+  "params": [
+   "R",
+   "I",
+   "se",
+   "ae",
+   "k",
+   "ce"
+  ],
+  "shortParams": [
+   "R",
+   "I",
+   "se",
+   "ae",
+   "k",
+   "ce"
+  ],
+  "shortLocals": [
+   "Fe",
+   "I",
+   "Pe",
+   "R",
+   "Re",
+   "Te",
+   "_e",
+   "ae",
+   "ce",
+   "k",
+   "se",
+   "ve",
+   "ze"
+  ],
+  "code": "function addStairFlight(R, I, se, ae, k, ce) {\n  let ve = ae - I,\n    _e = Math.max(2, Math.round(ve / 0.21));\n  for (let Te of [k + 0.03, ce - 0.03]) {\n    addGeom(galvSteel, beamBetween([R, I - 0.12, Te], [se, ae - 0.12, Te], 0.05, 0.24)), addGeom(yellowPaint, strutBetween([R, I + 1, Te], [se, ae + 1, Te], 0.024, 5), TINT_YELLOW), addGeom(yellowPaint, strutBetween([R, I + 0.5, Te], [se, ae + 0.5, Te], 0.018, 4), TINT_YELLOW);\n    for (let Pe = 0; Pe <= 4; Pe++) {\n      let Re = Pe / 4,\n        Fe = R + (se - R) * Re,\n        ze = I + ve * Re;\n      addGeom(yellowPaint, strutBetween([Fe, ze - 0.05, Te], [Fe, ze + 1, Te], 0.02, 4), TINT_YELLOW);\n    }\n  }\n  for (let Te = 1; Te <= _e; Te++) {\n    let Pe = (Te - 0.5) / _e,\n      Re = R + (se - R) * Pe,\n      Fe = I + ve * (Te / _e);\n    addGeom(galvSteel, boxFromBounds(Re - 0.13, Fe - 0.03, k + 0.06, Re + 0.13, Fe, ce - 0.06));\n  }\n}"
+ },
+ {
+  "function": "buildLaneSignpost",
+  "bytes": 879,
+  "line": 19685,
+  "params": [
+   "ctx",
+   "x",
+   "z",
+   "text",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "x",
+   "z"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "f",
+   "h",
+   "l",
+   "o",
+   "r",
+   "s",
+   "u",
+   "x",
+   "z"
+  ],
+  "code": "/**\n * 行车道指示牌：镀锌立杆 + 黄底模版字标牌（LANE 1/2/3），带碰撞盒，用来给堆场分区命名\n * @module-ref src/world/level/placement.js\n */\nfunction buildLaneSignpost(ctx, x, z, text, s = 'x-', o = 3.2) {\n  let r = s[0] === 'x';\n  ctx.cyl('steel_galv', 0.045, o, x, o / 2, z, {\n    seg: 8\n  }), ctx.box('steel_dark', 0.3, 0.02, 0.3, x, 0.01, z);\n  let a = 1.1,\n    l = 0.62,\n    c = 0.03;\n  ctx.box('paint_yellow', r ? c : a, l, r ? a : c, x, o - l / 2 - 0.05, z, {\n    bevel: 0.01\n  });\n  let u = s[1] === '+' ? 1 : -1,\n    h = r ? x + u * (c / 2 + 0.003) : x,\n    f = r ? z : z + u * (c / 2 + 0.003);\n  ctx.label(text, 0.4, h, o - l / 2 - 0.05, f, s, {\n    color: 'black',\n    font: 'stencil',\n    distress: 0.35\n  }), ctx.col(x - 0.06, 0, z - 0.06, x + 0.06, o, z + 0.06, 'metal', {\n    noNav: !0\n  });\n}\n/**\n * 枕木上分层堆叠的 10.4×4.2 m 板料垛（每层带吊装缺口、黄色护角与橡胶挡边），返回垛高供上层堆叠\n * @module-ref src/world/level/placement.js\n */"
+ },
+ {
+  "function": "flipGeometryWinding",
+  "bytes": 839,
+  "line": 12200,
+  "params": [
+   "geometry"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "e",
+   "l",
+   "n",
+   "o",
+   "r",
+   "s",
+   "t"
+  ],
+  "code": "/**\n * 翻转三角绕序与法线，用来把一个几何反向成内侧/背面（篷布内壁、管道内壁）\n * @module-ref src/core/geometry.js\n */\nfunction flipGeometryWinding(geometry) {\n  if (geometry.index) {\n    let t = geometry.index.array;\n    for (let n = 0; n < t.length; n += 3) {\n      let s = t[n + 1];\n      t[n + 1] = t[n + 2], t[n + 2] = s;\n    }\n  } else for (let t of Object.keys(geometry.attributes)) {\n    let n = geometry.attributes[t],\n      s = n.itemSize,\n      o = n.array;\n    for (let r = 0; r < n.count; r += 3) for (let a = 0; a < s; a++) {\n      let l = o[(r + 1) * s + a];\n      o[(r + 1) * s + a] = o[(r + 2) * s + a], o[(r + 2) * s + a] = l;\n    }\n  }\n  let e = geometry.attributes.normal.array;\n  for (let t = 0; t < e.length; t++) e[t] = -e[t];\n  return geometry;\n}\n/**\n * 按 group 索引删掉一段三角面（并修正后续 group 的 start 偏移），用于把箱体的某一面挖掉做开口\n * @module-ref src/core/geometry.js\n */"
+ },
+ {
+  "function": "applySettings",
+  "bytes": 837,
+  "line": 47104,
+  "params": [
+   "U"
+  ],
+  "shortParams": [
+   "U"
+  ],
+  "shortLocals": [
+   "D",
+   "T",
+   "U"
+  ],
+  "code": "function applySettings(U) {\n  if ((!U || U === 'sens') && (ctx.input.sensitivity = settings.sens), (!U || U === 'invertY') && (ctx.input.invertY = settings.invertY), !U || U === 'volume') try {\n    ctx.audio && ctx.audio.setVolume && ctx.audio.setVolume(settings.volume);\n  } catch (T) {\n    console.error(T);\n  }\n  if ((!U || U === 'fov') && ctx.player && ctx.player.setFov && ctx.player.setFov(settings.fov), U === 'quality' || !U && settings.quality !== 'auto' && !ctx.params.shot && !ctx.params.q && settings.quality !== (ctx.quality && ctx.quality.name)) {\n    let T = QUALITY_PRESETS[settings.quality];\n    if (T) try {\n      ctx.render && ctx.render.setQuality ? ctx.render.setQuality({\n        ...T\n      }) : ctx.quality = {\n        ...T\n      };\n    } catch (D) {\n      console.error('[game] setQuality failed', D);\n    }\n  }\n}"
+ },
+ {
+  "function": "flattenCapNormals",
+  "bytes": 782,
+  "line": 38280,
+  "params": [
+   "geometry"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "c",
+   "e",
+   "l",
+   "n",
+   "o",
+   "r",
+   "s",
+   "t"
+  ],
+  "code": "/**\n * 修挤出体的端面法线：靠近两端的位置强制轴对齐、其余侧壁去掉轴向分量，避免倒角让平板看起来是圆饼\n * @module-ref src/core/geometry.js\n */\nfunction flattenCapNormals(geometry) {\n  geometry.computeBoundingBox();\n  let e = geometry.boundingBox.min.z,\n    t = geometry.boundingBox.max.z,\n    n = geometry.attributes.position,\n    s = geometry.attributes.normal;\n  for (let o = 0; o < n.count; o++) {\n    let r = s.getZ(o),\n      a = Math.abs(r);\n    if (a < 0.15 || a > 0.95) continue;\n    let l = n.getZ(o);\n    if (Math.abs(l - e) < 1e-6 || Math.abs(l - t) < 1e-6) s.setXYZ(o, 0, 0, Math.sign(r));else {\n      let c = Math.hypot(s.getX(o), s.getY(o)) || 1;\n      s.setXYZ(o, s.getX(o) / c, s.getY(o) / c, 0);\n    }\n  }\n  return geometry;\n}\n/**\n * 沿 X 轴方向挤出的侧板（外形轮廓在 YZ 面），挤出后转 90 度对齐机匣侧面\n * @module-ref src/core/geometry.js\n */"
+ },
+ {
+  "function": "n",
+  "bytes": 774,
+  "line": 32214,
+  "params": [
+   "o"
+  ],
+  "shortParams": [
+   "o"
+  ],
+  "shortLocals": [
+   "a",
+   "c",
+   "f",
+   "h",
+   "l",
+   "o",
+   "r",
+   "u"
+  ],
+  "code": "() => (t ^= t << 13, t >>>= 0, t ^= t >>> 17, t ^= t << 5, t >>>= 0, t / 4294967296)"
+ },
+ {
+  "function": "addPalletDeck",
+  "bytes": 759,
+  "line": 10420,
+  "params": [
+   "builder",
+   "mat",
+   "x",
+   "y",
+   "z"
+  ],
+  "shortParams": [
+   "x",
+   "y",
+   "z"
+  ],
+  "shortLocals": [
+   "o",
+   "r",
+   "x",
+   "y",
+   "z"
+  ],
+  "code": "/**\n * 在一个位置上拼出标准木托盘的上中下三层板条与垫块，货架上的货垛底座复用它\n * @module-ref src/world/props/basic-builders.js\n */\nfunction addPalletDeck(builder, mat, x, y, z) {\n  for (let o = -2; o <= 2; o++) builder.add(mat, je(boxGeometry(0.14 + (o === 0 ? 0.02 : 0), 0.022, 1), x + o * 0.2525, y + 0.133, z));\n  for (let o of [-1, 0, 1]) builder.add(mat, je(boxGeometry(1.15, 0.022, 0.1), x, y + 0.111, z + o * 0.45));\n  for (let o of [-1, 0, 1]) for (let r of [-1, 0, 1]) builder.add(mat, je(boxGeometry(0.14, 0.078, 0.1), x + r * 0.505, y + 0.061, z + o * 0.45));\n  for (let o of [-1, 0, 1]) builder.add(mat, je(boxGeometry(1.15, 0.022, 0.1), x, y + 0.011, z + o * 0.45));\n}\n/**\n * 往货架层上码货：四种载荷形态（纸箱垛 / 缠膜托盘 / 四只化工桶 / 叠托盘），带贴花与薄膜缠绕细节\n * @module-ref src/world/props/basic-builders.js\n */"
+ },
+ {
+  "function": "synthImpactWood",
+  "bytes": 731,
+  "line": 32966,
+  "params": [
+   "sr",
+   "rand",
+   "variant"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "n",
+   "s",
+   "sr"
+  ],
+  "code": "/**\n * 木质弹着：中频木腔共振加碎屑颗粒，听起来比混凝土更空。\n * @module-ref src/audio/library.js\n */\nfunction synthImpactWood(sr, rand, variant) {\n  let n = allocSamples(sr, 0.26),\n    s = variant ? 1.14 : 1;\n  return mixBufferAt(n, makeModalResonance(sr, 0.2, [[238 * s, 0.03, 1], [512 * s, 0.022, 0.8], [893 * s, 0.016, 0.6], [1410 * s, 0.01, 0.4]], rand), 0, 0.6, sr), mixBufferAt(n, makeFilteredNoise(sr, rand, 0.03, 0.006, {\n    lp: 2100\n  }), 0, 0.8, sr), mixBufferAt(n, makeFilteredNoise(sr, rand, 0.01, 0.002, {\n    hp: 3e3\n  }), 0, 0.5, sr), mixBufferAt(n, makeGrainBurst(sr, rand, 0.2, 6, {\n    from: 0.01,\n    fall: 2,\n    bp: 2600,\n    q: 1.5\n  }), 0, 0.3, sr), n;\n}\n/**\n * 水面弹着：水花飞溅加快速衰减的低频拍击，命中积水或海面时使用。\n * @module-ref src/audio/library.js\n */"
+ },
+ {
+  "function": "beamBetween",
+  "bytes": 712,
+  "line": 21584,
+  "params": [
+   "i",
+   "b",
+   "_",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "i",
+   "b"
+  ],
+  "shortLocals": [
+   "a",
+   "b",
+   "c",
+   "i",
+   "l",
+   "n",
+   "o",
+   "r",
+   "s",
+   "t"
+  ],
+  "code": "/**\n * 两点之间生成一根可带锥度的方截面梁（斜撑、箱型杆），用于桁架与结构斜撑\n * @module-ref src/core/geometry.js\n */\nfunction beamBetween(i, b, t = 0.3, n = 0.3, s = 0) {\n  i = toVec3(i), b = toVec3(b);\n  let o = new THREE.Vector3().subVectors(b, i),\n    r = o.length();\n  o.multiplyScalar(1 / r);\n  let a = new THREE.Vector3().crossVectors(o, UP_AXIS);\n  a.lengthSq() < 1e-6 ? a.set(1, 0, 0) : a.normalize();\n  let l = new THREE.Vector3().crossVectors(a, o),\n    c = s > 0 ? beveledBoxGeometry(t, r, n, s) : boxGeometry(t, r, n);\n  return TMP_MATRIX.makeBasis(a, o, l).setPosition((i.x + b.x) / 2, (i.y + b.y) / 2, (i.z + b.z) / 2), c.applyMatrix4(TMP_MATRIX), c;\n}\n/**\n * 把一串点连成连续杆件数组，一次性交给批处理器，用于管线与弯曲钢筋\n * @module-ref src/core/geometry.js\n */"
+ },
+ {
+  "function": "setEmissive",
+  "bytes": 697,
+  "line": 11800,
+  "params": [
+   "le",
+   "R"
+  ],
+  "shortParams": [
+   "le",
+   "R"
+  ],
+  "shortLocals": [
+   "R",
+   "le"
+  ],
+  "code": "(le, R) => {\n  if (ledMaterial.userData && typeof ledMaterial.userData.setEmissive == 'function') {\n    ledMaterial.userData.setEmissive(le, R);\n    return;\n  }\n  ledMaterial.emissive && ledMaterial.emissive.isColor && ledMaterial.isMeshStandardMaterial ? (ledMaterial.emissive.copy(le), ledMaterial.emissiveIntensity = R) : ledMaterial.uniforms && ledMaterial.uniforms.color && ledMaterial.uniforms.color.value && ledMaterial.uniforms.color.value.isColor ? (ledMaterial.uniforms.color.value.copy(le).multiplyScalar(R), ledMaterial.uniforms.intensity && (ledMaterial.uniforms.intensity.value = 1)) : ledMaterial.color && ledMaterial.color.isColor && ledMaterial.color.copy(le).multiplyScalar(R);\n}"
+ },
+ {
+  "function": "synthRifleDryFire",
+  "bytes": 691,
+  "line": 32253,
+  "params": [
+   "sr",
+   "rand"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "sr",
+   "t"
+  ],
+  "code": "/**\n * 空仓击锤声：高频机件咔哒加低频枪身空响，是弹匣打空时唯一的反馈。\n * @module-ref src/audio/library.js\n */\nfunction synthRifleDryFire(sr, rand) {\n  let t = allocSamples(sr, 0.13);\n  return mixBufferAt(t, makeModalResonance(sr, 0.05, [[2840, 0.004, 1], [4130, 0.004, 0.7], [6320, 0.003, 0.5], [1210, 0.008, 0.4]], rand), 0, 0.7, sr), mixBufferAt(t, makeFilteredNoise(sr, rand, 0.006, 0.0012, {\n    hp: 2e3\n  }), 0, 0.6, sr), mixBufferAt(t, makeModalResonance(sr, 0.08, [[930, 0.018, 1], [1870, 0.012, 0.5]], rand), 0.016, 0.16, sr), mixBufferAt(t, makeFilteredNoise(sr, rand, 0.004, 0.001, {\n    hp: 3e3\n  }), 0.018, 0.2, sr), t;\n}\n/**\n * 带通噪声扫频加梳状幅度起伏的金属滑动声，作为换弹时弹匣与枪机摩擦的共用底层音色。\n * @module-ref src/audio/library.js\n */"
+ },
+ {
+  "function": "synthObjectiveSting",
+  "bytes": 660,
+  "line": 34560,
+  "params": [
+   "sr"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "e",
+   "n",
+   "sr",
+   "t"
+  ],
+  "code": "/**\n * 完成单个目标的提示音：铃音、噪声打击与拨弦对位的小动机，用音乐语言而非蜂鸣报告进度。\n * @module-ref src/audio/library.js\n */\nfunction* synthObjectiveSting(sr) {\n  let e = allocSamples(sr, 2.8);\n  [57, 62, 65, 69].forEach((t, n) => {\n    mixBufferAt(e, synthBellTone(sr, midiToFreq(t), 1.6), n * 0.15, 0.45 + n * 0.08, sr), mixBufferAt(e, synthPercHit(sr, midiToFreq(t), 1), n * 0.15, 0.3, sr);\n  }), mixBufferAt(e, makeSweptSine(sr, 0.8, 73.4, 36.7, 0.1, 0.25, 0.002), 0.45, 0.7, sr);\n  for (let t of [50, 57, 62, 64]) mixBufferAt(e, synthBrassNote(sr, midiToFreq(t), 2.2), 0.45, 0.14, sr), yield;\n  return e;\n}\n/**\n * 全部目标完成的提示音：更长的上行动机与多重和弦，情绪强度高于单目标完成。\n * @module-ref src/audio/library.js\n */"
+ },
+ {
+  "function": "pumpQueue",
+  "bytes": 652,
+  "line": 35583,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "ge",
+   "he",
+   "pe",
+   "te"
+  ],
+  "code": "function pumpQueue() {\n  let te = performance.now();\n  for (; queue.length;) {\n    let he = queue[0];\n    if (buffers.has(he.k)) {\n      queue.shift();\n      continue;\n    }\n    he.steps || (he.steps = createSfxBaker(he.name, he.v, irSampleRate(he.name)));\n    let pe = null;\n    try {\n      pe = he.steps.step();\n    } catch (ge) {\n      console.error('[audio] synthesis failed for ' + he.k, ge), queue.shift();\n      continue;\n    }\n    if (pe && (registerBuffer(he.k, pe), queue.shift(), onBufferReady(he.name)), performance.now() - te > 6) break;\n  }\n  synthMs += performance.now() - te, queue.length ? setTimeout(pumpQueue, 12) : resolveReady();\n}"
+ },
+ {
+  "function": "makeDataTexture",
+  "bytes": 643,
+  "line": 26277,
+  "params": [
+   "data",
+   "size",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "n",
+   "s",
+   "t"
+  ],
+  "code": "/**\n * 把字节数组包成 DataTexture（可平铺、带 mipmap 与各向异性），地面烘焙结果统一走它\n * @module-ref src/world/ground/ground.js\n */\nfunction makeDataTexture(data, size, {\n  repeat: t = !0,\n  aniso: n = 1\n} = {}) {\n  let s = new THREE.DataTexture(data, size, size, THREE.RGBAFormat, THREE.UnsignedByteType);\n  return s.wrapS = s.wrapT = t ? THREE.RepeatWrapping : THREE.ClampToEdgeWrapping, s.magFilter = THREE.LinearFilter, s.minFilter = THREE.LinearMipmapLinearFilter, s.generateMipmaps = !0, s.anisotropy = n, s.colorSpace = THREE.NoColorSpace, s.needsUpdate = !0, s;\n}\n/**\n * 地面标线画布覆盖的世界范围（x0/z0/宽/高），canvas 像素坐标与场地坐标的换算基准\n * @module-ref src/world/ground/ground.js\n */"
+ },
+ {
+  "function": "createSfxBaker",
+  "bytes": 625,
+  "line": 35338,
+  "params": [
+   "name",
+   "_",
+   "sr"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "a",
+   "e",
+   "l",
+   "n",
+   "o",
+   "r",
+   "s",
+   "sr"
+  ],
+  "code": "/**\n * 渐进式烘焙句柄：每次 step() 只推进生成器一帧，未完成返回 null，供启动期用时间切片烘焙长缓冲而不阻塞首帧。\n * @module-ref src/audio/library.js\n */\nfunction createSfxBaker(name, e = 0, sr) {\n  let n = SFX_RECIPES[name];\n  if (!n) return null;\n  let s = sr || n.sr,\n    o = e % n.n,\n    r = n.gen(s, ao(fnv1aHash(name) + o * 7919), o),\n    a = null;\n  return {\n    step() {\n      if (a) return a;\n      if (isIterator(r)) {\n        let l = r.next();\n        if (!l.done) return null;\n        r = l.value;\n      }\n      return a = finalizeSample(n, r, s);\n    }\n  };\n}\n/**\n * 把数值夹到 [min,max]；引擎里所有来自事件的增益、音高、强度都先过它，防止外部数据把声音推到失控值。\n * @module-ref src/audio/audio.js\n */"
+ },
+ {
+  "function": "startRun",
+  "bytes": 604,
+  "line": 47651,
+  "params": [
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "P",
+   "V",
+   "Y"
+  ],
+  "code": "function startRun({\n  skipIntro: P = !1,\n  quick: V = !1,\n  keepRetries: Y = !1\n} = {}) {\n  if (Y || (run.retries = 0), menus.show('none'), menus.locationCard(!1), safeCall(ctx.audio, 'setPaused', !1), resetRun(), safeCall(ctx.weapon, 'setVisible', !0), lockSeen = !1, P) {\n    post.fade = 0, beginPlay();\n    return;\n  }\n  introSeconds = V ? MISSION_FLOW.retryIntroSeconds : MISSION_FLOW.introSeconds, introCardShown = V, introRadioDone = V, player.enabled = !1, input.setGameplay && input.setGameplay(!1), hud.show(!1), post.fade = 1, safeCall(ctx.audio, 'setIntensity', 0.15), setFlowState('intro');\n}"
+ },
+ {
+  "function": "strutBetween",
+  "bytes": 593,
+  "line": 21563,
+  "params": [
+   "i",
+   "b",
+   "_",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "i",
+   "b"
+  ],
+  "shortLocals": [
+   "a",
+   "b",
+   "i",
+   "n",
+   "o",
+   "r",
+   "s",
+   "t"
+  ],
+  "code": "/**\n * 两点之间生成一根圆柱杆件（栏杆、桁架、拉索），自动求朝向与长度\n * @module-ref src/core/geometry.js\n */\nfunction strutBetween(i, b, t = 0.03, n = 5, s = !1) {\n  i = toVec3(i), b = toVec3(b);\n  let o = new THREE.Vector3().subVectors(b, i),\n    r = o.length();\n  if (r < 1e-5) return null;\n  let a = cylinderGeometry(t, t, r, n, !s);\n  return TMP_QUAT.setFromUnitVectors(UP_AXIS, o.multiplyScalar(1 / r)), TMP_MATRIX.compose(new THREE.Vector3().addVectors(i, b).multiplyScalar(0.5), TMP_QUAT, ONE_SCALE), a.applyMatrix4(TMP_MATRIX), a;\n}\n/**\n * 两点之间生成一根可带锥度的方截面梁（斜撑、箱型杆），用于桁架与结构斜撑\n * @module-ref src/core/geometry.js\n */"
+ },
+ {
+  "function": "berth4",
+  "bytes": 557,
+  "line": 4556,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "g",
+   "v",
+   "x",
+   "y"
+  ],
+  "code": "() => buildCanvasDecal('berth4', 640, 224, (v, g, x, y) => {\n  v.strokeStyle = toRgba(INK_PALETTE.yellow), v.lineWidth = 12, v.strokeRect(14, 14, g - 28, x - 28), v.globalCompositeOperation = 'destination-out';\n  for (let b of [g * 0.25, g * 0.75]) v.fillRect(b - 6, 0, 12, x);\n  v.globalCompositeOperation = 'source-over', drawStencilRun(v, 'BERTH 4', g / 2, x * 0.76, x * 0.66, toRgba(INK_PALETTE.yellow), {\n    align: 'center',\n    weight: 900,\n    maxW: g - 80\n  }), applyCanvasDistress(v, g, x, 0.55, y);\n}, {\n  bleed: INK_PALETTE.yellow,\n  text: !0\n})"
+ },
+ {
+  "function": "synthBellTone",
+  "bytes": 546,
+  "line": 34515,
+  "params": [
+   "sr",
+   "freq",
+   "seconds"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "n",
+   "o",
+   "s",
+   "sr"
+  ],
+  "code": "/**\n * 钟铃音：基频加整数倍泛音并整体指数衰减，用于任务提示旋律与 motif 层。\n * @module-ref src/audio/library.js\n */\nfunction synthBellTone(sr, freq, seconds) {\n  let n = makeModalResonance(sr, seconds, [[freq, seconds * 0.3, 1], [freq * 2.003, seconds * 0.18, 0.4], [freq * 3.01, seconds * 0.1, 0.18], [freq * 4.2, seconds * 0.05, 0.1], [freq * 0.5, seconds * 0.3, 0.25]]),\n    s = Math.round(0.006 * sr);\n  for (let o = 0; o < s; o++) n[o] *= o / s;\n  return fadeBufferEdges(n, sr, 0, 0.2);\n}\n/**\n * 音乐动机层：两小节一组的铃音短句，是整个循环里最容易被记住的旋律钩子。\n * @module-ref src/audio/library.js\n */"
+ },
+ {
+  "function": "emitDebris",
+  "bytes": 535,
+  "line": 30064,
+  "params": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "R",
+   "I",
+   "se",
+   "ae",
+   "k"
+  ],
+  "shortParams": [
+   "ee",
+   "B",
+   "P",
+   "V",
+   "Y",
+   "L",
+   "Z",
+   "J",
+   "oe",
+   "fe",
+   "le",
+   "R",
+   "I",
+   "se",
+   "ae",
+   "k"
+  ],
+  "shortLocals": [
+   "B",
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "V",
+   "Y",
+   "Z",
+   "_e",
+   "ae",
+   "ce",
+   "ee",
+   "fe",
+   "k",
+   "le",
+   "oe",
+   "se",
+   "ve"
+  ],
+  "code": "function emitDebris(ee, B, P, V, Y, L, Z, J, oe, fe, le, R, I, se, ae, k) {\n  for (let ce = 0; ce < P; ce++) {\n    randomDirectionAround(B, ae, FX_SCRATCH_VEC_D);\n    let ve = randRange(V, Y),\n      _e = randRange(0.8, 1.15);\n    debrisPool.add(ee.x + FX_SCRATCH_VEC_D.x * 0.02, ee.y + FX_SCRATCH_VEC_D.y * 0.02, ee.z + FX_SCRATCH_VEC_D.z * 0.02, FX_SCRATCH_VEC_D.x * ve, FX_SCRATCH_VEC_D.y * ve + 0.8, FX_SCRATCH_VEC_D.z * ve, randRange(L, Z), randRange(J, oe), randRange(fe, le), R * _e, I * _e, se * _e, randRange(3.5, 6), k);\n  }\n}"
+ },
+ {
+  "function": "logo_d",
+  "bytes": 504,
+  "line": 4526,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "b",
+   "g",
+   "m",
+   "v",
+   "x",
+   "y"
+  ],
+  "code": "() => buildCanvasDecal('logo_d', 640, 192, (v, g, x, y) => {\n  drawLogoLockup(v, g, x, INK_PALETTE.white, (b, m, A) => {\n    b.fillRect(-m, -m, m * 0.5, m * 2), b.fillRect(m * 0.5, -m, m * 0.5, m * 2), b.fillRect(-m, -m * 0.2, m * 2, m * 0.4), b.fillStyle = A, b.fillRect(-m * 0.32, -m, m * 0.64, m * 0.5), b.fillRect(-m * 0.32, m * 0.5, m * 0.64, m * 0.5);\n  }, 'HOLMGARD', 'INTERMODAL  FREIGHT', INK_PALETTE.yellow), applyCanvasDistress(v, g, x, 0.35, y);\n}, {\n  bleed: INK_PALETTE.white,\n  text: !0\n})"
+ },
+ {
+  "function": "composeTransformMatrix",
+  "bytes": 500,
+  "line": 7450,
+  "params": [
+   "_",
+   "_",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "e",
+   "i",
+   "n",
+   "t"
+  ],
+  "code": "/**\n * 由位移与欧拉角合成一个 4x4 变换矩阵，供装配器 push() 压栈时使用\n * @module-ref src/core/geometry.js\n */\nfunction composeTransformMatrix(i = 0, e = 0, t = 0, n = null) {\n  return n ? (TEMP_EULER_A.set(n[0], n[1], n[2]), TEMP_QUAT_A.setFromEuler(TEMP_EULER_A)) : TEMP_QUAT_A.identity(), TEMP_POS_A.set(i, e, t), new THREE.Matrix4().compose(TEMP_POS_A, TEMP_QUAT_A, UNIT_SCALE);\n}\n/**\n * 第一代道具零件装配器：按材质分桶收集几何、维护变换矩阵栈、提供 box/cyl/tube/bar/beam/decal 语法糖，最后 parts()/group() 合并成少量 Mesh\n * @module-ref src/core/geometry.js\n */"
+ },
+ {
+  "function": "je",
+  "bytes": 483,
+  "line": 7435,
+  "params": [
+   "geometry",
+   "_",
+   "_",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "e",
+   "n",
+   "s",
+   "t"
+  ],
+  "code": "/**\n * 就地把几何体平移+绕欧拉角旋转（r 缺省则只平移），是道具装配里最热的调用，因此复用临时对象\n * @module-ref src/audio/audio.js\n */\nfunction je(geometry, e = 0, t = 0, n = 0, s = null) {\n  return s ? (TEMP_EULER_A.set(s[0], s[1], s[2]), TEMP_QUAT_A.setFromEuler(TEMP_EULER_A)) : TEMP_QUAT_A.identity(), TEMP_POS_A.set(e, t, n), TEMP_MATRIX_A.compose(TEMP_POS_A, TEMP_QUAT_A, UNIT_SCALE), geometry.applyMatrix4(TEMP_MATRIX_A), geometry;\n}\n/**\n * 由位移与欧拉角合成一个 4x4 变换矩阵，供装配器 push() 压栈时使用\n * @module-ref src/core/geometry.js\n */"
+ },
+ {
+  "function": "addRollerDoor",
+  "bytes": 478,
+  "line": 22788,
+  "params": [
+   "R",
+   "I",
+   "se",
+   "ae",
+   "k",
+   "ce"
+  ],
+  "shortParams": [
+   "R",
+   "I",
+   "se",
+   "ae",
+   "k",
+   "ce"
+  ],
+  "shortLocals": [
+   "I",
+   "Pe",
+   "R",
+   "Te",
+   "_e",
+   "ae",
+   "ce",
+   "k",
+   "se",
+   "ve"
+  ],
+  "code": "function addRollerDoor(R, I, se, ae, k, ce) {\n  let ve = [boxFromBounds(-ae / 2, -k / 2, 0, ae / 2, k / 2, 0.02)],\n    _e = Math.round(k / 0.12);\n  for (let Te = 0; Te < _e; Te++) {\n    let Pe = boxFromBounds(-ae / 2 + 0.03, -0.012, 0, ae / 2 - 0.03, 0.012, 0.11);\n    Pe.rotateX(0.7), Pe.translate(0, -k / 2 + (Te + 0.5) * (k / _e), 0.03), ve.push(Pe);\n  }\n  for (let Te of ve) Te.rotateY(ce), Te.translate(R, I, se);\n  addGeom(darkSteel, ve.shift()), addGeom(galvSteel, ve);\n}"
+ },
+ {
+  "function": "createTiledPlane",
+  "bytes": 465,
+  "line": 6258,
+  "params": [
+   "width",
+   "height"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "n",
+   "s",
+   "t"
+  ],
+  "code": "/**\n * 按世界尺度重写平面 uv（乘宽高），使材质 tile 的物理尺寸与米一致，避免小面片贴图过密、大面片过大\n * @module-ref src/core/geometry.js\n */\nfunction createTiledPlane(width, height) {\n  let t = new THREE.PlaneGeometry(width, height),\n    n = t.attributes.uv;\n  for (let s = 0; s < n.count; s++) n.setXY(s, n.getX(s) * width, n.getY(s) * height);\n  return t;\n}\n/**\n * 材质展示场景：把 SURFACE_LIB 的每种材质铺成墙板/地面/球三件套（小球体额外走三平面以验证该路径），另立一面墙贴出全部贴花、标牌与数字，用于人工比对材质与贴花质量\n * @module-ref src/render/materials/showcase.js\n */"
+ },
+ {
+  "function": "createTiledSphere",
+  "bytes": 444,
+  "line": 6247,
+  "params": [
+   "radius"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "e",
+   "n",
+   "t"
+  ],
+  "code": "/**\n * 按世界尺度重写球体 uv（乘 2πr 与 πr），使材质 tile 的物理尺寸与米一致，而不是每颗球都各自铺满一次\n * @module-ref src/core/geometry.js\n */\nfunction createTiledSphere(radius) {\n  let e = new THREE.SphereGeometry(radius, 48, 32),\n    t = e.attributes.uv;\n  for (let n = 0; n < t.count; n++) t.setXY(n, t.getX(n) * 2 * Math.PI * radius, t.getY(n) * Math.PI * radius);\n  return e;\n}\n/**\n * 按世界尺度重写平面 uv（乘宽高），使材质 tile 的物理尺寸与米一致，避免小面片贴图过密、大面片过大\n * @module-ref src/core/geometry.js\n */"
+ },
+ {
+  "function": "p",
+  "bytes": 438,
+  "line": 7140,
+  "params": [
+   "x",
+   "y",
+   "b"
+  ],
+  "shortParams": [
+   "x",
+   "y",
+   "b"
+  ],
+  "shortLocals": [
+   "A",
+   "C",
+   "D",
+   "E",
+   "H",
+   "M",
+   "O",
+   "S",
+   "T",
+   "U",
+   "_",
+   "b",
+   "m",
+   "q",
+   "w",
+   "x",
+   "y",
+   "z"
+  ],
+  "code": "(x, y, b) => {\n  let m = l[x * 3],\n    A = l[x * 3 + 1],\n    _ = l[x * 3 + 2],\n    M = l[y * 3] - m,\n    E = l[y * 3 + 1] - A,\n    w = l[y * 3 + 2] - _,\n    S = l[b * 3] - m,\n    z = l[b * 3 + 1] - A,\n    H = l[b * 3 + 2] - _,\n    O = E * H - w * z,\n    q = w * S - M * H,\n    U = M * z - E * S,\n    T = m + (M + S) / 3,\n    D = A + (E + z) / 3,\n    C = _ + (w + H) / 3;\n  O * T + q * D + U * C >= 0 ? f.push(x, y, b) : f.push(x, b, y);\n}"
+ },
+ {
+  "function": "mixBufferAt",
+  "bytes": 424,
+  "line": 31849,
+  "params": [
+   "dest",
+   "src",
+   "offsetSec",
+   "gain",
+   "sr"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "a",
+   "o",
+   "r",
+   "sr"
+  ],
+  "code": "/**\n * 把一段缓冲按时间偏移与增益叠加进目标缓冲，是配方分层拼装的唯一基本操作（越界自动裁掉）。\n * @module-ref src/audio/synthesis.js\n */\nfunction mixBufferAt(dest, src, offsetSec, gain, sr) {\n  let o = Math.round(offsetSec * sr),\n    r = Math.min(src.length, dest.length - o);\n  for (let a = Math.max(0, -o); a < r; a++) dest[o + a] += src[a] * gain;\n  return dest;\n}\n/**\n * 同 mixBufferAt 但按环形回绕写入，用于把短音色撒满整条循环缓冲（雨滴、鼓组、连击纹理）。\n * @module-ref src/audio/synthesis.js\n */"
+ },
+ {
+  "function": "requestLock",
+  "bytes": 415,
+  "line": 37232,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "P"
+  ],
+  "code": "function requestLock() {\n  if (!(state.touch || state.locked)) {\n    if (!viewEl.requestPointerLock) {\n      onLockFail();\n      return;\n    }\n    try {\n      lockRequestAt = performance.now();\n      let P = viewEl.requestPointerLock();\n      P && P.catch && P.catch(() => onLockFail());\n    } catch {\n      onLockFail();\n    }\n    try {\n      viewEl.focus({\n        preventScroll: !0\n      });\n    } catch {}\n  }\n}"
+ },
+ {
+  "function": "quad",
+  "bytes": 408,
+  "line": 17737,
+  "params": [
+   "T",
+   "D",
+   "C",
+   "G",
+   "j",
+   "N",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "T",
+   "D",
+   "C",
+   "G",
+   "j",
+   "N"
+  ],
+  "shortLocals": [
+   "C",
+   "D",
+   "F",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "T",
+   "ie",
+   "j"
+  ],
+  "code": "function quad(T, D, C, G, j, N, Q = 'z+', K = 0) {\n  let ie = new THREE.PlaneGeometry(D, C),\n    F = new THREE.Mesh(ie, T);\n  return F.castShadow = !1, F.receiveShadow = !0, F.position.set(G, j, N), Q === 'z-' ? F.rotation.y = Math.PI : Q === 'x+' ? F.rotation.y = Math.PI / 2 : Q === 'x-' ? F.rotation.y = -Math.PI / 2 : Q === 'y+' && (F.rotation.x = -Math.PI / 2, F.rotation.z = K), staticRoot.add(F), F;\n}"
+ }
+]

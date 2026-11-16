@@ -1,0 +1,32 @@
+{
+  "buildWorkshopShed": {
+    "e": "makeSurfaceMat",
+    "Ne": "skylightHole",
+    "ze": "bandEaveSideZ",
+    "We": "bandRidgeSideZ"
+  },
+  "createRenderer": {
+    "s": "glContext",
+    "B": "materialList",
+    "P": "sceneMaterial"
+  },
+  "createPhysics": {
+    "Y": "overlapToMaxZ"
+  },
+  "placeYardLayout": {
+    "r": "cableSagHeight"
+  },
+  "createMaterials": {
+    "ie": "autoClearWas",
+    "F": "xrWasEnabled",
+    "X": "shadowUpdateWas",
+    "ne": "albedoTarget",
+    "re": "ormTarget",
+    "$": "normalTarget",
+    "ue": "texTarget"
+  },
+  "buildDumpster": {
+    "O": "lumpVertex",
+    "q": "noiseOffset"
+  }
+}

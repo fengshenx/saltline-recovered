@@ -1,0 +1,614 @@
+{
+  "domain": "A-配置与渲染基础",
+  "symbols": [
+    {
+      "compressed": "oi",
+      "name": "WORLD_BOUNDS",
+      "kind": "table",
+      "module": "src/config.js",
+      "doc": "港口堆场的世界边界与高程基准：可玩区 x∈[-40,40]、z∈[-30,30]，含地面高度 0、海平面 -1.6 与码头前沿 X=30，物理阻挡、地面高度查询与海水/陆地区分都以此为准"
+    },
+    {
+      "compressed": "Mn",
+      "name": "SUN",
+      "kind": "table",
+      "module": "src/config.js",
+      "doc": "黄昏低角度太阳参数（归一化方向、暖橙色、强度 9）：天空着色器、平行光、体积光与阴影相机共用同一方向来源，改动即全局生效"
+    },
+    {
+      "compressed": "en",
+      "name": "SKY_COLORS",
+      "kind": "table",
+      "module": "src/config.js",
+      "doc": "天空与雾的统一色板：天顶、向日地平、背日地平、雾色四项，天空 GLSL、体积光环境项与场景 fog 都从这里取色，保证远景色调一致"
+    },
+    {
+      "compressed": "Pi",
+      "name": "PLAYER_SPEC",
+      "kind": "table",
+      "module": "src/config.js",
+      "doc": "玩家与相机的尺寸规格：站立眼高 1.68 / 蹲下 1.05、胶囊半径 0.32 / 身高 1.8、世界相机 FOV 74；视图模型用窄 FOV 54，避免手部透视畸变"
+    },
+    {
+      "compressed": "vf",
+      "name": "LAYER_WORLD",
+      "kind": "const",
+      "module": "src/config.js",
+      "doc": "世界渲染层（three 默认层 0）：世界相机只渲这一层，把视图模型隔离到另一层，从而用两套近平面/FOV 各渲一遍再叠合"
+    },
+    {
+      "compressed": "zc",
+      "name": "LAYER_VIEWMODEL",
+      "kind": "const",
+      "module": "src/config.js",
+      "doc": "视图模型专用渲染层：挂在相机上的枪械/手臂只被 0.01 近平面、FOV 54 的视图模型相机渲染，防止武器穿模与近裁剪裁掉"
+    },
+    {
+      "compressed": "Pr",
+      "name": "QUALITY_PRESETS",
+      "kind": "table",
+      "module": "src/config.js",
+      "doc": "五档画质预设表（test/low/medium/high/ultra）：每档给出渲染缩放、MSAA、阴影贴图与纹理尺寸、体积光步数，以及 AO/平面反射/泛光/运动模糊/雨量开关与强度，是全部画质门禁的唯一数据源"
+    },
+    {
+      "compressed": "zy",
+      "name": "resolveQualityPreset",
+      "kind": "function",
+      "module": "src/config.js",
+      "doc": "启动时的画质裁决：显式预设名优先；其次按 UA/触屏尺寸判移动端降到 low；再用 WEBGL_debug_renderer_info 的 GPU 串识别软渲染与移动 GPU 降为 medium，其余给 high"
+    },
+    {
+      "compressed": "Dy",
+      "name": "createEventBus",
+      "kind": "function",
+      "module": "src/core/events.js",
+      "doc": "基于 Map 的事件总线：on 返回退订闭包，emit 对每个 handler 单独 try/catch 以免一个订阅者抛错断掉武器/敌人等整条广播链"
+    },
+    {
+      "compressed": "il",
+      "name": "createRng",
+      "kind": "function",
+      "module": "src/core/rng.js",
+      "doc": "mulberry32 系种子随机数：附带 range/int/pick/sign 与 fork（派生子流），让关卡布置、涂鸦与噪声在给定种子下可复现"
+    },
+    {
+      "compressed": "Zn",
+      "name": "clamp",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "把值夹到 [min,max]，全工程范围限制的基础函数"
+    },
+    {
+      "compressed": "bi",
+      "name": "lerp",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "线性插值，用于参数过渡与向量混合"
+    },
+    {
+      "compressed": "Fo",
+      "name": "saturate",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "把值夹到 [0,1]，用于归一化进度、强度与颜色通道"
+    },
+    {
+      "compressed": "sl",
+      "name": "smoothstep",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "在 [edge0,edge1] 间做 3t²-2t³ 平滑过渡，端点导数为零，用于淡入淡出与门限软化"
+    },
+    {
+      "compressed": "kn",
+      "name": "damp",
+      "kind": "function",
+      "module": "src/core/math.js",
+      "doc": "帧率无关的指数趋近 current+(target-current)·e^(-λdt)：不管掉帧与否收敛速度一致，用于相机跟随与各类平滑"
+    },
+    {
+      "compressed": "Wt",
+      "name": "noop",
+      "kind": "function",
+      "module": "src/main.js",
+      "doc": "共享空函数：所有 stub 模块的方法都指向它，使缺失子系统时的调用路径仍然安全可执行"
+    },
+    {
+      "compressed": "dr",
+      "name": "STUB_MODULE_FACTORIES",
+      "kind": "table",
+      "module": "src/main.js",
+      "doc": "子系统 stub 工厂表（ground/backdrop/fx/audio/weapon/enemies/hud/mats）：每个工厂返回一份形状与真模块一致的最小替身，模块加载失败或 showcase 模式下整局仍能跑起来"
+    },
+    {
+      "compressed": "sa",
+      "name": "mergeBufferGeometries",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "three BufferGeometryUtils.mergeGeometries 的内联副本：按属性语义合并多个几何（保留 index/morph/group），属性集合或类型不一致时报错并返回 null 而不是产出坏网格"
+    },
+    {
+      "compressed": "Ly",
+      "name": "mergeBufferAttributes",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "合并同名 BufferAttribute：先校验 array 构造类型/itemSize/normalized/gpuType 全部一致，再一次性分配拷贝；交错属性逐分量展开，是几何合并的底层搬运工"
+    },
+    {
+      "compressed": "oa",
+      "name": "SCRATCH_BEVEL_DIR",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "倒角盒逐顶点计算外扩方向时复用的临时向量，避免每顶点新建 Vector3 造成的分配压力"
+    },
+    {
+      "compressed": "$e",
+      "name": "createPlanarBox",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "盒体几何，UV 改为按世界坐标做三向平面投影，使不同尺寸的箱子/机柜贴图密度一致；anchor='bottom' 时原点落在盒底，便于按地面高度摆放"
+    },
+    {
+      "compressed": "Wi",
+      "name": "createChamferedBox",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "倒角盒：3×3 分段的盒体把棱/角顶点沿外法线内缩成小斜面并同步重算法线，让集装箱与机柜的边沿有真实高光；bevel 被限制在最短边一半以内，UV 仍走平面投影"
+    },
+    {
+      "compressed": "ot",
+      "name": "createMetricCylinder",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "圆柱几何，侧面 UV 按周长×高度换算成米制，使管材/栏杆的纹理不随半径粗细被拉伸；顶底盖走平面投影"
+    },
+    {
+      "compressed": "Fn",
+      "name": "createTubeAlongPath",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "沿点列生成 CatmullRom 管体（电缆、软管、缆绳）：段数与 UV 按实际弧长换算，并硬性限制 400 段以免长索把面数拉爆"
+    },
+    {
+      "compressed": "ky",
+      "name": "SCRATCH_TRS_MATRIX",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "applyTransform 复用的临时矩阵，避免每个零件变换都新建 Matrix4"
+    },
+    {
+      "compressed": "Fy",
+      "name": "SCRATCH_ROTATION",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "applyTransform 复用的临时四元数"
+    },
+    {
+      "compressed": "Uy",
+      "name": "SCRATCH_EULER",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "applyTransform 复用的临时欧拉角，承载 {r:[x,y,z]} 形式的旋转参数"
+    },
+    {
+      "compressed": "Ny",
+      "name": "SCRATCH_POSITION",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "applyTransform 复用的临时位置向量"
+    },
+    {
+      "compressed": "Fg",
+      "name": "SCRATCH_SCALE",
+      "kind": "const",
+      "module": "src/assets/geometry.js",
+      "doc": "applyTransform 复用的临时缩放向量，同时兼容标量与三元组两种缩放写法"
+    },
+    {
+      "compressed": "Dc",
+      "name": "applyTransform",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "用 {p,r,s} 简写把位移/欧拉旋转/缩放烘进几何体（返回同一对象），是道具生成器拼装零件的统一变换入口；s 传数字即等比缩放"
+    },
+    {
+      "compressed": "Lc",
+      "name": "applyVertexColor",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "给几何写入逐顶点 color 属性（可传固定 RGB 或按坐标计算的函数），用于锈迹、水渍等顶点级染色，省掉一张贴图"
+    },
+    {
+      "compressed": "Ii",
+      "name": "prepareAndMergeGeometries",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "合并前的规范化管线：补齐 uv/normal/color、剔除本例不需要的属性、统一 index 有无，再交给 mergeBufferGeometries，失败时退回空几何而不是崩掉"
+    },
+    {
+      "compressed": "By",
+      "name": "mergeStaticMeshes",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "把一棵静态子树按「材质 uuid + 投影/接收阴影标志 + layer」分组烘成若干大网格以压 draw call；skinned/instanced/多材质以及带 userData.noMerge 标记的子树原样保留"
+    },
+    {
+      "compressed": "Qi",
+      "name": "createShadowMesh",
+      "kind": "function",
+      "module": "src/assets/geometry.js",
+      "doc": "建 Mesh 并默认打开 castShadow/receiveShadow，统一道具与建筑对阴影的约定，可用 opts 逐处关掉"
+    },
+    {
+      "compressed": "Vg",
+      "name": "rendererModule",
+      "kind": "table",
+      "module": "src/render/renderer.js",
+      "doc": "渲染模块的惰性导出表（create 取 createRendererApi、showcase 取 showcase 版本），用 getter 延迟绑定，使入口能先按名字拿到渲染模块再真正求值，断开与主启动流程的循环依赖"
+    },
+    {
+      "compressed": "Ug",
+      "name": "SALTLINE_NOISE_GLSL",
+      "kind": "shader",
+      "module": "src/render/shaders/noise.glsl",
+      "doc": "共享噪声前缀：基于 tNoise 采样贴图的 n2() 值噪声与 5/3 八度 fbm，被天空、体积光与镜头污渍等着色器 include，保证各 pass 用同一套噪声统计"
+    },
+    {
+      "compressed": "Ng",
+      "name": "SALTLINE_HORIZON_GLSL",
+      "kind": "shader",
+      "module": "src/render/shaders/horizon.glsl",
+      "doc": "共享地平线色函数：skyToSun 给出去向太阳的方位权重，horizonColor 按该权重混合背日/向日/近日三层暖色，天空与体积光的远景雾必须用同一函数才不会接缝"
+    },
+    {
+      "compressed": "Oy",
+      "name": "createNoiseTexture",
+      "kind": "function",
+      "module": "src/assets/noise.js",
+      "doc": "生成 256×256 随机值噪声贴图（xorshift 填充 RGBA，RepeatWrapping + 线性滤波 + 无 mipmap + NoColorSpace）：给 GLSL 的 n2()/fbm 提供可平铺重复的采样底图，不依赖外部图片"
+    },
+    {
+      "compressed": "H6",
+      "name": "SALTLINE_SKY_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/sky.frag.glsl",
+      "doc": "天空片元着色器：程序化云层（fbm 密度 + 云缘燃烧 + 云洞漏日 + 薄碎云）、日盘、云内闪电与海面雾霭；uEnv=1 时钳制高光并隐去日盘，供 PMREM 环境捕获不产生 firefly"
+    },
+    {
+      "compressed": "V6",
+      "name": "SALTLINE_SKY_VERT",
+      "kind": "shader",
+      "module": "src/render/shaders/sky.vert.glsl",
+      "doc": "天空盒顶点着色器：输出方向向量并把 gl_Position 的 z 压到 w（等价推到远平面），使天空始终铺满视野且不参与深度排序"
+    },
+    {
+      "compressed": "W6",
+      "name": "createSkyUniforms",
+      "kind": "function",
+      "module": "src/render/sky.js",
+      "doc": "生成天空材质 uniform（噪声贴图、时间、环境模式、闪电强度/方向，以及从 SUN/SKY_COLORS 克隆的太阳与地平线色），真实天空与环境捕获共用同一套定义"
+    },
+    {
+      "compressed": "Hy",
+      "name": "createSkyDome",
+      "kind": "function",
+      "module": "src/render/sky.js",
+      "doc": "建天空网格：BackSide 盒体 + 定制 ShaderMaterial，关深度写入与雾、renderOrder=-1000、matrixAutoUpdate 关掉（始终随相机不参与变换），返回 mesh/material/geometry 三件套以便同一材质再用于环境捕获"
+    },
+    {
+      "compressed": "Vy",
+      "name": "captureSkyEnvironment",
+      "kind": "function",
+      "module": "src/render/sky.js",
+      "doc": "把天空材质克隆一份置 uEnv=1，用 PMREMGenerator 烘成环境贴图（烘完即 dispose 临时材质与生成器），使场景 IBL 与可见天空严格一致"
+    },
+    {
+      "compressed": "Wy",
+      "name": "SALTLINE_SHADOW_MARKER",
+      "kind": "const",
+      "module": "src/render/renderer.js",
+      "doc": "注入软阴影 chunk 时打上的 GLSL 注释标记，用于在着色器编译失败时识别「错误来自软阴影补丁」，从而回退到原生 PCF"
+    },
+    {
+      "compressed": "xf",
+      "name": "stockShadowChunk",
+      "kind": "const",
+      "module": "src/render/renderer.js",
+      "doc": "首次修补时缓存的三原生 shadowmap_pars_fragment 源码：必须只备份一次，才能在补丁失效或需要降级时无损还原"
+    },
+    {
+      "compressed": "Gy",
+      "name": "fitSunShadowFrustum",
+      "kind": "function",
+      "module": "src/render/renderer.js",
+      "doc": "把平行光阴影相机对到太阳方向并贴合场景：沿光轴 lookAt 区域中点，把两组包围盒的 8 个角投到光空间取 min/max 定正交范围，第二组（更高更远）的角只用来收紧近平面以免楼顶被裁"
+    },
+    {
+      "compressed": "qy",
+      "name": "installSoftShadowPatch",
+      "kind": "function",
+      "module": "src/render/renderer.js",
+      "doc": "运行时替换 three 的 getShadow：注入 Vogel 盘 blocker search + 半影随遮挡距离增长的 PCSS（米制视锥常量换算 UV、接收面斜率偏置、贴图边缘淡出）；chunk 结构与预期不符则告警并保留原生 PCF"
+    },
+    {
+      "compressed": "Xy",
+      "name": "restoreStockShadowChunk",
+      "kind": "function",
+      "module": "src/render/renderer.js",
+      "doc": "把缓存的原始 shadowmap chunk 写回 three，用于软阴影补丁失效或降级时恢复原生 PCF"
+    },
+    {
+      "compressed": "Yy",
+      "name": "SALTLINE_SHADOW_TAG",
+      "kind": "const",
+      "module": "src/render/renderer.js",
+      "doc": "软阴影标记的别名引用：只在 shader 错误分类里判断「当前材质用的是打过补丁的 chunk」，必须与注入时的字符串保持同一份"
+    },
+    {
+      "compressed": "Bg",
+      "name": "SALTLINE_POST_MARKER",
+      "kind": "const",
+      "module": "src/render/pipeline.js",
+      "doc": "所有后处理片元着色器共用的首行注释标记：既让 shader 报错能归类为 post pass 并解析出 pass 名，也是后处理链的识别特征"
+    },
+    {
+      "compressed": "n1",
+      "name": "GLSL_RAW_DEPTH_NEAR_EPS",
+      "kind": "const",
+      "module": "src/render/pipeline.js",
+      "doc": "以字符串形式注入后处理的原始深度阈值：小于它的像素视为贴近近平面（视图模型/贴脸面），跳过 AO、体积光与运动模糊，避免极近处白采样并产生脏边"
+    },
+    {
+      "compressed": "Zy",
+      "name": "GLSL_LINEAR_DEPTH_NEAR_EPS",
+      "kind": "const",
+      "module": "src/render/pipeline.js",
+      "doc": "线性深度版的近距阈值（单位米）：半分辨率深度图上小于它的像素直接判为无遮蔽/无体积，AO 与体积光共同遵循"
+    },
+    {
+      "compressed": "G6",
+      "name": "SALTLINE_POST_VERT",
+      "kind": "shader",
+      "module": "src/render/shaders/post.vert.glsl",
+      "doc": "全屏几何的顶点着色器：直接透传 position.xy 与 uv，配合预置的全屏三角省掉矩阵运算"
+    },
+    {
+      "compressed": "Js",
+      "name": "SALTLINE_POST_COMMON",
+      "kind": "shader",
+      "module": "src/render/shaders/post_common.glsl",
+      "doc": "后处理公共前缀：交错梯度噪声 ign（每像素旋转抖动）、hash12 与亮度 luma，被几乎所有 pass 拼在片元开头，保证抖动与亮度定义一致"
+    },
+    {
+      "compressed": "Og",
+      "name": "SALTLINE_EXPOSURE_GLSL",
+      "kind": "shader",
+      "module": "src/render/shaders/exposure.glsl",
+      "doc": "曝光取值片段：把手动曝光与 1×1 自适应亮度纹理按 key/限幅混合成 slExposure()，grade、streak 与 composite 共用同一条曝光曲线以防前后不一致"
+    },
+    {
+      "compressed": "q6",
+      "name": "SALTLINE_DEPTHCOPY_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/depthcopy.frag.glsl",
+      "doc": "只写深度的复制 pass：把不可采样的主 RT 深度写进带 DepthTexture 的目标供后续 pass 读取（关闭 colorWrite，depthFunc 恒通过）"
+    },
+    {
+      "compressed": "X6",
+      "name": "SALTLINE_DEPTHHALF_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/depthhalf.frag.glsl",
+      "doc": "半分辨率线性深度：用 texelFetch 精确取 2×2 中的一个深度再反算视距，注释说明为何不能用 uv 采样（取样会跨行、在地面产生 AO 条纹）"
+    },
+    {
+      "compressed": "Y6",
+      "name": "SALTLINE_AO_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/ao.frag.glsl",
+      "doc": "半分辨率 SSAO：由四邻域深度差重建视空间法线，按 Vogel 螺旋在球内采样做遮挡积分，半径随距离略增；taps 由 define 按画质注入"
+    },
+    {
+      "compressed": "$6",
+      "name": "SALTLINE_VOLUMETRIC_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/volumetric.frag.glsl",
+      "doc": "半分辨率体积光柱：射线步进累积双瓣 HG 相函数、太阳阴影可见性与高度衰减，仓库内部盒体额外加尘以显出门窗光柱；超出步进距离的远景用解析式接上该方向的地平线色避免断层"
+    },
+    {
+      "compressed": "$y",
+      "name": "SALTLINE_BLUR_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/blur.frag.glsl",
+      "doc": "深度感知的分离式模糊：±3 tap 按深度差加权，AO（BLUR_TOL 0.04）与体积光（0.30）复用同一份代码只换 define，防止半分辨率缓冲在几何边缘漏光"
+    },
+    {
+      "compressed": "Z6",
+      "name": "SALTLINE_COMPOSITE_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/composite.frag.glsl",
+      "doc": "半分辨率缓冲的上采样合成：按深度做联合双边上采样把 AO 与体积光还原到全分辨率；遮蔽只压环境光并在亮部淡出以免出现脏光晕，体积光按 col·T+scatter 叠加"
+    },
+    {
+      "compressed": "j6",
+      "name": "SALTLINE_MOTIONBLUR_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/motionblur.frag.glsl",
+      "doc": "相机运动模糊：用当前与上一帧 viewProj 求屏幕速度，沿速度方向 9 tap 采样并按深度剔除天空，速度归一上限防止快速转身糊成一片"
+    },
+    {
+      "compressed": "J6",
+      "name": "SALTLINE_DOWN_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/downsample.frag.glsl",
+      "doc": "Bloom 降采样：13 tap 加权盒式，首级额外做部分 Karis 平均（按亮度倒数加权）压住太阳与高光的 firefly，同时不把太阳本身弄灭"
+    },
+    {
+      "compressed": "K6",
+      "name": "SALTLINE_UP_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/upsample.frag.glsl",
+      "doc": "Bloom 升采样：3×3 帐篷滤波把低一级的模糊结果与高一级原图按 uMix 混合，逐级上行重建泛光金字塔"
+    },
+    {
+      "compressed": "Q6",
+      "name": "SALTLINE_STREAK_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/streak.frag.glsl",
+      "doc": "各向异性光条：只沿水平方向做 15 tap 高斯并减去随曝光归一的高亮阈值，模拟镜头横向拉丝；两级串联（第一级带阈值、第二级纯扩散）得到长尾"
+    },
+    {
+      "compressed": "eA",
+      "name": "SALTLINE_ADAPT_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/adapt.frag.glsl",
+      "doc": "1×1 眼睛适应：7×5 中心加权对数亮度平均 + 时间指数趋近，同时用 12 点 Vogel 采样太阳位置深度算出太阳可见度（R 存亮度、G 存可见度），带 NaN/首帧看门狗"
+    },
+    {
+      "compressed": "tA",
+      "name": "SALTLINE_LENS_DIRT_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/lensdirt.frag.glsl",
+      "doc": "程序化镜头污渍图：70 个哈希散布的斑块 + fbm 污痕 + 竖直雨痕，边缘加强后一次性烘成 512×288 纹理给泛光做调制，省掉一张美术贴图"
+    },
+    {
+      "compressed": "nA",
+      "name": "SALTLINE_GRADE_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/grade.frag.glsl",
+      "doc": "最终成像 pass：径向色散、ADS 边缘虚化、泛光/污渍/光条叠加、程序化太阳光晕与鬼影（按可见度做遮挡测试）、ACES→AgX 混合的胶片曲线，随后是分离色调、S 曲线、受击/低血/暗角与淡出"
+    },
+    {
+      "compressed": "iA",
+      "name": "SALTLINE_FINAL_FRAG",
+      "kind": "shader",
+      "module": "src/render/shaders/final.frag.glsl",
+      "doc": "输出前的收尾 pass：以亮度 alpha 做的轻量 FXAA、在强边缘退让的反锐化、亮度加权动态胶片颗粒，最后加 1/255 抖动压住天空渐变的色带"
+    },
+    {
+      "compressed": "jy",
+      "name": "createPostPipeline",
+      "kind": "function",
+      "module": "src/render/pipeline.js",
+      "doc": "后处理链编排器：自建全屏几何与正交相机，按画质预建全部 RenderTarget 与 pass 材质（深度复制/线性深度/AO/体积光/合成/运动模糊/bloom 金字塔/光条/自适应/dirt/grade/final），并暴露 run/resize/copyDepth/readAdapt/dispose 与 TUNE 调参表；初始化失败由调用方整体回退到 forward 渲染"
+    },
+    {
+      "compressed": "Jy",
+      "name": "SCENE_ENV_INTENSITY",
+      "kind": "const",
+      "module": "src/render/renderer.js",
+      "doc": "场景级环境光强度（IBL 加成）基准值：烘出的天空 PMREM 偏暗，靠它把整体环境照明拉到与黄昏实拍相符的水平"
+    },
+    {
+      "compressed": "Ky",
+      "name": "OBJECT_ENV_INTENSITY",
+      "kind": "const",
+      "module": "src/render/renderer.js",
+      "doc": "单物体 envMapIntensity 基准值：合并后的静态网格统一用它，室内/视图模型的补光按 Ky/Jy 比例换算，保证物体亮度与环境亮度的关系一致"
+    }
+  ],
+  "params": {
+    "zy": ["presetName"],
+    "Dy": [],
+    "il": ["seed"],
+    "Zn": ["value", "min", "max"],
+    "bi": ["a", "b", "t"],
+    "Fo": ["value"],
+    "sl": ["edge0", "edge1", "x"],
+    "kn": ["current", "target", "lambda", "dt"],
+    "Wt": [],
+    "sa": ["geometries", "useGroups"],
+    "Ly": ["attributes"],
+    "$e": ["width", "height", "depth", "anchor"],
+    "Wi": ["width", "height", "depth", "bevel", "anchor"],
+    "ot": ["radiusTop", "radiusBottom", "height", "radialSegments", "openEnded", "anchor"],
+    "Fn": ["points", "radius", "radialSegments", "closed", "tension"],
+    "Dc": ["object", "transform"],
+    "Lc": ["geometry", "color"],
+    "Ii": ["geometries"],
+    "By": ["root", "opts"],
+    "Qi": ["geometry", "material", "opts"],
+    "Oy": [],
+    "W6": ["noiseTex"],
+    "Hy": ["noiseTex"],
+    "Vy": ["renderer", "sky"],
+    "Gy": ["sunLight", "boundsMin", "boundsMax", "casterMin", "casterMax"],
+    "qy": ["frustum", "opts"],
+    "Xy": [],
+    "jy": ["renderer", "ctx", "opts"]
+  },
+  "locals": {
+    "sa": {
+      "t": "usesIndex",
+      "n": "attributeNames",
+      "s": "morphNames",
+      "o": "attributesBySemantic",
+      "r": "morphAttributesBySemantic",
+      "a": "morphTargetsRelative",
+      "l": "merged",
+      "c": "groupStart"
+    },
+    "qy": {
+      "n": "stockChunk",
+      "s": "chunkSource",
+      "o": "getShadowStart",
+      "r": "cubeToUVStart",
+      "a": "injectAt",
+      "l": "patchedChunk"
+    },
+    "jy": {
+      "n": "quadGeometry",
+      "s": "quadMesh",
+      "o": "fsCamera",
+      "r": "materials",
+      "a": "makePassMaterial",
+      "l": "renderPass",
+      "c": "HALF_FLOAT_TYPE",
+      "u": "UNSIGNED_BYTE_TYPE",
+      "h": "LINEAR_FILTER",
+      "f": "NEAREST_FILTER",
+      "p": "createTarget",
+      "d": "getQuality",
+      "v": "skyUniforms",
+      "g": "TUNE",
+      "x": "supportsFloatColor",
+      "y": "rt",
+      "b": "BLOOM_LEVELS",
+      "m": "adaptIndex",
+      "A": "frameCount",
+      "_": "dirtBaked",
+      "M": "size",
+      "E": "exposureUniforms",
+      "w": "depthCopyMat",
+      "S": "depthHalfMat",
+      "z": "aoMat",
+      "H": "volMat",
+      "O": "blurAoMat",
+      "q": "blurVolMat",
+      "U": "compositeMat",
+      "T": "motionMat",
+      "D": "downMat",
+      "C": "upMat",
+      "G": "streakMat",
+      "j": "adaptMat",
+      "N": "dirtMat",
+      "Q": "gradeMat",
+      "K": "finalMat",
+      "ie": "viewProj",
+      "F": "prevViewProj",
+      "X": "invViewProjScratch",
+      "ne": "sunClipPos",
+      "re": "scratchVec",
+      "$": "hasPrevFrame",
+      "ue": "syncQualityDefines",
+      "me": "resize",
+      "ee": "ensureDepthCopy",
+      "B": "copyDepth",
+      "P": "run",
+      "V": "clamp01",
+      "Y": "dispose",
+      "L": "readbackPixel",
+      "Z": "readAdaptation",
+      "J": "pipeline"
+    }
+  }
+}

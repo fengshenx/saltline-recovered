@@ -1,0 +1,73 @@
+# 反混淆报告（阶段 2：命名）
+
+顶层重命名 851 / 参数 993 / 局部绑定 4634
+JSDoc 注入 868 处
+输出 stage2.js 1505KB / 50374 行
+
+命名表未覆盖的顶层符号（0）: 无
+
+命名表里不存在的压缩名（0）: 无
+
+跨域命名冲突（0）:
+
+跳过的重命名（3292）:
+- params:qa.t->x(函数内已有同名绑定)
+- params:qa.n->y(函数内已有同名绑定)
+- params:jn(未找到函数)
+- params:Kn(未找到函数)
+- params:Rn.s->h(函数内已有同名绑定)
+- params:rv.r->h(函数内已有同名绑定)
+- params:Ka.e->x(函数内已有同名绑定)
+- params:av.e->x(函数内已有同名绑定)
+- params:Ke.i->a(函数内已有同名绑定)
+- params:jt.i->a(函数内已有同名绑定)
+- params:ua.i->a(函数内已有同名绑定)
+- params:Ab.i->x(函数内已有同名绑定)
+- params:Rf(未找到函数)
+- params:q1(未找到函数)
+- params:$1(未找到函数)
+- params:Z1(未找到函数)
+- params:j1(未找到函数)
+- params:yl(未找到函数)
+- params:Lf.i->x(函数内已有同名绑定)
+- params:Lf.e->y(函数内已有同名绑定)
+- locals:zy.t->gpuName(同作用域已有)
+- locals:Dy.i->handlersByEvent(同作用域已有)
+- locals:il.e->rngState(同作用域已有)
+- locals:il.i->seedValue(同作用域已有)
+- locals:il.t->nextRandom(同作用域已有)
+- locals:t.n->mixedHash(同作用域已有)
+- locals:mats.i->materialCache(同作用域已有)
+- locals:sa.t->usesIndex(同作用域已有)
+- locals:sa.n->attributeNames(同作用域已有)
+- locals:sa.s->morphNames(同作用域已有)
+- locals:sa.o->attributesBySemantic(同作用域已有)
+- locals:sa.r->morphAttributesBySemantic(同作用域已有)
+- locals:sa.a->morphTargetsRelative(同作用域已有)
+- locals:sa.l->merged(同作用域已有)
+- locals:sa.c->groupStart(同作用域已有)
+- locals:sa.e->useGroups(同作用域已有)
+- locals:Ly.a->mergedAttr(同作用域已有)
+- locals:Ly.e->ArrayType(同作用域已有)
+- locals:Ly.l->writeOffset(同作用域已有)
+- locals:Ly.n->normalized(同作用域已有)
+- locals:Ly.o->totalComponents(同作用域已有)
+- locals:Ly.r->mergedArray(同作用域已有)
+- locals:Ly.s->gpuType(同作用域已有)
+- locals:Ly.t->itemSize(同作用域已有)
+- locals:$e.a->normalAttr(同作用域已有)
+- locals:$e.n->anchor(同作用域已有)
+- locals:$e.o->uvAttr(同作用域已有)
+- locals:$e.r->posAttr(同作用域已有)
+- locals:$e.s->boxGeo(同作用域已有)
+- locals:$e.c->nx(与祖先绑定同名)
+- locals:Wi.n->bevelSize(同作用域已有)
+- locals:Wi.s->anchor(同作用域已有)
+- locals:Wi.o->boxGeo(同作用域已有)
+- locals:Wi.r->posAttr(同作用域已有)
+- locals:Wi.a->normAttr(同作用域已有)
+- locals:Wi.l->uvAttr(同作用域已有)
+- locals:Wi.c->halfW(同作用域已有)
+- locals:Wi.u->halfH(同作用域已有)
+- locals:Wi.h->halfD(同作用域已有)
+- locals:Wi.f->snapToEdge(同作用域已有)

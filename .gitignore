@@ -1,0 +1,12 @@
+node_modules/
+.tmp/
+
+# 调试构建（npm run build:dev 可重建）
+dist/saltline.dev.html
+
+# 反混淆流水线的中间大文件（npm run extract / deob / apply 可重建）
+extracted/stage1.js
+extracted/stage1.raw.js
+extracted/stage2.js
+extracted/segments/
+build/

@@ -1,0 +1,16 @@
+[
+ {
+  "n": 0,
+  "offset": 0,
+  "length": 1392052,
+  "head": " (()=>{var _M=Object.defineProperty;var br=(i,e)=>{for(var t in e)_M(i,t,{get:e[t],enumera",
+  "glsl": true
+ },
+ {
+  "n": 1,
+  "offset": 1392052,
+  "length": 2,
+  "head": " ",
+  "glsl": false
+ }
+]

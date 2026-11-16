@@ -1,0 +1,1474 @@
+[
+ {
+  "mine": "chooseQuality",
+  "ref": "chooseQuality",
+  "adoptName": "chooseQuality",
+  "module": "src/core/quality.js",
+  "score": 1,
+  "shared": 5
+ },
+ {
+  "mine": "applyCanvasDistress",
+  "ref": "Ks",
+  "adoptName": "applyCanvasDistress",
+  "module": "src/render/materials/textures.js",
+  "score": 1,
+  "shared": 4
+ },
+ {
+  "mine": "drawStencilRun",
+  "ref": "qa",
+  "adoptName": "drawStencilRun",
+  "module": "src/render/materials/textures.js",
+  "score": 1,
+  "shared": 6
+ },
+ {
+  "mine": "showcaseProps",
+  "ref": "showcaseProps",
+  "adoptName": "showcaseProps",
+  "module": "src/world/props/props.js",
+  "score": 1,
+  "shared": 1
+ },
+ {
+  "mine": "getLabelMaterial",
+  "ref": "Mi",
+  "adoptName": "getLabelMaterial",
+  "module": "src/world/props/geometry.js",
+  "score": 1,
+  "shared": 1
+ },
+ {
+  "mine": "buildJerseyBarrier",
+  "ref": "buildJerseyBarrier",
+  "adoptName": "buildJerseyBarrier",
+  "module": "src/world/props/basic-builders.js",
+  "score": 1,
+  "shared": 4
+ },
+ {
+  "mine": "buildLightMast",
+  "ref": "buildLightMast",
+  "adoptName": "buildLightMast",
+  "module": "src/world/props/basic-builders.js",
+  "score": 1,
+  "shared": 6
+ },
+ {
+  "mine": "buildGuardBooth",
+  "ref": "buildGuardBooth",
+  "adoptName": "buildGuardBooth",
+  "module": "src/world/props/basic-builders.js",
+  "score": 1,
+  "shared": 20
+ },
+ {
+  "mine": "buildMooringBollard",
+  "ref": "buildMooringBollard",
+  "adoptName": "buildMooringBollard",
+  "module": "src/world/props/basic-builders.js",
+  "score": 1,
+  "shared": 4
+ },
+ {
+  "mine": "buildBollardPost",
+  "ref": "buildBollardPost",
+  "adoptName": "buildBollardPost",
+  "module": "src/world/props/basic-builders.js",
+  "score": 1,
+  "shared": 4
+ },
+ {
+  "mine": "buildSignPost",
+  "ref": "buildSignPost",
+  "adoptName": "buildSignPost",
+  "module": "src/world/props/basic-builders.js",
+  "score": 1,
+  "shared": 10
+ },
+ {
+  "mine": "buildFloodlightStand",
+  "ref": "buildFloodlightStand",
+  "adoptName": "buildFloodlightStand",
+  "module": "src/world/props/basic-builders.js",
+  "score": 1,
+  "shared": 6
+ },
+ {
+  "mine": "buildMetalStairs",
+  "ref": "buildMetalStairs",
+  "adoptName": "buildMetalStairs",
+  "module": "src/world/props/basic-builders.js",
+  "score": 1,
+  "shared": 6
+ },
+ {
+  "mine": "buildCatwalk",
+  "ref": "buildCatwalk",
+  "adoptName": "buildCatwalk",
+  "module": "src/world/props/basic-builders.js",
+  "score": 1,
+  "shared": 8
+ },
+ {
+  "mine": "addShelfLoad",
+  "ref": "DA",
+  "adoptName": "addShelfLoad",
+  "module": "src/world/props/basic-builders.js",
+  "score": 1,
+  "shared": 7
+ },
+ {
+  "mine": "buildShelfRack",
+  "ref": "buildShelfRack",
+  "adoptName": "buildShelfRack",
+  "module": "src/world/props/basic-builders.js",
+  "score": 1,
+  "shared": 23
+ },
+ {
+  "mine": "buildReeferUnit",
+  "ref": "buildReeferUnit",
+  "adoptName": "buildReeferUnit",
+  "module": "src/world/props/basic-builders.js",
+  "score": 1,
+  "shared": 16
+ },
+ {
+  "mine": "roundedBoxGeometry",
+  "ref": "Ge",
+  "adoptName": "roundedBoxGeometry",
+  "module": "src/world/props/detail-geometry.js",
+  "score": 1,
+  "shared": 2
+ },
+ {
+  "mine": "buildBarrel",
+  "ref": "HA",
+  "adoptName": "buildBarrel",
+  "module": "src/world/props/detail-geometry.js",
+  "score": 1,
+  "shared": 11
+ },
+ {
+  "mine": "addEuroPallet",
+  "ref": "S1",
+  "adoptName": "addEuroPallet",
+  "module": "src/world/props/detailed-builders.js",
+  "score": 1,
+  "shared": 3
+ },
+ {
+  "mine": "buildPalletStack",
+  "ref": "WA",
+  "adoptName": "buildPalletStack",
+  "module": "src/world/props/detailed-builders.js",
+  "score": 1,
+  "shared": 1
+ },
+ {
+  "mine": "addWoodCrateBody",
+  "ref": "E1",
+  "adoptName": "addWoodCrateBody",
+  "module": "src/world/props/detailed-builders.js",
+  "score": 1,
+  "shared": 9
+ },
+ {
+  "mine": "buildCrateWood",
+  "ref": "GA",
+  "adoptName": "buildCrateWood",
+  "module": "src/world/props/detailed-builders.js",
+  "score": 1,
+  "shared": 5
+ },
+ {
+  "mine": "buildCrateStack",
+  "ref": "qA",
+  "adoptName": "buildCrateStack",
+  "module": "src/world/props/detailed-builders.js",
+  "score": 1,
+  "shared": 8
+ },
+ {
+  "mine": "buildIbcTote",
+  "ref": "XA",
+  "adoptName": "buildIbcTote",
+  "module": "src/world/props/detailed-builders.js",
+  "score": 1,
+  "shared": 13
+ },
+ {
+  "mine": "createCableReelDiscGeometries",
+  "ref": "Z3",
+  "adoptName": "createCableReelDiscGeometries",
+  "module": "src/world/props/detailed-builders.js",
+  "score": 1,
+  "shared": 2
+ },
+ {
+  "mine": "buildCableReel",
+  "ref": "YA",
+  "adoptName": "buildCableReel",
+  "module": "src/world/props/detailed-builders.js",
+  "score": 1,
+  "shared": 13
+ },
+ {
+  "mine": "buildTireStack",
+  "ref": "$A",
+  "adoptName": "buildTireStack",
+  "module": "src/world/props/detailed-builders.js",
+  "score": 1,
+  "shared": 2
+ },
+ {
+  "mine": "buildJerryCan",
+  "ref": "ZA",
+  "adoptName": "buildJerryCan",
+  "module": "src/world/props/detailed-builders.js",
+  "score": 1,
+  "shared": 7
+ },
+ {
+  "mine": "buildTrafficCone",
+  "ref": "jA",
+  "adoptName": "buildTrafficCone",
+  "module": "src/world/props/detailed-builders.js",
+  "score": 1,
+  "shared": 5
+ },
+ {
+  "mine": "buildGasCylinders",
+  "ref": "JA",
+  "adoptName": "buildGasCylinders",
+  "module": "src/world/props/detailed-builders.js",
+  "score": 1,
+  "shared": 20
+ },
+ {
+  "mine": "buildPipeStack",
+  "ref": "KA",
+  "adoptName": "buildPipeStack",
+  "module": "src/world/props/detailed-builders.js",
+  "score": 1,
+  "shared": 9
+ },
+ {
+  "mine": "registerDetailedProps",
+  "ref": "registerDetailedProps",
+  "adoptName": "registerDetailedProps",
+  "module": "src/world/props/detailed-builders.js",
+  "score": 1,
+  "shared": 16
+ },
+ {
+  "mine": "buildTarpCargo",
+  "ref": "QA",
+  "adoptName": "buildTarpCargo",
+  "module": "src/world/props/character-builders.js",
+  "score": 1,
+  "shared": 9
+ },
+ {
+  "mine": "buildSandbags",
+  "ref": "tR",
+  "adoptName": "buildSandbags",
+  "module": "src/world/props/character-builders.js",
+  "score": 1,
+  "shared": 2
+ },
+ {
+  "mine": "addCardboardBox",
+  "ref": "Oc",
+  "adoptName": "addCardboardBox",
+  "module": "src/world/props/character-builders.js",
+  "score": 1,
+  "shared": 9
+ },
+ {
+  "mine": "buildCardboardBoxes",
+  "ref": "nR",
+  "adoptName": "buildCardboardBoxes",
+  "module": "src/world/props/character-builders.js",
+  "score": 1,
+  "shared": 4
+ },
+ {
+  "mine": "addForkliftWheel",
+  "ref": "ib",
+  "adoptName": "addForkliftWheel",
+  "module": "src/world/props/cargo-builders.js",
+  "score": 1,
+  "shared": 4
+ },
+ {
+  "mine": "buildForklift",
+  "ref": "oR",
+  "adoptName": "buildForklift",
+  "module": "src/world/props/cargo-builders.js",
+  "score": 1,
+  "shared": 20
+ },
+ {
+  "mine": "buildGenerator",
+  "ref": "rR",
+  "adoptName": "buildGenerator",
+  "module": "src/world/props/cargo-builders.js",
+  "score": 1,
+  "shared": 21
+ },
+ {
+  "mine": "buildDumpster",
+  "ref": "aR",
+  "adoptName": "buildDumpster",
+  "module": "src/world/props/cargo-builders.js",
+  "score": 1,
+  "shared": 17
+ },
+ {
+  "mine": "buildToolboxCart",
+  "ref": "lR",
+  "adoptName": "buildToolboxCart",
+  "module": "src/world/props/cargo-builders.js",
+  "score": 1,
+  "shared": 18
+ },
+ {
+  "mine": "addCylinderMesh",
+  "ref": "ov",
+  "adoptName": "addCylinderMesh",
+  "module": "src/world/level/placement.js",
+  "score": 1,
+  "shared": 1
+ },
+ {
+  "mine": "addFootprintCollider",
+  "ref": "rv",
+  "adoptName": "addFootprintCollider",
+  "module": "src/world/level/placement.js",
+  "score": 1,
+  "shared": 1
+ },
+ {
+  "mine": "buildMeshCage",
+  "ref": "Ka",
+  "adoptName": "buildMeshCage",
+  "module": "src/world/level/placement.js",
+  "score": 1,
+  "shared": 6
+ },
+ {
+  "mine": "buildSkipBin",
+  "ref": "Qa",
+  "adoptName": "buildSkipBin",
+  "module": "src/world/level/placement.js",
+  "score": 1,
+  "shared": 4
+ },
+ {
+  "mine": "buildRebarBundle",
+  "ref": "Ef",
+  "adoptName": "buildRebarBundle",
+  "module": "src/world/level/placement.js",
+  "score": 1,
+  "shared": 3
+ },
+ {
+  "mine": "buildLaneSignpost",
+  "ref": "Sf",
+  "adoptName": "buildLaneSignpost",
+  "module": "src/world/level/placement.js",
+  "score": 1,
+  "shared": 6
+ },
+ {
+  "mine": "buildPlateStack",
+  "ref": "av",
+  "adoptName": "buildPlateStack",
+  "module": "src/world/level/placement.js",
+  "score": 1,
+  "shared": 8
+ },
+ {
+  "mine": "buildCableRun",
+  "ref": "Lr",
+  "adoptName": "buildCableRun",
+  "module": "src/world/level/placement.js",
+  "score": 1,
+  "shared": 1
+ },
+ {
+  "mine": "placeYardLayout",
+  "ref": "hR",
+  "adoptName": "placeYardLayout",
+  "module": "src/world/level/placement.js",
+  "score": 1,
+  "shared": 43
+ },
+ {
+  "mine": "placeGateArea",
+  "ref": "fR",
+  "adoptName": "placeGateArea",
+  "module": "src/world/level/placement.js",
+  "score": 1,
+  "shared": 23
+ },
+ {
+  "mine": "buildQuayCrane",
+  "ref": "z1",
+  "adoptName": "buildQuayCrane",
+  "module": "src/world/backdrop/cranes.js",
+  "score": 1,
+  "shared": 15
+ },
+ {
+  "mine": "showcaseBackdrop",
+  "ref": "showcaseBackdrop",
+  "adoptName": "showcaseBackdrop",
+  "module": "src/world/backdrop/backdrop.js",
+  "score": 1,
+  "shared": 1
+ },
+ {
+  "mine": "SEA_WAVE_DISPLACE_VERT",
+  "ref": "CR",
+  "adoptName": "SEA_WAVE_DISPLACE_VERT",
+  "module": "src/world/ground/water.js",
+  "score": 1,
+  "shared": 1
+ },
+ {
+  "mine": "SEA_WAVE_MAIN_SLOPE_FRAG",
+  "ref": "PR",
+  "adoptName": "SEA_WAVE_MAIN_SLOPE_FRAG",
+  "module": "src/world/ground/water.js",
+  "score": 1,
+  "shared": 1
+ },
+ {
+  "mine": "SEA_WAVE_DETAIL_SLOPE_FRAG",
+  "ref": "IR",
+  "adoptName": "SEA_WAVE_DETAIL_SLOPE_FRAG",
+  "module": "src/world/ground/water.js",
+  "score": 1,
+  "shared": 1
+ },
+ {
+  "mine": "applySweptBiquad",
+  "ref": "di",
+  "adoptName": "applySweptBiquad",
+  "module": "src/audio/synthesis.js",
+  "score": 1,
+  "shared": 1
+ },
+ {
+  "mine": "SFX_RECIPES",
+  "ref": "Go",
+  "adoptName": "SFX_RECIPES",
+  "module": "src/audio/library.js",
+  "score": 1,
+  "shared": 3
+ },
+ {
+  "mine": "createWebAudioEngine",
+  "ref": "u_",
+  "adoptName": "createWebAudioEngine",
+  "module": "src/audio/audio.js",
+  "score": 1,
+  "shared": 109
+ },
+ {
+  "mine": "createInput",
+  "ref": "createInput",
+  "adoptName": "createInput",
+  "module": "src/input/input.js",
+  "score": 1,
+  "shared": 63
+ },
+ {
+  "mine": "createCombat",
+  "ref": "createCombat",
+  "adoptName": "createCombat",
+  "module": "src/combat/combat.js",
+  "score": 1,
+  "shared": 7
+ },
+ {
+  "mine": "buildPac9Geometry",
+  "ref": "w_",
+  "adoptName": "buildPac9Geometry",
+  "module": "src/weapons/geometry.js",
+  "score": 1,
+  "shared": 3
+ },
+ {
+  "mine": "buildDrapedSlab",
+  "ref": "Lf",
+  "adoptName": "buildDrapedSlab",
+  "module": "src/weapons/rig.js",
+  "score": 1,
+  "shared": 1
+ },
+ {
+  "mine": "buildGloveHand",
+  "ref": "Vv",
+  "adoptName": "buildGloveHand",
+  "module": "src/weapons/rig.js",
+  "score": 1,
+  "shared": 10
+ },
+ {
+  "mine": "showcaseWeapon",
+  "ref": "showcaseWeapon",
+  "adoptName": "showcaseWeapon",
+  "module": "src/weapons/weapon.js",
+  "score": 1,
+  "shared": 4
+ },
+ {
+  "mine": "DEFAULT_SETTINGS",
+  "ref": "DEFAULT_SETTINGS",
+  "adoptName": "DEFAULT_SETTINGS",
+  "module": "src/ui/menus.js",
+  "score": 1,
+  "shared": 1
+ },
+ {
+  "mine": "loadSettings",
+  "ref": "loadSettings",
+  "adoptName": "loadSettings",
+  "module": "src/ui/menus.js",
+  "score": 1,
+  "shared": 3
+ },
+ {
+  "mine": "createMenus",
+  "ref": "createMenus",
+  "adoptName": "createMenus",
+  "module": "src/ui/menus.js",
+  "score": 1,
+  "shared": 61
+ },
+ {
+  "mine": "createGameFlow",
+  "ref": "createGameFlow",
+  "adoptName": "createGameFlow",
+  "module": "src/game/flow.js",
+  "score": 0.999,
+  "shared": 64
+ },
+ {
+  "mine": "createHUD",
+  "ref": "createHUD",
+  "adoptName": "createHUD",
+  "module": "src/ui/hud.js",
+  "score": 0.999,
+  "shared": 99
+ },
+ {
+  "mine": "createDrone",
+  "ref": "createDrone",
+  "adoptName": "createDrone",
+  "module": "src/enemies/drone.js",
+  "score": 0.998,
+  "shared": 26
+ },
+ {
+  "mine": "createLevel",
+  "ref": "createLevel",
+  "adoptName": "createLevel",
+  "module": "src/world/level/level.js",
+  "score": 0.998,
+  "shared": 20
+ },
+ {
+  "mine": "createWalker",
+  "ref": "createWalker",
+  "adoptName": "createWalker",
+  "module": "src/enemies/walker.js",
+  "score": 0.997,
+  "shared": 19
+ },
+ {
+  "mine": "createPlayer",
+  "ref": "createPlayer",
+  "adoptName": "createPlayer",
+  "module": "src/player/player.js",
+  "score": 0.997,
+  "shared": 11
+ },
+ {
+  "mine": "createEffects",
+  "ref": "createEffects",
+  "adoptName": "createEffects",
+  "module": "src/effects/effects.js",
+  "score": 0.997,
+  "shared": 23
+ },
+ {
+  "mine": "startGame",
+  "ref": "startGame",
+  "adoptName": "startGame",
+  "module": "src/app/runtime.js",
+  "score": 0.997,
+  "shared": 38
+ },
+ {
+  "mine": "createPhysics",
+  "ref": "createPhysics",
+  "adoptName": "createPhysics",
+  "module": "src/world/physics.js",
+  "score": 0.996,
+  "shared": 2
+ },
+ {
+  "mine": "createWeapon",
+  "ref": "createWeapon",
+  "adoptName": "createWeapon",
+  "module": "src/weapons/weapon.js",
+  "score": 0.996,
+  "shared": 34
+ },
+ {
+  "mine": "buildContainerParts",
+  "ref": "zA",
+  "adoptName": "buildContainerParts",
+  "module": "src/world/props/basic-builders.js",
+  "score": 0.994,
+  "shared": 19
+ },
+ {
+  "mine": "Rig",
+  "ref": "iu",
+  "adoptName": "Rig",
+  "module": "src/enemies/models.js",
+  "score": 0.994,
+  "shared": 7
+ },
+ {
+  "mine": "buildBasicContainer",
+  "ref": "buildBasicContainer",
+  "adoptName": "buildBasicContainer",
+  "module": "src/world/props/basic-builders.js",
+  "score": 0.994,
+  "shared": 1
+ },
+ {
+  "mine": "enableBenchmark",
+  "ref": "enableBenchmark",
+  "adoptName": "enableBenchmark",
+  "module": "src/app/benchmark.js",
+  "score": 0.994,
+  "shared": 5
+ },
+ {
+  "mine": "beveledBoxGeometry",
+  "ref": "beveledBoxGeometry",
+  "adoptName": "beveledBoxGeometry",
+  "module": "src/core/geometry.js",
+  "score": 0.993,
+  "shared": 2
+ },
+ {
+  "mine": "buildContainerShip",
+  "ref": "vb",
+  "adoptName": "buildContainerShip",
+  "module": "src/world/backdrop/ships.js",
+  "score": 0.993,
+  "shared": 13
+ },
+ {
+  "mine": "buildFencePanel",
+  "ref": "buildFencePanel",
+  "adoptName": "buildFencePanel",
+  "module": "src/world/props/basic-builders.js",
+  "score": 0.992,
+  "shared": 8
+ },
+ {
+  "mine": "ShellPool",
+  "ref": "Z1",
+  "adoptName": "ShellPool",
+  "module": "src/effects/pools.js",
+  "score": 0.992,
+  "shared": 4
+ },
+ {
+  "mine": "buildRelayNode",
+  "ref": "buildRelayNode",
+  "adoptName": "buildRelayNode",
+  "module": "src/world/props/basic-builders.js",
+  "score": 0.992,
+  "shared": 25
+ },
+ {
+  "mine": "buildLabelAtlas",
+  "ref": "rb",
+  "adoptName": "buildLabelAtlas",
+  "module": "src/world/level/buildings.js",
+  "score": 0.992,
+  "shared": 4
+ },
+ {
+  "mine": "createDecalLibrary",
+  "ref": "l3",
+  "adoptName": "createDecalLibrary",
+  "module": "src/render/materials/textures.js",
+  "score": 0.992,
+  "shared": 107
+ },
+ {
+  "mine": "createDecalAtlas",
+  "ref": "Hb",
+  "adoptName": "createDecalAtlas",
+  "module": "src/effects/particles.js",
+  "score": 0.991,
+  "shared": 60
+ },
+ {
+  "mine": "createWalkerModel",
+  "ref": "createWalkerModel",
+  "adoptName": "createWalkerModel",
+  "module": "src/enemies/models.js",
+  "score": 0.991,
+  "shared": 13
+ },
+ {
+  "mine": "buildHarborSkyline",
+  "ref": "Mb",
+  "adoptName": "buildHarborSkyline",
+  "module": "src/world/backdrop/sky.js",
+  "score": 0.99,
+  "shared": 5
+ },
+ {
+  "mine": "createLevelKit",
+  "ref": "ob",
+  "adoptName": "createLevelKit",
+  "module": "src/world/level/buildings.js",
+  "score": 0.99,
+  "shared": 16
+ },
+ {
+  "mine": "createGround",
+  "ref": "createGround",
+  "adoptName": "createGround",
+  "module": "src/world/ground/ground.js",
+  "score": 0.99,
+  "shared": 2
+ },
+ {
+  "mine": "createEnemies",
+  "ref": "createEnemies",
+  "adoptName": "createEnemies",
+  "module": "src/enemies/enemies.js",
+  "score": 0.99,
+  "shared": 21
+ },
+ {
+  "mine": "PropAssembler",
+  "ref": "Kn",
+  "adoptName": "PropAssembler",
+  "module": "src/world/props/detail-geometry.js",
+  "score": 0.99,
+  "shared": 2
+ },
+ {
+  "mine": "showcaseEffects",
+  "ref": "showcaseEffects",
+  "adoptName": "showcaseEffects",
+  "module": "src/effects/effects.js",
+  "score": 0.989,
+  "shared": 16
+ },
+ {
+  "mine": "showcaseMaterials",
+  "ref": "showcaseMaterials",
+  "adoptName": "showcaseMaterials",
+  "module": "src/render/materials/showcase.js",
+  "score": 0.989,
+  "shared": 14
+ },
+ {
+  "mine": "cylinderGeometry",
+  "ref": "cylinderGeometry",
+  "adoptName": "cylinderGeometry",
+  "module": "src/core/geometry.js",
+  "score": 0.988,
+  "shared": 2
+ },
+ {
+  "mine": "buildGateArm",
+  "ref": "buildGateArm",
+  "adoptName": "buildGateArm",
+  "module": "src/world/props/basic-builders.js",
+  "score": 0.988,
+  "shared": 11
+ },
+ {
+  "mine": "buildBackdrop",
+  "ref": "Eb",
+  "adoptName": "buildBackdrop",
+  "module": "src/world/backdrop/backdrop.js",
+  "score": 0.988,
+  "shared": 10
+ },
+ {
+  "mine": "boxGeometry",
+  "ref": "boxGeometry",
+  "adoptName": "boxGeometry",
+  "module": "src/core/geometry.js",
+  "score": 0.987,
+  "shared": 2
+ },
+ {
+  "mine": "createApronMarkingsTexture",
+  "ref": "Pb",
+  "adoptName": "createApronMarkingsTexture",
+  "module": "src/world/ground/geometry.js",
+  "score": 0.987,
+  "shared": 16
+ },
+ {
+  "mine": "DebrisPool",
+  "ref": "$1",
+  "adoptName": "DebrisPool",
+  "module": "src/effects/pools.js",
+  "score": 0.987,
+  "shared": 1
+ },
+ {
+  "mine": "createProps",
+  "ref": "createProps",
+  "adoptName": "createProps",
+  "module": "src/world/props/props.js",
+  "score": 0.986,
+  "shared": 4
+ },
+ {
+  "mine": "bakeVertexColorTint",
+  "ref": "NA",
+  "adoptName": "bakeVertexColorTint",
+  "module": "src/world/props/detail-geometry.js",
+  "score": 0.986,
+  "shared": 3
+ },
+ {
+  "mine": "applyVertexShading",
+  "ref": "sm",
+  "adoptName": "applyVertexShading",
+  "module": "src/weapons/geometry.js",
+  "score": 0.986,
+  "shared": 1
+ },
+ {
+  "mine": "RingMeshBuilder",
+  "ref": "yl",
+  "adoptName": "RingMeshBuilder",
+  "module": "src/weapons/rig.js",
+  "score": 0.986,
+  "shared": 2
+ },
+ {
+  "mine": "showcaseEnemies",
+  "ref": "showcaseEnemies",
+  "adoptName": "showcaseEnemies",
+  "module": "src/enemies/enemies.js",
+  "score": 0.986,
+  "shared": 7
+ },
+ {
+  "mine": "mergeGeometryParts",
+  "ref": "mergeGeometryParts",
+  "adoptName": "mergeGeometryParts",
+  "module": "src/core/geometry.js",
+  "score": 0.986,
+  "shared": 3
+ },
+ {
+  "mine": "roundedBoxGeometryGrid",
+  "ref": "eo",
+  "adoptName": "roundedBoxGeometryGrid",
+  "module": "src/world/props/detail-geometry.js",
+  "score": 0.986,
+  "shared": 2
+ },
+ {
+  "mine": "installSoftShadows",
+  "ref": "installSoftShadows",
+  "adoptName": "installSoftShadows",
+  "module": "src/render/shadows.js",
+  "score": 0.985,
+  "shared": 5
+ },
+ {
+  "mine": "recomputeSmoothNormals",
+  "ref": "gr",
+  "adoptName": "recomputeSmoothNormals",
+  "module": "src/world/props/detail-geometry.js",
+  "score": 0.985,
+  "shared": 1
+ },
+ {
+  "mine": "createPostprocessing",
+  "ref": "createPostprocessing",
+  "adoptName": "createPostprocessing",
+  "module": "src/render/postprocessing.js",
+  "score": 0.985,
+  "shared": 19
+ },
+ {
+  "mine": "createRenderer",
+  "ref": "createRenderer",
+  "adoptName": "createRenderer",
+  "module": "src/render/renderer.js",
+  "score": 0.983,
+  "shared": 28
+ },
+ {
+  "mine": "createRainSystem",
+  "ref": "Nb",
+  "adoptName": "createRainSystem",
+  "module": "src/world/ground/water.js",
+  "score": 0.982,
+  "shared": 3
+ },
+ {
+  "mine": "buildMarkingsAtlas",
+  "ref": "TC",
+  "adoptName": "buildMarkingsAtlas",
+  "module": "src/weapons/rig.js",
+  "score": 0.982,
+  "shared": 41
+ },
+ {
+  "mine": "colorGeometry",
+  "ref": "colorGeometry",
+  "adoptName": "colorGeometry",
+  "module": "src/core/geometry.js",
+  "score": 0.981,
+  "shared": 2
+ },
+ {
+  "mine": "SurfaceBuilder",
+  "ref": "D1",
+  "adoptName": "SurfaceBuilder",
+  "module": "src/world/backdrop/ships.js",
+  "score": 0.981,
+  "shared": 3
+ },
+ {
+  "mine": "buildMooringBoat",
+  "ref": "xb",
+  "adoptName": "buildMooringBoat",
+  "module": "src/world/backdrop/ships.js",
+  "score": 0.981,
+  "shared": 8
+ },
+ {
+  "mine": "DecalBatch",
+  "ref": "j1",
+  "adoptName": "DecalBatch",
+  "module": "src/effects/pools.js",
+  "score": 0.98,
+  "shared": 5
+ },
+ {
+  "mine": "buildWorkshopShed",
+  "ref": "ab",
+  "adoptName": "buildWorkshopShed",
+  "module": "src/world/level/buildings.js",
+  "score": 0.979,
+  "shared": 45
+ },
+ {
+  "mine": "buildQuayApron",
+  "ref": "cb",
+  "adoptName": "buildQuayApron",
+  "module": "src/world/level/placement.js",
+  "score": 0.979,
+  "shared": 35
+ },
+ {
+  "mine": "buildLatheBody",
+  "ref": "Cn",
+  "adoptName": "buildLatheBody",
+  "module": "src/weapons/geometry.js",
+  "score": 0.977,
+  "shared": 3
+ },
+ {
+  "mine": "createDroneModel",
+  "ref": "createDroneModel",
+  "adoptName": "createDroneModel",
+  "module": "src/enemies/models.js",
+  "score": 0.976,
+  "shared": 15
+ },
+ {
+  "mine": "showcaseRenderer",
+  "ref": "showcaseRenderer",
+  "adoptName": "showcaseRenderer",
+  "module": "src/render/renderer.js",
+  "score": 0.976,
+  "shared": 9
+ },
+ {
+  "mine": "showcaseGround",
+  "ref": "showcaseGround",
+  "adoptName": "showcaseGround",
+  "module": "src/world/ground/ground.js",
+  "score": 0.975,
+  "shared": 11
+ },
+ {
+  "mine": "createMaterials",
+  "ref": "createMaterials",
+  "adoptName": "createMaterials",
+  "module": "src/render/materials/materials.js",
+  "score": 0.973,
+  "shared": 5
+ },
+ {
+  "mine": "createPlanarReflectionPass",
+  "ref": "zb",
+  "adoptName": "createPlanarReflectionPass",
+  "module": "src/world/ground/asphalt.js",
+  "score": 0.973,
+  "shared": 1
+ },
+ {
+  "mine": "createSeaSurface",
+  "ref": "kb",
+  "adoptName": "createSeaSurface",
+  "module": "src/world/ground/water.js",
+  "score": 0.973,
+  "shared": 20
+ },
+ {
+  "mine": "createBlinkerBatch",
+  "ref": "pb",
+  "adoptName": "createBlinkerBatch",
+  "module": "src/world/backdrop/geometry.js",
+  "score": 0.973,
+  "shared": 10
+ },
+ {
+  "mine": "tubeGeometry",
+  "ref": "tubeGeometry",
+  "adoptName": "tubeGeometry",
+  "module": "src/core/geometry.js",
+  "score": 0.972,
+  "shared": 1
+ },
+ {
+  "mine": "createWetApron",
+  "ref": "Ib",
+  "adoptName": "createWetApron",
+  "module": "src/world/ground/asphalt.js",
+  "score": 0.971,
+  "shared": 19
+ },
+ {
+  "mine": "chamferedBoxGeometry",
+  "ref": "p3",
+  "adoptName": "chamferedBoxGeometry",
+  "module": "src/world/props/geometry.js",
+  "score": 0.97,
+  "shared": 4
+ },
+ {
+  "mine": "createRoundedRectFanGeometry",
+  "ref": "pr",
+  "adoptName": "createRoundedRectFanGeometry",
+  "module": "src/world/props/geometry.js",
+  "score": 0.97,
+  "shared": 1
+ },
+ {
+  "mine": "buildGridSurface",
+  "ref": "I_",
+  "adoptName": "buildGridSurface",
+  "module": "src/weapons/rig.js",
+  "score": 0.97,
+  "shared": 2
+ },
+ {
+  "mine": "createOpticLens",
+  "ref": "U_",
+  "adoptName": "createOpticLens",
+  "module": "src/weapons/rig.js",
+  "score": 0.97,
+  "shared": 2
+ },
+ {
+  "mine": "hullPatchGeo",
+  "ref": "ul",
+  "adoptName": "hullPatchGeo",
+  "module": "src/world/backdrop/ships.js",
+  "score": 0.967,
+  "shared": 2
+ },
+ {
+  "mine": "createFxBatch",
+  "ref": "Ev",
+  "adoptName": "createFxBatch",
+  "module": "src/effects/particles.js",
+  "score": 0.966,
+  "shared": 7
+ },
+ {
+  "mine": "buildWheelChock",
+  "ref": "e0",
+  "adoptName": "buildWheelChock",
+  "module": "src/world/level/placement.js",
+  "score": 0.962,
+  "shared": 2
+ },
+ {
+  "mine": "loftProfileSurface",
+  "ref": "la",
+  "adoptName": "loftProfileSurface",
+  "module": "src/world/props/geometry.js",
+  "score": 0.957,
+  "shared": 1
+ },
+ {
+  "mine": "createGullFlock",
+  "ref": "wb",
+  "adoptName": "createGullFlock",
+  "module": "src/world/backdrop/sky.js",
+  "score": 0.95,
+  "shared": 8
+ },
+ {
+  "mine": "createSkyDome",
+  "ref": "Hy",
+  "adoptName": "createSkyDome",
+  "module": "src/render/sky.js",
+  "score": 0.94,
+  "shared": 1
+ },
+ {
+  "mine": "createGeometryFromArrays",
+  "ref": "Mf",
+  "adoptName": "createGeometryFromArrays",
+  "module": "src/world/props/detail-geometry.js",
+  "score": 0.94,
+  "shared": 2
+ },
+ {
+  "mine": "createMarkingsMesh",
+  "ref": "F_",
+  "adoptName": "createMarkingsMesh",
+  "module": "src/weapons/rig.js",
+  "score": 0.938,
+  "shared": 2
+ },
+ {
+  "mine": "FALLBACKS",
+  "ref": "FALLBACKS",
+  "adoptName": "FALLBACKS",
+  "module": "src/core/fallbacks.js",
+  "score": 0.936,
+  "shared": 2
+ },
+ {
+  "mine": "createMuzzleFlash",
+  "ref": "N_",
+  "adoptName": "createMuzzleFlash",
+  "module": "src/weapons/rig.js",
+  "score": 0.925,
+  "shared": 4
+ },
+ {
+  "mine": "createRainInstanceGeometry",
+  "ref": "Fb",
+  "adoptName": "createRainInstanceGeometry",
+  "module": "src/world/ground/water.js",
+  "score": 0.917,
+  "shared": 2
+ },
+ {
+  "mine": "QUALITY_PRESETS",
+  "ref": "QUALITY_PRESETS",
+  "adoptName": "QUALITY_PRESETS",
+  "module": "src/core/config.js",
+  "score": 0.85,
+  "shared": 4
+ },
+ {
+  "mine": "SURFACE_DEFS",
+  "ref": "c3",
+  "adoptName": "SURFACE_DEFS",
+  "module": "src/render/materials/catalog.js",
+  "score": 0.85,
+  "shared": 27
+ },
+ {
+  "mine": "SURFACE_LIB",
+  "ref": "l1",
+  "adoptName": "SURFACE_LIB",
+  "module": "src/render/materials/catalog.js",
+  "score": 0.85,
+  "shared": 28
+ },
+ {
+  "mine": "PROP_SIZES",
+  "ref": "PROP_SIZES",
+  "adoptName": "PROP_SIZES",
+  "module": "src/world/props/registry.js",
+  "score": 0.85,
+  "shared": 25
+ },
+ {
+  "mine": "PAINT_COLOR_ALIASES",
+  "ref": "V3",
+  "adoptName": "PAINT_COLOR_ALIASES",
+  "module": "src/world/props/detail-geometry.js",
+  "score": 0.85,
+  "shared": 9
+ },
+ {
+  "mine": "buildUtilityStandpipe",
+  "ref": "lv",
+  "adoptName": "buildUtilityStandpipe",
+  "module": "src/world/level/placement.js",
+  "score": 0.85,
+  "shared": 5
+ },
+ {
+  "mine": "patchMaterialShader",
+  "ref": "patchMaterialShader",
+  "adoptName": "patchMaterialShader",
+  "module": "src/render/materials/materials.js",
+  "score": 0.75,
+  "shared": 9
+ },
+ {
+  "mine": "createAudio",
+  "ref": "createAudio",
+  "adoptName": "createAudio",
+  "module": "src/audio/audio.js",
+  "score": 0.75,
+  "shared": 2
+ },
+ {
+  "mine": "patchPac9DetailMaterial",
+  "ref": "Bf",
+  "adoptName": "patchPac9DetailMaterial",
+  "module": "src/weapons/rig.js",
+  "score": 0.75,
+  "shared": 10
+ },
+ {
+  "mine": "showFatalError",
+  "ref": "showFatalError",
+  "adoptName": "showFatalError",
+  "module": "src/app/diagnostics.js",
+  "score": 0.75,
+  "shared": 3
+ },
+ {
+  "mine": "mergeGeometries",
+  "ref": "mergeGeometries",
+  "adoptName": "mergeGeometries",
+  "module": "src/core/geometry.js",
+  "score": 0.741,
+  "shared": 11
+ },
+ {
+  "mine": "mergeAttributes",
+  "ref": "mergeAttributes",
+  "adoptName": "mergeAttributes",
+  "module": "src/core/geometry.js",
+  "score": 0.738,
+  "shared": 4
+ },
+ {
+  "mine": "SL_AOMAP_FRAGMENT",
+  "ref": "bA",
+  "adoptName": "SL_AOMAP_FRAGMENT",
+  "module": "src/render/materials/catalog.js",
+  "score": 0.7,
+  "shared": 2
+ },
+ {
+  "mine": "TRIPLANAR_MATERIALS",
+  "ref": "_A",
+  "adoptName": "TRIPLANAR_MATERIALS",
+  "module": "src/render/materials/showcase.js",
+  "score": 0.6,
+  "shared": 9
+ },
+ {
+  "mine": "CONTAINER_SPECS",
+  "ref": "_3",
+  "adoptName": "CONTAINER_SPECS",
+  "module": "src/world/props/geometry.js",
+  "score": 0.6,
+  "shared": 16
+ },
+ {
+  "mine": "CONTAINER_OWNER_CODES",
+  "ref": "v1",
+  "adoptName": "CONTAINER_OWNER_CODES",
+  "module": "src/world/props/geometry.js",
+  "score": 0.6,
+  "shared": 6
+ },
+ {
+  "mine": "CONTAINER_LOGO_DECALS",
+  "ref": "v3",
+  "adoptName": "CONTAINER_LOGO_DECALS",
+  "module": "src/world/props/geometry.js",
+  "score": 0.6,
+  "shared": 4
+ },
+ {
+  "mine": "CONTAINER_PAINT_COLORS",
+  "ref": "jg",
+  "adoptName": "CONTAINER_PAINT_COLORS",
+  "module": "src/world/props/geometry.js",
+  "score": 0.6,
+  "shared": 7
+ },
+ {
+  "mine": "SIGN_DECAL_NAMES",
+  "ref": "Jg",
+  "adoptName": "SIGN_DECAL_NAMES",
+  "module": "src/world/props/basic-builders.js",
+  "score": 0.6,
+  "shared": 6
+ },
+ {
+  "mine": "SIGN_TEXTS",
+  "ref": "E3",
+  "adoptName": "SIGN_TEXTS",
+  "module": "src/world/props/basic-builders.js",
+  "score": 0.6,
+  "shared": 5
+ },
+ {
+  "mine": "registerCharacterProps",
+  "ref": "registerCharacterProps",
+  "adoptName": "registerCharacterProps",
+  "module": "src/world/props/character-builders.js",
+  "score": 0.6,
+  "shared": 3
+ },
+ {
+  "mine": "registerCargoProps",
+  "ref": "registerCargoProps",
+  "adoptName": "registerCargoProps",
+  "module": "src/world/props/cargo-builders.js",
+  "score": 0.6,
+  "shared": 4
+ },
+ {
+  "mine": "NO_COLLIDER_PROPS",
+  "ref": "cR",
+  "adoptName": "NO_COLLIDER_PROPS",
+  "module": "src/world/level/buildings.js",
+  "score": 0.6,
+  "shared": 2
+ },
+ {
+  "mine": "BACKDROP_PARTS",
+  "ref": "_R",
+  "adoptName": "BACKDROP_PARTS",
+  "module": "src/world/backdrop/backdrop.js",
+  "score": 0.6,
+  "shared": 3
+ },
+ {
+  "mine": "TRACER_FIELD_NAMES",
+  "ref": "qR",
+  "adoptName": "TRACER_FIELD_NAMES",
+  "module": "src/effects/particles.js",
+  "score": 0.6,
+  "shared": 4
+ },
+ {
+  "mine": "SFX_ALIASES",
+  "ref": "i_",
+  "adoptName": "SFX_ALIASES",
+  "module": "src/audio/library.js",
+  "score": 0.6,
+  "shared": 6
+ },
+ {
+  "mine": "SURFACE_IMPACT_SFX",
+  "ref": "l_",
+  "adoptName": "SURFACE_IMPACT_SFX",
+  "module": "src/audio/audio.js",
+  "score": 0.6,
+  "shared": 5
+ },
+ {
+  "mine": "SURFACE_STEP_SFX",
+  "ref": "Iv",
+  "adoptName": "SURFACE_STEP_SFX",
+  "module": "src/audio/audio.js",
+  "score": 0.6,
+  "shared": 3
+ },
+ {
+  "mine": "LATE_RETRY_SFX",
+  "ref": "tC",
+  "adoptName": "LATE_RETRY_SFX",
+  "module": "src/audio/audio.js",
+  "score": 0.6,
+  "shared": 13
+ },
+ {
+  "mine": "BAKE_ORDER",
+  "ref": "nC",
+  "adoptName": "BAKE_ORDER",
+  "module": "src/audio/audio.js",
+  "score": 0.6,
+  "shared": 49
+ },
+ {
+  "mine": "MUSIC_LAYERS",
+  "ref": "tm",
+  "adoptName": "MUSIC_LAYERS",
+  "module": "src/audio/audio.js",
+  "score": 0.6,
+  "shared": 5
+ },
+ {
+  "mine": "KEY_BINDINGS",
+  "ref": "KEY_BINDINGS",
+  "adoptName": "KEY_BINDINGS",
+  "module": "src/input/input.js",
+  "score": 0.6,
+  "shared": 16
+ },
+ {
+  "mine": "QUALITY_NAMES",
+  "ref": "QUALITY_NAMES",
+  "adoptName": "QUALITY_NAMES",
+  "module": "src/ui/menus.js",
+  "score": 0.6,
+  "shared": 3
+ },
+ {
+  "mine": "COMPASS_NAMES",
+  "ref": "jC",
+  "adoptName": "COMPASS_NAMES",
+  "module": "src/game/flow.js",
+  "score": 0.6,
+  "shared": 8
+ },
+ {
+  "mine": "CONTROL_RADIO_LINES",
+  "ref": "_l",
+  "adoptName": "CONTROL_RADIO_LINES",
+  "module": "src/game/flow.js",
+  "score": 0.6,
+  "shared": 7
+ }
+]

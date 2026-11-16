@@ -1,0 +1,1108 @@
+{
+  "domain": "F-音频引擎与音效",
+  "symbols": [
+    {
+      "compressed": "Cf",
+      "name": "createFxSystem",
+      "kind": "function",
+      "module": "src/render/fx.js",
+      "doc": "场景特效总线：预分配并批处理烟雾/火花/曳光/枪口焰/爆炸/水花/碎屑/贴花与长寿命发射器（蒸汽、火、余烬、滴漏），并把 impact、player:step、player:land 事件翻译成对应特效；用一次射线决定粒子是否处于遮蔽阴影中，整套特效不依赖外部贴图和 GPU 粒子。"
+    },
+    {
+      "compressed": "JR",
+      "name": "createFxDebugStage",
+      "kind": "function",
+      "module": "src/render/fx_bench.js",
+      "doc": "特效调参与截图用的独立测试场景：摆放混凝土/铁皮/木托盘三块靶板并循环触发冲击、曳光、抛壳与爆炸，支持 fxshow/fxhold/fxage/fxsize 参数与 window.__setShot 逐帧定格，用于离线比对特效迭代效果。"
+    },
+    {
+      "compressed": "vt",
+      "name": "TAU",
+      "kind": "const",
+      "module": "src/audio/dsp.js",
+      "doc": "2π 常量；音频合成按弧度累加相位，所有波形都用频率乘它换算，避免各处重复写 Math.PI 乘 2。"
+    },
+    {
+      "compressed": "ao",
+      "name": "createSeededRandom",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "mulberry32 变体的 32 位种子随机数发生器；音效烘焙用固定种子，保证同一配方每次生成的波形逐采样一致（可复现、可跨 session 缓存）。"
+    },
+    {
+      "compressed": "Kb",
+      "name": "fnv1aHash",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "FNV-1a 字符串哈希：把配方名映射成稳定种子，让每个音效的随机细节在每次启动时都相同，玩家听不出机器随机。"
+    },
+    {
+      "compressed": "St",
+      "name": "allocSamples",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "按采样率乘时长分配 Float32Array 缓冲（最少 1 个采样防 0 长度），是全套离线合成器的统一内存入口。"
+    },
+    {
+      "compressed": "Xt",
+      "name": "randBetween",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "在 [min,max] 区间取随机数，用于时长、频率、增益的轻微抖动，使同一音效多次触发不会听出重复。"
+    },
+    {
+      "compressed": "Ns",
+      "name": "midiToFreq",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "MIDI 音高转频率（A4=440、69 号键）；音乐与提示音都按音名谱写，便于各层共用一个和声空间。"
+    },
+    {
+      "compressed": "Qn",
+      "name": "makeWhiteNoise",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "生成 [-1,1] 白噪声缓冲，是所有噪声类音效（脚步、冲击、风、雨、爆炸）的底料。"
+    },
+    {
+      "compressed": "Av",
+      "name": "biquadCoeffs",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "按 RBJ cookbook 算出低通/高通/带通的 5 个双二阶系数；合成器不用运行时 BiquadFilter，而是在烘焙阶段离线滤波，省下每条声音的音频线程开销。"
+    },
+    {
+      "compressed": "tn",
+      "name": "applyBiquad",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "对整段缓冲做一次固定截止频率的双二阶滤波（转置直接 II 型），用于音色定型。"
+    },
+    {
+      "compressed": "di",
+      "name": "applySweptBiquad",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "扫频版双二阶滤波：每 32 采样重算系数并可多趟通过，实现随时间滑动的共振峰与扫频包络（爆炸、鞭击、风声都靠它）。"
+    },
+    {
+      "compressed": "Vo",
+      "name": "makeExpSweep",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "生成指数频率滑音函数（fromHz 到 toHz，可加曲线度），给扫频滤波与循环噪声提供随时间变化的调制曲线。"
+    },
+    {
+      "compressed": "lo",
+      "name": "applyEnvelope",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "按传入的随时间函数逐点乘包络，做衰减、起伏与淡入淡出调制。"
+    },
+    {
+      "compressed": "co",
+      "name": "makeDecayEnv",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "生成指数起音加指数衰减的包络函数（可选 attack 期），是大部分敲击类音效共用的时间形状。"
+    },
+    {
+      "compressed": "Se",
+      "name": "mixBufferAt",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "把一段缓冲按时间偏移与增益叠加进目标缓冲，是配方分层拼装的唯一基本操作（越界自动裁掉）。"
+    },
+    {
+      "compressed": "Us",
+      "name": "mixBufferWrapped",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "同 mixBufferAt 但按环形回绕写入，用于把短音色撒满整条循环缓冲（雨滴、鼓组、连击纹理）。"
+    },
+    {
+      "compressed": "Qb",
+      "name": "peakAmplitude",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "求缓冲峰值绝对值，用于归一化到配方声明的 peak，保证同一音效的不同变体响度一致。"
+    },
+    {
+      "compressed": "ml",
+      "name": "scaleBuffer",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "整段缓冲就地乘增益，用于归一化与收尾电平微调。"
+    },
+    {
+      "compressed": "Wo",
+      "name": "softClip",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "tanh 归一化软削波：给偏粗糙的音效加谐波并限幅，避免直接硬 clipping 产生刺耳失真。"
+    },
+    {
+      "compressed": "em",
+      "name": "fadeBufferEdges",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "给缓冲首尾加淡入淡出，消除一次性音效起止的咔哒声；循环音效必须跳过此步否则破坏接缝。"
+    },
+    {
+      "compressed": "at",
+      "name": "makeFilteredNoise",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "通用滤波噪声加包络发生器：可配高通/低通/带通与起音时间，是冲击、脚步、雨、爆炸等配方的基础层。"
+    },
+    {
+      "compressed": "ei",
+      "name": "makeSweptSine",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "扫频正弦冲击（起止频率、扫频速度、衰减、起音可调），给低频闷响与机械撞击提供实体感。"
+    },
+    {
+      "compressed": "jc",
+      "name": "makePitchGlide",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "带指数滑音的正弦（可加正弦窗），用于哨音、掠弹、金属余音这类音高变化明显的短音。"
+    },
+    {
+      "compressed": "dn",
+      "name": "makeModalResonance",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "模态共振合成：把 [频率, 衰减, 幅度] 列表叠成指数衰减的正弦簇，模拟金属板、墙面、木箱等物体的固有振动。"
+    },
+    {
+      "compressed": "Jc",
+      "name": "makeGrainBurst",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "颗粒噪声爆破：沿时间轴随机撒短噪声颗粒并衰减，用于布料摩擦、碎屑、震动等不规则质感。"
+    },
+    {
+      "compressed": "Rv",
+      "name": "makeSeamlessLoop",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "把缓冲尾部交叉淡入头部，产出无缝循环；雨、风、海、伺服等循环音都靠它消除接缝咔哒。"
+    },
+    {
+      "compressed": "Zc",
+      "name": "makeFilteredLoop",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "带余量的噪声经滤波后交叉淡化成无缝循环，是环境与机械循环音的统一生成入口。"
+    },
+    {
+      "compressed": "Q1",
+      "name": "sumLayers",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "把若干 [缓冲, 增益] 层等长相加成一层，用于把多个合成层压成单条样本交给播放层。"
+    },
+    {
+      "compressed": "Tv",
+      "name": "quantizeTo",
+      "kind": "function",
+      "module": "src/audio/dsp.js",
+      "doc": "把数值量化到 1/step 精度，让扫频与鼓点频率落在稳定栅格上，避免浮点尾数造成不同机器上的音色漂移。"
+    },
+    {
+      "compressed": "KR",
+      "name": "synthRifleShot",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "pac9 步枪单发配方：爆音、低频冲击、机件撞击与尾腔共鸣分层叠加，4 个变体靠微失谐和共振峰偏移区分，避免连发听起来像循环。"
+    },
+    {
+      "compressed": "QR",
+      "name": "synthRifleTailOutdoor",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "步枪尾音（室外开阔反射）配方：多组共振峰加延迟高通噪声模拟港口建筑回响，产出 2 个变体交替使用。"
+    },
+    {
+      "compressed": "e8",
+      "name": "synthRifleTailIndoor",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "步枪尾音（室内近距离）配方：更短更闷的多重反射，逐段叠加谐波峰模拟近墙回弹；用生成器分帧烘焙以免阻塞主线程。"
+    },
+    {
+      "compressed": "t8",
+      "name": "synthRifleDryFire",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "空仓击锤声：高频机件咔哒加低频枪身空响，是弹匣打空时唯一的反馈。"
+    },
+    {
+      "compressed": "e_",
+      "name": "synthMechanicalSlide",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "带通噪声扫频加梳状幅度起伏的金属滑动声，作为换弹时弹匣与枪机摩擦的共用底层音色。"
+    },
+    {
+      "compressed": "n8",
+      "name": "synthMagOut",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "退弹匣：锁扣金属撞击、弹匣滑出与空腔共鸣，让换弹动作听得出阶段。"
+    },
+    {
+      "compressed": "i8",
+      "name": "synthMagIn",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "插弹匣：滑动摩擦、到位锁扣与余震，与退弹匣音色区分以便玩家判断换弹进度。"
+    },
+    {
+      "compressed": "s8",
+      "name": "synthBoltCycle",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "拉推枪机：金属刮擦、到位撞击与尾部弹簧余响，收尾换弹动作。"
+    },
+    {
+      "compressed": "o8",
+      "name": "synthShellBounce",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "弹壳落地弹跳：多次高频金属小撞击，强度与音高逐次衰减，反馈地面材质与距离感。"
+    },
+    {
+      "compressed": "r8",
+      "name": "synthStepConcrete",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "混凝土脚步：低频脚步冲量加随机砂砾摩擦层，是最常听到的移动反馈。"
+    },
+    {
+      "compressed": "t_",
+      "name": "synthFootstepKernel",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "脚步通用内核：落地冲量加颗粒摩擦，按 scale 调软硬与湿度，供水面脚步和击水复用。"
+    },
+    {
+      "compressed": "a8",
+      "name": "synthStepWater",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "踩水脚步：脚步内核加水层拍击与气泡细节，走过积水时切换到此音色。"
+    },
+    {
+      "compressed": "l8",
+      "name": "synthStepMetal",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "金属格栅与钢板脚步：脚步内核加板面共振余音，区分甲板与水泥地。"
+    },
+    {
+      "compressed": "c8",
+      "name": "synthLand",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "落地：低频冲击、装备杂音与多个高频撞击点，按下落速度决定响度。"
+    },
+    {
+      "compressed": "u8",
+      "name": "synthJump",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "起跳：短促的衣物摩擦与蹬地声，与落地声成对出现才有重量感。"
+    },
+    {
+      "compressed": "h8",
+      "name": "synthHurt",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "玩家受伤：闷钝的低频肉体冲击，配合画面受击与低通滤镜传达受伤程度。"
+    },
+    {
+      "compressed": "f8",
+      "name": "synthEarRing",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "爆炸后耳鸣：三个近 4kHz 正弦缓慢衰减，短暂提示听力受损并强化爆炸冲击。"
+    },
+    {
+      "compressed": "d8",
+      "name": "synthImpactMetal",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "金属弹着：非谐和（1.58 倍频程堆叠）模态共振簇，刻意不平整才像真实钢板。"
+    },
+    {
+      "compressed": "p8",
+      "name": "synthImpactConcrete",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "混凝土弹着：钝闷的中频冲击加粉尘颗粒噪点，是非金属表面的默认弹着音。"
+    },
+    {
+      "compressed": "m8",
+      "name": "synthImpactWood",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "木质弹着：中频木腔共振加碎屑颗粒，听起来比混凝土更空。"
+    },
+    {
+      "compressed": "g8",
+      "name": "synthImpactWater",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "水面弹着：水花飞溅加快速衰减的低频拍击，命中积水或海面时使用。"
+    },
+    {
+      "compressed": "v8",
+      "name": "synthImpactFlesh",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "命中敌人：湿润软组织的闷击加低频冲击，让玩家闭眼也能分辨是否打中。"
+    },
+    {
+      "compressed": "x8",
+      "name": "synthImpactGlass",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "玻璃弹着：随机高频碎片的密集簇，表现玻璃瞬时脆裂。"
+    },
+    {
+      "compressed": "y8",
+      "name": "synthWhiz",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "子弹掠过耳边：频率快速下坠的共振啸叫，用于敌方子弹近失的方向提示（引擎按弹道最近距离触发）。"
+    },
+    {
+      "compressed": "b8",
+      "name": "synthRicochet",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "跳弹：带通扫频尖啸加尾部爆裂，表现子弹擦过金属或混凝土后的反弹。"
+    },
+    {
+      "compressed": "_8",
+      "name": "synthGullRotor",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "海鸥无人机旋翼循环：多组非谐和低频噪声做幅度调制再叠 46Hz 摆动，作为持续飞行的环境声源。"
+    },
+    {
+      "compressed": "M8",
+      "name": "synthHoundServo",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "猎犬机器人伺服循环：电机基频加谐波、62Hz 机械摆动与带通哨声，作为地面敌人的持续移动声源。"
+    },
+    {
+      "compressed": "w8",
+      "name": "synthRelayHum",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "中继节点嗡鸣循环：50Hz 基频的方波式谐波加高频电流啸叫，靠听感提示玩家接近任务目标。"
+    },
+    {
+      "compressed": "E8",
+      "name": "synthGullFire",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "海鸥无人机开火：高频电流爆裂加机械扫尾，与猎犬火力形成清晰的音色区分。"
+    },
+    {
+      "compressed": "S8",
+      "name": "synthHoundFire",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "猎犬开火：更低沉厚重的能量爆发加机械后坐，威胁感强于海鸥，用于危险等级提示。"
+    },
+    {
+      "compressed": "T8",
+      "name": "synthHoundStep",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "猎犬踏步：金属腿落地、伺服摩擦与低频躯体震动，也复用于近战挥击。"
+    },
+    {
+      "compressed": "A8",
+      "name": "synthGullDie",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "海鸥被击落：谐波簇断电下坠加多段撞击，表现空中解体的多声部坠落。"
+    },
+    {
+      "compressed": "R8",
+      "name": "synthHoundDie",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "猎犬被击毁：电机减速停车、多段金属撞击与液压泄气，宣告地面威胁解除。"
+    },
+    {
+      "compressed": "C8",
+      "name": "synthAlert",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "警报：双振荡器颤音加 FM 抖动，用于敌人发现玩家与任务提示，提供两种音高变体区分敌人类型。"
+    },
+    {
+      "compressed": "P8",
+      "name": "synthTelegraph",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "敌人攻击预警：上扬的噪声与音高扫描，给玩家留出躲避窗口，是公平性的听觉保障。"
+    },
+    {
+      "compressed": "I8",
+      "name": "synthExplosion",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "爆炸：低频冲击、长尾轰鸣与碎石颗粒分层，是所有音效中最响的一档，按爆炸尺寸缩放。"
+    },
+    {
+      "compressed": "z8",
+      "name": "synthRelayCut",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "中继节点被切断：电流爆音、断续方波与金属崩解，标志任务目标完成的瞬时反馈。"
+    },
+    {
+      "compressed": "D8",
+      "name": "synthThunder",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "雷声：低频隆隆叠加随机位置的爆裂包络，室内变体更闷；用生成器分帧烘焙长缓冲。"
+    },
+    {
+      "compressed": "jb",
+      "name": "FOGHORN_PARTIALS",
+      "kind": "table",
+      "module": "src/audio/sfx.js",
+      "doc": "雾笛的 7 阶谐波幅度序列（0、1、0.435、0.268…），衰减刻意陡峭以模拟大型空气号筒的音色。"
+    },
+    {
+      "compressed": "L8",
+      "name": "synthFoghorn",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "雾笛：以 92.5Hz 为基频按 FOGHORN_PARTIALS 叠加谐波，加缓慢起落包络，作为远方船只的环境点缀。"
+    },
+    {
+      "compressed": "k8",
+      "name": "synthGullCry",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "海鸥叫声：频率滑动的谐波簇重复 3 到 4 次，是港口场景最具标识性的环境音。"
+    },
+    {
+      "compressed": "F8",
+      "name": "synthHalyard",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "缆绳敲击桅杆：金属杆被绳端反复撞击的共振，用来填补风吹码头的细节空隙。"
+    },
+    {
+      "compressed": "U8",
+      "name": "synthContainerBang",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "集装箱受撞：超低频箱体共鸣加多道回声，用于远处吊装作业的偶发巨响。"
+    },
+    {
+      "compressed": "N8",
+      "name": "synthUiClick",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "UI 点击：极短高频咔哒，保证菜单反馈干脆且不吵。"
+    },
+    {
+      "compressed": "B8",
+      "name": "synthUiHover",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "UI 悬停：更轻更短的高频点缀，避免频繁悬停累积成噪声。"
+    },
+    {
+      "compressed": "O8",
+      "name": "synthRain",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "室外雨声循环：带通噪声铺底加随机雨滴颗粒与低频隆隆，用生成器分帧烘焙以避免启动卡顿。"
+    },
+    {
+      "compressed": "H8",
+      "name": "synthRainInterior",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "室内雨声循环：屋顶雨点加衰减滴落，与室外雨层按室内系数交叉淡化，实现进出仓库的平滑过渡。"
+    },
+    {
+      "compressed": "V8",
+      "name": "synthWind",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "风循环：带通噪声的截止频率按 8 秒周期摆动，配合引擎的阵风曲线产生自然起伏。"
+    },
+    {
+      "compressed": "W8",
+      "name": "synthSea",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "海浪循环：低频涌动加周期性拍岸峰值，作为整个港口场景的空间底噪。"
+    },
+    {
+      "compressed": "Fr",
+      "name": "MUSIC_TIMING",
+      "kind": "table",
+      "module": "src/audio/sfx.js",
+      "doc": "音乐节拍约定：100 BPM、2.4 秒一小节、8 小节循环、32kHz 采样；所有音乐配方都按它排布，保证叠加各层严格对拍。"
+    },
+    {
+      "compressed": "Cv",
+      "name": "CHORD_PROGRESSIONS",
+      "kind": "table",
+      "module": "src/audio/sfx.js",
+      "doc": "4 段和声进行（根音 MIDI 号、音阶度数、低音偏移各 5 项），音乐各层共用同一套走向，叠加时才不会撞音。"
+    },
+    {
+      "compressed": "Jb",
+      "name": "synthBassPluck",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "三振荡器微失谐的贝斯拨弦：起音-保持-释放三段包络，是音乐低频与 ost 层的骨架音色。"
+    },
+    {
+      "compressed": "G8",
+      "name": "synthMusicDrone",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "音乐持续低音层：每小节触发拨弦并铺超低八度，最后用动态低通扫一遍，提供不断线的底噪。"
+    },
+    {
+      "compressed": "n_",
+      "name": "synthPercHit",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "音乐打击音：带共振低通扫频的噪声短打，按音高与亮度参数派生出鼓组的不同音色。"
+    },
+    {
+      "compressed": "q8",
+      "name": "synthMusicOst",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "音乐主节奏层：16 步音序在和弦内音间行走并带半拍补点，构成可无缝循环的港口工业律动。"
+    },
+    {
+      "compressed": "X8",
+      "name": "synthMusicPerc",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "音乐打击层：4 小节循环的底鼓、军鼓与沙锤编排，负责推进节奏并给出重拍。"
+    },
+    {
+      "compressed": "$c",
+      "name": "synthBrassNote",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "单音铜管：脉冲串经动态低通与起落包络，是 brass 层的发声单元。"
+    },
+    {
+      "compressed": "Y8",
+      "name": "synthMusicBrass",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "音乐铜管层：四段和声按八度与五度铺开，营造类似雾号的沉稳港口和声。"
+    },
+    {
+      "compressed": "Pf",
+      "name": "synthBellTone",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "钟铃音：基频加整数倍泛音并整体指数衰减，用于任务提示旋律与 motif 层。"
+    },
+    {
+      "compressed": "$8",
+      "name": "synthMusicMotif",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "音乐动机层：两小节一组的铃音短句，是整个循环里最容易被记住的旋律钩子。"
+    },
+    {
+      "compressed": "Z8",
+      "name": "synthObjectiveSting",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "完成单个目标的提示音：铃音、噪声打击与拨弦对位的小动机，用音乐语言而非蜂鸣报告进度。"
+    },
+    {
+      "compressed": "j8",
+      "name": "synthObjectiveAllSting",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "全部目标完成的提示音：更长的上行动机与多重和弦，情绪强度高于单目标完成。"
+    },
+    {
+      "compressed": "J8",
+      "name": "synthCompleteSting",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "通关结算提示音：完整和弦齐奏加尾声铃音，为整段任务收束。"
+    },
+    {
+      "compressed": "K8",
+      "name": "synthDeathSting",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "死亡提示音：低频下坠、失谐三重奏与炸裂噪声，宣告失败但刻意不刺耳。"
+    },
+    {
+      "compressed": "Q8",
+      "name": "synthImpulseOutdoor",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "室外卷积混响脉冲响应：早反射稀疏、尾音渐薄，给开阔港口空间回响；产出 2 个变体供随机切换。"
+    },
+    {
+      "compressed": "eC",
+      "name": "synthImpulseShed",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "仓库棚内卷积混响脉冲响应：反射更密、衰减更快，配合室内系数在两组卷积器之间交叉淡化。"
+    },
+    {
+      "compressed": "ki",
+      "name": "SAMPLE_RATE_44K",
+      "kind": "const",
+      "module": "src/audio/sfx.js",
+      "doc": "44.1kHz 采样率：留给枪械、冲击、玻璃等需要高频细节的音效。"
+    },
+    {
+      "compressed": "Xn",
+      "name": "SAMPLE_RATE_32K",
+      "kind": "const",
+      "module": "src/audio/sfx.js",
+      "doc": "32kHz 采样率：脚步、UI、循环环境与大部分音乐层，在细节与内存之间折中。"
+    },
+    {
+      "compressed": "pl",
+      "name": "SAMPLE_RATE_22K",
+      "kind": "const",
+      "module": "src/audio/sfx.js",
+      "doc": "22.05kHz 采样率：以低频为主的长音（雷、雾笛、海、风、耳鸣），显著省内存。"
+    },
+    {
+      "compressed": "Go",
+      "name": "SFX_RECIPES",
+      "kind": "table",
+      "module": "src/audio/sfx.js",
+      "doc": "57 条音效配方表：每条声明生成函数、变体数、采样率、目标峰值、所属总线、并发上限、优先级，以及可选的空间化参考距离、rolloff、循环、音乐、卷积脉冲等标记，是音频引擎唯一的音效真源。"
+    },
+    {
+      "compressed": "i_",
+      "name": "SFX_ALIASES",
+      "kind": "table",
+      "module": "src/audio/sfx.js",
+      "doc": "语义名到配方名的别名表，让调用方可以说 step、impact、extraction 而不必记住具体配方名。"
+    },
+    {
+      "compressed": "s_",
+      "name": "isIterator",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "判断生成器返回值是迭代器还是成品缓冲：渐进式烘焙的长音效用生成器分帧让出主线程，其余一次跑完。"
+    },
+    {
+      "compressed": "o_",
+      "name": "finalizeSample",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "把配方产出定型：非循环音效加首尾淡变、按声明峰值归一化，返回采样率、声道缓冲与循环标记，供引擎直接构造 AudioBuffer。"
+    },
+    {
+      "compressed": "r_",
+      "name": "bakeSfxBuffer",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "同步烘焙一条配方（指定变体与采样率）：若配方是生成器则强制跑完，用于启动阶段一次性补齐的短音效。"
+    },
+    {
+      "compressed": "a_",
+      "name": "createSfxBaker",
+      "kind": "function",
+      "module": "src/audio/sfx.js",
+      "doc": "渐进式烘焙句柄：每次 step() 只推进生成器一帧，未完成返回 null，供启动期用时间切片烘焙长缓冲而不阻塞首帧。"
+    },
+    {
+      "compressed": "pi",
+      "name": "clampValue",
+      "kind": "function",
+      "module": "src/audio/engine.js",
+      "doc": "把数值夹到 [min,max]；引擎里所有来自事件的增益、音高、强度都先过它，防止外部数据把声音推到失控值。"
+    },
+    {
+      "compressed": "Pv",
+      "name": "smoothstepRange",
+      "kind": "function",
+      "module": "src/audio/engine.js",
+      "doc": "在区间内做 smoothstep 插值，用于音乐各层按战斗强度分段渐入而不出现台阶。"
+    },
+    {
+      "compressed": "l_",
+      "name": "SURFACE_IMPACT_SFX",
+      "kind": "table",
+      "module": "src/audio/sfx.js",
+      "doc": "命中材质到弹着音效名的映射（泥土、橡胶做近似归并），未知材质回落到混凝土。"
+    },
+    {
+      "compressed": "Iv",
+      "name": "SURFACE_STEP_SFX",
+      "kind": "table",
+      "module": "src/audio/sfx.js",
+      "doc": "地面材质到脚步音效名的映射，只有金属与水面走专用音色，其余归到混凝土以控制变体数量。"
+    },
+    {
+      "compressed": "tC",
+      "name": "LATE_RETRY_SFX",
+      "kind": "table",
+      "module": "src/audio/sfx.js",
+      "doc": "必须立即发声的关键音效集合：若缓冲尚未烘焙完成就先登记回调并在 2.5 秒内补播，避免高潮时刻静音。"
+    },
+    {
+      "compressed": "nC",
+      "name": "BAKE_ORDER",
+      "kind": "table",
+      "module": "src/audio/sfx.js",
+      "doc": "启动烘焙顺序表：关键与高频音效排在前面先出，次要音效靠空闲时间切片补齐。"
+    },
+    {
+      "compressed": "tm",
+      "name": "MUSIC_LAYERS",
+      "kind": "table",
+      "module": "src/audio/sfx.js",
+      "doc": "音乐层固定顺序（drone/ost/perc/brass/motif），与 musicMix 返回的增益数组按位置一一对应。"
+    },
+    {
+      "compressed": "iC",
+      "name": "createSilentAudioEngine",
+      "kind": "function",
+      "module": "src/audio/engine.js",
+      "doc": "WebAudio 不可用（或被策略禁用）时的哑引擎：接口齐全但全部空实现，使上层游戏逻辑无需判断音频是否存在。"
+    },
+    {
+      "compressed": "c_",
+      "name": "createAudioEngine",
+      "kind": "function",
+      "module": "src/audio/engine.js",
+      "doc": "创建 AudioContext（interactive 延迟模式）并交给真正的引擎装配；构造失败或环境不支持时打印告警并退回哑引擎。"
+    },
+    {
+      "compressed": "u_",
+      "name": "createWebAudioEngine",
+      "kind": "function",
+      "module": "src/audio/engine.js",
+      "doc": "WebAudio 音频引擎主体：分 world/near/amb/dry/music 五条总线，声部池按优先级抢占并发，距离与 HRTF 空间化，室外与棚内两套卷积混响，声音事件订阅表，音乐分层随战斗强度混合，敌人循环音做距离 LOD，室内/受伤/暂停走滤波与增益，并提供离线自检。"
+    }
+  ],
+  "params": {
+    "Cf": ["ctx"],
+    "JR": ["ctx"],
+    "ao": ["seed"],
+    "Kb": ["str"],
+    "St": ["sr", "seconds"],
+    "Xt": ["rand", "min", "max"],
+    "Ns": ["midiNote"],
+    "Qn": ["sr", "seconds", "rand"],
+    "Av": ["type", "cutoffHz", "q", "sr"],
+    "tn": ["buf", "type", "cutoffHz", "q", "sr"],
+    "di": ["buf", "type", "cutoff", "q", "sr", "passes"],
+    "Vo": ["fromHz", "toHz", "curve"],
+    "lo": ["buf", "sr", "env"],
+    "co": ["decay", "attack"],
+    "Se": ["dest", "src", "offsetSec", "gain", "sr"],
+    "Us": ["dest", "src", "offsetSec", "gain", "sr"],
+    "Qb": ["buf"],
+    "ml": ["buf", "gain"],
+    "Wo": ["buf", "drive"],
+    "em": ["buf", "sr", "fadeIn", "fadeOut"],
+    "at": ["sr", "rand", "seconds", "decay", "opts"],
+    "ei": ["sr", "seconds", "fromHz", "toHz", "sweepTau", "decayTau", "attackTau"],
+    "jc": ["sr", "seconds", "fromHz", "toHz", "windowed"],
+    "dn": ["sr", "seconds", "partials", "rand"],
+    "Jc": ["sr", "rand", "seconds", "grains", "opts"],
+    "Rv": ["buf", "loopLen", "cosine"],
+    "Zc": ["sr", "seconds", "rand", "shape", "tailPad"],
+    "Q1": ["length", "layers"],
+    "Tv": ["value", "step"],
+    "KR": ["sr", "rand", "variant"],
+    "QR": ["sr", "rand", "indoor"],
+    "e8": ["sr", "rand", "indoor"],
+    "t8": ["sr", "rand"],
+    "e_": ["sr", "rand", "seconds", "fromHz", "toHz", "ripple"],
+    "n8": ["sr", "rand"],
+    "i8": ["sr", "rand"],
+    "s8": ["sr", "rand"],
+    "o8": ["sr", "rand", "variant"],
+    "r8": ["sr", "rand", "variant"],
+    "t_": ["sr", "rand", "seconds", "scale"],
+    "a8": ["sr", "rand", "variant"],
+    "l8": ["sr", "rand", "variant"],
+    "c8": ["sr", "rand"],
+    "u8": ["sr", "rand"],
+    "h8": ["sr", "rand"],
+    "f8": ["sr"],
+    "d8": ["sr", "rand", "variant"],
+    "p8": ["sr", "rand", "variant"],
+    "m8": ["sr", "rand", "variant"],
+    "g8": ["sr", "rand", "variant"],
+    "v8": ["sr", "rand", "variant"],
+    "x8": ["sr", "rand"],
+    "y8": ["sr", "rand", "variant"],
+    "b8": ["sr", "rand", "variant"],
+    "_8": ["sr", "rand"],
+    "M8": ["sr", "rand"],
+    "w8": ["sr", "rand"],
+    "E8": ["sr", "rand", "variant"],
+    "S8": ["sr", "rand", "variant"],
+    "T8": ["sr", "rand", "variant"],
+    "A8": ["sr", "rand"],
+    "R8": ["sr", "rand"],
+    "C8": ["sr", "rand", "variant"],
+    "P8": ["sr", "rand", "variant"],
+    "I8": ["sr", "rand", "variant"],
+    "z8": ["sr", "rand"],
+    "D8": ["sr", "rand", "variant"],
+    "L8": ["sr", "rand"],
+    "k8": ["sr", "rand", "variant"],
+    "F8": ["sr", "rand", "variant"],
+    "U8": ["sr", "rand"],
+    "N8": ["sr", "rand"],
+    "B8": ["sr", "rand"],
+    "O8": ["sr", "rand"],
+    "H8": ["sr", "rand"],
+    "V8": ["sr", "rand"],
+    "W8": ["sr", "rand"],
+    "Jb": ["sr", "freq", "hold", "attack", "release", "detune", "rand"],
+    "G8": ["sr", "rand"],
+    "n_": ["sr", "freq", "edge"],
+    "q8": ["sr"],
+    "X8": ["sr", "rand"],
+    "$c": ["sr", "freq", "seconds"],
+    "Y8": ["sr"],
+    "Pf": ["sr", "freq", "seconds"],
+    "$8": ["sr"],
+    "Z8": ["sr"],
+    "j8": ["sr"],
+    "J8": ["sr"],
+    "K8": ["sr", "rand"],
+    "Q8": ["sr", "rand"],
+    "eC": ["sr", "rand"],
+    "s_": ["value"],
+    "o_": ["recipe", "channels", "sr"],
+    "r_": ["name", "variant", "sr"],
+    "a_": ["name", "variant", "sr"],
+    "pi": ["value", "min", "max"],
+    "Pv": ["from", "to", "value"],
+    "iC": [],
+    "c_": ["ctx"],
+    "u_": ["ctx", "audioCtx", "prebaked"]
+  },
+  "locals": {
+    "Cf": {
+      "i": "ctx",
+      "e": "scene",
+      "t": "windDir",
+      "n": "sunColor",
+      "s": "ambientHigh",
+      "o": "ambientLow",
+      "r": "litBatch",
+      "a": "unlitBatch",
+      "l": "litEmitter",
+      "c": "unlitEmitter",
+      "u": "tracerPool",
+      "h": "debrisPool",
+      "f": "shellPool",
+      "p": "decalPool",
+      "d": "root",
+      "v": "time",
+      "g": "lastMetalFlashAt",
+      "x": "lastTracerTrailAt",
+      "y": "getLightPool",
+      "b": "flashLight",
+      "m": "shadeAt",
+      "A": "groundHeightAt",
+      "_": "emitParticle",
+      "M": "emitStreak",
+      "E": "emitSparkBurst",
+      "w": "emitGlow",
+      "S": "emitRipple",
+      "z": "emitDebris",
+      "H": "sparkBurstAt",
+      "O": "smokeAt",
+      "q": "dustAt",
+      "U": "debrisBurstAt",
+      "T": "splashAt",
+      "D": "scratch",
+      "C": "impactAt",
+      "G": "tracer",
+      "j": "muzzleFlash",
+      "N": "addShell",
+      "Q": "explosionEvent",
+      "K": "explosionAt",
+      "ie": "emitterPool",
+      "F": "NULL_EMITTER",
+      "X": "addEmitterAt",
+      "ne": "addEmitter",
+      "re": "updateEmitters",
+      "$": "isPuddleAt",
+      "ue": "update",
+      "me": "clear"
+    },
+    "JR": {
+      "i": "ctx",
+      "e": "fx",
+      "t": "mode",
+      "n": "propGroup",
+      "s": "addProp",
+      "o": "makeVec",
+      "r": "muzzleA",
+      "a": "muzzleB",
+      "l": "airGunPos",
+      "c": "ejectPos",
+      "u": "aimPoint",
+      "h": "shotDir",
+      "f": "effectPos",
+      "p": "upDir",
+      "d": "impactEvent",
+      "v": "rand",
+      "g": "time",
+      "x": "impactIndex",
+      "y": "shotIndex",
+      "b": "boomIndex",
+      "m": "impactTimer",
+      "A": "tracerTimer",
+      "_": "shellTimer",
+      "M": "boomTimer",
+      "E": "warmedUp",
+      "w": "doImpacts",
+      "S": "doExplosions",
+      "z": "doTracers",
+      "H": "boomInterval",
+      "q": "holdMode",
+      "U": "muzzlePos",
+      "T": "muzzleDir",
+      "D": "step",
+      "C": "frozen",
+      "G": "baseUpdate",
+      "j": "prevSetShot",
+      "O": "fireImpact"
+    },
+    "u_": {
+      "i": "ctx",
+      "e": "audioCtx",
+      "t": "prebaked",
+      "n": "events",
+      "s": "rand",
+      "o": "isRunning",
+      "r": "bufferCache",
+      "a": "readyWaiters",
+      "l": "genMs",
+      "c": "bufferCount",
+      "u": "bootMs",
+      "h": "storeBuffer",
+      "f": "irSampleRate",
+      "p": "synthNow",
+      "d": "bakeQueue",
+      "v": "queuedNames",
+      "g": "resolveReady",
+      "x": "ready",
+      "y": "pumpBakeQueue",
+      "b": "withBuffer",
+      "m": "makeGain",
+      "A": "masterGain",
+      "_": "compressor",
+      "M": "compMakeupGain",
+      "E": "softClipShaper",
+      "w": "volumeGain",
+      "S": "muffleFilter",
+      "z": "pauseGain",
+      "H": "busGains",
+      "O": "musicDuckGain",
+      "q": "reverbBusIn",
+      "U": "outdoorWetGain",
+      "T": "interiorWetGain",
+      "D": "outdoorConvolver",
+      "C": "shedConvolver",
+      "G": "outdoorWetReturn",
+      "j": "shedWetReturn",
+      "N": "worldReverbSend",
+      "Q": "nearReverbSend",
+      "K": "musicReverbSend",
+      "X": "voicePools",
+      "ne": "allocVoice",
+      "re": "listenerPos",
+      "$": "unlocked",
+      "ue": "paused",
+      "me": "volume",
+      "ee": "gameState",
+      "B": "interiorTarget",
+      "P": "interiorAmount",
+      "V": "intensityTarget",
+      "Y": "combatHeat",
+      "L": "intensity",
+      "Z": "damageMuffle",
+      "J": "musicDuck",
+      "oe": "pauseFade",
+      "fe": "ambienceFade",
+      "le": "lastShotAt",
+      "R": "lastTailAt",
+      "I": "shotVariantCursor",
+      "se": "lastImpactAt",
+      "ae": "lastRicochetAt",
+      "k": "lastEarRingAt",
+      "ce": "lastShellBounceAt",
+      "ve": "lastAlertAt",
+      "_e": "lastStingerAt",
+      "Te": "lastWhizAt",
+      "Pe": "variantCursor",
+      "Re": "api",
+      "Fe": "pickVoice",
+      "ze": "play",
+      "We": "activeLoops",
+      "Ne": "enemyLoops",
+      "dt": "noop",
+      "xe": "manualEnemyLoop",
+      "Ie": "DEAD_LOOP",
+      "Be": "startLoop",
+      "Xe": "music",
+      "Me": "startMusic",
+      "we": "musicMix",
+      "be": "onBufferReady",
+      "Oe": "ambienceLoops",
+      "pt": "gustLevel",
+      "ut": "gustTarget",
+      "nn": "gustTimer",
+      "bt": "ambientTimers",
+      "Os": "updateAmbientEvents",
+      "pn": "trackedEnemies",
+      "Ti": "scanTimer",
+      "ho": "trackEnemy",
+      "Rs": "untrackEnemy",
+      "Un": "byDistance",
+      "zo": "updateEnemyLoops",
+      "$i": "objectiveHums",
+      "ya": "startObjectiveHums",
+      "ba": "stopObjectiveHum",
+      "Hn": "toVec3",
+      "fo": "playRifleTail",
+      "ln": "on",
+      "yr": "resume",
+      "lu": "update",
+      "de": "selfTest",
+      "Zo": "playComplete"
+    }
+  }
+}
