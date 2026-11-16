@@ -55,7 +55,8 @@ ES 模块的求值顺序由依赖图决定，遇到循环依赖就会读到还�
 
 ## 用参考仓库做 ground truth（可选环节）
 
-`_refs/fps3ademo-saltline` 是网友从 Claude Artifact 反推的版本，同样做过一轮半还原（约一半符号
+`_refs/fps3ademo-saltline` 是网友从 Claude Artifact 反推的版本（**本仓库不包含，需自行 clone**），
+同样做过一轮半还原（约一半符号
 仍是 `i3`/`s3`/`pm` 这类短名）。它不能当权威，但能提供两件有价值的东西：**作者意图的命名**和
 **原始文件边界**。做法与踩坑记录：
 

@@ -14,8 +14,10 @@ Gulls/Hounds 两类敌人），JS 区是 esbuild `--bundle --format=iife --minif
 本项目把它还原成人可读、可继续维护的工程：真名函数与参数、868 条 JSDoc、GLSL 独立成模块、
 three.js 换成 npm 依赖。`src/` 改完能重新构建成单文件，行为与原版一致。
 
-另有参考件 `_refs/fps3ademo-saltline`（网友从 Claude Artifact 反推的版本，见根级 `_refs/`），
-用于对齐命名与文件边界——它本身也是半还原的（约一半符号仍是短名），所以只作参考不作权威。
+命名与文件边界部分对齐了一个外部反推版本（网友从 Claude Artifact 反推，本仓库不含）。要复现这一步，
+自行 `git clone --depth 1 https://github.com/realskyrin/fps3ademo-saltline.git ../../_refs/fps3ademo-saltline`
+后跑 `node tools/match-original.mjs`。该参考本身也是半还原的（约一半符号仍是短名），只作参考不作权威；
+不跑这一步也能正常构建。
 
 ## 来源与版权
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 用原版仓库（_refs/fps3ademo-saltline）作为 ground truth，为还原后的符号建立对应关系。
+// 用外部反推版本（_refs/fps3ademo-saltline，可选，本仓库不含）作 ground truth，为还原后的符号建立对应关系。
 //
 // 两个来源都来自同一个 bundle，所以函数体里的字符串字面量、关键数字常量是完全一致的
 // （局部变量名不同不影响）。这里用指纹相似度为每个"我的符号"找原版对应符号，从而同时得到：
@@ -7,7 +7,8 @@
 //   2. 原作者的文件边界（原版 65 个模块的职责划分）
 // 原版自己仍保留短名的地方（如 i3/s3/l3/pm），匹配到后保留我方命名（更可读）。
 //
-// 用法: node tools/match-original.mjs [--ref ../_refs/fps3ademo-saltline]
+// 用法: node tools/match-original.mjs [--ref ../../_refs/fps3ademo-saltline]
+// 缺省路径不存在时会提示 clone 命令；不跑这一步也能正常构建，只是命名对齐度低一些。
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { resolve, join, relative } from 'node:path';
