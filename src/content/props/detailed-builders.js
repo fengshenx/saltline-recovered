@@ -26,7 +26,7 @@ import { buildPalletStack } from '../level/placement.js';
 
 import { createCableReelDiscGeometries } from '../models/enemies.js';
 
-import { buildHandTruck, createTireProfileGeometry } from './basic-builders.js';
+import { buildAbandonedSedan, buildHandTruck, createTireProfileGeometry } from './basic-builders.js';
 
 import {
   PropAssembler,
@@ -1706,5 +1706,7 @@ export function registerDetailedProps(register) {
     }),
     register('gas_cylinders', (propCtx, propOpts = {}) => buildGasCylinders(propCtx, propOpts)),
     register('pipe_stack', (propCtx, propOpts = {}) => buildPipeStack(propCtx, propOpts)),
-    register('hand_truck', (propCtx, propOpts = {}) => buildHandTruck(propCtx, propOpts)));
+    register('hand_truck', (propCtx, propOpts = {}) => buildHandTruck(propCtx, propOpts)),
+    register('abandoned_sedan', (propCtx, propOpts = {}) =>
+      buildAbandonedSedan(propCtx, propOpts)));
 }

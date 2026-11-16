@@ -6,7 +6,7 @@
 export var propsModule = {};
 
 /**
- * 37 种道具的尺寸与材质表：[宽, 高, 深, 主材质名, 物理/音效材质类]，关卡布置、物理盒与脚步材质都从这里取值，是道具几何尺寸的唯一真源
+ * 38 种道具的尺寸与材质表：[宽, 高, 深, 主材质名, 物理/音效材质类]，关卡布置、物理盒与脚步材质都从这里取值，是道具几何尺寸的唯一真源
  */
 export var PROP_SIZES = {
   container20: [6.06, 2.59, 2.44, 'paint_red', 'metal'],
@@ -33,6 +33,7 @@ export var PROP_SIZES = {
   forklift: [3.4, 2.2, 1.25, 'paint_yellow', 'metal'],
   cable_reel: [1.3, 1.3, 0.8, 'wood_dark', 'wood'],
   hand_truck: [0.52, 1.32, 0.5, 'paint_yellow', 'metal'],
+  abandoned_sedan: [1.8, 1.44, 4.4, 'paint_red', 'metal'],
   tire_stack: [0.8, 1, 0.8, 'tire', 'rubber'],
   dumpster: [1.9, 1.35, 1.1, 'paint_green', 'metal'],
   generator: [2.2, 1.4, 1, 'paint_yellow', 'metal'],

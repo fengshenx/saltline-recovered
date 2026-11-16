@@ -4782,3 +4782,293 @@ export function buildHandTruck(ctx, truckOpts = {}) {
     },
   ]);
 }
+
+/**
+ * 被遗弃的轿车：车身按 31 个截面沿车长放样。侧视轮廓在 A/C 柱处陡转形成挡风与后窗倾角，
+ * 底部高度在四个轮位抬到 0.68 让轮子露出来（等效轮拱），车顶较腰线收窄 17% 形成肩线；
+ * 车漆按三维噪声褪色、下沿叠锈，左前轮亏气、整车微倾
+ */
+export function buildAbandonedSedan(ctx, sedanOpts = {}) {
+  let builder = new PartBuilder(ctx),
+    paintMat = builder.M('paint_red', {
+      vertexColors: !0,
+    }),
+    glassMat = builder.M('glass'),
+    trimMat = builder.M('steel_dark'),
+    chromeMat = builder.M('steel_galv'),
+    rustMat = builder.M('steel_rust'),
+    headlampMat = ctx.mats.emissive(15192520, 0.4),
+    tailLampMat = ctx.mats.emissive(6555930, 0.35),
+    tireMat = builder.M('tire'),
+    plateMat = builder.M('paint_white'),
+    noiseSeed = (((sedanOpts.seed | 0) % 7) + 1) * 0.61,
+    SECTIONS = [
+      [-2.2, 0.68, 0.46, 0.84],
+      [-2.1, 0.76, 0.4, 0.88],
+      [-1.98, 0.81, 0.34, 0.915],
+      [-1.86, 0.835, 0.31, 0.935],
+      [-1.76, 0.845, 0.46, 0.945],
+      [-1.66, 0.85, 0.62, 0.955],
+      [-1.5, 0.855, 0.68, 0.965],
+      [-1.32, 0.857, 0.68, 0.975],
+      [-1.16, 0.856, 0.62, 0.985],
+      [-1.06, 0.854, 0.46, 1.0],
+      [-0.98, 0.852, 0.3, 1.06],
+      [-0.88, 0.85, 0.29, 1.21],
+      [-0.76, 0.848, 0.28, 1.34],
+      [-0.64, 0.845, 0.27, 1.44],
+      [-0.4, 0.845, 0.26, 1.475],
+      [0.0, 0.845, 0.26, 1.485],
+      [0.34, 0.845, 0.26, 1.475],
+      [0.56, 0.843, 0.26, 1.43],
+      [0.68, 0.84, 0.27, 1.34],
+      [0.82, 0.838, 0.28, 1.19],
+      [0.96, 0.836, 0.29, 1.07],
+      [1.06, 0.834, 0.3, 1.0],
+      [1.16, 0.832, 0.44, 0.985],
+      [1.28, 0.83, 0.62, 0.975],
+      [1.42, 0.828, 0.68, 0.968],
+      [1.56, 0.825, 0.62, 0.962],
+      [1.68, 0.82, 0.46, 0.955],
+      [1.78, 0.815, 0.33, 0.945],
+      [1.96, 0.8, 0.32, 0.925],
+      [2.08, 0.76, 0.36, 0.9],
+      [2.16, 0.7, 0.42, 0.87],
+      [2.2, 0.64, 0.48, 0.82],
+    ],
+    sectionByZ = new Map(SECTIONS.map((spec) => [spec[0], spec])),
+    bodySection = (() => {
+      let pts = [],
+        cornerR = 0.2,
+        arc = (cx, cy, a0, a1) => {
+          for (let step = 0; step <= 4; step++) {
+            let ang = a0 + ((a1 - a0) * step) / 4;
+            pts.push([cx + Math.cos(ang) * cornerR, cy + Math.sin(ang) * cornerR]);
+          }
+        },
+        halfPi = HALF_PI;
+      return (
+        arc(1 - cornerR, cornerR, -halfPi, 0),
+        arc(1 - cornerR, 1 - cornerR, 0, halfPi),
+        arc(-1 + cornerR, 1 - cornerR, halfPi, Math.PI),
+        arc(-1 + cornerR, cornerR, Math.PI, Math.PI * 1.5),
+        pts
+      );
+    })(),
+    bodyGeo = loftProfileSurface(
+      bodySection,
+      SECTIONS.map((spec) => spec[0]),
+      (coordU, coordV, stationZ) => {
+        let [, halfWidth, yBottom, yTop] = sectionByZ.get(stationZ),
+          shoulderTaper = 1 - 0.17 * smoothstepRange(0.42, 1, coordV);
+        return [coordU * halfWidth * shoulderTaper, yBottom + coordV * (yTop - yBottom), stationZ];
+      },
+      {
+        closed: !0,
+        caps: !0,
+      },
+    ),
+    bodyPos = bodyGeo.attributes.position,
+    bodyColors = new Float32Array(bodyPos.count * 3);
+  for (let vertexIdx = 0; vertexIdx < bodyPos.count; vertexIdx++) {
+    let px = bodyPos.getX(vertexIdx),
+      py = bodyPos.getY(vertexIdx),
+      pz = bodyPos.getZ(vertexIdx),
+      grain = valueNoise3D(px * 2.6 + noiseSeed, py * 2.1, pz * 1.4),
+      grainFine = valueNoise3D(px * 7.3, py * 6.1 + noiseSeed, pz * 5.7),
+      lowerFade = smoothstepRange(0.9, 0.42, py),
+      rustMix = clampValue(lowerFade * 0.42 + (grain - 0.5) * 0.55 + (grainFine - 0.5) * 0.2, 0, 1),
+      topFade = smoothstepRange(1.1, 1.43, py) * 0.45,
+      sunBleach = smoothstepRange(0.4, 1.4, pz) * 0.14,
+      paintR = 0.56 * (1 - topFade) + 0.66 * topFade,
+      paintG = 0.14 * (1 - topFade) + 0.2 * topFade,
+      paintB = 0.14 * (1 - topFade) + 0.16 * topFade;
+    ((bodyColors[vertexIdx * 3] = (paintR + sunBleach) * (1 - rustMix) + 0.32 * rustMix),
+      (bodyColors[vertexIdx * 3 + 1] = paintG * (1 - rustMix) + 0.16 * rustMix),
+      (bodyColors[vertexIdx * 3 + 2] = paintB * (1 - rustMix) + 0.09 * rustMix));
+  }
+  bodyGeo.setAttribute('color', new THREE.BufferAttribute(bodyColors, 3));
+  bodyGeo.computeVertexNormals();
+  builder.add(paintMat, bodyGeo);
+  let quadPanel = (p0, p1, p2, p3) => {
+    let bufGeo = new THREE.BufferGeometry();
+    return (
+      bufGeo.setAttribute(
+        'position',
+        new THREE.Float32BufferAttribute([...p0, ...p1, ...p2, ...p0, ...p2, ...p3], 3),
+      ),
+      bufGeo.computeVertexNormals(),
+      bufGeo
+    );
+  };
+  for (let sideSign of [-1, 1]) {
+    let sx = sideSign * 0.838;
+    (builder.add(
+      glassMat,
+      sideSign > 0
+        ? quadPanel([sx, 1.03, 0.62], [sx, 1.03, 0.02], [sx, 1.35, 0.08], [sx, 1.35, 0.54])
+        : quadPanel([sx, 1.03, 0.02], [sx, 1.03, 0.62], [sx, 1.35, 0.54], [sx, 1.35, 0.08]),
+    ),
+      builder.add(
+        glassMat,
+        sideSign > 0
+          ? quadPanel([sx, 1.03, -0.04], [sx, 1.03, -0.62], [sx, 1.34, -0.56], [sx, 1.34, -0.04])
+          : quadPanel([sx, 1.03, -0.62], [sx, 1.03, -0.04], [sx, 1.34, -0.04], [sx, 1.34, -0.56]),
+      ));
+  }
+  (builder.add(
+    glassMat,
+    quadPanel([-0.66, 1.0, 1.06], [0.66, 1.0, 1.06], [0.6, 1.32, 0.7], [-0.6, 1.32, 0.7]),
+  ),
+    builder.add(
+      glassMat,
+      quadPanel([-0.62, 1.02, -1.06], [0.62, 1.02, -1.06], [0.6, 1.42, -0.64], [-0.6, 1.42, -0.64]),
+    ));
+  for (let grilleIdx = 0; grilleIdx < 5; grilleIdx++)
+    builder.box(chromeMat, 0.84, 0.018, 0.03, 0, 0.665 + grilleIdx * 0.04, 2.145, {
+      r: 0.004,
+    });
+  (builder.box(trimMat, 0.07, 0.05, 0.46, 0.795, 1.42, 0.62, {
+    r: 0.014,
+    rot: [-0.62, 0, 0],
+  }),
+    builder.box(trimMat, 0.07, 0.05, 0.46, -0.795, 1.42, 0.62, {
+      r: 0.014,
+      rot: [-0.62, 0, 0],
+    }),
+    builder.box(trimMat, 0.075, 0.4, 0.05, 0.8, 1.19, 0.02, {
+      r: 0.012,
+    }),
+    builder.box(trimMat, 0.075, 0.4, 0.05, -0.8, 1.19, 0.02, {
+      r: 0.012,
+    }),
+    builder.box(trimMat, 0.075, 0.4, 0.06, 0.79, 1.28, -0.62, {
+      r: 0.012,
+      rot: [0.5, 0, 0],
+    }),
+    builder.box(trimMat, 0.075, 0.4, 0.06, -0.79, 1.28, -0.62, {
+      r: 0.012,
+      rot: [0.5, 0, 0],
+    }),
+    builder.box(chromeMat, 0.02, 0.03, 3.0, 0.7, 1.465, -0.1, {
+      r: 0.006,
+    }),
+    builder.box(chromeMat, 0.02, 0.03, 3.0, -0.7, 1.465, -0.1, {
+      r: 0.006,
+    }),
+    builder.box(trimMat, 1.5, 0.09, 0.06, 0, 0.6, 2.16, {
+      r: 0.012,
+    }),
+    builder.box(trimMat, 0.7, 0.055, 0.05, 0, 0.5, 2.17, {
+      r: 0.01,
+    }));
+  for (let sideSign of [-1, 1])
+    (builder.box(headlampMat, 0.28, 0.11, 0.05, sideSign * 0.55, 0.79, 2.135, {
+      r: 0.012,
+    }),
+      builder.box(chromeMat, 0.12, 0.06, 0.04, sideSign * 0.74, 0.665, 2.13, {
+        r: 0.008,
+      }),
+      builder.box(tailLampMat, 0.3, 0.13, 0.05, sideSign * 0.54, 0.8, -2.2, {
+        r: 0.012,
+      }),
+      builder.box(trimMat, 0.006, 0.5, 0.014, sideSign * 0.856, 0.58, 0.6, {
+        r: 0.002,
+      }),
+      builder.box(trimMat, 0.006, 0.5, 0.014, sideSign * 0.856, 0.58, -0.02, {
+        r: 0.002,
+      }),
+      builder.box(trimMat, 0.006, 0.46, 0.014, sideSign * 0.854, 0.6, -0.64, {
+        r: 0.002,
+      }),
+      builder.box(trimMat, 0.008, 0.018, 1.9, sideSign * 0.857, 0.9, 0.02, {
+        r: 0.003,
+      }),
+      builder.box(chromeMat, 0.03, 0.04, 0.15, sideSign * 0.865, 0.87, 0.3, {
+        r: 0.008,
+      }),
+      builder.box(chromeMat, 0.03, 0.04, 0.15, sideSign * 0.865, 0.87, -0.4, {
+        r: 0.008,
+      }),
+      builder.box(trimMat, 0.07, 0.022, 0.022, sideSign * 0.875, 1.03, 0.62, {
+        r: 0.004,
+      }),
+      builder.box(paintMat, 0.085, 0.1, 0.065, sideSign * 0.905, 1.03, 0.6, {
+        r: 0.014,
+      }));
+  (builder.box(trimMat, 1.42, 0.15, 0.13, 0, 0.44, 2.17, {
+    r: 0.02,
+  }),
+    builder.box(trimMat, 1.46, 0.16, 0.13, 0, 0.46, -2.22, {
+      r: 0.02,
+    }),
+    builder.box(plateMat, 0.34, 0.11, 0.012, 0, 0.56, -2.28, {
+      r: 0.003,
+    }),
+    builder.box(chromeMat, 0.42, 0.012, 0.016, 0.27, 1.01, 1.02, {
+      r: 0.003,
+      rot: [0, 0.25, 0],
+    }),
+    builder.box(chromeMat, 0.42, 0.012, 0.016, -0.27, 1.01, 1.02, {
+      r: 0.003,
+      rot: [0, -0.25, 0],
+    }),
+    builder.cyl(trimMat, 0.035, 0.035, 0.18, 0.44, 0.33, -2.24, {
+      seg: 10,
+      rot: [HALF_PI, 0, 0],
+    }),
+    builder.cyl(chromeMat, 0.055, 0.055, 0.022, 0, 0.8, 2.16, {
+      seg: 14,
+      rot: [HALF_PI, 0, 0],
+    }),
+    builder.box(rustMat, 1.36, 0.18, 3.5, 0, 0.31, 0, {
+      r: 0.02,
+    }),
+    builder.cyl(trimMat, 0.007, 0.007, 0.34, -0.5, 1.5, -0.5, {
+      seg: 6,
+    }));
+  let rimGeo = revolveProfileGeometry(
+      [
+        [0.0, 0.05],
+        [0.17, 0.05],
+        [0.185, 0.02],
+        [0.185, -0.02],
+        [0.17, -0.05],
+        [0.0, -0.05],
+      ],
+      16,
+    ),
+    WHEELS = [
+      [-0.72, -1.41],
+      [0.72, -1.41],
+      [-0.72, 1.42],
+      [0.72, 1.42],
+    ];
+  for (let wheelEntry of WHEELS) {
+    let axleX = wheelEntry[0],
+      axleZ = wheelEntry[1],
+      isFlat = axleX < 0 && axleZ > 0,
+      wheelRadius = isFlat ? 0.27 : 0.32;
+    // je() 直接改写入参并返回同一引用，每个轮子都要独立 clone，否则变换会累积
+    (builder.add(
+      tireMat,
+      je(
+        createTireProfileGeometry(wheelRadius, 0.2, 0.185, 18),
+        axleX,
+        wheelRadius,
+        axleZ,
+        [0, 0, HALF_PI],
+      ),
+    ),
+      builder.add(chromeMat, je(rimGeo.clone(), axleX, wheelRadius, axleZ, [0, 0, HALF_PI])));
+  }
+  let sedanGroup = builder.group();
+  sedanGroup.rotation.z = 0.012;
+  return tagPropUserData(sedanGroup, 'abandoned_sedan', getPropSize3('abandoned_sedan'), [
+    {
+      min: [-0.92, 0, -2.3],
+      max: [0.92, 1.45, 2.25],
+      surface: 'metal',
+    },
+  ]);
+}

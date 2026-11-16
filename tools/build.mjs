@@ -104,9 +104,11 @@ window.__checkProp = function (name, tol) {
   };
 };
 
+var wantDiag = /[?&](diag=1|check=)/.test(location.search);
 setInterval(function () {
   var d = document.getElementById('diag');
-  if (!d) return;
+  if (!d || !wantDiag) return;
+  d.style.display = 'block';
   d.textContent = JSON.stringify({
     ready: window.__ready,
     frames: window.__frames,
