@@ -1,7 +1,7 @@
 [
  {
   "function": "createWebAudioEngine",
-  "bytes": 38145,
+  "bytes": 38148,
   "line": 37083,
   "params": [
    "ctx",
@@ -41,7 +41,7 @@
  },
  {
   "function": "createEffects",
-  "bytes": 35610,
+  "bytes": 35624,
   "line": 31066,
   "params": [
    "ctx"
@@ -73,7 +73,7 @@
  },
  {
   "function": "buildQuayCrane",
-  "bytes": 35320,
+  "bytes": 35324,
   "line": 22833,
   "params": [
    "ctx",
@@ -100,7 +100,7 @@
  },
  {
   "function": "createDrone",
-  "bytes": 31071,
+  "bytes": 31080,
   "line": 46369,
   "params": [
    "ctx",
@@ -148,7 +148,7 @@
  },
  {
   "function": "buildWorkshopShed",
-  "bytes": 30129,
+  "bytes": 30133,
   "line": 18912,
   "params": [
    "ctx"
@@ -178,7 +178,7 @@
  },
  {
   "function": "createWeapon",
-  "bytes": 25138,
+  "bytes": 25156,
   "line": 43035,
   "params": [
    "ctx"
@@ -237,7 +237,7 @@
  },
  {
   "function": "createDecalLibrary",
-  "bytes": 24912,
+  "bytes": 24913,
   "line": 4292,
   "params": [
    "app",
@@ -272,7 +272,7 @@
  },
  {
   "function": "buildContainerShip",
-  "bytes": 22184,
+  "bytes": 22188,
   "line": 24811,
   "params": [
    "ctx",
@@ -299,7 +299,7 @@
  },
  {
   "function": "buildPac9Geometry",
-  "bytes": 21990,
+  "bytes": 22012,
   "line": 40074,
   "params": [],
   "shortParams": [],
@@ -358,7 +358,7 @@
  },
  {
   "function": "buildForklift",
-  "bytes": 20715,
+  "bytes": 20719,
   "line": 16000,
   "params": [
    "ctx",
@@ -379,7 +379,7 @@
  },
  {
   "function": "buildHarborSkyline",
-  "bytes": 20300,
+  "bytes": 20304,
   "line": 26118,
   "params": [
    "ctx",
@@ -443,7 +443,7 @@
  },
  {
   "function": "createGameFlow",
-  "bytes": 20265,
+  "bytes": 20272,
   "line": 49144,
   "params": [
    "ctx"
@@ -494,7 +494,7 @@
  },
  {
   "function": "buildContainerParts",
-  "bytes": 19159,
+  "bytes": 19163,
   "line": 8024,
   "params": [
    "ctx",
@@ -535,7 +535,7 @@
  },
  {
   "function": "buildRelayNode",
-  "bytes": 18613,
+  "bytes": 18615,
   "line": 11578,
   "params": [
    "ctx",
@@ -598,7 +598,7 @@
  },
  {
   "function": "createWalker",
-  "bytes": 16825,
+  "bytes": 16843,
   "line": 45692,
   "params": [
    "ctx",
@@ -649,7 +649,7 @@
  },
  {
   "function": "createWalkerModel",
-  "bytes": 14857,
+  "bytes": 14874,
   "line": 44322,
   "params": [],
   "shortParams": [],
@@ -662,7 +662,7 @@
  },
  {
   "function": "createPhysics",
-  "bytes": 14472,
+  "bytes": 14480,
   "line": 6581,
   "params": [
    "app"
@@ -705,7 +705,7 @@
  },
  {
   "function": "createDecalAtlas",
-  "bytes": 14416,
+  "bytes": 14430,
   "line": 29231,
   "params": [
    "_"
@@ -739,7 +739,7 @@
  },
  {
   "function": "createEnemies",
-  "bytes": 14363,
+  "bytes": 14372,
   "line": 47459,
   "params": [
    "ctx"
@@ -762,7 +762,7 @@
  },
  {
   "function": "createInput",
-  "bytes": 14122,
+  "bytes": 14125,
   "line": 38600,
   "params": [
    "ctx"
@@ -782,7 +782,7 @@
  },
  {
   "function": "createMenus",
-  "bytes": 13953,
+  "bytes": 13952,
   "line": 48746,
   "params": [
    "ctx",
@@ -800,7 +800,7 @@
  },
  {
   "function": "createPlayer",
-  "bytes": 13435,
+  "bytes": 13439,
   "line": 39131,
   "params": [
    "ctx"
@@ -834,8 +834,22 @@
   ]
  },
  {
+  "function": "createDroneModel",
+  "bytes": 9971,
+  "line": 45115,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "c",
+   "f",
+   "h",
+   "l",
+   "u"
+  ]
+ },
+ {
   "function": "buildGuardBooth",
-  "bytes": 9954,
+  "bytes": 9958,
   "line": 9414,
   "params": [
    "ctx",
@@ -853,22 +867,8 @@
   ]
  },
  {
-  "function": "createDroneModel",
-  "bytes": 9954,
-  "line": 45115,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "c",
-   "f",
-   "h",
-   "l",
-   "u"
-  ]
- },
- {
   "function": "placeYardLayout",
-  "bytes": 9704,
+  "bytes": 9708,
   "line": 21181,
   "params": [
    "ctx"
@@ -931,7 +931,7 @@
  },
  {
   "function": "buildGenerator",
-  "bytes": 9461,
+  "bytes": 9465,
   "line": 17091,
   "params": [
    "ctx",
@@ -951,7 +951,7 @@
  },
  {
   "function": "createLevel",
-  "bytes": 9229,
+  "bytes": 9233,
   "line": 21890,
   "params": [
    "game"
@@ -967,7 +967,7 @@
  },
  {
   "function": "createLevelKit",
-  "bytes": 9086,
+  "bytes": 9089,
   "line": 18355,
   "params": [
    "ctx"
@@ -1002,7 +1002,7 @@
  },
  {
   "function": "buildQuayApron",
-  "bytes": 9010,
+  "bytes": 9014,
   "line": 20801,
   "params": [
    "ctx"
@@ -1018,7 +1018,7 @@
  },
  {
   "function": "buildMooringBoat",
-  "bytes": 8953,
+  "bytes": 8957,
   "line": 25828,
   "params": [
    "ctx",
@@ -1192,7 +1192,7 @@
  },
  {
   "function": "createApronMarkingsTexture",
-  "bytes": 8292,
+  "bytes": 8296,
   "line": 27369,
   "params": [
    "size",
@@ -1224,7 +1224,7 @@
  },
  {
   "function": "buildGloveHand",
-  "bytes": 8213,
+  "bytes": 8223,
   "line": 42063,
   "params": [
    "handSpec"
@@ -1250,7 +1250,7 @@
  },
  {
   "function": "buildTarpCargo",
-  "bytes": 7654,
+  "bytes": 7658,
   "line": 15215,
   "params": [
    "ctx",
@@ -1283,7 +1283,7 @@
  },
  {
   "function": "buildReeferUnit",
-  "bytes": 7384,
+  "bytes": 7386,
   "line": 11215,
   "params": [
    "ctx",
@@ -1299,7 +1299,7 @@
  },
  {
   "function": "buildDumpster",
-  "bytes": 7263,
+  "bytes": 7267,
   "line": 17593,
   "params": [
    "ctx",
@@ -1319,7 +1319,7 @@
  },
  {
   "function": "buildToolboxCart",
-  "bytes": 6869,
+  "bytes": 6873,
   "line": 17959,
   "params": [
    "ctx",
@@ -1375,7 +1375,7 @@
  },
  {
   "function": "addWoodCrateBody",
-  "bytes": 6574,
+  "bytes": 6578,
   "line": 13598,
   "params": [
    "builder",
@@ -1481,7 +1481,7 @@
  },
  {
   "function": "buildFinger",
-  "bytes": 6002,
+  "bytes": 6011,
   "line": 41611,
   "params": [
    "spec"
@@ -1508,7 +1508,7 @@
  },
  {
   "function": "showcaseEffects",
-  "bytes": 5895,
+  "bytes": 5902,
   "line": 32700,
   "params": [
    "ctx"
@@ -1526,7 +1526,7 @@
  },
  {
   "function": "buildIbcTote",
-  "bytes": 5579,
+  "bytes": 5589,
   "line": 13987,
   "params": [
    "ctx",
@@ -1580,7 +1580,7 @@
  },
  {
   "function": "addCardboardBox",
-  "bytes": 5226,
+  "bytes": 5230,
   "line": 15542,
   "params": [
    "builder",
@@ -1639,7 +1639,7 @@
  },
  {
   "function": "createOpticLens",
-  "bytes": 5068,
+  "bytes": 5086,
   "line": 42571,
   "params": [
    "windowOutline",
@@ -1653,7 +1653,7 @@
  },
  {
   "function": "buildMetalStairs",
-  "bytes": 5055,
+  "bytes": 5059,
   "line": 10495,
   "params": [
    "ctx",
@@ -1666,7 +1666,7 @@
  },
  {
   "function": "buildLightMast",
-  "bytes": 5002,
+  "bytes": 5006,
   "line": 9111,
   "params": [
    "ctx",
@@ -1682,7 +1682,7 @@
  },
  {
   "function": "createSeaSurface",
-  "bytes": 4972,
+  "bytes": 4976,
   "line": 28195,
   "params": [
    "game",
@@ -1695,7 +1695,7 @@
  },
  {
   "function": "buildGasCylinders",
-  "bytes": 4951,
+  "bytes": 4955,
   "line": 14758,
   "params": [
    "ctx",
@@ -1740,7 +1740,7 @@
  },
  {
   "function": "createMuzzleFlash",
-  "bytes": 4708,
+  "bytes": 4726,
   "line": 42679,
   "params": [],
   "shortParams": [],
@@ -1756,7 +1756,7 @@
  },
  {
   "function": "createSparkFlipbook",
-  "bytes": 4626,
+  "bytes": 4634,
   "line": 29103,
   "params": [
    "_"
@@ -1770,7 +1770,7 @@
  },
  {
   "function": "createRainSystem",
-  "bytes": 4521,
+  "bytes": 4525,
   "line": 28502,
   "params": [
    "game",
@@ -1788,7 +1788,7 @@
  },
  {
   "function": "buildShelfRack",
-  "bytes": 4500,
+  "bytes": 4504,
   "line": 10983,
   "params": [
    "ctx",
@@ -1846,7 +1846,7 @@
  },
  {
   "function": "createFxBatch",
-  "bytes": 4425,
+  "bytes": 4439,
   "line": 29832,
   "params": [
    "game",
@@ -1873,6 +1873,23 @@
    "ne",
    "q",
    "z"
+  ]
+ },
+ {
+  "function": "buildLabelAtlas",
+  "bytes": 4391,
+  "line": 18722,
+  "params": [
+   "root",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "S",
+   "_",
+   "b",
+   "m"
   ]
  },
  {
@@ -1946,25 +1963,8 @@
   ]
  },
  {
-  "function": "buildLabelAtlas",
-  "bytes": 4387,
-  "line": 18722,
-  "params": [
-   "root",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "S",
-   "_",
-   "b",
-   "m"
-  ]
- },
- {
   "function": "buildCableReel",
-  "bytes": 4274,
+  "bytes": 4278,
   "line": 14285,
   "params": [
    "ctx",
@@ -1979,7 +1979,7 @@
  },
  {
   "function": "createGround",
-  "bytes": 4119,
+  "bytes": 4123,
   "line": 28654,
   "params": [
    "game"
@@ -1997,7 +1997,7 @@
  },
  {
   "function": "createPlanarReflectionPass",
-  "bytes": 4097,
+  "bytes": 4101,
   "line": 27927,
   "params": [
    "game",
@@ -2016,7 +2016,7 @@
  },
  {
   "function": "buildPipeStack",
-  "bytes": 4072,
+  "bytes": 4076,
   "line": 14987,
   "params": [
    "ctx",
@@ -2045,7 +2045,7 @@
  },
  {
   "function": "chamferedBoxGeometry",
-  "bytes": 3951,
+  "bytes": 3966,
   "line": 7256,
   "params": [
    "width",
@@ -2067,7 +2067,7 @@
  },
  {
   "function": "placeGateArea",
-  "bytes": 3919,
+  "bytes": 3923,
   "line": 21730,
   "params": [
    "ctx"
@@ -2139,7 +2139,7 @@
  },
  {
   "function": "buildBackdrop",
-  "bytes": 3724,
+  "bytes": 3728,
   "line": 26886,
   "params": [
    "game",
@@ -2153,7 +2153,7 @@
  },
  {
   "function": "showcaseMaterials",
-  "bytes": 3628,
+  "bytes": 3632,
   "line": 6405,
   "params": [
    "app"
@@ -2175,7 +2175,7 @@
  },
  {
   "function": "buildGateArm",
-  "bytes": 3605,
+  "bytes": 3609,
   "line": 9917,
   "params": [
    "ctx",
@@ -2190,7 +2190,7 @@
  },
  {
   "function": "loftProfileSurface",
-  "bytes": 3546,
+  "bytes": 3572,
   "line": 7412,
   "params": [
    "profile",
@@ -2231,7 +2231,7 @@
  },
  {
   "function": "buildBarrel",
-  "bytes": 3446,
+  "bytes": 3450,
   "line": 13331,
   "params": [
    "ctx",
@@ -2254,8 +2254,26 @@
   ]
  },
  {
+  "function": "buildMarkingsAtlas",
+  "bytes": 3408,
+  "line": 42406,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "f",
+   "g",
+   "h",
+   "p",
+   "u",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
   "function": "buildJerseyBarrier",
-  "bytes": 3397,
+  "bytes": 3401,
   "line": 8936,
   "params": [
    "ctx",
@@ -2275,26 +2293,8 @@
   ]
  },
  {
-  "function": "buildMarkingsAtlas",
-  "bytes": 3391,
-  "line": 42406,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "d",
-   "f",
-   "g",
-   "h",
-   "p",
-   "u",
-   "v",
-   "x",
-   "y"
-  ]
- },
- {
   "function": "createMarkingsMesh",
-  "bytes": 3183,
+  "bytes": 3200,
   "line": 42493,
   "params": [
    "decals"
@@ -2311,7 +2311,7 @@
  },
  {
   "function": "buildFencePanel",
-  "bytes": 3171,
+  "bytes": 3175,
   "line": 9306,
   "params": [
    "ctx",
@@ -2326,7 +2326,7 @@
  },
  {
   "function": "createCombat",
-  "bytes": 3098,
+  "bytes": 3102,
   "line": 39588,
   "params": [
    "ctx"
@@ -2347,7 +2347,7 @@
  },
  {
   "function": "createWetApron",
-  "bytes": 3047,
+  "bytes": 3051,
   "line": 27806,
   "params": [
    "game",
@@ -2360,7 +2360,7 @@
  },
  {
   "function": "showcaseWeapon",
-  "bytes": 2954,
+  "bytes": 2972,
   "line": 43843,
   "params": [
    "ctx"
@@ -2381,7 +2381,7 @@
  },
  {
   "function": "roundedBoxGeometry",
-  "bytes": 2935,
+  "bytes": 2939,
   "line": 12509,
   "params": [
    "width",
@@ -2408,7 +2408,7 @@
  },
  {
   "function": "buildJerryCan",
-  "bytes": 2805,
+  "bytes": 2809,
   "line": 14563,
   "params": [
    "ctx",
@@ -2423,7 +2423,7 @@
  },
  {
   "function": "enableBenchmark",
-  "bytes": 2770,
+  "bytes": 2773,
   "line": 50236,
   "params": [
    "ctx"
@@ -2447,7 +2447,7 @@
  },
  {
   "function": "createGullFlock",
-  "bytes": 2745,
+  "bytes": 2749,
   "line": 26808,
   "params": [
    "ctx",
@@ -2483,7 +2483,7 @@
  },
  {
   "function": "showcaseEnemies",
-  "bytes": 2650,
+  "bytes": 2659,
   "line": 47991,
   "params": [
    "ctx"
@@ -2497,7 +2497,7 @@
  },
  {
   "function": "createHollowPolygonExtrusion",
-  "bytes": 2568,
+  "bytes": 2594,
   "line": 12809,
   "params": [
    "polygon",
@@ -2532,7 +2532,7 @@
  },
  {
   "function": "showcaseGround",
-  "bytes": 2452,
+  "bytes": 2461,
   "line": 28786,
   "params": [
    "game"
@@ -2540,6 +2540,21 @@
   "shortParams": [],
   "shortLocals": [
    "o"
+  ]
+ },
+ {
+  "function": "buildSkinnedRig",
+  "bytes": 2437,
+  "line": 44028,
+  "params": [
+   "def",
+   "materials",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "p"
   ]
  },
  {
@@ -2589,21 +2604,6 @@
   ]
  },
  {
-  "function": "buildSkinnedRig",
-  "bytes": 2423,
-  "line": 44028,
-  "params": [
-   "def",
-   "materials",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "d",
-   "p"
-  ]
- },
- {
   "function": "update",
   "bytes": 2400,
   "line": 49782,
@@ -2620,38 +2620,8 @@
   ]
  },
  {
-  "function": "pickFirePos",
-  "bytes": 2347,
-  "line": 46681,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "C",
-   "D",
-   "G",
-   "K",
-   "N",
-   "Q",
-   "T",
-   "ie",
-   "j"
-  ]
- },
- {
-  "function": "bakeTerrainNormals",
-  "bytes": 2340,
-  "line": 27287,
-  "params": [
-   "size"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "r"
-  ]
- },
- {
   "function": "beveledBoxGeometry",
-  "bytes": 2330,
+  "bytes": 2356,
   "line": 618,
   "params": [
    "width",
@@ -2677,8 +2647,26 @@
   ]
  },
  {
+  "function": "pickFirePos",
+  "bytes": 2347,
+  "line": 46681,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "C",
+   "D",
+   "G",
+   "K",
+   "N",
+   "Q",
+   "T",
+   "ie",
+   "j"
+  ]
+ },
+ {
   "function": "roundedBoxGeometryGrid",
-  "bytes": 2330,
+  "bytes": 2345,
   "line": 12596,
   "params": [
    "width",
@@ -2693,6 +2681,18 @@
   "shortParams": [],
   "shortLocals": [
    "x"
+  ]
+ },
+ {
+  "function": "bakeTerrainNormals",
+  "bytes": 2344,
+  "line": 27287,
+  "params": [
+   "size"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "r"
   ]
  },
  {
@@ -2722,7 +2722,7 @@
  },
  {
   "function": "addEuroPallet",
-  "bytes": 2231,
+  "bytes": 2235,
   "line": 13448,
   "params": [
    "builder",
@@ -2758,7 +2758,7 @@
  },
  {
   "function": "buildCrateStack",
-  "bytes": 2204,
+  "bytes": 2208,
   "line": 13900,
   "params": [
    "ctx",
@@ -2881,7 +2881,7 @@
  },
  {
   "function": "buildBollardPost",
-  "bytes": 2141,
+  "bytes": 2144,
   "line": 10143,
   "params": [
    "ctx",
@@ -2959,7 +2959,7 @@
  },
  {
   "function": "buildMooringBollard",
-  "bytes": 2065,
+  "bytes": 2069,
   "line": 10052,
   "params": [
    "ctx",
@@ -2993,7 +2993,7 @@
  },
  {
   "function": "buildSandbags",
-  "bytes": 2057,
+  "bytes": 2061,
   "line": 15474,
   "params": [
    "ctx",
@@ -3035,7 +3035,7 @@
  },
  {
   "function": "createBlinkerBatch",
-  "bytes": 1906,
+  "bytes": 1910,
   "line": 22695,
   "params": [],
   "shortParams": [],
@@ -3080,8 +3080,23 @@
   ]
  },
  {
+  "function": "recomputeSmoothNormals",
+  "bytes": 1887,
+  "line": 12667,
+  "params": [
+   "geometry"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "f",
+   "i2",
+   "p"
+  ]
+ },
+ {
   "function": "addForkliftWheel",
-  "bytes": 1881,
+  "bytes": 1885,
   "line": 15914,
   "params": [
    "builder",
@@ -3105,7 +3120,7 @@
  },
  {
   "function": "buildDistantCrane",
-  "bytes": 1880,
+  "bytes": 1884,
   "line": 24570,
   "params": [
    "batcher",
@@ -3146,23 +3161,8 @@
   ]
  },
  {
-  "function": "recomputeSmoothNormals",
-  "bytes": 1872,
-  "line": 12667,
-  "params": [
-   "geometry"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "d",
-   "f",
-   "i2",
-   "p"
-  ]
- },
- {
   "function": "mergeStaticMeshes",
-  "bytes": 1765,
+  "bytes": 1791,
   "line": 831,
   "params": [
    "root",
@@ -3191,6 +3191,25 @@
   ]
  },
  {
+  "function": "orientTrianglesOutward",
+  "bytes": 1716,
+  "line": 7371,
+  "params": [
+   "positions",
+   "uvs",
+   "start",
+   "end",
+   "center",
+   "inward"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d",
+   "ny",
+   "nz"
+  ]
+ },
+ {
   "function": "captureInteriorProbe",
   "bytes": 1690,
   "line": 3247,
@@ -3211,27 +3230,8 @@
   ]
  },
  {
-  "function": "orientTrianglesOutward",
-  "bytes": 1690,
-  "line": 7371,
-  "params": [
-   "positions",
-   "uvs",
-   "start",
-   "end",
-   "center",
-   "inward"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "d",
-   "ny",
-   "nz"
-  ]
- },
- {
   "function": "buildTrafficCone",
-  "bytes": 1681,
+  "bytes": 1685,
   "line": 14688,
   "params": [
    "ctx",
@@ -3262,7 +3262,7 @@
  },
  {
   "function": "buildBasicContainer",
-  "bytes": 1635,
+  "bytes": 1639,
   "line": 8875,
   "params": [
    "ctx",
@@ -3312,7 +3312,7 @@
  },
  {
   "function": "createCableReelDiscGeometries",
-  "bytes": 1542,
+  "bytes": 1552,
   "line": 14248,
   "params": [
    "radius",
@@ -3383,7 +3383,7 @@
  },
  {
   "function": "registerDetailedProps",
-  "bytes": 1494,
+  "bytes": 1498,
   "line": 15163,
   "params": [
    "register"
@@ -3414,6 +3414,20 @@
   ]
  },
  {
+  "function": "mergeGeometryParts",
+  "bytes": 1448,
+  "line": 793,
+  "params": [
+   "geometries"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "c",
+   "l",
+   "u"
+  ]
+ },
+ {
   "function": "synthRainInterior",
   "bytes": 1441,
   "line": 35582,
@@ -3427,22 +3441,8 @@
   ]
  },
  {
-  "function": "mergeGeometryParts",
-  "bytes": 1422,
-  "line": 793,
-  "params": [
-   "geometries"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "c",
-   "l",
-   "u"
-  ]
- },
- {
   "function": "createDebrisGeometry",
-  "bytes": 1413,
+  "bytes": 1427,
   "line": 30407,
   "params": [],
   "shortParams": [],
@@ -3665,6 +3665,20 @@
   ]
  },
  {
+  "function": "createRoundedRectFanGeometry",
+  "bytes": 1344,
+  "line": 7557,
+  "params": [
+   "width",
+   "height",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "t"
+  ]
+ },
+ {
   "function": "synthGullRotor",
   "bytes": 1342,
   "line": 34507,
@@ -3675,20 +3689,6 @@
   "shortParams": [],
   "shortLocals": [
    "l"
-  ]
- },
- {
-  "function": "createRoundedRectFanGeometry",
-  "bytes": 1324,
-  "line": 7557,
-  "params": [
-   "width",
-   "height",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "t"
   ]
  },
  {
@@ -3862,7 +3862,7 @@
  },
  {
   "function": "buildTireStack",
-  "bytes": 1166,
+  "bytes": 1170,
   "line": 14531,
   "params": [
    "ctx",
@@ -3891,7 +3891,7 @@
  },
  {
   "function": "createSandbagGeometry",
-  "bytes": 1147,
+  "bytes": 1151,
   "line": 15446,
   "params": [
    "width",
@@ -3911,7 +3911,7 @@
  },
  {
   "function": "patchPac9DetailMaterial",
-  "bytes": 1128,
+  "bytes": 1146,
   "line": 42883,
   "params": [
    "material",
@@ -4073,7 +4073,7 @@
  },
  {
   "function": "createProps",
-  "bytes": 1070,
+  "bytes": 1074,
   "line": 7125,
   "params": [
    "ctx"
@@ -4353,6 +4353,18 @@
   ]
  },
  {
+  "function": "buildThumb",
+  "bytes": 982,
+  "line": 41848,
+  "params": [
+   "thumbDirs"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "o"
+  ]
+ },
+ {
   "function": "tracer",
   "bytes": 975,
   "line": 31934,
@@ -4395,18 +4407,6 @@
   ]
  },
  {
-  "function": "buildThumb",
-  "bytes": 964,
-  "line": 41848,
-  "params": [
-   "thumbDirs"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "o"
-  ]
- },
- {
   "function": "syncUi",
   "bytes": 959,
   "line": 48883,
@@ -4432,6 +4432,25 @@
    "v",
    "x",
    "y"
+  ]
+ },
+ {
+  "function": "boxGeometry",
+  "bytes": 946,
+  "line": 595,
+  "params": [
+   "width",
+   "height",
+   "depth",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "c",
+   "ny",
+   "vx",
+   "vy",
+   "vz"
   ]
  },
  {
@@ -4464,6 +4483,22 @@
   ]
  },
  {
+  "function": "tubeGeometry",
+  "bytes": 934,
+  "line": 704,
+  "params": [
+   "points",
+   "_",
+   "_",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "h"
+  ]
+ },
+ {
   "function": "resize",
   "bytes": 927,
   "line": 2392,
@@ -4484,22 +4519,21 @@
   ]
  },
  {
-  "function": "boxGeometry",
-  "bytes": 920,
-  "line": 595,
+  "function": "buildCorrugationStations",
+  "bytes": 918,
+  "line": 7537,
   "params": [
-   "width",
-   "height",
+   "min",
+   "max",
+   "pitch",
    "depth",
+   "flat",
+   "slope",
    "_"
   ],
   "shortParams": [],
   "shortLocals": [
-   "c",
-   "ny",
-   "vx",
-   "vy",
-   "vz"
+   "f"
   ]
  },
  {
@@ -4543,24 +4577,8 @@
   ]
  },
  {
-  "function": "tubeGeometry",
-  "bytes": 908,
-  "line": 704,
-  "params": [
-   "points",
-   "_",
-   "_",
-   "_",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "h"
-  ]
- },
- {
   "function": "showcaseBackdrop",
-  "bytes": 899,
+  "bytes": 903,
   "line": 27024,
   "params": [
    "game"
@@ -4568,24 +4586,6 @@
   "shortParams": [],
   "shortLocals": [
    "s"
-  ]
- },
- {
-  "function": "buildCorrugationStations",
-  "bytes": 898,
-  "line": 7537,
-  "params": [
-   "min",
-   "max",
-   "pitch",
-   "depth",
-   "flat",
-   "slope",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "f"
   ]
  },
  {
@@ -4644,25 +4644,8 @@
   ]
  },
  {
-  "function": "synthWind",
-  "bytes": 879,
-  "line": 35626,
-  "params": [
-   "sr",
-   "rand"
-  ],
-  "shortParams": [
-   "sr"
-  ],
-  "shortLocals": [
-   "a",
-   "r",
-   "sr"
-  ]
- },
- {
   "function": "buildDrapedSlab",
-  "bytes": 873,
+  "bytes": 891,
   "line": 41530,
   "params": [
    "originX",
@@ -4688,6 +4671,23 @@
    "v",
    "x",
    "y"
+  ]
+ },
+ {
+  "function": "synthWind",
+  "bytes": 879,
+  "line": 35626,
+  "params": [
+   "sr",
+   "rand"
+  ],
+  "shortParams": [
+   "sr"
+  ],
+  "shortLocals": [
+   "a",
+   "r",
+   "sr"
   ]
  },
  {
@@ -5069,6 +5069,33 @@
   ]
  },
  {
+  "function": "valueNoise3D",
+  "bytes": 767,
+  "line": 12398,
+  "params": [
+   "px",
+   "_",
+   "_"
+  ],
+  "shortParams": [
+   "px"
+  ],
+  "shortLocals": [
+   "f",
+   "fx",
+   "fy",
+   "fz",
+   "h",
+   "iy",
+   "n",
+   "o",
+   "px",
+   "py",
+   "t",
+   "u"
+  ]
+ },
+ {
   "function": "rust_run",
   "bytes": 761,
   "line": 4753,
@@ -5104,33 +5131,6 @@
    "v",
    "x",
    "y"
-  ]
- },
- {
-  "function": "valueNoise3D",
-  "bytes": 754,
-  "line": 12398,
-  "params": [
-   "px",
-   "_",
-   "_"
-  ],
-  "shortParams": [
-   "px"
-  ],
-  "shortLocals": [
-   "f",
-   "fx",
-   "fy",
-   "fz",
-   "h",
-   "iy",
-   "n",
-   "o",
-   "px",
-   "py",
-   "t",
-   "u"
   ]
  },
  {
@@ -5293,6 +5293,16 @@
   ]
  },
  {
+  "function": "createShellGeometry",
+  "bytes": 715,
+  "line": 30601,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "s"
+  ]
+ },
+ {
   "function": "makeDecalMaterial",
   "bytes": 713,
   "line": 4296,
@@ -5441,16 +5451,6 @@
   ],
   "shortLocals": [
    "sr"
-  ]
- },
- {
-  "function": "createShellGeometry",
-  "bytes": 701,
-  "line": 30601,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "s"
   ]
  },
  {
@@ -6033,6 +6033,21 @@
   ]
  },
  {
+  "function": "catenaryPoints",
+  "bytes": 560,
+  "line": 22620,
+  "params": [
+   "startPt",
+   "endPt",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "pt"
+  ]
+ },
+ {
   "function": "berth4",
   "bytes": 557,
   "line": 4678,
@@ -6213,23 +6228,8 @@
   ]
  },
  {
-  "function": "catenaryPoints",
-  "bytes": 534,
-  "line": 22620,
-  "params": [
-   "startPt",
-   "endPt",
-   "_",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "pt"
-  ]
- },
- {
   "function": "createSeededRandom",
-  "bytes": 533,
+  "bytes": 534,
   "line": 4144,
   "params": [
    "seed"
@@ -6357,6 +6357,30 @@
    "ce",
    "k",
    "se"
+  ]
+ },
+ {
+  "function": "createShapeFromPoints",
+  "bytes": 509,
+  "line": 39823,
+  "params": [
+   "points",
+   "holes"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "n",
+   "s"
+  ]
+ },
+ {
+  "function": "createRotorBellGeometry",
+  "bytes": 508,
+  "line": 45098,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "e"
   ]
  },
  {
@@ -6503,16 +6527,6 @@
   ]
  },
  {
-  "function": "createRotorBellGeometry",
-  "bytes": 491,
-  "line": 45098,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "e"
-  ]
- },
- {
   "function": "startMusic",
   "bytes": 487,
   "line": 37532,
@@ -6523,20 +6537,6 @@
    "he",
    "pe",
    "te"
-  ]
- },
- {
-  "function": "createShapeFromPoints",
-  "bytes": 483,
-  "line": 39823,
-  "params": [
-   "points",
-   "holes"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "n",
-   "s"
   ]
  },
  {
@@ -6760,6 +6760,19 @@
   ]
  },
  {
+  "function": "registerCharacterProps",
+  "bytes": 430,
+  "line": 15846,
+  "params": [
+   "register"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "e",
+   "t"
+  ]
+ },
+ {
   "function": "registerBuffer",
   "bytes": 430,
   "line": 37092,
@@ -6874,19 +6887,6 @@
   ]
  },
  {
-  "function": "registerCharacterProps",
-  "bytes": 415,
-  "line": 15846,
-  "params": [
-   "register"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "e",
-   "t"
-  ]
- },
- {
   "function": "requestLock",
   "bytes": 415,
   "line": 38786,
@@ -6943,6 +6943,21 @@
    "v",
    "x",
    "y"
+  ]
+ },
+ {
+  "function": "getTintedMaterial",
+  "bytes": 411,
+  "line": 22465,
+  "params": [
+   "ctx",
+   "name",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "n",
+   "t"
   ]
  },
  {
@@ -7112,6 +7127,25 @@
   "shortLocals": [
    "g",
    "x"
+  ]
+ },
+ {
+  "function": "palmTopY",
+  "bytes": 400,
+  "line": 41910,
+  "params": [
+   "x",
+   "z"
+  ],
+  "shortParams": [
+   "x",
+   "z"
+  ],
+  "shortLocals": [
+   "n",
+   "t",
+   "x",
+   "z"
   ]
  }
 ]
