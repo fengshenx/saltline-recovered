@@ -423,34 +423,35 @@ export function buildLabelAtlas(
   if (typeof document > 'u') return fallback;
   let byMaterial = new Map();
   if (
-    (root.traverse((b) => {
-      if (!b.isMesh || Array.isArray(b.material)) return;
-      let m = b.material;
-      if (!m || m.name !== 'label' || !m.map || !m.map.image || !m.map.image.width) return;
-      let A = b,
-        _ = !1;
-      for (; A;) {
-        if (A.userData && A.userData.noMerge) {
-          _ = !0;
+    (root.traverse((item) => {
+      if (!item.isMesh || Array.isArray(item.material)) return;
+      let aux = item.material;
+      if (!aux || aux.name !== 'label' || !aux.map || !aux.map.image || !aux.map.image.width)
+        return;
+      let ancestor = item,
+        skipMerge = !1;
+      for (; ancestor;) {
+        if (ancestor.userData && ancestor.userData.noMerge) {
+          skipMerge = !0;
           break;
         }
-        A = A.parent;
+        ancestor = ancestor.parent;
       }
-      _ || (byMaterial.has(m) || byMaterial.set(m, []), byMaterial.get(m).push(b));
+      skipMerge || (byMaterial.has(aux) || byMaterial.set(aux, []), byMaterial.get(aux).push(item));
     }),
     byMaterial.size < 2)
   )
     return fallback;
-  let entries = [...byMaterial.keys()].map((b) => {
-    let m = b.map.image;
+  let entries = [...byMaterial.keys()].map((item) => {
+    let aux = item.map.image;
     return {
-      m: b,
-      img: m,
-      w: Math.max(4, Math.ceil(m.width * atlasScale)),
-      h: Math.max(4, Math.ceil(m.height * atlasScale)),
+      m: item,
+      img: aux,
+      w: Math.max(4, Math.ceil(aux.width * atlasScale)),
+      h: Math.max(4, Math.ceil(aux.height * atlasScale)),
     };
   });
-  entries.sort((b, m) => m.h - b.h || m.w - b.w);
+  entries.sort((item, aux) => aux.h - item.h || aux.w - item.w);
   let cursorX = 0,
     cursorY = 0,
     rowHeight = 0;
@@ -504,10 +505,10 @@ export function buildLabelAtlas(
       vMin = 1 - (item.y + item.h) / atlasHeight;
     for (let labelMesh of byMaterial.get(item.m)) {
       let cacheKey = labelMesh.geometry.uuid + '|' + item.m.uuid,
-        S = geometryCache.get(cacheKey);
-      if (!S) {
-        S = labelMesh.geometry.clone();
-        let uvAttr = S.attributes.uv;
+        cachedGeometry = geometryCache.get(cacheKey);
+      if (!cachedGeometry) {
+        cachedGeometry = labelMesh.geometry.clone();
+        let uvAttr = cachedGeometry.attributes.uv;
         if (uvAttr) {
           for (let vertexIndex = 0; vertexIndex < uvAttr.count; vertexIndex++)
             uvAttr.setXY(
@@ -517,9 +518,9 @@ export function buildLabelAtlas(
             );
           uvAttr.needsUpdate = !0;
         }
-        geometryCache.set(cacheKey, S);
+        geometryCache.set(cacheKey, cachedGeometry);
       }
-      ((labelMesh.geometry = S), (labelMesh.material = atlasMaterial));
+      ((labelMesh.geometry = cachedGeometry), (labelMesh.material = atlasMaterial));
     }
   }
   let elapsed = 0;
@@ -527,11 +528,11 @@ export function buildLabelAtlas(
     count: entries.length,
     material: atlasMaterial,
     size: [atlasWidth, atlasHeight],
-    update(b) {
+    update(item) {
       if (!(elapsed > 8)) {
-        elapsed += b;
-        for (let m of entries)
-          if (m.m.map.version !== m.version) {
+        elapsed += item;
+        for (let aux of entries)
+          if (aux.m.map.version !== aux.version) {
             (repaint(), (atlasTexture.needsUpdate = !0));
             break;
           }
@@ -787,12 +788,12 @@ export function buildWorkshopShed(ctx) {
   }
   let sillY = 5.45,
     headerY = 6.8;
-  for (let L = 0; L < SHED_BAY_XS.length - 1; L++) {
-    let Z = SHED_BAY_XS[L],
-      J = SHED_BAY_XS[L + 1];
-    L === 2
-      ? (wallSpanZ(shedZ1, 1, Z, SHED_DOOR_OPENING.x0, 0, eaveY),
-        wallSpanZ(shedZ1, 1, SHED_DOOR_OPENING.x1, J, 0, eaveY),
+  for (let spanAxisPos = 0; spanAxisPos < SHED_BAY_XS.length - 1; spanAxisPos++) {
+    let inwardSign = SHED_BAY_XS[spanAxisPos],
+      spanStartPos = SHED_BAY_XS[spanAxisPos + 1];
+    spanAxisPos === 2
+      ? (wallSpanZ(shedZ1, 1, inwardSign, SHED_DOOR_OPENING.x0, 0, eaveY),
+        wallSpanZ(shedZ1, 1, SHED_DOOR_OPENING.x1, spanStartPos, 0, eaveY),
         wallSpanZ(
           shedZ1,
           1,
@@ -801,9 +802,9 @@ export function buildWorkshopShed(ctx) {
           SHED_DOOR_OPENING.h,
           eaveY,
         ))
-      : (wallSpanZ(shedZ1, 1, Z, J, 0, sillY - 0.05),
-        wallSpanZ(shedZ1, 1, Z, J, headerY + 0.05, eaveY),
-        addGirtSpanZ(shedZ1, 1, Z + 0.15, J - 0.15, sillY, headerY));
+      : (wallSpanZ(shedZ1, 1, inwardSign, spanStartPos, 0, sillY - 0.05),
+        wallSpanZ(shedZ1, 1, inwardSign, spanStartPos, headerY + 0.05, eaveY),
+        addGirtSpanZ(shedZ1, 1, inwardSign + 0.15, spanStartPos - 0.15, sillY, headerY));
   }
   (wallSpanZ(shedZ0, -1, shedX0, shedX1, 0, eaveY),
     addSlab(
@@ -841,15 +842,15 @@ export function buildWorkshopShed(ctx) {
     addBox(roofOuterMat, 1, 0.03, 2, shedX1 + 1.3, 0.05, doorOpening.z0 + 1.6, {
       r: [0.02, 0.5, 0.03],
     }));
-  for (let L of [doorOpening.z0, doorOpening.z1])
+  for (let spanAxisPos of [doorOpening.z0, doorOpening.z1])
     addSlab(
       galvFlatMat,
       shedX1 - 0.16,
       doorOpening.y0,
-      L - 0.03,
+      spanAxisPos - 0.03,
       shedX1 - 0.1,
       sillY - 0.05,
-      L + 0.03,
+      spanAxisPos + 0.03,
     );
   (wallSpanX(
     shedX1,
@@ -860,12 +861,12 @@ export function buildWorkshopShed(ctx) {
     sillY - 0.05,
   ),
     wallSpanX(shedX1, 1, shedZ0, shedZ1, headerY + 0.05, eaveY));
-  for (let [L, Z] of [
+  for (let [spanAxisPos, inwardSign] of [
     [shedZ0 + 0.3, -22.45],
     [-22.15, -16.85],
     [-16.55, shedZ1 - 0.3],
   ])
-    addGirtSpanX(shedX1, 1, L, Z, sillY, headerY);
+    addGirtSpanX(shedX1, 1, spanAxisPos, inwardSign, sillY, headerY);
   let fanHole = {
     y: 8.02,
     r: 0.56,
@@ -959,154 +960,196 @@ export function buildWorkshopShed(ctx) {
   let skylights = [],
     columnWidth = (shedX1 - shedX0 + 0.6) / ROOF_COLUMN_COUNT,
     columnStartX = shedX0 - 0.3;
-  for (let L of ['S', 'N']) {
-    let Z = L === 'S' ? 1 : -1,
-      J = [Z * roofAngle, 0, 0],
-      oe = Math.cos(roofAngle),
-      fe = Z * Math.sin(roofAngle);
-    for (let R = 0; R < 4; R++) {
-      let I = ROOF_BAND_FRACTIONS[R],
-        se = ROOF_BAND_FRACTIONS[R + 1],
-        ae = (I + se) / 2,
-        k = (se - I) * slopeLen,
-        ce = ridgeZ + Z * halfDepth * (1 - ae),
-        ve = eaveY + riseH * ae,
-        _e = 0;
-      for (; _e < ROOF_COLUMN_COUNT;) {
-        if (SHED_SKYLIGHT_HOLES.some((Ne) => Ne[0] === L && Ne[1] === R && Ne[2] === _e)) {
-          _e++;
+  for (let spanAxisPos of ['S', 'N']) {
+    let inwardSign = spanAxisPos === 'S' ? 1 : -1,
+      spanStartPos = [inwardSign * roofAngle, 0, 0],
+      farEdgePos = Math.cos(roofAngle),
+      lowEdgePos = inwardSign * Math.sin(roofAngle);
+    for (let scratchValue = 0; scratchValue < 4; scratchValue++) {
+      let innerFacePos = ROOF_BAND_FRACTIONS[scratchValue],
+        bandEndValue = ROOF_BAND_FRACTIONS[scratchValue + 1],
+        midValue = (innerFacePos + bandEndValue) / 2,
+        stepIndex = (bandEndValue - innerFacePos) * slopeLen,
+        spanMidCoord = ridgeZ + inwardSign * halfDepth * (1 - midValue),
+        roofHeightAt = eaveY + riseH * midValue,
+        columnCursor = 0;
+      for (; columnCursor < ROOF_COLUMN_COUNT;) {
+        if (
+          SHED_SKYLIGHT_HOLES.some(
+            (skylightHole) =>
+              skylightHole[0] === spanAxisPos &&
+              skylightHole[1] === scratchValue &&
+              skylightHole[2] === columnCursor,
+          )
+        ) {
+          columnCursor++;
           continue;
         }
-        let Te = _e;
+        let runEndColumn = columnCursor;
         for (
           ;
-          Te + 1 < ROOF_COLUMN_COUNT &&
-          !SHED_SKYLIGHT_HOLES.some((Ne) => Ne[0] === L && Ne[1] === R && Ne[2] === Te + 1);
+          runEndColumn + 1 < ROOF_COLUMN_COUNT &&
+          !SHED_SKYLIGHT_HOLES.some(
+            (skylightHole) =>
+              skylightHole[0] === spanAxisPos &&
+              skylightHole[1] === scratchValue &&
+              skylightHole[2] === runEndColumn + 1,
+          );
         )
-          Te++;
-        let Pe = columnStartX + _e * columnWidth,
-          Re = columnStartX + (Te + 1) * columnWidth,
-          Fe = (Pe + Re) / 2;
-        (addBox(roofOuterMat, Re - Pe, 0.04, k + 0.02, Fe, ve + oe * 0.03, ce + fe * 0.03, {
-          r: J,
-        }),
-          addBox(roofInnerMat, Re - Pe, 0.02, k + 0.02, Fe, ve - oe * 0.02, ce - fe * 0.02, {
-            r: J,
-          }));
-        let bandEaveSideZ = ridgeZ + Z * halfDepth * (1 - I),
-          bandRidgeSideZ = ridgeZ + Z * halfDepth * (1 - se);
+          runEndColumn++;
+        let runStartX = columnStartX + columnCursor * columnWidth,
+          runEndX = columnStartX + (runEndColumn + 1) * columnWidth,
+          ribPanelCenterX = (runStartX + runEndX) / 2;
+        (addBox(
+          roofOuterMat,
+          runEndX - runStartX,
+          0.04,
+          stepIndex + 0.02,
+          ribPanelCenterX,
+          roofHeightAt + farEdgePos * 0.03,
+          spanMidCoord + lowEdgePos * 0.03,
+          {
+            r: spanStartPos,
+          },
+        ),
+          addBox(
+            roofInnerMat,
+            runEndX - runStartX,
+            0.02,
+            stepIndex + 0.02,
+            ribPanelCenterX,
+            roofHeightAt - farEdgePos * 0.02,
+            spanMidCoord - lowEdgePos * 0.02,
+            {
+              r: spanStartPos,
+            },
+          ));
+        let bandEaveSideZ = ridgeZ + inwardSign * halfDepth * (1 - innerFacePos),
+          bandRidgeSideZ = ridgeZ + inwardSign * halfDepth * (1 - bandEndValue);
         (addCollider(
-          Math.max(Pe, shedX0 - 0.3),
-          eaveY + riseH * Math.max(0, I) - 0.05,
+          Math.max(runStartX, shedX0 - 0.3),
+          eaveY + riseH * Math.max(0, innerFacePos) - 0.05,
           Math.min(bandEaveSideZ, bandRidgeSideZ),
-          Re,
-          eaveY + riseH * se + 0.08,
+          runEndX,
+          eaveY + riseH * bandEndValue + 0.08,
           Math.max(bandEaveSideZ, bandRidgeSideZ),
           'metal',
           {
             noNav: !0,
           },
         ),
-          (_e = Te + 1));
+          (columnCursor = runEndColumn + 1));
       }
     }
-    for (let R of SHED_SKYLIGHT_HOLES)
-      if (R[0] === L) {
-        let I = ROOF_BAND_FRACTIONS[R[1]],
-          se = ROOF_BAND_FRACTIONS[R[1] + 1],
-          ae = columnStartX + R[2] * columnWidth,
-          k = (I + se) / 2,
-          ce = ridgeZ + Z * halfDepth * (1 - k),
-          ve = eaveY + riseH * k;
+    for (let scratchValue of SHED_SKYLIGHT_HOLES)
+      if (scratchValue[0] === spanAxisPos) {
+        let innerFacePos = ROOF_BAND_FRACTIONS[scratchValue[1]],
+          bandEndValue = ROOF_BAND_FRACTIONS[scratchValue[1] + 1],
+          midValue = columnStartX + scratchValue[2] * columnWidth,
+          stepIndex = (innerFacePos + bandEndValue) / 2,
+          spanMidCoord = ridgeZ + inwardSign * halfDepth * (1 - stepIndex),
+          roofHeightAt = eaveY + riseH * stepIndex;
         (skylights.push({
-          x: ae + columnWidth / 2,
-          y: ve,
-          z: ce,
+          x: midValue + columnWidth / 2,
+          y: roofHeightAt,
+          z: spanMidCoord,
           w: columnWidth,
-          d: (se - I) * halfDepth,
+          d: (bandEndValue - innerFacePos) * halfDepth,
         }),
           ctx.decal(
             'leak_stain',
             1.9,
-            ae + columnWidth / 2 + 0.2,
+            midValue + columnWidth / 2 + 0.2,
             floorY + 0.004,
-            ce,
+            spanMidCoord,
             'y+',
-            R[2] * 1.7,
+            scratchValue[2] * 1.7,
           ),
           addBox(
             galvFlatMat,
             0.05,
             0.05,
-            (se - I) * slopeLen,
-            ae + 0.02,
-            ve - oe * 0.06,
-            ce - fe * 0.06,
+            (bandEndValue - innerFacePos) * slopeLen,
+            midValue + 0.02,
+            roofHeightAt - farEdgePos * 0.06,
+            spanMidCoord - lowEdgePos * 0.06,
             {
-              r: J,
+              r: spanStartPos,
             },
           ),
           addBox(
             galvFlatMat,
             0.05,
             0.05,
-            (se - I) * slopeLen,
-            ae + columnWidth - 0.02,
-            ve - oe * 0.06,
-            ce - fe * 0.06,
+            (bandEndValue - innerFacePos) * slopeLen,
+            midValue + columnWidth - 0.02,
+            roofHeightAt - farEdgePos * 0.06,
+            spanMidCoord - lowEdgePos * 0.06,
             {
-              r: J,
+              r: spanStartPos,
             },
           ));
       }
-    for (let R of [0.03, 0.2, 0.37, 0.54, 0.71, 0.88, 0.985]) {
-      let I = ridgeZ + Z * halfDepth * (1 - R),
-        se = eaveY + riseH * R;
+    for (let scratchValue of [0.03, 0.2, 0.37, 0.54, 0.71, 0.88, 0.985]) {
+      let innerFacePos = ridgeZ + inwardSign * halfDepth * (1 - scratchValue),
+        bandEndValue = eaveY + riseH * scratchValue;
       addBox(
         galvFlatMat,
         shedX1 - shedX0 - 0.3,
         0.17,
         0.06,
         (shedX0 + shedX1) / 2,
-        se - oe * 0.13,
-        I - fe * 0.13,
+        bandEndValue - farEdgePos * 0.13,
+        innerFacePos - lowEdgePos * 0.13,
         {
-          r: J,
+          r: spanStartPos,
         },
       );
     }
-    let le = ridgeZ + Z * (halfDepth + 0.38);
+    let highEdgePos = ridgeZ + inwardSign * (halfDepth + 0.38);
     (addSlab(
       galvMat,
       shedX0 - 0.3,
       eaveY - 0.22,
-      Math.min(le, le + Z * 0.16),
+      Math.min(highEdgePos, highEdgePos + inwardSign * 0.16),
       shedX1 + 0.3,
       eaveY - 0.08,
-      Math.max(le, le + Z * 0.16),
+      Math.max(highEdgePos, highEdgePos + inwardSign * 0.16),
     ),
       addSlab(
         galvMat,
         shedX0 - 0.3,
         eaveY - 0.22,
-        Math.min(le - Z * 0.05, le + Z * 0.21),
+        Math.min(highEdgePos - inwardSign * 0.05, highEdgePos + inwardSign * 0.21),
         shedX1 + 0.3,
         eaveY - 0.19,
-        Math.max(le - Z * 0.05, le + Z * 0.21),
+        Math.max(highEdgePos - inwardSign * 0.05, highEdgePos + inwardSign * 0.21),
       ));
-    for (let R = 0; R < SHED_BAY_XS.length; R++) {
-      if (L === 'S' && (R === 2 || R === 3)) continue;
-      let I = Math.min(shedX1 - 0.5, Math.max(shedX0 + 0.5, SHED_BAY_XS[R])) + 0.42,
-        se = ridgeZ + Z * (halfDepth + 0.13);
-      (addCyl(galvMat, 0.055, eaveY - 0.4, I, (eaveY - 0.4) / 2 + 0.2, se, {
+    for (let scratchValue = 0; scratchValue < SHED_BAY_XS.length; scratchValue++) {
+      if (spanAxisPos === 'S' && (scratchValue === 2 || scratchValue === 3)) continue;
+      let innerFacePos =
+          Math.min(shedX1 - 0.5, Math.max(shedX0 + 0.5, SHED_BAY_XS[scratchValue])) + 0.42,
+        bandEndValue = ridgeZ + inwardSign * (halfDepth + 0.13);
+      (addCyl(galvMat, 0.055, eaveY - 0.4, innerFacePos, (eaveY - 0.4) / 2 + 0.2, bandEndValue, {
         seg: 8,
       }),
-        addRod(galvMat, [I, eaveY - 0.2, se], [I, eaveY - 0.12, le + Z * 0.08], 0.05));
-      for (let ae of [1.6, 3.6, 5.6]) addBox(galvMat, 0.16, 0.04, 0.14, I, ae, se - Z * 0.02);
-      addRod(galvMat, [I, 0.2, se], [I + 0.02, 0.06, se + Z * 0.22], 0.055);
+        addRod(
+          galvMat,
+          [innerFacePos, eaveY - 0.2, bandEndValue],
+          [innerFacePos, eaveY - 0.12, highEdgePos + inwardSign * 0.08],
+          0.05,
+        ));
+      for (let midValue of [1.6, 3.6, 5.6])
+        addBox(galvMat, 0.16, 0.04, 0.14, innerFacePos, midValue, bandEndValue - inwardSign * 0.02);
+      addRod(
+        galvMat,
+        [innerFacePos, 0.2, bandEndValue],
+        [innerFacePos + 0.02, 0.06, bandEndValue + inwardSign * 0.22],
+        0.055,
+      );
     }
   }
-  for (let L of [-1, 1])
+  for (let spanAxisPos of [-1, 1])
     addBox(
       galvMat,
       shedX1 - shedX0 + 0.7,
@@ -1114,60 +1157,76 @@ export function buildWorkshopShed(ctx) {
       0.34,
       (shedX0 + shedX1) / 2,
       ridgeY + 0.03,
-      ridgeZ + L * 0.15,
+      ridgeZ + spanAxisPos * 0.15,
       {
-        r: [L * roofAngle, 0, 0],
+        r: [spanAxisPos * roofAngle, 0, 0],
       },
     );
-  for (let L of [shedX0 - 0.31, shedX1 + 0.31])
-    for (let Z of [-1, 1])
+  for (let spanAxisPos of [shedX0 - 0.31, shedX1 + 0.31])
+    for (let inwardSign of [-1, 1])
       addBox(
         galvMat,
         0.04,
         0.22,
         slopeLen + 0.4,
-        L,
+        spanAxisPos,
         (eaveY + ridgeY) / 2 - 0.05,
-        ridgeZ + Z * (halfDepth / 2 + 0.1),
+        ridgeZ + inwardSign * (halfDepth / 2 + 0.1),
         {
-          r: [Z * roofAngle, 0, 0],
+          r: [inwardSign * roofAngle, 0, 0],
         },
       );
   let girtZs = [shedZ1 - wallThickness - 0.24, shedZ0 + wallThickness + 0.24];
-  for (let L = 0; L < SHED_BAY_XS.length; L++) {
-    let Z =
-      L === 0
+  for (let spanAxisPos = 0; spanAxisPos < SHED_BAY_XS.length; spanAxisPos++) {
+    let inwardSign =
+      spanAxisPos === 0
         ? shedX0 + wallThickness + 0.12
-        : L === SHED_BAY_XS.length - 1
+        : spanAxisPos === SHED_BAY_XS.length - 1
           ? shedX1 - wallThickness - 0.12
-          : SHED_BAY_XS[L];
-    for (let J of girtZs)
-      (addIBeam(greyPaintMat, 'y', eaveY - 0.35, Z, floorY + (eaveY - 0.35) / 2, J, {
-        depth: 0.46,
-        width: 0.22,
-        depthAxis: 'z',
-      }),
-        addBox(darkSteelMat, 0.36, 0.03, 0.62, Z, floorY + 0.015, J),
-        addCollider(Z - 0.12, 0, J - 0.24, Z + 0.12, eaveY, J + 0.24, 'metal'));
-    for (let J of [1, -1]) {
-      let oe = ridgeZ + (J * halfDepth) / 2 - J * 0.14,
-        fe = eaveY + riseH / 2 - 0.42;
-      (addIBeam(greyPaintMat, 'z', slopeLen - 0.5, Z, fe, oe, {
+          : SHED_BAY_XS[spanAxisPos];
+    for (let spanStartPos of girtZs)
+      (addIBeam(
+        greyPaintMat,
+        'y',
+        eaveY - 0.35,
+        inwardSign,
+        floorY + (eaveY - 0.35) / 2,
+        spanStartPos,
+        {
+          depth: 0.46,
+          width: 0.22,
+          depthAxis: 'z',
+        },
+      ),
+        addBox(darkSteelMat, 0.36, 0.03, 0.62, inwardSign, floorY + 0.015, spanStartPos),
+        addCollider(
+          inwardSign - 0.12,
+          0,
+          spanStartPos - 0.24,
+          inwardSign + 0.12,
+          eaveY,
+          spanStartPos + 0.24,
+          'metal',
+        ));
+    for (let spanStartPos of [1, -1]) {
+      let farEdgePos = ridgeZ + (spanStartPos * halfDepth) / 2 - spanStartPos * 0.14,
+        lowEdgePos = eaveY + riseH / 2 - 0.42;
+      (addIBeam(greyPaintMat, 'z', slopeLen - 0.5, inwardSign, lowEdgePos, farEdgePos, {
         depth: 0.4,
         width: 0.2,
         depthAxis: 'y',
-        r: [J * roofAngle, 0, 0],
+        r: [spanStartPos * roofAngle, 0, 0],
       }),
         addBox(
           greyPaintMat,
           0.014,
           0.5,
           1.5,
-          Z,
+          inwardSign,
           eaveY - 0.55,
-          ridgeZ + J * (halfDepth - wallThickness - 0.9),
+          ridgeZ + spanStartPos * (halfDepth - wallThickness - 0.9),
           {
-            r: [J * (roofAngle + 0.22), 0, 0],
+            r: [spanStartPos * (roofAngle + 0.22), 0, 0],
           },
         ),
         addBox(
@@ -1175,123 +1234,165 @@ export function buildWorkshopShed(ctx) {
           0.2,
           0.02,
           1.55,
-          Z,
+          inwardSign,
           eaveY - 0.82,
-          ridgeZ + J * (halfDepth - wallThickness - 0.95),
+          ridgeZ + spanStartPos * (halfDepth - wallThickness - 0.95),
           {
-            r: [J * (roofAngle + 0.42), 0, 0],
+            r: [spanStartPos * (roofAngle + 0.42), 0, 0],
           },
         ));
     }
-    addBox(greyPaintMat, 0.22, 0.5, 0.03, Z, ridgeY - 0.55, ridgeZ);
+    addBox(greyPaintMat, 0.22, 0.5, 0.03, inwardSign, ridgeY - 0.55, ridgeZ);
   }
-  for (let L of [shedX0 + wallThickness + 0.12, shedX1 - wallThickness - 0.12])
-    for (let Z of [-22.3, -16.7]) {
-      let J = matLit(Z) - 0.55;
-      (addIBeam(greyPaintMat, 'y', J, L, floorY + J / 2, Z, {
-        depth: 0.3,
-        width: 0.18,
-        depthAxis: 'x',
-      }),
-        addCollider(L - 0.16, 0, Z - 0.1, L + 0.16, J, Z + 0.1, 'metal'));
+  for (let spanAxisPos of [shedX0 + wallThickness + 0.12, shedX1 - wallThickness - 0.12])
+    for (let inwardSign of [-22.3, -16.7]) {
+      let spanStartPos = matLit(inwardSign) - 0.55;
+      (addIBeam(
+        greyPaintMat,
+        'y',
+        spanStartPos,
+        spanAxisPos,
+        floorY + spanStartPos / 2,
+        inwardSign,
+        {
+          depth: 0.3,
+          width: 0.18,
+          depthAxis: 'x',
+        },
+      ),
+        addCollider(
+          spanAxisPos - 0.16,
+          0,
+          inwardSign - 0.1,
+          spanAxisPos + 0.16,
+          spanStartPos,
+          inwardSign + 0.1,
+          'metal',
+        ));
     }
-  for (let L of girtZs) {
-    let Z = L > ridgeZ ? 1 : -1;
-    for (let J of [2.3, 3.7, 5.15])
-      Z > 0
+  for (let spanAxisPos of girtZs) {
+    let inwardSign = spanAxisPos > ridgeZ ? 1 : -1;
+    for (let spanStartPos of [2.3, 3.7, 5.15])
+      inwardSign > 0
         ? (addSlab(
             galvFlatMat,
             shedX0 + 0.3,
-            J - 0.08,
+            spanStartPos - 0.08,
             shedZ1 - 0.2,
             SHED_DOOR_OPENING.x0 - 0.2,
-            J + 0.08,
+            spanStartPos + 0.08,
             shedZ1 - 0.14,
           ),
           addSlab(
             galvFlatMat,
             SHED_DOOR_OPENING.x1 + 0.2,
-            J - 0.08,
+            spanStartPos - 0.08,
             shedZ1 - 0.2,
             shedX1 - 0.3,
-            J + 0.08,
+            spanStartPos + 0.08,
             shedZ1 - 0.14,
           ))
         : addSlab(
             galvFlatMat,
             shedX0 + 0.3,
-            J - 0.08,
+            spanStartPos - 0.08,
             shedZ0 + 0.14,
             shedX1 - 0.3,
-            J + 0.08,
+            spanStartPos + 0.08,
             shedZ0 + 0.2,
           );
-    addBox(greyPaintMat, shedX1 - shedX0 - 0.6, 0.14, 0.14, (shedX0 + shedX1) / 2, eaveY - 0.25, L);
+    addBox(
+      greyPaintMat,
+      shedX1 - shedX0 - 0.6,
+      0.14,
+      0.14,
+      (shedX0 + shedX1) / 2,
+      eaveY - 0.25,
+      spanAxisPos,
+    );
   }
-  for (let L of [shedX0 + 0.17, shedX1 - 0.17])
-    for (let Z of [2.3, 3.7, 5.15])
-      L > 0
+  for (let spanAxisPos of [shedX0 + 0.17, shedX1 - 0.17])
+    for (let inwardSign of [2.3, 3.7, 5.15])
+      spanAxisPos > 0
         ? (addSlab(
             galvFlatMat,
-            L - 0.03,
-            Z - 0.08,
+            spanAxisPos - 0.03,
+            inwardSign - 0.08,
             shedZ0 + 0.3,
-            L + 0.03,
-            Z + 0.08,
+            spanAxisPos + 0.03,
+            inwardSign + 0.08,
             SHED_WINDOW_OPENING.z0 - 0.2,
           ),
           addSlab(
             galvFlatMat,
-            L - 0.03,
-            Z - 0.08,
+            spanAxisPos - 0.03,
+            inwardSign - 0.08,
             SHED_WINDOW_OPENING.z1 + 0.2,
-            L + 0.03,
-            Z + 0.08,
+            spanAxisPos + 0.03,
+            inwardSign + 0.08,
             shedZ1 - 0.3,
           ))
-        : addSlab(galvFlatMat, L - 0.03, Z - 0.08, shedZ0 + 0.3, L + 0.03, Z + 0.08, shedZ1 - 0.3);
-  for (let [L, Z] of [
+        : addSlab(
+            galvFlatMat,
+            spanAxisPos - 0.03,
+            inwardSign - 0.08,
+            shedZ0 + 0.3,
+            spanAxisPos + 0.03,
+            inwardSign + 0.08,
+            shedZ1 - 0.3,
+          );
+  for (let [spanAxisPos, inwardSign] of [
     [SHED_BAY_XS[0] + 0.4, SHED_BAY_XS[1]],
     [SHED_BAY_XS[4], SHED_BAY_XS[5] - 0.4],
   ]) {
-    for (let J of girtZs)
-      (addRod(galvFlatMat, [L, 1.35, J], [Z, 5.3, J], 0.016),
-        addRod(galvFlatMat, [Z, 1.35, J + 0.04], [L, 5.3, J + 0.04], 0.016));
-    for (let J of [1, -1]) {
-      let oe = ridgeZ + J * (halfDepth - 0.6),
-        fe = -0.3;
+    for (let spanStartPos of girtZs)
       (addRod(
         galvFlatMat,
-        [L, eaveY + fe + 0.1, oe],
-        [Z, ridgeY + fe - 0.1, ridgeZ + J * 0.3],
+        [spanAxisPos, 1.35, spanStartPos],
+        [inwardSign, 5.3, spanStartPos],
+        0.016,
+      ),
+        addRod(
+          galvFlatMat,
+          [inwardSign, 1.35, spanStartPos + 0.04],
+          [spanAxisPos, 5.3, spanStartPos + 0.04],
+          0.016,
+        ));
+    for (let spanStartPos of [1, -1]) {
+      let farEdgePos = ridgeZ + spanStartPos * (halfDepth - 0.6),
+        lowEdgePos = -0.3;
+      (addRod(
+        galvFlatMat,
+        [spanAxisPos, eaveY + lowEdgePos + 0.1, farEdgePos],
+        [inwardSign, ridgeY + lowEdgePos - 0.1, ridgeZ + spanStartPos * 0.3],
         0.014,
       ),
         addRod(
           galvFlatMat,
-          [Z, eaveY + fe + 0.1, oe],
-          [L, ridgeY + fe - 0.1, ridgeZ + J * 0.3],
+          [inwardSign, eaveY + lowEdgePos + 0.1, farEdgePos],
+          [spanAxisPos, ridgeY + lowEdgePos - 0.1, ridgeZ + spanStartPos * 0.3],
           0.014,
         ));
     }
   }
   {
-    let L = shedZ1 - wallThickness;
-    for (let Z of [SHED_DOOR_OPENING.x0 - 0.07, SHED_DOOR_OPENING.x1 + 0.07])
+    let spanAxisPos = shedZ1 - wallThickness;
+    for (let inwardSign of [SHED_DOOR_OPENING.x0 - 0.07, SHED_DOOR_OPENING.x1 + 0.07])
       (addSlab(
         darkSteelMat,
-        Z - 0.07,
+        inwardSign - 0.07,
         floorY,
-        L - 0.16,
-        Z + 0.07,
+        spanAxisPos - 0.16,
+        inwardSign + 0.07,
         SHED_DOOR_OPENING.h + 0.75,
         shedZ1 + 0.07,
       ),
         addSlab(
           makeSurfaceMat('hazard_stripes'),
-          Z - 0.11,
+          inwardSign - 0.11,
           floorY,
-          L - 0.2,
-          Z + 0.11,
+          spanAxisPos - 0.2,
+          inwardSign + 0.11,
           1.3,
           shedZ1 + 0.1,
           {
@@ -1302,7 +1403,7 @@ export function buildWorkshopShed(ctx) {
       darkSteelMat,
       SHED_DOOR_OPENING.x0 - 0.2,
       SHED_DOOR_OPENING.h,
-      L - 0.1,
+      spanAxisPos - 0.1,
       SHED_DOOR_OPENING.x1 + 0.2,
       SHED_DOOR_OPENING.h + 0.14,
       shedZ1 + 0.08,
@@ -1311,29 +1412,29 @@ export function buildWorkshopShed(ctx) {
         galvFlatMat,
         SHED_DOOR_OPENING.x0 - 0.25,
         SHED_DOOR_OPENING.h + 0.78,
-        L - 0.72,
+        spanAxisPos - 0.72,
         SHED_DOOR_OPENING.x1 + 0.25,
         SHED_DOOR_OPENING.h + 0.81,
-        L,
+        spanAxisPos,
       ),
       addSlab(
         galvFlatMat,
         SHED_DOOR_OPENING.x0 - 0.25,
         SHED_DOOR_OPENING.h + 0.3,
-        L - 0.72,
+        spanAxisPos - 0.72,
         SHED_DOOR_OPENING.x1 + 0.25,
         SHED_DOOR_OPENING.h + 0.81,
-        L - 0.69,
+        spanAxisPos - 0.69,
       ));
-    for (let Z of [SHED_DOOR_OPENING.x0 - 0.24, SHED_DOOR_OPENING.x1 + 0.24])
+    for (let inwardSign of [SHED_DOOR_OPENING.x0 - 0.24, SHED_DOOR_OPENING.x1 + 0.24])
       addSlab(
         galvFlatMat,
-        Z - 0.012,
+        inwardSign - 0.012,
         SHED_DOOR_OPENING.h + 0.05,
-        L - 0.72,
-        Z + 0.012,
+        spanAxisPos - 0.72,
+        inwardSign + 0.012,
         SHED_DOOR_OPENING.h + 0.81,
-        L,
+        spanAxisPos,
       );
     (addCyl(
       roofInnerMat,
@@ -1341,7 +1442,7 @@ export function buildWorkshopShed(ctx) {
       SHED_DOOR_OPENING.x1 - SHED_DOOR_OPENING.x0 + 0.3,
       (SHED_DOOR_OPENING.x0 + SHED_DOOR_OPENING.x1) / 2,
       SHED_DOOR_OPENING.h + 0.44,
-      L - 0.36,
+      spanAxisPos - 0.36,
       {
         axis: 'x',
         seg: 18,
@@ -1353,7 +1454,7 @@ export function buildWorkshopShed(ctx) {
         SHED_DOOR_OPENING.x1 - SHED_DOOR_OPENING.x0 + 0.46,
         (SHED_DOOR_OPENING.x0 + SHED_DOOR_OPENING.x1) / 2,
         SHED_DOOR_OPENING.h + 0.44,
-        L - 0.36,
+        spanAxisPos - 0.36,
         {
           axis: 'x',
           seg: 8,
@@ -1363,70 +1464,94 @@ export function buildWorkshopShed(ctx) {
         roofInnerMat,
         SHED_DOOR_OPENING.x0 + 0.02,
         SHED_DOOR_OPENING.h - 0.42,
-        L - 0.09,
+        spanAxisPos - 0.09,
         SHED_DOOR_OPENING.x1 - 0.02,
         SHED_DOOR_OPENING.h + 0.42,
-        L - 0.06,
+        spanAxisPos - 0.06,
       ),
       addSlab(
         makeSurfaceMat('hazard_stripes'),
         SHED_DOOR_OPENING.x0 + 0.02,
         SHED_DOOR_OPENING.h - 0.52,
-        L - 0.12,
+        spanAxisPos - 0.12,
         SHED_DOOR_OPENING.x1 - 0.02,
         SHED_DOOR_OPENING.h - 0.42,
-        L - 0.03,
+        spanAxisPos - 0.03,
       ),
       addSlab(
         darkSteelMat,
         SHED_DOOR_OPENING.x1 + 0.28,
         SHED_DOOR_OPENING.h + 0.2,
-        L - 0.6,
+        spanAxisPos - 0.6,
         SHED_DOOR_OPENING.x1 + 0.7,
         SHED_DOOR_OPENING.h + 0.7,
-        L - 0.15,
+        spanAxisPos - 0.15,
         {
           bevel: 0.02,
         },
       ),
       addRod(
         darkSteelMat,
-        [SHED_DOOR_OPENING.x1 + 0.5, SHED_DOOR_OPENING.h + 0.2, L - 0.3],
-        [SHED_DOOR_OPENING.x1 + 0.5, 1.2, L - 0.3],
+        [SHED_DOOR_OPENING.x1 + 0.5, SHED_DOOR_OPENING.h + 0.2, spanAxisPos - 0.3],
+        [SHED_DOOR_OPENING.x1 + 0.5, 1.2, spanAxisPos - 0.3],
         0.008,
       ));
-    for (let Z of [SHED_DOOR_OPENING.x0 - 0.45, SHED_DOOR_OPENING.x1 + 0.45])
-      ctx.place('bollard_post', Z, shedZ1 + 0.55, 0, {
+    for (let inwardSign of [SHED_DOOR_OPENING.x0 - 0.45, SHED_DOOR_OPENING.x1 + 0.45])
+      ctx.place('bollard_post', inwardSign, shedZ1 + 0.55, 0, {
         seed: 5,
       });
   }
   {
-    let L = shedX1 + 0.12,
-      Z = SHED_WINDOW_OPENING.z0 - 0.25,
-      J = Z - 5.1;
-    addSlab(roofOuterMat, L, 0.12, J, L + 0.05, SHED_WINDOW_OPENING.h + 0.1, Z);
-    for (let oe of [J, Z, (J + Z) / 2])
-      addSlab(galvMat, L - 0.02, 0.1, oe - 0.05, L + 0.09, SHED_WINDOW_OPENING.h + 0.12, oe + 0.05);
-    for (let oe of [0.14, SHED_WINDOW_OPENING.h + 0.08, SHED_WINDOW_OPENING.h * 0.5])
-      addSlab(galvMat, L - 0.02, oe - 0.05, J, L + 0.09, oe + 0.05, Z);
+    let spanAxisPos = shedX1 + 0.12,
+      inwardSign = SHED_WINDOW_OPENING.z0 - 0.25,
+      spanStartPos = inwardSign - 5.1;
+    addSlab(
+      roofOuterMat,
+      spanAxisPos,
+      0.12,
+      spanStartPos,
+      spanAxisPos + 0.05,
+      SHED_WINDOW_OPENING.h + 0.1,
+      inwardSign,
+    );
+    for (let farEdgePos of [spanStartPos, inwardSign, (spanStartPos + inwardSign) / 2])
+      addSlab(
+        galvMat,
+        spanAxisPos - 0.02,
+        0.1,
+        farEdgePos - 0.05,
+        spanAxisPos + 0.09,
+        SHED_WINDOW_OPENING.h + 0.12,
+        farEdgePos + 0.05,
+      );
+    for (let farEdgePos of [0.14, SHED_WINDOW_OPENING.h + 0.08, SHED_WINDOW_OPENING.h * 0.5])
+      addSlab(
+        galvMat,
+        spanAxisPos - 0.02,
+        farEdgePos - 0.05,
+        spanStartPos,
+        spanAxisPos + 0.09,
+        farEdgePos + 0.05,
+        inwardSign,
+      );
     (addRod(
       galvMat,
-      [L + 0.02, 0.2, J + 0.1],
-      [L + 0.02, SHED_WINDOW_OPENING.h, (J + Z) / 2],
+      [spanAxisPos + 0.02, 0.2, spanStartPos + 0.1],
+      [spanAxisPos + 0.02, SHED_WINDOW_OPENING.h, (spanStartPos + inwardSign) / 2],
       0.02,
     ),
       addRod(
         galvMat,
-        [L + 0.02, 0.2, Z - 0.1],
-        [L + 0.02, SHED_WINDOW_OPENING.h, (J + Z) / 2],
+        [spanAxisPos + 0.02, 0.2, inwardSign - 0.1],
+        [spanAxisPos + 0.02, SHED_WINDOW_OPENING.h, (spanStartPos + inwardSign) / 2],
         0.02,
       ),
       addSlab(
         darkSteelMat,
-        L - 0.04,
+        spanAxisPos - 0.04,
         SHED_WINDOW_OPENING.h + 0.16,
-        J - 0.2,
-        L + 0.12,
+        spanStartPos - 0.2,
+        spanAxisPos + 0.12,
         SHED_WINDOW_OPENING.h + 0.3,
         SHED_WINDOW_OPENING.z1 + 0.3,
       ),
@@ -1457,20 +1582,28 @@ export function buildWorkshopShed(ctx) {
         SHED_WINDOW_OPENING.h + 0.12,
         SHED_WINDOW_OPENING.z1 + 0.12,
       ));
-    for (let oe of [SHED_WINDOW_OPENING.z0 - 0.06, SHED_WINDOW_OPENING.z1 + 0.06])
+    for (let farEdgePos of [SHED_WINDOW_OPENING.z0 - 0.06, SHED_WINDOW_OPENING.z1 + 0.06])
       addSlab(
         makeSurfaceMat('hazard_stripes'),
         shedX1 - wallThickness - 0.05,
         floorY,
-        oe - 0.1,
+        farEdgePos - 0.1,
         shedX1 + 0.1,
         1.3,
-        oe + 0.1,
+        farEdgePos + 0.1,
         {
           bevel: 0.01,
         },
       );
-    (addCollider(L - 0.05, 0, J, L + 0.12, SHED_WINDOW_OPENING.h + 0.3, Z, 'metal'),
+    (addCollider(
+      spanAxisPos - 0.05,
+      0,
+      spanStartPos,
+      spanAxisPos + 0.12,
+      SHED_WINDOW_OPENING.h + 0.3,
+      inwardSign,
+      'metal',
+    ),
       ctx.place('bollard_post', shedX1 + 0.6, SHED_WINDOW_OPENING.z0 - 0.4, 0, {
         seed: 6,
       }));
@@ -1478,27 +1611,39 @@ export function buildWorkshopShed(ctx) {
   let fanGroup = new THREE.Group();
   (fanGroup.position.set(shedX1 - 0.05, fanHole.y, ridgeZ), (fanGroup.userData.noMerge = !0));
   {
-    let L = new THREE.TorusGeometry(fanHole.r + 0.02, 0.05, 8, 28);
-    (L.rotateY(Math.PI / 2),
-      addGeometry(L, galvMat, {
+    let spanAxisPos = new THREE.TorusGeometry(fanHole.r + 0.02, 0.05, 8, 28);
+    (spanAxisPos.rotateY(Math.PI / 2),
+      addGeometry(spanAxisPos, galvMat, {
         p: [shedX1 + 0.04, fanHole.y, ridgeZ],
       }));
-    let Z = new THREE.TorusGeometry(fanHole.r + 0.02, 0.035, 6, 28);
-    (Z.rotateY(Math.PI / 2),
-      addGeometry(Z, galvFlatMat, {
+    let inwardSign = new THREE.TorusGeometry(fanHole.r + 0.02, 0.035, 6, 28);
+    (inwardSign.rotateY(Math.PI / 2),
+      addGeometry(inwardSign, galvFlatMat, {
         p: [shedX1 - 0.16, fanHole.y, ridgeZ],
       }));
-    for (let fe of [0.4, 0.4 + Math.PI / 2])
+    for (let lowEdgePos of [0.4, 0.4 + Math.PI / 2])
       addRod(
         galvMat,
-        [shedX1 + 0.1, fanHole.y - Math.sin(fe) * fanHole.r, ridgeZ - Math.cos(fe) * fanHole.r],
-        [shedX1 + 0.1, fanHole.y + Math.sin(fe) * fanHole.r, ridgeZ + Math.cos(fe) * fanHole.r],
+        [
+          shedX1 + 0.1,
+          fanHole.y - Math.sin(lowEdgePos) * fanHole.r,
+          ridgeZ - Math.cos(lowEdgePos) * fanHole.r,
+        ],
+        [
+          shedX1 + 0.1,
+          fanHole.y + Math.sin(lowEdgePos) * fanHole.r,
+          ridgeZ + Math.cos(lowEdgePos) * fanHole.r,
+        ],
         0.012,
       );
-    for (let fe of [0, (Math.PI * 2) / 3, (Math.PI * 4) / 3])
+    for (let lowEdgePos of [0, (Math.PI * 2) / 3, (Math.PI * 4) / 3])
       addRod(
         galvFlatMat,
-        [shedX1 - 0.18, fanHole.y + Math.sin(fe) * fanHole.r, ridgeZ + Math.cos(fe) * fanHole.r],
+        [
+          shedX1 - 0.18,
+          fanHole.y + Math.sin(lowEdgePos) * fanHole.r,
+          ridgeZ + Math.cos(lowEdgePos) * fanHole.r,
+        ],
         [shedX1 - 0.18, fanHole.y, ridgeZ],
         0.014,
       );
@@ -1506,107 +1651,192 @@ export function buildWorkshopShed(ctx) {
       axis: 'x',
       seg: 12,
     });
-    let J = matFlat('steel_worn');
-    for (let fe = 0; fe < 5; fe++) {
-      let le = boxGeometry(0.012, 0.42, 0.2);
-      (le.rotateY(0.5), le.translate(0, 0.3, 0), le.rotateX((fe / 5) * Math.PI * 2));
-      let R = new THREE.Mesh(le, J);
-      ((R.castShadow = !0), (R.receiveShadow = !0), fanGroup.add(R));
+    let spanStartPos = matFlat('steel_worn');
+    for (let lowEdgePos = 0; lowEdgePos < 5; lowEdgePos++) {
+      let highEdgePos = boxGeometry(0.012, 0.42, 0.2);
+      (highEdgePos.rotateY(0.5),
+        highEdgePos.translate(0, 0.3, 0),
+        highEdgePos.rotateX((lowEdgePos / 5) * Math.PI * 2));
+      let scratchValue = new THREE.Mesh(highEdgePos, spanStartPos);
+      ((scratchValue.castShadow = !0),
+        (scratchValue.receiveShadow = !0),
+        fanGroup.add(scratchValue));
     }
-    let oe = new THREE.Mesh(cylinderGeometry(0.1, 0.1, 0.1, 12).rotateZ(Math.PI / 2), darkSteelMat);
-    ((oe.castShadow = !0), fanGroup.add(oe), ctx.dynRoot.add(fanGroup));
+    let farEdgePos = new THREE.Mesh(
+      cylinderGeometry(0.1, 0.1, 0.1, 12).rotateZ(Math.PI / 2),
+      darkSteelMat,
+    );
+    ((farEdgePos.castShadow = !0), fanGroup.add(farEdgePos), ctx.dynRoot.add(fanGroup));
   }
   let lampGlowMat = game.mats.emissive(16757864, 7),
     aluminiumMat = matFlat('aluminium'),
     pendantPositions = [];
-  for (let L of [-15.4, -23.6])
-    for (let Z of [-13.6, -8.5, -3.5, 2.6, 8.6])
-      (L < -20 && Z < -10) || pendantPositions.push([Z, L]);
-  for (let [L, Z] of pendantPositions) {
-    let J = matLit(Z) - 0.3,
-      oe = 6.05;
-    (addRod(darkSteelMat, [L, J, Z], [L, oe + 0.3, Z], 0.012, {
-      cast: !1,
-    }),
-      addCyl(aluminiumMat, 0.33, 0.3, L, oe + 0.15, Z, {
+  for (let spanAxisPos of [-15.4, -23.6])
+    for (let inwardSign of [-13.6, -8.5, -3.5, 2.6, 8.6])
+      (spanAxisPos < -20 && inwardSign < -10) || pendantPositions.push([inwardSign, spanAxisPos]);
+  for (let [spanAxisPos, inwardSign] of pendantPositions) {
+    let spanStartPos = matLit(inwardSign) - 0.3,
+      farEdgePos = 6.05;
+    (addRod(
+      darkSteelMat,
+      [spanAxisPos, spanStartPos, inwardSign],
+      [spanAxisPos, farEdgePos + 0.3, inwardSign],
+      0.012,
+      {
+        cast: !1,
+      },
+    ),
+      addCyl(aluminiumMat, 0.33, 0.3, spanAxisPos, farEdgePos + 0.15, inwardSign, {
         rTop: 0.09,
         seg: 14,
       }),
-      addCyl(darkSteelMat, 0.09, 0.14, L, oe + 0.37, Z, {
+      addCyl(darkSteelMat, 0.09, 0.14, spanAxisPos, farEdgePos + 0.37, inwardSign, {
         seg: 10,
       }),
-      addCyl(lampGlowMat, 0.24, 0.02, L, oe + 0.02, Z, {
+      addCyl(lampGlowMat, 0.24, 0.02, spanAxisPos, farEdgePos + 0.02, inwardSign, {
         seg: 14,
         cast: !1,
         recv: !1,
       }));
   }
   let shedLights = [];
-  for (let [L, Z] of [
+  for (let [spanAxisPos, inwardSign] of [
     [-8.5, -15.4],
     [2.6, -15.4],
     [-3.5, -23.6],
     [8.6, -23.6],
   ]) {
-    let J = new THREE.PointLight(16761994, 34, 13, 2);
-    (J.position.set(L, 5.75, Z), (J.castShadow = !1), ctx.dynRoot.add(J), shedLights.push(J));
+    let spanStartPos = new THREE.PointLight(16761994, 34, 13, 2);
+    (spanStartPos.position.set(spanAxisPos, 5.75, inwardSign),
+      (spanStartPos.castShadow = !1),
+      ctx.dynRoot.add(spanStartPos),
+      shedLights.push(spanStartPos));
   }
   {
-    let Z = shedX0 + wallThickness + 0.02,
-      J = -10.25,
-      oe = shedZ0 + wallThickness + 0.02,
-      fe = -23.75;
-    addSlab(matFlat('diamond_plate'), Z, 2.6 - 0.1, oe, J, 2.6, fe);
-    for (let Te of [Z + 0.1, -13, J - 0.08])
-      addSlab(greyPaintMat, Te - 0.07, 2.6 - 0.3, oe, Te + 0.07, 2.6 - 0.1, fe);
-    for (let [Te, Pe] of [
-      [J - 0.08, fe - 0.08],
-      [J - 0.08, oe + 0.3],
-      [-13, fe - 0.08],
+    let inwardSign = shedX0 + wallThickness + 0.02,
+      spanStartPos = -10.25,
+      farEdgePos = shedZ0 + wallThickness + 0.02,
+      lowEdgePos = -23.75;
+    addSlab(
+      matFlat('diamond_plate'),
+      inwardSign,
+      2.6 - 0.1,
+      farEdgePos,
+      spanStartPos,
+      2.6,
+      lowEdgePos,
+    );
+    for (let runEndColumn of [inwardSign + 0.1, -13, spanStartPos - 0.08])
+      addSlab(
+        greyPaintMat,
+        runEndColumn - 0.07,
+        2.6 - 0.3,
+        farEdgePos,
+        runEndColumn + 0.07,
+        2.6 - 0.1,
+        lowEdgePos,
+      );
+    for (let [runEndColumn, runStartX] of [
+      [spanStartPos - 0.08, lowEdgePos - 0.08],
+      [spanStartPos - 0.08, farEdgePos + 0.3],
+      [-13, lowEdgePos - 0.08],
     ])
-      (addBox(greyPaintMat, 0.14, 2.6 - 0.1, 0.14, Te, (2.6 - 0.1) / 2, Pe, {
+      (addBox(greyPaintMat, 0.14, 2.6 - 0.1, 0.14, runEndColumn, (2.6 - 0.1) / 2, runStartX, {
         bevel: 0.01,
       }),
-        addCollider(Te - 0.08, 0, Pe - 0.08, Te + 0.08, 2.6, Pe + 0.08, 'metal', {
-          noNav: !0,
-        }));
-    let le = matFlat('paint_white'),
-      R = makeSurfaceMat('glass_dirty'),
-      I = Z + 0.05,
-      se = J - 0.05,
-      ae = oe + 0.05,
-      k = fe - 0.05,
-      ce = 5,
-      ve = (Te, Pe, Re, Fe = 0.07) => {
-        (addSlab(Re, I, Te, k - Fe, se, Pe, k), addSlab(Re, se - Fe, Te, ae, se, Pe, k - Fe));
+        addCollider(
+          runEndColumn - 0.08,
+          0,
+          runStartX - 0.08,
+          runEndColumn + 0.08,
+          2.6,
+          runStartX + 0.08,
+          'metal',
+          {
+            noNav: !0,
+          },
+        ));
+    let highEdgePos = matFlat('paint_white'),
+      scratchValue = makeSurfaceMat('glass_dirty'),
+      innerFacePos = inwardSign + 0.05,
+      bandEndValue = spanStartPos - 0.05,
+      midValue = farEdgePos + 0.05,
+      stepIndex = lowEdgePos - 0.05,
+      spanMidCoord = 5,
+      roofHeightAt = (Te, Pe, Re, Fe = 0.07) => {
+        (addSlab(Re, innerFacePos, Te, stepIndex - Fe, bandEndValue, Pe, stepIndex),
+          addSlab(Re, bandEndValue - Fe, Te, midValue, bandEndValue, Pe, stepIndex - Fe));
       };
-    (ve(2.6, 3.5, le), ve(4.45, ce, le), ve(3.5, 4.45, R, 0.02));
-    for (let Te of [I + 0.04, -14.2, -12.9, -11.75, se - 0.04])
-      addSlab(le, Te - 0.04, 3.5, k - 0.07, Te + 0.04, 4.45, k);
-    for (let Te of [ae + 0.04, -26.3, -25, k - 0.04])
-      addSlab(le, se - 0.07, 3.5, Te - 0.04, se, 4.45, Te + 0.04);
-    (addSlab(matFlat('paint_grey'), -11.65, 2.6, k - 0.01, -10.75, 4.6, k + 0.03),
-      addSlab(le, I, ce, ae, se + 0.1, ce + 0.08, k + 0.1),
-      addSlab(matFlat('wood_dark'), I + 0.2, 3.3, ae + 0.3, se - 0.3, 3.36, ae + 1),
-      addSlab(darkSteelMat, -13.4, 3.36, ae + 0.5, -12.7, 3.8, ae + 0.56),
-      addBox(game.mats.emissive(13624063, 2.4), 1.2, 0.04, 0.14, -13, ce - 0.05, -25.8, {
+    (roofHeightAt(2.6, 3.5, highEdgePos),
+      roofHeightAt(4.45, spanMidCoord, highEdgePos),
+      roofHeightAt(3.5, 4.45, scratchValue, 0.02));
+    for (let runEndColumn of [innerFacePos + 0.04, -14.2, -12.9, -11.75, bandEndValue - 0.04])
+      addSlab(
+        highEdgePos,
+        runEndColumn - 0.04,
+        3.5,
+        stepIndex - 0.07,
+        runEndColumn + 0.04,
+        4.45,
+        stepIndex,
+      );
+    for (let runEndColumn of [midValue + 0.04, -26.3, -25, stepIndex - 0.04])
+      addSlab(
+        highEdgePos,
+        bandEndValue - 0.07,
+        3.5,
+        runEndColumn - 0.04,
+        bandEndValue,
+        4.45,
+        runEndColumn + 0.04,
+      );
+    (addSlab(matFlat('paint_grey'), -11.65, 2.6, stepIndex - 0.01, -10.75, 4.6, stepIndex + 0.03),
+      addSlab(
+        highEdgePos,
+        innerFacePos,
+        spanMidCoord,
+        midValue,
+        bandEndValue + 0.1,
+        spanMidCoord + 0.08,
+        stepIndex + 0.1,
+      ),
+      addSlab(
+        matFlat('wood_dark'),
+        innerFacePos + 0.2,
+        3.3,
+        midValue + 0.3,
+        bandEndValue - 0.3,
+        3.36,
+        midValue + 1,
+      ),
+      addSlab(darkSteelMat, -13.4, 3.36, midValue + 0.5, -12.7, 3.8, midValue + 0.56),
+      addBox(game.mats.emissive(13624063, 2.4), 1.2, 0.04, 0.14, -13, spanMidCoord - 0.05, -25.8, {
         cast: !1,
         recv: !1,
       }),
-      addBox(game.mats.emissive(10473727, 1.6), 0.6, 0.36, 0.01, -13.05, 3.6, ae + 0.59, {
+      addBox(game.mats.emissive(10473727, 1.6), 0.6, 0.36, 0.01, -13.05, 3.6, midValue + 0.59, {
         cast: !1,
         recv: !1,
       }),
-      addCollider(I, 2.6 - 0.12, ae, se, ce + 0.08, k, 'metal', {
-        noNav: !0,
-      }),
-      addCollider(Z, 2.6 - 0.12, oe, J, 2.6, fe, 'metal', {
+      addCollider(
+        innerFacePos,
+        2.6 - 0.12,
+        midValue,
+        bandEndValue,
+        spanMidCoord + 0.08,
+        stepIndex,
+        'metal',
+        {
+          noNav: !0,
+        },
+      ),
+      addCollider(inwardSign, 2.6 - 0.12, farEdgePos, spanStartPos, 2.6, lowEdgePos, 'metal', {
         noNav: !0,
       }));
-    let _e = fe + 0.6;
+    let columnCursor = lowEdgePos + 0.6;
     (ctx.catwalk(
       -14.25,
-      _e,
+      columnCursor,
       0,
       2.6 - 0.05,
       {
@@ -1616,7 +1846,7 @@ export function buildWorkshopShed(ctx) {
     ),
       ctx.catwalk(
         -11.25,
-        _e,
+        columnCursor,
         0,
         2.6 - 0.05,
         {
@@ -1624,49 +1854,75 @@ export function buildWorkshopShed(ctx) {
         },
         [!1, !0],
       ));
-    for (let Te of [-15.6, -12.75, -9.85])
-      addBox(greyPaintMat, 0.1, 2.6 - 0.12, 0.1, Te, (2.6 - 0.12) / 2, _e + 0.5, {
-        bevel: 0.01,
-      });
-    (addSlab(greyPaintMat, -15.75, 2.6 - 0.26, _e + 0.44, -9.75, 2.6 - 0.12, _e + 0.56),
-      ctx.stairs(-8.25, _e, Math.PI, 0, {
+    for (let runEndColumn of [-15.6, -12.75, -9.85])
+      addBox(
+        greyPaintMat,
+        0.1,
+        2.6 - 0.12,
+        0.1,
+        runEndColumn,
+        (2.6 - 0.12) / 2,
+        columnCursor + 0.5,
+        {
+          bevel: 0.01,
+        },
+      );
+    (addSlab(
+      greyPaintMat,
+      -15.75,
+      2.6 - 0.26,
+      columnCursor + 0.44,
+      -9.75,
+      2.6 - 0.12,
+      columnCursor + 0.56,
+    ),
+      ctx.stairs(-8.25, columnCursor, Math.PI, 0, {
         seed: 4,
       }),
-      ctx.metalRects.push([Z, oe, -6.7, _e + 0.6]));
+      ctx.metalRects.push([inwardSign, farEdgePos, -6.7, columnCursor + 0.6]));
   }
   {
-    let J = shedZ1 - wallThickness - 0.05,
-      oe = J - 0.75;
-    addSlab(matFlat('wood_dark'), 1.6, 0.88, oe, 5, 0.94, J, {
+    let spanStartPos = shedZ1 - wallThickness - 0.05,
+      farEdgePos = spanStartPos - 0.75;
+    addSlab(matFlat('wood_dark'), 1.6, 0.88, farEdgePos, 5, 0.94, spanStartPos, {
       bevel: 0.012,
     });
-    for (let fe of [1.6 + 0.06, 5 - 0.06, (1.6 + 5) / 2])
-      for (let le of [oe + 0.06, J - 0.06])
-        addBox(darkSteelMat, 0.05, 0.86, 0.05, fe, floorY + 0.43, le);
-    (addSlab(darkSteelMat, 1.6 + 0.04, 0.2, oe + 0.06, 5 - 0.04, 0.23, J - 0.04),
-      addSlab(matFlat('paint_grey'), 1.6 + 0.1, 0.55, oe + 0.04, 1.6 + 1.3, 0.86, J - 0.05, {
-        bevel: 0.01,
-      }),
-      addSlab(matFlat('wood_pallet'), 1.6, 1.25, J - 0.02, 5, 2.3, J + 0.01));
-    for (let fe = 0; fe < 7; fe++)
+    for (let lowEdgePos of [1.6 + 0.06, 5 - 0.06, (1.6 + 5) / 2])
+      for (let highEdgePos of [farEdgePos + 0.06, spanStartPos - 0.06])
+        addBox(darkSteelMat, 0.05, 0.86, 0.05, lowEdgePos, floorY + 0.43, highEdgePos);
+    (addSlab(darkSteelMat, 1.6 + 0.04, 0.2, farEdgePos + 0.06, 5 - 0.04, 0.23, spanStartPos - 0.04),
+      addSlab(
+        matFlat('paint_grey'),
+        1.6 + 0.1,
+        0.55,
+        farEdgePos + 0.04,
+        1.6 + 1.3,
+        0.86,
+        spanStartPos - 0.05,
+        {
+          bevel: 0.01,
+        },
+      ),
+      addSlab(matFlat('wood_pallet'), 1.6, 1.25, spanStartPos - 0.02, 5, 2.3, spanStartPos + 0.01));
+    for (let lowEdgePos = 0; lowEdgePos < 7; lowEdgePos++)
       addRod(
         galvFlatMat,
-        [1.6 + 0.3 + fe * 0.42, 1.5 + (fe % 3) * 0.12, J - 0.04],
-        [1.6 + 0.3 + fe * 0.42, 2.05 + (fe % 2) * 0.1, J - 0.04],
-        0.012 + (fe % 2) * 0.006,
+        [1.6 + 0.3 + lowEdgePos * 0.42, 1.5 + (lowEdgePos % 3) * 0.12, spanStartPos - 0.04],
+        [1.6 + 0.3 + lowEdgePos * 0.42, 2.05 + (lowEdgePos % 2) * 0.1, spanStartPos - 0.04],
+        0.012 + (lowEdgePos % 2) * 0.006,
         {
           cast: !1,
         },
       );
-    (addBox(darkSteelMat, 0.16, 0.14, 0.3, 5 - 0.5, 1.01, oe + 0.2, {
+    (addBox(darkSteelMat, 0.16, 0.14, 0.3, 5 - 0.5, 1.01, farEdgePos + 0.2, {
       bevel: 0.015,
     }),
-      addBox(galvFlatMat, 0.03, 0.03, 0.34, 5 - 0.5, 1.1, oe + 0.12),
-      addBox(matFlat('paint_red'), 0.45, 0.22, 0.24, 1.6 + 1.9, 1.05, oe + 0.35, {
+      addBox(galvFlatMat, 0.03, 0.03, 0.34, 5 - 0.5, 1.1, farEdgePos + 0.12),
+      addBox(matFlat('paint_red'), 0.45, 0.22, 0.24, 1.6 + 1.9, 1.05, farEdgePos + 0.35, {
         bevel: 0.02,
         r: [0, 0.3, 0],
       }),
-      addSlab(darkSteelMat, 1.6, 2.5, J - 0.3, 5, 2.53, J),
+      addSlab(darkSteelMat, 1.6, 2.5, spanStartPos - 0.3, 5, 2.53, spanStartPos),
       addBox(
         game.mats.emissive(16773328, 3),
         5 - 1.6 - 0.4,
@@ -1674,22 +1930,37 @@ export function buildWorkshopShed(ctx) {
         0.1,
         (1.6 + 5) / 2,
         2.48,
-        J - 0.18,
+        spanStartPos - 0.18,
         {
           cast: !1,
           recv: !1,
         },
       ),
-      addCollider(1.6, 0, oe, 5, 0.94, J, 'wood'));
+      addCollider(1.6, 0, farEdgePos, 5, 0.94, spanStartPos, 'wood'));
   }
   {
-    for (let fe of [-1, 1]) {
-      let le = -11.6 + (fe * 2.6) / 2;
-      (addRod(matFlat('paint_yellow'), [le, floorY, -17.6 - 0.9], [le, 3.3, -17.6], 0.045),
-        addRod(matFlat('paint_yellow'), [le, floorY, -17.6 + 0.9], [le, 3.3, -17.6], 0.045),
-        addRod(matFlat('paint_yellow'), [le, 1, -17.6 - 0.62], [le, 1, -17.6 + 0.62], 0.03));
-      for (let R of [-17.6 - 0.9, -17.6 + 0.9])
-        addCyl(darkSteelMat, 0.07, 0.1, le, floorY + 0.05, R, {
+    for (let lowEdgePos of [-1, 1]) {
+      let highEdgePos = -11.6 + (lowEdgePos * 2.6) / 2;
+      (addRod(
+        matFlat('paint_yellow'),
+        [highEdgePos, floorY, -17.6 - 0.9],
+        [highEdgePos, 3.3, -17.6],
+        0.045,
+      ),
+        addRod(
+          matFlat('paint_yellow'),
+          [highEdgePos, floorY, -17.6 + 0.9],
+          [highEdgePos, 3.3, -17.6],
+          0.045,
+        ),
+        addRod(
+          matFlat('paint_yellow'),
+          [highEdgePos, 1, -17.6 - 0.62],
+          [highEdgePos, 1, -17.6 + 0.62],
+          0.03,
+        ));
+      for (let scratchValue of [-17.6 - 0.9, -17.6 + 0.9])
+        addCyl(darkSteelMat, 0.07, 0.1, highEdgePos, floorY + 0.05, scratchValue, {
           axis: 'x',
           seg: 8,
         });
@@ -1732,13 +2003,13 @@ export function buildWorkshopShed(ctx) {
   }
   let halfPi = Math.PI / 2,
     placeProp = (L, Z, J, oe, fe, le = floorY, R) => ctx.place(L, Z, J, oe, fe, le, R);
-  for (let L of [-8.4, -5.6, -2.8, 2.8, 5.6, 8.4])
-    placeProp('shelf_rack', L, shedZ0 + wallThickness + 0.62, 0, {
-      seed: Math.round(L * 7 + 90),
+  for (let spanAxisPos of [-8.4, -5.6, -2.8, 2.8, 5.6, 8.4])
+    placeProp('shelf_rack', spanAxisPos, shedZ0 + wallThickness + 0.62, 0, {
+      seed: Math.round(spanAxisPos * 7 + 90),
     });
-  for (let L of [2.8, 5.6, 8.4])
-    placeProp('shelf_rack', L, -23.45, 0, {
-      seed: Math.round(L * 5 + 40),
+  for (let spanAxisPos of [2.8, 5.6, 8.4])
+    placeProp('shelf_rack', spanAxisPos, -23.45, 0, {
+      seed: Math.round(spanAxisPos * 5 + 40),
     });
   return (
     placeProp('pallet_stack', 0, -26.9, 0.1, {
@@ -1872,8 +2143,8 @@ export function buildWorkshopShed(ctx) {
       lights: shedLights,
       skylights: skylights,
       relayPos: new THREE.Vector3(-2, floorY, -19.5),
-      update(L) {
-        fanGroup.rotation.x += L * 1.7;
+      update(spanAxisPos) {
+        fanGroup.rotation.x += spanAxisPos * 1.7;
       },
     }
   );

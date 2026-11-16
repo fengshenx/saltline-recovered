@@ -47,9 +47,9 @@ three.js 换成 npm 依赖。`src/` 改完能重新构建成单文件，行为�
 - [x] 撞名收口：`_i/Pb/u_` 三处跨域命名冲突（`_i` 采纳参考仓库的 `registerProp`）
 - [x] `structures.js`（6,155 行）按构件拆成 `world/backdrop/{cranes,ships,sky,geometry}` +
       `world/level/buildings.js`；`assets/props/*` 36 个细文件收回 `world/props/*-builders.js`
-- [x] 短名治理两轮（16 个子代理）：局部绑定 1,979 → 4,214（新增生效 2,235 条）
+- [x] 短名治理三轮（24 个子代理）：局部绑定 1,979 → 6,737；剩余短名 5,286 → 2,706
 - [x] 构建链 `tools/link.mjs` + `tools/build.mjs`：按原始求值顺序链接，esbuild 打回单文件
-- [ ] 剩余短名：339 个函数 / 3,475 个绑定（多为深层嵌套作用域与匿名回调参数）
+- [ ] 剩余短名：252 个函数 / 2,706 个绑定（多为对象字面量的字段名，属另一类治理）
 - [ ] 前台会话下的游戏内截图回归（当前环境为后台标签页，rAF 被浏览器暂停）
 
 ## 规模对照

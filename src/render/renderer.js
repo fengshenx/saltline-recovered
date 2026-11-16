@@ -60,16 +60,16 @@ function fitSunShadowFrustum(sunLight, boundsMin, boundsMax, casterMin, casterMa
           .applyMatrix4(lightMatrix),
           eachCorner(cornerPoint));
     };
-  (forEachCorner(boundsMin, boundsMax, (y) => {
-    ((minX = Math.min(minX, y.x)),
-      (maxX = Math.max(maxX, y.x)),
-      (minY = Math.min(minY, y.y)),
-      (maxY = Math.max(maxY, y.y)),
-      (minZ = Math.min(minZ, -y.z)),
-      (maxZ = Math.max(maxZ, -y.z)));
+  (forEachCorner(boundsMin, boundsMax, (corner) => {
+    ((minX = Math.min(minX, corner.x)),
+      (maxX = Math.max(maxX, corner.x)),
+      (minY = Math.min(minY, corner.y)),
+      (maxY = Math.max(maxY, corner.y)),
+      (minZ = Math.min(minZ, -corner.z)),
+      (maxZ = Math.max(maxZ, -corner.z)));
   }),
-    forEachCorner(casterMin, casterMax, (y) => {
-      minZ = Math.min(minZ, -y.z);
+    forEachCorner(casterMin, casterMax, (corner) => {
+      minZ = Math.min(minZ, -corner.z);
     }));
   let shadowCam = sunLight.shadow.camera,
     frustumPad = 1;
@@ -141,27 +141,28 @@ export async function createRenderer(ctx) {
       sky: !1,
       other: 0,
     };
-  renderer.debug.onShaderError = (ie, F, X, ne) => {
-    let re = '',
-      $ = '';
+  renderer.debug.onShaderError = (frameDelta, scratchRef, localRef, targetHeight) => {
+    let scaleFactor = '',
+      savedState = '';
     try {
-      ((re = ie.getShaderSource(ne) || ''),
-        ($ =
-          (ie.getShaderInfoLog(ne) || '') +
+      ((scaleFactor = frameDelta.getShaderSource(targetHeight) || ''),
+        (savedState =
+          (frameDelta.getShaderInfoLog(targetHeight) || '') +
           ' ' +
-          (ie.getShaderInfoLog(X) || '') +
+          (frameDelta.getShaderInfoLog(localRef) || '') +
           ' ' +
-          (ie.getProgramInfoLog(F) || '')));
+          (frameDelta.getProgramInfoLog(scratchRef) || '')));
     } catch {}
-    let ue = 'material';
-    (re.includes(SALTLINE_POST_MARKER)
-      ? ((shaderErrors.post = !0), (ue = 'post pass ' + (re.match(/SALTLINE_POST (\S+)/) || [])[1]))
-      : re.includes('SALTLINE_SKY')
-        ? ((shaderErrors.sky = !0), (ue = 'sky'))
-        : re.includes(SALTLINE_SHADOW_TAG)
-          ? ((shaderErrors.shadow = !0), (ue = 'material (soft shadow chunk active)'))
+    let pixelCount = 'material';
+    (scaleFactor.includes(SALTLINE_POST_MARKER)
+      ? ((shaderErrors.post = !0),
+        (pixelCount = 'post pass ' + (scaleFactor.match(/SALTLINE_POST (\S+)/) || [])[1]))
+      : scaleFactor.includes('SALTLINE_SKY')
+        ? ((shaderErrors.sky = !0), (pixelCount = 'sky'))
+        : scaleFactor.includes(SALTLINE_SHADOW_TAG)
+          ? ((shaderErrors.shadow = !0), (pixelCount = 'material (soft shadow chunk active)'))
           : shaderErrors.other++,
-      console.error(`[render] shader error in ${ue}: ${$.trim().slice(0, 700)}`));
+      console.error(`[render] shader error in ${pixelCount}: ${savedState.trim().slice(0, 700)}`));
   };
   let scene = new THREE.Scene(),
     camera = new THREE.PerspectiveCamera(PLAYER_SPEC.fov, 16 / 9, 0.08, 900);
@@ -194,66 +195,76 @@ export async function createRenderer(ctx) {
       taps: ctx.quality.name === 'low' ? 10 : 16,
       searchTaps: 8,
     });
-  } catch (ie) {
-    console.warn('[render] soft shadows unavailable: ' + ie);
+  } catch (frameDelta) {
+    console.warn('[render] soft shadows unavailable: ' + frameDelta);
   }
   let lightPoolSize = 6,
     flashLights = [];
-  for (let ie = 0; ie < lightPoolSize; ie++) {
-    let F = new THREE.PointLight(16777215, 0, 12, 2);
-    ((F.userData = {
+  for (let frameDelta = 0; frameDelta < lightPoolSize; frameDelta++) {
+    let scratchRef = new THREE.PointLight(16777215, 0, 12, 2);
+    ((scratchRef.userData = {
       busy: !1,
       ttl: 0,
       dur: 0,
       peak: 0,
       persistent: !1,
     }),
-      scene.add(F),
-      flashLights.push(F));
+      scene.add(scratchRef),
+      flashLights.push(scratchRef));
   }
   let lightPool = {
-      flash(ie, F = 16763008, X = 30, ne = 10, re = 0.06) {
-        let $ =
-          flashLights.find((ue) => !ue.userData.busy) ||
+      flash(
+        frameDelta,
+        scratchRef = 16763008,
+        localRef = 30,
+        targetHeight = 10,
+        scaleFactor = 0.06,
+      ) {
+        let savedState =
+          flashLights.find((pixelCount) => !pixelCount.userData.busy) ||
           flashLights
-            .filter((ue) => !ue.userData.persistent)
-            .sort((ue, me) => ue.userData.ttl - me.userData.ttl)[0];
-        $ &&
-          ($.position.copy(ie),
-          $.color.set(F),
-          ($.distance = ne),
-          ($.intensity = X),
-          Object.assign($.userData, {
+            .filter((pixelCount) => !pixelCount.userData.persistent)
+            .sort(
+              (pixelCount, targetWidth) => pixelCount.userData.ttl - targetWidth.userData.ttl,
+            )[0];
+        savedState &&
+          (savedState.position.copy(frameDelta),
+          savedState.color.set(scratchRef),
+          (savedState.distance = targetHeight),
+          (savedState.intensity = localRef),
+          Object.assign(savedState.userData, {
             busy: !0,
-            ttl: re,
-            dur: re,
-            peak: X,
+            ttl: scaleFactor,
+            dur: scaleFactor,
+            peak: localRef,
             persistent: !1,
           }));
       },
       acquire() {
-        let ie = flashLights.find((F) => !F.userData.busy);
-        return ie
-          ? ((ie.userData.busy = !0),
-            (ie.userData.persistent = !0),
-            (ie.intensity = 0),
+        let frameDelta = flashLights.find((scratchRef) => !scratchRef.userData.busy);
+        return frameDelta
+          ? ((frameDelta.userData.busy = !0),
+            (frameDelta.userData.persistent = !0),
+            (frameDelta.intensity = 0),
             {
-              light: ie,
+              light: frameDelta,
               release() {
-                ((ie.userData.busy = !1), (ie.userData.persistent = !1), (ie.intensity = 0));
+                ((frameDelta.userData.busy = !1),
+                  (frameDelta.userData.persistent = !1),
+                  (frameDelta.intensity = 0));
               },
             })
           : null;
       },
-      update(ie) {
-        for (let F of flashLights) {
-          let X = F.userData;
-          X.busy &&
-            !X.persistent &&
-            ((X.ttl -= ie),
-            X.ttl <= 0
-              ? ((X.busy = !1), (F.intensity = 0))
-              : (F.intensity = X.peak * (X.ttl / X.dur)));
+      update(frameDelta) {
+        for (let scratchRef of flashLights) {
+          let localRef = scratchRef.userData;
+          localRef.busy &&
+            !localRef.persistent &&
+            ((localRef.ttl -= frameDelta),
+            localRef.ttl <= 0
+              ? ((localRef.busy = !1), (scratchRef.intensity = 0))
+              : (scratchRef.intensity = localRef.peak * (localRef.ttl / localRef.dur)));
         }
       },
     },
@@ -262,8 +273,10 @@ export async function createRenderer(ctx) {
     ((envCapture = captureSkyEnvironment(renderer, sky)),
       (scene.environment = envCapture.texture),
       (scene.environmentIntensity = SCENE_ENV_INTENSITY));
-  } catch (ie) {
-    console.error('[render] environment capture failed: ' + ((ie && ie.stack) || ie));
+  } catch (frameDelta) {
+    console.error(
+      '[render] environment capture failed: ' + ((frameDelta && frameDelta.stack) || frameDelta),
+    );
   }
   let depthTexture = new THREE.DepthTexture(4, 4);
   ((depthTexture.type = THREE.UnsignedIntType),
@@ -292,11 +305,11 @@ export async function createRenderer(ctx) {
       post = createPostprocessing(renderer, ctx, {
         noiseTex: noiseTex,
       });
-    } catch (ie) {
+    } catch (frameDelta) {
       ((advanced = !1),
         console.error(
           '[render] post chain failed to initialise, using forward fallback: ' +
-            ((ie && ie.stack) || ie),
+            ((frameDelta && frameDelta.stack) || frameDelta),
         ));
     }
   let fastMode = !!(params.shot || params.show),
@@ -308,11 +321,15 @@ export async function createRenderer(ctx) {
     };
   ctx.events &&
     ctx.events.on &&
-    ctx.events.on('thunder', (ie) => {
-      ((thunder.t = 0), (thunder.power = Math.min(1, (ie && ie.intensity) || 0.6)));
-      let F = Math.PI * (0.55 + Math.random() * 0.9);
+    ctx.events.on('thunder', (frameDelta) => {
+      ((thunder.t = 0), (thunder.power = Math.min(1, (frameDelta && frameDelta.intensity) || 0.6)));
+      let scratchRef = Math.PI * (0.55 + Math.random() * 0.9);
       sky.material.uniforms.uFlashDir.value
-        .set(Math.cos(F), 0.35 + Math.random() * 0.3, Math.sin(F) * (Math.random() < 0.5 ? -1 : 1))
+        .set(
+          Math.cos(scratchRef),
+          0.35 + Math.random() * 0.3,
+          Math.sin(scratchRef) * (Math.random() < 0.5 ? -1 : 1),
+        )
         .normalize();
     });
   let dynamicRes = {
@@ -484,8 +501,8 @@ export async function createRenderer(ctx) {
       get autoExposure() {
         return post ? post.autoExposure : !1;
       },
-      set autoExposure(ie) {
-        post && (post.autoExposure = !!ie);
+      set autoExposure(frameDelta) {
+        post && (post.autoExposure = !!frameDelta);
       },
       get depthTexture() {
         if (!post) return null;
@@ -496,35 +513,39 @@ export async function createRenderer(ctx) {
           return null;
         }
       },
-      addPrePass(ie) {
-        prePasses.push(ie);
+      addPrePass(frameDelta) {
+        prePasses.push(frameDelta);
       },
-      renderWorld(ie, F) {
-        let X = renderer.getRenderTarget(),
-          ne = renderer.shadowMap.needsUpdate,
-          re = renderer.toneMapping,
-          $ = renderer.toneMappingExposure,
-          ue = ie.layers.mask;
-        (ie.layers.disable(LAYER_VIEWMODEL),
+      renderWorld(frameDelta, scratchRef) {
+        let localRef = renderer.getRenderTarget(),
+          targetHeight = renderer.shadowMap.needsUpdate,
+          scaleFactor = renderer.toneMapping,
+          savedState = renderer.toneMappingExposure,
+          pixelCount = frameDelta.layers.mask;
+        (frameDelta.layers.disable(LAYER_VIEWMODEL),
           (renderer.shadowMap.needsUpdate = !1),
           (renderer.toneMapping = THREE.NoToneMapping),
           (renderer.toneMappingExposure = 1));
         try {
-          (renderer.setRenderTarget(F), renderer.clear(), renderer.render(scene, ie));
+          (renderer.setRenderTarget(scratchRef),
+            renderer.clear(),
+            renderer.render(scene, frameDelta));
         } finally {
-          ((ie.layers.mask = ue),
-            renderer.setRenderTarget(X),
-            (renderer.shadowMap.needsUpdate = ne),
-            (renderer.toneMapping = re),
-            (renderer.toneMappingExposure = $));
+          ((frameDelta.layers.mask = pixelCount),
+            renderer.setRenderTarget(localRef),
+            (renderer.shadowMap.needsUpdate = targetHeight),
+            (renderer.toneMapping = scaleFactor),
+            (renderer.toneMappingExposure = savedState));
         }
       },
       async onLevelReady() {
         renderer.shadowMap.needsUpdate = !0;
         try {
           captureInteriorProbe();
-        } catch (ie) {
-          console.error('[render] interior probe failed: ' + ((ie && ie.stack) || ie));
+        } catch (frameDelta) {
+          console.error(
+            '[render] interior probe failed: ' + ((frameDelta && frameDelta.stack) || frameDelta),
+          );
         }
         try {
           if (
@@ -532,12 +553,12 @@ export async function createRenderer(ctx) {
             await renderer.compileAsync(scene, camera),
             api.interiorEnv)
           ) {
-            let ie = scene.environment;
+            let frameDelta = scene.environment;
             scene.environment = api.interiorEnv;
             try {
               renderer.compile(scene, viewCamera);
             } finally {
-              scene.environment = ie;
+              scene.environment = frameDelta;
             }
           }
         } catch {}
@@ -546,61 +567,65 @@ export async function createRenderer(ctx) {
           (dynamicRes.acc = 0),
           (dynamicRes.n = 0));
       },
-      setQuality(ie) {
-        ctx.quality = ie;
-        let F = getShadowMapSize();
-        sun.shadow.mapSize.x !== F &&
-          (sun.shadow.mapSize.set(F, F),
+      setQuality(frameDelta) {
+        ctx.quality = frameDelta;
+        let scratchRef = getShadowMapSize();
+        sun.shadow.mapSize.x !== scratchRef &&
+          (sun.shadow.mapSize.set(scratchRef, scratchRef),
           sun.shadow.map && (sun.shadow.map.dispose(), (sun.shadow.map = null)));
-        let X = ie.msaa | 0;
-        (hdrTarget.samples !== X && ((hdrTarget.samples = X), hdrTarget.dispose()),
+        let localRef = frameDelta.msaa | 0;
+        (hdrTarget.samples !== localRef && ((hdrTarget.samples = localRef), hdrTarget.dispose()),
           post && post.applyQuality(),
           api.resize());
       },
       resize() {
-        let ie = Math.max(2, canvas.clientWidth || window.innerWidth),
-          F = Math.max(2, canvas.clientHeight || window.innerHeight),
-          X = Math.min(window.devicePixelRatio || 1, 2),
-          ne = ctx.quality.scale || 1;
+        let frameDelta = Math.max(2, canvas.clientWidth || window.innerWidth),
+          scratchRef = Math.max(2, canvas.clientHeight || window.innerHeight),
+          localRef = Math.min(window.devicePixelRatio || 1, 2),
+          targetHeight = ctx.quality.scale || 1;
         if (advanced) {
-          (renderer.setPixelRatio(X), renderer.setSize(ie, F, !1));
-          let re = ne * dynamicRes.scale,
-            $ =
+          (renderer.setPixelRatio(localRef), renderer.setSize(frameDelta, scratchRef, !1));
+          let scaleFactor = targetHeight * dynamicRes.scale,
+            savedState =
               {
                 low: 1e6,
                 medium: 15e5,
                 high: 23e5,
                 ultra: 37e5,
               }[ctx.quality.name] || 23e5,
-            ue = ie * X * F * X * re * re;
-          ue > $ && (re *= Math.sqrt($ / ue));
-          let me = Math.max(16, Math.round(ie * X * re)),
-            ee = Math.max(16, Math.round(F * X * re));
-          (hdrTarget.setSize(me, ee),
-            (depthTexture.image.width !== me || depthTexture.image.height !== ee) &&
-              ((depthTexture.image.width = me),
-              (depthTexture.image.height = ee),
+            pixelCount = frameDelta * localRef * scratchRef * localRef * scaleFactor * scaleFactor;
+          pixelCount > savedState && (scaleFactor *= Math.sqrt(savedState / pixelCount));
+          let targetWidth = Math.max(16, Math.round(frameDelta * localRef * scaleFactor)),
+            cubeTarget = Math.max(16, Math.round(scratchRef * localRef * scaleFactor));
+          (hdrTarget.setSize(targetWidth, cubeTarget),
+            (depthTexture.image.width !== targetWidth ||
+              depthTexture.image.height !== cubeTarget) &&
+              ((depthTexture.image.width = targetWidth),
+              (depthTexture.image.height = cubeTarget),
               (depthTexture.needsUpdate = !0)),
-            post && post.resize(me, ee),
-            api.resolution.set(me, ee));
+            post && post.resize(targetWidth, cubeTarget),
+            api.resolution.set(targetWidth, cubeTarget));
         } else
-          (renderer.setPixelRatio(X * ne),
-            renderer.setSize(ie, F, !1),
-            api.resolution.set(Math.round(ie * X * ne), Math.round(F * X * ne)));
-        ((camera.aspect = viewCamera.aspect = ie / F),
+          (renderer.setPixelRatio(localRef * targetHeight),
+            renderer.setSize(frameDelta, scratchRef, !1),
+            api.resolution.set(
+              Math.round(frameDelta * localRef * targetHeight),
+              Math.round(scratchRef * localRef * targetHeight),
+            ));
+        ((camera.aspect = viewCamera.aspect = frameDelta / scratchRef),
           camera.updateProjectionMatrix(),
           viewCamera.updateProjectionMatrix());
       },
-      frame(ie) {
-        let F = performance.now();
-        (lastFrameTime && updateDynamicRes(F - lastFrameTime),
-          (lastFrameTime = F),
+      frame(frameDelta) {
+        let scratchRef = performance.now();
+        (lastFrameTime && updateDynamicRes(scratchRef - lastFrameTime),
+          (lastFrameTime = scratchRef),
           frameCount++,
           renderer.info.reset(),
-          lightPool.update(ie));
-        let X = ctx.time ? ctx.time.t : frameCount / 60;
-        ((sky.material.uniforms.uTime.value = X),
-          (thunder.t += ie),
+          lightPool.update(frameDelta));
+        let localRef = ctx.time ? ctx.time.t : frameCount / 60;
+        ((sky.material.uniforms.uTime.value = localRef),
+          (thunder.t += frameDelta),
           (thunder.value =
             thunder.t < 0.9
               ? thunder.power *
@@ -610,23 +635,26 @@ export async function createRenderer(ctx) {
               : 0),
           (sky.material.uniforms.uFlash.value = Math.max(0, thunder.value)),
           syncViewCamera());
-        for (let ne of prePasses)
+        for (let targetHeight of prePasses)
           try {
-            ne(renderer, scene, camera);
-          } catch (re) {
-            warnOnce('pre', '[render] pre-pass threw: ' + ((re && re.stack) || re));
+            targetHeight(renderer, scene, camera);
+          } catch (scaleFactor) {
+            warnOnce(
+              'pre',
+              '[render] pre-pass threw: ' + ((scaleFactor && scaleFactor.stack) || scaleFactor),
+            );
           }
         if (advanced)
           try {
-            renderAdvanced(ie);
-          } catch (ne) {
+            renderAdvanced(frameDelta);
+          } catch (targetHeight) {
             advanced = !1;
             try {
               (glContext.depthRange(0, 1), renderer.setRenderTarget(null));
             } catch {}
             (console.error(
               '[render] advanced pipeline disabled, falling back to forward rendering: ' +
-                ((ne && ne.stack) || ne),
+                ((targetHeight && targetHeight.stack) || targetHeight),
             ),
               api.resize());
           }
@@ -637,13 +665,13 @@ export async function createRenderer(ctx) {
           }));
       },
       stats() {
-        let ie = renderer.info;
+        let frameDelta = renderer.info;
         return {
           calls: frameStats.calls,
           tris: frameStats.tris,
-          geos: ie.memory.geometries,
-          tex: ie.memory.textures,
-          programs: ie.programs ? ie.programs.length : 0,
+          geos: frameDelta.memory.geometries,
+          tex: frameDelta.memory.textures,
+          programs: frameDelta.programs ? frameDelta.programs.length : 0,
           res: [api.resolution.x, api.resolution.y],
           scale: dynamicRes.scale,
           advanced: advanced,
@@ -711,22 +739,24 @@ export async function createRenderer(ctx) {
     api.resize(),
     window.addEventListener('resize', () => api.resize()));
   try {
-    let ie = new THREE.MeshStandardMaterial({
+    let frameDelta = new THREE.MeshStandardMaterial({
         color: 8421504,
       }),
-      F = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), ie);
-    ((F.castShadow = F.receiveShadow = !0), F.position.set(0, 0.5, -3), scene.add(F));
-    let X = () => {
+      scratchRef = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), frameDelta);
+    ((scratchRef.castShadow = scratchRef.receiveShadow = !0),
+      scratchRef.position.set(0, 0.5, -3),
+      scene.add(scratchRef));
+    let localRef = () => {
       (syncViewCamera(), advanced ? renderAdvanced(0.016) : renderForward());
     };
     try {
-      X();
-    } catch (ne) {
+      localRef();
+    } catch (targetHeight) {
       advanced &&
         ((advanced = !1),
         console.error(
           '[render] advanced pipeline failed its self test, using forward fallback: ' +
-            ((ne && ne.message) || ne),
+            ((targetHeight && targetHeight.message) || targetHeight),
         ));
     }
     if (shaderErrors.shadow && softShadows) {
@@ -735,23 +765,23 @@ export async function createRenderer(ctx) {
         (shaderErrors.shadow = !1),
         (renderer.shadowMap.type = THREE.PCFSoftShadowMap),
         (sun.shadow.radius = 2),
-        ie.dispose(),
-        (F.material = new THREE.MeshStandardMaterial({
+        frameDelta.dispose(),
+        (scratchRef.material = new THREE.MeshStandardMaterial({
           color: 8421505,
         })),
         console.warn('[render] soft shadow chunk rejected by the driver, using stock PCF'));
       try {
-        X();
+        localRef();
       } catch {
         advanced = !1;
       }
     }
     if (
       (shaderErrors.sky && console.error('[render] sky shader failed to compile'),
-      scene.remove(F),
-      F.geometry.dispose(),
-      ie.dispose(),
-      F.material.dispose(),
+      scene.remove(scratchRef),
+      scratchRef.geometry.dispose(),
+      frameDelta.dispose(),
+      scratchRef.material.dispose(),
       !advanced)
     ) {
       try {
@@ -760,8 +790,8 @@ export async function createRenderer(ctx) {
       api.resize();
     }
     frameCount = 0;
-  } catch (ie) {
-    console.error('[render] self test threw: ' + ((ie && ie.stack) || ie));
+  } catch (frameDelta) {
+    console.error('[render] self test threw: ' + ((frameDelta && frameDelta.stack) || frameDelta));
   }
   return api;
 }
@@ -774,15 +804,15 @@ export function showcaseRenderer(app) {
   group.name = 'render-showcase';
   let addToGroup = (h) => (group.add(h), h),
     sphereGeo = new THREE.SphereGeometry(0.42, 48, 24);
-  for (let loopIdx = 0; loopIdx < 2; loopIdx++)
+  for (let addedObject = 0; addedObject < 2; addedObject++)
     for (let colIdx = 0; colIdx < 7; colIdx++) {
       let panelMat = new THREE.MeshStandardMaterial({
-          color: loopIdx ? 12170408 : 8006172,
+          color: addedObject ? 12170408 : 8006172,
           roughness: 0.06 + colIdx * 0.15,
-          metalness: loopIdx ? 1 : 0,
+          metalness: addedObject ? 1 : 0,
         }),
         panelMesh = new THREE.Mesh(sphereGeo, panelMat);
-      (panelMesh.position.set(-3.6 + colIdx * 1.2, 0.42 + loopIdx * 1.05, loopIdx * -1.1),
+      (panelMesh.position.set(-3.6 + colIdx * 1.2, 0.42 + addedObject * 1.05, addedObject * -1.1),
         (panelMesh.castShadow = panelMesh.receiveShadow = !0),
         addToGroup(panelMesh));
     }
@@ -792,28 +822,31 @@ export function showcaseRenderer(app) {
     ['paint_teal', 5.6, 0.6, 2.4, 0.9, 3.6],
     ['concrete', -2.2, 0.5, 0.5, 2.6, 3.2],
   ];
-  for (let [loopIdx, colIdx, panelMat, panelMesh, panelDepth, panelZ] of panelSpecs) {
+  for (let [addedObject, colIdx, panelMat, panelMesh, panelDepth, panelZ] of panelSpecs) {
     let shadowMesh = createShadowMesh(
       beveledBoxGeometry(panelMat, panelMesh, panelDepth, 0.03, 'bottom'),
-      app.mats.get(loopIdx),
+      app.mats.get(addedObject),
     );
     (shadowMesh.position.set(colIdx, 0, panelZ),
       (shadowMesh.rotation.y = colIdx * 0.2),
       addToGroup(shadowMesh));
   }
-  for (let loopIdx = 0; loopIdx < 5; loopIdx++) {
+  for (let addedObject = 0; addedObject < 5; addedObject++) {
     let colIdx = createShadowMesh(
       beveledBoxGeometry(0.5, 0.5, 0.5, 0.02, 'bottom'),
       app.mats.get('wood_pallet'),
     );
-    (colIdx.position.set(0.5 + loopIdx * 0.52, 0, 3.4 + (loopIdx % 2) * 0.04), addToGroup(colIdx));
+    (colIdx.position.set(0.5 + addedObject * 0.52, 0, 3.4 + (addedObject % 2) * 0.04),
+      addToGroup(colIdx));
   }
   {
-    let loopIdx = createShadowMesh(
+    let addedObject = createShadowMesh(
       beveledBoxGeometry(0.5, 0.5, 0.5, 0.02, 'bottom'),
       app.mats.get('wood_pallet'),
     );
-    (loopIdx.position.set(1.3, 0.5, 3.42), (loopIdx.rotation.y = 0.3), addToGroup(loopIdx));
+    (addedObject.position.set(1.3, 0.5, 3.42),
+      (addedObject.rotation.y = 0.3),
+      addToGroup(addedObject));
   }
   let concreteDirtyMat = app.mats.get('concrete_dirty'),
     quadX = 9,
@@ -825,16 +858,16 @@ export function showcaseRenderer(app) {
       [2.4, 5.6],
       [6.3, 14],
     ];
-  for (let [loopIdx, colIdx] of gaps) {
+  for (let [addedObject, colIdx] of gaps) {
     let panelMat = createShadowMesh(
-      boxGeometry(0.4, quadTop, colIdx - loopIdx, 'bottom'),
+      boxGeometry(0.4, quadTop, colIdx - addedObject, 'bottom'),
       concreteDirtyMat,
     );
-    (panelMat.position.set(quadX, 0, (loopIdx + colIdx) / 2), addToGroup(panelMat));
+    (panelMat.position.set(quadX, 0, (addedObject + colIdx) / 2), addToGroup(panelMat));
   }
   {
-    let loopIdx = createShadowMesh(boxGeometry(0.4, 1.2, 28, 'bottom'), concreteDirtyMat);
-    (loopIdx.position.set(quadX, quadTop, 0), addToGroup(loopIdx));
+    let addedObject = createShadowMesh(boxGeometry(0.4, 1.2, 28, 'bottom'), concreteDirtyMat);
+    (addedObject.position.set(quadX, quadTop, 0), addToGroup(addedObject));
   }
   let wallSpecs = [
     [-12, 0, -9, 6, 4, 0.3],
@@ -842,23 +875,23 @@ export function showcaseRenderer(app) {
     [-15, 0, -6, 0.3, 4, 6.3],
     [-12, 4, -6, 6.6, 0.3, 6.6],
   ];
-  for (let [loopIdx, colIdx, panelMat, panelMesh, panelDepth, panelZ] of wallSpecs) {
+  for (let [addedObject, colIdx, panelMat, panelMesh, panelDepth, panelZ] of wallSpecs) {
     let shadowMesh = createShadowMesh(
       boxGeometry(panelMesh, panelDepth, panelZ, 'bottom'),
       app.mats.get('steel_dark'),
     );
-    (shadowMesh.position.set(loopIdx, colIdx, panelMat), addToGroup(shadowMesh));
+    (shadowMesh.position.set(addedObject, colIdx, panelMat), addToGroup(shadowMesh));
   }
   {
-    let loopIdx = new THREE.Mesh(boxGeometry(2.4, 0.06, 0.06), app.mats.emissive(16756832, 14));
-    (loopIdx.position.set(-12, 3.6, -6), addToGroup(loopIdx));
+    let addedObject = new THREE.Mesh(boxGeometry(2.4, 0.06, 0.06), app.mats.emissive(16756832, 14));
+    (addedObject.position.set(-12, 3.6, -6), addToGroup(addedObject));
   }
   {
-    let loopIdx = new THREE.Mesh(
+    let addedObject = new THREE.Mesh(
       new THREE.SphereGeometry(0.06, 12, 8),
       app.mats.emissive(16726560, 30),
     );
-    (loopIdx.position.set(4.6, 1.02, 1.6), addToGroup(loopIdx));
+    (addedObject.position.set(4.6, 1.02, 1.6), addToGroup(addedObject));
   }
   return (
     app.scene.add(group),

@@ -51,8 +51,8 @@ export function addEuroPallet(
   { broken = !1, stamp: doStamp = !0, bevel: useBevel = !1 } = {},
 ) {
   let boxGeom = useBevel
-      ? (u, h, f) => roundedBoxGeometry(u, h, f, 0.004)
-      : (u, h, f) => boxGeometry(u, h, f),
+      ? (amount, extent, depthArg) => roundedBoxGeometry(amount, extent, depthArg, 0.004)
+      : (amount, extent, depthArg) => boxGeometry(amount, extent, depthArg),
     deckTint = () => {
       let u = rand.range(0.62, 1),
         h = rand.range(0.9, 1);
@@ -95,7 +95,7 @@ export function addEuroPallet(
           p: [amount + jitter(), 0.061, extent + jitter()],
           r: [-HALF_PI, jitter(0.03), 0],
         },
-        deckTint().map((f) => f * 0.8),
+        deckTint().map((depthArg) => depthArg * 0.8),
       );
   for (let amount of [-0.5275, 0, 0.5275])
     builder.add(
@@ -114,13 +114,13 @@ export function addEuroPallet(
       [0, 0.145],
       [0.215, 0.1],
       [0.4275, 0.145],
-    ].forEach(([u, h], f) => {
-      (broken && f === 3) ||
+    ].forEach(([amount, extent], depthArg) => {
+      (broken && depthArg === 3) ||
         builder.add(
           'wood_pallet',
-          boxGeom(1.2, 0.022, h),
+          boxGeom(1.2, 0.022, extent),
           {
-            p: [jitter(), 0.133, u + jitter(0.006)],
+            p: [jitter(), 0.133, amount + jitter(0.006)],
             r: [jitter(0.004), jitter(0.008), 0],
           },
           deckTint(),
@@ -170,15 +170,15 @@ function addWoodCrateBody(
       return [H, H * rand.range(0.92, 1), H * rand.range(0.82, 0.95)];
     },
     boxGeom = withDetail
-      ? (z, H, O) => roundedBoxGeometry(z, H, O, 0.004)
-      : (z, H, O) => boxGeometry(z, H, O);
+      ? (sidePosition, rowY, faceKey) => roundedBoxGeometry(sidePosition, rowY, faceKey, 0.004)
+      : (sidePosition, rowY, faceKey) => boxGeometry(sidePosition, rowY, faceKey);
   if (withSkids)
-    for (let z of [-(width / 2 - 0.13), 0, width / 2 - 0.13])
+    for (let sidePosition of [-(width / 2 - 0.13), 0, width / 2 - 0.13])
       builder.add(
         'wood_pallet',
         roundedBoxGeometry(0.09, skidHeight, depth - 0.02, 0.006),
         {
-          p: [z, skidHeight / 2, 0],
+          p: [sidePosition, skidHeight / 2, 0],
         },
         tintFn(0.6),
       );
@@ -196,29 +196,29 @@ function addWoodCrateBody(
   );
   let rowCount = Math.max(3, Math.round(bodyHeight / 0.125)),
     rowHeight = bodyHeight / rowCount;
-  for (let z = 0; z < rowCount; z++) {
-    let H = skidHeight + rowHeight * (z + 0.5);
-    for (let [O, q, U] of [
+  for (let sidePosition = 0; sidePosition < rowCount; sidePosition++) {
+    let rowY = skidHeight + rowHeight * (sidePosition + 0.5);
+    for (let [faceKey, faceSpan, faceOffset] of [
       ['pz', width, depth / 2 - wallThickness],
       ['nz', width, depth / 2 - wallThickness],
       ['px', depth, width / 2 - wallThickness],
       ['nx', depth, width / 2 - wallThickness],
     ]) {
-      let panelOffset = U - rand.range(0, 0.004),
+      let panelOffset = faceOffset - rand.range(0, 0.004),
         panelPos =
-          O === 'pz'
-            ? [0, H, panelOffset]
-            : O === 'nz'
-              ? [0, H, -panelOffset]
-              : O === 'px'
-                ? [panelOffset, H, 0]
-                : [-panelOffset, H, 0];
+          faceKey === 'pz'
+            ? [0, rowY, panelOffset]
+            : faceKey === 'nz'
+              ? [0, rowY, -panelOffset]
+              : faceKey === 'px'
+                ? [panelOffset, rowY, 0]
+                : [-panelOffset, rowY, 0];
       builder.add(
         'wood_pallet',
-        createPlaneGeometryOffsetUV(q - 0.03, rowHeight - 0.005, rand() * 3, rand() * 3),
+        createPlaneGeometryOffsetUV(faceSpan - 0.03, rowHeight - 0.005, rand() * 3, rand() * 3),
         {
           p: panelPos,
-          r: FACE_ROTATIONS[O],
+          r: FACE_ROTATIONS[faceKey],
         },
         tintFn(),
       );
@@ -226,7 +226,7 @@ function addWoodCrateBody(
   }
   let colCount = Math.max(3, Math.round(depth / 0.13)),
     colWidth = (depth - 0.02) / colCount;
-  for (let z = 0; z < colCount; z++)
+  for (let sidePosition = 0; sidePosition < colCount; sidePosition++)
     builder.add(
       'wood_pallet',
       createPlaneGeometryOffsetUV(width - 0.03, colWidth - 0.005, rand() * 3, rand() * 3),
@@ -234,7 +234,7 @@ function addWoodCrateBody(
         p: [
           0,
           height - wallThickness - rand.range(0, 0.003),
-          -depth / 2 + 0.01 + colWidth * (z + 0.5),
+          -depth / 2 + 0.01 + colWidth * (sidePosition + 0.5),
         ],
         r: [-HALF_PI, 0, 0],
       },
@@ -242,13 +242,13 @@ function addWoodCrateBody(
     );
   let braceAngle = Math.atan2(bodyHeight - 2 * battenWidth, width - 2 * battenWidth),
     braceLength = Math.hypot(width - 2 * battenWidth, bodyHeight - 2 * battenWidth);
-  for (let z of [1, -1]) {
-    let H = z * (depth / 2 - wallThickness / 2);
+  for (let sidePosition of [1, -1]) {
+    let rowY = sidePosition * (depth / 2 - wallThickness / 2);
     (builder.add(
       'wood_pallet',
       boxGeom(width, battenWidth, wallThickness),
       {
-        p: [0, skidHeight + battenWidth / 2, H],
+        p: [0, skidHeight + battenWidth / 2, rowY],
       },
       tintFn(0.85),
     ),
@@ -256,16 +256,16 @@ function addWoodCrateBody(
         'wood_pallet',
         boxGeom(width, battenWidth, wallThickness),
         {
-          p: [0, height - battenWidth / 2, H],
+          p: [0, height - battenWidth / 2, rowY],
         },
         tintFn(0.85),
       ));
-    for (let U of [1, -1])
+    for (let faceOffset of [1, -1])
       builder.add(
         'wood_pallet',
         boxGeom(battenWidth, bodyHeight - 2 * battenWidth, wallThickness),
         {
-          p: [U * (width / 2 - battenWidth / 2), bodyMidY, H],
+          p: [faceOffset * (width / 2 - battenWidth / 2), bodyMidY, rowY],
         },
         tintFn(0.85),
       );
@@ -274,35 +274,35 @@ function addWoodCrateBody(
         'wood_pallet',
         roundedBoxGeometry(braceLength, battenWidth * 0.85, wallThickness * 0.8, 0.004),
         {
-          p: [0, bodyMidY, z * (depth / 2 - wallThickness * 0.6)],
-          r: [0, 0, z * braceAngle],
+          p: [0, bodyMidY, sidePosition * (depth / 2 - wallThickness * 0.6)],
+          r: [0, 0, sidePosition * braceAngle],
         },
         tintFn(0.8),
       );
-    let O = z * (width / 2 - wallThickness / 2),
-      q = depth - 2 * wallThickness;
-    for (let U of [1, -1])
+    let faceKey = sidePosition * (width / 2 - wallThickness / 2),
+      faceSpan = depth - 2 * wallThickness;
+    for (let faceOffset of [1, -1])
       builder.add(
         'wood_pallet',
         boxGeom(wallThickness, bodyHeight, battenWidth),
         {
-          p: [O, bodyMidY, U * (q / 2 - battenWidth / 2)],
+          p: [faceKey, bodyMidY, faceOffset * (faceSpan / 2 - battenWidth / 2)],
         },
         tintFn(0.85),
       );
     (builder.add(
       'wood_pallet',
-      boxGeom(wallThickness, battenWidth, q - 2 * battenWidth),
+      boxGeom(wallThickness, battenWidth, faceSpan - 2 * battenWidth),
       {
-        p: [O, skidHeight + battenWidth / 2, 0],
+        p: [faceKey, skidHeight + battenWidth / 2, 0],
       },
       tintFn(0.85),
     ),
       builder.add(
         'wood_pallet',
-        boxGeom(wallThickness, battenWidth, q - 2 * battenWidth),
+        boxGeom(wallThickness, battenWidth, faceSpan - 2 * battenWidth),
         {
-          p: [O, height - battenWidth / 2, 0],
+          p: [faceKey, height - battenWidth / 2, 0],
         },
         tintFn(0.85),
       ),
@@ -310,7 +310,7 @@ function addWoodCrateBody(
         'wood_pallet',
         boxGeom(width, wallThickness, battenWidth),
         {
-          p: [0, height - wallThickness / 2, z * (depth / 2 - battenWidth / 2)],
+          p: [0, height - wallThickness / 2, sidePosition * (depth / 2 - battenWidth / 2)],
         },
         tintFn(0.85),
       ),
@@ -318,7 +318,7 @@ function addWoodCrateBody(
         'wood_pallet',
         boxGeom(battenWidth, wallThickness, depth - 2 * battenWidth),
         {
-          p: [z * (width / 2 - battenWidth / 2), height - wallThickness / 2, 0],
+          p: [sidePosition * (width / 2 - battenWidth / 2), height - wallThickness / 2, 0],
         },
         tintFn(0.85),
       ));
@@ -337,39 +337,43 @@ function addWoodCrateBody(
       let z = rand.range(0.55, 0.9);
       return [z, z * 0.9, z * 0.8];
     };
-  for (let z of [1, -1])
-    for (let H of [1, -1])
-      for (let O of withDetail ? [1, 0] : [1]) {
-        let q = O ? height - plateSize / 2 : skidHeight + plateSize / 2,
-          U = plateTint();
+  for (let sidePosition of [1, -1])
+    for (let rowY of [1, -1])
+      for (let faceKey of withDetail ? [1, 0] : [1]) {
+        let faceSpan = faceKey ? height - plateSize / 2 : skidHeight + plateSize / 2,
+          faceOffset = plateTint();
         (builder.add(
           'steel_galv',
           boxGeometry(plateSize, plateSize, 0.003),
           {
-            p: [z * (width / 2 - plateSize / 2), q, H * (depth / 2 + 0.0015)],
+            p: [sidePosition * (width / 2 - plateSize / 2), faceSpan, rowY * (depth / 2 + 0.0015)],
           },
-          U,
+          faceOffset,
         ),
           builder.add(
             'steel_galv',
             boxGeometry(0.003, plateSize, plateSize),
             {
-              p: [z * (width / 2 + 0.0015), q, H * (depth / 2 - plateSize / 2)],
+              p: [
+                sidePosition * (width / 2 + 0.0015),
+                faceSpan,
+                rowY * (depth / 2 - plateSize / 2),
+              ],
             },
-            U,
+            faceOffset,
           ),
-          O &&
+          faceKey &&
             builder.add(
               'steel_galv',
               boxGeometry(plateSize, 0.003, plateSize),
               {
                 p: [
-                  z * (width / 2 - plateSize / 2),
+                  sidePosition * (width / 2 - plateSize / 2),
                   height + 0.0015,
-                  H * (depth / 2 - plateSize / 2),
+                  rowY * (depth / 2 - plateSize / 2),
                 ],
               },
-              U,
+              faceOffset,
             ));
       }
   let frontZ = depth / 2 - wallThickness + 0.003,
@@ -539,40 +543,40 @@ function buildIbcTote(ctx, opts) {
   let assembler = new PropAssembler(ctx, 'ibc_tote', opts.seed || 0),
     rand = assembler.rng,
     tintFn = () => rand.range(0.75, 1);
-  for (let vertex of [-0.44, 0, 0.44])
+  for (let bladderVertex of [-0.44, 0, 0.44])
     assembler.add(
       'steel_galv',
       boxGeometry(1.2, 0.028, 0.1),
       {
-        p: [0, 0.014, vertex],
+        p: [0, 0.014, bladderVertex],
       },
       tintFn(),
     );
-  for (let vertex of [-0.54, 0, 0.54])
-    for (let normX of [-0.44, 0, 0.44])
+  for (let bladderVertex of [-0.54, 0, 0.54])
+    for (let faceNormX of [-0.44, 0, 0.44])
       assembler.add(
         'steel_galv',
         roundedBoxGeometry(0.12, 0.074, 0.1, 0.008),
         {
-          p: [vertex, 0.065, normX],
+          p: [bladderVertex, 0.065, faceNormX],
         },
         tintFn() * 0.85,
       );
-  for (let vertex of [-0.48, 0.48])
+  for (let bladderVertex of [-0.48, 0.48])
     assembler.add(
       'steel_galv',
       roundedBoxGeometry(1.2, 0.03, 0.04, 0.006),
       {
-        p: [0, 0.115, vertex],
+        p: [0, 0.115, bladderVertex],
       },
       tintFn(),
     );
-  for (let vertex of [-0.58, 0.58])
+  for (let bladderVertex of [-0.58, 0.58])
     assembler.add(
       'steel_galv',
       roundedBoxGeometry(0.04, 0.03, 0.92, 0.006),
       {
-        p: [vertex, 0.115, 0],
+        p: [bladderVertex, 0.115, 0],
       },
       tintFn(),
     );
@@ -589,18 +593,27 @@ function buildIbcTote(ctx, opts) {
     bladderDepth = 0.9,
     bladderY = 0.13 + bladderHeight / 2,
     bladderGeo = roundedBoxGeometryGrid(palletWidth, bladderHeight, bladderDepth, 0.07, 8, 6, 8);
-  (mapVertices(bladderGeo, (y) => {
-    let b = y.x / (palletWidth / 2),
-      m = y.y / (bladderHeight / 2),
-      A = y.z / (bladderDepth / 2),
-      _ = Math.cos(HALF_PI * m) * Math.cos(HALF_PI * A),
-      M = Math.cos(HALF_PI * b) * Math.cos(HALF_PI * A),
-      E = Math.cos(HALF_PI * b) * Math.cos(HALF_PI * m);
-    (Math.abs(b) > 0.9 &&
-      (y.x += Math.sign(b) * (0.016 * _ + 0.004 * Math.abs(Math.sin((y.y * PI_TWO) / 0.22)) * _)),
-      Math.abs(A) > 0.9 &&
-        (y.z += Math.sign(A) * (0.016 * E + 0.004 * Math.abs(Math.sin((y.y * PI_TWO) / 0.22)) * E)),
-      m > 0.9 && (y.y += 0.012 * M - 0.01 * Math.max(0, 1 - Math.hypot(y.x, y.z) / 0.3)));
+  (mapVertices(bladderGeo, (bladderVertex) => {
+    let faceNormX = bladderVertex.x / (palletWidth / 2),
+      faceNormY = bladderVertex.y / (bladderHeight / 2),
+      faceNormZ = bladderVertex.z / (bladderDepth / 2),
+      xFaceBulge = Math.cos(HALF_PI * faceNormY) * Math.cos(HALF_PI * faceNormZ),
+      topFaceBulge = Math.cos(HALF_PI * faceNormX) * Math.cos(HALF_PI * faceNormZ),
+      zFaceBulge = Math.cos(HALF_PI * faceNormX) * Math.cos(HALF_PI * faceNormY);
+    (Math.abs(faceNormX) > 0.9 &&
+      (bladderVertex.x +=
+        Math.sign(faceNormX) *
+        (0.016 * xFaceBulge +
+          0.004 * Math.abs(Math.sin((bladderVertex.y * PI_TWO) / 0.22)) * xFaceBulge)),
+      Math.abs(faceNormZ) > 0.9 &&
+        (bladderVertex.z +=
+          Math.sign(faceNormZ) *
+          (0.016 * zFaceBulge +
+            0.004 * Math.abs(Math.sin((bladderVertex.y * PI_TWO) / 0.22)) * zFaceBulge)),
+      faceNormY > 0.9 &&
+        (bladderVertex.y +=
+          0.012 * topFaceBulge -
+          0.01 * Math.max(0, 1 - Math.hypot(bladderVertex.x, bladderVertex.z) / 0.3)));
   }),
     recomputeSmoothNormals(bladderGeo));
   let fillLevel = 0.13 + bladderHeight * rand.range(0.45, 0.8),
@@ -614,14 +627,19 @@ function buildIbcTote(ctx, opts) {
     {
       p: [0, bladderY, 0],
     },
-    (y, b, m) => {
-      let A = smoothstepRangeAlt(
+    (bladderVertex, faceNormX, faceNormY) => {
+      let faceNormZ = smoothstepRangeAlt(
           fillLevel - 0.03,
           fillLevel + 0.03,
-          b + 0.02 * valueNoise3D(y * 3 + noiseOffset, m * 3),
+          faceNormX + 0.02 * valueNoise3D(bladderVertex * 3 + noiseOffset, faceNormY * 3),
         ),
-        _ = 0.9 + 0.1 * valueNoise3D(y * 6, b * 6 + noiseOffset, m * 6);
-      return [_ * (0.52 + 0.48 * A), _ * (0.6 + 0.4 * A), _ * (0.66 + 0.34 * A)];
+        xFaceBulge =
+          0.9 + 0.1 * valueNoise3D(bladderVertex * 6, faceNormX * 6 + noiseOffset, faceNormY * 6);
+      return [
+        xFaceBulge * (0.52 + 0.48 * faceNormZ),
+        xFaceBulge * (0.6 + 0.4 * faceNormZ),
+        xFaceBulge * (0.66 + 0.34 * faceNormZ),
+      ];
     },
   ),
     assembler.add(
@@ -649,14 +667,14 @@ function buildIbcTote(ctx, opts) {
       },
       0.9,
     ));
-  for (let vertex = 0; vertex < 8; vertex++) {
-    let normX = (vertex * PI_TWO) / 4;
+  for (let bladderVertex = 0; bladderVertex < 8; bladderVertex++) {
+    let faceNormX = (bladderVertex * PI_TWO) / 4;
     assembler.add(
       'plastic_red',
       boxGeometry(0.012, 0.04, 0.02),
       {
-        p: [Math.cos(normX) * 0.108, 0.13 + bladderHeight + 0.036, Math.sin(normX) * 0.108],
-        r: [0, -normX, 0],
+        p: [Math.cos(faceNormX) * 0.108, 0.13 + bladderHeight + 0.036, Math.sin(faceNormX) * 0.108],
+        r: [0, -faceNormX, 0],
       },
       0.8,
     );
@@ -666,15 +684,15 @@ function buildIbcTote(ctx, opts) {
     cageBottomY = 0.13,
     cageTopY = 1.1,
     barRadius = 0.011;
-  for (let vertex of [0.2, 0.42, 0.64, 0.86, cageTopY]) {
-    let normX = vertex === cageTopY ? 0.014 : barRadius;
-    for (let normY of [1, -1])
+  for (let bladderVertex of [0.2, 0.42, 0.64, 0.86, cageTopY]) {
+    let faceNormX = bladderVertex === cageTopY ? 0.014 : barRadius;
+    for (let faceNormY of [1, -1])
       (assembler.add(
         'steel_galv',
         createCylinderBetween(
-          [-cageHalfX, vertex, normY * cageHalfZ],
-          [cageHalfX, vertex, normY * cageHalfZ],
-          normX,
+          [-cageHalfX, bladderVertex, faceNormY * cageHalfZ],
+          [cageHalfX, bladderVertex, faceNormY * cageHalfZ],
+          faceNormX,
           5,
         ),
         null,
@@ -683,34 +701,34 @@ function buildIbcTote(ctx, opts) {
         assembler.add(
           'steel_galv',
           createCylinderBetween(
-            [normY * cageHalfX, vertex, -cageHalfZ],
-            [normY * cageHalfX, vertex, cageHalfZ],
-            normX,
+            [faceNormY * cageHalfX, bladderVertex, -cageHalfZ],
+            [faceNormY * cageHalfX, bladderVertex, cageHalfZ],
+            faceNormX,
             5,
           ),
           null,
           tintFn(),
         ));
   }
-  for (let vertex of [1, -1]) {
-    for (let normX = -0.46; normX <= 0.461; normX += 0.184)
+  for (let bladderVertex of [1, -1]) {
+    for (let faceNormX = -0.46; faceNormX <= 0.461; faceNormX += 0.184)
       assembler.add(
         'steel_galv',
         createCylinderBetween(
-          [normX, cageBottomY, vertex * (cageHalfZ - 0.012)],
-          [normX, cageTopY, vertex * (cageHalfZ - 0.012)],
+          [faceNormX, cageBottomY, bladderVertex * (cageHalfZ - 0.012)],
+          [faceNormX, cageTopY, bladderVertex * (cageHalfZ - 0.012)],
           barRadius,
           5,
         ),
         null,
         tintFn(),
       );
-    for (let normX = -0.36; normX <= 0.361; normX += 0.18)
+    for (let faceNormX = -0.36; faceNormX <= 0.361; faceNormX += 0.18)
       assembler.add(
         'steel_galv',
         createCylinderBetween(
-          [vertex * (cageHalfX - 0.012), cageBottomY, normX],
-          [vertex * (cageHalfX - 0.012), cageTopY, normX],
+          [bladderVertex * (cageHalfX - 0.012), cageBottomY, faceNormX],
+          [bladderVertex * (cageHalfX - 0.012), cageTopY, faceNormX],
           barRadius,
           5,
         ),
@@ -720,8 +738,8 @@ function buildIbcTote(ctx, opts) {
     assembler.add(
       'steel_galv',
       createCylinderBetween(
-        [vertex * 0.28, cageTopY + 0.01, -cageHalfZ],
-        [vertex * 0.28, cageTopY + 0.01, cageHalfZ],
+        [bladderVertex * 0.28, cageTopY + 0.01, -cageHalfZ],
+        [bladderVertex * 0.28, cageTopY + 0.01, cageHalfZ],
         0.013,
         5,
       ),
@@ -812,24 +830,24 @@ function buildCableReel(ctx, opts) {
     p: [0, centerY, 0],
     r: [0, 0, tilt],
   });
-  for (let sideSign of [1, -1]) {
-    for (let partB of createCableReelDiscGeometries(discRadius - 0.004, 9, rand))
+  for (let tintScale of [1, -1]) {
+    for (let baseTone of createCableReelDiscGeometries(discRadius - 0.004, 9, rand))
       assembler.add(
         'wood_dark',
-        partB,
+        baseTone,
         {
-          p: [0, 0, sideSign * (halfWidth + rand.range(0, 0.003))],
-          r: [0, sideSign > 0 ? 0 : PI_TWO, 0],
+          p: [0, 0, tintScale * (halfWidth + rand.range(0, 0.003))],
+          r: [0, tintScale > 0 ? 0 : PI_TWO, 0],
         },
         tintFn(),
       );
-    for (let partB of createCableReelDiscGeometries(discRadius - 0.004, 9, rand))
+    for (let baseTone of createCableReelDiscGeometries(discRadius - 0.004, 9, rand))
       assembler.add(
         'wood_dark',
-        partB,
+        baseTone,
         {
-          p: [0, 0, sideSign * (halfWidth - flangeThickness)],
-          r: [0, sideSign > 0 ? PI_TWO : 0, HALF_PI],
+          p: [0, 0, tintScale * (halfWidth - flangeThickness)],
+          r: [0, tintScale > 0 ? PI_TWO : 0, HALF_PI],
         },
         tintFn(0.8),
       );
@@ -837,7 +855,7 @@ function buildCableReel(ctx, opts) {
       'wood_dark',
       cylinderGeometry(discRadius, discRadius, flangeThickness, 24, !0),
       {
-        p: [0, 0, sideSign * (halfWidth - flangeThickness / 2)],
+        p: [0, 0, tintScale * (halfWidth - flangeThickness / 2)],
         r: [HALF_PI, 0, 0],
       },
       tintFn(0.75),
@@ -846,7 +864,7 @@ function buildCableReel(ctx, opts) {
         'steel_dark',
         cylinderGeometry(0.105, 0.105, 0.008, 12),
         {
-          p: [0, 0, sideSign * (halfWidth + 0.006)],
+          p: [0, 0, tintScale * (halfWidth + 0.006)],
           r: [HALF_PI, 0, 0],
         },
         0.9,
@@ -855,25 +873,29 @@ function buildCableReel(ctx, opts) {
         'polymer_black',
         cylinderGeometry(0.04, 0.04, 0.004, 10),
         {
-          p: [0, 0, sideSign * (halfWidth + 0.0105)],
+          p: [0, 0, tintScale * (halfWidth + 0.0105)],
           r: [HALF_PI, 0, 0],
         },
         0.3,
       ));
-    for (let partB = 0; partB < 6; partB++) {
-      let boltAngle = (partB * PI_TWO) / 3 + 0.3;
+    for (let baseTone = 0; baseTone < 6; baseTone++) {
+      let noiseCoord = (baseTone * PI_TWO) / 3 + 0.3;
       assembler.add(
         'steel_galv',
         cylinderGeometry(0.017, 0.017, 0.014, 6),
         {
-          p: [Math.cos(boltAngle) * 0.3, Math.sin(boltAngle) * 0.3, sideSign * (halfWidth + 0.006)],
+          p: [
+            Math.cos(noiseCoord) * 0.3,
+            Math.sin(noiseCoord) * 0.3,
+            tintScale * (halfWidth + 0.006),
+          ],
           r: [HALF_PI, 0, 0],
         },
         rand.range(0.5, 0.9),
       );
     }
     (assembler.label(
-      sideSign > 0 ? 'NYY-J 4x95 mm2  500 m' : 'SALTLINE TERMINAL',
+      tintScale > 0 ? 'NYY-J 4x95 mm2  500 m' : 'SALTLINE TERMINAL',
       {
         color: 'white',
         font: 'stencil',
@@ -882,11 +904,11 @@ function buildCableReel(ctx, opts) {
       0.7,
       0.085,
       {
-        p: [0, 0.4, sideSign * (halfWidth + 0.006)],
-        r: [0, sideSign > 0 ? 0 : PI_TWO, 0],
+        p: [0, 0.4, tintScale * (halfWidth + 0.006)],
+        r: [0, tintScale > 0 ? 0 : PI_TWO, 0],
       },
     ),
-      sideSign > 0 &&
+      tintScale > 0 &&
         assembler.decal(ctx.mats.decal('arrow'), 0.2, {
           p: [0.36, -0.2, halfWidth + 0.006],
           r: [0, 0, -1.2],
@@ -897,10 +919,10 @@ function buildCableReel(ctx, opts) {
     spokeStep = (2 * innerRadius) / spokeCount,
     cableRadius = 0.47,
     cableProfile = [];
-  for (let sideSign = 0; sideSign <= spokeCount; sideSign++)
-    (cableProfile.push([cableRadius - 0.017, -innerRadius + sideSign * spokeStep]),
-      sideSign < spokeCount &&
-        cableProfile.push([cableRadius, -innerRadius + (sideSign + 0.5) * spokeStep]));
+  for (let tintScale = 0; tintScale <= spokeCount; tintScale++)
+    (cableProfile.push([cableRadius - 0.017, -innerRadius + tintScale * spokeStep]),
+      tintScale < spokeCount &&
+        cableProfile.push([cableRadius, -innerRadius + (tintScale + 0.5) * spokeStep]));
   let noiseSeed = assembler.seed * 0.7;
   (assembler.add(
     'rubber',
@@ -908,16 +930,17 @@ function buildCableReel(ctx, opts) {
     {
       r: [HALF_PI, 0, 0],
     },
-    (y, b, m) => 0.7 + 0.5 * valueNoise3D(Math.atan2(b, y) * 2 + noiseSeed, m * 30),
+    (tintScale, baseTone, noiseCoord) =>
+      0.7 + 0.5 * valueNoise3D(Math.atan2(baseTone, tintScale) * 2 + noiseSeed, noiseCoord * 30),
   ),
     assembler.pop());
   let cableZ = 0.2,
     cablePath = [];
-  for (let sideSign = 1.9; sideSign >= -0.25; sideSign -= 0.36)
+  for (let tintScale = 1.9; tintScale >= -0.25; tintScale -= 0.36)
     cablePath.push([
-      Math.cos(sideSign) * (cableRadius + 0.012),
-      centerY + Math.sin(sideSign) * (cableRadius + 0.012),
-      cableZ + (1.9 - sideSign) * 0.02,
+      Math.cos(tintScale) * (cableRadius + 0.012),
+      centerY + Math.sin(tintScale) * (cableRadius + 0.012),
+      cableZ + (1.9 - tintScale) * 0.02,
     ]);
   (cablePath.push(
     [0.53, 0.3, cableZ + 0.05],
@@ -941,7 +964,7 @@ function buildCableReel(ctx, opts) {
       null,
       0.9,
     ));
-  for (let sideSign of [halfWidth - flangeThickness / 2, -(halfWidth - flangeThickness / 2)])
+  for (let tintScale of [halfWidth - flangeThickness / 2, -(halfWidth - flangeThickness / 2)])
     (assembler.add(
       'wood_pallet',
       createHollowPolygonExtrusion(
@@ -956,7 +979,7 @@ function buildCableReel(ctx, opts) {
         },
       ),
       {
-        p: [0, 0, sideSign],
+        p: [0, 0, tintScale],
       },
       tintFn(0.8),
     ),
@@ -974,7 +997,7 @@ function buildCableReel(ctx, opts) {
           },
         ),
         {
-          p: [0, 0, sideSign],
+          p: [0, 0, tintScale],
         },
         tintFn(0.8),
       ));
@@ -1000,11 +1023,14 @@ function buildTireStack(ctx, opts) {
       },
       shade = rand.range(0.75, 1),
       noiseOffset = tireIndex * 3.1;
-    assembler.add('tire', tireGeo, tireTransform, (u, h, f) => {
-      let p = Math.hypot(u - tireTransform.p[0], f - tireTransform.p[2]);
+    assembler.add('tire', tireGeo, tireTransform, (vertexX, vertexY, vertexZ) => {
+      let radialDist = Math.hypot(vertexX - tireTransform.p[0], vertexZ - tireTransform.p[2]);
       return (
         shade *
-        (p < 0.23 ? 0.5 : 0.8 + 0.2 * valueNoise3D(Math.atan2(f, u) * 3 + noiseOffset, p * 30))
+        (radialDist < 0.23
+          ? 0.5
+          : 0.8 +
+            0.2 * valueNoise3D(Math.atan2(vertexZ, vertexX) * 3 + noiseOffset, radialDist * 30))
       );
     });
   }
@@ -1021,9 +1047,13 @@ function buildJerryCan(ctx, opts, variant) {
     [bodyMat, bodyTint] = resolvePaintColorAlias(opts.color, 'olive'),
     bodyGeo = roundedBoxGeometryGrid(0.336, 0.36, 0.156, 0.022, 3, 3, 3, 'bottom'),
     shoulderTaper = (x, y) => (y > 0.3 && x > 0.04 ? y - (x - 0.04) * 0.5 : y);
-  (mapVertices(bodyGeo, (x) => {
-    ((x.y = shoulderTaper(x.x, x.y)),
-      Math.abs(x.z) > 0.07 && Math.abs(x.x) < 0.14 && x.y > 0.04 && x.y < 0.3 && (x.z *= 1.02));
+  (mapVertices(bodyGeo, (vert) => {
+    ((vert.y = shoulderTaper(vert.x, vert.y)),
+      Math.abs(vert.z) > 0.07 &&
+        Math.abs(vert.x) < 0.14 &&
+        vert.y > 0.04 &&
+        vert.y < 0.3 &&
+        (vert.z *= 1.02));
   }),
     bodyGeo.computeVertexNormals(),
     rand.add(bodyMat, bodyGeo, null, bodyTint),
@@ -1043,7 +1073,7 @@ function buildJerryCan(ctx, opts, variant) {
         },
       ),
       null,
-      typeof bodyTint == 'number' ? 0.8 : bodyTint.map((x) => x * 0.8),
+      typeof bodyTint == 'number' ? 0.8 : bodyTint.map((vert) => vert * 0.8),
     ));
   let handleLen = 0.24,
     handleH = 0.2,
@@ -1178,9 +1208,19 @@ function buildTrafficCone(ctx, opts, variant) {
       null,
       tintFn,
     ),
-    rand.add(greyMat, coneSegment(0.36, 0.5), null, (h, f, p) => 0.85 * tintFn(h, f, p)),
+    rand.add(
+      greyMat,
+      coneSegment(0.36, 0.5),
+      null,
+      (segFromY, segToY, extraPoints) => 0.85 * tintFn(segFromY, segToY, extraPoints),
+    ),
     rand.add(redMat, coneSegment(0.5, 0.56), null, tintFn),
-    rand.add(greyMat, coneSegment(0.56, 0.61), null, (h, f, p) => 0.85 * tintFn(h, f, p)),
+    rand.add(
+      greyMat,
+      coneSegment(0.56, 0.61),
+      null,
+      (segFromY, segToY, extraPoints) => 0.85 * tintFn(segFromY, segToY, extraPoints),
+    ),
     rand.add(
       redMat,
       coneSegment(
@@ -1217,12 +1257,12 @@ function buildGasCylinders(ctx, opts) {
     segments = 12,
     tintFn = () => rand.range(0.6, 0.9);
   assembler.add('diamond_plate', roundedBoxGeometry(0.9, 0.016, 0.5, 0.004, 'bottom'), null, 0.8);
-  for (let stepU of [-0.43, 0.43])
+  for (let profilePos of [-0.43, 0.43])
     (assembler.add(
       'steel_dark',
       roundedBoxGeometry(0.04, 1.14, 0.04, 0.005),
       {
-        p: [stepU, 0.585, -0.225],
+        p: [profilePos, 0.585, -0.225],
       },
       tintFn(),
     ),
@@ -1230,7 +1270,7 @@ function buildGasCylinders(ctx, opts) {
         'steel_dark',
         roundedBoxGeometry(0.036, 0.036, 0.43, 0.005),
         {
-          p: [stepU, 1.06, -0.01],
+          p: [profilePos, 1.06, -0.01],
         },
         tintFn(),
       ),
@@ -1238,7 +1278,7 @@ function buildGasCylinders(ctx, opts) {
         'steel_dark',
         roundedBoxGeometry(0.036, 0.036, 0.43, 0.005),
         {
-          p: [stepU, 0.3, -0.01],
+          p: [profilePos, 0.3, -0.01],
         },
         tintFn(),
       ),
@@ -1246,7 +1286,7 @@ function buildGasCylinders(ctx, opts) {
         'steel_dark',
         roundedBoxGeometry(0.036, 0.32, 0.036, 0.005),
         {
-          p: [stepU, 0.16, 0.19],
+          p: [profilePos, 0.16, 0.19],
         },
         tintFn(),
       ),
@@ -1254,17 +1294,17 @@ function buildGasCylinders(ctx, opts) {
         'steel_galv',
         createTorusGeometryWorldUV(0.016, 0.004, 4, 8),
         {
-          p: [stepU - Math.sign(stepU) * 0, 1.06, 0.215],
+          p: [profilePos - Math.sign(profilePos) * 0, 1.06, 0.215],
           r: [0, HALF_PI, 0],
         },
         0.8,
       ));
-  for (let stepU of [0.45, 1.06])
+  for (let profilePos of [0.45, 1.06])
     assembler.add(
       'steel_dark',
       roundedBoxGeometry(0.9, 0.04, 0.036, 0.005),
       {
-        p: [0, stepU, -0.225],
+        p: [0, profilePos, -0.225],
       },
       tintFn(),
     );
@@ -1293,18 +1333,18 @@ function buildGasCylinders(ctx, opts) {
       ['paint_red', [0.55, 0.4, 0.4]],
       ['paint_blue', 0.8],
     ];
-  for (let stepU = 0; stepU < 3; stepU++) {
-    let posH = (stepU - 1) * 0.272,
-      sideFactor = 1 - rand.range(0, 0.05),
-      axisOffset = 0.115,
-      bottleTopY = bodyColors[(assembler.seed + stepU * 2) % bodyColors.length],
-      valveHeight = shoulderColors[(assembler.seed + stepU) % shoulderColors.length],
-      noiseSeed = stepU * 5.3 + assembler.seed,
+  for (let profilePos = 0; profilePos < 3; profilePos++) {
+    let capHeight = (profilePos - 1) * 0.272,
+      bottleOffsetIdx = 1 - rand.range(0, 0.05),
+      relOffset = 0.115,
+      bottleTopY = bodyColors[(assembler.seed + profilePos * 2) % bodyColors.length],
+      valveHeight = shoulderColors[(assembler.seed + profilePos) % shoulderColors.length],
+      noiseSeed = profilePos * 5.3 + assembler.seed,
       spinOffset = rand() * 6;
     (assembler.push({
-      p: [posH, 0.016, 0.015 + rand.range(-0.01, 0.01)],
+      p: [capHeight, 0.016, 0.015 + rand.range(-0.01, 0.01)],
       r: [0, spinOffset, 0],
-      s: [1, sideFactor, 1],
+      s: [1, bottleOffsetIdx, 1],
     }),
       assembler.add(
         valveHeight[0],
@@ -1315,29 +1355,36 @@ function buildGasCylinders(ctx, opts) {
             [0.095, 0.012],
             [0.1, 0],
             [0.111, 0],
-            [axisOffset, 0.008],
-            [axisOffset, 0.4],
-            [axisOffset, 0.8],
-            [axisOffset, 1.22],
+            [relOffset, 0.008],
+            [relOffset, 0.4],
+            [relOffset, 0.8],
+            [relOffset, 1.22],
           ],
           segments,
         ),
         null,
-        (y, b, m) => {
-          let A = valueNoise3D(Math.atan2(m, y) * 3 + noiseSeed, b * 5),
-            _ = A > 0.7 ? 0.55 : 1,
-            M =
+        (revolveCoordX, revolveCoordY, revolveCoordZ) => {
+          let stripeNoise = valueNoise3D(
+              Math.atan2(revolveCoordZ, revolveCoordX) * 3 + noiseSeed,
+              revolveCoordY * 5,
+            ),
+            damageScale = stripeNoise > 0.7 ? 0.55 : 1,
+            shoulderTint =
               typeof valveHeight[1] == 'number'
                 ? [valveHeight[1], valveHeight[1], valveHeight[1]]
                 : valveHeight[1];
-          return [M[0] * _, M[1] * _ * (A > 0.7 ? 0.85 : 1), M[2] * _ * (A > 0.7 ? 0.7 : 1)];
+          return [
+            shoulderTint[0] * damageScale,
+            shoulderTint[1] * damageScale * (stripeNoise > 0.7 ? 0.85 : 1),
+            shoulderTint[2] * damageScale * (stripeNoise > 0.7 ? 0.7 : 1),
+          ];
         },
       ),
       assembler.add(
         bottleTopY[0],
         revolveProfileGeometry(
           [
-            [axisOffset, 1.22],
+            [relOffset, 1.22],
             [0.111, 1.285],
             [0.098, 1.34],
             [0.075, 1.385],
@@ -1369,20 +1416,20 @@ function buildGasCylinders(ctx, opts) {
         null,
         0.8,
       ));
-    for (let coordY of [0, PI_TWO])
+    for (let revolveCoordX of [0, PI_TWO])
       assembler.add(
         'polymer_black',
         cylinderGeometry(0.016, 0.016, 0.004, 6),
         {
-          p: [Math.cos(coordY) * 0.052, 1.5, Math.sin(coordY) * 0.052],
-          r: [0, -coordY, HALF_PI],
+          p: [Math.cos(revolveCoordX) * 0.052, 1.5, Math.sin(revolveCoordX) * 0.052],
+          r: [0, -revolveCoordX, HALF_PI],
         },
         0.2,
       );
-    (stepU !== 1 &&
+    (profilePos !== 1 &&
       assembler.cdecal(
-        ctx.mats.decal(stepU ? 'hazard_general' : 'hazard_flammable'),
-        axisOffset + 0.0015,
+        ctx.mats.decal(profilePos ? 'hazard_general' : 'hazard_flammable'),
+        relOffset + 0.0015,
         0.1,
         {
           p: [0, 1.08, 0],
@@ -1390,12 +1437,15 @@ function buildGasCylinders(ctx, opts) {
         },
       ),
       assembler.cdecal(
-        ctx.mats.label(['ACETYLENE', 'OXYGEN', 'ARGON', 'PROPANE'][(assembler.seed + stepU) % 4], {
-          color: 'white',
-          font: 'stencil',
-          distress: 0.4,
-        }),
-        axisOffset + 0.0015,
+        ctx.mats.label(
+          ['ACETYLENE', 'OXYGEN', 'ARGON', 'PROPANE'][(assembler.seed + profilePos) % 4],
+          {
+            color: 'white',
+            font: 'stencil',
+            distress: 0.4,
+          },
+        ),
+        relOffset + 0.0015,
         0.2,
         {
           p: [0, 0.86, 0],
@@ -1413,22 +1463,22 @@ function buildGasCylinders(ctx, opts) {
       }
       return Math.max(h, 0.1);
     };
-  for (let stepU = 0; stepU < barCount; stepU++) {
-    let posH = stepU / (barCount - 1),
-      sideFactor = -0.425 + 0.85 * posH,
-      axisOffset =
+  for (let profilePos = 0; profilePos < barCount; profilePos++) {
+    let capHeight = profilePos / (barCount - 1),
+      bottleOffsetIdx = -0.425 + 0.85 * capHeight,
+      relOffset =
         Math.max(
-          capHeightAt(sideFactor),
-          capHeightAt(sideFactor - 0.03),
-          capHeightAt(sideFactor + 0.03),
+          capHeightAt(bottleOffsetIdx),
+          capHeightAt(bottleOffsetIdx - 0.03),
+          capHeightAt(bottleOffsetIdx + 0.03),
         ) + 0.004,
-      bottleTopY = 1.05 - 0.035 * Math.sin(PI_TWO * ((posH * 3) % 1)) - 0.01;
+      bottleTopY = 1.05 - 0.035 * Math.sin(PI_TWO * ((capHeight * 3) % 1)) - 0.01;
     assembler.add(
       'steel_galv',
       createTorusGeometryWorldUV(0.017, 0.0045, 3, 6),
       {
-        p: [sideFactor, bottleTopY, axisOffset],
-        r: [stepU % 2 ? HALF_PI : 0.15, 0, 0],
+        p: [bottleOffsetIdx, bottleTopY, relOffset],
+        r: [profilePos % 2 ? HALF_PI : 0.15, 0, 0],
         s: [1.35, 1, 1],
       },
       rand.range(0.6, 0.95),
@@ -1490,60 +1540,66 @@ function buildPipeStack(ctx, opts) {
   }
   let layerCounts = [4, 3, 2],
     rowOffset = 2 * pipeRadius * Math.sin(PI_TWO / 3);
-  layerCounts.forEach((h, f) => {
-    for (let p = 0; p < h; p++) {
-      let d = (p - (h - 1) / 2) * 2 * pipeRadius,
-        v = skidHeight + pipeRadius + f * rowOffset,
-        g = rand.range(5.78, 5.92),
-        x = rand.range(-3, 3 - g) * 0.999 + 0,
-        y = Math.max(-3, Math.min(3 - g, x)) + g / 2,
-        b = rand() < 0.7 ? 'steel_rust' : 'steel_dark',
-        m = rand() * 50,
-        A = rand.range(0.75, 1),
-        _ = new THREE.CylinderGeometry(pipeRadius, pipeRadius, g, segments, 4, !0);
+  layerCounts.forEach((offsetX, rowIdx) => {
+    for (let pipeIdx = 0; pipeIdx < offsetX; pipeIdx++) {
+      let lateralOffset = (pipeIdx - (offsetX - 1) / 2) * 2 * pipeRadius,
+        rowY = skidHeight + pipeRadius + rowIdx * rowOffset,
+        pipeLength = rand.range(5.78, 5.92),
+        xOffset = rand.range(-3, 3 - pipeLength) * 0.999 + 0,
+        centerX = Math.max(-3, Math.min(3 - pipeLength, xOffset)) + pipeLength / 2,
+        pipeMat = rand() < 0.7 ? 'steel_rust' : 'steel_dark',
+        noiseSeed = rand() * 50,
+        tintAmplitude = rand.range(0.75, 1),
+        pipeGeo = new THREE.CylinderGeometry(pipeRadius, pipeRadius, pipeLength, segments, 4, !0);
       {
-        let w = _.attributes.uv,
-          S = _.attributes.position;
-        for (let z = 0; z < w.count; z++)
-          w.setXY(z, w.getX(z) * 2 * PI_TWO * pipeRadius, S.getY(z));
+        let uvAttr = pipeGeo.attributes.uv,
+          posAttr = pipeGeo.attributes.position;
+        for (let vertIdx = 0; vertIdx < uvAttr.count; vertIdx++)
+          uvAttr.setXY(
+            vertIdx,
+            uvAttr.getX(vertIdx) * 2 * PI_TWO * pipeRadius,
+            posAttr.getY(vertIdx),
+          );
       }
-      let M = {
-        p: [y, v, d],
+      let placeTf = {
+        p: [centerX, rowY, lateralOffset],
         r: [rand() * 6, 0, HALF_PI],
       };
       assembler.add(
-        b,
-        _,
-        M,
-        (w, S, z) => A * (0.75 + 0.35 * valueNoise3D(w * 1.3 + m, z * 9, S * 9)),
+        pipeMat,
+        pipeGeo,
+        placeTf,
+        (uvAttr, posAttr, vertIdx) =>
+          tintAmplitude *
+          (0.75 + 0.35 * valueNoise3D(uvAttr * 1.3 + noiseSeed, vertIdx * 9, posAttr * 9)),
       );
-      let E = flipGeometryWinding(
+      let linerGeo = flipGeometryWinding(
         cylinderGeometry(
           pipeRadius - wallThickness,
           pipeRadius - wallThickness,
-          g - 0.002,
+          pipeLength - 0.002,
           segments,
           !0,
         ),
       );
       assembler.add(
         'steel_rust',
-        E,
-        M,
-        (w) =>
+        linerGeo,
+        placeTf,
+        (uvAttr) =>
           0.16 +
           0.5 *
             smoothstepRangeAlt(
-              g / 2 + Math.abs(y) - 0.9,
-              g / 2 + Math.abs(y) + 0.2,
-              Math.abs(w - y) + Math.abs(y),
+              pipeLength / 2 + Math.abs(centerX) - 0.9,
+              pipeLength / 2 + Math.abs(centerX) + 0.2,
+              Math.abs(uvAttr - centerX) + Math.abs(centerX),
             ),
       );
-      for (let w of [1, -1])
+      for (let uvAttr of [1, -1])
         assembler.add(
-          b,
+          pipeMat,
           revolveProfileGeometry(
-            w > 0
+            uvAttr > 0
               ? [
                   [pipeRadius, 0],
                   [pipeRadius - wallThickness, 0],
@@ -1555,10 +1611,10 @@ function buildPipeStack(ctx, opts) {
             segments,
           ),
           {
-            p: [y + (w * g) / 2, v, d],
+            p: [centerX + (uvAttr * pipeLength) / 2, rowY, lateralOffset],
             r: [0, 0, -HALF_PI],
           },
-          A * 1.1,
+          tintAmplitude * 1.1,
         );
     }
   });
@@ -1617,30 +1673,37 @@ function buildPipeStack(ctx, opts) {
  * 把油桶/托盘/木箱/吨桶/线缆盘/轮胎/油桶/锥/气瓶/钢管这批用 PropAssembler 写的道具登记进注册表，可重复变体的按参数拼 key 走缓存
  */
 export function registerDetailedProps(register) {
-  (register('barrel', (e, t = {}) => {
-    let n = Math.abs(t.seed | 0) % 4;
-    return buildCachedPropClone(`barrel|${t.color}|${!!t.lying}|${!!t.open}|${n}`, () =>
-      buildBarrel(e, t, n),
+  (register('barrel', (propCtx, propOpts = {}) => {
+    let variantSeed = Math.abs(propOpts.seed | 0) % 4;
+    return buildCachedPropClone(
+      `barrel|${propOpts.color}|${!!propOpts.lying}|${!!propOpts.open}|${variantSeed}`,
+      () => buildBarrel(propCtx, propOpts, variantSeed),
     );
   }),
-    register('pallet', (e, t = {}) => {
-      let n = Math.abs(t.seed | 0) % 4;
-      return buildCachedPropClone(`pallet|${!!t.broken}|${n}`, () => buildPallet(e, t, n));
+    register('pallet', (propCtx, propOpts = {}) => {
+      let variantSeed = Math.abs(propOpts.seed | 0) % 4;
+      return buildCachedPropClone(`pallet|${!!propOpts.broken}|${variantSeed}`, () =>
+        buildPallet(propCtx, propOpts, variantSeed),
+      );
     }),
-    register('pallet_stack', (e, t = {}) => buildPalletStack(e, t)),
-    register('crate_wood', (e, t = {}) => buildCrateWood(e, t)),
-    register('crate_stack', (e, t = {}) => buildCrateStack(e, t)),
-    register('ibc_tote', (e, t = {}) => buildIbcTote(e, t)),
-    register('cable_reel', (e, t = {}) => buildCableReel(e, t)),
-    register('tire_stack', (e, t = {}) => buildTireStack(e, t)),
-    register('jerry_can', (e, t = {}) => {
-      let n = Math.abs(t.seed | 0) % 2;
-      return buildCachedPropClone(`jerry|${t.color}|${n}`, () => buildJerryCan(e, t, n));
+    register('pallet_stack', (propCtx, propOpts = {}) => buildPalletStack(propCtx, propOpts)),
+    register('crate_wood', (propCtx, propOpts = {}) => buildCrateWood(propCtx, propOpts)),
+    register('crate_stack', (propCtx, propOpts = {}) => buildCrateStack(propCtx, propOpts)),
+    register('ibc_tote', (propCtx, propOpts = {}) => buildIbcTote(propCtx, propOpts)),
+    register('cable_reel', (propCtx, propOpts = {}) => buildCableReel(propCtx, propOpts)),
+    register('tire_stack', (propCtx, propOpts = {}) => buildTireStack(propCtx, propOpts)),
+    register('jerry_can', (propCtx, propOpts = {}) => {
+      let variantSeed = Math.abs(propOpts.seed | 0) % 2;
+      return buildCachedPropClone(`jerry|${propOpts.color}|${variantSeed}`, () =>
+        buildJerryCan(propCtx, propOpts, variantSeed),
+      );
     }),
-    register('traffic_cone', (e, t = {}) => {
-      let n = Math.abs(t.seed | 0) % 3;
-      return buildCachedPropClone(`cone|${!!t.lying}|${n}`, () => buildTrafficCone(e, t, n));
+    register('traffic_cone', (propCtx, propOpts = {}) => {
+      let variantSeed = Math.abs(propOpts.seed | 0) % 3;
+      return buildCachedPropClone(`cone|${!!propOpts.lying}|${variantSeed}`, () =>
+        buildTrafficCone(propCtx, propOpts, variantSeed),
+      );
     }),
-    register('gas_cylinders', (e, t = {}) => buildGasCylinders(e, t)),
-    register('pipe_stack', (e, t = {}) => buildPipeStack(e, t)));
+    register('gas_cylinders', (propCtx, propOpts = {}) => buildGasCylinders(propCtx, propOpts)),
+    register('pipe_stack', (propCtx, propOpts = {}) => buildPipeStack(propCtx, propOpts)));
 }

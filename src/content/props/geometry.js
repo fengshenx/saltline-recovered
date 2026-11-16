@@ -77,9 +77,15 @@ export function chamferedBoxGeometry(width, height, depth, bevelSize = 0.01, anc
       [-1, 1],
     ];
   for (let cornerX of [-1, 1])
-    (pushQuadTri(...quadCorners.map(([y, b]) => vtxIndex(cornerX, y, b, 0))),
-      pushQuadTri(...quadCorners.map(([y, b]) => vtxIndex(y, cornerX, b, 1))),
-      pushQuadTri(...quadCorners.map(([y, b]) => vtxIndex(y, b, cornerX, 2))));
+    (pushQuadTri(
+      ...quadCorners.map(([cornerY, cornerZ]) => vtxIndex(cornerX, cornerY, cornerZ, 0)),
+    ),
+      pushQuadTri(
+        ...quadCorners.map(([cornerY, cornerZ]) => vtxIndex(cornerY, cornerX, cornerZ, 1)),
+      ),
+      pushQuadTri(
+        ...quadCorners.map(([cornerY, cornerZ]) => vtxIndex(cornerY, cornerZ, cornerX, 2)),
+      ));
   for (let cornerX of [-1, 1])
     for (let cornerY of [-1, 1])
       (pushQuadTri(

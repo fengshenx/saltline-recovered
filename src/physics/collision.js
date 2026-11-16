@@ -63,273 +63,354 @@ export function createPhysics(app) {
         min: WORLD_BOUNDS.min.clone(),
         max: WORLD_BOUNDS.max.clone(),
       },
-      addBox(_, M, E = {}) {
-        let w = toVector3(_),
-          S = toVector3(M),
-          z = {
-            min: new THREE.Vector3(Math.min(w.x, S.x), Math.min(w.y, S.y), Math.min(w.z, S.z)),
-            max: new THREE.Vector3(Math.max(w.x, S.x), Math.max(w.y, S.y), Math.max(w.z, S.z)),
-            surface: E.surface || 'concrete',
-            tag: E.tag || '',
-            noNav: !!E.noNav,
-            bulletOnly: !!E.bulletOnly,
-            playerOnly: !!E.playerOnly,
+      addBox(startPoint, rangeEnd, limitValue = {}) {
+        let maxDistance = toVector3(startPoint),
+          hitBoxRef = toVector3(rangeEnd),
+          boxRecord = {
+            min: new THREE.Vector3(
+              Math.min(maxDistance.x, hitBoxRef.x),
+              Math.min(maxDistance.y, hitBoxRef.y),
+              Math.min(maxDistance.z, hitBoxRef.z),
+            ),
+            max: new THREE.Vector3(
+              Math.max(maxDistance.x, hitBoxRef.x),
+              Math.max(maxDistance.y, hitBoxRef.y),
+              Math.max(maxDistance.z, hitBoxRef.z),
+            ),
+            surface: limitValue.surface || 'concrete',
+            tag: limitValue.tag || '',
+            noNav: !!limitValue.noNav,
+            bulletOnly: !!limitValue.bulletOnly,
+            playerOnly: !!limitValue.playerOnly,
           };
-        return (boxes.push(z), (gridDirty = !0), z);
+        return (boxes.push(boxRecord), (gridDirty = !0), boxRecord);
       },
-      removeBox(_) {
-        let M = boxes.indexOf(_);
-        M >= 0 && (boxes.splice(M, 1), (gridDirty = !0));
+      removeBox(startPoint) {
+        let rangeEnd = boxes.indexOf(startPoint);
+        rangeEnd >= 0 && (boxes.splice(rangeEnd, 1), (gridDirty = !0));
       },
       build() {
         buildGrid();
       },
-      raycast(_, M, E = 500) {
-        let w = E,
-          S = null,
-          z = -1,
-          H = 0,
-          O = 0,
-          q = _.x,
-          U = _.y,
-          T = _.z,
-          D = M.x,
-          C = M.y,
-          G = M.z;
-        if (C < -1e-6) {
-          let F = (WORLD_BOUNDS.groundY - U) / C;
-          if (F > 0 && F < w)
-            if (q + D * F <= WORLD_BOUNDS.quayX) ((w = F), (O = 1));
+      raycast(startPoint, rangeEnd, limitValue = 500) {
+        let maxDistance = limitValue,
+          hitBoxRef = null,
+          boxRecord = -1,
+          normalSign = 0,
+          surfaceKind = 0,
+          rayOriginX = startPoint.x,
+          rayOriginY = startPoint.y,
+          rayOriginZ = startPoint.z,
+          probeDeltaX = rangeEnd.x,
+          probeDeltaY = rangeEnd.y,
+          probeDeltaZ = rangeEnd.z;
+        if (probeDeltaY < -1e-6) {
+          let hitTime = (WORLD_BOUNDS.groundY - rayOriginY) / probeDeltaY;
+          if (hitTime > 0 && hitTime < maxDistance)
+            if (rayOriginX + probeDeltaX * hitTime <= WORLD_BOUNDS.quayX)
+              ((maxDistance = hitTime), (surfaceKind = 1));
             else {
-              let ne = (WORLD_BOUNDS.seaY - U) / C;
-              ne > 0 && ne < w && ((w = ne), (O = 2));
+              let axisLeave = (WORLD_BOUNDS.seaY - rayOriginY) / probeDeltaY;
+              axisLeave > 0 &&
+                axisLeave < maxDistance &&
+                ((maxDistance = axisLeave), (surfaceKind = 2));
             }
         }
-        let j = D === 0 ? 1 / 0 : 1 / D,
-          N = C === 0 ? 1 / 0 : 1 / C,
-          Q = G === 0 ? 1 / 0 : 1 / G;
-        for (let F = 0; F < boxes.length; F++) {
-          let X = boxes[F];
-          if (X.playerOnly) continue;
-          let ne = 0,
-            re = w,
-            $ = -1,
-            ue = 0,
-            me,
-            ee;
-          if (D !== 0) {
-            ((me = (X.min.x - q) * j), (ee = (X.max.x - q) * j));
-            let B = -1;
-            if (me > ee) {
-              let P = me;
-              ((me = ee), (ee = P), (B = 1));
+        let invDirX = probeDeltaX === 0 ? 1 / 0 : 1 / probeDeltaX,
+          invDirY = probeDeltaY === 0 ? 1 / 0 : 1 / probeDeltaY,
+          invDirZ = probeDeltaZ === 0 ? 1 / 0 : 1 / probeDeltaZ;
+        for (let hitTime = 0; hitTime < boxes.length; hitTime++) {
+          let boxCandidate = boxes[hitTime];
+          if (boxCandidate.playerOnly) continue;
+          let axisLeave = 0,
+            tExitLimit = maxDistance,
+            hitFaceAxis = -1,
+            closestXOffset = 0,
+            axisEnter,
+            distSq;
+          if (probeDeltaX !== 0) {
+            ((axisEnter = (boxCandidate.min.x - rayOriginX) * invDirX),
+              (distSq = (boxCandidate.max.x - rayOriginX) * invDirX));
+            let faceOffsetMin = -1;
+            if (axisEnter > distSq) {
+              let pushDepth = axisEnter;
+              ((axisEnter = distSq), (distSq = pushDepth), (faceOffsetMin = 1));
             }
-            if ((me > ne && ((ne = me), ($ = 0), (ue = B)), ee < re && (re = ee), ne > re))
+            if (
+              (axisEnter > axisLeave &&
+                ((axisLeave = axisEnter), (hitFaceAxis = 0), (closestXOffset = faceOffsetMin)),
+              distSq < tExitLimit && (tExitLimit = distSq),
+              axisLeave > tExitLimit)
+            )
               continue;
-          } else if (q < X.min.x || q > X.max.x) continue;
-          if (C !== 0) {
-            ((me = (X.min.y - U) * N), (ee = (X.max.y - U) * N));
-            let B = -1;
-            if (me > ee) {
-              let P = me;
-              ((me = ee), (ee = P), (B = 1));
+          } else if (rayOriginX < boxCandidate.min.x || rayOriginX > boxCandidate.max.x) continue;
+          if (probeDeltaY !== 0) {
+            ((axisEnter = (boxCandidate.min.y - rayOriginY) * invDirY),
+              (distSq = (boxCandidate.max.y - rayOriginY) * invDirY));
+            let faceOffsetMin = -1;
+            if (axisEnter > distSq) {
+              let pushDepth = axisEnter;
+              ((axisEnter = distSq), (distSq = pushDepth), (faceOffsetMin = 1));
             }
-            if ((me > ne && ((ne = me), ($ = 1), (ue = B)), ee < re && (re = ee), ne > re))
+            if (
+              (axisEnter > axisLeave &&
+                ((axisLeave = axisEnter), (hitFaceAxis = 1), (closestXOffset = faceOffsetMin)),
+              distSq < tExitLimit && (tExitLimit = distSq),
+              axisLeave > tExitLimit)
+            )
               continue;
-          } else if (U < X.min.y || U > X.max.y) continue;
-          if (G !== 0) {
-            ((me = (X.min.z - T) * Q), (ee = (X.max.z - T) * Q));
-            let B = -1;
-            if (me > ee) {
-              let P = me;
-              ((me = ee), (ee = P), (B = 1));
+          } else if (rayOriginY < boxCandidate.min.y || rayOriginY > boxCandidate.max.y) continue;
+          if (probeDeltaZ !== 0) {
+            ((axisEnter = (boxCandidate.min.z - rayOriginZ) * invDirZ),
+              (distSq = (boxCandidate.max.z - rayOriginZ) * invDirZ));
+            let faceOffsetMin = -1;
+            if (axisEnter > distSq) {
+              let pushDepth = axisEnter;
+              ((axisEnter = distSq), (distSq = pushDepth), (faceOffsetMin = 1));
             }
-            if ((me > ne && ((ne = me), ($ = 2), (ue = B)), ee < re && (re = ee), ne > re))
+            if (
+              (axisEnter > axisLeave &&
+                ((axisLeave = axisEnter), (hitFaceAxis = 2), (closestXOffset = faceOffsetMin)),
+              distSq < tExitLimit && (tExitLimit = distSq),
+              axisLeave > tExitLimit)
+            )
               continue;
-          } else if (T < X.min.z || T > X.max.z) continue;
-          $ < 0 || ((w = ne), (S = X), (z = $), (H = ue), (O = 0));
+          } else if (rayOriginZ < boxCandidate.min.z || rayOriginZ > boxCandidate.max.z) continue;
+          hitFaceAxis < 0 ||
+            ((maxDistance = axisLeave),
+            (hitBoxRef = boxCandidate),
+            (boxRecord = hitFaceAxis),
+            (normalSign = closestXOffset),
+            (surfaceKind = 0));
         }
-        if (!S && !O) return null;
-        let K = new THREE.Vector3(q + D * w, U + C * w, T + G * w);
-        if (O)
+        if (!hitBoxRef && !surfaceKind) return null;
+        let hitPointVec = new THREE.Vector3(
+          rayOriginX + probeDeltaX * maxDistance,
+          rayOriginY + probeDeltaY * maxDistance,
+          rayOriginZ + probeDeltaZ * maxDistance,
+        );
+        if (surfaceKind)
           return {
-            dist: w,
-            point: K,
+            dist: maxDistance,
+            point: hitPointVec,
             normal: new THREE.Vector3(0, 1, 0),
             surface:
-              O === 2
+              surfaceKind === 2
                 ? 'water'
                 : app.level && app.level.groundSurfaceAt
-                  ? app.level.groundSurfaceAt(K.x, K.z)
+                  ? app.level.groundSurfaceAt(hitPointVec.x, hitPointVec.z)
                   : 'concrete',
             box: null,
           };
-        let ie = new THREE.Vector3();
+        let boxRef = new THREE.Vector3();
         return (
-          ie.setComponent(z, H),
+          boxRef.setComponent(boxRecord, normalSign),
           {
-            dist: w,
-            point: K,
-            normal: ie,
-            surface: S.surface,
-            box: S,
+            dist: maxDistance,
+            point: hitPointVec,
+            normal: boxRef,
+            surface: hitBoxRef.surface,
+            box: hitBoxRef,
           }
         );
       },
-      lineOfSight(_, M) {
-        tmpDir.subVectors(M, _);
-        let E = tmpDir.length();
-        return E < 1e-4 ? !0 : (tmpDir.multiplyScalar(1 / E), !world.raycast(_, tmpDir, E - 0.05));
+      lineOfSight(startPoint, rangeEnd) {
+        tmpDir.subVectors(rangeEnd, startPoint);
+        let limitValue = tmpDir.length();
+        return limitValue < 1e-4
+          ? !0
+          : (tmpDir.multiplyScalar(1 / limitValue),
+            !world.raycast(startPoint, tmpDir, limitValue - 0.05));
       },
-      groundHeight(_, M, E = 50) {
-        let w = _ <= WORLD_BOUNDS.quayX ? WORLD_BOUNDS.groundY : WORLD_BOUNDS.seaY;
-        for (let S = 0; S < boxes.length; S++) {
-          let z = boxes[S];
-          z.bulletOnly ||
-            (_ >= z.min.x &&
-              _ <= z.max.x &&
-              M >= z.min.z &&
-              M <= z.max.z &&
-              z.max.y <= E &&
-              z.max.y > w &&
-              (w = z.max.y));
+      groundHeight(startPoint, rangeEnd, limitValue = 50) {
+        let maxDistance =
+          startPoint <= WORLD_BOUNDS.quayX ? WORLD_BOUNDS.groundY : WORLD_BOUNDS.seaY;
+        for (let hitBoxRef = 0; hitBoxRef < boxes.length; hitBoxRef++) {
+          let boxRecord = boxes[hitBoxRef];
+          boxRecord.bulletOnly ||
+            (startPoint >= boxRecord.min.x &&
+              startPoint <= boxRecord.max.x &&
+              rangeEnd >= boxRecord.min.z &&
+              rangeEnd <= boxRecord.max.z &&
+              boxRecord.max.y <= limitValue &&
+              boxRecord.max.y > maxDistance &&
+              (maxDistance = boxRecord.max.y));
         }
-        return w;
+        return maxDistance;
       },
-      moveCapsule(_, M, E, w = 0.32, S = 1.8, z = !0) {
-        let H = {
+      moveCapsule(
+        startPoint,
+        rangeEnd,
+        limitValue,
+        maxDistance = 0.32,
+        hitBoxRef = 1.8,
+        boxRecord = !0,
+      ) {
+        let normalSign = {
             onGround: !1,
             hitWall: !1,
             hitCeil: !1,
             surface: 'concrete',
           },
-          O = M.x * E,
-          q = M.z * E,
-          U = Math.max(1, Math.ceil(Math.hypot(O, q) / (w * 0.6))),
-          T = _.y;
-        for (let K = 0; K < U; K++) {
-          ((_.x += O / U), (_.z += q / U));
-          for (let ie = 0; ie < 3; ie++) {
-            let F = !1;
-            for (let X = 0; X < boxes.length; X++) {
-              let ne = boxes[X];
+          surfaceKind = rangeEnd.x * limitValue,
+          rayOriginX = rangeEnd.z * limitValue,
+          rayOriginY = Math.max(
+            1,
+            Math.ceil(Math.hypot(surfaceKind, rayOriginX) / (maxDistance * 0.6)),
+          ),
+          rayOriginZ = startPoint.y;
+        for (let hitPointVec = 0; hitPointVec < rayOriginY; hitPointVec++) {
+          ((startPoint.x += surfaceKind / rayOriginY), (startPoint.z += rayOriginX / rayOriginY));
+          for (let boxRef = 0; boxRef < 3; boxRef++) {
+            let hitTime = !1;
+            for (let boxCandidate = 0; boxCandidate < boxes.length; boxCandidate++) {
+              let axisLeave = boxes[boxCandidate];
               if (
-                ne.bulletOnly ||
-                ne.max.y <= _.y + (z ? STEP_HEIGHT : 0.08) ||
-                ne.min.y >= _.y + S
+                axisLeave.bulletOnly ||
+                axisLeave.max.y <= startPoint.y + (boxRecord ? STEP_HEIGHT : 0.08) ||
+                axisLeave.min.y >= startPoint.y + hitBoxRef
               )
                 continue;
-              let re = Math.max(ne.min.x, Math.min(ne.max.x, _.x)),
-                $ = Math.max(ne.min.z, Math.min(ne.max.z, _.z)),
-                ue = _.x - re,
-                me = _.z - $,
-                ee = ue * ue + me * me;
-              if (!(ee >= w * w)) {
-                if (ee > 1e-10) {
-                  let B = Math.sqrt(ee),
-                    P = w - B;
-                  ((ue /= B), (me /= B), (_.x += ue * P), (_.z += me * P));
-                  let V = M.x * ue + M.z * me;
-                  V < 0 && ((M.x -= ue * V), (M.z -= me * V));
+              let tExitLimit = Math.max(axisLeave.min.x, Math.min(axisLeave.max.x, startPoint.x)),
+                hitFaceAxis = Math.max(axisLeave.min.z, Math.min(axisLeave.max.z, startPoint.z)),
+                closestXOffset = startPoint.x - tExitLimit,
+                axisEnter = startPoint.z - hitFaceAxis,
+                distSq = closestXOffset * closestXOffset + axisEnter * axisEnter;
+              if (!(distSq >= maxDistance * maxDistance)) {
+                if (distSq > 1e-10) {
+                  let faceOffsetMin = Math.sqrt(distSq),
+                    pushDepth = maxDistance - faceOffsetMin;
+                  ((closestXOffset /= faceOffsetMin),
+                    (axisEnter /= faceOffsetMin),
+                    (startPoint.x += closestXOffset * pushDepth),
+                    (startPoint.z += axisEnter * pushDepth));
+                  let velocityAlongNormal = rangeEnd.x * closestXOffset + rangeEnd.z * axisEnter;
+                  velocityAlongNormal < 0 &&
+                    ((rangeEnd.x -= closestXOffset * velocityAlongNormal),
+                    (rangeEnd.z -= axisEnter * velocityAlongNormal));
                 } else {
-                  let B = _.x - ne.min.x,
-                    P = ne.max.x - _.x,
-                    V = _.z - ne.min.z,
-                    Y = ne.max.z - _.z,
-                    L = Math.min(B, P, V, Y);
-                  L === B
-                    ? ((_.x = ne.min.x - w), M.x > 0 && (M.x = 0))
-                    : L === P
-                      ? ((_.x = ne.max.x + w), M.x < 0 && (M.x = 0))
-                      : L === V
-                        ? ((_.z = ne.min.z - w), M.z > 0 && (M.z = 0))
-                        : ((_.z = ne.max.z + w), M.z < 0 && (M.z = 0));
+                  let faceOffsetMin = startPoint.x - axisLeave.min.x,
+                    pushDepth = axisLeave.max.x - startPoint.x,
+                    velocityAlongNormal = startPoint.z - axisLeave.min.z,
+                    faceSpanMax = axisLeave.max.z - startPoint.z,
+                    nearestSideDist = Math.min(
+                      faceOffsetMin,
+                      pushDepth,
+                      velocityAlongNormal,
+                      faceSpanMax,
+                    );
+                  nearestSideDist === faceOffsetMin
+                    ? ((startPoint.x = axisLeave.min.x - maxDistance),
+                      rangeEnd.x > 0 && (rangeEnd.x = 0))
+                    : nearestSideDist === pushDepth
+                      ? ((startPoint.x = axisLeave.max.x + maxDistance),
+                        rangeEnd.x < 0 && (rangeEnd.x = 0))
+                      : nearestSideDist === velocityAlongNormal
+                        ? ((startPoint.z = axisLeave.min.z - maxDistance),
+                          rangeEnd.z > 0 && (rangeEnd.z = 0))
+                        : ((startPoint.z = axisLeave.max.z + maxDistance),
+                          rangeEnd.z < 0 && (rangeEnd.z = 0));
                 }
-                ((F = !0), (H.hitWall = !0));
+                ((hitTime = !0), (normalSign.hitWall = !0));
               }
             }
-            if (!F) break;
+            if (!hitTime) break;
           }
         }
-        let D = _.y + M.y * E,
-          C = w * 0.7,
-          G = _.x <= WORLD_BOUNDS.quayX + C ? WORLD_BOUNDS.groundY : -50,
-          j = null,
-          N = 1 / 0,
-          Q = T + (z ? STEP_HEIGHT : 0.08) + 1e-4;
-        for (let K = 0; K < boxes.length; K++) {
-          let ie = boxes[K];
-          ie.bulletOnly ||
-            _.x + C < ie.min.x ||
-            _.x - C > ie.max.x ||
-            _.z + C < ie.min.z ||
-            _.z - C > ie.max.z ||
-            (ie.max.y <= Q && ie.max.y > G && ((G = ie.max.y), (j = ie.surface)),
-            ie.min.y >= T + S - 0.05 && ie.min.y < N && (N = ie.min.y));
+        let probeDeltaX = startPoint.y + rangeEnd.y * limitValue,
+          probeDeltaY = maxDistance * 0.7,
+          probeDeltaZ =
+            startPoint.x <= WORLD_BOUNDS.quayX + probeDeltaY ? WORLD_BOUNDS.groundY : -50,
+          invDirX = null,
+          invDirY = 1 / 0,
+          invDirZ = rayOriginZ + (boxRecord ? STEP_HEIGHT : 0.08) + 1e-4;
+        for (let hitPointVec = 0; hitPointVec < boxes.length; hitPointVec++) {
+          let boxRef = boxes[hitPointVec];
+          boxRef.bulletOnly ||
+            startPoint.x + probeDeltaY < boxRef.min.x ||
+            startPoint.x - probeDeltaY > boxRef.max.x ||
+            startPoint.z + probeDeltaY < boxRef.min.z ||
+            startPoint.z - probeDeltaY > boxRef.max.z ||
+            (boxRef.max.y <= invDirZ &&
+              boxRef.max.y > probeDeltaZ &&
+              ((probeDeltaZ = boxRef.max.y), (invDirX = boxRef.surface)),
+            boxRef.min.y >= rayOriginZ + hitBoxRef - 0.05 &&
+              boxRef.min.y < invDirY &&
+              (invDirY = boxRef.min.y));
         }
         return (
-          M.y > 0 && D + S > N
-            ? ((_.y = N - S), (M.y = 0), (H.hitCeil = !0))
-            : D <= G
-              ? ((_.y = G), M.y < 0 && (M.y = 0), (H.onGround = !0))
-              : z && M.y <= 0 && D - G < STEP_HEIGHT
-                ? ((_.y = G), (M.y = 0), (H.onGround = !0))
-                : (_.y = D),
-          H.onGround &&
-            (H.surface =
-              j ||
+          rangeEnd.y > 0 && probeDeltaX + hitBoxRef > invDirY
+            ? ((startPoint.y = invDirY - hitBoxRef), (rangeEnd.y = 0), (normalSign.hitCeil = !0))
+            : probeDeltaX <= probeDeltaZ
+              ? ((startPoint.y = probeDeltaZ),
+                rangeEnd.y < 0 && (rangeEnd.y = 0),
+                (normalSign.onGround = !0))
+              : boxRecord && rangeEnd.y <= 0 && probeDeltaX - probeDeltaZ < STEP_HEIGHT
+                ? ((startPoint.y = probeDeltaZ), (rangeEnd.y = 0), (normalSign.onGround = !0))
+                : (startPoint.y = probeDeltaX),
+          normalSign.onGround &&
+            (normalSign.surface =
+              invDirX ||
               (app.level && app.level.groundSurfaceAt
-                ? app.level.groundSurfaceAt(_.x, _.z)
+                ? app.level.groundSurfaceAt(startPoint.x, startPoint.z)
                 : 'concrete')),
-          H
+          normalSign
         );
       },
       nav: {
         cell: NAV_CELL_SIZE,
-        isWalkable(_, M) {
+        isWalkable(startPoint, rangeEnd) {
           ensureGrid();
-          let E = cellIndexAt(_, M);
-          return E >= 0 && !blocked[E];
+          let limitValue = cellIndexAt(startPoint, rangeEnd);
+          return limitValue >= 0 && !blocked[limitValue];
         },
-        findPath(_, M) {
+        findPath(startPoint, rangeEnd) {
           ensureGrid();
-          let E = nearestOpenCell(_.x, _.z),
-            w = nearestOpenCell(M.x, M.z);
-          if (E < 0 || w < 0) return null;
-          if (E === w) return [new THREE.Vector3(M.x, 0, M.z)];
-          let S = findPathCells(E, w);
-          if (!S) return null;
-          let z = [],
-            H = 0;
-          for (; H < S.length - 1;) {
-            let O = H + 1;
-            for (let q = S.length - 1; q > H + 1; q--)
-              if (hasGridLine(S[H], S[q])) {
-                O = q;
+          let limitValue = nearestOpenCell(startPoint.x, startPoint.z),
+            maxDistance = nearestOpenCell(rangeEnd.x, rangeEnd.z);
+          if (limitValue < 0 || maxDistance < 0) return null;
+          if (limitValue === maxDistance) return [new THREE.Vector3(rangeEnd.x, 0, rangeEnd.z)];
+          let hitBoxRef = findPathCells(limitValue, maxDistance);
+          if (!hitBoxRef) return null;
+          let boxRecord = [],
+            normalSign = 0;
+          for (; normalSign < hitBoxRef.length - 1;) {
+            let surfaceKind = normalSign + 1;
+            for (let rayOriginX = hitBoxRef.length - 1; rayOriginX > normalSign + 1; rayOriginX--)
+              if (hasGridLine(hitBoxRef[normalSign], hitBoxRef[rayOriginX])) {
+                surfaceKind = rayOriginX;
                 break;
               }
-            (z.push(cellCenterAt(S[O])), (H = O));
+            (boxRecord.push(cellCenterAt(hitBoxRef[surfaceKind])), (normalSign = surfaceKind));
           }
-          return (cellIndexAt(M.x, M.z) === w && z.length && z[z.length - 1].set(M.x, 0, M.z), z);
+          return (
+            cellIndexAt(rangeEnd.x, rangeEnd.z) === maxDistance &&
+              boxRecord.length &&
+              boxRecord[boxRecord.length - 1].set(rangeEnd.x, 0, rangeEnd.z),
+            boxRecord
+          );
         },
-        randomPoint(_, M) {
+        randomPoint(startPoint, rangeEnd) {
           ensureGrid();
-          for (let w = 0; w < 24; w++) {
-            let S = Math.random() * 6.2832,
-              z = Math.sqrt(Math.random()) * M,
-              H = _.x + Math.cos(S) * z,
-              O = _.z + Math.sin(S) * z,
-              q = cellIndexAt(H, O);
-            if (q >= 0 && !blocked[q]) return new THREE.Vector3(H, 0, O);
+          for (let maxDistance = 0; maxDistance < 24; maxDistance++) {
+            let hitBoxRef = Math.random() * 6.2832,
+              boxRecord = Math.sqrt(Math.random()) * rangeEnd,
+              normalSign = startPoint.x + Math.cos(hitBoxRef) * boxRecord,
+              surfaceKind = startPoint.z + Math.sin(hitBoxRef) * boxRecord,
+              rayOriginX = cellIndexAt(normalSign, surfaceKind);
+            if (rayOriginX >= 0 && !blocked[rayOriginX])
+              return new THREE.Vector3(normalSign, 0, surfaceKind);
           }
-          let E = nearestOpenCell(_.x, _.z);
-          return E >= 0 ? cellCenterAt(E) : new THREE.Vector3(_.x, 0, _.z);
+          let limitValue = nearestOpenCell(startPoint.x, startPoint.z);
+          return limitValue >= 0
+            ? cellCenterAt(limitValue)
+            : new THREE.Vector3(startPoint.x, 0, startPoint.z);
         },
-        clearLine(_, M) {
+        clearLine(startPoint, rangeEnd) {
           ensureGrid();
-          let E = cellIndexAt(_.x, _.z),
-            w = cellIndexAt(M.x, M.z);
-          return E >= 0 && w >= 0 && hasGridLine(E, w);
+          let limitValue = cellIndexAt(startPoint.x, startPoint.z),
+            maxDistance = cellIndexAt(rangeEnd.x, rangeEnd.z);
+          return limitValue >= 0 && maxDistance >= 0 && hasGridLine(limitValue, maxDistance);
         },
         _grid: () => (
           ensureGrid(),

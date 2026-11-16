@@ -158,10 +158,10 @@ export function createGameFlow(ctx) {
       flow: MISSION_FLOW,
       run: run,
       menus: menus,
-      start(P = {}) {
+      start(primaryArgument = {}) {
         startRun({
-          skipIntro: !!P.skipIntro,
-          quick: !!P.quick,
+          skipIntro: !!primaryArgument.skipIntro,
+          quick: !!primaryArgument.quick,
         });
       },
       pause() {
@@ -172,8 +172,8 @@ export function createGameFlow(ctx) {
       },
       update: update,
       debugCut() {
-        let P = run.relays.find((V) => !V.cut);
-        P && cutRelay(P);
+        let primaryArgument = run.relays.find((secondaryArgument) => !secondaryArgument.cut);
+        primaryArgument && cutRelay(primaryArgument);
       },
     };
   function setFlowState(P) {
@@ -380,8 +380,8 @@ export function createGameFlow(ctx) {
           : flow.state === 'playing' && input.locked && hud.message('', 0)));
   }
   (input.onModeChange && input.onModeChange(() => refreshLookMode(!1)),
-    ctx.events.on('input:lock', (P) => {
-      if (P.locked) {
+    ctx.events.on('input:lock', (primaryArgument) => {
+      if (primaryArgument.locked) {
         ((lockSeen = !0), refreshLookMode(!1));
         return;
       }
@@ -390,11 +390,11 @@ export function createGameFlow(ctx) {
     document.addEventListener('visibilitychange', () => {
       document.hidden && flow.state === 'playing' && pauseGame();
     }),
-    addEventListener('keydown', (P) => {
+    addEventListener('keydown', (primaryArgument) => {
       flow.state !== 'title' ||
         menus.panelOpen ||
-        (P.code !== 'Enter' && P.code !== 'NumpadEnter') ||
-        (P.target && P.target.tagName === 'BUTTON') ||
+        (primaryArgument.code !== 'Enter' && primaryArgument.code !== 'NumpadEnter') ||
+        (primaryArgument.target && primaryArgument.target.tagName === 'BUTTON') ||
         (safeCall(ctx.audio, 'resume'), input.requestLock(), startRun({}));
     }));
   function pauseGame() {

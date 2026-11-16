@@ -125,7 +125,7 @@ export async function startGame() {
     (game.input = showcaseName ? createStubInput() : createInput(game)),
     showcaseName)
   ) {
-    let now = createShadowMesh(
+    let moduleName = createShadowMesh(
       new THREE.PlaneGeometry(80, 80).rotateX(-Math.PI / 2),
       game.mats.get('concrete'),
       {
@@ -133,7 +133,7 @@ export async function startGame() {
       },
     );
     if (
-      (game.scene.add(now),
+      (game.scene.add(moduleName),
       (game.level = {
         stub: !0,
         playerStart: {
@@ -175,17 +175,19 @@ export async function startGame() {
         update: () => !1,
         start() {},
       }));
-    let frameDt = null;
+    let frameDelta = null;
     try {
-      frameDt = await SHOWCASE_REGISTRY[showcaseName].showcase(game);
-    } catch (dt) {
-      showFatalError(`showcase "${showcaseName}" threw: ${(dt && dt.stack) || dt}`);
+      frameDelta = await SHOWCASE_REGISTRY[showcaseName].showcase(game);
+    } catch (moduleRef) {
+      showFatalError(
+        `showcase "${showcaseName}" threw: ${(moduleRef && moduleRef.stack) || moduleRef}`,
+      );
     }
-    ((game.showcaseInfo = frameDt || {}),
-      frameDt &&
-        frameDt.cam &&
+    ((game.showcaseInfo = frameDelta || {}),
+      frameDelta &&
+        frameDelta.cam &&
         applyShot({
-          cam: [...frameDt.cam, ...(frameDt.target || [0, 1, 0])].join(','),
+          cam: [...frameDelta.cam, ...(frameDelta.target || [0, 1, 0])].join(','),
         }));
   } else {
     if (
@@ -197,14 +199,14 @@ export async function startGame() {
       await loadModule('ground', 'ground', () => createGround(game)),
       game.ground.stub)
     ) {
-      let now = createShadowMesh(
+      let moduleName = createShadowMesh(
         new THREE.PlaneGeometry(400, 400).rotateX(-Math.PI / 2),
         game.mats.get('asphalt'),
         {
           cast: !1,
         },
       );
-      game.scene.add(now);
+      game.scene.add(moduleName);
     }
     (game.physics.build(),
       await setBootProgress('Loading tracers and smoke', 0.66),
@@ -224,8 +226,10 @@ export async function startGame() {
   await setBootProgress('Waiting for first light', 0.92);
   try {
     await game.render.onLevelReady();
-  } catch (now) {
-    console.error('[boot] render.onLevelReady failed: ' + ((now && now.stack) || now));
+  } catch (moduleName) {
+    console.error(
+      '[boot] render.onLevelReady failed: ' + ((moduleName && moduleName.stack) || moduleName),
+    );
   }
   let fpsEma = 0;
   if (
@@ -245,8 +249,8 @@ export async function startGame() {
       game.game.start({
         skipIntro: !0,
       });
-    } catch (now) {
-      console.error('[boot] game.start failed', now);
+    } catch (moduleName) {
+      console.error('[boot] game.start failed', moduleName);
     }
   (params.noweapon && game.weapon.setVisible && game.weapon.setVisible(!1),
     benchMode && enableBenchmark(game),
@@ -270,36 +274,46 @@ export async function startGame() {
     };
   ((updateModule.err = {}),
     game.renderer.setAnimationLoop(() => {
-      let h = performance.now(),
-        f = (h - lastFrameTime) / 1e3;
-      ((lastFrameTime = h), (fpsEma = fpsEma ? fpsEma * 0.95 + f * 0.05 : f));
-      let p = Math.min(f, 0.05);
-      (params.dt && (p = +params.dt),
-        (game.time.dt = p),
-        (game.time.t += p),
-        (game.time.real = h / 1e3),
+      let moduleName = performance.now(),
+        frameDelta = (moduleName - lastFrameTime) / 1e3;
+      ((lastFrameTime = moduleName),
+        (fpsEma = fpsEma ? fpsEma * 0.95 + frameDelta * 0.05 : frameDelta));
+      let moduleRef = Math.min(frameDelta, 0.05);
+      (params.dt && (moduleRef = +params.dt),
+        (game.time.dt = moduleRef),
+        (game.time.t += moduleRef),
+        (game.time.real = moduleName / 1e3),
         game.time.frame++,
-        updateModule('input', p));
-      let d = !1;
+        updateModule('input', moduleRef));
+      let requiredFlag = !1;
       try {
-        d =
-          game.game.update(p) !== !1 && game.game.state !== 'title' && game.game.state !== 'paused';
-      } catch (v) {
+        requiredFlag =
+          game.game.update(moduleRef) !== !1 &&
+          game.game.state !== 'title' &&
+          game.game.state !== 'paused';
+      } catch (startTime) {
         updateModule.err.game ||
           ((updateModule.err.game = 1),
-          console.error('[loop] game.update threw: ' + ((v && v.stack) || v)));
+          console.error(
+            '[loop] game.update threw: ' + ((startTime && startTime.stack) || startTime),
+          ));
       }
       if (showcaseName) {
         if (game.showcaseInfo.update)
           try {
-            game.showcaseInfo.update(p);
-          } catch (v) {
+            game.showcaseInfo.update(moduleRef);
+          } catch (startTime) {
             updateModule.err.sc ||
               ((updateModule.err.sc = 1),
-              console.error('[loop] showcase update threw: ' + ((v && v.stack) || v)));
+              console.error(
+                '[loop] showcase update threw: ' + ((startTime && startTime.stack) || startTime),
+              ));
           }
       } else
-        d && (updateModule('player', p), updateModule('weapon', p), updateModule('enemies', p));
+        requiredFlag &&
+          (updateModule('player', moduleRef),
+          updateModule('weapon', moduleRef),
+          updateModule('enemies', moduleRef));
       if (
         game.weapon &&
         game.weapon.setWetness &&
@@ -307,31 +321,40 @@ export async function startGame() {
         game.level.interiorBoxes &&
         game.level.interiorBoxes[0]
       ) {
-        let v = game.level.interiorBoxes[0],
-          g = game.camera.position,
-          x = g.x > v.min.x && g.x < v.max.x && g.z > v.min.z && g.z < v.max.z && g.y < v.max.y;
-        interiorWetness += ((x ? 0.3 : 1) - interiorWetness) * Math.min(1, p * (x ? 0.25 : 0.6));
+        let startTime = game.level.interiorBoxes[0],
+          loadDuration = game.camera.position,
+          caughtError =
+            loadDuration.x > startTime.min.x &&
+            loadDuration.x < startTime.max.x &&
+            loadDuration.z > startTime.min.z &&
+            loadDuration.z < startTime.max.z &&
+            loadDuration.y < startTime.max.y;
+        interiorWetness +=
+          ((caughtError ? 0.3 : 1) - interiorWetness) *
+          Math.min(1, moduleRef * (caughtError ? 0.25 : 0.6));
         try {
           game.weapon.setWetness(interiorWetness);
         } catch {}
       }
       (game.game.state !== 'paused' &&
-        (updateModule('fx', p),
-        updateModule('ground', p),
-        updateModule('level', p),
-        updateModule('backdrop', p),
-        updateModule('mats', p)),
-        updateModule('audio', p),
-        updateModule('hud', p),
+        (updateModule('fx', moduleRef),
+        updateModule('ground', moduleRef),
+        updateModule('level', moduleRef),
+        updateModule('backdrop', moduleRef),
+        updateModule('mats', moduleRef)),
+        updateModule('audio', moduleRef),
+        updateModule('hud', moduleRef),
         camOverride &&
           (game.camera.position.copy(camOverride.pos), game.camera.lookAt(camOverride.look)),
-        game.bench && game.bench.frame(f));
+        game.bench && game.bench.frame(frameDelta));
       try {
-        game.render.frame(p);
-      } catch (v) {
+        game.render.frame(moduleRef);
+      } catch (startTime) {
         updateModule.err.render ||
           ((updateModule.err.render = 1),
-          console.error('[loop] render.frame threw: ' + ((v && v.stack) || v)));
+          console.error(
+            '[loop] render.frame threw: ' + ((startTime && startTime.stack) || startTime),
+          ));
       }
       (game.input.endFrame && game.input.endFrame(),
         window.__frames++,

@@ -1,8 +1,8 @@
 # 反混淆报告（阶段 2：命名）
 
-顶层重命名 851 / 参数 993 / 局部绑定 4634
+顶层重命名 851 / 参数 993 / 局部绑定 6737
 JSDoc 注入 868 处
-输出 stage2.js 1509KB / 50374 行
+输出 stage2.js 1608KB / 52525 行
 
 命名表未覆盖的顶层符号（0）: 无
 
@@ -10,7 +10,7 @@ JSDoc 注入 868 处
 
 跨域命名冲突（0）:
 
-跳过的重命名（3292）:
+跳过的重命名（4109）:
 - params:qa.t->x(函数内已有同名绑定)
 - params:qa.n->y(函数内已有同名绑定)
 - params:jn(未找到函数)
@@ -33,6 +33,15 @@ JSDoc 注入 868 处
 - params:Lf.e->y(函数内已有同名绑定)
 - locals:zy.t->gpuName(同作用域已有)
 - locals:Dy.i->handlersByEvent(同作用域已有)
+- locals:Dy.e->eventName(同作用域已有)
+- locals:Dy.t->handler(同作用域已有)
+- locals:Dy.e->eventName(同作用域已有)
+- locals:Dy.n->handlerList(同作用域已有)
+- locals:Dy.t->handler(同作用域已有)
+- locals:Dy.e->eventName(同作用域已有)
+- locals:Dy.n->handlerList(同作用域已有)
+- locals:Dy.t->handler(同作用域已有)
+- locals:Dy.o->err(同作用域已有)
 - locals:il.e->rngState(同作用域已有)
 - locals:il.i->seedValue(同作用域已有)
 - locals:il.t->nextRandom(同作用域已有)
@@ -62,12 +71,3 @@ JSDoc 注入 868 处
 - locals:$e.s->boxGeo(同作用域已有)
 - locals:$e.c->nx(与祖先绑定同名)
 - locals:Wi.n->bevelSize(同作用域已有)
-- locals:Wi.s->anchor(同作用域已有)
-- locals:Wi.o->boxGeo(同作用域已有)
-- locals:Wi.r->posAttr(同作用域已有)
-- locals:Wi.a->normAttr(同作用域已有)
-- locals:Wi.l->uvAttr(同作用域已有)
-- locals:Wi.c->halfW(同作用域已有)
-- locals:Wi.u->halfH(同作用域已有)
-- locals:Wi.h->halfD(同作用域已有)
-- locals:Wi.f->snapToEdge(同作用域已有)

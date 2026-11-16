@@ -6,28 +6,28 @@
 export function createEventBus() {
   let handlersByEvent = new Map();
   return {
-    on(e, t) {
+    on(eventName, handler) {
       return (
-        handlersByEvent.has(e) || handlersByEvent.set(e, []),
-        handlersByEvent.get(e).push(t),
-        () => this.off(e, t)
+        handlersByEvent.has(eventName) || handlersByEvent.set(eventName, []),
+        handlersByEvent.get(eventName).push(handler),
+        () => this.off(eventName, handler)
       );
     },
-    off(e, t) {
-      let n = handlersByEvent.get(e);
-      if (n) {
-        let s = n.indexOf(t);
-        s >= 0 && n.splice(s, 1);
+    off(eventName, handler) {
+      let handlerList = handlersByEvent.get(eventName);
+      if (handlerList) {
+        let handlerIdx = handlerList.indexOf(handler);
+        handlerIdx >= 0 && handlerList.splice(handlerIdx, 1);
       }
     },
-    emit(e, t) {
-      let n = handlersByEvent.get(e);
-      if (n)
-        for (let s = 0; s < n.length; s++)
+    emit(eventName, handler) {
+      let handlerList = handlersByEvent.get(eventName);
+      if (handlerList)
+        for (let handlerIdx = 0; handlerIdx < handlerList.length; handlerIdx++)
           try {
-            n[s](t);
-          } catch (o) {
-            console.error(`[events] handler for "${e}" threw`, o);
+            handlerList[handlerIdx](handler);
+          } catch (err) {
+            console.error(`[events] handler for "${eventName}" threw`, err);
           }
     },
   };

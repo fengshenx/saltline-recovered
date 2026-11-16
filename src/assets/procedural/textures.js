@@ -297,41 +297,49 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'hazard_flammable',
           256,
           256,
-          (v, g, x, y) => {
-            (v.save(),
-              v.translate(g / 2, x / 2),
-              v.rotate(Math.PI / 4),
-              (v.fillStyle = toRgba(INK_PALETTE.red)),
-              v.fillRect(-86, -86, 172, 172),
-              (v.strokeStyle = toRgba(INK_PALETTE.white)),
-              (v.lineWidth = 5),
-              v.strokeRect(-76, -76, 152, 152),
-              v.restore(),
-              v.save(),
-              v.translate(g / 2, x / 2 - 8),
-              (v.fillStyle = toRgba(INK_PALETTE.white)),
-              v.beginPath(),
-              v.moveTo(2, -64),
-              v.bezierCurveTo(34, -28, 40, 6, 24, 28),
-              v.bezierCurveTo(12, 44, -12, 44, -24, 28),
-              v.bezierCurveTo(-40, 6, -20, -12, -15, -34),
-              v.bezierCurveTo(-6, -28, 0, -44, 2, -64),
-              v.fill(),
-              (v.fillStyle = toRgba(INK_PALETTE.red)),
-              v.beginPath(),
-              v.moveTo(1, -10),
-              v.bezierCurveTo(15, 6, 15, 24, 0, 31),
-              v.bezierCurveTo(-15, 24, -13, 8, 1, -10),
-              v.fill(),
-              (v.fillStyle = toRgba(INK_PALETTE.white)),
-              v.fillRect(-34, 50, 68, 6),
-              v.restore(),
-              drawStencilRun(v, '3', g / 2, x * 0.9, 34, toRgba(INK_PALETTE.white), {
-                align: 'center',
-                weight: 900,
-                bridges: !1,
-              }),
-              applyCanvasDistress(v, g, x, 0.3, y));
+          (drawCtx, canvasW, canvasH, distressSeed) => {
+            (drawCtx.save(),
+              drawCtx.translate(canvasW / 2, canvasH / 2),
+              drawCtx.rotate(Math.PI / 4),
+              (drawCtx.fillStyle = toRgba(INK_PALETTE.red)),
+              drawCtx.fillRect(-86, -86, 172, 172),
+              (drawCtx.strokeStyle = toRgba(INK_PALETTE.white)),
+              (drawCtx.lineWidth = 5),
+              drawCtx.strokeRect(-76, -76, 152, 152),
+              drawCtx.restore(),
+              drawCtx.save(),
+              drawCtx.translate(canvasW / 2, canvasH / 2 - 8),
+              (drawCtx.fillStyle = toRgba(INK_PALETTE.white)),
+              drawCtx.beginPath(),
+              drawCtx.moveTo(2, -64),
+              drawCtx.bezierCurveTo(34, -28, 40, 6, 24, 28),
+              drawCtx.bezierCurveTo(12, 44, -12, 44, -24, 28),
+              drawCtx.bezierCurveTo(-40, 6, -20, -12, -15, -34),
+              drawCtx.bezierCurveTo(-6, -28, 0, -44, 2, -64),
+              drawCtx.fill(),
+              (drawCtx.fillStyle = toRgba(INK_PALETTE.red)),
+              drawCtx.beginPath(),
+              drawCtx.moveTo(1, -10),
+              drawCtx.bezierCurveTo(15, 6, 15, 24, 0, 31),
+              drawCtx.bezierCurveTo(-15, 24, -13, 8, 1, -10),
+              drawCtx.fill(),
+              (drawCtx.fillStyle = toRgba(INK_PALETTE.white)),
+              drawCtx.fillRect(-34, 50, 68, 6),
+              drawCtx.restore(),
+              drawStencilRun(
+                drawCtx,
+                '3',
+                canvasW / 2,
+                canvasH * 0.9,
+                34,
+                toRgba(INK_PALETTE.white),
+                {
+                  align: 'center',
+                  weight: 900,
+                  bridges: !1,
+                },
+              ),
+              applyCanvasDistress(drawCtx, canvasW, canvasH, 0.3, distressSeed));
           },
           {
             bleed: INK_PALETTE.red,
@@ -343,12 +351,12 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'hazard_voltage',
           256,
           256,
-          (v, g, x, y) => {
-            (drawHazardTriangle(v, g, x, toRgba(INK_PALETTE.yellow)),
-              (v.fillStyle = toRgba(INK_PALETTE.black)),
-              v.save(),
-              v.translate(g / 2, x * 0.56),
-              v.beginPath(),
+          (canvas2d, texW, texH, rnd) => {
+            (drawHazardTriangle(canvas2d, texW, texH, toRgba(INK_PALETTE.yellow)),
+              (canvas2d.fillStyle = toRgba(INK_PALETTE.black)),
+              canvas2d.save(),
+              canvas2d.translate(texW / 2, texH * 0.56),
+              canvas2d.beginPath(),
               [
                 [12, -58],
                 [-24, 4],
@@ -357,11 +365,15 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
                 [26, -14],
                 [5, -14],
                 [22, -58],
-              ].forEach((b, m) => (m ? v.lineTo(b[0], b[1]) : v.moveTo(b[0], b[1]))),
-              v.closePath(),
-              v.fill(),
-              v.restore(),
-              applyCanvasDistress(v, g, x, 0.3, y));
+              ].forEach((boltPt, ptIdx) =>
+                ptIdx
+                  ? canvas2d.lineTo(boltPt[0], boltPt[1])
+                  : canvas2d.moveTo(boltPt[0], boltPt[1]),
+              ),
+              canvas2d.closePath(),
+              canvas2d.fill(),
+              canvas2d.restore(),
+              applyCanvasDistress(canvas2d, texW, texH, 0.3, rnd));
           },
           {
             bleed: INK_PALETTE.yellow,
@@ -372,20 +384,20 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'hazard_general',
           256,
           256,
-          (v, g, x, y) => {
-            (drawHazardTriangle(v, g, x, toRgba(INK_PALETTE.yellow)),
-              (v.fillStyle = toRgba(INK_PALETTE.black)),
-              v.beginPath(),
-              v.moveTo(g / 2 - 13, x * 0.34),
-              v.lineTo(g / 2 + 13, x * 0.34),
-              v.lineTo(g / 2 + 7, x * 0.62),
-              v.lineTo(g / 2 - 7, x * 0.62),
-              v.closePath(),
-              v.fill(),
-              v.beginPath(),
-              v.arc(g / 2, x * 0.715, 11, 0, 7),
-              v.fill(),
-              applyCanvasDistress(v, g, x, 0.3, y));
+          (drawCtx, canvasW, canvasH, rnd) => {
+            (drawHazardTriangle(drawCtx, canvasW, canvasH, toRgba(INK_PALETTE.yellow)),
+              (drawCtx.fillStyle = toRgba(INK_PALETTE.black)),
+              drawCtx.beginPath(),
+              drawCtx.moveTo(canvasW / 2 - 13, canvasH * 0.34),
+              drawCtx.lineTo(canvasW / 2 + 13, canvasH * 0.34),
+              drawCtx.lineTo(canvasW / 2 + 7, canvasH * 0.62),
+              drawCtx.lineTo(canvasW / 2 - 7, canvasH * 0.62),
+              drawCtx.closePath(),
+              drawCtx.fill(),
+              drawCtx.beginPath(),
+              drawCtx.arc(canvasW / 2, canvasH * 0.715, 11, 0, 7),
+              drawCtx.fill(),
+              applyCanvasDistress(drawCtx, canvasW, canvasH, 0.3, rnd));
           },
           {
             bleed: INK_PALETTE.yellow,
@@ -396,9 +408,9 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'arrow',
           384,
           192,
-          (v, g, x, y) => {
-            ((v.fillStyle = toRgba(INK_PALETTE.white)),
-              v.beginPath(),
+          (drawCtx, canvasW, canvasH, randFn) => {
+            ((drawCtx.fillStyle = toRgba(INK_PALETTE.white)),
+              drawCtx.beginPath(),
               [
                 [20, 68],
                 [226, 68],
@@ -407,14 +419,18 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
                 [226, 170],
                 [226, 124],
                 [20, 124],
-              ].forEach((b, m) => (m ? v.lineTo(b[0], b[1]) : v.moveTo(b[0], b[1]))),
-              v.closePath(),
-              v.fill(),
-              (v.globalCompositeOperation = 'destination-out'),
-              v.fillRect(118, 0, 9, x),
-              v.fillRect(232, 0, 7, x),
-              (v.globalCompositeOperation = 'source-over'),
-              applyCanvasDistress(v, g, x, 0.5, y));
+              ].forEach((arrowPt, ptIdx) =>
+                ptIdx
+                  ? drawCtx.lineTo(arrowPt[0], arrowPt[1])
+                  : drawCtx.moveTo(arrowPt[0], arrowPt[1]),
+              ),
+              drawCtx.closePath(),
+              drawCtx.fill(),
+              (drawCtx.globalCompositeOperation = 'destination-out'),
+              drawCtx.fillRect(118, 0, 9, canvasH),
+              drawCtx.fillRect(232, 0, 7, canvasH),
+              (drawCtx.globalCompositeOperation = 'source-over'),
+              applyCanvasDistress(drawCtx, canvasW, canvasH, 0.5, randFn));
           },
           {
             bleed: INK_PALETTE.white,
@@ -447,35 +463,35 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'logo_a',
           640,
           192,
-          (v, g, x, y) => {
+          (drawCtx, canvasW, canvasH, distressSeed) => {
             (drawLogoLockup(
-              v,
-              g,
-              x,
+              drawCtx,
+              canvasW,
+              canvasH,
               INK_PALETTE.white,
-              (b, m, A) => {
-                ((b.lineWidth = m * 0.13),
-                  b.beginPath(),
-                  b.arc(0, 0, m * 0.92, 0.25 * Math.PI, 1.75 * Math.PI),
-                  b.stroke(),
-                  b.beginPath(),
-                  b.moveTo(0, -m * 1.08),
-                  b.lineTo(m * 0.26, 0),
-                  b.lineTo(0, m * 0.62),
-                  b.lineTo(-m * 0.26, 0),
-                  b.closePath(),
-                  b.fill(),
-                  b.beginPath(),
-                  b.moveTo(m * 0.5, 0),
-                  b.lineTo(m * 1.12, -m * 0.1),
-                  b.lineTo(m * 1.12, m * 0.1),
-                  b.closePath(),
-                  b.fill());
+              (logoCtx, logoRadius, logoAux) => {
+                ((logoCtx.lineWidth = logoRadius * 0.13),
+                  logoCtx.beginPath(),
+                  logoCtx.arc(0, 0, logoRadius * 0.92, 0.25 * Math.PI, 1.75 * Math.PI),
+                  logoCtx.stroke(),
+                  logoCtx.beginPath(),
+                  logoCtx.moveTo(0, -logoRadius * 1.08),
+                  logoCtx.lineTo(logoRadius * 0.26, 0),
+                  logoCtx.lineTo(0, logoRadius * 0.62),
+                  logoCtx.lineTo(-logoRadius * 0.26, 0),
+                  logoCtx.closePath(),
+                  logoCtx.fill(),
+                  logoCtx.beginPath(),
+                  logoCtx.moveTo(logoRadius * 0.5, 0),
+                  logoCtx.lineTo(logoRadius * 1.12, -logoRadius * 0.1),
+                  logoCtx.lineTo(logoRadius * 1.12, logoRadius * 0.1),
+                  logoCtx.closePath(),
+                  logoCtx.fill());
               },
               'NORDKAP LINE',
               'ARCTIC  \xB7  ATLANTIC  \xB7  FEEDER',
             ),
-              applyCanvasDistress(v, g, x, 0.35, y));
+              applyCanvasDistress(drawCtx, canvasW, canvasH, 0.35, distressSeed));
           },
           {
             bleed: INK_PALETTE.white,
@@ -487,31 +503,51 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'logo_b',
           640,
           192,
-          (v, g, x, y) => {
+          (g2d, canvasW, canvasH, rand) => {
             (drawLogoLockup(
-              v,
-              g,
-              x,
+              g2d,
+              canvasW,
+              canvasH,
               INK_PALETTE.white,
-              (b, m, A) => {
-                b.fillStyle = A;
-                for (let _ = 0; _ < 2; _++) {
-                  let M = -m * 0.35 + _ * m * 0.55,
-                    E = m * (0.3 - _ * 0.06);
-                  (b.beginPath(),
-                    b.moveTo(-m * 1.05, M - m * 0.25),
-                    b.quadraticCurveTo(-m * 0.3, M - m * 0.2, 0, M + m * 0.35),
-                    b.quadraticCurveTo(m * 0.3, M - m * 0.2, m * 1.05, M - m * 0.25),
-                    b.quadraticCurveTo(m * 0.35, M + E * 0.2, 0, M + m * 0.35 + E),
-                    b.quadraticCurveTo(-m * 0.35, M + E * 0.2, -m * 1.05, M - m * 0.25),
-                    b.fill());
+              (markCtx, markScale, markColor) => {
+                markCtx.fillStyle = markColor;
+                for (let waveIndex = 0; waveIndex < 2; waveIndex++) {
+                  let waveY = -markScale * 0.35 + waveIndex * markScale * 0.55,
+                    waveAmp = markScale * (0.3 - waveIndex * 0.06);
+                  (markCtx.beginPath(),
+                    markCtx.moveTo(-markScale * 1.05, waveY - markScale * 0.25),
+                    markCtx.quadraticCurveTo(
+                      -markScale * 0.3,
+                      waveY - markScale * 0.2,
+                      0,
+                      waveY + markScale * 0.35,
+                    ),
+                    markCtx.quadraticCurveTo(
+                      markScale * 0.3,
+                      waveY - markScale * 0.2,
+                      markScale * 1.05,
+                      waveY - markScale * 0.25,
+                    ),
+                    markCtx.quadraticCurveTo(
+                      markScale * 0.35,
+                      waveY + waveAmp * 0.2,
+                      0,
+                      waveY + markScale * 0.35 + waveAmp,
+                    ),
+                    markCtx.quadraticCurveTo(
+                      -markScale * 0.35,
+                      waveY + waveAmp * 0.2,
+                      -markScale * 1.05,
+                      waveY - markScale * 0.25,
+                    ),
+                    markCtx.fill());
                 }
               },
               'TERN OCEANIC',
               'CONTAINER SERVICES',
               INK_PALETTE.orange,
             ),
-              applyCanvasDistress(v, g, x, 0.35, y));
+              applyCanvasDistress(g2d, canvasW, canvasH, 0.35, rand));
           },
           {
             bleed: INK_PALETTE.white,
@@ -523,33 +559,49 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'logo_c',
           640,
           192,
-          (v, g, x, y) => {
+          (decalId, canvasW, canvasH, drawFn) => {
             (drawLogoLockup(
-              v,
-              g,
-              x,
+              decalId,
+              canvasW,
+              canvasH,
               INK_PALETTE.navy,
-              (b, m, A) => {
-                (b.beginPath(),
-                  b.arc(0, m * 0.25, m * 0.55, Math.PI, 0),
-                  b.closePath(),
-                  b.fill(),
-                  (b.lineWidth = m * 0.1),
-                  (b.lineCap = 'butt'));
-                for (let _ = 0; _ < 7; _++) {
-                  let M = Math.PI + ((_ + 0.5) / 7) * Math.PI;
-                  (b.beginPath(),
-                    b.moveTo(Math.cos(M) * m * 0.7, m * 0.25 + Math.sin(M) * m * 0.7),
-                    b.lineTo(Math.cos(M) * m * 1.05, m * 0.25 + Math.sin(M) * m * 1.05),
-                    b.stroke());
+              (markCtx, markSize, markOpts) => {
+                (markCtx.beginPath(),
+                  markCtx.arc(0, markSize * 0.25, markSize * 0.55, Math.PI, 0),
+                  markCtx.closePath(),
+                  markCtx.fill(),
+                  (markCtx.lineWidth = markSize * 0.1),
+                  (markCtx.lineCap = 'butt'));
+                for (let spokeIdx = 0; spokeIdx < 7; spokeIdx++) {
+                  let spokeAngle = Math.PI + ((spokeIdx + 0.5) / 7) * Math.PI;
+                  (markCtx.beginPath(),
+                    markCtx.moveTo(
+                      Math.cos(spokeAngle) * markSize * 0.7,
+                      markSize * 0.25 + Math.sin(spokeAngle) * markSize * 0.7,
+                    ),
+                    markCtx.lineTo(
+                      Math.cos(spokeAngle) * markSize * 1.05,
+                      markSize * 0.25 + Math.sin(spokeAngle) * markSize * 1.05,
+                    ),
+                    markCtx.stroke());
                 }
-                (b.fillRect(-m * 1.05, m * 0.42, m * 2.1, m * 0.13),
-                  b.fillRect(-m * 0.8, m * 0.68, m * 1.6, m * 0.1));
+                (markCtx.fillRect(
+                  -markSize * 1.05,
+                  markSize * 0.42,
+                  markSize * 2.1,
+                  markSize * 0.13,
+                ),
+                  markCtx.fillRect(
+                    -markSize * 0.8,
+                    markSize * 0.68,
+                    markSize * 1.6,
+                    markSize * 0.1,
+                  ));
               },
               'AUREL PACIFIC',
               'DEEP SEA  \xB7  REEFER  \xB7  BULK',
             ),
-              applyCanvasDistress(v, g, x, 0.35, y));
+              applyCanvasDistress(decalId, canvasW, canvasH, 0.35, drawFn));
           },
           {
             bleed: INK_PALETTE.navy,
@@ -561,25 +613,50 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'logo_d',
           640,
           192,
-          (v, g, x, y) => {
+          (c2d, canvasW, canvasH, distressSeed) => {
             (drawLogoLockup(
-              v,
-              g,
-              x,
+              c2d,
+              canvasW,
+              canvasH,
               INK_PALETTE.white,
-              (b, m, A) => {
-                (b.fillRect(-m, -m, m * 0.5, m * 2),
-                  b.fillRect(m * 0.5, -m, m * 0.5, m * 2),
-                  b.fillRect(-m, -m * 0.2, m * 2, m * 0.4),
-                  (b.fillStyle = A),
-                  b.fillRect(-m * 0.32, -m, m * 0.64, m * 0.5),
-                  b.fillRect(-m * 0.32, m * 0.5, m * 0.64, m * 0.5));
+              (markCtx, markHalfSize, accentColor) => {
+                (markCtx.fillRect(
+                  -markHalfSize,
+                  -markHalfSize,
+                  markHalfSize * 0.5,
+                  markHalfSize * 2,
+                ),
+                  markCtx.fillRect(
+                    markHalfSize * 0.5,
+                    -markHalfSize,
+                    markHalfSize * 0.5,
+                    markHalfSize * 2,
+                  ),
+                  markCtx.fillRect(
+                    -markHalfSize,
+                    -markHalfSize * 0.2,
+                    markHalfSize * 2,
+                    markHalfSize * 0.4,
+                  ),
+                  (markCtx.fillStyle = accentColor),
+                  markCtx.fillRect(
+                    -markHalfSize * 0.32,
+                    -markHalfSize,
+                    markHalfSize * 0.64,
+                    markHalfSize * 0.5,
+                  ),
+                  markCtx.fillRect(
+                    -markHalfSize * 0.32,
+                    markHalfSize * 0.5,
+                    markHalfSize * 0.64,
+                    markHalfSize * 0.5,
+                  ));
               },
               'HOLMGARD',
               'INTERMODAL  FREIGHT',
               INK_PALETTE.yellow,
             ),
-              applyCanvasDistress(v, g, x, 0.35, y));
+              applyCanvasDistress(c2d, canvasW, canvasH, 0.35, distressSeed));
           },
           {
             bleed: INK_PALETTE.white,
@@ -591,19 +668,28 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'berth4',
           640,
           224,
-          (v, g, x, y) => {
-            ((v.strokeStyle = toRgba(INK_PALETTE.yellow)),
-              (v.lineWidth = 12),
-              v.strokeRect(14, 14, g - 28, x - 28),
-              (v.globalCompositeOperation = 'destination-out'));
-            for (let b of [g * 0.25, g * 0.75]) v.fillRect(b - 6, 0, 12, x);
-            ((v.globalCompositeOperation = 'source-over'),
-              drawStencilRun(v, 'BERTH 4', g / 2, x * 0.76, x * 0.66, toRgba(INK_PALETTE.yellow), {
-                align: 'center',
-                weight: 900,
-                maxW: g - 80,
-              }),
-              applyCanvasDistress(v, g, x, 0.55, y));
+          (c2d, canvasW, canvasH, distressSeed) => {
+            ((c2d.strokeStyle = toRgba(INK_PALETTE.yellow)),
+              (c2d.lineWidth = 12),
+              c2d.strokeRect(14, 14, canvasW - 28, canvasH - 28),
+              (c2d.globalCompositeOperation = 'destination-out'));
+            for (let cutX of [canvasW * 0.25, canvasW * 0.75])
+              c2d.fillRect(cutX - 6, 0, 12, canvasH);
+            ((c2d.globalCompositeOperation = 'source-over'),
+              drawStencilRun(
+                c2d,
+                'BERTH 4',
+                canvasW / 2,
+                canvasH * 0.76,
+                canvasH * 0.66,
+                toRgba(INK_PALETTE.yellow),
+                {
+                  align: 'center',
+                  weight: 900,
+                  maxW: canvasW - 80,
+                },
+              ),
+              applyCanvasDistress(c2d, canvasW, canvasH, 0.55, distressSeed));
           },
           {
             bleed: INK_PALETTE.yellow,
@@ -615,23 +701,23 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'caution_stripes',
           512,
           128,
-          (v, g, x, y) => {
-            ((v.fillStyle = toRgba(INK_PALETTE.black)),
-              v.fillRect(0, 8, g, x - 16),
-              v.save(),
-              v.beginPath(),
-              v.rect(0, 8, g, x - 16),
-              v.clip(),
-              (v.fillStyle = toRgba(INK_PALETTE.yellow)));
-            for (let b = -x; b < g + x; b += 64)
-              (v.beginPath(),
-                v.moveTo(b, x),
-                v.lineTo(b + 32, x),
-                v.lineTo(b + 32 + x, 0),
-                v.lineTo(b + x, 0),
-                v.closePath(),
-                v.fill());
-            (v.restore(), applyCanvasDistress(v, g, x, 0.5, y));
+          (g2d, canvasW, canvasH, rng) => {
+            ((g2d.fillStyle = toRgba(INK_PALETTE.black)),
+              g2d.fillRect(0, 8, canvasW, canvasH - 16),
+              g2d.save(),
+              g2d.beginPath(),
+              g2d.rect(0, 8, canvasW, canvasH - 16),
+              g2d.clip(),
+              (g2d.fillStyle = toRgba(INK_PALETTE.yellow)));
+            for (let stripeX = -canvasH; stripeX < canvasW + canvasH; stripeX += 64)
+              (g2d.beginPath(),
+                g2d.moveTo(stripeX, canvasH),
+                g2d.lineTo(stripeX + 32, canvasH),
+                g2d.lineTo(stripeX + 32 + canvasH, 0),
+                g2d.lineTo(stripeX + canvasH, 0),
+                g2d.closePath(),
+                g2d.fill());
+            (g2d.restore(), applyCanvasDistress(g2d, canvasW, canvasH, 0.5, rng));
           },
           {
             bleed: INK_PALETTE.black,
@@ -642,18 +728,23 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'grime_streak',
           128,
           256,
-          (v, g, x, y) => {
-            for (let b = 0; b < 46; b++) {
-              let m = g * (0.12 + 0.76 * (y() * 0.5 + y() * 0.5)),
-                A = x * (0.25 + y() * 0.7),
-                _ = 1.5 + y() * y() * 12,
-                M = 0.05 + y() * 0.16,
-                E = v.createLinearGradient(0, 0, 0, A);
-              (E.addColorStop(0, `rgba(26,23,19,${M})`),
-                E.addColorStop(0.15, `rgba(26,23,19,${M * 1.3})`),
-                E.addColorStop(1, 'rgba(26,23,19,0)'),
-                (v.fillStyle = E),
-                v.fillRect(m - _ / 2 + (y() - 0.5) * 2, 0, _, A));
+          (g2d, canvasW, canvasH, rand) => {
+            for (let streakIndex = 0; streakIndex < 46; streakIndex++) {
+              let streakX = canvasW * (0.12 + 0.76 * (rand() * 0.5 + rand() * 0.5)),
+                streakLen = canvasH * (0.25 + rand() * 0.7),
+                streakWidth = 1.5 + rand() * rand() * 12,
+                alphaMax = 0.05 + rand() * 0.16,
+                streakGrad = g2d.createLinearGradient(0, 0, 0, streakLen);
+              (streakGrad.addColorStop(0, `rgba(26,23,19,${alphaMax})`),
+                streakGrad.addColorStop(0.15, `rgba(26,23,19,${alphaMax * 1.3})`),
+                streakGrad.addColorStop(1, 'rgba(26,23,19,0)'),
+                (g2d.fillStyle = streakGrad),
+                g2d.fillRect(
+                  streakX - streakWidth / 2 + (rand() - 0.5) * 2,
+                  0,
+                  streakWidth,
+                  streakLen,
+                ));
             }
           },
           {
@@ -666,24 +757,32 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'rust_run',
           128,
           256,
-          (v, g, x, y) => {
-            for (let b = 0; b < 40; b++) {
-              let m = g * (0.2 + 0.6 * (y() * 0.5 + y() * 0.5)),
-                A = x * (0.2 + y() * 0.75),
-                _ = 1.2 + y() * y() * 9,
-                M = 0.08 + y() * 0.22,
-                E = y() < 0.5 ? '118,52,18' : '150,78,26',
-                w = v.createLinearGradient(0, 8, 0, A);
-              (w.addColorStop(0, `rgba(${E},${M * 1.4})`),
-                w.addColorStop(0.3, `rgba(${E},${M})`),
-                w.addColorStop(1, `rgba(${E},0)`),
-                (v.fillStyle = w),
-                v.fillRect(m - _ / 2, 8, _, A));
+          (g2d, canvasW, canvasH, rand) => {
+            for (let streakIndex = 0; streakIndex < 40; streakIndex++) {
+              let streakX = canvasW * (0.2 + 0.6 * (rand() * 0.5 + rand() * 0.5)),
+                streakLen = canvasH * (0.2 + rand() * 0.75),
+                streakWidth = 1.2 + rand() * rand() * 9,
+                alphaMax = 0.08 + rand() * 0.22,
+                rustColor = rand() < 0.5 ? '118,52,18' : '150,78,26',
+                streakGrad = g2d.createLinearGradient(0, 8, 0, streakLen);
+              (streakGrad.addColorStop(0, `rgba(${rustColor},${alphaMax * 1.4})`),
+                streakGrad.addColorStop(0.3, `rgba(${rustColor},${alphaMax})`),
+                streakGrad.addColorStop(1, `rgba(${rustColor},0)`),
+                (g2d.fillStyle = streakGrad),
+                g2d.fillRect(streakX - streakWidth / 2, 8, streakWidth, streakLen));
             }
-            for (let b = 0; b < 9; b++)
-              ((v.fillStyle = `rgba(${y() < 0.5 ? '70,30,14' : '104,44,16'},${0.5 + y() * 0.4})`),
-                traceBlobPath(v, g * (0.3 + y() * 0.4), 6 + y() * 12, 3 + y() * 8, y, 0.5, 7),
-                v.fill());
+            for (let streakIndex = 0; streakIndex < 9; streakIndex++)
+              ((g2d.fillStyle = `rgba(${rand() < 0.5 ? '70,30,14' : '104,44,16'},${0.5 + rand() * 0.4})`),
+                traceBlobPath(
+                  g2d,
+                  canvasW * (0.3 + rand() * 0.4),
+                  6 + rand() * 12,
+                  3 + rand() * 8,
+                  rand,
+                  0.5,
+                  7,
+                ),
+                g2d.fill());
           },
           {
             rough: 0.9,
@@ -695,27 +794,33 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'oil_stain',
           256,
           256,
-          (v, g, x, y) => {
-            for (let b = 0; b < 26; b++) {
-              let m = y() * 7,
-                A = Math.pow(y(), 1.5) * g * 0.26,
-                _ = g / 2 + Math.cos(m) * A,
-                M = x / 2 + Math.sin(m) * A * 0.8,
-                E = g * (0.06 + y() * 0.16),
-                w = v.createRadialGradient(_, M, E * 0.2, _, M, E);
-              (w.addColorStop(0, `rgba(10,10,11,${0.35 + y() * 0.3})`),
-                w.addColorStop(0.75, 'rgba(12,11,10,0.22)'),
-                w.addColorStop(1, 'rgba(12,11,10,0)'),
-                (v.fillStyle = w),
-                v.fillRect(_ - E, M - E, E * 2, E * 2));
+          (canvas2d, texW, texH, rnd) => {
+            for (let blobIdx = 0; blobIdx < 26; blobIdx++) {
+              let angle = rnd() * 7,
+                radius = Math.pow(rnd(), 1.5) * texW * 0.26,
+                cx = texW / 2 + Math.cos(angle) * radius,
+                cy = texH / 2 + Math.sin(angle) * radius * 0.8,
+                blobR = texW * (0.06 + rnd() * 0.16),
+                grad = canvas2d.createRadialGradient(cx, cy, blobR * 0.2, cx, cy, blobR);
+              (grad.addColorStop(0, `rgba(10,10,11,${0.35 + rnd() * 0.3})`),
+                grad.addColorStop(0.75, 'rgba(12,11,10,0.22)'),
+                grad.addColorStop(1, 'rgba(12,11,10,0)'),
+                (canvas2d.fillStyle = grad),
+                canvas2d.fillRect(cx - blobR, cy - blobR, blobR * 2, blobR * 2));
             }
-            for (let b = 0; b < 30; b++) {
-              v.fillStyle = `rgba(10,10,11,${0.3 + y() * 0.4})`;
-              let m = y() * 7,
-                A = g * (0.25 + y() * 0.2);
-              (v.beginPath(),
-                v.arc(g / 2 + Math.cos(m) * A, x / 2 + Math.sin(m) * A, 1 + y() * 4, 0, 7),
-                v.fill());
+            for (let blobIdx = 0; blobIdx < 30; blobIdx++) {
+              canvas2d.fillStyle = `rgba(10,10,11,${0.3 + rnd() * 0.4})`;
+              let angle = rnd() * 7,
+                radius = texW * (0.25 + rnd() * 0.2);
+              (canvas2d.beginPath(),
+                canvas2d.arc(
+                  texW / 2 + Math.cos(angle) * radius,
+                  texH / 2 + Math.sin(angle) * radius,
+                  1 + rnd() * 4,
+                  0,
+                  7,
+                ),
+                canvas2d.fill());
             }
           },
           {
@@ -728,29 +833,46 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'leak_stain',
           192,
           256,
-          (v, g, x, y) => {
-            for (let b = 0; b < 18; b++) {
-              let m = g * (0.3 + y() * 0.4),
-                A = x * (0.12 + y() * 0.2),
-                _ = g * (0.1 + y() * 0.2),
-                M = v.createRadialGradient(m, A, _ * 0.5, m, A, _);
-              (M.addColorStop(0, 'rgba(150,146,130,0.0)'),
-                M.addColorStop(0.8, `rgba(168,162,140,${0.18 + y() * 0.2})`),
-                M.addColorStop(1, 'rgba(168,162,140,0)'),
-                (v.fillStyle = M),
-                v.fillRect(m - _, A - _, _ * 2, _ * 2));
+          (drawCtx, canvasW, canvasH, rnd) => {
+            for (let blobIndex = 0; blobIndex < 18; blobIndex++) {
+              let centerX = canvasW * (0.3 + rnd() * 0.4),
+                centerY = canvasH * (0.12 + rnd() * 0.2),
+                blobRadius = canvasW * (0.1 + rnd() * 0.2),
+                gradient = drawCtx.createRadialGradient(
+                  centerX,
+                  centerY,
+                  blobRadius * 0.5,
+                  centerX,
+                  centerY,
+                  blobRadius,
+                );
+              (gradient.addColorStop(0, 'rgba(150,146,130,0.0)'),
+                gradient.addColorStop(0.8, `rgba(168,162,140,${0.18 + rnd() * 0.2})`),
+                gradient.addColorStop(1, 'rgba(168,162,140,0)'),
+                (drawCtx.fillStyle = gradient),
+                drawCtx.fillRect(
+                  centerX - blobRadius,
+                  centerY - blobRadius,
+                  blobRadius * 2,
+                  blobRadius * 2,
+                ));
             }
-            for (let b = 0; b < 22; b++) {
-              let m = g * (0.25 + 0.5 * y()),
-                A = x * (0.3 + y() * 0.6),
-                _ = 2 + y() * 9,
-                M = 0.08 + y() * 0.16,
-                E = y() < 0.6 ? '160,154,132' : '60,66,52',
-                w = v.createLinearGradient(0, x * 0.2, 0, x * 0.2 + A);
-              (w.addColorStop(0, `rgba(${E},${M})`),
-                w.addColorStop(1, `rgba(${E},0)`),
-                (v.fillStyle = w),
-                v.fillRect(m, x * 0.2, _, A));
+            for (let blobIndex = 0; blobIndex < 22; blobIndex++) {
+              let centerX = canvasW * (0.25 + 0.5 * rnd()),
+                centerY = canvasH * (0.3 + rnd() * 0.6),
+                blobRadius = 2 + rnd() * 9,
+                gradient = 0.08 + rnd() * 0.16,
+                stainColorStr = rnd() < 0.6 ? '160,154,132' : '60,66,52',
+                dripGradient = drawCtx.createLinearGradient(
+                  0,
+                  canvasH * 0.2,
+                  0,
+                  canvasH * 0.2 + centerY,
+                );
+              (dripGradient.addColorStop(0, `rgba(${stainColorStr},${gradient})`),
+                dripGradient.addColorStop(1, `rgba(${stainColorStr},0)`),
+                (drawCtx.fillStyle = dripGradient),
+                drawCtx.fillRect(centerX, canvasH * 0.2, blobRadius, centerY));
             }
           },
           {
@@ -763,34 +885,37 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'bullet_metal',
           128,
           128,
-          (v, g, x, y) => {
-            ((v.fillStyle = 'rgba(96,52,40,0.9)'),
-              traceBlobPath(v, 64, 64, 30, y, 0.4, 11),
-              v.fill(),
-              (v.fillStyle = 'rgba(150,152,156,0.95)'),
-              traceBlobPath(v, 64, 64, 22, y, 0.3, 12),
-              v.fill(),
-              (v.strokeStyle = 'rgba(205,207,210,0.9)'),
-              (v.lineWidth = 1));
-            for (let m = 0; m < 14; m++) {
-              let A = y() * 7;
-              (v.beginPath(),
-                v.moveTo(64 + Math.cos(A) * 9, 64 + Math.sin(A) * 9),
-                v.lineTo(64 + Math.cos(A) * (16 + y() * 10), 64 + Math.sin(A) * (16 + y() * 10)),
-                v.stroke());
+          (drawCtx, canvasW, canvasH, rnd) => {
+            ((drawCtx.fillStyle = 'rgba(96,52,40,0.9)'),
+              traceBlobPath(drawCtx, 64, 64, 30, rnd, 0.4, 11),
+              drawCtx.fill(),
+              (drawCtx.fillStyle = 'rgba(150,152,156,0.95)'),
+              traceBlobPath(drawCtx, 64, 64, 22, rnd, 0.3, 12),
+              drawCtx.fill(),
+              (drawCtx.strokeStyle = 'rgba(205,207,210,0.9)'),
+              (drawCtx.lineWidth = 1));
+            for (let rayIndex = 0; rayIndex < 14; rayIndex++) {
+              let angle = rnd() * 7;
+              (drawCtx.beginPath(),
+                drawCtx.moveTo(64 + Math.cos(angle) * 9, 64 + Math.sin(angle) * 9),
+                drawCtx.lineTo(
+                  64 + Math.cos(angle) * (16 + rnd() * 10),
+                  64 + Math.sin(angle) * (16 + rnd() * 10),
+                ),
+                drawCtx.stroke());
             }
-            let b = v.createRadialGradient(64, 64, 2, 64, 64, 12);
-            (b.addColorStop(0, 'rgba(4,4,5,1)'),
-              b.addColorStop(0.75, 'rgba(10,10,12,1)'),
-              b.addColorStop(1, 'rgba(70,72,76,0.9)'),
-              (v.fillStyle = b),
-              traceBlobPath(v, 64, 64, 12, y, 0.15, 12),
-              v.fill(),
-              (v.strokeStyle = 'rgba(230,232,235,0.85)'),
-              (v.lineWidth = 1.5),
-              v.beginPath(),
-              v.arc(64, 64, 12.5, 3.6, 5.6),
-              v.stroke());
+            let coreGradient = drawCtx.createRadialGradient(64, 64, 2, 64, 64, 12);
+            (coreGradient.addColorStop(0, 'rgba(4,4,5,1)'),
+              coreGradient.addColorStop(0.75, 'rgba(10,10,12,1)'),
+              coreGradient.addColorStop(1, 'rgba(70,72,76,0.9)'),
+              (drawCtx.fillStyle = coreGradient),
+              traceBlobPath(drawCtx, 64, 64, 12, rnd, 0.15, 12),
+              drawCtx.fill(),
+              (drawCtx.strokeStyle = 'rgba(230,232,235,0.85)'),
+              (drawCtx.lineWidth = 1.5),
+              drawCtx.beginPath(),
+              drawCtx.arc(64, 64, 12.5, 3.6, 5.6),
+              drawCtx.stroke());
           },
           {
             rough: 0.4,
@@ -803,43 +928,48 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'bullet_concrete',
           128,
           128,
-          (v, g, x, y) => {
-            let b = v.createRadialGradient(64, 64, 20, 64, 64, 60);
-            (b.addColorStop(0, 'rgba(176,172,162,0.5)'),
-              b.addColorStop(1, 'rgba(176,172,162,0)'),
-              (v.fillStyle = b),
-              v.fillRect(0, 0, g, x),
-              (v.fillStyle = 'rgba(168,164,154,0.95)'),
-              traceBlobPath(v, 64, 64, 32, y, 0.35, 13),
-              v.fill(),
-              (v.fillStyle = 'rgba(120,116,108,0.95)'),
-              traceBlobPath(v, 65, 66, 20, y, 0.35, 11),
-              v.fill(),
-              (v.strokeStyle = 'rgba(40,38,36,0.8)'),
-              (v.lineWidth = 1));
-            for (let A = 0; A < 6; A++) {
-              let _ = y() * 7,
-                M = 64 + Math.cos(_) * 14,
-                E = 64 + Math.sin(_) * 14;
-              (v.beginPath(), v.moveTo(M, E));
-              for (let w = 0; w < 5; w++)
-                ((_ += (y() - 0.5) * 0.9),
-                  (M += Math.cos(_) * 8),
-                  (E += Math.sin(_) * 8),
-                  v.lineTo(M, E));
-              v.stroke();
+          (drawCtx, canvasW, canvasH, randFn) => {
+            let sprayGrad = drawCtx.createRadialGradient(64, 64, 20, 64, 64, 60);
+            (sprayGrad.addColorStop(0, 'rgba(176,172,162,0.5)'),
+              sprayGrad.addColorStop(1, 'rgba(176,172,162,0)'),
+              (drawCtx.fillStyle = sprayGrad),
+              drawCtx.fillRect(0, 0, canvasW, canvasH),
+              (drawCtx.fillStyle = 'rgba(168,164,154,0.95)'),
+              traceBlobPath(drawCtx, 64, 64, 32, randFn, 0.35, 13),
+              drawCtx.fill(),
+              (drawCtx.fillStyle = 'rgba(120,116,108,0.95)'),
+              traceBlobPath(drawCtx, 65, 66, 20, randFn, 0.35, 11),
+              drawCtx.fill(),
+              (drawCtx.strokeStyle = 'rgba(40,38,36,0.8)'),
+              (drawCtx.lineWidth = 1));
+            for (let crackIdx = 0; crackIdx < 6; crackIdx++) {
+              let startAngle = randFn() * 7,
+                crackX = 64 + Math.cos(startAngle) * 14,
+                crackY = 64 + Math.sin(startAngle) * 14;
+              (drawCtx.beginPath(), drawCtx.moveTo(crackX, crackY));
+              for (let segIdx = 0; segIdx < 5; segIdx++)
+                ((startAngle += (randFn() - 0.5) * 0.9),
+                  (crackX += Math.cos(startAngle) * 8),
+                  (crackY += Math.sin(startAngle) * 8),
+                  drawCtx.lineTo(crackX, crackY));
+              drawCtx.stroke();
             }
-            let m = v.createRadialGradient(64, 64, 1, 64, 64, 11);
-            (m.addColorStop(0, 'rgba(18,17,16,1)'),
-              m.addColorStop(1, 'rgba(60,58,54,0.95)'),
-              (v.fillStyle = m),
-              traceBlobPath(v, 64, 64, 10, y, 0.3, 9),
-              v.fill());
-            for (let A = 0; A < 40; A++) {
-              v.fillStyle = `rgba(${y() < 0.5 ? '90,86,80' : '190,186,176'},0.8)`;
-              let _ = y() * 7,
-                M = 10 + y() * 24;
-              v.fillRect(64 + Math.cos(_) * M, 64 + Math.sin(_) * M, 1 + y() * 2, 1 + y() * 2);
+            let holeGrad = drawCtx.createRadialGradient(64, 64, 1, 64, 64, 11);
+            (holeGrad.addColorStop(0, 'rgba(18,17,16,1)'),
+              holeGrad.addColorStop(1, 'rgba(60,58,54,0.95)'),
+              (drawCtx.fillStyle = holeGrad),
+              traceBlobPath(drawCtx, 64, 64, 10, randFn, 0.3, 9),
+              drawCtx.fill());
+            for (let crackIdx = 0; crackIdx < 40; crackIdx++) {
+              drawCtx.fillStyle = `rgba(${randFn() < 0.5 ? '90,86,80' : '190,186,176'},0.8)`;
+              let startAngle = randFn() * 7,
+                crackX = 10 + randFn() * 24;
+              drawCtx.fillRect(
+                64 + Math.cos(startAngle) * crackX,
+                64 + Math.sin(startAngle) * crackX,
+                1 + randFn() * 2,
+                1 + randFn() * 2,
+              );
             }
           },
           {
@@ -852,29 +982,43 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'scorch',
           256,
           256,
-          (v, g, x, y) => {
-            for (let b = 0; b < 40; b++) {
-              let m = y() * 7,
-                A = Math.pow(y(), 1.2) * g * 0.3,
-                _ = g / 2 + Math.cos(m) * A,
-                M = x / 2 + Math.sin(m) * A,
-                E = g * (0.07 + y() * 0.15) * (1.2 - A / (g * 0.4)),
-                w = v.createRadialGradient(_, M, 0, _, M, Math.max(4, E));
-              (w.addColorStop(0, `rgba(8,7,6,${0.3 + y() * 0.3})`),
-                w.addColorStop(1, 'rgba(8,7,6,0)'),
-                (v.fillStyle = w),
-                v.fillRect(0, 0, g, x));
+          (drawCtx, canvasW, canvasH, randFn) => {
+            for (let blobIdx = 0; blobIdx < 40; blobIdx++) {
+              let blobAngle = randFn() * 7,
+                blobRadius = Math.pow(randFn(), 1.2) * canvasW * 0.3,
+                blobX = canvasW / 2 + Math.cos(blobAngle) * blobRadius,
+                blobY = canvasH / 2 + Math.sin(blobAngle) * blobRadius,
+                blobSize =
+                  canvasW * (0.07 + randFn() * 0.15) * (1.2 - blobRadius / (canvasW * 0.4)),
+                blobGrad = drawCtx.createRadialGradient(
+                  blobX,
+                  blobY,
+                  0,
+                  blobX,
+                  blobY,
+                  Math.max(4, blobSize),
+                );
+              (blobGrad.addColorStop(0, `rgba(8,7,6,${0.3 + randFn() * 0.3})`),
+                blobGrad.addColorStop(1, 'rgba(8,7,6,0)'),
+                (drawCtx.fillStyle = blobGrad),
+                drawCtx.fillRect(0, 0, canvasW, canvasH));
             }
-            v.strokeStyle = 'rgba(8,7,6,0.25)';
-            for (let b = 0; b < 50; b++) {
-              let m = y() * 7,
-                A = g * 0.1,
-                _ = g * (0.25 + y() * 0.22);
-              ((v.lineWidth = 1 + y() * 3),
-                v.beginPath(),
-                v.moveTo(g / 2 + Math.cos(m) * A, x / 2 + Math.sin(m) * A),
-                v.lineTo(g / 2 + Math.cos(m) * _, x / 2 + Math.sin(m) * _),
-                v.stroke());
+            drawCtx.strokeStyle = 'rgba(8,7,6,0.25)';
+            for (let blobIdx = 0; blobIdx < 50; blobIdx++) {
+              let blobAngle = randFn() * 7,
+                blobRadius = canvasW * 0.1,
+                blobX = canvasW * (0.25 + randFn() * 0.22);
+              ((drawCtx.lineWidth = 1 + randFn() * 3),
+                drawCtx.beginPath(),
+                drawCtx.moveTo(
+                  canvasW / 2 + Math.cos(blobAngle) * blobRadius,
+                  canvasH / 2 + Math.sin(blobAngle) * blobRadius,
+                ),
+                drawCtx.lineTo(
+                  canvasW / 2 + Math.cos(blobAngle) * blobX,
+                  canvasH / 2 + Math.sin(blobAngle) * blobX,
+                ),
+                drawCtx.stroke());
             }
           },
           {
@@ -887,39 +1031,39 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'crack',
           256,
           256,
-          (v, g, x, y) => {
-            ((v.lineCap = 'round'), (v.lineJoin = 'round'));
-            let b = (startX, startY, angle, length, strokeW, branchDepth) => {
-              ((v.strokeStyle = `rgba(20,19,18,${0.6 + 0.35 * Math.min(1, strokeW / 2.5)})`),
-                (v.lineWidth = strokeW),
-                v.beginPath(),
-                v.moveTo(startX, startY));
+          (canvas2d, texW, texH, rnd) => {
+            ((canvas2d.lineCap = 'round'), (canvas2d.lineJoin = 'round'));
+            let drawCrack = (startX, startY, angle, length, strokeW, branchDepth) => {
+              ((canvas2d.strokeStyle = `rgba(20,19,18,${0.6 + 0.35 * Math.min(1, strokeW / 2.5)})`),
+                (canvas2d.lineWidth = strokeW),
+                canvas2d.beginPath(),
+                canvas2d.moveTo(startX, startY));
               let segCount = Math.floor(length / 9);
               for (let segIdx = 0; segIdx < segCount; segIdx++)
-                ((angle += (y() - 0.5) * 0.8),
+                ((angle += (rnd() - 0.5) * 0.8),
                   (startX += Math.cos(angle) * 9),
                   (startY += Math.sin(angle) * 9),
-                  v.lineTo(startX, startY),
+                  canvas2d.lineTo(startX, startY),
                   branchDepth > 0 &&
-                    y() < 0.22 &&
-                    (v.stroke(),
-                    b(
+                    rnd() < 0.22 &&
+                    (canvas2d.stroke(),
+                    drawCrack(
                       startX,
                       startY,
-                      angle + (y() < 0.5 ? 1 : -1) * (0.5 + y() * 0.7),
-                      length * (0.3 + y() * 0.3),
+                      angle + (rnd() < 0.5 ? 1 : -1) * (0.5 + rnd() * 0.7),
+                      length * (0.3 + rnd() * 0.3),
                       strokeW * 0.6,
                       branchDepth - 1,
                     ),
-                    (v.strokeStyle = `rgba(20,19,18,${0.6 + 0.35 * Math.min(1, strokeW / 2.5)})`),
-                    (v.lineWidth = strokeW),
-                    v.beginPath(),
-                    v.moveTo(startX, startY)));
-              v.stroke();
+                    (canvas2d.strokeStyle = `rgba(20,19,18,${0.6 + 0.35 * Math.min(1, strokeW / 2.5)})`),
+                    (canvas2d.lineWidth = strokeW),
+                    canvas2d.beginPath(),
+                    canvas2d.moveTo(startX, startY)));
+              canvas2d.stroke();
             };
-            (b(g * 0.5, x * 0.5, y() * 7, g * 0.42, 2.6, 3),
-              b(g * 0.5, x * 0.5, y() * 7 + 2, g * 0.4, 2.2, 3),
-              b(g * 0.5, x * 0.5, y() * 7 + 4, g * 0.36, 1.8, 2));
+            (drawCrack(texW * 0.5, texH * 0.5, rnd() * 7, texW * 0.42, 2.6, 3),
+              drawCrack(texW * 0.5, texH * 0.5, rnd() * 7 + 2, texW * 0.4, 2.2, 3),
+              drawCrack(texW * 0.5, texH * 0.5, rnd() * 7 + 4, texW * 0.36, 1.8, 2));
           },
           {
             rough: 0.95,
@@ -931,24 +1075,24 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'graffiti_tag',
           384,
           256,
-          (v, g, x, y) => {
-            ((v.lineCap = 'round'), (v.lineJoin = 'round'));
-            let b = (angle, length, strokeW) => {
-                ((v.strokeStyle = strokeW),
-                  (v.lineWidth = length),
-                  v.beginPath(),
-                  v.moveTo(angle[0][0], angle[0][1]));
+          (g2d, canvasW, canvasH, rng) => {
+            ((g2d.lineCap = 'round'), (g2d.lineJoin = 'round'));
+            let strokePath = (angle, length, strokeW) => {
+                ((g2d.strokeStyle = strokeW),
+                  (g2d.lineWidth = length),
+                  g2d.beginPath(),
+                  g2d.moveTo(angle[0][0], angle[0][1]));
                 for (let branchDepth = 1; branchDepth < angle.length - 1; branchDepth += 2)
-                  v.quadraticCurveTo(
+                  g2d.quadraticCurveTo(
                     angle[branchDepth][0],
                     angle[branchDepth][1],
                     angle[branchDepth + 1][0],
                     angle[branchDepth + 1][1],
                   );
-                v.stroke();
+                g2d.stroke();
               },
-              m = 'rgba(206,214,208,0.92)',
-              A = [
+              inkColor = 'rgba(206,214,208,0.92)',
+              tagStrokes = [
                 [
                   [40, 60],
                   [36, 130],
@@ -986,39 +1130,40 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
                   [334, 176],
                 ],
               ];
-            for (let _ of A) (b(_, 12, 'rgba(206,214,208,0.25)'), b(_, 7, m));
-            (b(
+            for (let pts of tagStrokes)
+              (strokePath(pts, 12, 'rgba(206,214,208,0.25)'), strokePath(pts, 7, inkColor));
+            (strokePath(
               [
                 [30, 222],
                 [180, 236],
                 [352, 206],
               ],
               5,
-              m,
+              inkColor,
             ),
-              b(
+              strokePath(
                 [
                   [330, 40],
                   [344, 30],
                   [356, 44],
                 ],
                 5,
-                m,
+                inkColor,
               ));
-            for (let _ = 0; _ < 7; _++) {
-              let M = 50 + y() * 290,
-                E = 150 + y() * 50,
-                w = 12 + y() * 46,
-                S = v.createLinearGradient(0, E, 0, E + w);
-              (S.addColorStop(0, m),
-                S.addColorStop(1, 'rgba(206,214,208,0)'),
-                (v.fillStyle = S),
-                v.fillRect(M, E, 2 + y() * 2, w));
+            for (let pts = 0; pts < 7; pts++) {
+              let lineW = 50 + rng() * 290,
+                strokeCol = 150 + rng() * 50,
+                segIdx = 12 + rng() * 46,
+                dripGrad = g2d.createLinearGradient(0, strokeCol, 0, strokeCol + segIdx);
+              (dripGrad.addColorStop(0, inkColor),
+                dripGrad.addColorStop(1, 'rgba(206,214,208,0)'),
+                (g2d.fillStyle = dripGrad),
+                g2d.fillRect(lineW, strokeCol, 2 + rng() * 2, segIdx));
             }
-            for (let _ = 0; _ < 260; _++)
-              ((v.fillStyle = `rgba(206,214,208,${y() * 0.5})`),
-                v.fillRect(30 + y() * 330, 40 + y() * 190, 1.2, 1.2));
-            applyCanvasDistress(v, g, x, 0.25, y);
+            for (let pts = 0; pts < 260; pts++)
+              ((g2d.fillStyle = `rgba(206,214,208,${rng() * 0.5})`),
+                g2d.fillRect(30 + rng() * 330, 40 + rng() * 190, 1.2, 1.2));
+            applyCanvasDistress(g2d, canvasW, canvasH, 0.25, rng);
           },
           {
             rough: 0.6,
@@ -1030,39 +1175,41 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
           'csc_plate',
           288,
           200,
-          (v, g, x, y) => {
-            let b = v.createLinearGradient(0, 0, g, x);
-            (b.addColorStop(0, 'rgb(150,152,150)'),
-              b.addColorStop(0.5, 'rgb(176,178,176)'),
-              b.addColorStop(1, 'rgb(138,140,138)'),
-              (v.fillStyle = b),
-              v.beginPath(),
-              v.roundRect ? v.roundRect(3, 3, g - 6, x - 6, 8) : v.rect(3, 3, g - 6, x - 6),
-              v.fill(),
-              (v.strokeStyle = 'rgba(40,42,44,0.8)'),
-              (v.lineWidth = 2),
-              v.strokeRect(11, 11, g - 22, x - 22));
-            for (let [_, M] of [
+          (canvas2d, plateW, plateH, rnd) => {
+            let plateGrad = canvas2d.createLinearGradient(0, 0, plateW, plateH);
+            (plateGrad.addColorStop(0, 'rgb(150,152,150)'),
+              plateGrad.addColorStop(0.5, 'rgb(176,178,176)'),
+              plateGrad.addColorStop(1, 'rgb(138,140,138)'),
+              (canvas2d.fillStyle = plateGrad),
+              canvas2d.beginPath(),
+              canvas2d.roundRect
+                ? canvas2d.roundRect(3, 3, plateW - 6, plateH - 6, 8)
+                : canvas2d.rect(3, 3, plateW - 6, plateH - 6),
+              canvas2d.fill(),
+              (canvas2d.strokeStyle = 'rgba(40,42,44,0.8)'),
+              (canvas2d.lineWidth = 2),
+              canvas2d.strokeRect(11, 11, plateW - 22, plateH - 22));
+            for (let [boltX, boltY] of [
               [20, 20],
-              [g - 20, 20],
-              [20, x - 20],
-              [g - 20, x - 20],
+              [plateW - 20, 20],
+              [20, plateH - 20],
+              [plateW - 20, plateH - 20],
             ])
-              ((v.fillStyle = 'rgb(96,98,98)'),
-                v.beginPath(),
-                v.arc(_, M, 5, 0, 7),
-                v.fill(),
-                (v.fillStyle = 'rgba(230,232,232,0.7)'),
-                v.beginPath(),
-                v.arc(_ - 1.2, M - 1.2, 2, 0, 7),
-                v.fill());
-            let m = 'rgba(28,30,32,0.92)';
-            (drawStencilRun(v, 'SAFETY APPROVAL PLATE', g / 2, 46, 19, m, {
+              ((canvas2d.fillStyle = 'rgb(96,98,98)'),
+                canvas2d.beginPath(),
+                canvas2d.arc(boltX, boltY, 5, 0, 7),
+                canvas2d.fill(),
+                (canvas2d.fillStyle = 'rgba(230,232,232,0.7)'),
+                canvas2d.beginPath(),
+                canvas2d.arc(boltX - 1.2, boltY - 1.2, 2, 0, 7),
+                canvas2d.fill());
+            let inkColor = 'rgba(28,30,32,0.92)';
+            (drawStencilRun(canvas2d, 'SAFETY APPROVAL PLATE', plateW / 2, 46, 19, inkColor, {
               font: 'sans',
               weight: 600,
               align: 'center',
               spacing: 1.5,
-              maxW: g - 60,
+              maxW: plateW - 60,
             }),
               [
                 'APPROVAL REF   SL/PA-4207/19',
@@ -1072,19 +1219,20 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
                 'STACKING LOAD   192 000 KG',
                 'RACKING TEST   150 KN',
                 'NEXT EXAM   09/2027',
-              ].forEach((_, M) => {
-                (drawStencilRun(v, _, 30, 70 + M * 16.5, 11, m, {
+              ].forEach((boltX, boltY) => {
+                (drawStencilRun(canvas2d, boltX, 30, 70 + boltY * 16.5, 11, inkColor, {
                   font: 'mono',
                   weight: 500,
                   spacing: 0,
-                  maxW: g - 60,
+                  maxW: plateW - 60,
                 }),
-                  (v.fillStyle = 'rgba(28,30,32,0.35)'),
-                  v.fillRect(30, 73 + M * 16.5, g - 60, 1));
+                  (canvas2d.fillStyle = 'rgba(28,30,32,0.35)'),
+                  canvas2d.fillRect(30, 73 + boltY * 16.5, plateW - 60, 1));
               }),
-              (v.fillStyle = 'rgba(60,40,24,0.25)'));
-            for (let _ = 0; _ < 30; _++)
-              (traceBlobPath(v, y() * g, y() * x, 2 + y() * 9, y, 0.5, 7), v.fill());
+              (canvas2d.fillStyle = 'rgba(60,40,24,0.25)'));
+            for (let boltX = 0; boltX < 30; boltX++)
+              (traceBlobPath(canvas2d, rnd() * plateW, rnd() * plateH, 2 + rnd() * 9, rnd, 0.5, 7),
+                canvas2d.fill());
           },
           {
             rough: 0.45,
@@ -1214,23 +1362,26 @@ export function createDecalLibrary(app, maxAnisoLevel = 4) {
   }
   try {
     if (typeof document < 'u' && document.fonts && document.fonts.load) {
-      let v = 0,
-        g = () => {
-          v = 0;
+      let canvas2dContext = 0,
+        canvasWidth = () => {
+          canvas2dContext = 0;
           for (let x of fontRefreshers)
             try {
               x();
             } catch {}
         };
-      for (let colorKey of [
+      for (let canvasHeight of [
         '700 20px "Big Shoulders Display"',
         '900 20px "Big Shoulders Display"',
         '600 20px "Barlow Condensed"',
         '500 20px "IBM Plex Mono"',
       ])
-        document.fonts.load(colorKey).then(
-          (y) => {
-            y && y.length && !v && (v = setTimeout(g, 120));
+        document.fonts.load(canvasHeight).then(
+          (decalRand) => {
+            decalRand &&
+              decalRand.length &&
+              !canvas2dContext &&
+              (canvas2dContext = setTimeout(canvasWidth, 120));
           },
           () => {},
         );
@@ -1457,20 +1608,20 @@ export function createSparkFlipbook(cellSize = 128) {
     data = new Uint8Array(width * height * 4),
     noise = createValueNoise(4441),
     raySets = [0, 1].map(() => {
-      let a = 7 + Math.floor(noise.rnd() * 4),
-        l = [];
-      for (let c = 0; c < a; c++)
-        l.push({
-          a: (c / a + (noise.rnd() - 0.5) * 0.12) * Math.PI * 2,
+      let spokeCount = 7 + Math.floor(noise.rnd() * 4),
+        spokeList = [];
+      for (let spokeIndex = 0; spokeIndex < spokeCount; spokeIndex++)
+        spokeList.push({
+          a: (spokeIndex / spokeCount + (noise.rnd() - 0.5) * 0.12) * Math.PI * 2,
           l: 0.35 + noise.rnd() * 0.6,
           w: 0.018 + noise.rnd() * 0.05,
           g: 0.5 + noise.rnd() * 0.5,
         });
-      return l;
+      return spokeList;
     });
-  for (let rayCount = 0; rayCount < 8; rayCount++) {
-    let rayList = rayCount % SPARK_ATLAS_COLS,
-      rayIndex = Math.floor(rayCount / SPARK_ATLAS_COLS);
+  for (let spokeCount = 0; spokeCount < 8; spokeCount++) {
+    let spokeList = spokeCount % SPARK_ATLAS_COLS,
+      spokeIndex = Math.floor(spokeCount / SPARK_ATLAS_COLS);
     for (let cellRow = 0; cellRow < cellSize; cellRow++)
       for (let cellCol = 0; cellCol < cellSize; cellCol++) {
         let coordU = ((cellCol + 0.5) / cellSize) * 2 - 1,
@@ -1478,14 +1629,14 @@ export function createSparkFlipbook(cellSize = 128) {
           dist = Math.sqrt(coordU * coordU + coordV * coordV),
           falloff = 1 - smoothstepClamp(0.86, 0.99, Math.max(Math.abs(coordU), Math.abs(coordV))),
           value = 0;
-        if (rayCount === SPARK_CELL_FLASH) {
+        if (spokeCount === SPARK_CELL_FLASH) {
           let shapeVal = Math.max(0, 1 - dist);
           value = shapeVal * shapeVal * shapeVal * 0.75 + Math.exp(-dist * dist * 22) * 0.5;
-        } else if (rayCount === SPARK_CELL_STREAK) {
+        } else if (spokeCount === SPARK_CELL_STREAK) {
           let shapeVal = Math.pow(Math.max(0, 1 - coordU * coordU), 1.5);
           value = Math.exp(-(coordV * coordV) / (0.42 * 0.42)) * shapeVal;
-        } else if (rayCount === SPARK_CELL_BURST_A || rayCount === SPARK_CELL_BURST_B) {
-          let shapeVal = raySets[rayCount - SPARK_CELL_BURST_A],
+        } else if (spokeCount === SPARK_CELL_BURST_A || spokeCount === SPARK_CELL_BURST_B) {
+          let shapeVal = raySets[spokeCount - SPARK_CELL_BURST_A],
             shapeAux = Math.atan2(coordV, coordU);
           for (let auxA of shapeVal) {
             let auxB = Math.abs(shapeAux - auxA.a) % (Math.PI * 2);
@@ -1498,10 +1649,10 @@ export function createSparkFlipbook(cellSize = 128) {
                 Math.pow(Math.max(0, 1 - dist / auxA.l), 1.4));
           }
           value =
-            value * (0.7 + 0.6 * noise.fbm(coordU * 5 + rayCount * 9, coordV * 5, 3)) +
+            value * (0.7 + 0.6 * noise.fbm(coordU * 5 + spokeCount * 9, coordV * 5, 3)) +
             Math.exp(-dist * dist * 70) * 1.2 +
             Math.max(0, 1 - dist * 2.2) * 0.06;
-        } else if (rayCount === SPARK_CELL_RING) {
+        } else if (spokeCount === SPARK_CELL_RING) {
           let shapeVal = Math.atan2(coordV, coordU),
             shapeAux =
               0.78 +
@@ -1510,7 +1661,7 @@ export function createSparkFlipbook(cellSize = 128) {
             Math.exp(-((dist - shapeAux) * (dist - shapeAux)) / (0.03 * 0.03)) *
               (0.6 + 0.4 * noise.noise(Math.cos(shapeVal) * 5 + 9, Math.sin(shapeVal) * 5 + 9)) +
             0.05 * smoothstepClamp(0.2, 0.78, dist) * (1 - smoothstepClamp(0.78, 0.8, dist));
-        } else if (rayCount === SPARK_CELL_PUFF) {
+        } else if (spokeCount === SPARK_CELL_PUFF) {
           let shapeVal = (noise.fbm(coordU * 1.6 + 3.3, coordV * 1.6 + 8.1, 3) - 0.5) * 0.5,
             shapeAux = (noise.fbm(coordU * 1.6 + 7.7, coordV * 1.6 + 2.2, 3) - 0.5) * 0.5,
             auxA = coordU + shapeVal,
@@ -1521,8 +1672,8 @@ export function createSparkFlipbook(cellSize = 128) {
           value =
             smoothstepClamp(0.04, 0.9, puffFalloff * (0.3 + 1.4 * puffNoise)) *
             (0.45 + 0.75 * puffFalloff);
-        } else if (rayCount === SPARK_CELL_DISC) value = 1 - smoothstepClamp(0.3, 0.62, dist);
-        else if (rayCount === SPARK_CELL_SPIKE) {
+        } else if (spokeCount === SPARK_CELL_DISC) value = 1 - smoothstepClamp(0.3, 0.62, dist);
+        else if (spokeCount === SPARK_CELL_SPIKE) {
           let shapeVal = coordU * 0.5 + 0.5,
             shapeAux = 0.22 + 0.3 * shapeVal,
             auxA = Math.exp(-(coordV * coordV) / (shapeAux * shapeAux)) * Math.pow(shapeVal, 1.8),
@@ -1531,7 +1682,8 @@ export function createSparkFlipbook(cellSize = 128) {
         }
         value *= falloff;
         let pixelValue = Math.max(0, Math.min(255, value * 255)),
-          dataIndex = ((rayIndex * cellSize + cellRow) * width + rayList * cellSize + cellCol) * 4;
+          dataIndex =
+            ((spokeIndex * cellSize + cellRow) * width + spokeList * cellSize + cellCol) * 4;
         ((data[dataIndex] = data[dataIndex + 1] = data[dataIndex + 2] = pixelValue),
           (data[dataIndex + 3] = 255));
       }

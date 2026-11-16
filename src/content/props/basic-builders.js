@@ -87,15 +87,20 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
       [-halfLen * 0.75, -halfLen * 0.05],
       [halfLen - 2.2, halfLen],
     ];
-  for (let $ = 0; $ < dentCount; $++) {
-    let ue = rand() < 0.5 ? 1 : -1,
-      me = 0,
-      ee = 0;
-    do ((me = (rand() * 2 - 1) * (halfLen - 0.9)), ee++);
-    while (ee < 8 && clearZones.some((B) => me > B[0] - 0.4 && me < B[1] + 0.4 && rand() < 0.9));
+  for (let sideSign = 0; sideSign < dentCount; sideSign++) {
+    let sideFlag = rand() < 0.5 ? 1 : -1,
+      depthSign = 0,
+      coordX = 0;
+    do ((depthSign = (rand() * 2 - 1) * (halfLen - 0.9)), coordX++);
+    while (
+      coordX < 8 &&
+      clearZones.some(
+        (coordY) => depthSign > coordY[0] - 0.4 && depthSign < coordY[1] + 0.4 && rand() < 0.9,
+      )
+    );
     dents.push({
-      side: ue,
-      x: ue * me,
+      side: sideFlag,
+      x: sideFlag * depthSign,
       y: 0.45 + rand() * 1.3,
       r: 0.22 + rand() * 0.3,
       depth: 0.025 + rand() * 0.04,
@@ -103,9 +108,9 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
   }
   let rustStreaks = [],
     streakCount = Math.round((propW / 2.2) * (0.5 + wear) * (0.6 + rand()));
-  for (let $ = 0; $ < streakCount * 2; $++)
+  for (let sideSign = 0; sideSign < streakCount * 2; sideSign++)
     rustStreaks.push({
-      side: $ % 2 ? 1 : -1,
+      side: sideSign % 2 ? 1 : -1,
       x: (rand() * 2 - 1) * (halfLen - 0.3),
       w: 0.05 + rand() * 0.12,
       k: 0.4 + rand() * 0.6,
@@ -145,46 +150,50 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
       return ee;
     },
     holeColor = [0.035, 0.035, 0.04];
-  for (let $ of [-1, 1])
-    for (let ue of [0, 1])
-      for (let me of [-1, 1]) {
-        let ee = $ * (halfLen - CORNER_BLOCK_LENGTH / 2),
-          B = ue ? propH - CORNER_BLOCK_HEIGHT / 2 : CORNER_BLOCK_HEIGHT / 2,
-          P = me * (halfWidth - CORNER_BLOCK_DEPTH / 2);
+  for (let sideSign of [-1, 1])
+    for (let sideFlag of [0, 1])
+      for (let depthSign of [-1, 1]) {
+        let coordX = sideSign * (halfLen - CORNER_BLOCK_LENGTH / 2),
+          coordY = sideFlag ? propH - CORNER_BLOCK_HEIGHT / 2 : CORNER_BLOCK_HEIGHT / 2,
+          coordZ = depthSign * (halfWidth - CORNER_BLOCK_DEPTH / 2);
         (builder.box(
           CONTAINER_BODY_MATERIAL_KEY,
           CORNER_BLOCK_LENGTH,
           CORNER_BLOCK_HEIGHT,
           CORNER_BLOCK_DEPTH,
-          ee,
-          B,
-          P,
+          coordX,
+          coordY,
+          coordZ,
           {
             r: 0.012,
           },
         ),
           builder.add(
             CONTAINER_BODY_MATERIAL_KEY,
-            je(createRoundedRectFanGeometry(0.078, 0.052, 3), ee, B, me * (halfWidth + 0.0012), [
-              0,
-              me > 0 ? 0 : Math.PI,
-              0,
-            ]),
+            je(
+              createRoundedRectFanGeometry(0.078, 0.052, 3),
+              coordX,
+              coordY,
+              depthSign * (halfWidth + 0.0012),
+              [0, depthSign > 0 ? 0 : Math.PI, 0],
+            ),
             holeColor,
           ),
           builder.add(
             CONTAINER_BODY_MATERIAL_KEY,
-            je(createRoundedRectFanGeometry(0.064, 0.05, 3), $ * (halfLen + 0.0012), B, P, [
-              0,
-              ($ * Math.PI) / 2,
-              0,
-            ]),
+            je(
+              createRoundedRectFanGeometry(0.064, 0.05, 3),
+              sideSign * (halfLen + 0.0012),
+              coordY,
+              coordZ,
+              [0, (sideSign * Math.PI) / 2, 0],
+            ),
             holeColor,
           ),
-          ue &&
+          sideFlag &&
             builder.add(
               CONTAINER_BODY_MATERIAL_KEY,
-              je(createRoundedRectFanGeometry(0.124, 0.064, 3), ee, propH + 0.0012, P, [
+              je(createRoundedRectFanGeometry(0.124, 0.064, 3), coordX, propH + 0.0012, coordZ, [
                 -Math.PI / 2,
                 0,
                 0,
@@ -192,7 +201,7 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
               holeColor,
             ));
       }
-  for (let $ of [-1, 1])
+  for (let sideSign of [-1, 1])
     (builder.box(
       CONTAINER_BODY_MATERIAL_KEY,
       0.085,
@@ -200,7 +209,7 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
       0.15,
       -halfLen + 0.0465,
       propH / 2,
-      $ * (halfWidth - 0.079),
+      sideSign * (halfWidth - 0.079),
       {
         r: 0.014,
       },
@@ -212,7 +221,7 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
         0.056,
         halfLen - 0.074,
         propH / 2,
-        $ * (halfWidth - 0.032),
+        sideSign * (halfWidth - 0.032),
         {
           r: 0.012,
         },
@@ -224,7 +233,7 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
         0.062,
         -0.02,
         propH - 0.031,
-        $ * (halfWidth - 0.035),
+        sideSign * (halfWidth - 0.035),
         {
           r: 0.008,
         },
@@ -236,7 +245,7 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
         0.05,
         -0.02,
         0.012 + 0.079,
-        $ * (halfWidth - 0.029),
+        sideSign * (halfWidth - 0.029),
         {
           r: 0.008,
         },
@@ -305,13 +314,13 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
     ),
     type === 'container20')
   )
-    for (let $ of [-1, 1])
-      for (let ue of [-1.025, 1.025]) {
+    for (let sideSign of [-1, 1])
+      for (let sideFlag of [-1.025, 1.025]) {
         (builder.add(
           CONTAINER_BODY_MATERIAL_KEY,
-          je(createPlaneGeometry(0.36, 0.112), ue, 0.075, $ * (halfWidth - 0.0035), [
+          je(createPlaneGeometry(0.36, 0.112), sideFlag, 0.075, sideSign * (halfWidth - 0.0035), [
             0,
-            $ > 0 ? 0 : Math.PI,
+            sideSign > 0 ? 0 : Math.PI,
             0,
           ]),
           holeColor,
@@ -321,22 +330,22 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
             0.46,
             0.018,
             0.012,
-            ue,
+            sideFlag,
             0.142,
-            $ * (halfWidth - 0.002),
+            sideSign * (halfWidth - 0.002),
             {
               r: 0.003,
             },
           ));
-        for (let me of [-1, 1])
+        for (let depthSign of [-1, 1])
           builder.box(
             CONTAINER_BODY_MATERIAL_KEY,
             0.018,
             0.13,
             0.01,
-            ue + me * 0.19,
+            sideFlag + depthSign * 0.19,
             0.078,
-            $ * (halfWidth - 0.003),
+            sideSign * (halfWidth - 0.003),
             {
               r: 0.003,
             },
@@ -352,70 +361,92 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
       SIDE_CORRUGATION.sl,
       panelStart + 0.02,
     );
-  for (let $ of [-1, 1]) {
-    let ue = loftProfileSurface(
+  for (let sideSign of [-1, 1]) {
+    let sideFlag = loftProfileSurface(
       rimStations,
       profileHeightSpan,
-      (B, P, V) => [B, V, $ * (sideX + P - dentDepthFn(B, V, $))],
+      (coordY, coordZ, falloffValue) => [
+        coordY,
+        falloffValue,
+        sideSign * (sideX + coordZ - dentDepthFn(coordY, falloffValue, sideSign)),
+      ],
       {
         center: [0, propH / 2, 0],
       },
     );
-    ue.computeVertexNormals();
-    let me = ue.attributes.position,
-      ee = new Float32Array(me.count * 3);
-    for (let B = 0; B < me.count; B++) {
-      let P = me.getX(B),
-        V = me.getY(B),
-        Y = me.getZ(B),
-        L = paintColorFn(P, V, Y),
-        Z = sideX - Math.abs(Y),
-        J = smoothstepRange(0.008, 0.034, Z);
-      L = [L[0] * (1 - 0.17 * J), L[1] * (1 - 0.18 * J), L[2] * (1 - 0.18 * J)];
-      let oe = smoothstepRange(propH - 0.75, ribEndY, V);
-      if (oe > 0) {
-        for (let le of rustStreaks)
-          if (le.side === $) {
-            let R = Math.abs(P - le.x) / le.w;
-            R < 1 &&
-              (L = lerpVec3(
-                L,
-                [L[0] * rustColor[0], L[1] * rustColor[1], L[2] * rustColor[2]],
-                oe * oe * le.k * (1 - R * R) * (0.45 + 0.55 * wear),
+    sideFlag.computeVertexNormals();
+    let depthSign = sideFlag.attributes.position,
+      coordX = new Float32Array(depthSign.count * 3);
+    for (let coordY = 0; coordY < depthSign.count; coordY++) {
+      let coordZ = depthSign.getX(coordY),
+        falloffValue = depthSign.getY(coordY),
+        edgeMix = depthSign.getZ(coordY),
+        shadeColor = paintColorFn(coordZ, falloffValue, edgeMix),
+        edgeDistance = sideX - Math.abs(edgeMix),
+        rimShade = smoothstepRange(0.008, 0.034, edgeDistance);
+      shadeColor = [
+        shadeColor[0] * (1 - 0.17 * rimShade),
+        shadeColor[1] * (1 - 0.18 * rimShade),
+        shadeColor[2] * (1 - 0.18 * rimShade),
+      ];
+      let rustFactor = smoothstepRange(propH - 0.75, ribEndY, falloffValue);
+      if (rustFactor > 0) {
+        for (let streakEntry of rustStreaks)
+          if (streakEntry.side === sideSign) {
+            let streakFalloff = Math.abs(coordZ - streakEntry.x) / streakEntry.w;
+            streakFalloff < 1 &&
+              (shadeColor = lerpVec3(
+                shadeColor,
+                [
+                  shadeColor[0] * rustColor[0],
+                  shadeColor[1] * rustColor[1],
+                  shadeColor[2] * rustColor[2],
+                ],
+                rustFactor *
+                  rustFactor *
+                  streakEntry.k *
+                  (1 - streakFalloff * streakFalloff) *
+                  (0.45 + 0.55 * wear),
               ));
           }
       }
-      let fe = dentDepthFn(P, V, $);
-      (fe > 0.004 &&
-        (L = lerpVec3(L, [L[0] * 0.66, L[1] * 0.46, L[2] * 0.36], Math.min(0.8, fe * 22))),
-        (ee[B * 3] = L[0]),
-        (ee[B * 3 + 1] = L[1]),
-        (ee[B * 3 + 2] = L[2]));
+      let dentAmount = dentDepthFn(coordZ, falloffValue, sideSign);
+      (dentAmount > 0.004 &&
+        (shadeColor = lerpVec3(
+          shadeColor,
+          [shadeColor[0] * 0.66, shadeColor[1] * 0.46, shadeColor[2] * 0.36],
+          Math.min(0.8, dentAmount * 22),
+        )),
+        (coordX[coordY * 3] = shadeColor[0]),
+        (coordX[coordY * 3 + 1] = shadeColor[1]),
+        (coordX[coordY * 3 + 2] = shadeColor[2]));
     }
-    (ue.setAttribute('color', new THREE.BufferAttribute(ee, 3)),
-      builder.buckets.get(CONTAINER_BODY_MATERIAL_KEY).geos.push(ue));
+    (sideFlag.setAttribute('color', new THREE.BufferAttribute(coordX, 3)),
+      builder.buckets.get(CONTAINER_BODY_MATERIAL_KEY).geos.push(sideFlag));
   }
-  for (let $ of [-1, 1])
-    for (let ue of propW > 7 ? [-1, 1] : [1]) {
-      let me = $ * ue * (halfLen - 0.62),
-        ee = propH - 0.165,
-        B = $ * (sideX - 0.004);
-      builder.box(CONTAINER_BODY_MATERIAL_KEY, 0.24, 0.1, 0.03, me, ee, B, {
+  for (let sideSign of [-1, 1])
+    for (let sideFlag of propW > 7 ? [-1, 1] : [1]) {
+      let depthSign = sideSign * sideFlag * (halfLen - 0.62),
+        coordX = propH - 0.165,
+        coordY = sideSign * (sideX - 0.004);
+      builder.box(CONTAINER_BODY_MATERIAL_KEY, 0.24, 0.1, 0.03, depthSign, coordX, coordY, {
         r: 0.008,
       });
-      for (let P = -1; P <= 1; P++)
+      for (let coordZ = -1; coordZ <= 1; coordZ++)
         builder.add(
           CONTAINER_BODY_MATERIAL_KEY,
-          je(createPlaneGeometry(0.18, 0.012), me, ee + P * 0.026, $ * (sideX + 0.0116), [
-            0,
-            $ > 0 ? 0 : Math.PI,
-            0,
-          ]),
+          je(
+            createPlaneGeometry(0.18, 0.012),
+            depthSign,
+            coordX + coordZ * 0.026,
+            sideSign * (sideX + 0.0116),
+            [0, sideSign > 0 ? 0 : Math.PI, 0],
+          ),
           holeColor,
         );
     }
   {
-    let $ = buildCorrugationStations(
+    let sideSign = buildCorrugationStations(
         -halfWidth + 0.155,
         halfWidth - 0.155,
         ROOF_CORRUGATION.P,
@@ -424,23 +455,27 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
         ROOF_CORRUGATION.sl,
         -halfWidth + 0.155 + 0.03,
       ),
-      ue = loftProfileSurface(
-        $,
+      sideFlag = loftProfileSurface(
+        sideSign,
         [ribStartY, 1.25, ribEndY],
-        (ee, B, P) => [-(halfLen - 0.014 + B), P, ee],
+        (coordX, coordY, coordZ) => [-(halfLen - 0.014 + coordY), coordZ, coordX],
         {
           center: [0, propH / 2, 0],
         },
       ),
-      me = -(halfLen - 0.014);
-    builder.add(CONTAINER_BODY_MATERIAL_KEY, ue, (ee, B, P) => {
-      let V = paintColorFn(ee, B, P),
-        Y = smoothstepRange(0.008, 0.038, ee - me);
-      return [V[0] * (1 - 0.17 * Y), V[1] * (1 - 0.18 * Y), V[2] * (1 - 0.18 * Y)];
+      depthSign = -(halfLen - 0.014);
+    builder.add(CONTAINER_BODY_MATERIAL_KEY, sideFlag, (coordX, coordY, coordZ) => {
+      let falloffValue = paintColorFn(coordX, coordY, coordZ),
+        edgeMix = smoothstepRange(0.008, 0.038, coordX - depthSign);
+      return [
+        falloffValue[0] * (1 - 0.17 * edgeMix),
+        falloffValue[1] * (1 - 0.18 * edgeMix),
+        falloffValue[2] * (1 - 0.18 * edgeMix),
+      ];
     });
   }
   {
-    let $ = buildCorrugationStations(
+    let sideSign = buildCorrugationStations(
         -halfLen + 0.07,
         halfLen - 0.13,
         FRONT_CORRUGATION.P,
@@ -449,27 +484,35 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
         FRONT_CORRUGATION.sl,
         -halfLen + 0.1,
       ),
-      ue = propH - 0.008,
-      me = loftProfileSurface(
-        $,
+      sideFlag = propH - 0.008,
+      depthSign = loftProfileSurface(
+        sideSign,
         propW > 7
           ? [-(halfWidth - 0.066), halfWidth - 0.066]
           : [-(halfWidth - 0.066), 0, halfWidth - 0.066],
-        (ee, B, P) => [ee, ue + B + (Math.abs(P) < 0.01 ? 0.006 : 0), P],
+        (coordX, coordY, coordZ) => [
+          coordX,
+          sideFlag + coordY + (Math.abs(coordZ) < 0.01 ? 0.006 : 0),
+          coordZ,
+        ],
         {
           center: [0, propH / 2, 0],
         },
       );
-    builder.add(CONTAINER_BODY_MATERIAL_KEY, me, (ee, B, P) => {
-      let V = 0.78 + 0.3 * valueNoise2D(ee * 0.8 + noiseSeed, P * 1.1),
-        Y = smoothstepRange(0.004, 0.018, ue - B);
-      return [V * (1 - 0.25 * Y), V * (1 - 0.3 * Y) * 0.97, V * (1 - 0.32 * Y) * 0.94];
+    builder.add(CONTAINER_BODY_MATERIAL_KEY, depthSign, (coordX, coordY, coordZ) => {
+      let falloffValue = 0.78 + 0.3 * valueNoise2D(coordX * 0.8 + noiseSeed, coordZ * 1.1),
+        edgeMix = smoothstepRange(0.004, 0.018, sideFlag - coordY);
+      return [
+        falloffValue * (1 - 0.25 * edgeMix),
+        falloffValue * (1 - 0.3 * edgeMix) * 0.97,
+        falloffValue * (1 - 0.32 * edgeMix) * 0.94,
+      ];
     });
   }
   let doorsAreOpen = doorsOpen > 0.03,
     doorZoneTopY = 0.172;
   if (doorsAreOpen) {
-    let $ = (ee, B, P) => {
+    let sideSign = (ee, B, P) => {
         let Y =
           (0.16 +
             0.62 *
@@ -478,7 +521,7 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
           (0.8 + 0.2 * smoothstepRange(0.2, 1.4, B));
         return [Y, Y, Y];
       },
-      ue = buildCorrugationStations(
+      sideFlag = buildCorrugationStations(
         panelStart,
         panelEnd,
         SIDE_CORRUGATION.P,
@@ -487,19 +530,23 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
         SIDE_CORRUGATION.sl,
         panelStart + 0.02,
       );
-    for (let ee of [-1, 1])
+    for (let coordX of [-1, 1])
       builder.add(
         CONTAINER_BODY_MATERIAL_KEY,
         loftProfileSurface(
-          ue,
+          sideFlag,
           [doorZoneTopY, ribEndY - 0.02],
-          (B, P, V) => [B, V, ee * (sideX + P - 0.004)],
+          (coordY, coordZ, falloffValue) => [
+            coordY,
+            falloffValue,
+            coordX * (sideX + coordZ - 0.004),
+          ],
           {
             center: [0, propH / 2, 0],
             inward: !0,
           },
         ),
-        $,
+        sideSign,
       );
     (builder.add(
       CONTAINER_BODY_MATERIAL_KEY,
@@ -510,7 +557,7 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
         0,
         [Math.PI / 2, 0, 0],
       ),
-      $,
+      sideSign,
     ),
       builder.add(
         CONTAINER_BODY_MATERIAL_KEY,
@@ -521,15 +568,15 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
           0,
           [0, Math.PI / 2, 0],
         ),
-        $,
+        sideSign,
       ));
-    let me = createPlaneGeometryWorldUV(panelEnd - panelStart + 0.1, 2 * sideX - 0.02);
+    let depthSign = createPlaneGeometryWorldUV(panelEnd - panelStart + 0.1, 2 * sideX - 0.02);
     (builder.add(
       woodMat,
-      je(me, (panelStart + panelEnd) / 2 + 0.05, doorZoneTopY, 0, [-Math.PI / 2, 0, 0]),
-      (ee) => {
-        let B = 0.3 + 0.6 * smoothstepRange(-halfLen, halfLen, ee) ** 2;
-        return [B, B * 0.97, B * 0.93];
+      je(depthSign, (panelStart + panelEnd) / 2 + 0.05, doorZoneTopY, 0, [-Math.PI / 2, 0, 0]),
+      (coordX) => {
+        let coordY = 0.3 + 0.6 * smoothstepRange(-halfLen, halfLen, coordX) ** 2;
+        return [coordY, coordY * 0.97, coordY * 0.93];
       },
     ),
       builder.box(steelMat, 0.05, 0.006, 2 * sideX - 0.1, halfLen - 0.11, doorZoneTopY + 0.001, 0, {
@@ -543,57 +590,69 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
     doorStartX = halfLen - 0.066,
     paintFn = ($, ue, me) => paintColorFn($, ue, me),
     colliders = [];
-  for (let $ of [1, -1]) {
-    let ue = doorsOpen * ($ > 0 ? 1 : 0.88) * THREE.MathUtils.degToRad($ > 0 ? 112 : 100),
-      me = $ * (halfWidth - 0.058);
-    builder.push(composeTransformMatrix(doorStartX, 0, me, [0, -$ * ue, 0]));
-    let ee = (k) => -$ * k,
-      B = (doorFrameBottom + doorFrameTop) / 2;
+  for (let sideSign of [1, -1]) {
+    let sideFlag =
+        doorsOpen * (sideSign > 0 ? 1 : 0.88) * THREE.MathUtils.degToRad(sideSign > 0 ? 112 : 100),
+      depthSign = sideSign * (halfWidth - 0.058);
+    builder.push(composeTransformMatrix(doorStartX, 0, depthSign, [0, -sideSign * sideFlag, 0]));
+    let coordX = (k) => -sideSign * k,
+      coordY = (doorFrameBottom + doorFrameTop) / 2;
     builder.box(
       CONTAINER_BODY_MATERIAL_KEY,
       0.034,
       doorFrameSpan,
       doorDepth - 0.006,
       0,
-      B,
-      ee(doorDepth / 2),
+      coordY,
+      coordX(doorDepth / 2),
       {
         r: 0.008,
         col: paintFn,
       },
     );
-    let P = type === 'container40hc' ? 7 : 6,
-      V = doorFrameBottom + 0.085,
-      Y = doorFrameTop - 0.085,
-      L = (Y - V) / P,
-      Z = 0.019,
-      J = 0.031,
-      oe = [];
-    for (let k = 0; k < P; k++) {
-      let ce = V + k * L;
-      oe.push([ce, Z], [ce + 0.022, Z], [ce + 0.05, J], [ce + L - 0.05, J], [ce + L - 0.022, Z]);
+    let coordZ = type === 'container40hc' ? 7 : 6,
+      falloffValue = doorFrameBottom + 0.085,
+      edgeMix = doorFrameTop - 0.085,
+      shadeColor = (edgeMix - falloffValue) / coordZ,
+      edgeDistance = 0.019,
+      rimShade = 0.031,
+      rustFactor = [];
+    for (let ribIndex = 0; ribIndex < coordZ; ribIndex++) {
+      let ribY = falloffValue + ribIndex * shadeColor;
+      rustFactor.push(
+        [ribY, edgeDistance],
+        [ribY + 0.022, edgeDistance],
+        [ribY + 0.05, rimShade],
+        [ribY + shadeColor - 0.05, rimShade],
+        [ribY + shadeColor - 0.022, edgeDistance],
+      );
     }
-    (oe.push([Y, Z]),
+    (rustFactor.push([edgeMix, edgeDistance]),
       builder.add(
         CONTAINER_BODY_MATERIAL_KEY,
-        loftProfileSurface(oe, [0.075, doorDepth - 0.085], (k, ce, ve) => [ce, k, ee(ve)], {
-          center: [-1, B, ee(doorDepth / 2)],
-        }),
-        (k, ce, ve) => paintColorFn(k, ce, ve),
+        loftProfileSurface(
+          rustFactor,
+          [0.075, doorDepth - 0.085],
+          (ribIndex, ribY, handleY) => [ribY, ribIndex, coordX(handleY)],
+          {
+            center: [-1, coordY, coordX(doorDepth / 2)],
+          },
+        ),
+        (ribIndex, ribY, handleY) => paintColorFn(ribIndex, ribY, handleY),
       ));
-    let fe = (k) => V + (k + 0.5) * L,
-      le = [0.05, 0.05, 0.05];
+    let dentAmount = (k) => falloffValue + (k + 0.5) * shadeColor,
+      streakEntry = [0.05, 0.05, 0.05];
     (builder.box(
       CONTAINER_BODY_MATERIAL_KEY,
       0.022,
       doorFrameSpan + 0.012,
       0.018,
       0.004,
-      B,
-      ee(doorDepth + 0.001),
+      coordY,
+      coordX(doorDepth + 0.001),
       {
         r: 0,
-        col: le,
+        col: streakEntry,
       },
     ),
       builder.box(
@@ -603,10 +662,10 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
         doorDepth,
         0.004,
         doorFrameTop + 0.004,
-        ee(doorDepth / 2),
+        coordX(doorDepth / 2),
         {
           r: 0,
-          col: le,
+          col: streakEntry,
         },
       ),
       builder.box(
@@ -616,36 +675,36 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
         doorDepth,
         0.004,
         doorFrameBottom - 0.004,
-        ee(doorDepth / 2),
+        coordX(doorDepth / 2),
         {
           r: 0,
-          col: le,
+          col: streakEntry,
         },
       ));
-    let R = type === 'container40hc' ? 5 : 4;
-    for (let k = 0; k < R; k++) {
-      let ce = doorFrameBottom + 0.16 + (k * (doorFrameSpan - 0.32)) / (R - 1);
-      (builder.box(CONTAINER_BODY_MATERIAL_KEY, 0.012, 0.062, 0.15, 0.021, ce, ee(0.085), {
+    let streakFalloff = type === 'container40hc' ? 5 : 4;
+    for (let ribIndex = 0; ribIndex < streakFalloff; ribIndex++) {
+      let ribY = doorFrameBottom + 0.16 + (ribIndex * (doorFrameSpan - 0.32)) / (streakFalloff - 1);
+      (builder.box(CONTAINER_BODY_MATERIAL_KEY, 0.012, 0.062, 0.15, 0.021, ribY, coordX(0.085), {
         r: 0,
       }),
-        builder.cyl(steelMat, 0.013, 0.013, 0.086, 0.026, ce, ee(-0.002), {
+        builder.cyl(steelMat, 0.013, 0.013, 0.086, 0.026, ribY, coordX(-0.002), {
           seg: 6,
           open: !0,
         }));
     }
-    for (let k of [0.31, 0.83]) {
-      builder.cyl(steelMat, 0.0155, 0.0155, doorFrameSpan + 0.2, 0.052, B, ee(k), {
+    for (let ribIndex of [0.31, 0.83]) {
+      builder.cyl(steelMat, 0.0155, 0.0155, doorFrameSpan + 0.2, 0.052, coordY, coordX(ribIndex), {
         seg: 7,
         open: !0,
       });
-      for (let Te of [-1, 1])
+      for (let handleEndY of [-1, 1])
         (builder.add(
           steelMat,
           je(
             boxGeometry(0.03, 0.045, 0.085),
             0.052 - 0.004,
-            B + Te * (doorFrameSpan / 2 + 0.065),
-            ee(k),
+            coordY + handleEndY * (doorFrameSpan / 2 + 0.065),
+            coordX(ribIndex),
           ),
         ),
           builder.box(
@@ -654,116 +713,148 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
             0.05,
             0.075,
             0.052 - 0.012,
-            B + Te * (doorFrameSpan / 2 - 0.035),
-            ee(k),
+            coordY + handleEndY * (doorFrameSpan / 2 - 0.035),
+            coordX(ribIndex),
             {
               r: 0,
             },
           ));
-      for (let Te of [
+      for (let handleEndY of [
         doorFrameBottom + doorFrameSpan * 0.3,
         doorFrameBottom + doorFrameSpan * 0.72,
       ])
-        builder.box(CONTAINER_BODY_MATERIAL_KEY, 0.026, 0.04, 0.07, 0.052 - 0.012, Te, ee(k), {
-          r: 0,
-        });
-      let ve = 1.02 + (k > 0.5 ? 0 : 0.13),
-        _e = k > 0.5 ? -1 : 1;
-      (builder.box(steelMat, 0.02, 0.05, 0.05, 0.052 + 0.008, ve, ee(k), {
+        builder.box(
+          CONTAINER_BODY_MATERIAL_KEY,
+          0.026,
+          0.04,
+          0.07,
+          0.052 - 0.012,
+          handleEndY,
+          coordX(ribIndex),
+          {
+            r: 0,
+          },
+        );
+      let handleY = 1.02 + (ribIndex > 0.5 ? 0 : 0.13),
+        handleSide = ribIndex > 0.5 ? -1 : 1;
+      (builder.box(steelMat, 0.02, 0.05, 0.05, 0.052 + 0.008, handleY, coordX(ribIndex), {
         r: 0,
       }),
-        builder.box(steelMat, 0.011, 0.032, 0.36, 0.052 + 0.016, ve, ee(k + _e * 0.19), {
-          r: 0.004,
-        }),
+        builder.box(
+          steelMat,
+          0.011,
+          0.032,
+          0.36,
+          0.052 + 0.016,
+          handleY,
+          coordX(ribIndex + handleSide * 0.19),
+          {
+            r: 0.004,
+          },
+        ),
         builder.box(
           CONTAINER_BODY_MATERIAL_KEY,
           0.03,
           0.07,
           0.05,
           0.052 - 0.008,
-          ve,
-          ee(k + _e * 0.33),
+          handleY,
+          coordX(ribIndex + handleSide * 0.33),
           {
             r: 0,
           },
         ),
-        builder.box(steelMat, 0.012, 0.085, 0.012, 0.052 + 0.012, ve + 0.005, ee(k + _e * 0.33), {
-          r: 0,
-        }));
+        builder.box(
+          steelMat,
+          0.012,
+          0.085,
+          0.012,
+          0.052 + 0.012,
+          handleY + 0.005,
+          coordX(ribIndex + handleSide * 0.33),
+          {
+            r: 0,
+          },
+        ));
     }
-    let I = 0.031 + 0.0025,
-      se = [0, Math.PI / 2, 0],
-      placeDecalOnDoor = (k, ce, ve, _e, Te) => {
+    let decalOffsetX = 0.031 + 0.0025,
+      uvAttribute = [0, Math.PI / 2, 0],
+      vertexIndex = (k, ce, ve, _e, Te) => {
         let Pe = ce * k.aspect;
         (Te && Pe > Te && ((ce *= Te / Pe), (Pe = Te)),
-          builder.add(k.material, je(createPlaneGeometry(Pe, ce), I, ve, ee(_e), se), null, !0));
+          builder.add(
+            k.material,
+            je(createPlaneGeometry(Pe, ce), decalOffsetX, ve, coordX(_e), uvAttribute),
+            null,
+            !0,
+          ));
       };
-    if ($ < 0) {
-      (placeDecalOnDoor(
+    if (sideSign < 0) {
+      (vertexIndex(
         getLabelMaterial(ctx, CONTAINER_OWNER_CODES[variant % CONTAINER_OWNER_CODES.length], {
           color: 'white',
           font: 'stencil',
           distress: 0.3,
         }),
         0.115,
-        fe(P - 1),
+        dentAmount(coordZ - 1),
         doorDepth / 2,
         doorDepth - 0.24,
       ),
-        placeDecalOnDoor(
+        vertexIndex(
           getLabelMaterial(ctx, spec.type, {
             color: 'white',
             font: 'stencil',
             distress: 0.3,
           }),
           0.1,
-          fe(P - 2),
+          dentAmount(coordZ - 2),
           doorDepth / 2 + 0.2,
           0.4,
         ));
-      let k = {
+      let ribIndex = {
         color: 'white',
         font: 'sans',
         distress: 0.2,
       };
-      (placeDecalOnDoor(
-        getLabelMaterial(ctx, 'MAX GROSS ' + spec.gross + ' KG', k),
+      (vertexIndex(
+        getLabelMaterial(ctx, 'MAX GROSS ' + spec.gross + ' KG', ribIndex),
         0.052,
-        fe(P - 3) + 0.062,
+        dentAmount(coordZ - 3) + 0.062,
         doorDepth / 2 - 0.01,
         0.44,
       ),
-        placeDecalOnDoor(
-          getLabelMaterial(ctx, 'TARE ' + spec.tare + ' KG   NET ' + spec.net + ' KG', k),
+        vertexIndex(
+          getLabelMaterial(ctx, 'TARE ' + spec.tare + ' KG   NET ' + spec.net + ' KG', ribIndex),
           0.045,
-          fe(P - 3),
+          dentAmount(coordZ - 3),
           doorDepth / 2 - 0.01,
           0.44,
         ),
-        placeDecalOnDoor(
-          getLabelMaterial(ctx, 'CU.CAP. ' + spec.cu + ' CU.M', k),
+        vertexIndex(
+          getLabelMaterial(ctx, 'CU.CAP. ' + spec.cu + ' CU.M', ribIndex),
           0.045,
-          fe(P - 3) - 0.062,
+          dentAmount(coordZ - 3) - 0.062,
           doorDepth / 2 - 0.01,
           0.44,
         ));
     } else
-      (placeDecalOnDoor(
+      (vertexIndex(
         getDecalMaterial(ctx, CONTAINER_LOGO_DECALS[variant % 4]),
         0.2,
-        fe(P - 1),
+        dentAmount(coordZ - 1),
         doorDepth / 2,
         doorDepth - 0.36,
       ),
-        placeDecalOnDoor(
+        vertexIndex(
           getDecalMaterial(ctx, 'csc_plate'),
           0.17,
-          fe(1),
+          dentAmount(1),
           doorDepth / 2 + 0.05,
           0.36,
         ),
         type === 'container40hc' &&
-          placeDecalOnDoor(
+          vertexIndex(
             getDecalMaterial(ctx, 'caution_stripes'),
             0.1,
             doorFrameTop - 0.04,
@@ -771,25 +862,44 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
             doorDepth - 0.1,
           ));
     if ((builder.pop(), doorsAreOpen))
-      for (let k = 0; k < 3; k++) {
-        let ce = (doorDepth * k) / 3,
-          ve = (doorDepth * (k + 1)) / 3,
-          _e = [doorStartX + Math.sin(ue) * ce, me - $ * Math.cos(ue) * ce],
-          Te = [doorStartX + Math.sin(ue) * ve, me - $ * Math.cos(ue) * ve];
+      for (let ribIndex = 0; ribIndex < 3; ribIndex++) {
+        let ribY = (doorDepth * ribIndex) / 3,
+          handleY = (doorDepth * (ribIndex + 1)) / 3,
+          handleSide = [
+            doorStartX + Math.sin(sideFlag) * ribY,
+            depthSign - sideSign * Math.cos(sideFlag) * ribY,
+          ],
+          handleEndY = [
+            doorStartX + Math.sin(sideFlag) * handleY,
+            depthSign - sideSign * Math.cos(sideFlag) * handleY,
+          ];
         colliders.push({
-          min: [Math.min(_e[0], Te[0]) - 0.03, doorFrameBottom, Math.min(_e[1], Te[1]) - 0.03],
-          max: [Math.max(_e[0], Te[0]) + 0.03, doorFrameTop, Math.max(_e[1], Te[1]) + 0.03],
+          min: [
+            Math.min(handleSide[0], handleEndY[0]) - 0.03,
+            doorFrameBottom,
+            Math.min(handleSide[1], handleEndY[1]) - 0.03,
+          ],
+          max: [
+            Math.max(handleSide[0], handleEndY[0]) + 0.03,
+            doorFrameTop,
+            Math.max(handleSide[1], handleEndY[1]) + 0.03,
+          ],
           surface: 'metal',
         });
       }
   }
-  for (let $ of [1, -1])
-    for (let ue of [0.31, 0.83])
-      for (let me of [-1, 1]) {
-        let ee = $ * (halfWidth - 0.058) - $ * ue;
+  for (let sideSign of [1, -1])
+    for (let sideFlag of [0.31, 0.83])
+      for (let depthSign of [-1, 1]) {
+        let coordX = sideSign * (halfWidth - 0.058) - sideSign * sideFlag;
         builder.add(
           CONTAINER_BODY_MATERIAL_KEY,
-          je(boxGeometry(0.035, 0.05, 0.11), halfLen - 0.03, me > 0 ? propH - 0.07 : 0.115, ee),
+          je(
+            boxGeometry(0.035, 0.05, 0.11),
+            halfLen - 0.03,
+            depthSign > 0 ? propH - 0.07 : 0.115,
+            coordX,
+          ),
         );
       }
   let placeDoorDecal = ($, ue, me, ee, B, P) => {
@@ -841,35 +951,35 @@ function buildContainerParts(ctx, type, variant, doorsOpen, wear) {
       distress: 0.3,
     }),
     logoDecal = getDecalMaterial(ctx, CONTAINER_LOGO_DECALS[variant % 4]);
-  for (let $ of [-1, 1]) {
-    let ue = Math.min(propH * 0.4, 1.05),
-      me = Math.min(ue * logoDecal.aspect, type === 'container20' ? 2.2 : 3.4);
+  for (let sideSign of [-1, 1]) {
+    let sideFlag = Math.min(propH * 0.4, 1.05),
+      depthSign = Math.min(sideFlag * logoDecal.aspect, type === 'container20' ? 2.2 : 3.4);
     placeDoorDecal(
       logoDecal,
-      $,
+      sideSign,
       type === 'container20' ? -0.75 : -halfLen * 0.42,
       propH * 0.52,
-      me / logoDecal.aspect,
-      me,
+      depthSign / logoDecal.aspect,
+      depthSign,
     );
-    let ee = Math.min(0.14 * ownerLabel.aspect, 1.9);
-    placeDoorDecal(ownerLabel, $, halfLen - 0.3 - ee / 2, propH - 0.32, 0.14, 1.9);
-    let B = Math.min(0.11 * typeLabel.aspect, 0.6);
-    placeDoorDecal(typeLabel, $, halfLen - 0.3 - B / 2, propH - 0.52, 0.11, 0.6);
-    let P = Math.round((1 + rand() * 2) * (0.4 + wear) * (propW > 7 ? 1.6 : 1));
-    for (let V = 0; V < P; V++) {
-      let Y = getDecalMaterial(ctx, rand() < 0.6 ? 'rust_run' : 'grime_streak'),
-        L = 0.5 + rand() * 0.7,
-        Z = Math.min(0.5, Math.max(0.16, L * Y.aspect));
+    let coordX = Math.min(0.14 * ownerLabel.aspect, 1.9);
+    placeDoorDecal(ownerLabel, sideSign, halfLen - 0.3 - coordX / 2, propH - 0.32, 0.14, 1.9);
+    let coordY = Math.min(0.11 * typeLabel.aspect, 0.6);
+    placeDoorDecal(typeLabel, sideSign, halfLen - 0.3 - coordY / 2, propH - 0.52, 0.11, 0.6);
+    let coordZ = Math.round((1 + rand() * 2) * (0.4 + wear) * (propW > 7 ? 1.6 : 1));
+    for (let falloffValue = 0; falloffValue < coordZ; falloffValue++) {
+      let edgeMix = getDecalMaterial(ctx, rand() < 0.6 ? 'rust_run' : 'grime_streak'),
+        shadeColor = 0.5 + rand() * 0.7,
+        edgeDistance = Math.min(0.5, Math.max(0.16, shadeColor * edgeMix.aspect));
       placeDoorDecal(
         {
-          material: Y.material,
-          aspect: Z / L,
+          material: edgeMix.material,
+          aspect: edgeDistance / shadeColor,
         },
-        $,
+        sideSign,
         (rand() * 2 - 1) * (halfLen - 0.6),
-        ribEndY - L / 2 - 0.005,
-        L,
+        ribEndY - shadeColor / 2 - 0.005,
+        shadeColor,
       );
     }
   }
@@ -956,10 +1066,10 @@ export function buildBasicContainer(ctx, type, contOpts = {}) {
       group,
       type,
       [size[0], size[1], size[2]],
-      cachedParts.colliders.map((d) => ({
-        min: d.min.slice(),
-        max: d.max.slice(),
-        surface: d.surface,
+      cachedParts.colliders.map((collider) => ({
+        min: collider.min.slice(),
+        max: collider.max.slice(),
+        surface: collider.surface,
       })),
     )
   );
@@ -991,74 +1101,97 @@ export function buildJerseyBarrier(ctx, opts = {}) {
       [-0.3, 0.076],
     ],
     stations = [-1.5, -1.47];
-  for (let stationX = -1.25; stationX <= 1.26; stationX += 0.25) stations.push(stationX);
+  for (let stationCoord = -1.25; stationCoord <= 1.26; stationCoord += 0.25)
+    stations.push(stationCoord);
   stations.push(1.47, 1.5);
   let dents = [];
-  for (let stationX = 0; stationX < 7; stationX++)
+  for (let stationCoord = 0; stationCoord < 7; stationCoord++)
     dents.push([(rand() * 2 - 1) * 1.5, rand() * 0.8, 0.08 + rand() * 0.14, rand() < 0.5 ? 1 : -1]);
   let shell = loftProfileSurface(
     profile,
     stations,
-    (f, p, d) => {
-      let v = Math.abs(d) > 1.49 ? 1 : 0;
-      return [d, p - v * 0.022 * (p / 0.81), f * (1 - v * 0.09)];
+    (stationCoord, profileHeight, depthCoord) => {
+      let baseTint = Math.abs(depthCoord) > 1.49 ? 1 : 0;
+      return [
+        depthCoord,
+        profileHeight - baseTint * 0.022 * (profileHeight / 0.81),
+        stationCoord * (1 - baseTint * 0.09),
+      ];
     },
     {
       closed: !0,
       caps: !0,
     },
   );
-  builder.add(concreteMat, shell, (f, p, d) => {
-    let v =
+  builder.add(concreteMat, shell, (stationCoord, profileHeight, depthCoord) => {
+    let baseTint =
         0.86 +
-        0.2 * valueNoise2D(f * 1.3 + noiseOffset, p * 3 + d * 2) +
-        0.08 * valueNoise2D(f * 7, p * 9 + noiseOffset),
-      g = [v, v * 0.99, v * 0.97];
-    g = lerpVec3(g, [v * 0.5, v * 0.48, v * 0.44], smoothstepRange(0.3, 0, p) * 0.8);
-    let x =
-      smoothstepRange(0.55, 0.8, valueNoise2D(f * 4.5 + noiseOffset, 3.3)) *
-      smoothstepRange(0.25, 0.8, p);
-    g = lerpVec3(g, [v * 0.62, v * 0.6, v * 0.56], x * 0.6);
-    let y =
-      smoothstepRange(0.6, 0.85, valueNoise2D(f * 2.1 + noiseOffset * 2, d * 3)) *
-      smoothstepRange(0.2, 0.33, p) *
-      smoothstepRange(0.62, 0.4, p);
-    g = lerpVec3(g, [0.22, 0.22, 0.22], y * 0.65);
-    for (let b of dents)
-      if (Math.sign(d || 1) === b[3]) {
-        let m = Math.hypot(f - b[0], p - b[1]) / b[2];
-        m < 1 && (g = lerpVec3(g, [1.12, 1.1, 1.05], (1 - m) * 0.7));
+        0.2 * valueNoise2D(stationCoord * 1.3 + noiseOffset, profileHeight * 3 + depthCoord * 2) +
+        0.08 * valueNoise2D(stationCoord * 7, profileHeight * 9 + noiseOffset),
+      vertexColor = [baseTint, baseTint * 0.99, baseTint * 0.97];
+    vertexColor = lerpVec3(
+      vertexColor,
+      [baseTint * 0.5, baseTint * 0.48, baseTint * 0.44],
+      smoothstepRange(0.3, 0, profileHeight) * 0.8,
+    );
+    let stainAmount =
+      smoothstepRange(0.55, 0.8, valueNoise2D(stationCoord * 4.5 + noiseOffset, 3.3)) *
+      smoothstepRange(0.25, 0.8, profileHeight);
+    vertexColor = lerpVec3(
+      vertexColor,
+      [baseTint * 0.62, baseTint * 0.6, baseTint * 0.56],
+      stainAmount * 0.6,
+    );
+    let rustAmount =
+      smoothstepRange(
+        0.6,
+        0.85,
+        valueNoise2D(stationCoord * 2.1 + noiseOffset * 2, depthCoord * 3),
+      ) *
+      smoothstepRange(0.2, 0.33, profileHeight) *
+      smoothstepRange(0.62, 0.4, profileHeight);
+    vertexColor = lerpVec3(vertexColor, [0.22, 0.22, 0.22], rustAmount * 0.65);
+    for (let dentRecord of dents)
+      if (Math.sign(depthCoord || 1) === dentRecord[3]) {
+        let dentFalloff =
+          Math.hypot(stationCoord - dentRecord[0], profileHeight - dentRecord[1]) / dentRecord[2];
+        dentFalloff < 1 &&
+          (vertexColor = lerpVec3(vertexColor, [1.12, 1.1, 1.05], (1 - dentFalloff) * 0.7));
       }
     return (
-      Math.abs(f) > 1.4 &&
-        (g = lerpVec3(g, [1.08, 1.06, 1.02], 0.4 * valueNoise2D(p * 9, d * 9 + noiseOffset))),
-      g
+      Math.abs(stationCoord) > 1.4 &&
+        (vertexColor = lerpVec3(
+          vertexColor,
+          [1.08, 1.06, 1.02],
+          0.4 * valueNoise2D(profileHeight * 9, depthCoord * 9 + noiseOffset),
+        )),
+      vertexColor
     );
   });
   let fittingColor = [0.05, 0.05, 0.05];
-  for (let stationX of [-1, 1])
-    for (let profileH of [-0.85, 0.85])
+  for (let stationCoord of [-1, 1])
+    for (let profileHeight of [-0.85, 0.85])
       (builder.add(
         concreteMat,
-        je(createPlaneGeometry(0.3, 0.058), profileH, 0.03, stationX * 0.3008, [
+        je(createPlaneGeometry(0.3, 0.058), profileHeight, 0.03, stationCoord * 0.3008, [
           0,
-          stationX > 0 ? 0 : PI,
+          stationCoord > 0 ? 0 : PI,
           0,
         ]),
         fittingColor,
       ),
-        builder.box(concreteMat, 0.34, 0.012, 0.012, profileH, 0.064, stationX * 0.3, {
+        builder.box(concreteMat, 0.34, 0.012, 0.012, profileHeight, 0.064, stationCoord * 0.3, {
           r: 0.003,
           col: [0.7, 0.7, 0.68],
         }));
-  for (let stationX of [-0.9, 0.9])
+  for (let stationCoord of [-0.9, 0.9])
     builder.tube(
       builder.M('steel_rust'),
       [
-        [stationX - 0.05, 0.8, 0],
-        [stationX - 0.04, 0.85, 0],
-        [stationX + 0.04, 0.85, 0],
-        [stationX + 0.05, 0.8, 0],
+        [stationCoord - 0.05, 0.8, 0],
+        [stationCoord - 0.04, 0.85, 0],
+        [stationCoord + 0.04, 0.85, 0],
+        [stationCoord + 0.05, 0.8, 0],
       ],
       0.008,
       {
@@ -1066,17 +1199,17 @@ export function buildJerseyBarrier(ctx, opts = {}) {
       },
     );
   if (opts.stripe) {
-    let stationX = builder.M('hazard_stripes');
+    let stationCoord = builder.M('hazard_stripes');
     builder.add(
-      stationX,
+      stationCoord,
       je(createPlaneGeometryWorldUV(2.9, 0.118), 0, 0.8125, 0, [-PI / 2, 0, 0]),
     );
-    for (let profileH of [-1, 1])
+    for (let profileHeight of [-1, 1])
       builder.add(
-        stationX,
-        je(createPlaneGeometryWorldUV(2.9, 0.2), 0, 0.68, profileH * 0.0905, [
-          profileH > 0 ? -0.108 : 0.108,
-          profileH > 0 ? 0 : PI,
+        stationCoord,
+        je(createPlaneGeometryWorldUV(2.9, 0.2), 0, 0.68, profileHeight * 0.0905, [
+          profileHeight > 0 ? -0.108 : 0.108,
+          profileHeight > 0 ? 0 : PI,
           0,
         ]),
       );
@@ -1161,14 +1294,14 @@ export function buildLightMast(ctx, options = {}) {
     builder.box(steelMat, 0.5, 0.03, 0.5, 0, 0.335, 0, {
       r: 0.006,
     }));
-  for (let stepX = 0; stepX < 8; stepX++) {
-    let stepY = ((stepX + 0.5) * PI) / 4,
-      offsetB = Math.cos(stepY) * 0.215,
-      offsetM = Math.sin(stepY) * 0.215;
-    (builder.cyl(steelMat, 0.014, 0.014, 0.1, offsetB, 0.38, offsetM, {
+  for (let vertexX = 0; vertexX < 8; vertexX++) {
+    let vertexY = ((vertexX + 0.5) * PI) / 4,
+      vertexZ = Math.cos(vertexY) * 0.215,
+      shadeValue = Math.sin(vertexY) * 0.215;
+    (builder.cyl(steelMat, 0.014, 0.014, 0.1, vertexZ, 0.38, shadeValue, {
       seg: 6,
     }),
-      builder.cyl(steelMat, 0.027, 0.027, 0.024, offsetB, 0.362, offsetM, {
+      builder.cyl(steelMat, 0.027, 0.027, 0.024, vertexZ, 0.362, shadeValue, {
         seg: 6,
         flat: !0,
       }));
@@ -1185,14 +1318,14 @@ export function buildLightMast(ctx, options = {}) {
       [4.6, 9.15, 0.007],
       [9, poleTopY, 0.014],
     ];
-  for (let [stepX, stepY, offsetB] of poleSections)
+  for (let [vertexX, vertexY, vertexZ] of poleSections)
     builder.cyl(
       steelMat,
-      poleRadiusAt(stepY) + offsetB,
-      poleRadiusAt(stepX) + offsetB,
-      stepY - stepX,
+      poleRadiusAt(vertexY) + vertexZ,
+      poleRadiusAt(vertexX) + vertexZ,
+      vertexY - vertexX,
       0,
-      (stepX + stepY) / 2,
+      (vertexX + vertexY) / 2,
       0,
       {
         seg: 8,
@@ -1201,12 +1334,21 @@ export function buildLightMast(ctx, options = {}) {
         rot: [0, PI / 8, 0],
       },
     );
-  for (let stepX = 0; stepX < 4; stepX++) {
-    let stepY = (stepX * PI) / 2;
-    builder.box(steelMat, 0.012, 0.2, 0.12, Math.cos(stepY) * 0.2, 0.45, -Math.sin(stepY) * 0.2, {
-      r: 0,
-      rot: [0, stepY + PI / 2, 0],
-    });
+  for (let vertexX = 0; vertexX < 4; vertexX++) {
+    let vertexY = (vertexX * PI) / 2;
+    builder.box(
+      steelMat,
+      0.012,
+      0.2,
+      0.12,
+      Math.cos(vertexY) * 0.2,
+      0.45,
+      -Math.sin(vertexY) * 0.2,
+      {
+        r: 0,
+        rot: [0, vertexY + PI / 2, 0],
+      },
+    );
   }
   (builder.cyl(steelMat, 0.2, 0.2, 0.02, 0, 0.36, 0, {
     seg: 8,
@@ -1256,12 +1398,12 @@ export function buildLightMast(ctx, options = {}) {
       rot: [0, PI / 8, 0],
     }));
   let rungIndex = 0;
-  for (let stepX = 3.45; stepX < 12.9; stepX += 0.38, rungIndex++) {
-    let stepY = rungIndex % 2 ? 1 : -1;
+  for (let vertexX = 3.45; vertexX < 12.9; vertexX += 0.38, rungIndex++) {
+    let vertexY = rungIndex % 2 ? 1 : -1;
     builder.bar(
       steelMat,
-      [0, stepX, stepY * poleRadiusAt(stepX) * 0.8],
-      [0, stepX, stepY * (poleRadiusAt(stepX) + 0.15)],
+      [0, vertexX, vertexY * poleRadiusAt(vertexX) * 0.8],
+      [0, vertexX, vertexY * (poleRadiusAt(vertexX) + 0.15)],
       0.009,
       {
         seg: 5,
@@ -1281,7 +1423,7 @@ export function buildLightMast(ctx, options = {}) {
     }),
     builder.beam(steelMat, [0, poleTopY - 0.5, 0.08], [0, crossbarY - 0.03, 0.7], 0.04, 0.04),
     builder.beam(steelMat, [0, poleTopY - 0.5, -0.08], [0, crossbarY - 0.03, -0.7], 0.04, 0.04));
-  for (let stepX of [-0.55, 0.55])
+  for (let vertexX of [-0.55, 0.55])
     (addFloodlightHead(
       builder,
       steelMat,
@@ -1289,7 +1431,7 @@ export function buildLightMast(ctx, options = {}) {
       lensMat,
       0.22,
       crossbarY - 0.14,
-      stepX,
+      vertexX,
       0,
       -0.62,
     ),
@@ -1300,7 +1442,7 @@ export function buildLightMast(ctx, options = {}) {
         lensMat,
         -0.22,
         crossbarY - 0.14,
-        stepX,
+        vertexX,
         PI,
         -0.62,
       ));
@@ -1314,11 +1456,11 @@ export function buildLightMast(ctx, options = {}) {
     }));
   let group = builder.group();
   group.userData.lamps = [];
-  for (let stepX of [-0.55, 0.55])
-    for (let stepY of [-1, 1])
+  for (let vertexX of [-0.55, 0.55])
+    for (let vertexY of [-1, 1])
       group.userData.lamps.push({
-        pos: [stepY * 0.34, crossbarY - 0.22, stepX],
-        dir: [stepY * 0.81, -0.58, 0],
+        pos: [vertexY * 0.34, crossbarY - 0.22, vertexX],
+        dir: [vertexY * 0.81, -0.58, 0],
         color: 16769981,
       });
   return tagPropUserData(group, 'light_mast', getPropSize3('light_mast'), [
@@ -1380,8 +1522,8 @@ export function buildFencePanel(ctx, fenceOpts = {}) {
       builder.cyl(steelMat, 0.034, 0.034, 0.05, idx, 2.03, 0, {
         seg: 8,
       }));
-    for (let xCoord of [0.2, 1.05, 1.9])
-      builder.cyl(steelMat, 0.034, 0.034, 0.03, idx, xCoord, 0, {
+    for (let surfaceU of [0.2, 1.05, 1.9])
+      builder.cyl(steelMat, 0.034, 0.034, 0.03, idx, surfaceU, 0, {
         seg: 8,
         open: !0,
       });
@@ -1403,29 +1545,29 @@ export function buildFencePanel(ctx, fenceOpts = {}) {
     meshPos = meshPlane.attributes.position,
     meshUv = meshPlane.attributes.uv;
   for (let idx = 0; idx < meshPos.count; idx++) {
-    let xCoord = meshPos.getX(idx),
-      yCoord = meshPos.getY(idx);
-    (meshUv.setXY(idx, xCoord + 1.5, yCoord + 1),
+    let surfaceU = meshPos.getX(idx),
+      surfaceV = meshPos.getY(idx);
+    (meshUv.setXY(idx, surfaceU + 1.5, surfaceV + 1),
       meshPos.setZ(
         idx,
         0.012 +
           0.02 *
-            (valueNoise2D(xCoord * 1.3 + (fenceOpts.seed | 0), yCoord * 1.5) - 0.5) *
-            (1 - Math.abs(xCoord) / 1.46),
+            (valueNoise2D(surfaceU * 1.3 + (fenceOpts.seed | 0), surfaceV * 1.5) - 0.5) *
+            (1 - Math.abs(surfaceU) / 1.46),
       ));
   }
   (meshPlane.computeVertexNormals(), builder.add(meshMat, je(meshPlane, 0, 1.025, 0)));
   for (let idx = 0; idx < 3; idx++) {
-    let xCoord = 0.3 + idx * 0.33,
-      yCoord = 2.02 + xCoord * 0.36,
-      shadeVal = leanDir * xCoord * 0.36;
-    builder.bar(steelMat, [-1.5, yCoord, shadeVal], [1.5, yCoord, shadeVal], 0.0032, {
+    let surfaceU = 0.3 + idx * 0.33,
+      surfaceV = 2.02 + surfaceU * 0.36,
+      greyTone = leanDir * surfaceU * 0.36;
+    builder.bar(steelMat, [-1.5, surfaceV, greyTone], [1.5, surfaceV, greyTone], 0.0032, {
       seg: 4,
     });
     for (let barbX = -1.42 + (idx % 2) * 0.09; barbX < 1.45; barbX += 0.18)
       builder.add(
         steelMat,
-        je(boxGeometry(0.004, 0.032, 0.004), barbX, yCoord, shadeVal, [
+        je(boxGeometry(0.004, 0.032, 0.004), barbX, surfaceV, greyTone, [
           rand() * 3,
           0,
           0.8 + rand(),
@@ -1482,20 +1624,20 @@ export function buildGuardBooth(ctx, boothOpts = {}) {
   builder.box(steelDarkMat, boothWidth, 0.12, boothDepth, 0, 0.06, 0, {
     r: 0.015,
   });
-  for (let H of [-0.7, 0.7])
-    builder.box(steelDarkMat, boothWidth + 0.06, 0.06, 0.1, 0, 0.03, H, {
+  for (let layoutOffset of [-0.7, 0.7])
+    builder.box(steelDarkMat, boothWidth + 0.06, 0.06, 0.1, 0, 0.03, layoutOffset, {
       r: 0.01,
     });
-  for (let H of [-1, 1])
-    for (let O of [-1, 1])
+  for (let layoutOffset of [-1, 1])
+    for (let sideSignValue of [-1, 1])
       builder.box(
         wallMat,
         0.09,
         roofHeight - baseHeight,
         0.09,
-        H * (halfWidth - 0.045),
+        layoutOffset * (halfWidth - 0.045),
         (roofHeight + baseHeight) / 2,
-        O * (halfDepth - 0.045),
+        sideSignValue * (halfDepth - 0.045),
         {
           r: 0.012,
         },
@@ -1575,44 +1717,62 @@ export function buildGuardBooth(ctx, boothOpts = {}) {
       );
     };
   (buildSideWall(halfDepth - 0.03, 1), buildSideWall(-halfDepth + 0.03, -1));
-  for (let H of [-1, 1]) {
-    let O = H * (halfWidth - 0.03);
+  for (let layoutOffset of [-1, 1]) {
+    let sideSignValue = layoutOffset * (halfWidth - 0.03);
     (builder.box(
       wallMat,
       0.05,
       sillHeight - baseHeight,
       boothDepth - 0.18,
-      O,
+      sideSignValue,
       (sillHeight + baseHeight) / 2,
       0,
       {
         r: 0.006,
       },
     ),
-      builder.box(wallMat, 0.075, 0.05, boothDepth - 0.18, O + H * 0.005, sillHeight + 0.01, 0, {
-        r: 0.008,
-      }),
+      builder.box(
+        wallMat,
+        0.075,
+        0.05,
+        boothDepth - 0.18,
+        sideSignValue + layoutOffset * 0.005,
+        sillHeight + 0.01,
+        0,
+        {
+          r: 0.008,
+        },
+      ),
       builder.box(
         glassMat,
         0.008,
         glassTopY - sillHeight - 0.03,
         boothDepth - 0.18,
-        O,
+        sideSignValue,
         (sillHeight + glassTopY) / 2 + 0.01,
         0,
         {
           r: 0,
         },
       ),
-      builder.box(wallMat, 0.05, glassTopY - sillHeight, 0.04, O, (sillHeight + glassTopY) / 2, 0, {
-        r: 0.006,
-      }),
+      builder.box(
+        wallMat,
+        0.05,
+        glassTopY - sillHeight,
+        0.04,
+        sideSignValue,
+        (sillHeight + glassTopY) / 2,
+        0,
+        {
+          r: 0.006,
+        },
+      ),
       builder.box(
         wallMat,
         0.05,
         roofHeight - glassTopY,
         boothDepth - 0.18,
-        O,
+        sideSignValue,
         (roofHeight + glassTopY) / 2,
         0,
         {
@@ -1674,13 +1834,13 @@ export function buildGuardBooth(ctx, boothOpts = {}) {
     builder.box(wallMat, windowWidth, 0.07, 0.04, windowCenterX, glassTopY - 0.04, frontZ + 0.005, {
       r: 0.006,
     }));
-  for (let H of [-1, 1])
+  for (let layoutOffset of [-1, 1])
     builder.box(
       wallMat,
       0.07,
       glassTopY - sillHeight,
       0.04,
-      windowCenterX + H * (windowWidth / 2 - 0.035),
+      windowCenterX + layoutOffset * (windowWidth / 2 - 0.035),
       (sillHeight + glassTopY) / 2,
       frontZ + 0.005,
       {
@@ -1723,8 +1883,8 @@ export function buildGuardBooth(ctx, boothOpts = {}) {
         caps: !0,
       },
     ));
-  for (let H of [0.4, 1.75])
-    builder.cyl(steelGalvMat, 0.012, 0.012, 0.1, doorRightX + 0.002, H, frontZ + 0.03, {
+  for (let layoutOffset of [0.4, 1.75])
+    builder.cyl(steelGalvMat, 0.012, 0.012, 0.1, doorRightX + 0.002, layoutOffset, frontZ + 0.03, {
       seg: 6,
     });
   (builder.box(steelDarkMat, 0.9, 0.03, 0.3, windowCenterX, 0.105, halfDepth + 0.15, {
@@ -1740,7 +1900,7 @@ export function buildGuardBooth(ctx, boothOpts = {}) {
     builder.box(steelDarkMat, boothWidth + 0.3, 0.03, boothDepth + 0.34, 0, roofHeight + 0.112, 0, {
       r: 0.01,
     }));
-  for (let H of [-1, 1])
+  for (let layoutOffset of [-1, 1])
     builder.box(
       steelGalvMat,
       boothWidth + 0.36,
@@ -1748,7 +1908,7 @@ export function buildGuardBooth(ctx, boothOpts = {}) {
       0.08,
       0,
       roofHeight - 0.005,
-      H * (halfDepth + 0.2 + 0.03),
+      layoutOffset * (halfDepth + 0.2 + 0.03),
       {
         r: 0.012,
       },
@@ -1777,13 +1937,13 @@ export function buildGuardBooth(ctx, boothOpts = {}) {
       je(createRoundedRectFanGeometry(0.44, 0.44, 6), deskX - 0.151, 0.62, -0.14, [0, -PI / 2, 0]),
       [0.06, 0.06, 0.06],
     ));
-  for (let H = -3; H <= 3; H++)
+  for (let layoutOffset = -3; layoutOffset <= 3; layoutOffset++)
     builder.add(
       steelDarkMat,
       je(
-        boxGeometry(0.006, 0.008, Math.sqrt(0.22 * 0.22 - (H * 0.06) ** 2) * 2),
+        boxGeometry(0.006, 0.008, Math.sqrt(0.22 * 0.22 - (layoutOffset * 0.06) ** 2) * 2),
         deskX - 0.154,
-        0.62 + H * 0.06,
+        0.62 + layoutOffset * 0.06,
         -0.14,
       ),
     );
@@ -1791,10 +1951,17 @@ export function buildGuardBooth(ctx, boothOpts = {}) {
     seg: 8,
     rot: [0, 0, PI / 2],
   });
-  for (let H of [-0.55, 0.05])
-    builder.beam(steelDarkMat, [-halfWidth, 0.32, H], [deskX - 0.1, 0.34, H], 0.03, 0.03, {
-      r: 0,
-    });
+  for (let layoutOffset of [-0.55, 0.05])
+    builder.beam(
+      steelDarkMat,
+      [-halfWidth, 0.32, layoutOffset],
+      [deskX - 0.1, 0.34, layoutOffset],
+      0.03,
+      0.03,
+      {
+        r: 0,
+      },
+    );
   (builder.tube(
     builder.M('rubber'),
     [
@@ -1819,8 +1986,8 @@ export function buildGuardBooth(ctx, boothOpts = {}) {
     builder.box(woodMat, 0.6, 0.04, boothDepth - 0.3, -halfWidth + 0.4, 0.76, 0, {
       r: 0.008,
     }));
-  for (let H of [-0.85, 0.85])
-    builder.box(steelDarkMat, 0.5, 0.64, 0.03, -halfWidth + 0.4, 0.44, H, {
+  for (let layoutOffset of [-0.85, 0.85])
+    builder.box(steelDarkMat, 0.5, 0.64, 0.03, -halfWidth + 0.4, 0.44, layoutOffset, {
       r: 0.005,
     });
   (builder.box(polymerMat, 0.05, 0.32, 0.5, -halfWidth + 0.3, 1.02, -0.3, {
@@ -1857,12 +2024,16 @@ export function buildGuardBooth(ctx, boothOpts = {}) {
     builder.cyl(steelDarkMat, 0.025, 0.025, 0.36, -halfWidth + 1, 0.3, -0.2, {
       seg: 6,
     }));
-  for (let H = 0; H < 5; H++) {
-    let O = H * PI * 0.4;
+  for (let layoutOffset = 0; layoutOffset < 5; layoutOffset++) {
+    let sideSignValue = layoutOffset * PI * 0.4;
     builder.beam(
       steelDarkMat,
       [-halfWidth + 1, 0.16, -0.2],
-      [-halfWidth + 1 + Math.cos(O) * 0.26, 0.14, -0.2 + Math.sin(O) * 0.26],
+      [
+        -halfWidth + 1 + Math.cos(sideSignValue) * 0.26,
+        0.14,
+        -0.2 + Math.sin(sideSignValue) * 0.26,
+      ],
       0.03,
       0.025,
       {
@@ -2007,8 +2178,8 @@ export function buildGateArm(ctx, armOpts = {}) {
       seg: 10,
       rot: [PI / 2, 0, 0],
     }));
-  for (let offsetIdx of [-1, 1])
-    builder.box(steelDarkMat, 0.62, 0.11, 0.012, 0.05, 0, offsetIdx * 0.175, {
+  for (let colorSlotArg of [-1, 1])
+    builder.box(steelDarkMat, 0.62, 0.11, 0.012, 0.05, 0, colorSlotArg * 0.175, {
       r: 0.004,
     });
   builder.box(steelDarkMat, 0.3, 0.16, 0.3, -0.33, -0.02, 0, {
@@ -2018,13 +2189,13 @@ export function buildGateArm(ctx, armOpts = {}) {
     armStartX = 0.12,
     stripeCount = 9,
     stripeWidth = armLength / stripeCount;
-  for (let offsetIdx = 0; offsetIdx < stripeCount; offsetIdx++)
+  for (let colorSlotArg = 0; colorSlotArg < stripeCount; colorSlotArg++)
     builder.box(
-      offsetIdx % 2 ? whiteMat : redMat,
+      colorSlotArg % 2 ? whiteMat : redMat,
       stripeWidth + 0.001,
-      0.1 - offsetIdx * 0.003,
+      0.1 - colorSlotArg * 0.003,
       0.05,
-      armStartX + stripeWidth * (offsetIdx + 0.5),
+      armStartX + stripeWidth * (colorSlotArg + 0.5),
       0,
       0,
       {
@@ -2051,8 +2222,8 @@ export function buildGateArm(ctx, armOpts = {}) {
     builder.box(yellowMat, 0.14, 0.02, 0.16, postX, 0.855, 0, {
       r: 0.005,
     }));
-  for (let offsetIdx of [-1, 1])
-    builder.box(yellowMat, 0.14, 0.14, 0.014, postX, 0.93, offsetIdx * 0.073, {
+  for (let colorSlotArg of [-1, 1])
+    builder.box(yellowMat, 0.14, 0.14, 0.014, postX, 0.93, colorSlotArg * 0.073, {
       r: 0.004,
     });
   builder.cyl(steelGalvMat, 0.07, 0.07, 0.01, postX, 0.055, 0, {
@@ -2518,9 +2689,9 @@ export function buildMetalStairs(ctx, options = {}) {
     halfWidth = 0.5,
     endX = startX + stepCount * stepRun,
     colliders = [];
-  for (let stepIndex = 0; stepIndex < stepCount; stepIndex++) {
-    let stepTopY = (stepIndex + 1) * stepRise,
-      stepX = startX + stepIndex * stepRun;
+  for (let walkX = 0; walkX < stepCount; walkX++) {
+    let stepTopY = (walkX + 1) * stepRise,
+      stepX = startX + walkX * stepRun;
     (builder.box(treadMat, 0.25, 0.03, 0.9, stepX + 0.125, stepTopY - 0.015, 0, {
       r: 0.005,
     }),
@@ -2537,33 +2708,24 @@ export function buildMetalStairs(ctx, options = {}) {
       surface: 'metal',
     });
   }
-  for (let stepIndex of [-1, 1]) {
+  for (let walkX of [-1, 1]) {
     (builder.beam(
       frameMat,
-      [startX + 0.07, 0.13, stepIndex * 0.465],
-      [endX + 0.04, 2.5, stepIndex * 0.465],
+      [startX + 0.07, 0.13, walkX * 0.465],
+      [endX + 0.04, 2.5, walkX * 0.465],
       0.24,
       0.014,
       {
         r: 0.004,
       },
     ),
-      builder.box(steelGalvMat, 0.3, 0.012, 0.12, startX + 0.06, 0.006, stepIndex * 0.465, {
+      builder.box(steelGalvMat, 0.3, 0.012, 0.12, startX + 0.06, 0.006, walkX * 0.465, {
         r: 0,
       }));
     for (let stepTopY of [-0.08, 0.1])
-      builder.cyl(
-        steelGalvMat,
-        0.012,
-        0.012,
-        0.02,
-        startX + 0.06 + stepTopY,
-        0.02,
-        stepIndex * 0.5,
-        {
-          seg: 6,
-        },
-      );
+      builder.cyl(steelGalvMat, 0.012, 0.012, 0.02, startX + 0.06 + stepTopY, 0.02, walkX * 0.5, {
+        seg: 6,
+      });
   }
   let landingX = (stepCount + 1) * stepRise;
   (builder.box(treadMat, 0.64, 0.035, 0.96, endX + 0.3, landingX - 0.0175, 0, {
@@ -2572,8 +2734,8 @@ export function buildMetalStairs(ctx, options = {}) {
     builder.box(railMat, 0.035, 0.038, 0.96, endX + 0.016, landingX - 0.0175, 0, {
       r: 0.006,
     }));
-  for (let stepIndex of [-1, 1])
-    builder.box(frameMat, 0.66, 0.16, 0.06, endX + 0.3, landingX - 0.115, stepIndex * 0.47, {
+  for (let walkX of [-1, 1])
+    builder.box(frameMat, 0.66, 0.16, 0.06, endX + 0.3, landingX - 0.115, walkX * 0.47, {
       r: 0.008,
     });
   (builder.box(frameMat, 0.06, 0.16, 0.96, 1.47, landingX - 0.115, 0, {
@@ -2582,26 +2744,17 @@ export function buildMetalStairs(ctx, options = {}) {
     builder.box(frameMat, 0.06, 0.12, 0.9, endX + 0.02, landingX - 0.1, 0, {
       r: 0.008,
     }));
-  for (let stepIndex of [-1, 1])
-    (builder.box(
-      frameMat,
-      0.08,
-      landingX - 0.19,
-      0.08,
-      1.44,
-      (landingX - 0.19) / 2,
-      stepIndex * 0.45,
-      {
-        r: 0.008,
-      },
-    ),
-      builder.box(steelGalvMat, 0.18, 0.012, 0.18, 1.44, 0.006, stepIndex * 0.45, {
+  for (let walkX of [-1, 1])
+    (builder.box(frameMat, 0.08, landingX - 0.19, 0.08, 1.44, (landingX - 0.19) / 2, walkX * 0.45, {
+      r: 0.008,
+    }),
+      builder.box(steelGalvMat, 0.18, 0.012, 0.18, 1.44, 0.006, walkX * 0.45, {
         r: 0,
       }),
       builder.beam(
         frameMat,
-        [1.44, 1.5, stepIndex * 0.45],
-        [endX + 0.1, landingX - 0.2, stepIndex * 0.45],
+        [1.44, 1.5, walkX * 0.45],
+        [endX + 0.1, landingX - 0.2, walkX * 0.45],
         0.05,
         0.05,
         {
@@ -2622,15 +2775,15 @@ export function buildMetalStairs(ctx, options = {}) {
       max: [1.5, landingX, halfWidth],
       surface: 'metal',
     }));
-  for (let stepIndex of [-1, 1])
+  for (let walkX of [-1, 1])
     colliders.push({
-      min: [1.4, 0, stepIndex * 0.45 - 0.04],
-      max: [1.48, landingX - 0.2, stepIndex * 0.45 + 0.04],
+      min: [1.4, 0, walkX * 0.45 - 0.04],
+      max: [1.48, landingX - 0.2, walkX * 0.45 + 0.04],
       surface: 'metal',
     });
   let heightAt = (g) => ((g - startX) / stepRun) * stepRise + stepRise;
-  for (let stepIndex of [-1, 1]) {
-    let stepTopY = stepIndex * 0.485,
+  for (let walkX of [-1, 1]) {
+    let stepTopY = walkX * 0.485,
       stepX = [
         [startX + 0.1, heightAt(startX + 0.1)],
         [startX + 0.9, heightAt(startX + 0.9) - 0.1],
@@ -2655,7 +2808,7 @@ export function buildMetalStairs(ctx, options = {}) {
           0.012,
           sideSign,
           railBarRadius - 0.1,
-          stepTopY - stepIndex * 0.012,
+          stepTopY - walkX * 0.012,
           {
             r: 0,
           },
@@ -2708,7 +2861,7 @@ export function buildMetalStairs(ctx, options = {}) {
           ),
         ));
     }
-    (builder.box(frameMat, 0.6, 0.1, 0.008, endX + 0.3, landingX + 0.05, stepIndex * 0.476, {
+    (builder.box(frameMat, 0.6, 0.1, 0.008, endX + 0.3, landingX + 0.05, walkX * 0.476, {
       r: 0,
     }),
       colliders.push({
@@ -3016,16 +3169,16 @@ export function buildShelfRack(ctx, opts = {}) {
     halfWidth = 1.305,
     halfDepth = 0.5,
     edgeColor = [0.04, 0.04, 0.05];
-  for (let sideSign of [-1, 1]) {
-    for (let sideX of [-1, 1]) {
+  for (let shelfY of [-1, 1]) {
+    for (let sideSign of [-1, 1]) {
       (builder.box(
         uprightMat,
         0.09,
         rackHeight,
         0.07,
-        sideSign * halfWidth,
+        shelfY * halfWidth,
         rackHeight / 2,
-        sideX * halfDepth,
+        sideSign * halfDepth,
         {
           r: 0.008,
           col: (y, b) => {
@@ -3039,66 +3192,66 @@ export function buildShelfRack(ctx, opts = {}) {
           0.14,
           0.01,
           0.12,
-          sideSign * halfWidth,
+          shelfY * halfWidth,
           0.005,
-          sideX * halfDepth,
+          sideSign * halfDepth,
           {
             r: 0,
           },
         ));
-      for (let loadKind of [-0.05, 0.05])
+      for (let loadKindName of [-0.05, 0.05])
         builder.cyl(
           steelGalvMat,
           0.01,
           0.01,
           0.02,
-          sideSign * halfWidth + loadKind,
+          shelfY * halfWidth + loadKindName,
           0.016,
-          sideX * halfDepth,
+          sideSign * halfDepth,
           {
             seg: 6,
           },
         );
-      for (let loadKind = 0.12; loadKind < rackHeight - 0.05; loadKind += 0.1)
-        for (let vertY of [-0.022, 0.022])
+      for (let loadKindName = 0.12; loadKindName < rackHeight - 0.05; loadKindName += 0.1)
+        for (let paintRow of [-0.022, 0.022])
           builder.add(
             uprightMat,
             je(
               createPlaneGeometry(0.014, 0.034),
-              sideSign * halfWidth + vertY,
-              loadKind,
-              sideX * (halfDepth + 0.0356),
-              [0, sideX > 0 ? 0 : PI_LATER, 0],
+              shelfY * halfWidth + paintRow,
+              loadKindName,
+              sideSign * (halfDepth + 0.0356),
+              [0, sideSign > 0 ? 0 : PI_LATER, 0],
             ),
             edgeColor,
           );
     }
-    let beamHeights = [0.2, 1.1, 2, 2.9, 3.8];
-    for (let sideX = 0; sideX < beamHeights.length; sideX++)
+    let shelfLevel = [0.2, 1.1, 2, 2.9, 3.8];
+    for (let sideSign = 0; sideSign < shelfLevel.length; sideSign++)
       (builder.box(
         uprightMat,
         0.03,
         0.03,
         2 * halfDepth - 0.07,
-        sideSign * halfWidth,
-        beamHeights[sideX],
+        shelfY * halfWidth,
+        shelfLevel[sideSign],
         0,
         {
           r: 0,
         },
       ),
-        sideX < beamHeights.length - 1 &&
+        sideSign < shelfLevel.length - 1 &&
           builder.beam(
             uprightMat,
             [
-              sideSign * halfWidth,
-              beamHeights[sideX],
-              sideX % 2 ? halfDepth - 0.04 : -halfDepth + 0.04,
+              shelfY * halfWidth,
+              shelfLevel[sideSign],
+              sideSign % 2 ? halfDepth - 0.04 : -halfDepth + 0.04,
             ],
             [
-              sideSign * halfWidth,
-              beamHeights[sideX + 1],
-              sideX % 2 ? -halfDepth + 0.04 : halfDepth - 0.04,
+              shelfY * halfWidth,
+              shelfLevel[sideSign + 1],
+              sideSign % 2 ? -halfDepth + 0.04 : halfDepth - 0.04,
             ],
             0.03,
             0.03,
@@ -3111,7 +3264,7 @@ export function buildShelfRack(ctx, opts = {}) {
       0.14,
       0.4,
       0.02,
-      sideSign * halfWidth,
+      shelfY * halfWidth,
       0.2,
       halfDepth + 0.06,
       {
@@ -3120,48 +3273,48 @@ export function buildShelfRack(ctx, opts = {}) {
     );
   }
   let beamYs = [1.45, 2.86];
-  for (let sideSign of beamYs) {
-    for (let beamHeights of [-1, 1]) {
+  for (let shelfY of beamYs) {
+    for (let shelfLevel of [-1, 1]) {
       builder.box(
         beamMat,
         2 * halfWidth - 0.09,
         0.12,
         0.05,
         0,
-        sideSign,
-        beamHeights * (halfDepth + 0.01),
+        shelfY,
+        shelfLevel * (halfDepth + 0.01),
         {
           r: 0.008,
         },
       );
-      for (let sideX of [-1, 1])
+      for (let sideSign of [-1, 1])
         builder.box(
           beamMat,
           0.012,
           0.2,
           0.065,
-          sideX * (halfWidth - 0.051),
-          sideSign - 0.02,
-          beamHeights * (halfDepth + 0.005),
+          sideSign * (halfWidth - 0.051),
+          shelfY - 0.02,
+          shelfLevel * (halfDepth + 0.005),
           {
             r: 0,
           },
         );
     }
-    for (let beamHeights of [-0.85, 0, 0.85])
+    for (let shelfLevel of [-0.85, 0, 0.85])
       builder.add(
         steelGalvMat,
-        je(boxGeometry(0.04, 0.025, 2 * halfDepth), beamHeights, sideSign + 0.045, 0),
+        je(boxGeometry(0.04, 0.025, 2 * halfDepth), shelfLevel, shelfY + 0.045, 0),
       );
-    for (let beamHeights = -0.45; beamHeights <= 0.451; beamHeights += 0.1)
+    for (let shelfLevel = -0.45; shelfLevel <= 0.451; shelfLevel += 0.1)
       builder.add(
         steelGalvMat,
-        je(boxGeometry(2 * halfWidth - 0.1, 0.005, 0.005), 0, sideSign + 0.062, beamHeights),
+        je(boxGeometry(2 * halfWidth - 0.1, 0.005, 0.005), 0, shelfY + 0.062, shelfLevel),
       );
-    for (let beamHeights = -1.2; beamHeights <= 1.201; beamHeights += 0.2)
+    for (let shelfLevel = -1.2; shelfLevel <= 1.201; shelfLevel += 0.2)
       builder.add(
         steelGalvMat,
-        je(boxGeometry(0.005, 0.005, 2 * halfDepth + 0.04), beamHeights, sideSign + 0.066, 0),
+        je(boxGeometry(0.005, 0.005, 2 * halfDepth + 0.04), shelfLevel, shelfY + 0.066, 0),
       );
   }
   (builder.decal(
@@ -3196,17 +3349,17 @@ export function buildShelfRack(ctx, opts = {}) {
     ));
   let loadKinds = ['cartons', 'wrapped', 'drums', 'cartons', 'wrapped', 'pallets', 'none'];
   return (
-    [0, beamYs[0] + 0.068, beamYs[1] + 0.068].forEach((v, g) => {
-      for (let x of [-1, 1]) {
-        let y = loadKinds[Math.floor(rand() * loadKinds.length)];
-        (g === 2 && y === 'drums' && (y = 'wrapped'),
-          y !== 'none' &&
+    [0, beamYs[0] + 0.068, beamYs[1] + 0.068].forEach((shelfY, shelfLevel) => {
+      for (let sideSign of [-1, 1]) {
+        let loadKindName = loadKinds[Math.floor(rand() * loadKinds.length)];
+        (shelfLevel === 2 && loadKindName === 'drums' && (loadKindName = 'wrapped'),
+          loadKindName !== 'none' &&
             addShelfLoad(
               builder,
               loadMats,
-              y,
-              x * 0.615 + (rand() - 0.5) * 0.03,
-              v,
+              loadKindName,
+              sideSign * 0.615 + (rand() - 0.5) * 0.03,
+              shelfY,
               (rand() - 0.5) * 0.05,
               rand,
             ));
@@ -3251,8 +3404,8 @@ export function buildReeferUnit(ctx, unitOpts = {}) {
   builder.box(shellMat, 0.38, 2.3, 2.3, -0.06, 1.15, 0, {
     r: 0.012,
   });
-  for (let g of [-1, 1])
-    builder.box(shellMat, 0.12, 2.3, 0.09, 0.19, 1.15, g * 1.105, {
+  for (let sideSignValue of [-1, 1])
+    builder.box(shellMat, 0.12, 2.3, 0.09, 0.19, 1.15, sideSignValue * 1.105, {
       r: 0.012,
     });
   (builder.box(shellMat, 0.12, 0.09, 2.12, 0.19, 2.255, 0, {
@@ -3267,62 +3420,90 @@ export function buildReeferUnit(ctx, unitOpts = {}) {
     builder.box(shellMat, 0.1, 0.06, 2.12, 0.18, 0.9, 0, {
       r: 0.01,
     }));
-  for (let g of [0.3, 0.9, 1.5, 2.1])
-    for (let x of [-1, 1])
-      builder.cyl(steelGalvMat, 0.014, 0.014, 0.012, 0.255, g, x * 1.105, {
+  for (let sideSignValue of [0.3, 0.9, 1.5, 2.1])
+    for (let louverAxisOffset of [-1, 1])
+      builder.cyl(
+        steelGalvMat,
+        0.014,
+        0.014,
+        0.012,
+        0.255,
+        sideSignValue,
+        louverAxisOffset * 1.105,
+        {
+          seg: 6,
+          rot: [0, 0, PI_LATER / 2],
+        },
+      );
+  for (let sideSignValue of [-0.8, -0.3, 0.3, 0.8])
+    for (let louverAxisOffset of [0.05, 2.255])
+      builder.cyl(steelGalvMat, 0.014, 0.014, 0.012, 0.255, louverAxisOffset, sideSignValue, {
         seg: 6,
         rot: [0, 0, PI_LATER / 2],
       });
-  for (let g of [-0.8, -0.3, 0.3, 0.8])
-    for (let x of [0.05, 2.255])
-      builder.cyl(steelGalvMat, 0.014, 0.014, 0.012, 0.255, x, g, {
-        seg: 6,
-        rot: [0, 0, PI_LATER / 2],
-      });
-  for (let g of [-1, 1]) {
-    let x = g * 0.53,
-      y = 1.83;
+  for (let sideSignValue of [-1, 1]) {
+    let louverAxisOffset = sideSignValue * 0.53,
+      fanAxisCoord = 1.83;
     (builder.add(
       shellMat,
-      je(createRoundedRectFanGeometry(0.66, 0.66, 6), frontX + 0.004, y, x, [0, PI_LATER / 2, 0]),
+      je(
+        createRoundedRectFanGeometry(0.66, 0.66, 6),
+        frontX + 0.004,
+        fanAxisCoord,
+        louverAxisOffset,
+        [0, PI_LATER / 2, 0],
+      ),
       darkColor,
     ),
-      builder.cyl(shellMat, 0.335, 0.345, 0.1, frontX + 0.05, y, x, {
+      builder.cyl(shellMat, 0.335, 0.345, 0.1, frontX + 0.05, fanAxisCoord, louverAxisOffset, {
         seg: 20,
         open: !0,
         rot: [0, 0, PI_LATER / 2],
       }),
-      builder.cyl(shellMat, 0.36, 0.36, 0.014, frontX + 0.006, y, x, {
+      builder.cyl(shellMat, 0.36, 0.36, 0.014, frontX + 0.006, fanAxisCoord, louverAxisOffset, {
         seg: 20,
         open: !0,
         rot: [0, 0, PI_LATER / 2],
       }));
-    for (let b = 0; b < 3; b++)
+    for (let grillBarIndex = 0; grillBarIndex < 3; grillBarIndex++)
       builder.add(
         steelDarkMat,
-        je(boxGeometry(0.012, 0.6, 0.12), frontX + 0.04, y, x, [
-          (b * PI_LATER) / 3 + g * 0.4,
+        je(boxGeometry(0.012, 0.6, 0.12), frontX + 0.04, fanAxisCoord, louverAxisOffset, [
+          (grillBarIndex * PI_LATER) / 3 + sideSignValue * 0.4,
           0.5,
           0,
         ]),
       );
-    builder.cyl(steelDarkMat, 0.07, 0.07, 0.06, frontX + 0.05, y, x, {
+    builder.cyl(steelDarkMat, 0.07, 0.07, 0.06, frontX + 0.05, fanAxisCoord, louverAxisOffset, {
       seg: 10,
       rot: [0, 0, PI_LATER / 2],
     });
-    for (let b = 0; b < 8; b++) {
-      let radialBarAngle = (b * PI_LATER) / 4;
+    for (let grillBarIndex = 0; grillBarIndex < 8; grillBarIndex++) {
+      let radialBarAngle = (grillBarIndex * PI_LATER) / 4;
       builder.add(
         steelGalvMat,
-        je(boxGeometry(0.005, 0.66, 0.005), frontX + 0.098, y, x, [radialBarAngle, 0, 0]),
+        je(boxGeometry(0.005, 0.66, 0.005), frontX + 0.098, fanAxisCoord, louverAxisOffset, [
+          radialBarAngle,
+          0,
+          0,
+        ]),
       );
     }
-    for (let b of [0.12, 0.22, 0.32])
-      builder.cyl(steelGalvMat, b, b, 0.006, frontX + 0.1, y, x, {
-        seg: 20,
-        open: !0,
-        rot: [0, 0, PI_LATER / 2],
-      });
+    for (let grillBarIndex of [0.12, 0.22, 0.32])
+      builder.cyl(
+        steelGalvMat,
+        grillBarIndex,
+        grillBarIndex,
+        0.006,
+        frontX + 0.1,
+        fanAxisCoord,
+        louverAxisOffset,
+        {
+          seg: 20,
+          open: !0,
+          rot: [0, 0, PI_LATER / 2],
+        },
+      );
   }
   builder.decal(
     getLabelMaterial(ctx, 'KELVAR  MARINE  REFRIGERATION', {
@@ -3337,18 +3518,31 @@ export function buildReeferUnit(ctx, unitOpts = {}) {
     [0, PI_LATER / 2, 0],
     1.2,
   );
-  for (let g of [-1, 1]) {
+  for (let sideSignValue of [-1, 1]) {
     builder.add(
       shellMat,
-      je(createPlaneGeometry(0.98, 0.44), frontX + 0.004, 1.16, g * 0.53, [0, PI_LATER / 2, 0]),
+      je(createPlaneGeometry(0.98, 0.44), frontX + 0.004, 1.16, sideSignValue * 0.53, [
+        0,
+        PI_LATER / 2,
+        0,
+      ]),
       darkColor,
     );
-    for (let x = 0; x < 9; x++)
-      builder.box(shellMat, 0.06, 0.006, 0.98, frontX + 0.035, 0.965 + x * 0.049, g * 0.53, {
-        r: 0,
-        rot: [0, 0, -0.75],
-      });
-    builder.box(shellMat, 0.05, 0.46, 0.03, frontX + 0.03, 1.16, g * 0.53, {
+    for (let louverAxisOffset = 0; louverAxisOffset < 9; louverAxisOffset++)
+      builder.box(
+        shellMat,
+        0.06,
+        0.006,
+        0.98,
+        frontX + 0.035,
+        0.965 + louverAxisOffset * 0.049,
+        sideSignValue * 0.53,
+        {
+          r: 0,
+          rot: [0, 0, -0.75],
+        },
+      );
+    builder.box(shellMat, 0.05, 0.46, 0.03, frontX + 0.03, 1.16, sideSignValue * 0.53, {
       r: 0.005,
     });
   }
@@ -3362,9 +3556,13 @@ export function buildReeferUnit(ctx, unitOpts = {}) {
       open: !0,
       rot: [PI_LATER / 2, 0, 0],
     }));
-  for (let g of [-1, 1]) {
-    let x = createSphereGeometry(0.15, 14, 6);
-    (x.scale(1, 1, 0.45), builder.add(steelDarkMat, je(x, frontX + 0.1, 0.36, -0.58 + g * 0.23)));
+  for (let sideSignValue of [-1, 1]) {
+    let louverAxisOffset = createSphereGeometry(0.15, 14, 6);
+    (louverAxisOffset.scale(1, 1, 0.45),
+      builder.add(
+        steelDarkMat,
+        je(louverAxisOffset, frontX + 0.1, 0.36, -0.58 + sideSignValue * 0.23),
+      ));
   }
   (builder.box(steelDarkMat, 0.26, 0.03, 0.5, frontX + 0.1, 0.19, -0.58, {
     r: 0.006,
@@ -3451,16 +3649,16 @@ export function buildReeferUnit(ctx, unitOpts = {}) {
       null,
       !0,
     ));
-  for (let g = 0; g < 4; g++)
-    for (let x = 0; x < 2; x++)
+  for (let sideSignValue = 0; sideSignValue < 4; sideSignValue++)
+    for (let louverAxisOffset = 0; louverAxisOffset < 2; louverAxisOffset++)
       builder.box(
         steelDarkMat,
         0.008,
         0.03,
         0.03,
         frontX + 0.122,
-        0.5 - x * 0.045,
-        controlPanelZ - 0.04 - g * 0.045,
+        0.5 - louverAxisOffset * 0.045,
+        controlPanelZ - 0.04 - sideSignValue * 0.045,
         {
           r: 0.003,
         },
@@ -3608,9 +3806,9 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
       return [se, se, se * 0.98];
     };
   (builder.defCol.set(cabinetMat, paintColorFn),
-    doorBuilder.defCol.set(cabinetMat, (le, R, I) => {
-      let se = 0.9 + 0.14 * valueNoise2D(le * 4 + noiseOffset, R * 3);
-      return [se, se, se];
+    doorBuilder.defCol.set(cabinetMat, (sideSign, vCoord, wCoord) => {
+      let shadeValue = 0.9 + 0.14 * valueNoise2D(sideSign * 4 + noiseOffset, vCoord * 3);
+      return [shadeValue, shadeValue, shadeValue];
     }));
   let darkColor = [0.035, 0.035, 0.04],
     emissiveOpts = {
@@ -3624,12 +3822,12 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
     },
   }),
     builder.decal(getDecalMaterial(ctx, 'caution_stripes'), 0.1, 0, 0.085, 0.4815, null, 1.2));
-  for (let le of [-1, 1])
-    for (let R of [-1, 1])
-      (builder.cyl(steelGalvMat, 0.016, 0.016, 0.03, le * 0.44, 0.185, R * 0.36, {
+  for (let sideSign of [-1, 1])
+    for (let vCoord of [-1, 1])
+      (builder.cyl(steelGalvMat, 0.016, 0.016, 0.03, sideSign * 0.44, 0.185, vCoord * 0.36, {
         seg: 6,
       }),
-        builder.box(steelGalvMat, 0.1, 0.012, 0.1, le * 0.44, 0.166, R * 0.36, {
+        builder.box(steelGalvMat, 0.1, 0.012, 0.1, sideSign * 0.44, 0.166, vCoord * 0.36, {
           r: 0,
         }));
   let cabinetLeft = -0.5,
@@ -3653,13 +3851,13 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
       r: 0.006,
     },
   );
-  for (let le of [-1, 1])
+  for (let sideSign of [-1, 1])
     builder.box(
       cabinetMat,
       panelThickness,
       cabinetHeight,
       0.6,
-      le * (0.5 - panelThickness / 2),
+      sideSign * (0.5 - panelThickness / 2),
       cabinetMidY,
       0,
       {
@@ -3705,14 +3903,14 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
     builder.box(cabinetMat, 1.12, 0.05, 0.74, 0, cabinetTop + 0.025, 0.01, {
       r: 0.012,
     }));
-  for (let le of [-1, 1])
+  for (let sideSign of [-1, 1])
     builder.tube(
       steelGalvMat,
       [
-        [le * 0.4 - 0.04, cabinetTop + 0.05, 0.2],
-        [le * 0.4 - 0.03, cabinetTop + 0.1, 0.2],
-        [le * 0.4 + 0.03, cabinetTop + 0.1, 0.2],
-        [le * 0.4 + 0.04, cabinetTop + 0.05, 0.2],
+        [sideSign * 0.4 - 0.04, cabinetTop + 0.05, 0.2],
+        [sideSign * 0.4 - 0.03, cabinetTop + 0.1, 0.2],
+        [sideSign * 0.4 + 0.03, cabinetTop + 0.1, 0.2],
+        [sideSign * 0.4 + 0.04, cabinetTop + 0.05, 0.2],
       ],
       0.008,
       {
@@ -3752,35 +3950,40 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
       ),
       panelColorFn,
     ));
-  for (let le = 0; le < 5; le++) {
-    let R = 0.42 + le * 0.22;
-    (builder.box(steelDarkMat, 0.42, 0.17, 0.4, -0.25, R, -0.05, {
+  for (let sideSign = 0; sideSign < 5; sideSign++) {
+    let vCoord = 0.42 + sideSign * 0.22;
+    (builder.box(steelDarkMat, 0.42, 0.17, 0.4, -0.25, vCoord, -0.05, {
       r: 0.008,
     }),
-      builder.box(aluMat, 0.4, 0.02, 0.012, -0.25, R + 0.06, 0.152, {
+      builder.box(aluMat, 0.4, 0.02, 0.012, -0.25, vCoord + 0.06, 0.152, {
         r: 0,
       }));
-    for (let I = 0; I < 4; I++)
+    for (let wCoord = 0; wCoord < 4; wCoord++)
       ledBuilder.add(
         emissiveOpts,
-        je(createPlaneGeometry(0.012, 0.012), -0.41 + I * 0.035, R - 0.04, 0.1512),
+        je(createPlaneGeometry(0.012, 0.012), -0.41 + wCoord * 0.035, vCoord - 0.04, 0.1512),
       );
-    for (let I = 0; I < 3; I++)
+    for (let wCoord = 0; wCoord < 3; wCoord++)
       builder.add(
         steelDarkMat,
-        je(createRoundedRectFanGeometry(0.03, 0.022, 2), -0.2 + I * 0.06, R - 0.03, 0.1512),
+        je(
+          createRoundedRectFanGeometry(0.03, 0.022, 2),
+          -0.2 + wCoord * 0.06,
+          vCoord - 0.03,
+          0.1512,
+        ),
         darkColor,
       );
   }
   let cableMats = [rubberMat, rubberMat, rubberMat];
-  for (let le = 0; le < 4; le++)
+  for (let sideSign = 0; sideSign < 4; sideSign++)
     builder.tube(
-      cableMats[le % 3],
+      cableMats[sideSign % 3],
       [
-        [-0.2 + (le % 3) * 0.06, 0.39 + le * 0.22, 0.15],
-        [-0.14 + (le % 3) * 0.05, 0.36 + le * 0.22, 0.24],
-        [-0.07, 0.55 + le * 0.22, 0.22],
-        [-0.2 + ((le + 1) % 3) * 0.06, 0.61 + le * 0.22, 0.15],
+        [-0.2 + (sideSign % 3) * 0.06, 0.39 + sideSign * 0.22, 0.15],
+        [-0.14 + (sideSign % 3) * 0.05, 0.36 + sideSign * 0.22, 0.24],
+        [-0.07, 0.55 + sideSign * 0.22, 0.22],
+        [-0.2 + ((sideSign + 1) % 3) * 0.06, 0.61 + sideSign * 0.22, 0.15],
       ],
       0.007,
       {
@@ -3946,10 +4149,14 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
       null,
       !0,
     ));
-  for (let le of [doorCenterY + 0.36, doorCenterY - 0.4])
+  for (let sideSign of [doorCenterY + 0.36, doorCenterY - 0.4])
     doorBuilder.add(
       cabinetMat,
-      je(createPlaneGeometry(doorWidth - 0.14, 0.3), doorWidth / 2, le, -0.0125, [0, PI_RELAY, 0]),
+      je(createPlaneGeometry(doorWidth - 0.14, 0.3), doorWidth / 2, sideSign, -0.0125, [
+        0,
+        PI_RELAY,
+        0,
+      ]),
       darkColor,
     );
   doorBuilder.decal(
@@ -3965,28 +4172,31 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
     null,
     doorWidth - 0.1,
   );
-  for (let le of [-1, 1]) {
-    builder.box(aluMat, 0.012, 0.98, 0.5, le * 0.506, 1.06, 0, {
+  for (let sideSign of [-1, 1]) {
+    builder.box(aluMat, 0.012, 0.98, 0.5, sideSign * 0.506, 1.06, 0, {
       r: 0.003,
     });
-    for (let R = -6; R <= 6; R++)
-      builder.add(aluMat, je(boxGeometry(0.06, 0.94, 0.007), le * 0.54, 1.06, R * 0.038));
-    builder.box(cabinetMat, 0.075, 0.03, 0.52, le * 0.54, 1.56, 0, {
+    for (let vCoord = -6; vCoord <= 6; vCoord++)
+      builder.add(
+        aluMat,
+        je(boxGeometry(0.06, 0.94, 0.007), sideSign * 0.54, 1.06, vCoord * 0.038),
+      );
+    builder.box(cabinetMat, 0.075, 0.03, 0.52, sideSign * 0.54, 1.56, 0, {
       r: 0.006,
     });
   }
-  for (let le = 0; le < 3; le++) {
-    let R = -0.17 + le * 0.17,
-      I = 0.44 - le * 0.02,
-      se = 0.86 + le * 0.07;
+  for (let sideSign = 0; sideSign < 3; sideSign++) {
+    let vCoord = -0.17 + sideSign * 0.17,
+      wCoord = 0.44 - sideSign * 0.02,
+      shadeValue = 0.86 + sideSign * 0.07;
     (builder.tube(
       rubberMat,
       [
-        [0.5, I, R],
-        [0.6, I, R],
-        [0.72 + le * 0.04, I - 0.06, R],
-        [se - 0.02, 0.16, R + 0.02],
-        [se, -0.03, R + 0.02],
+        [0.5, wCoord, vCoord],
+        [0.6, wCoord, vCoord],
+        [0.72 + sideSign * 0.04, wCoord - 0.06, vCoord],
+        [shadeValue - 0.02, 0.16, vCoord + 0.02],
+        [shadeValue, -0.03, vCoord + 0.02],
       ],
       0.04,
       {
@@ -3994,12 +4204,12 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
         tension: 0.4,
       },
     ),
-      builder.cyl(steelGalvMat, 0.055, 0.055, 0.05, 0.515, I, R, {
+      builder.cyl(steelGalvMat, 0.055, 0.055, 0.05, 0.515, wCoord, vCoord, {
         seg: 8,
         flat: !0,
         rot: [0, 0, PI_RELAY / 2],
       }),
-      builder.cyl(steelGalvMat, 0.06, 0.066, 0.03, se, 0.015, R + 0.02, {
+      builder.cyl(steelGalvMat, 0.06, 0.066, 0.03, shadeValue, 0.015, vCoord + 0.02, {
         seg: 8,
       }));
   }
@@ -4038,26 +4248,32 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
     beaconY = -0.14,
     rackTopY = cabinetTop + 0.05,
     mastTopY = 2.5,
-    mastFeet = [0, 1, 2].map((le) => [
-      beaconX + Math.cos(le * 2.094 + 0.52) * 0.085,
-      beaconY + Math.sin(le * 2.094 + 0.52) * 0.085,
+    mastFeet = [0, 1, 2].map((sideSign) => [
+      beaconX + Math.cos(sideSign * 2.094 + 0.52) * 0.085,
+      beaconY + Math.sin(sideSign * 2.094 + 0.52) * 0.085,
     ]);
   builder.box(steelGalvMat, 0.24, 0.012, 0.24, beaconX, rackTopY + 0.006, beaconY, {
     r: 0,
   });
-  for (let le = 0; le < 3; le++) {
-    let R = mastFeet[le],
-      I = mastFeet[(le + 1) % 3];
-    builder.bar(steelGalvMat, [R[0], rackTopY, R[1]], [R[0], mastTopY, R[1]], 0.011, {
-      seg: 6,
-    });
-    let se = 5,
-      ae = (mastTopY - rackTopY) / se;
-    for (let k = 0; k < se; k++)
+  for (let sideSign = 0; sideSign < 3; sideSign++) {
+    let vCoord = mastFeet[sideSign],
+      wCoord = mastFeet[(sideSign + 1) % 3];
+    builder.bar(
+      steelGalvMat,
+      [vCoord[0], rackTopY, vCoord[1]],
+      [vCoord[0], mastTopY, vCoord[1]],
+      0.011,
+      {
+        seg: 6,
+      },
+    );
+    let shadeValue = 5,
+      localZ = (mastTopY - rackTopY) / shadeValue;
+    for (let localX = 0; localX < shadeValue; localX++)
       (builder.bar(
         steelGalvMat,
-        [R[0], rackTopY + k * ae, R[1]],
-        [I[0], rackTopY + (k + 1) * ae, I[1]],
+        [vCoord[0], rackTopY + localX * localZ, vCoord[1]],
+        [wCoord[0], rackTopY + (localX + 1) * localZ, wCoord[1]],
         0.005,
         {
           seg: 4,
@@ -4065,8 +4281,8 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
       ),
         builder.bar(
           steelGalvMat,
-          [R[0], rackTopY + (k + 1) * ae, R[1]],
-          [I[0], rackTopY + (k + 1) * ae, I[1]],
+          [vCoord[0], rackTopY + (localX + 1) * localZ, vCoord[1]],
+          [wCoord[0], rackTopY + (localX + 1) * localZ, wCoord[1]],
           0.005,
           {
             seg: 4,
@@ -4129,10 +4345,10 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
     antennaBuilder.box(aluMat, 0.07, 0.1, 0.06, 0, 0.26, -0.02, {
       r: 0.01,
     }));
-  for (let le of [0.5, 2.6, 4.7])
+  for (let sideSign of [0.5, 2.6, 4.7])
     antennaBuilder.bar(
       aluMat,
-      [Math.cos(le) * 0.2, 0.3 + Math.sin(le) * 0.2, 0.09],
+      [Math.cos(sideSign) * 0.2, 0.3 + Math.sin(sideSign) * 0.2, 0.09],
       [0, 0.325, 0.25],
       0.0045,
       {
@@ -4151,12 +4367,12 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
       emissiveOpts,
       je(createPlaneGeometry(0.84, 0.036), 0, cabinetTop - 0.06, cabinetFrontZ + 0.0275),
     ));
-  for (let le = 1; le < 6; le++)
+  for (let sideSign = 1; sideSign < 6; sideSign++)
     builder.add(
       steelDarkMat,
       je(
         boxGeometry(0.008, 0.05, 0.006),
-        -0.42 + le * 0.14,
+        -0.42 + sideSign * 0.14,
         cabinetTop - 0.06,
         cabinetFrontZ + 0.028,
       ),
@@ -4168,32 +4384,36 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
       emissiveOpts,
       je(createPlaneGeometry(0.54, 0.03), 0, cabinetTop - 0.06, doorZ - 0.0275, [0, PI_RELAY, 0]),
     ));
-  for (let le of [-1, 1])
-    (builder.box(steelDarkMat, 0.03, 1.2, 0.03, le * 0.5, 0.86, cabinetFrontZ, {
+  for (let sideSign of [-1, 1])
+    (builder.box(steelDarkMat, 0.03, 1.2, 0.03, sideSign * 0.5, 0.86, cabinetFrontZ, {
       r: 0.008,
       rot: [0, PI_RELAY / 4, 0],
     }),
       ledBuilder.add(
         emissiveOpts,
-        je(createPlaneGeometry(0.014, 1.14), le * 0.5, 0.86, cabinetFrontZ + 0.0215, [
+        je(createPlaneGeometry(0.014, 1.14), sideSign * 0.5, 0.86, cabinetFrontZ + 0.0215, [
           0,
-          (le * PI_RELAY) / 4,
+          (sideSign * PI_RELAY) / 4,
           0,
-        ]).translate(le * 0.0152, 0, 0),
+        ]).translate(sideSign * 0.0152, 0, 0),
       ),
       ledBuilder.add(
         emissiveOpts,
-        je(createPlaneGeometry(0.014, 0.9), le * 0.5715, 1.06, 0.262, [0, (le * PI_RELAY) / 2, 0]),
+        je(createPlaneGeometry(0.014, 0.9), sideSign * 0.5715, 1.06, 0.262, [
+          0,
+          (sideSign * PI_RELAY) / 2,
+          0,
+        ]),
       ));
-  for (let le of [-1, 1])
-    (builder.box(steelDarkMat, 0.03, 0.06, 0.46, le * 0.587, cabinetTop - 0.01, 0, {
+  for (let sideSign of [-1, 1])
+    (builder.box(steelDarkMat, 0.03, 0.06, 0.46, sideSign * 0.587, cabinetTop - 0.01, 0, {
       r: 0.008,
     }),
       ledBuilder.add(
         emissiveOpts,
-        je(createPlaneGeometry(0.4, 0.032), le * 0.6025, cabinetTop - 0.01, 0, [
+        je(createPlaneGeometry(0.4, 0.032), sideSign * 0.6025, cabinetTop - 0.01, 0, [
           0,
-          (le * PI_RELAY) / 2,
+          (sideSign * PI_RELAY) / 2,
           0,
         ]),
       ));
@@ -4250,15 +4470,15 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
   );
   ((ledMesh.userData.noMerge = !0), dynamicGroup.add(ledMesh));
   let doorChildren = doorBuilder.group().children.slice();
-  for (let le of doorChildren)
-    (le.position.set(doorOffset[0], doorOffset[1], doorOffset[2]),
-      (le.userData.noMerge = !0),
-      dynamicGroup.add(le));
+  for (let sideSign of doorChildren)
+    (sideSign.position.set(doorOffset[0], doorOffset[1], doorOffset[2]),
+      (sideSign.userData.noMerge = !0),
+      dynamicGroup.add(sideSign));
   let ledChildren = antennaBuilder.group().children.slice();
-  for (let le of ledChildren)
-    (le.position.set(beaconPos[0], beaconPos[1], beaconPos[2]),
-      (le.userData.noMerge = !0),
-      dynamicGroup.add(le));
+  for (let sideSign of ledChildren)
+    (sideSign.position.set(beaconPos[0], beaconPos[1], beaconPos[2]),
+      (sideSign.userData.noMerge = !0),
+      dynamicGroup.add(sideSign));
   let tempColor = new THREE.Color(),
     setEmissive = (le, R) => {
       if (ledMaterial.userData && typeof ledMaterial.userData.setEmissive == 'function') {
@@ -4291,52 +4511,59 @@ export function buildRelayNode(ctx, nodeOpts = {}) {
     (userData.interact = [0, 1, 0.75]),
     (userData.emissiveMaterial = ledMaterial),
     (userData.level = 0),
-    (userData.setState = (le) => {
-      (le !== 'live' && le !== 'cutting' && le !== 'cut') ||
-        (le !== state &&
-          ((state = le),
-          (userData.state = le),
-          le === 'cut' && ((cutElapsed = 0), (gateTarget = 1.32), (gateVelocity = 2.5)),
-          le === 'live' && (gateTarget = 0)));
+    (userData.setState = (sideSign) => {
+      (sideSign !== 'live' && sideSign !== 'cutting' && sideSign !== 'cut') ||
+        (sideSign !== state &&
+          ((state = sideSign),
+          (userData.state = sideSign),
+          sideSign === 'cut' && ((cutElapsed = 0), (gateTarget = 1.32), (gateVelocity = 2.5)),
+          sideSign === 'live' && (gateTarget = 0)));
     }),
-    (userData.update = (le) => {
-      ((le = Math.min(le || 0, 0.1)), (elapsed += le));
-      let R = 0,
-        I = RELAY_COLOR_LIVE,
-        se = 0.7;
-      if (state === 'live') R = 5.5 + 3 * Math.sin(elapsed * 2.2);
+    (userData.update = (sideSign) => {
+      ((sideSign = Math.min(sideSign || 0, 0.1)), (elapsed += sideSign));
+      let vCoord = 0,
+        wCoord = RELAY_COLOR_LIVE,
+        shadeValue = 0.7;
+      if (state === 'live') vCoord = 5.5 + 3 * Math.sin(elapsed * 2.2);
       else if (state === 'cutting') {
-        let ae = Math.sin(elapsed * 2 * PI_RELAY * 5.5) > 0;
-        ((R = ae ? 9 : 0.5),
-          (I = ae ? RELAY_COLOR_CUTTING : RELAY_COLOR_LIVE),
-          (se = 2.6 + Math.sin(elapsed * 9) * 1.5));
-      } else if (((cutElapsed += le), (I = RELAY_COLOR_CUT), (se = 0), cutElapsed < 0.3)) R = 9;
+        let localZ = Math.sin(elapsed * 2 * PI_RELAY * 5.5) > 0;
+        ((vCoord = localZ ? 9 : 0.5),
+          (wCoord = localZ ? RELAY_COLOR_CUTTING : RELAY_COLOR_LIVE),
+          (shadeValue = 2.6 + Math.sin(elapsed * 9) * 1.5));
+      } else if (
+        ((cutElapsed += sideSign), (wCoord = RELAY_COLOR_CUT), (shadeValue = 0), cutElapsed < 0.3)
+      )
+        vCoord = 9;
       else if (cutElapsed < 2.6) {
-        let ae = 1 - (cutElapsed - 0.3) / 2.3;
-        R =
-          7 * ae * ae * (Math.sin(cutElapsed * 37) * Math.sin(cutElapsed * 13.3) > -0.2 ? 1 : 0.08);
-      } else R = 0;
+        let localZ = 1 - (cutElapsed - 0.3) / 2.3;
+        vCoord =
+          7 *
+          localZ *
+          localZ *
+          (Math.sin(cutElapsed * 37) * Math.sin(cutElapsed * 13.3) > -0.2 ? 1 : 0.08);
+      } else vCoord = 0;
       if (
-        ((userData.level = R),
-        setEmissive(tempColor.copy(I), R),
-        (spinSpeed += (se - spinSpeed) * Math.min(1, le * (state === 'cut' ? 1.6 : 3))),
+        ((userData.level = vCoord),
+        setEmissive(tempColor.copy(wCoord), vCoord),
+        (spinSpeed +=
+          (shadeValue - spinSpeed) * Math.min(1, sideSign * (state === 'cut' ? 1.6 : 3))),
         Math.abs(spinSpeed) > 0.001)
       )
-        for (let ae of ledChildren) ae.rotateY(spinSpeed * le);
+        for (let localZ of ledChildren) localZ.rotateY(spinSpeed * sideSign);
       if (Math.abs(gateTarget - gateAngle) > 1e-4 || Math.abs(gateVelocity) > 0.001) {
-        gateVelocity += (-(gateAngle - gateTarget) * 30 - gateVelocity * 3.2) * le;
-        let ae = gateAngle + gateVelocity * le;
-        (ae < 0 && ((ae = 0), (gateVelocity = Math.abs(gateVelocity) * 0.3)),
-          ae > 1.9 && ((ae = 1.9), (gateVelocity = -Math.abs(gateVelocity) * 0.4)));
-        let k = ae - gateAngle;
-        gateAngle = ae;
-        for (let ce of doorChildren) ce.rotateY(-k);
+        gateVelocity += (-(gateAngle - gateTarget) * 30 - gateVelocity * 3.2) * sideSign;
+        let localZ = gateAngle + gateVelocity * sideSign;
+        (localZ < 0 && ((localZ = 0), (gateVelocity = Math.abs(gateVelocity) * 0.3)),
+          localZ > 1.9 && ((localZ = 1.9), (gateVelocity = -Math.abs(gateVelocity) * 0.4)));
+        let localX = localZ - gateAngle;
+        gateAngle = localZ;
+        for (let edgeX of doorChildren) edgeX.rotateY(-localX);
       }
     }),
     nodeOpts.state === 'cut')
   ) {
     userData.setState('cut');
-    for (let le = 0; le < 80; le++) userData.update(0.05);
+    for (let sideSign = 0; sideSign < 80; sideSign++) userData.update(0.05);
   } else
     (nodeOpts.state === 'cutting' && userData.setState('cutting'),
       userData.update(0),
@@ -4470,17 +4697,21 @@ export function createSandbagGeometry(width, height, depth, rand) {
     skew = rand.range(-0.05, 0.05),
     sag = rand.range(0.4, 1);
   return (
-    mapVertices(bagGeo, (l) => {
-      let c = l.x / (width / 2),
-        u = l.z / (depth / 2),
-        h = l.y / (height / 2),
-        f = 1 - 0.22 * Math.pow(Math.abs(c), 2.5);
-      ((l.z *= f * (h < 0 ? 1.05 : 1)),
-        (l.y = (l.y + height / 2) * (1 - 0.3 * Math.pow(Math.abs(c), 3)) - height / 2),
-        h > 0 && (l.y += 0.016 * Math.cos(HALF_PI * c) * Math.cos(HALF_PI * u)),
-        (l.y -= sag * 0.018 * Math.abs(c) * Math.abs(c) * (h > -0.9 ? 1 : 0) + skew * l.x * 0.3));
-      let p = valueNoise3D(l.x * 9 + noiseOff, l.y * 9, l.z * 9 + noiseOff) - 0.5;
-      ((l.x += p * 0.014), (l.z += p * 0.016), h > -0.9 && (l.y += p * 0.014));
+    mapVertices(bagGeo, (vert) => {
+      let normX = vert.x / (width / 2),
+        normZ = vert.z / (depth / 2),
+        normY = vert.y / (height / 2),
+        taper = 1 - 0.22 * Math.pow(Math.abs(normX), 2.5);
+      ((vert.z *= taper * (normY < 0 ? 1.05 : 1)),
+        (vert.y = (vert.y + height / 2) * (1 - 0.3 * Math.pow(Math.abs(normX), 3)) - height / 2),
+        normY > 0 && (vert.y += 0.016 * Math.cos(HALF_PI * normX) * Math.cos(HALF_PI * normZ)),
+        (vert.y -=
+          sag * 0.018 * Math.abs(normX) * Math.abs(normX) * (normY > -0.9 ? 1 : 0) +
+          skew * vert.x * 0.3));
+      let noise = valueNoise3D(vert.x * 9 + noiseOff, vert.y * 9, vert.z * 9 + noiseOff) - 0.5;
+      ((vert.x += noise * 0.014),
+        (vert.z += noise * 0.016),
+        normY > -0.9 && (vert.y += noise * 0.014));
     }),
     recomputeSmoothNormals(bagGeo)
   );

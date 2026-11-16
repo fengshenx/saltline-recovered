@@ -13,11 +13,11 @@ export function enableBenchmark(ctx) {
     document.getElementById('app').appendChild(benchEl));
   let gpuName = 'unknown';
   try {
-    let frameDt = ctx.renderer.getContext(),
-      pathProgress = frameDt.getExtension('WEBGL_debug_renderer_info');
-    gpuName = pathProgress
-      ? frameDt.getParameter(pathProgress.UNMASKED_RENDERER_WEBGL)
-      : frameDt.getParameter(frameDt.RENDERER);
+    let frameDelta = ctx.renderer.getContext(),
+      pathPosition = frameDelta.getExtension('WEBGL_debug_renderer_info');
+    gpuName = pathPosition
+      ? frameDelta.getParameter(pathPosition.UNMASKED_RENDERER_WEBGL)
+      : frameDelta.getParameter(frameDelta.RENDERER);
   } catch {}
   let path =
       ctx.level.cinematicPath && ctx.level.cinematicPath.length >= 2
@@ -42,35 +42,39 @@ export function enableBenchmark(ctx) {
     lookTo = new THREE.Vector3();
   (ctx.player && (ctx.player.enabled = !1),
     (ctx.bench = {
-      frame(f) {
-        elapsed += f;
-        let p = ((elapsed / lapSeconds) % 1) * (path.length - 1),
-          d = Math.min(path.length - 2, Math.floor(p)),
-          v = p - d,
-          g = v * v * (3 - 2 * v);
+      frame(frameDelta) {
+        elapsed += frameDelta;
+        let pathPosition = ((elapsed / lapSeconds) % 1) * (path.length - 1),
+          pathSegment = Math.min(path.length - 2, Math.floor(pathPosition)),
+          segmentT = pathPosition - pathSegment,
+          easedT = segmentT * segmentT * (3 - 2 * segmentT);
         if (
-          (posFrom.fromArray(path[d].pos),
-          posTo.fromArray(path[d + 1].pos),
-          lookFrom.fromArray(path[d].look),
-          lookTo.fromArray(path[d + 1].look),
-          ctx.camera.position.lerpVectors(posFrom, posTo, g),
-          ctx.camera.lookAt(lookFrom.lerp(lookTo, g)),
-          elapsed > 2 && samples.push(f * 1e3),
+          (posFrom.fromArray(path[pathSegment].pos),
+          posTo.fromArray(path[pathSegment + 1].pos),
+          lookFrom.fromArray(path[pathSegment].look),
+          lookTo.fromArray(path[pathSegment + 1].look),
+          ctx.camera.position.lerpVectors(posFrom, posTo, easedT),
+          ctx.camera.lookAt(lookFrom.lerp(lookTo, easedT)),
+          elapsed > 2 && samples.push(frameDelta * 1e3),
           samples.length > 3e3 && samples.shift(),
           elapsed - lastReport > 1 && samples.length > 10)
         ) {
           lastReport = elapsed;
-          let x = samples.slice().sort((M, E) => M - E),
-            y = x.reduce((M, E) => M + E, 0) / x.length,
-            b = x[Math.floor(x.length * 0.99)],
-            m = x[x.length >> 1],
-            A = ctx.render.stats ? ctx.render.stats() : {},
-            _ = ctx.renderer.getDrawingBufferSize(new THREE.Vector2());
+          let sortedSamples = samples
+              .slice()
+              .sort((sampleLeft, sampleRight) => sampleLeft - sampleRight),
+            meanFrameMs =
+              sortedSamples.reduce((sampleLeft, sampleRight) => sampleLeft + sampleRight, 0) /
+              sortedSamples.length,
+            p99FrameMs = sortedSamples[Math.floor(sortedSamples.length * 0.99)],
+            medianFrameMs = sortedSamples[sortedSamples.length >> 1],
+            renderStats = ctx.render.stats ? ctx.render.stats() : {},
+            drawingBufferSize = ctx.renderer.getDrawingBufferSize(new THREE.Vector2());
           benchEl.textContent = `SALTLINE BENCH  t=${elapsed.toFixed(0)}s
 GPU: ${gpuName}
-buffer ${_.x}x${_.y}  quality ${ctx.quality.name}  dpr ${window.devicePixelRatio}
-frame ms avg ${y.toFixed(1)}  median ${m.toFixed(1)}  p99 ${b.toFixed(1)}  => ${(1e3 / y).toFixed(0)} fps
-stats ${JSON.stringify(A)}
+buffer ${drawingBufferSize.x}x${drawingBufferSize.y}  quality ${ctx.quality.name}  dpr ${window.devicePixelRatio}
+frame ms avg ${meanFrameMs.toFixed(1)}  median ${medianFrameMs.toFixed(1)}  p99 ${p99FrameMs.toFixed(1)}  => ${(1e3 / meanFrameMs).toFixed(0)} fps
+stats ${JSON.stringify(renderStats)}
 errors ${window.__errors.length}${
             window.__errors.length
               ? `

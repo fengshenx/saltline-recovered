@@ -138,35 +138,37 @@ export function createWalker(ctx, rigDef, materials, index) {
     loop: null,
     sweep: 0,
     thr: 1,
-    damage(y, b, m, A) {
+    damage(deltaTime, playerRef, currentTime, isEngaging) {
       return gull.alive
-        ? ((gull.hp -= y),
+        ? ((gull.hp -= deltaTime),
           gameState.events.emit('enemy:hit', {
             enemy: gull,
-            point: b,
-            part: A || 'body',
+            point: playerRef,
+            part: isEngaging || 'body',
           }),
-          m &&
-            (gull.vel.addScaledVector(m, Math.min(3, y * 0.09)),
+          currentTime &&
+            (gull.vel.addScaledVector(currentTime, Math.min(3, deltaTime * 0.09)),
             (gull.roll += (rand() - 0.5) * 0.5),
             (gull.pitch += (rand() - 0.5) * 0.4)),
           ctx.provoke(gull),
-          gull.hp <= 0 ? (killGull(m), !0) : !1)
+          gull.hp <= 0 ? (killGull(currentTime), !0) : !1)
         : !1;
     },
-    _activate(y, b = {}) {
+    _activate(deltaTime, playerRef = {}) {
       ((gull.active = !0),
         (gull.alive = !0),
         (gull.hp = GULL_TUNE_ALIAS.hp),
-        (gull.passive = !!b.passive),
-        gull.pos.copy(y),
-        gull.home.copy(y),
+        (gull.passive = !!playerRef.passive),
+        gull.pos.copy(deltaTime),
+        gull.home.copy(deltaTime),
         gull.vel.set(0, 0, 0),
-        (gull.yaw = b.yaw ?? rand() * 6.283),
+        (gull.yaw = playerRef.yaw ?? rand() * 6.283),
         (gull.pitch = gull.roll = 0),
-        (gull.mode = b.state === 'alert' ? 'investigate' : 'patrol'),
+        (gull.mode = playerRef.state === 'alert' ? 'investigate' : 'patrol'),
         (gull.modeT = 8),
-        gull.lastKnown.copy(b.target || (gameState.player ? gameState.player.pos : y)),
+        gull.lastKnown.copy(
+          playerRef.target || (gameState.player ? gameState.player.pos : deltaTime),
+        ),
         (gull.los = !1),
         (gull.seeT = gull.noSeeT = 0),
         (gull.exposure = 0),
@@ -178,12 +180,12 @@ export function createWalker(ctx, rigDef, materials, index) {
           2 +
           rand() * (GULL_TUNE_ALIAS.rangeMax - GULL_TUNE_ALIAS.rangeMin - 5)),
         (gull.alt =
-          b.hover ??
+          playerRef.hover ??
           GULL_TUNE_ALIAS.altMin +
             0.8 +
             rand() * (GULL_TUNE_ALIAS.altMax - GULL_TUNE_ALIAS.altMin - 1.6)),
-        (gull.hoverFixed = b.hover != null),
-        (gull.patrolR = b.patrolRadius ?? 4 + rand() * 5),
+        (gull.hoverFixed = playerRef.hover != null),
+        (gull.patrolR = playerRef.patrolRadius ?? 4 + rand() * 5),
         (gull.phase = rand() * 6.283),
         (gull.orbitA = rand() * 6.283),
         (gull.ceil = 1e9),
@@ -195,7 +197,8 @@ export function createWalker(ctx, rigDef, materials, index) {
         (gull.lostRotor = -1),
         (gull.flare = 0),
         (gull.thr = 1));
-      for (let m = 0; m < 4; m++) bones['rotor' + m].scale.setScalar(1);
+      for (let currentTime = 0; currentTime < 4; currentTime++)
+        bones['rotor' + currentTime].scale.setScalar(1);
       if (
         (bones.lamp.scale.setScalar(1),
         bones.body.rotation.set(0, 0, 0),
@@ -226,32 +229,35 @@ export function createWalker(ctx, rigDef, materials, index) {
         gull.loop = null;
       }
     },
-    _raycast(y, b, m, A) {
-      let E = y.x - gull.pos.x,
-        w = (y.y - gull.pos.y + 0.03) * 2.3,
-        S = y.z - gull.pos.z,
-        z = b.x,
-        H = b.y * 2.3,
-        O = b.z,
-        q = z * z + H * H + O * O,
-        U = E * z + w * H + S * O,
-        T = E * E + w * w + S * S - 0.5 * 0.5,
-        D = U * U - q * T;
-      if (D < 0) return !1;
-      let C = (-U - Math.sqrt(D)) / q;
-      return C < 0 || C > m || C >= A.dist
+    _raycast(deltaTime, playerRef, currentTime, isEngaging) {
+      let targetX = deltaTime.x - gull.pos.x,
+        targetY = (deltaTime.y - gull.pos.y + 0.03) * 2.3,
+        targetZ = deltaTime.z - gull.pos.z,
+        horizontalSpeed = playerRef.x,
+        steerMagnitude = playerRef.y * 2.3,
+        speedTotal = playerRef.z,
+        desiredYaw =
+          horizontalSpeed * horizontalSpeed +
+          steerMagnitude * steerMagnitude +
+          speedTotal * speedTotal,
+        yawDelta = targetX * horizontalSpeed + targetY * steerMagnitude + targetZ * speedTotal,
+        yawCos = targetX * targetX + targetY * targetY + targetZ * targetZ - 0.5 * 0.5,
+        yawSin = yawDelta * yawDelta - desiredYaw * yawCos;
+      if (yawSin < 0) return !1;
+      let lateralSteer = (-yawDelta - Math.sqrt(yawSin)) / desiredYaw;
+      return lateralSteer < 0 || lateralSteer > currentTime || lateralSteer >= isEngaging.dist
         ? !1
-        : ((A.dist = C),
-          (A.part = 'body'),
-          (A.enemy = gull),
-          A.point.copy(y).addScaledVector(b, C),
-          A.normal.copy(A.point).sub(gull.pos),
-          (A.normal.y *= 2.3),
-          A.normal.normalize(),
+        : ((isEngaging.dist = lateralSteer),
+          (isEngaging.part = 'body'),
+          (isEngaging.enemy = gull),
+          isEngaging.point.copy(deltaTime).addScaledVector(playerRef, lateralSteer),
+          isEngaging.normal.copy(isEngaging.point).sub(gull.pos),
+          (isEngaging.normal.y *= 2.3),
+          isEngaging.normal.normalize(),
           !0);
     },
-    _update(y) {
-      gull.alive ? updateAlive(y) : updateDead(y);
+    _update(deltaTime) {
+      gull.alive ? updateAlive(deltaTime) : updateDead(deltaTime);
     },
   };
   function killGull(boundsMin) {

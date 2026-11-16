@@ -13,29 +13,34 @@ export function createProps(ctx) {
   return {
     names: () => Object.keys(PROP_SIZES),
     has: (e) => !!PROP_SIZES[e],
-    build(e, t = {}) {
-      if (PROP_GENERATORS[e])
+    build(propName, buildOpts = {}) {
+      if (PROP_GENERATORS[propName])
         try {
-          let o = PROP_GENERATORS[e](ctx, t);
-          if (o) return ((o.userData.prop = e), o);
-        } catch (o) {
-          console.error(`[props] builder "${e}" threw`, o);
+          let builtProp = PROP_GENERATORS[propName](ctx, buildOpts);
+          if (builtProp) return ((builtProp.userData.prop = propName), builtProp);
+        } catch (builtProp) {
+          console.error(`[props] builder "${propName}" threw`, builtProp);
         }
-      let n = PROP_SIZES[e] || [1, 1, 1, 'concrete', 'concrete'];
-      PROP_SIZES[e] || console.warn(`[props] unknown prop "${e}"`);
-      let s = new THREE.Group();
+      let sizeSpec = PROP_SIZES[propName] || [1, 1, 1, 'concrete', 'concrete'];
+      PROP_SIZES[propName] || console.warn(`[props] unknown prop "${propName}"`);
+      let fallbackGroup = new THREE.Group();
       return (
-        s.add(createShadowMesh(boxGeometry(n[0], n[1], n[2], 'bottom'), ctx.mats.get(n[3]))),
-        (s.userData.colliders = [
+        fallbackGroup.add(
+          createShadowMesh(
+            boxGeometry(sizeSpec[0], sizeSpec[1], sizeSpec[2], 'bottom'),
+            ctx.mats.get(sizeSpec[3]),
+          ),
+        ),
+        (fallbackGroup.userData.colliders = [
           {
-            min: [-n[0] / 2, 0, -n[2] / 2],
-            max: [n[0] / 2, n[1], n[2] / 2],
-            surface: n[4],
+            min: [-sizeSpec[0] / 2, 0, -sizeSpec[2] / 2],
+            max: [sizeSpec[0] / 2, sizeSpec[1], sizeSpec[2] / 2],
+            surface: sizeSpec[4],
           },
         ]),
-        (s.userData.size = [n[0], n[1], n[2]]),
-        (s.userData.prop = e),
-        s
+        (fallbackGroup.userData.size = [sizeSpec[0], sizeSpec[1], sizeSpec[2]]),
+        (fallbackGroup.userData.prop = propName),
+        fallbackGroup
       );
     },
   };

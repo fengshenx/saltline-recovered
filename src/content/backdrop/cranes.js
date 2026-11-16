@@ -125,14 +125,15 @@ var CRANE_HOUSE_X = 41;
 /**
  * 搭建 4 支腿岸桥（SALTLINE 04）：门架、主梁、臂架、机房、走梯、检修平台、灯具与吊具，返回根节点、碰撞盒与吊具对象；带 into 选项时只往外部批处理器灌几何（远景用）
  */
-export function buildQuayCrane(ctx, lamps, t = {}) {
-  let intoBatch = !!t.into,
-    depthOffset = t.dz || 0,
-    batcher = t.into || new MeshBatcher(),
+export function buildQuayCrane(ctx, lamps, craneOptions = {}) {
+  let intoBatch = !!craneOptions.into,
+    depthOffset = craneOptions.dz || 0,
+    batcher = craneOptions.into || new MeshBatcher(),
     lampTarget = intoBatch
       ? {
-          add(R, I, se, ae, k) {
-            (R.translate(0, 0, depthOffset), lamps.add(R, I, se, ae, k));
+          add(frameX, frameZ, segmentValue, spanExtent, offsetValue) {
+            (frameX.translate(0, 0, depthOffset),
+              lamps.add(frameX, frameZ, segmentValue, spanExtent, offsetValue));
           },
         }
       : lamps,
@@ -148,7 +149,7 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
     addGeom = (R, I, se) => batcher.add(R, I, se),
     colliders = [];
   if (intoBatch) {
-    let stationX = new Map([
+    let frameX = new Map([
         [greyPaint.uuid, [0.2, 0.25, 0.31]],
         [yellowPaint.uuid, [0.72, 0.52, 0.12]],
         [whitePaint.uuid, [0.78, 0.78, 0.76]],
@@ -157,10 +158,21 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
         [darkSteel.uuid, [0.1, 0.1, 0.11]],
         [hazardPaint.uuid, [0.7, 0.5, 0.1]],
       ]),
-      stationZ = t.mat;
-    ((batcher.remap = (se, ae) => {
-      let k = stationX.get(se.uuid);
-      return k ? [stationZ, ae ? [k[0] * ae[0], k[1] * ae[1], k[2] * ae[2]] : k] : null;
+      frameZ = craneOptions.mat;
+    ((batcher.remap = (segmentValue, spanExtent) => {
+      let offsetValue = frameX.get(segmentValue.uuid);
+      return offsetValue
+        ? [
+            frameZ,
+            spanExtent
+              ? [
+                  offsetValue[0] * spanExtent[0],
+                  offsetValue[1] * spanExtent[1],
+                  offsetValue[2] * spanExtent[2],
+                ]
+              : offsetValue,
+          ]
+        : null;
     }),
       (batcher.dz = depthOffset),
       (batcher.minSize = 2.6));
@@ -223,168 +235,111 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       }));
   }
   let legSegmentYs = [3.6, 7.6, 11.2, 12.5, 13.5, 17.2, 20.6, 23.8];
-  for (let stationX of [CRANE_PORTAL_X0, CRANE_PORTAL_X1])
-    for (let stationZ of [-CRANE_PORTAL_HALF_Z, CRANE_PORTAL_HALF_Z]) {
-      (addPortalFrame(stationX, stationZ),
+  for (let frameX of [CRANE_PORTAL_X0, CRANE_PORTAL_X1])
+    for (let frameZ of [-CRANE_PORTAL_HALF_Z, CRANE_PORTAL_HALF_Z]) {
+      (addPortalFrame(frameX, frameZ),
         addGeom(
           hazardPaint,
-          boxFromBounds(
-            stationX - 0.6,
-            1.6,
-            stationZ - 0.6,
-            stationX + 0.6,
-            3.6,
-            stationZ + 0.6,
-            0.04,
-          ),
+          boxFromBounds(frameX - 0.6, 1.6, frameZ - 0.6, frameX + 0.6, 3.6, frameZ + 0.6, 0.04),
         ));
-      for (let se = 0; se < legSegmentYs.length - 1; se++)
+      for (let segmentValue = 0; segmentValue < legSegmentYs.length - 1; segmentValue++)
         (addGeom(
           greyPaint,
           boxFromBounds(
-            stationX - 0.6,
-            legSegmentYs[se],
-            stationZ - 0.6,
-            stationX + 0.6,
-            legSegmentYs[se + 1],
-            stationZ + 0.6,
+            frameX - 0.6,
+            legSegmentYs[segmentValue],
+            frameZ - 0.6,
+            frameX + 0.6,
+            legSegmentYs[segmentValue + 1],
+            frameZ + 0.6,
             0.05,
           ),
           TINT_PANEL,
         ),
-          (se === 0 || se === 1 || se === 5) &&
+          (segmentValue === 0 || segmentValue === 1 || segmentValue === 5) &&
             addGeom(
               greyPaint,
               boxFromBounds(
-                stationX - 0.64,
-                legSegmentYs[se] - 0.05,
-                stationZ - 0.64,
-                stationX + 0.64,
-                legSegmentYs[se] + 0.05,
-                stationZ + 0.64,
+                frameX - 0.64,
+                legSegmentYs[segmentValue] - 0.05,
+                frameZ - 0.64,
+                frameX + 0.64,
+                legSegmentYs[segmentValue] + 0.05,
+                frameZ + 0.64,
               ),
               TINT_PANEL_DARK,
             ));
     }
   let hazardDecal = ctx.mats.decal('hazard_voltage');
-  for (let stationX of [-CRANE_PORTAL_HALF_Z, CRANE_PORTAL_HALF_Z]) {
-    let stationZ = CRANE_PORTAL_X0 - 0.6;
+  for (let frameX of [-CRANE_PORTAL_HALF_Z, CRANE_PORTAL_HALF_Z]) {
+    let frameZ = CRANE_PORTAL_X0 - 0.6;
     (addGeom(
       whitePaint,
-      boxFromBounds(
-        stationZ - 0.035,
-        1.72,
-        stationX - 0.36,
-        stationZ,
-        3.48,
-        stationX + 0.36,
-        0.012,
-      ),
+      boxFromBounds(frameZ - 0.035, 1.72, frameX - 0.36, frameZ, 3.48, frameX + 0.36, 0.012),
       [0.62, 0.66, 0.7],
     ),
       addGeom(
         darkSteel,
-        boxFromBounds(
-          stationZ - 0.05,
-          1.66,
-          stationX - 0.42,
-          stationZ - 0.005,
-          1.72,
-          stationX + 0.42,
-        ),
+        boxFromBounds(frameZ - 0.05, 1.66, frameX - 0.42, frameZ - 0.005, 1.72, frameX + 0.42),
       ),
       addGeom(
         darkSteel,
-        boxFromBounds(
-          stationZ - 0.05,
-          3.48,
-          stationX - 0.42,
-          stationZ - 0.005,
-          3.54,
-          stationX + 0.42,
-        ),
+        boxFromBounds(frameZ - 0.05, 3.48, frameX - 0.42, frameZ - 0.005, 3.54, frameX + 0.42),
       ),
       addGeom(
         darkSteel,
-        boxFromBounds(
-          stationZ - 0.05,
-          1.66,
-          stationX - 0.42,
-          stationZ - 0.005,
-          3.54,
-          stationX - 0.36,
-        ),
+        boxFromBounds(frameZ - 0.05, 1.66, frameX - 0.42, frameZ - 0.005, 3.54, frameX - 0.36),
       ),
       addGeom(
         darkSteel,
-        boxFromBounds(
-          stationZ - 0.05,
-          1.66,
-          stationX + 0.36,
-          stationZ - 0.005,
-          3.54,
-          stationX + 0.42,
-        ),
+        boxFromBounds(frameZ - 0.05, 1.66, frameX + 0.36, frameZ - 0.005, 3.54, frameX + 0.42),
       ),
       addGeom(
         galvSteel,
         strutBetween(
-          [stationZ - 0.08, 2.45, stationX + 0.26],
-          [stationZ - 0.08, 2.75, stationX + 0.26],
+          [frameZ - 0.08, 2.45, frameX + 0.26],
+          [frameZ - 0.08, 2.75, frameX + 0.26],
           0.014,
           5,
         ),
       ));
-    for (let se of [2, 3.2])
+    for (let segmentValue of [2, 3.2])
       addGeom(
         darkSteel,
         boxFromBounds(
-          stationZ - 0.06,
-          se - 0.07,
-          stationX - 0.37,
-          stationZ - 0.03,
-          se + 0.07,
-          stationX - 0.33,
+          frameZ - 0.06,
+          segmentValue - 0.07,
+          frameX - 0.37,
+          frameZ - 0.03,
+          segmentValue + 0.07,
+          frameX - 0.33,
         ),
       );
-    (addGeom(
-      galvSteel,
-      boxFromBounds(stationZ - 0.3, 1.5, stationX - 0.4, stationZ, 1.56, stationX + 0.4),
-    ),
+    (addGeom(galvSteel, boxFromBounds(frameZ - 0.3, 1.5, frameX - 0.4, frameZ, 1.56, frameX + 0.4)),
       addGeom(
         galvSteel,
-        boxFromBounds(stationZ - 0.3, 1, stationX - 0.4, stationZ - 0.02, 1.05, stationX + 0.4),
+        boxFromBounds(frameZ - 0.3, 1, frameX - 0.4, frameZ - 0.02, 1.05, frameX + 0.4),
       ),
-      addGeom(
-        hazardDecal.material,
-        planeAt(0.3, 0.3, stationZ - 0.04, 3.1, stationX, -Math.PI / 2),
-      ));
+      addGeom(hazardDecal.material, planeAt(0.3, 0.3, frameZ - 0.04, 3.1, frameX, -Math.PI / 2)));
   }
-  for (let stationX of [CRANE_PORTAL_X0, CRANE_PORTAL_X1]) {
+  for (let frameX of [CRANE_PORTAL_X0, CRANE_PORTAL_X1]) {
     addGeom(
       greyPaint,
       boxFromBounds(
-        stationX - 0.45,
+        frameX - 0.45,
         3.6,
         -CRANE_PORTAL_HALF_Z + 0.6,
-        stationX + 0.45,
+        frameX + 0.45,
         4.6,
         CRANE_PORTAL_HALF_Z - 0.6,
         0.05,
       ),
       TINT_PANEL,
     );
-    for (let stationZ of [-2.4, 0, 2.4])
+    for (let frameZ of [-2.4, 0, 2.4])
       addGeom(
         greyPaint,
-        boxFromBounds(
-          stationX - 0.48,
-          3.58,
-          stationZ - 0.03,
-          stationX + 0.48,
-          4.62,
-          stationZ + 0.03,
-        ),
+        boxFromBounds(frameX - 0.48, 3.58, frameZ - 0.03, frameX + 0.48, 4.62, frameZ + 0.03),
         TINT_PANEL_DARK,
       );
   }
@@ -433,48 +388,55 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       boxFromBounds(CRANE_PORTAL_X0 - 0.42, 4.6, 1, CRANE_PORTAL_X0 + 0.42, 6.3, 3.6, 0.03),
       TINT_WHITE,
     ));
-  for (let stationX of [1.65, 2.3, 2.95])
+  for (let frameX of [1.65, 2.3, 2.95])
     addGeom(
       darkSteel,
       boxFromBounds(
         CRANE_PORTAL_X0 - 0.44,
         4.7,
-        stationX - 0.01,
+        frameX - 0.01,
         CRANE_PORTAL_X0 - 0.42,
         6.2,
-        stationX + 0.01,
+        frameX + 0.01,
       ),
     );
   addGeom(
     galvSteel,
     boxFromBounds(CRANE_PORTAL_X0 - 0.47, 5.6, 1.2, CRANE_PORTAL_X0 - 0.42, 6.1, 1.55),
   );
-  for (let stationX of [-CRANE_PORTAL_HALF_Z, CRANE_PORTAL_HALF_Z]) {
+  for (let frameX of [-CRANE_PORTAL_HALF_Z, CRANE_PORTAL_HALF_Z]) {
     addGeom(
       greyPaint,
       boxFromBounds(
         CRANE_PORTAL_X0 + 0.6,
         12.5,
-        stationX - 0.45,
+        frameX - 0.45,
         CRANE_PORTAL_X1 - 0.6,
         13.5,
-        stationX + 0.45,
+        frameX + 0.45,
         0.05,
       ),
       TINT_PANEL,
     );
-    for (let se of [21, 23.5, 26])
+    for (let segmentValue of [21, 23.5, 26])
       addGeom(
         greyPaint,
-        boxFromBounds(se - 0.03, 12.48, stationX - 0.48, se + 0.03, 13.52, stationX + 0.48),
+        boxFromBounds(
+          segmentValue - 0.03,
+          12.48,
+          frameX - 0.48,
+          segmentValue + 0.03,
+          13.52,
+          frameX + 0.48,
+        ),
         TINT_PANEL_DARK,
       );
-    let stationZ = Math.sign(stationX);
+    let frameZ = Math.sign(frameX);
     (addGeom(
       greyPaint,
       beamBetween(
-        [CRANE_PORTAL_X0 + 0.5, 9.6, stationX],
-        [CRANE_PORTAL_X0 + 3.4, 12.6, stationX],
+        [CRANE_PORTAL_X0 + 0.5, 9.6, frameX],
+        [CRANE_PORTAL_X0 + 3.4, 12.6, frameX],
         0.4,
         0.4,
         0.03,
@@ -484,20 +446,20 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       addGeom(
         greyPaint,
         beamBetween(
-          [CRANE_PORTAL_X1 - 0.5, 9.6, stationX],
-          [CRANE_PORTAL_X1 - 3.4, 12.6, stationX],
+          [CRANE_PORTAL_X1 - 0.5, 9.6, frameX],
+          [CRANE_PORTAL_X1 - 3.4, 12.6, frameX],
           0.4,
           0.4,
           0.03,
         ),
         TINT_PANEL,
       ));
-    for (let se of [CRANE_PORTAL_X0, CRANE_PORTAL_X1])
+    for (let segmentValue of [CRANE_PORTAL_X0, CRANE_PORTAL_X1])
       addGeom(
         greyPaint,
         beamBetween(
-          [se, 9.6, stationX - stationZ * 0.5],
-          [se, 12.6, stationX - stationZ * 3.4],
+          [segmentValue, 9.6, frameX - frameZ * 0.5],
+          [segmentValue, 12.6, frameX - frameZ * 3.4],
           0.4,
           0.4,
           0.03,
@@ -507,8 +469,8 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
     (addGeom(
       greyPaint,
       strutBetween(
-        [CRANE_PORTAL_X1 - 0.4, 13.7, stationX],
-        [CRANE_PORTAL_X0 + 0.4, 22.7, stationX],
+        [CRANE_PORTAL_X1 - 0.4, 13.7, frameX],
+        [CRANE_PORTAL_X0 + 0.4, 22.7, frameX],
         0.2,
         10,
       ),
@@ -517,8 +479,8 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       addGeom(
         greyPaint,
         strutBetween(
-          [CRANE_PORTAL_X0 + 0.4, 13.7, stationX],
-          [CRANE_PORTAL_X1 - 0.4, 22.7, stationX],
+          [CRANE_PORTAL_X0 + 0.4, 13.7, frameX],
+          [CRANE_PORTAL_X1 - 0.4, 22.7, frameX],
           0.2,
           10,
         ),
@@ -526,7 +488,7 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       ),
       addGeom(
         greyPaint,
-        boxFromBounds(23.5 - 0.5, 17.7, stationX - 0.24, 23.5 + 0.5, 18.7, stationX + 0.24, 0.03),
+        boxFromBounds(23.5 - 0.5, 17.7, frameX - 0.24, 23.5 + 0.5, 18.7, frameX + 0.24, 0.03),
         TINT_PANEL_DARK,
       ),
       addGeom(
@@ -534,23 +496,23 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
         boxFromBounds(
           CRANE_PORTAL_X0 + 0.6,
           22.95,
-          stationX - 0.35,
+          frameX - 0.35,
           CRANE_PORTAL_X1 - 0.6,
           23.7,
-          stationX + 0.35,
+          frameX + 0.35,
           0.04,
         ),
         TINT_PANEL,
       ));
   }
-  for (let stationX of [CRANE_PORTAL_X0, CRANE_PORTAL_X1]) {
+  for (let frameX of [CRANE_PORTAL_X0, CRANE_PORTAL_X1]) {
     (addGeom(
       greyPaint,
       boxFromBounds(
-        stationX - 0.45,
+        frameX - 0.45,
         12.5,
         -CRANE_PORTAL_HALF_Z + 0.6,
-        stationX + 0.45,
+        frameX + 0.45,
         13.5,
         CRANE_PORTAL_HALF_Z - 0.6,
         0.05,
@@ -560,22 +522,22 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       addGeom(
         greyPaint,
         boxFromBounds(
-          stationX - 0.45,
+          frameX - 0.45,
           22.8,
           -CRANE_PORTAL_HALF_Z + 0.6,
-          stationX + 0.45,
+          frameX + 0.45,
           23.8,
           CRANE_PORTAL_HALF_Z - 0.6,
           0.05,
         ),
         TINT_PANEL,
       ));
-    for (let stationZ of [-1, 1])
+    for (let frameZ of [-1, 1])
       addGeom(
         greyPaint,
         beamBetween(
-          [stationX, 20.2, stationZ * (CRANE_PORTAL_HALF_Z - 0.5)],
-          [stationX, 22.8, stationZ * (CRANE_BOOM_HALF_Z + 1.2)],
+          [frameX, 20.2, frameZ * (CRANE_PORTAL_HALF_Z - 0.5)],
+          [frameX, 22.8, frameZ * (CRANE_BOOM_HALF_Z + 1.2)],
           0.36,
           0.36,
           0.03,
@@ -614,9 +576,9 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       },
     ));
   let boomEndX = CRANE_PORTAL_X1 + 1.3;
-  for (let stationX of [-1, 1]) {
-    let stationZ = stationX * CRANE_BOOM_HALF_Z,
-      se = [
+  for (let frameX of [-1, 1]) {
+    let frameZ = frameX * CRANE_BOOM_HALF_Z,
+      segmentValue = [
         CRANE_BOOM_X0,
         15.4,
         CRANE_PORTAL_X0,
@@ -633,32 +595,32 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
         57.6,
         CRANE_BOOM_X1,
       ];
-    for (let ce = 0; ce < se.length - 1; ce++)
-      ce !== 6 &&
+    for (let offsetAlong = 0; offsetAlong < segmentValue.length - 1; offsetAlong++)
+      offsetAlong !== 6 &&
         (addGeom(
           greyPaint,
           boxFromBounds(
-            se[ce],
+            segmentValue[offsetAlong],
             CRANE_GIRDER_Y0,
-            stationZ - 0.45,
-            se[ce + 1],
+            frameZ - 0.45,
+            segmentValue[offsetAlong + 1],
             CRANE_GIRDER_Y1,
-            stationZ + 0.45,
+            frameZ + 0.45,
             0.05,
           ),
           TINT_PANEL,
         ),
-        ce > 0 &&
-          ce !== 7 &&
+        offsetAlong > 0 &&
+          offsetAlong !== 7 &&
           addGeom(
             greyPaint,
             boxFromBounds(
-              se[ce] - 0.035,
+              segmentValue[offsetAlong] - 0.035,
               CRANE_GIRDER_Y0 - 0.05,
-              stationZ - 0.5,
-              se[ce] + 0.035,
+              frameZ - 0.5,
+              segmentValue[offsetAlong] + 0.035,
               CRANE_GIRDER_Y1 + 0.05,
-              stationZ + 0.5,
+              frameZ + 0.5,
             ),
             TINT_PANEL_DARK,
           ));
@@ -667,10 +629,10 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       boxFromBounds(
         boomEndX - 0.7,
         CRANE_GIRDER_Y1 - 0.1,
-        stationZ - 0.52,
+        frameZ - 0.52,
         boomEndX + 0.7,
         CRANE_GIRDER_Y1 + 0.55,
-        stationZ - 0.4,
+        frameZ - 0.4,
         0.03,
       ),
       TINT_PANEL_DARK,
@@ -680,59 +642,64 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
         boxFromBounds(
           boomEndX - 0.7,
           CRANE_GIRDER_Y1 - 0.1,
-          stationZ + 0.4,
+          frameZ + 0.4,
           boomEndX + 0.7,
           CRANE_GIRDER_Y1 + 0.55,
-          stationZ + 0.52,
+          frameZ + 0.52,
           0.03,
         ),
         TINT_PANEL_DARK,
       ),
       addGeom(
         galvSteel,
-        cylinderFromAxis(0.16, 0.16, 1.2, 'z', boomEndX, CRANE_GIRDER_Y1 + 0.22, stationZ, 12),
+        cylinderFromAxis(0.16, 0.16, 1.2, 'z', boomEndX, CRANE_GIRDER_Y1 + 0.22, frameZ, 12),
       ),
       addGeom(
         darkSteel,
         boxFromBounds(
           CRANE_BOOM_X0 + 0.3,
           CRANE_GIRDER_Y1,
-          stationZ - stationX * 0.32 - 0.05,
+          frameZ - frameX * 0.32 - 0.05,
           CRANE_BOOM_X1 - 0.3,
           CRANE_GIRDER_Y1 + 0.09,
-          stationZ - stationX * 0.32 + 0.05,
+          frameZ - frameX * 0.32 + 0.05,
         ),
       ));
-    let ae = stationZ + stationX * 0.45,
-      k = stationZ + stationX * 1.35;
+    let spanExtent = frameZ + frameX * 0.45,
+      offsetValue = frameZ + frameX * 1.35;
     addGeom(
       galvSteel,
       boxFromBounds(
         CRANE_BOOM_X0 + 0.2,
         21.86,
-        Math.min(ae, k),
+        Math.min(spanExtent, offsetValue),
         CRANE_BOOM_X1 - 0.2,
         21.9,
-        Math.max(ae, k),
+        Math.max(spanExtent, offsetValue),
       ),
     );
-    for (let ce = CRANE_BOOM_X0 + 0.6; ce < CRANE_BOOM_X1; ce += 2.45)
+    for (let offsetAlong = CRANE_BOOM_X0 + 0.6; offsetAlong < CRANE_BOOM_X1; offsetAlong += 2.45)
       (addGeom(
         greyPaint,
-        beamBetween([ce, 21.84, ae], [ce, 21.3, ae], 0.07, 0.07),
+        beamBetween([offsetAlong, 21.84, spanExtent], [offsetAlong, 21.3, spanExtent], 0.07, 0.07),
         TINT_PANEL_DARK,
       ),
         addGeom(
           greyPaint,
-          beamBetween([ce, 21.82, k], [ce, 21.36, ae], 0.06, 0.08),
+          beamBetween(
+            [offsetAlong, 21.82, offsetValue],
+            [offsetAlong, 21.36, spanExtent],
+            0.06,
+            0.08,
+          ),
           TINT_PANEL_DARK,
         ));
     (addRailing(
       batcher,
       yellowPaint,
       [
-        [CRANE_BOOM_X0 + 0.2, 21.9, k - stationX * 0.03],
-        [CRANE_BOOM_X1 - 0.2, 21.9, k - stationX * 0.03],
+        [CRANE_BOOM_X0 + 0.2, 21.9, offsetValue - frameX * 0.03],
+        [CRANE_BOOM_X1 - 0.2, 21.9, offsetValue - frameX * 0.03],
       ],
       {
         post: 2.45,
@@ -744,61 +711,61 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
         boxFromBounds(
           CRANE_BOOM_X0 + 0.2,
           21.9,
-          k - stationX * 0.03 - 0.008,
+          offsetValue - frameX * 0.03 - 0.008,
           CRANE_BOOM_X1 - 0.2,
           22.02,
-          k - stationX * 0.03 + 0.008,
+          offsetValue - frameX * 0.03 + 0.008,
         ),
         TINT_YELLOW,
       ));
-    for (let ce of [44, 58])
+    for (let offsetAlong of [44, 58])
       addGeom(
         greyPaint,
         boxFromBounds(
-          ce - 0.18,
+          offsetAlong - 0.18,
           CRANE_GIRDER_Y1,
-          stationZ - 0.2,
-          ce + 0.18,
+          frameZ - 0.2,
+          offsetAlong + 0.18,
           CRANE_GIRDER_Y1 + 1.5,
-          stationZ + 0.2,
+          frameZ + 0.2,
           0.03,
         ),
         TINT_PANEL,
       );
   }
-  for (let stationX of [44, 58])
+  for (let frameX of [44, 58])
     addGeom(
       greyPaint,
       boxFromBounds(
-        stationX - 0.2,
+        frameX - 0.2,
         CRANE_GIRDER_Y1 + 1.2,
         -CRANE_BOOM_HALF_Z - 0.3,
-        stationX + 0.2,
+        frameX + 0.2,
         CRANE_GIRDER_Y1 + 1.6,
         CRANE_BOOM_HALF_Z + 0.3,
         0.04,
       ),
       TINT_PANEL,
     );
-  for (let stationX of [CRANE_BOOM_X0 + 0.25, CRANE_BOOM_X1 - 0.25]) {
+  for (let frameX of [CRANE_BOOM_X0 + 0.25, CRANE_BOOM_X1 - 0.25]) {
     addGeom(
       greyPaint,
       boxFromBounds(
-        stationX - 0.25,
+        frameX - 0.25,
         CRANE_GIRDER_Y0 + 0.1,
         -CRANE_BOOM_HALF_Z + 0.45,
-        stationX + 0.25,
+        frameX + 0.25,
         CRANE_GIRDER_Y1 - 0.1,
         CRANE_BOOM_HALF_Z - 0.45,
         0.05,
       ),
       TINT_PANEL,
     );
-    let stationZ = stationX < 30 ? 1 : -1;
-    for (let se of [-0.8, 0.8])
+    let frameZ = frameX < 30 ? 1 : -1;
+    for (let segmentValue of [-0.8, 0.8])
       addGeom(
         darkSteel,
-        cylinderFromAxis(0.14, 0.14, 0.4, 'x', stationX + stationZ * 0.45, 22, se, 10),
+        cylinderFromAxis(0.14, 0.14, 0.4, 'x', frameX + frameZ * 0.45, 22, segmentValue, 10),
       );
   }
   (addGeom(
@@ -845,12 +812,12 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
   let apexX = 27.6,
     apexY = 30,
     apexHalfZ = 1.5;
-  for (let stationX of [-1, 1]) {
+  for (let frameX of [-1, 1]) {
     (addGeom(
       greyPaint,
       beamBetween(
-        [CRANE_PORTAL_X1, 23.8, stationX * CRANE_PORTAL_HALF_Z],
-        [apexX, apexY, stationX * apexHalfZ],
+        [CRANE_PORTAL_X1, 23.8, frameX * CRANE_PORTAL_HALF_Z],
+        [apexX, apexY, frameX * apexHalfZ],
         0.55,
         0.55,
         0.04,
@@ -860,31 +827,31 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       addGeom(
         greyPaint,
         beamBetween(
-          [CRANE_PORTAL_X0, 23.8, stationX * CRANE_PORTAL_HALF_Z],
-          [apexX, apexY, stationX * apexHalfZ],
+          [CRANE_PORTAL_X0, 23.8, frameX * CRANE_PORTAL_HALF_Z],
+          [apexX, apexY, frameX * apexHalfZ],
           0.5,
           0.5,
           0.04,
         ),
         TINT_PANEL,
       ));
-    for (let [stationZ, se] of [
+    for (let [frameZ, segmentValue] of [
       [44, 0.1],
       [58, 0.1],
     ]) {
-      let ae = newVec3(apexX + 0.3, apexY, stationX * apexHalfZ),
-        k = newVec3(stationZ, CRANE_GIRDER_Y1 + 1.45, stationX * CRANE_BOOM_HALF_Z);
-      addGeom(greyPaint, strutBetween(ae, k, se, 8), TINT_PANEL);
-      let ce = ae.clone().lerp(k, 0.5);
+      let spanExtent = newVec3(apexX + 0.3, apexY, frameX * apexHalfZ),
+        offsetValue = newVec3(frameZ, CRANE_GIRDER_Y1 + 1.45, frameX * CRANE_BOOM_HALF_Z);
+      addGeom(greyPaint, strutBetween(spanExtent, offsetValue, segmentValue, 8), TINT_PANEL);
+      let offsetAlong = spanExtent.clone().lerp(offsetValue, 0.5);
       addGeom(
         greyPaint,
         boxFromBounds(
-          ce.x - 0.3,
-          ce.y - 0.16,
-          ce.z - 0.14,
-          ce.x + 0.3,
-          ce.y + 0.16,
-          ce.z + 0.14,
+          offsetAlong.x - 0.3,
+          offsetAlong.y - 0.16,
+          offsetAlong.z - 0.14,
+          offsetAlong.x + 0.3,
+          offsetAlong.y + 0.16,
+          offsetAlong.z + 0.14,
           0.03,
         ),
         TINT_PANEL_DARK,
@@ -893,15 +860,15 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
     (addGeom(
       darkSteel,
       strutBetween(
-        [apexX + 0.2, apexY + 0.35, stationX * 0.9],
-        [50, CRANE_GIRDER_Y1 + 0.2, stationX * 1],
+        [apexX + 0.2, apexY + 0.35, frameX * 0.9],
+        [50, CRANE_GIRDER_Y1 + 0.2, frameX * 1],
         0.022,
         5,
       ),
     ),
       addGeom(
         darkSteel,
-        cylinderFromAxis(0.5, 0.5, 0.18, 'z', apexX, apexY + 0.25, stationX * 0.9, 16),
+        cylinderFromAxis(0.5, 0.5, 0.18, 'z', apexX, apexY + 0.25, frameX * 0.9, 16),
       ));
   }
   addGeom(
@@ -918,42 +885,48 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
     TINT_PANEL,
   );
   {
-    let stationX = (k, ce) =>
+    let frameX = (k, ce) =>
         newVec3(
           CRANE_PORTAL_X1 + (apexX - CRANE_PORTAL_X1) * k,
           23.8 + (apexY - 23.8) * k,
           ce * (CRANE_PORTAL_HALF_Z + (apexHalfZ - CRANE_PORTAL_HALF_Z) * k),
         ),
-      stationZ = (k, ce) =>
+      frameZ = (k, ce) =>
         newVec3(
           CRANE_PORTAL_X0 + (apexX - CRANE_PORTAL_X0) * k,
           23.8 + (apexY - 23.8) * k,
           ce * (CRANE_PORTAL_HALF_Z + (apexHalfZ - CRANE_PORTAL_HALF_Z) * k),
         );
-    (addGeom(
-      greyPaint,
-      beamBetween(stationX(0.5, -1), stationX(0.5, 1), 0.3, 0.3, 0.02),
-      TINT_PANEL,
-    ),
+    (addGeom(greyPaint, beamBetween(frameX(0.5, -1), frameX(0.5, 1), 0.3, 0.3, 0.02), TINT_PANEL),
       addGeom(
         greyPaint,
-        beamBetween(stationZ(0.55, -1), stationZ(0.55, 1), 0.3, 0.3, 0.02),
+        beamBetween(frameZ(0.55, -1), frameZ(0.55, 1), 0.3, 0.3, 0.02),
         TINT_PANEL,
       ),
-      addGeom(greyPaint, strutBetween(stationZ(0.55, -1), stationX(0.5, -1), 0.09, 6), TINT_PANEL),
-      addGeom(greyPaint, strutBetween(stationZ(0.55, 1), stationX(0.5, 1), 0.09, 6), TINT_PANEL));
-    let se = stationX(0.02, 1),
-      ae = stationX(0.97, 1);
-    for (let k of [-0.22, 0.22])
+      addGeom(greyPaint, strutBetween(frameZ(0.55, -1), frameX(0.5, -1), 0.09, 6), TINT_PANEL),
+      addGeom(greyPaint, strutBetween(frameZ(0.55, 1), frameX(0.5, 1), 0.09, 6), TINT_PANEL));
+    let segmentValue = frameX(0.02, 1),
+      spanExtent = frameX(0.97, 1);
+    for (let offsetValue of [-0.22, 0.22])
       addGeom(
         galvSteel,
-        strutBetween([se.x - 0.42, se.y, se.z + k], [ae.x - 0.42, ae.y, ae.z + k], 0.02, 4),
+        strutBetween(
+          [segmentValue.x - 0.42, segmentValue.y, segmentValue.z + offsetValue],
+          [spanExtent.x - 0.42, spanExtent.y, spanExtent.z + offsetValue],
+          0.02,
+          4,
+        ),
       );
-    for (let k = 0.03; k < 1; k += 0.045) {
-      let ce = se.clone().lerp(ae, k);
+    for (let offsetValue = 0.03; offsetValue < 1; offsetValue += 0.045) {
+      let offsetAlong = segmentValue.clone().lerp(spanExtent, offsetValue);
       addGeom(
         galvSteel,
-        strutBetween([ce.x - 0.42, ce.y, ce.z - 0.22], [ce.x - 0.42, ce.y, ce.z + 0.22], 0.012, 4),
+        strutBetween(
+          [offsetAlong.x - 0.42, offsetAlong.y, offsetAlong.z - 0.22],
+          [offsetAlong.x - 0.42, offsetAlong.y, offsetAlong.z + 0.22],
+          0.012,
+          4,
+        ),
       );
     }
   }
@@ -970,16 +943,16 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
     ),
     TINT_PANEL,
   );
-  for (let stationX of [-1, 1])
+  for (let frameX of [-1, 1])
     (addGeom(
       greyPaint,
       boxFromBounds(
         CRANE_BOOM_X0 + 0.08,
         CRANE_GIRDER_Y1 + 0.4,
-        stationX * 3.3 - 0.2,
+        frameX * 3.3 - 0.2,
         CRANE_BOOM_X0 + 0.52,
         CRANE_GIRDER_Y1 + 1,
-        stationX * 3.3 + 0.2,
+        frameX * 3.3 + 0.2,
         0.03,
       ),
       TINT_PANEL_DARK,
@@ -987,8 +960,8 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       addGeom(
         greyPaint,
         strutBetween(
-          [apexX - 0.3, apexY, stationX * apexHalfZ],
-          [CRANE_BOOM_X0 + 0.3, CRANE_GIRDER_Y1 + 0.8, stationX * 3.3],
+          [apexX - 0.3, apexY, frameX * apexHalfZ],
+          [CRANE_BOOM_X0 + 0.3, CRANE_GIRDER_Y1 + 0.8, frameX * 3.3],
           0.1,
           8,
         ),
@@ -1003,7 +976,7 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
           'z',
           CRANE_BOOM_X0 + 0.3,
           CRANE_GIRDER_Y1 + 0.8,
-          stationX * 3.3,
+          frameX * 3.3,
           10,
         ),
       ));
@@ -1039,13 +1012,10 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       galvSteel,
       strutBetween([apexX - 0.5, apexY + 1.5, 0], [apexX + 0.5, apexY + 1.5, 0], 0.018, 4),
     ));
-  for (let stationX of [-0.5, 0.5])
-    (addGeom(
-      darkSteel,
-      cylinderFromAxis(0.1, 0.12, 0.1, 'y', apexX + stationX, apexY + 1.56, 0, 8),
-    ),
+  for (let frameX of [-0.5, 0.5])
+    (addGeom(darkSteel, cylinderFromAxis(0.1, 0.12, 0.1, 'y', apexX + frameX, apexY + 1.56, 0, 8)),
       lampTarget.add(
-        makeBeaconGeo(apexX + stationX, apexY + 1.72, 0, 0.15),
+        makeBeaconGeo(apexX + frameX, apexY + 1.72, 0, 0.15),
         [10, 0.5, 0.25],
         2.6,
         0,
@@ -1086,17 +1056,17 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
         0.03,
       ),
     ));
-  for (let stationX = houseX0 + 1.3; stationX < houseX1; stationX += 1.3)
-    for (let stationZ of [-1, 1])
+  for (let frameX = houseX0 + 1.3; frameX < houseX1; frameX += 1.3)
+    for (let frameZ of [-1, 1])
       addGeom(
         whitePaint,
         boxFromBounds(
-          stationX - 0.02,
+          frameX - 0.02,
           houseY0 + 0.1,
-          stationZ * houseHalfZ - 0.015,
-          stationX + 0.02,
+          frameZ * houseHalfZ - 0.015,
+          frameX + 0.02,
           houseY1,
-          stationZ * houseHalfZ + 0.015,
+          frameZ * houseHalfZ + 0.015,
         ),
         [0.7, 0.72, 0.74],
       );
@@ -1110,15 +1080,15 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
     for (let Te of ve) (Te.rotateY(ce), Te.translate(R, I, se));
     (addGeom(darkSteel, ve.shift()), addGeom(galvSteel, ve));
   }
-  for (let stationX of [-1, 1])
-    for (let stationZ of [houseX0 + 1.4, houseX0 + 3.9, houseX0 + 6.1])
+  for (let frameX of [-1, 1])
+    for (let frameZ of [houseX0 + 1.4, houseX0 + 3.9, houseX0 + 6.1])
       addRollerDoor(
-        stationZ,
+        frameZ,
         24.5,
-        stationX * (houseHalfZ + 0.005),
+        frameX * (houseHalfZ + 0.005),
         1.5,
         1.3,
-        stationX > 0 ? 0 : Math.PI,
+        frameX > 0 ? 0 : Math.PI,
       );
   (addRollerDoor(houseX0 - 0.005, 23.75, -1.9, 1.4, 1.1, -Math.PI / 2),
     addGeom(
@@ -1173,12 +1143,9 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
         tint: TINT_YELLOW,
       },
     ));
-  for (let stationX of [houseX0 + 1.9, houseX0 + 5.6])
-    (addGeom(galvSteel, cylinderFromAxis(0.28, 0.28, 0.5, 'y', stationX, houseY1 + 0.37, -1.2, 10)),
-      addGeom(
-        galvSteel,
-        cylinderFromAxis(0.1, 0.5, 0.22, 'y', stationX, houseY1 + 0.72, -1.2, 10),
-      ));
+  for (let frameX of [houseX0 + 1.9, houseX0 + 5.6])
+    (addGeom(galvSteel, cylinderFromAxis(0.28, 0.28, 0.5, 'y', frameX, houseY1 + 0.37, -1.2, 10)),
+      addGeom(galvSteel, cylinderFromAxis(0.1, 0.5, 0.22, 'y', frameX, houseY1 + 0.72, -1.2, 10)));
   (addGeom(darkSteel, cylinderFromAxis(0.13, 0.13, 1.6, 'y', houseX0 + 3.7, houseY1 + 0.9, 1.9, 8)),
     addGeom(
       darkSteel,
@@ -1260,23 +1227,23 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
     );
   }
   let landingYs = [3.6, 6.9, 10.2, 13.5, 16.8, 20.1];
-  for (let stationX = 0; stationX < 5; stationX++)
-    stationX % 2 === 0
-      ? (addStairLanding(stairX0[0], stairX0[1], landingYs[stationX], -1),
+  for (let frameX = 0; frameX < 5; frameX++)
+    frameX % 2 === 0
+      ? (addStairLanding(stairX0[0], stairX0[1], landingYs[frameX], -1),
         addStairFlight(
           stairX0[1],
-          landingYs[stationX],
+          landingYs[frameX],
           stairX1[0],
-          landingYs[stationX + 1],
+          landingYs[frameX + 1],
           stairZ0,
           stairZ1,
         ))
-      : (addStairLanding(stairX1[0], stairX1[1], landingYs[stationX], 1),
+      : (addStairLanding(stairX1[0], stairX1[1], landingYs[frameX], 1),
         addStairFlight(
           stairX1[0],
-          landingYs[stationX],
+          landingYs[frameX],
           stairX0[1],
-          landingYs[stationX + 1],
+          landingYs[frameX + 1],
           stairZ1,
           stairZ2,
         ));
@@ -1309,47 +1276,47 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       },
     ),
     addGeom(galvSteel, boxFromBounds(stairX1[0], 13.45, 4.95, stairX1[1], 13.5, stairZ0)));
-  for (let stationX of [stairX0[0], stairX1[1]])
-    for (let stationZ of [stairZ0 - 0.05, stairZ2 + 0.05])
+  for (let frameX of [stairX0[0], stairX1[1]])
+    for (let frameZ of [stairZ0 - 0.05, stairZ2 + 0.05])
       addGeom(
         greyPaint,
-        boxFromBounds(
-          stationX - 0.07,
-          3.3,
-          stationZ - 0.07,
-          stationX + 0.07,
-          21.4,
-          stationZ + 0.07,
-        ),
+        boxFromBounds(frameX - 0.07, 3.3, frameZ - 0.07, frameX + 0.07, 21.4, frameZ + 0.07),
         TINT_PANEL,
       );
-  for (let stationX = 0; stationX < landingYs.length; stationX++) {
-    let stationZ = landingYs[stationX] - 0.25;
+  for (let frameX = 0; frameX < landingYs.length; frameX++) {
+    let frameZ = landingYs[frameX] - 0.25;
     addGeom(
       greyPaint,
       boxFromBounds(
         stairX0[0],
-        stationZ - 0.06,
+        frameZ - 0.06,
         stairZ2 + 0,
         stairX1[1],
-        stationZ + 0.06,
+        frameZ + 0.06,
         stairZ2 + 0.1,
       ),
       TINT_PANEL_DARK,
     );
-    for (let se of [stairX0[0], stairX1[1]])
+    for (let segmentValue of [stairX0[0], stairX1[1]])
       addGeom(
         greyPaint,
-        boxFromBounds(se - 0.05, stationZ - 0.06, 5.9, se + 0.05, stationZ + 0.06, stairZ2 + 0.1),
+        boxFromBounds(
+          segmentValue - 0.05,
+          frameZ - 0.06,
+          5.9,
+          segmentValue + 0.05,
+          frameZ + 0.06,
+          stairZ2 + 0.1,
+        ),
         TINT_PANEL_DARK,
       );
-    if (stationX < landingYs.length - 1) {
-      let se = landingYs[stationX + 1] - 0.25;
+    if (frameX < landingYs.length - 1) {
+      let segmentValue = landingYs[frameX + 1] - 0.25;
       (addGeom(
         greyPaint,
         strutBetween(
-          [stairX0[0], stationZ, stairZ2 + 0.05],
-          [stairX1[1], se, stairZ2 + 0.05],
+          [stairX0[0], frameZ, stairZ2 + 0.05],
+          [stairX1[1], segmentValue, stairZ2 + 0.05],
           0.03,
           5,
         ),
@@ -1358,8 +1325,8 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
         addGeom(
           greyPaint,
           strutBetween(
-            [stairX1[1], stationZ, stairZ2 + 0.05],
-            [stairX0[0], se, stairZ2 + 0.05],
+            [stairX1[1], frameZ, stairZ2 + 0.05],
+            [stairX0[0], segmentValue, stairZ2 + 0.05],
             0.03,
             5,
           ),
@@ -1368,42 +1335,53 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
     }
   }
   {
-    let stationX = stairX0[0] - 0.05,
-      stationZ = 7.35;
-    for (let ae of [-0.22, 0.22])
-      addGeom(
-        galvSteel,
-        strutBetween([stationX, 0.05, stationZ + ae], [stationX, 4.75, stationZ + ae], 0.022, 5),
-      );
-    for (let ae = 0.3; ae < 4.7; ae += 0.3)
-      addGeom(
-        galvSteel,
-        strutBetween([stationX, ae, stationZ - 0.22], [stationX, ae, stationZ + 0.22], 0.012, 4),
-      );
-    let se = (ae) => {
-      let k = [];
-      for (let ce = 0; ce <= 8; ce++) {
-        let ve = (Math.PI * ce) / 8;
-        k.push(newVec3(stationX - Math.sin(ve) * 0.7, ae, stationZ - Math.cos(ve) * 0.36));
-      }
-      return k;
-    };
-    for (let ae = 2.3; ae <= 4.75; ae += 0.6) addGeom(galvSteel, strutsAlongPath(se(ae), 0.012, 4));
-    for (let ae = 1; ae < 8; ae += 1.5) {
-      let k = (Math.PI * ae) / 8;
+    let frameX = stairX0[0] - 0.05,
+      frameZ = 7.35;
+    for (let spanExtent of [-0.22, 0.22])
       addGeom(
         galvSteel,
         strutBetween(
-          [stationX - Math.sin(k) * 0.7, 2.3, stationZ - Math.cos(k) * 0.36],
-          [stationX - Math.sin(k) * 0.7, 4.75, stationZ - Math.cos(k) * 0.36],
+          [frameX, 0.05, frameZ + spanExtent],
+          [frameX, 4.75, frameZ + spanExtent],
+          0.022,
+          5,
+        ),
+      );
+    for (let spanExtent = 0.3; spanExtent < 4.7; spanExtent += 0.3)
+      addGeom(
+        galvSteel,
+        strutBetween(
+          [frameX, spanExtent, frameZ - 0.22],
+          [frameX, spanExtent, frameZ + 0.22],
+          0.012,
+          4,
+        ),
+      );
+    let segmentValue = (ae) => {
+      let k = [];
+      for (let ce = 0; ce <= 8; ce++) {
+        let ve = (Math.PI * ce) / 8;
+        k.push(newVec3(frameX - Math.sin(ve) * 0.7, ae, frameZ - Math.cos(ve) * 0.36));
+      }
+      return k;
+    };
+    for (let spanExtent = 2.3; spanExtent <= 4.75; spanExtent += 0.6)
+      addGeom(galvSteel, strutsAlongPath(segmentValue(spanExtent), 0.012, 4));
+    for (let spanExtent = 1; spanExtent < 8; spanExtent += 1.5) {
+      let offsetValue = (Math.PI * spanExtent) / 8;
+      addGeom(
+        galvSteel,
+        strutBetween(
+          [frameX - Math.sin(offsetValue) * 0.7, 2.3, frameZ - Math.cos(offsetValue) * 0.36],
+          [frameX - Math.sin(offsetValue) * 0.7, 4.75, frameZ - Math.cos(offsetValue) * 0.36],
           0.01,
           4,
         ),
       );
     }
     colliders.push({
-      min: [stationX - 0.72, 0, stationZ - 0.4],
-      max: [stationX + 0.05, 4.7, stationZ + 0.4],
+      min: [frameX - 0.72, 0, frameZ - 0.4],
+      max: [frameX + 0.05, 4.7, frameZ + 0.4],
       bulletOnly: !1,
     });
   }
@@ -1418,47 +1396,47 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       -CRANE_BOOM_HALF_Z - 0.85,
     ),
   );
-  for (let stationX = 13.5; stationX < CRANE_HOUSE_X - 1.2; stationX += 3.3)
+  for (let frameX = 13.5; frameX < CRANE_HOUSE_X - 1.2; frameX += 3.3)
     addGeom(
       darkSteel,
       boxFromBounds(
-        stationX - 0.03,
+        frameX - 0.03,
         21.1,
         -CRANE_BOOM_HALF_Z - 0.93,
-        stationX + 0.03,
+        frameX + 0.03,
         21.86,
         -CRANE_BOOM_HALF_Z - 0.87,
       ),
     );
   {
-    let se = (CRANE_HOUSE_X - 1.6 - 13.6) / 15;
-    for (let ae = 0; ae < 15; ae++) {
-      let k = 13.6 + ae * se,
-        ce = 1.1 + 0.25 * Math.sin(ae * 2.1);
+    let segmentValue = (CRANE_HOUSE_X - 1.6 - 13.6) / 15;
+    for (let spanExtent = 0; spanExtent < 15; spanExtent++) {
+      let offsetValue = 13.6 + spanExtent * segmentValue,
+        offsetAlong = 1.1 + 0.25 * Math.sin(spanExtent * 2.1);
       addGeom(
         darkSteel,
         boxFromBounds(
-          k - 0.1,
+          offsetValue - 0.1,
           20.9,
           -CRANE_BOOM_HALF_Z - 0.98,
-          k + 0.1,
+          offsetValue + 0.1,
           21.02,
           -CRANE_BOOM_HALF_Z - 0.82,
         ),
       );
-      for (let ve of [-0.05, 0.05]) {
-        let _e = [];
-        for (let Te = 0; Te <= 7; Te++) {
-          let Pe = Te / 7;
-          _e.push(
+      for (let geometryList of [-0.05, 0.05]) {
+        let segmentCount = [];
+        for (let slatIndex = 0; slatIndex <= 7; slatIndex++) {
+          let segmentIndex = slatIndex / 7;
+          segmentCount.push(
             newVec3(
-              k + se * Pe,
-              20.92 - ce * (1 - (2 * Pe - 1) ** 2),
-              -CRANE_BOOM_HALF_Z - 0.9 + ve,
+              offsetValue + segmentValue * segmentIndex,
+              20.92 - offsetAlong * (1 - (2 * segmentIndex - 1) ** 2),
+              -CRANE_BOOM_HALF_Z - 0.9 + geometryList,
             ),
           );
         }
-        addGeom(darkSteel, strutsAlongPath(_e, 0.03, 4));
+        addGeom(darkSteel, strutsAlongPath(segmentCount, 0.03, 4));
       }
     }
   }
@@ -1484,12 +1462,12 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
         ));
     }
   }
-  for (let stationX of [33, 47.5, 59.5])
-    for (let stationZ of [-1, 1])
-      addLampBar(stationX, 21.3, stationZ * (CRANE_BOOM_HALF_Z + 1.3), 3, 'x');
-  for (let stationX of [-1, 1])
-    (addLampBar(23.5, 12.28, stationX * (CRANE_PORTAL_HALF_Z - 0.2), 4, 'x'),
-      addLampBar(15, 21.3, stationX * (CRANE_BOOM_HALF_Z + 1.3), 2, 'x'));
+  for (let frameX of [33, 47.5, 59.5])
+    for (let frameZ of [-1, 1])
+      addLampBar(frameX, 21.3, frameZ * (CRANE_BOOM_HALF_Z + 1.3), 3, 'x');
+  for (let frameX of [-1, 1])
+    (addLampBar(23.5, 12.28, frameX * (CRANE_PORTAL_HALF_Z - 0.2), 4, 'x'),
+      addLampBar(15, 21.3, frameX * (CRANE_BOOM_HALF_Z + 1.3), 2, 'x'));
   (addLampBar(CRANE_PORTAL_X1 + 0.1, 12.28, 0, 3, 'z'),
     addLampBar(CRANE_PORTAL_X0 - 0.1, 12.28, 0, 3, 'z'),
     addLampBar(apexX + 0.6, apexY - 0.55, 0, 3, 'z'),
@@ -1503,30 +1481,21 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       boxFromBounds(CRANE_HOUSE_X - 1.6, 20.7, -1.1, CRANE_HOUSE_X + 1.6, 21.35, 1.1, 0.05),
       TINT_YELLOW,
     ));
-  for (let stationX of [-1.8, 1.8])
-    for (let stationZ of [-1, 1])
+  for (let frameX of [-1.8, 1.8])
+    for (let frameZ of [-1, 1])
       (addGeom(
         darkSteel,
-        cylinderFromAxis(
-          0.24,
-          0.24,
-          0.16,
-          'z',
-          CRANE_HOUSE_X + stationX,
-          22.42,
-          stationZ * 1.3,
-          12,
-        ),
+        cylinderFromAxis(0.24, 0.24, 0.16, 'z', CRANE_HOUSE_X + frameX, 22.42, frameZ * 1.3, 12),
       ),
         addGeom(
           yellowPaint,
           boxFromBounds(
-            CRANE_HOUSE_X + stationX - 0.35,
+            CRANE_HOUSE_X + frameX - 0.35,
             22.1,
-            stationZ * 1.3 - 0.14,
-            CRANE_HOUSE_X + stationX + 0.35,
+            frameZ * 1.3 - 0.14,
+            CRANE_HOUSE_X + frameX + 0.35,
             22.5,
-            stationZ * 1.3 + 0.14,
+            frameZ * 1.3 + 0.14,
             0.03,
           ),
           TINT_YELLOW,
@@ -1539,23 +1508,16 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
     cabZ1 = 4.4,
     cabY0 = 18.3,
     cabY1 = 20.7;
-  for (let stationX of [cabX0 + 0.12, cabX1 - 0.3]) {
+  for (let frameX of [cabX0 + 0.12, cabX1 - 0.3]) {
     addGeom(
       yellowPaint,
-      boxFromBounds(stationX - 0.12, 20.88, -1, stationX + 0.12, 21.16, cabZ1, 0.03),
+      boxFromBounds(frameX - 0.12, 20.88, -1, frameX + 0.12, 21.16, cabZ1, 0.03),
       TINT_YELLOW,
     );
-    for (let stationZ of [cabZ0 + 0.1, cabZ1 - 0.1])
+    for (let frameZ of [cabZ0 + 0.1, cabZ1 - 0.1])
       addGeom(
         yellowPaint,
-        boxFromBounds(
-          stationX - 0.06,
-          cabY1,
-          stationZ - 0.06,
-          stationX + 0.06,
-          20.9,
-          stationZ + 0.06,
-        ),
+        boxFromBounds(frameX - 0.06, cabY1, frameZ - 0.06, frameX + 0.06, 20.9, frameZ + 0.06),
         TINT_YELLOW,
       );
   }
@@ -1582,10 +1544,10 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       boxFromBounds(cabX0, cabY0 + 0.14, cabZ0, cabX0 + 0.08, cabY1, cabZ1),
       TINT_WHITE,
     ));
-  for (let stationX of [cabZ0, cabZ1 - 0.06])
+  for (let frameX of [cabZ0, cabZ1 - 0.06])
     (addGeom(
       whitePaint,
-      boxFromBounds(cabX0, cabY0 + 0.14, stationX, cabX1 - 0.5, cabY0 + 0.95, stationX + 0.06),
+      boxFromBounds(cabX0, cabY0 + 0.14, frameX, cabX1 - 0.5, cabY0 + 0.95, frameX + 0.06),
       TINT_WHITE,
     ),
       addGeom(
@@ -1593,10 +1555,10 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
         boxFromBounds(
           cabX0 + 0.08,
           cabY0 + 0.95,
-          stationX + 0.02,
+          frameX + 0.02,
           cabX1 - 0.06,
           cabY1,
-          stationX + 0.04,
+          frameX + 0.04,
         ),
       ),
       addGeom(
@@ -1604,17 +1566,17 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
         boxFromBounds(
           cabX1 - 0.5,
           cabY0 + 0.14,
-          stationX + 0.02,
+          frameX + 0.02,
           cabX1 - 0.06,
           cabY0 + 0.95,
-          stationX + 0.04,
+          frameX + 0.04,
         ),
       ));
-  for (let stationX of [cabX1 - 0.06])
-    for (let stationZ of [cabZ0, cabZ1 - 0.06, (cabZ0 + cabZ1) / 2 - 0.03])
+  for (let frameX of [cabX1 - 0.06])
+    for (let frameZ of [cabZ0, cabZ1 - 0.06, (cabZ0 + cabZ1) / 2 - 0.03])
       addGeom(
         whitePaint,
-        boxFromBounds(stationX, cabY0 + 0.14, stationZ, stationX + 0.06, cabY1, stationZ + 0.06),
+        boxFromBounds(frameX, cabY0 + 0.14, frameZ, frameX + 0.06, cabY1, frameZ + 0.06),
         TINT_WHITE,
       );
   (addGeom(
@@ -1633,16 +1595,16 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
       darkSteel,
       boxFromBounds(cabX0 + 0.82, cabY0 + 0.6, 3.1, cabX0 + 0.96, cabY0 + 1.35, 3.65, 0.04),
     ));
-  for (let stationX of [2.75, 4])
+  for (let frameX of [2.75, 4])
     (addGeom(
       darkSteel,
       boxFromBounds(
         cabX0 + 1.2,
         cabY0 + 0.14,
-        stationX - 0.16,
+        frameX - 0.16,
         cabX0 + 1.75,
         cabY0 + 0.85,
-        stationX + 0.16,
+        frameX + 0.16,
         0.03,
       ),
     ),
@@ -1650,10 +1612,10 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
         boxFromBounds(
           cabX0 + 1.3,
           cabY0 + 0.855,
-          stationX - 0.1,
+          frameX - 0.1,
           cabX0 + 1.6,
           cabY0 + 0.865,
-          stationX + 0.1,
+          frameX + 0.1,
         ),
         [0.75, 0.5, 0.26],
         0,
@@ -1686,25 +1648,25 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
     }),
     labelAspect = Math.max(1, nameLabel.aspect || 6);
   {
-    let stationX = Math.min(1.15, 8.6 / labelAspect);
-    for (let stationZ of [-1, 1])
+    let frameX = Math.min(1.15, 8.6 / labelAspect);
+    for (let frameZ of [-1, 1])
       addGeom(
         nameLabel.material,
         planeAt(
-          stationX * labelAspect,
-          stationX,
+          frameX * labelAspect,
+          frameX,
           36.9,
           22,
-          stationZ * (CRANE_BOOM_HALF_Z + 0.453),
-          stationZ > 0 ? 0 : Math.PI,
+          frameZ * (CRANE_BOOM_HALF_Z + 0.453),
+          frameZ > 0 ? 0 : Math.PI,
         ),
       );
   }
   {
-    let stationX = Math.min(0.86, 9.4 / labelAspect);
+    let frameX = Math.min(0.86, 9.4 / labelAspect);
     addGeom(
       nameLabel.material,
-      planeAt(stationX * labelAspect, stationX, CRANE_PORTAL_X0 - 0.453, 13, 0, -Math.PI / 2),
+      planeAt(frameX * labelAspect, frameX, CRANE_PORTAL_X0 - 0.453, 13, 0, -Math.PI / 2),
     );
   }
   if (intoBatch) return ((batcher.remap = null), (batcher.dz = 0), (batcher.minSize = 0), null);
@@ -1716,55 +1678,34 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
   let spreaderBatch = new MeshBatcher(),
     addSpreaderGeom = (R, I, se) => spreaderBatch.add(R, I, se),
     spreaderDrop = 8.3;
-  for (let stationX of [-0.9, 0.9])
-    for (let stationZ of [-0.8, 0.8])
+  for (let frameX of [-0.9, 0.9])
+    for (let frameZ of [-0.8, 0.8])
       addSpreaderGeom(
         darkSteel,
-        strutBetween(
-          [stationX, 0, stationZ],
-          [stationX * 0.8, -spreaderDrop, stationZ * 0.7],
-          0.022,
-          5,
-        ),
+        strutBetween([frameX, 0, frameZ], [frameX * 0.8, -spreaderDrop, frameZ * 0.7], 0.022, 5),
       );
   addSpreaderGeom(
     yellowPaint,
     boxFromBounds(-0.95, -spreaderDrop - 0.55, -0.75, 0.95, -spreaderDrop, 0.75, 0.05),
     TINT_YELLOW,
   );
-  for (let stationX of [-0.45, 0.45])
+  for (let frameX of [-0.45, 0.45])
     addSpreaderGeom(
       darkSteel,
-      cylinderFromAxis(0.3, 0.3, 0.12, 'z', 0, -spreaderDrop + 0.12, stationX, 12),
+      cylinderFromAxis(0.3, 0.3, 0.12, 'z', 0, -spreaderDrop + 0.12, frameX, 12),
     );
   let spreaderTopY = -spreaderDrop - 0.55,
     spreaderUpperY = spreaderTopY - 0.34;
-  for (let stationX of [-0.6, 0.6])
+  for (let frameX of [-0.6, 0.6])
     addSpreaderGeom(
       yellowPaint,
-      boxFromBounds(
-        stationX - 0.16,
-        spreaderUpperY,
-        -6.02,
-        stationX + 0.16,
-        spreaderTopY,
-        6.02,
-        0.03,
-      ),
+      boxFromBounds(frameX - 0.16, spreaderUpperY, -6.02, frameX + 0.16, spreaderTopY, 6.02, 0.03),
       TINT_YELLOW,
     );
-  for (let stationX of [-5.92, 5.92])
+  for (let frameX of [-5.92, 5.92])
     addSpreaderGeom(
       yellowPaint,
-      boxFromBounds(
-        -1.22,
-        spreaderUpperY,
-        stationX - 0.14,
-        1.22,
-        spreaderTopY,
-        stationX + 0.14,
-        0.03,
-      ),
+      boxFromBounds(-1.22, spreaderUpperY, frameX - 0.14, 1.22, spreaderTopY, frameX + 0.14, 0.03),
       TINT_YELLOW,
     );
   addSpreaderGeom(
@@ -1772,24 +1713,24 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
     boxFromBounds(-0.9, spreaderUpperY - 0.02, -1.3, 0.9, spreaderTopY + 0.1, 1.3, 0.04),
     TINT_YELLOW,
   );
-  for (let stationX of [-1.2, 1.2])
-    for (let stationZ of [-6, 6])
+  for (let frameX of [-1.2, 1.2])
+    for (let frameZ of [-6, 6])
       (addSpreaderGeom(
         darkSteel,
         boxFromBounds(
-          stationX - 0.1,
+          frameX - 0.1,
           spreaderUpperY - 0.1,
-          stationZ - 0.1,
-          stationX + 0.1,
+          frameZ - 0.1,
+          frameX + 0.1,
           spreaderUpperY + 0.05,
-          stationZ + 0.1,
+          frameZ + 0.1,
         ),
       ),
         addSpreaderGeom(
           yellowPaint,
           beamBetween(
-            [stationX * 1.02, spreaderUpperY, stationZ * 1.01],
-            [stationX * 1.22, spreaderUpperY - 0.55, stationZ * 1.04],
+            [frameX * 1.02, spreaderUpperY, frameZ * 1.01],
+            [frameX * 1.22, spreaderUpperY - 0.55, frameZ * 1.04],
             0.28,
             0.03,
           ),
@@ -1803,40 +1744,40 @@ export function buildQuayCrane(ctx, lamps, t = {}) {
     boxFromBounds(-1.2, spreaderFloorY, -6.08, 1.2, spreaderLowerY, 6.08, 0.03),
     spreaderTint,
   );
-  for (let stationX of [-1.22, 1.22])
-    for (let stationZ = -5.7; stationZ <= 5.71; stationZ += 0.57)
+  for (let frameX of [-1.22, 1.22])
+    for (let frameZ = -5.7; frameZ <= 5.71; frameZ += 0.57)
       addSpreaderGeom(
         redPaint,
         boxFromBounds(
-          stationX - 0.02,
+          frameX - 0.02,
           spreaderFloorY + 0.16,
-          stationZ - 0.1,
-          stationX + 0.02,
+          frameZ - 0.1,
+          frameX + 0.02,
           spreaderLowerY - 0.12,
-          stationZ + 0.1,
+          frameZ + 0.1,
         ),
         spreaderTint,
       );
-  for (let stationX of [-6.095, 6.095])
-    for (let stationZ of [-1.22, 1.22])
+  for (let frameX of [-6.095, 6.095])
+    for (let frameZ of [-1.22, 1.22])
       addSpreaderGeom(
         redPaint,
         boxFromBounds(
-          stationZ - 0.08,
+          frameZ - 0.08,
           spreaderFloorY,
-          stationX - 0.08,
-          stationZ + 0.08,
+          frameX - 0.08,
+          frameZ + 0.08,
           spreaderLowerY,
-          stationX + 0.08,
+          frameX + 0.08,
         ),
         [0.7, 0.62, 0.6],
       );
-  for (let stationX of [-0.8, -0.3, 0.3, 0.8])
+  for (let frameX of [-0.8, -0.3, 0.3, 0.8])
     addSpreaderGeom(
       darkSteel,
       strutBetween(
-        [stationX, spreaderFloorY + 0.08, 6.1],
-        [stationX, spreaderLowerY - 0.08, 6.1],
+        [frameX, spreaderFloorY + 0.08, 6.1],
+        [frameX, spreaderLowerY - 0.08, 6.1],
         0.02,
         5,
       ),

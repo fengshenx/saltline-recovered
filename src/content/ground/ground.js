@@ -350,7 +350,7 @@ export async function createGround(game) {
       document.fonts.load &&
       (await Promise.race([
         document.fonts.load('900 40px "Big Shoulders Display"'),
-        new Promise((M) => setTimeout(M, 350)),
+        new Promise((worldX) => setTimeout(worldX, 350)),
       ]));
   } catch {}
   let marksTexture = createApronMarkingsTexture(hiRes ? 2048 : 1024, maxAniso),
@@ -409,41 +409,49 @@ export async function createGround(game) {
       reflectionCamera: planar.camera,
       maskTexture: maskTexture,
       uniforms: apron.uniforms,
-      puddleDepth(M, E) {
-        return M > WORLD_BOUNDS.quayX || !inMaskRect(M, E) || isIndoor(M, E)
+      puddleDepth(worldX, worldZ) {
+        return worldX > WORLD_BOUNDS.quayX ||
+          !inMaskRect(worldX, worldZ) ||
+          isIndoor(worldX, worldZ)
           ? -0.2
-          : 0.5 - sampleTerrainTexture(maskData, maskSize, M, E, 0);
+          : 0.5 - sampleTerrainTexture(maskData, maskSize, worldX, worldZ, 0);
       },
-      isPuddle(M, E) {
-        return ground.puddleDepth(M, E) > 0.015;
+      isPuddle(worldX, worldZ) {
+        return ground.puddleDepth(worldX, worldZ) > 0.015;
       },
-      wetnessAt(M, E) {
-        if (M > WORLD_BOUNDS.quayX) return 1;
-        if (isIndoor(M, E)) return 0.12;
-        if (!inMaskRect(M, E)) return 0.6;
-        let w = 0.5 - sampleTerrainTexture(maskData, maskSize, M, E, 0);
-        if (w > 0.015) return 1;
-        let S = THREE.MathUtils.smoothstep,
-          z = S(w, -0.11, 0),
-          H = S(w, -0.65, -0.02),
-          O = 1 - S(sampleTerrainTexture(maskData, maskSize, M, E, 1) + H * 0.55, 0.2, 0.42);
-        return Math.min(0.95, 0.25 + (1 - O) * 0.4 + z * 0.3);
+      wetnessAt(worldX, worldZ) {
+        if (worldX > WORLD_BOUNDS.quayX) return 1;
+        if (isIndoor(worldX, worldZ)) return 0.12;
+        if (!inMaskRect(worldX, worldZ)) return 0.6;
+        let puddleValue = 0.5 - sampleTerrainTexture(maskData, maskSize, worldX, worldZ, 0);
+        if (puddleValue > 0.015) return 1;
+        let smoothstepFn = THREE.MathUtils.smoothstep,
+          shallowMask = smoothstepFn(puddleValue, -0.11, 0),
+          deepMask = smoothstepFn(puddleValue, -0.65, -0.02),
+          detailMask =
+            1 -
+            smoothstepFn(
+              sampleTerrainTexture(maskData, maskSize, worldX, worldZ, 1) + deepMask * 0.55,
+              0.2,
+              0.42,
+            );
+        return Math.min(0.95, 0.25 + (1 - detailMask) * 0.4 + shallowMask * 0.3);
       },
-      seaHeight(M, E) {
-        return seaHeightAt(M, E, time);
+      seaHeight(worldX, worldZ) {
+        return seaHeightAt(worldX, worldZ, time);
       },
-      setRain(M) {
-        rain.setRain(M);
+      setRain(worldX) {
+        rain.setRain(worldX);
       },
       get rainLevel() {
         return rain.rainLevel;
       },
-      setReflections(M) {
-        planar.enabled = !!M;
+      setReflections(worldX) {
+        planar.enabled = !!worldX;
       },
-      update(M) {
-        ((time += M),
-          rain.update(M),
+      update(worldX) {
+        ((time += worldX),
+          rain.update(worldX),
           (apron.uniforms.uTime.value = time),
           (apron.uniforms.uRain.value = rain.rainLevel),
           (sea.uniforms.uTime.value = time));
@@ -457,12 +465,12 @@ export async function createGround(game) {
  */
 export async function showcaseGround(game) {
   let placeholderPlane = game.scene.children.find(
-    (o) =>
-      o.isMesh &&
-      o.geometry &&
-      o.geometry.type === 'PlaneGeometry' &&
-      o.geometry.parameters &&
-      o.geometry.parameters.width === 80,
+    (asset) =>
+      asset.isMesh &&
+      asset.geometry &&
+      asset.geometry.type === 'PlaneGeometry' &&
+      asset.geometry.parameters &&
+      asset.geometry.parameters.width === 80,
   );
   (placeholderPlane && game.scene.remove(placeholderPlane),
     (game.ground = await createGround(game)));

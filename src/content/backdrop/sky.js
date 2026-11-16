@@ -332,12 +332,12 @@ export function buildHarborSkyline(ctx, lamps) {
       doorRows: 12,
     }));
   {
-    let D = new THREE.BufferGeometry();
-    (D.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3)),
-      D.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3)),
-      D.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2)),
-      D.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3)),
-      batcher.add(containerMat, D));
+    let cranePosX = new THREE.BufferGeometry();
+    (cranePosX.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3)),
+      cranePosX.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3)),
+      cranePosX.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2)),
+      cranePosX.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3)),
+      batcher.add(containerMat, cranePosX));
   }
   let craneTintA = normalizeTint(5922920, 0.85),
     darkTint = [0.1, 0.1, 0.11],
@@ -457,7 +457,7 @@ export function buildHarborSkyline(ctx, lamps) {
     addGantryCrane(-103, -10.14, craneTintC, 2, 3),
     addGantryCrane(-6, -62.6, craneTintA, -6, 7),
     addGantryCrane(-12, 60.1, craneTintA, 4, 5));
-  for (let [D, C, G] of [
+  for (let [cranePosX, cranePosZ, craneTintColor] of [
     [-67.5, -22, 32],
     [-67.5, 31, 32],
     [-122, 4, 34],
@@ -475,90 +475,183 @@ export function buildHarborSkyline(ctx, lamps) {
     [-120, 60, 34],
     [10.5, 49, 26],
   ]) {
-    (addPiece(cylinderFromAxis(0.14, 0.3, G, 'y', D, G / 2, C, 6), frameTint),
-      addPiece(cylinderFromAxis(1.5, 1.5, 0.18, 'y', D, G - 0.5, C, 8), darkTint));
-    for (let [j, N] of [
+    (addPiece(
+      cylinderFromAxis(0.14, 0.3, craneTintColor, 'y', cranePosX, craneTintColor / 2, cranePosZ, 6),
+      frameTint,
+    ),
+      addPiece(
+        cylinderFromAxis(1.5, 1.5, 0.18, 'y', cranePosX, craneTintColor - 0.5, cranePosZ, 8),
+        darkTint,
+      ));
+    for (let [faceZOption, ribsEnabled] of [
       [-1.4, 0],
       [1.4, 0],
       [0, -1.4],
       [0, 1.4],
     ])
       (addPiece(
-        boxFromBounds(D + j - 0.25, G - 0.95, C + N - 0.25, D + j + 0.25, G - 0.6, C + N + 0.25),
+        boxFromBounds(
+          cranePosX + faceZOption - 0.25,
+          craneTintColor - 0.95,
+          cranePosZ + ribsEnabled - 0.25,
+          cranePosX + faceZOption + 0.25,
+          craneTintColor - 0.6,
+          cranePosZ + ribsEnabled + 0.25,
+        ),
         darkTint,
       ),
-        lamps.add(makeBeaconGeo(D + j, G - 1.05, C + N, 0.2), containerTint, 0));
+        lamps.add(
+          makeBeaconGeo(
+            cranePosX + faceZOption,
+            craneTintColor - 1.05,
+            cranePosZ + ribsEnabled,
+            0.2,
+          ),
+          containerTint,
+          0,
+        ));
   }
-  for (let [D, C, G] of [
+  for (let [cranePosX, cranePosZ, craneTintColor] of [
     [-158, -30, 62],
     [-76, -128, 48],
     [-150, 104, 54],
   ]) {
-    let N = [
+    let ribsEnabled = [
       [-1.1, -0.638],
       [1.1, -0.638],
       [0, 1.265],
     ];
-    for (let [Q, K] of N)
+    for (let [doorRowLimit, mainTintColor] of ribsEnabled)
       addPiece(
-        strutBetween([D + Q, 0, C + K], [D + Q * 0.3, G, C + K * 0.3], 0.07, 4),
+        strutBetween(
+          [cranePosX + doorRowLimit, 0, cranePosZ + mainTintColor],
+          [cranePosX + doorRowLimit * 0.3, craneTintColor, cranePosZ + mainTintColor * 0.3],
+          0.07,
+          4,
+        ),
         [0.42, 0.14, 0.1],
       );
-    for (let Q = 3, K = 0; Q < G; Q += 6, K++)
-      for (let ie = 0; ie < 3; ie++) {
-        let F = N[ie],
-          X = N[(ie + 1) % 3],
-          ne = 1 - (0.7 * Q) / G,
-          re = 1 - (0.7 * Math.min(G, Q + 6)) / G;
+    for (
+      let doorRowLimit = 3, mainTintColor = 0;
+      doorRowLimit < craneTintColor;
+      doorRowLimit += 6, mainTintColor++
+    )
+      for (let columnStepSign = 0; columnStepSign < 3; columnStepSign++) {
+        let columnEntries = ribsEnabled[columnStepSign],
+          stackHeights = ribsEnabled[(columnStepSign + 1) % 3],
+          stackHeightAt = 1 - (0.7 * doorRowLimit) / craneTintColor,
+          columnEntry = 1 - (0.7 * Math.min(craneTintColor, doorRowLimit + 6)) / craneTintColor;
         addPiece(
           strutBetween(
-            [D + F[0] * ne, Q, C + F[1] * ne],
-            [D + X[0] * re, Math.min(G, Q + 6), C + X[1] * re],
+            [
+              cranePosX + columnEntries[0] * stackHeightAt,
+              doorRowLimit,
+              cranePosZ + columnEntries[1] * stackHeightAt,
+            ],
+            [
+              cranePosX + stackHeights[0] * columnEntry,
+              Math.min(craneTintColor, doorRowLimit + 6),
+              cranePosZ + stackHeights[1] * columnEntry,
+            ],
             0.04,
             3,
           ),
-          K % 2 ? houseTint : [0.42, 0.14, 0.1],
+          mainTintColor % 2 ? houseTint : [0.42, 0.14, 0.1],
         );
       }
-    for (let Q of [0.5, 2.6, 4.7])
+    for (let doorRowLimit of [0.5, 2.6, 4.7])
       addPiece(
         strutBetween(
-          [D, G * 0.72, C],
-          [D + Math.cos(Q) * G * 0.5, 0, C + Math.sin(Q) * G * 0.5],
+          [cranePosX, craneTintColor * 0.72, cranePosZ],
+          [
+            cranePosX + Math.cos(doorRowLimit) * craneTintColor * 0.5,
+            0,
+            cranePosZ + Math.sin(doorRowLimit) * craneTintColor * 0.5,
+          ],
           0.025,
           3,
         ),
         darkTint,
       );
-    (addPiece(strutBetween([D, G, C], [D, G + 5, C], 0.04, 3), darkTint),
+    (addPiece(
+      strutBetween(
+        [cranePosX, craneTintColor, cranePosZ],
+        [cranePosX, craneTintColor + 5, cranePosZ],
+        0.04,
+        3,
+      ),
+      darkTint,
+    ),
       addPiece(
-        boxFromBounds(D - 0.9, G * 0.8, C - 0.25, D + 0.9, G * 0.8 + 1.6, C + 0.25),
+        boxFromBounds(
+          cranePosX - 0.9,
+          craneTintColor * 0.8,
+          cranePosZ - 0.25,
+          cranePosX + 0.9,
+          craneTintColor * 0.8 + 1.6,
+          cranePosZ + 0.25,
+        ),
         houseTint,
       ),
-      lamps.add(makeBeaconGeo(D, G + 0.4, C, 0.35), lampTint, 2.4, rng(), 0.45),
-      lamps.add(makeBeaconGeo(D, G * 0.55, C, 0.28), lampTint, 0));
+      lamps.add(
+        makeBeaconGeo(cranePosX, craneTintColor + 0.4, cranePosZ, 0.35),
+        lampTint,
+        2.4,
+        rng(),
+        0.45,
+      ),
+      lamps.add(makeBeaconGeo(cranePosX, craneTintColor * 0.55, cranePosZ, 0.28), lampTint, 0));
   }
-  for (let [D, C, G] of [
+  for (let [cranePosX, cranePosZ, craneTintColor] of [
     [-178, -70, 90],
     [-182, 40, 110],
     [-60, -150, 70],
     [-70, 150, 80],
   ]) {
-    let j = Math.abs(C) > 120,
-      N = (Q, K, ie, F, X, ne, re) =>
+    let faceZOption = Math.abs(cranePosZ) > 120,
+      ribsEnabled = (Q, K, ie, F, X, ne, re) =>
         addPiece(
-          j
-            ? boxFromBounds(D + Q, K, C + ie, D + F, X, C + ne)
-            : boxFromBounds(D + ie, K, C + Q, D + ne, X, C + F),
+          faceZOption
+            ? boxFromBounds(cranePosX + Q, K, cranePosZ + ie, cranePosX + F, X, cranePosZ + ne)
+            : boxFromBounds(cranePosX + ie, K, cranePosZ + Q, cranePosX + ne, X, cranePosZ + F),
           re,
         );
-    (N(-G / 2, 0, -16, G / 2, 9.5, 16, [0.2, 0.22, 0.24]),
-      N(-G / 2, 9.5, -16.4, G / 2, 9.9, 16.4, [0.12, 0.12, 0.13]),
-      N(-G / 2, 9.9, -10, G / 2, 12.2, 10, [0.17, 0.18, 0.2]),
-      N(-G / 2 + 4, 12.2, -1.2, G / 2 - 4, 13.3, 1.2, [0.13, 0.13, 0.14]));
-    for (let Q = -G / 2 + 6; Q < G / 2 - 5; Q += 12)
-      (N(Q - 0.25, 0, -16.2, Q + 0.25, 9.5, 16.2, [0.13, 0.14, 0.15]),
-        (Q | 0) % 3 === 0 && N(Q + 2, 0, -16.1, Q + 8, 6.2, 16.1, [0.06, 0.06, 0.07]));
+    (ribsEnabled(-craneTintColor / 2, 0, -16, craneTintColor / 2, 9.5, 16, [0.2, 0.22, 0.24]),
+      ribsEnabled(
+        -craneTintColor / 2,
+        9.5,
+        -16.4,
+        craneTintColor / 2,
+        9.9,
+        16.4,
+        [0.12, 0.12, 0.13],
+      ),
+      ribsEnabled(-craneTintColor / 2, 9.9, -10, craneTintColor / 2, 12.2, 10, [0.17, 0.18, 0.2]),
+      ribsEnabled(
+        -craneTintColor / 2 + 4,
+        12.2,
+        -1.2,
+        craneTintColor / 2 - 4,
+        13.3,
+        1.2,
+        [0.13, 0.13, 0.14],
+      ));
+    for (
+      let doorRowLimit = -craneTintColor / 2 + 6;
+      doorRowLimit < craneTintColor / 2 - 5;
+      doorRowLimit += 12
+    )
+      (ribsEnabled(
+        doorRowLimit - 0.25,
+        0,
+        -16.2,
+        doorRowLimit + 0.25,
+        9.5,
+        16.2,
+        [0.13, 0.14, 0.15],
+      ),
+        (doorRowLimit | 0) % 3 === 0 &&
+          ribsEnabled(doorRowLimit + 2, 0, -16.1, doorRowLimit + 8, 6.2, 16.1, [0.06, 0.06, 0.07]));
   }
   (buildQuayCrane(ctx, lamps, {
     into: batcher,
@@ -574,17 +667,17 @@ export function buildHarborSkyline(ctx, lamps) {
       [182, 1.3, !0, [0.24, 0.25, 0.27]],
       [250, 1.4, !1, [0.24, 0.25, 0.27]],
       [330, 1.45, !0, [0.26, 0.12, 0.06]],
-    ].forEach(([D, C, G, j], N) => {
-      let Q = buildDistantCrane(batcher, containerMat, 23.5, D, {
-        s: C,
-        up: G,
-        tint: j,
+    ].forEach(([cranePosX, cranePosZ, craneTintColor, faceZOption], ribsEnabled) => {
+      let doorRowLimit = buildDistantCrane(batcher, containerMat, 23.5, cranePosX, {
+        s: cranePosZ,
+        up: craneTintColor,
+        tint: faceZOption,
       });
       lamps.add(
-        makeBeaconGeo(Q[0], Q[1], Q[2], 0.45 * C),
+        makeBeaconGeo(doorRowLimit[0], doorRowLimit[1], doorRowLimit[2], 0.45 * cranePosZ),
         lampTint,
-        2.6 + (N % 3) * 0.35,
-        N * 0.37,
+        2.6 + (ribsEnabled % 3) * 0.35,
+        ribsEnabled * 0.37,
         0.45,
       );
     }),
@@ -623,10 +716,12 @@ export function buildHarborSkyline(ctx, lamps) {
     addWarehouse(34, 58, -360, -205, 10, [0.2, 0.08, 0.07], 0.2),
     addWarehouse(470, 500, -190, -40, 9, [0.12, 0.14, 0.17], 0.8),
     addWarehouse(600, 626, 160, 300, 9, [0.16, 0.12, 0.1], 0.2));
-  for (let D = 340; D > -66; D -= 12.5) {
-    let C = 398 + Math.sin(D * 0.013) * 14 + (rng() - 0.5) * 3,
-      G = boxFromBounds(-6 - rng() * 2, -1.6, -7, 6 + rng() * 2, 2.2 + rng() * 1.2, 7);
-    (G.rotateY((rng() - 0.5) * 0.5), G.translate(C, 0, D), addPiece(G, [0.2, 0.21, 0.22]));
+  for (let cranePosX = 340; cranePosX > -66; cranePosX -= 12.5) {
+    let cranePosZ = 398 + Math.sin(cranePosX * 0.013) * 14 + (rng() - 0.5) * 3,
+      craneTintColor = boxFromBounds(-6 - rng() * 2, -1.6, -7, 6 + rng() * 2, 2.2 + rng() * 1.2, 7);
+    (craneTintColor.rotateY((rng() - 0.5) * 0.5),
+      craneTintColor.translate(cranePosZ, 0, cranePosX),
+      addPiece(craneTintColor, [0.2, 0.21, 0.22]));
   }
   {
     (addPiece(cylinderFromAxis(5, 6, 3.6, 'y', 399, 0.2, -72, 10), [0.3, 0.3, 0.3]),
@@ -635,16 +730,16 @@ export function buildHarborSkyline(ctx, lamps) {
       addPiece(cylinderFromAxis(1.3, 1.5, 4, 'y', 399, 14, -72, 10), [0.85, 0.85, 0.82]),
       addPiece(cylinderFromAxis(2, 2, 0.3, 'y', 399, 16.1, -72, 10), [0.3, 0.3, 0.32]),
       addPiece(cylinderFromAxis(0.2, 1.3, 1.2, 'y', 399, 18.9, -72, 8), [0.25, 0.25, 0.27]));
-    for (let G = 0; G < 6; G++) {
-      let j = (G / 6) * 6.283;
+    for (let craneTintColor = 0; craneTintColor < 6; craneTintColor++) {
+      let faceZOption = (craneTintColor / 6) * 6.283;
       addPiece(
         boxFromBounds(
-          399 + Math.cos(j) * 1.1 - 0.06,
+          399 + Math.cos(faceZOption) * 1.1 - 0.06,
           16.2,
-          -72 + Math.sin(j) * 1.1 - 0.06,
-          399 + Math.cos(j) * 1.1 + 0.06,
+          -72 + Math.sin(faceZOption) * 1.1 - 0.06,
+          399 + Math.cos(faceZOption) * 1.1 + 0.06,
           18.3,
-          -72 + Math.sin(j) * 1.1 + 0.06,
+          -72 + Math.sin(faceZOption) * 1.1 + 0.06,
         ),
         [0.25, 0.25, 0.27],
       );
@@ -656,7 +751,7 @@ export function buildHarborSkyline(ctx, lamps) {
     boxFromBounds(breakBulkX - 330, -1.6, -520, breakBulkX + 330, 2.2, -430),
     [0.16, 0.17, 0.18],
   );
-  for (let [D, C, G, j] of [
+  for (let [cranePosX, cranePosZ, craneTintColor, faceZOption] of [
     [-150, -452, 17, 15],
     [-112, -458, 17, 15],
     [-76, -450, 13, 18],
@@ -667,36 +762,83 @@ export function buildHarborSkyline(ctx, lamps) {
     [210, -456, 22, 12],
   ])
     (addPiece(
-      cylinderFromAxis(G, G, j, 'y', breakBulkX + D, 2.2 + j / 2, C, 14),
+      cylinderFromAxis(
+        craneTintColor,
+        craneTintColor,
+        faceZOption,
+        'y',
+        breakBulkX + cranePosX,
+        2.2 + faceZOption / 2,
+        cranePosZ,
+        14,
+      ),
       [0.62, 0.63, 0.62],
     ),
       addPiece(
-        cylinderFromAxis(G * 0.2, G, j * 0.12, 'y', breakBulkX + D, 2.2 + j * 1.06, C, 14),
+        cylinderFromAxis(
+          craneTintColor * 0.2,
+          craneTintColor,
+          faceZOption * 0.12,
+          'y',
+          breakBulkX + cranePosX,
+          2.2 + faceZOption * 1.06,
+          cranePosZ,
+          14,
+        ),
         [0.52, 0.53, 0.53],
       ));
-  for (let [D, C, G, j] of [
+  for (let [cranePosX, cranePosZ, craneTintColor, faceZOption] of [
     [-32, -470, 96, 3.2],
     [168, -475, 70, 2.6],
   ]) {
     addPiece(
-      cylinderFromAxis(j * 0.62, j, G, 'y', breakBulkX + D, 2.2 + G / 2, C, 10),
+      cylinderFromAxis(
+        faceZOption * 0.62,
+        faceZOption,
+        craneTintColor,
+        'y',
+        breakBulkX + cranePosX,
+        2.2 + craneTintColor / 2,
+        cranePosZ,
+        10,
+      ),
       [0.5, 0.5, 0.5],
     );
-    for (let N of [0.82, 0.94])
+    for (let ribsEnabled of [0.82, 0.94])
       addPiece(
-        cylinderFromAxis(j * 0.66, j * 0.7, G * 0.05, 'y', breakBulkX + D, 2.2 + G * N, C, 10),
+        cylinderFromAxis(
+          faceZOption * 0.66,
+          faceZOption * 0.7,
+          craneTintColor * 0.05,
+          'y',
+          breakBulkX + cranePosX,
+          2.2 + craneTintColor * ribsEnabled,
+          cranePosZ,
+          10,
+        ),
         [0.6, 0.15, 0.1],
       );
-    (lamps.add(makeBeaconGeo(breakBulkX + D, 3.2 + G, C, 0.9), lampTint, 2.2, rng(), 0.5),
+    (lamps.add(
+      makeBeaconGeo(breakBulkX + cranePosX, 3.2 + craneTintColor, cranePosZ, 0.9),
+      lampTint,
+      2.2,
+      rng(),
+      0.5,
+    ),
       lamps.add(
-        makeBeaconGeo(breakBulkX + D + j, 2.2 + G * 0.55, C, 0.7),
+        makeBeaconGeo(
+          breakBulkX + cranePosX + faceZOption,
+          2.2 + craneTintColor * 0.55,
+          cranePosZ,
+          0.7,
+        ),
         lampTint,
         2.2,
         rng(),
         0.5,
       ));
   }
-  for (let [D, C, G, j, N] of [
+  for (let [cranePosX, cranePosZ, craneTintColor, faceZOption, ribsEnabled] of [
     [-230, -455, 70, 16, 30],
     [-10, -445, 30, 22, 18],
     [0, -452, 8, 44, 8],
@@ -706,16 +848,16 @@ export function buildHarborSkyline(ctx, lamps) {
   ])
     addPiece(
       boxFromBounds(
-        breakBulkX + D - G / 2,
+        breakBulkX + cranePosX - craneTintColor / 2,
         2.2,
-        C - N / 2,
-        breakBulkX + D + G / 2,
-        2.2 + j,
-        C + N / 2,
+        cranePosZ - ribsEnabled / 2,
+        breakBulkX + cranePosX + craneTintColor / 2,
+        2.2 + faceZOption,
+        cranePosZ + ribsEnabled / 2,
       ),
       [0.34, 0.36, 0.38],
     );
-  for (let D = 0; D < 26; D++)
+  for (let cranePosX = 0; cranePosX < 26; cranePosX++)
     lamps.add(
       makeBeaconGeo(breakBulkX - 300 + rng() * 600, 6 + rng() * 26, -436 + rng() * 6, 0.55),
       rng() > 0.3 ? containerTint : [3, 3.4, 3.8],
@@ -742,9 +884,9 @@ export function createGullFlock(ctx, uTime, gullCount = 12) {
     wingPositions = [],
     orbitAttr = [],
     flapAttr = [];
-  for (let gullIndex = 0; gullIndex < gullCount; gullIndex++) {
+  for (let shaderObject = 0; shaderObject < gullCount; shaderObject++) {
     let orbitCenter =
-        gullIndex % 3 === 0
+        shaderObject % 3 === 0
           ? [54 + rng() * 30, 9 + rng() * 14, -4 + rng() * 56]
           : [16 + rng() * 26, 33 + rng() * 12, -14 + rng() * 28],
       orbitRadius = 9 + rng() * 16,
@@ -773,14 +915,14 @@ export function createGullFlock(ctx, uTime, gullCount = 12) {
     side: THREE.DoubleSide,
     fog: !1,
   });
-  ((gullMat.onBeforeCompile = (u) => {
-    ((u.uniforms.uTime = uTime),
-      (u.vertexShader =
+  ((gullMat.onBeforeCompile = (shaderObject) => {
+    ((shaderObject.uniforms.uTime = uTime),
+      (shaderObject.vertexShader =
         `attribute vec4 aOrbit;
 attribute vec4 aPar;
 uniform float uTime;
 ` +
-        u.vertexShader.replace(
+        shaderObject.vertexShader.replace(
           '#include <begin_vertex>',
           `
       float ga = aPar.y + uTime * aPar.x;

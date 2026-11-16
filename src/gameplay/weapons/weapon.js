@@ -190,7 +190,9 @@ function buildFinger(spec) {
       cursor.addScaledVector(segmentDirs[segIdx], segmentLengths[segIdx]));
   let rootDir = NEG_Z_DIR.clone().applyQuaternion(jointQuats[0]),
     dirAt = (M) => (M ? segmentDirs[M - 1] : rootDir),
-    bisectors = [0, 1, 2].map((M) => new Vec3().addVectors(dirAt(M), segmentDirs[M]).normalize()),
+    bisectors = [0, 1, 2].map((segIdx) =>
+      new Vec3().addVectors(dirAt(segIdx), segmentDirs[segIdx]).normalize(),
+    ),
     projectAlong = (M, E) =>
       (M.x - segmentBases[E].x) * bisectors[E].x +
       (M.y - segmentBases[E].y) * bisectors[E].y +
@@ -390,7 +392,7 @@ export function buildFingerFromSpec(spec, pose) {
  * 拇指生成器：把三节方向转成四元数后套用 buildFinger，并开启 saddle/patch/tip 收窄等拇指专属参数
  */
 export function buildThumb(thumbDirs) {
-  let dirVecs = thumbDirs.map((o) => new Vec3(o[0], o[1], o[2]).normalize()),
+  let dirVecs = thumbDirs.map((segIdx) => new Vec3(segIdx[0], segIdx[1], segIdx[2]).normalize()),
     splayDir = new Vec3(-0.72, 0.69, 0),
     quats = [],
     spanVec = dirVecs[2].clone().sub(dirVecs[0]);
@@ -763,13 +765,13 @@ export async function createWeapon(ctx) {
       (markingsMesh.receiveShadow = !0),
       (markingsMesh.frustumCulled = !1),
       root.add(markingsMesh));
-  } catch (Me) {
-    console.warn('[weapon] markings skipped: ' + Me);
+  } catch (deltaTime) {
+    console.warn('[weapon] markings skipped: ' + deltaTime);
   }
   ((opticGlass = createOpticLens(
-    PAC9_DIMENSIONS.window.map((Me) => [
-      Me[0] * 1.01,
-      (Me[1] - PAC9_DIMENSIONS.sightY) * 1.01 + PAC9_DIMENSIONS.sightY,
+    PAC9_DIMENSIONS.window.map((deltaTime) => [
+      deltaTime[0] * 1.01,
+      (deltaTime[1] - PAC9_DIMENSIONS.sightY) * 1.01 + PAC9_DIMENSIONS.sightY,
     ]),
     PAC9_DIMENSIONS.lensF + 0.0025,
   )),
@@ -936,20 +938,20 @@ export async function createWeapon(ctx) {
   }
   (leftHandGroup.position.copy(leftGripPose.p), leftHandGroup.quaternion.copy(leftGripPose.q));
   let boltHandInvQuat = boltHandQuat.clone().invert();
-  (root.traverse((Me) => {
-    Me.layers.set(LAYER_VIEWMODEL);
+  (root.traverse((deltaTime) => {
+    deltaTime.layers.set(LAYER_VIEWMODEL);
   }),
     ctx.camera.add(root));
   let triCount =
-      Object.values(parts).reduce((Me, we) => Me + triangleCount(we), 0) +
+      Object.values(parts).reduce((deltaTime, player) => deltaTime + triangleCount(player), 0) +
       triangleCount(rightGlove.fabric) +
       triangleCount(rightGlove.index[0]) +
       triangleCount(leftGlove.fabric) +
       (markingsMesh ? triangleCount(markingsMesh.geometry) : 0) +
       2,
     meshCount = 0;
-  (root.traverse((Me) => {
-    Me.isMesh && meshCount++;
+  (root.traverse((deltaTime) => {
+    deltaTime.isMesh && meshCount++;
   }),
     console.log(
       `[weapon] ${PAC9_DIMENSIONS.name}: ${Math.round(triCount)} tris, ${meshCount} meshes (flash only while firing)`,
@@ -1021,21 +1023,21 @@ export async function createWeapon(ctx) {
       },
       update: update,
       reset: resetWeapon,
-      setVisible(Me) {
-        root.visible = !!Me;
+      setVisible(deltaTime) {
+        root.visible = !!deltaTime;
       },
       muzzleWorld: muzzleWorld,
       reloadNow: startReload,
-      addAmmo(Me) {
-        weapon.reserve += Me;
+      addAmmo(deltaTime) {
+        weapon.reserve += deltaTime;
       },
-      setWetness(Me) {
-        PAC9_RAIN_UNIFORM.value = Math.max(0, Math.min(1, +Me || 0));
+      setWetness(deltaTime) {
+        PAC9_RAIN_UNIFORM.value = Math.max(0, Math.min(1, +deltaTime || 0));
       },
       snap() {
         anim.adsLin = ctx.input.ads ? 1 : 0;
-        for (let Me of ['kZ', 'kP', 'kY', 'kR', 'swY', 'swP', 'jY', 'jP', 'bump'])
-          ((anim[Me].x = 0), (anim[Me].v = 0));
+        for (let deltaTime of ['kZ', 'kP', 'kY', 'kR', 'swY', 'swP', 'jY', 'jP', 'bump'])
+          ((anim[deltaTime].x = 0), (anim[deltaTime].v = 0));
         anim.sprintT = ctx.player.sprinting ? 1 : 0;
       },
     };
@@ -1546,15 +1548,17 @@ export async function showcaseWeapon(ctx) {
       }
     );
   }
-  window.__setShot = (u) => {
-    u && u.wpose ? setShot(u.wpose, u) : prevSetShot && prevSetShot(u);
+  window.__setShot = (poseName) => {
+    poseName && poseName.wpose
+      ? setShot(poseName.wpose, poseName)
+      : prevSetShot && prevSetShot(poseName);
   };
   let firstShot = setShot(ctx.params.wpose || 'hip', ctx.params);
   return {
     cam: firstShot.cam,
     target: firstShot.target,
-    update(u) {
-      (weapon.update(u), currentShot === 'fire' && (weapon.debug.flash = !0));
+    update(poseName) {
+      (weapon.update(poseName), currentShot === 'fire' && (weapon.debug.flash = !0));
     },
   };
 }

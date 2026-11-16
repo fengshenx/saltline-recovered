@@ -287,26 +287,26 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
   }
   let queue = [],
     seenNames = new Set();
-  for (let te of [...BAKE_ORDER, ...Object.keys(SFX_RECIPES)]) {
-    let he = SFX_RECIPES[te];
-    if (!(!he || seenNames.has(te))) {
-      seenNames.add(te);
-      for (let pe = 0; pe < he.n; pe++)
-        buffers.has(te + '#' + pe) ||
-          (he.boot
-            ? synthNow(te, pe)
+  for (let sfxName of [...BAKE_ORDER, ...Object.keys(SFX_RECIPES)]) {
+    let voiceOptions = SFX_RECIPES[sfxName];
+    if (!(!voiceOptions || seenNames.has(sfxName))) {
+      seenNames.add(sfxName);
+      for (let sfxRecipe = 0; sfxRecipe < voiceOptions.n; sfxRecipe++)
+        buffers.has(sfxName + '#' + sfxRecipe) ||
+          (voiceOptions.boot
+            ? synthNow(sfxName, sfxRecipe)
             : queue.push({
-                name: te,
-                v: pe,
-                k: te + '#' + pe,
+                name: sfxName,
+                v: sfxRecipe,
+                k: sfxName + '#' + sfxRecipe,
                 steps: null,
               }));
     }
   }
   bootMs = synthMs;
   let resolveReady,
-    readyPromise = new Promise((te) => {
-      resolveReady = te;
+    readyPromise = new Promise((sfxName) => {
+      resolveReady = sfxName;
     });
   function pumpQueue() {
     let te = performance.now();
@@ -363,13 +363,15 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
     (compressor.attack.value = 0.002),
     (compressor.release.value = 0.14));
   {
-    let he = new Float32Array(2049);
-    for (let pe = 0; pe < 2049; pe++) {
-      let ge = ((pe / 2048) * 2 - 1) * 2,
-        ye = Math.abs(ge);
-      he[pe] = Math.sign(ge) * (ye <= 0.6 ? ye : 0.6 + 0.4 * Math.tanh((ye - 0.6) / 0.4));
+    let voiceOptions = new Float32Array(2049);
+    for (let sfxRecipe = 0; sfxRecipe < 2049; sfxRecipe++) {
+      let variantIndex = ((sfxRecipe / 2048) * 2 - 1) * 2,
+        cachedBuffer = Math.abs(variantIndex);
+      voiceOptions[sfxRecipe] =
+        Math.sign(variantIndex) *
+        (cachedBuffer <= 0.6 ? cachedBuffer : 0.6 + 0.4 * Math.tanh((cachedBuffer - 0.6) / 0.4));
     }
-    shaper.curve = he;
+    shaper.curve = voiceOptions;
     try {
       shaper.oversample = '2x';
     } catch {}
@@ -420,11 +422,11 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
     indoorVerbReturn.connect(lowpass),
     buses.music.connect(musicVerbSend),
     musicVerbSend.connect(indoorConvolver),
-    whenReady('ir_outdoor', 0, (te) => {
-      outdoorConvolver.buffer = te;
+    whenReady('ir_outdoor', 0, (sfxName) => {
+      outdoorConvolver.buffer = sfxName;
     }),
-    whenReady('ir_shed', 0, (te) => {
-      indoorConvolver.buffer = te;
+    whenReady('ir_shed', 0, (sfxName) => {
+      indoorConvolver.buffer = sfxName;
     }));
   function setPannerPos(te, he, pe, ge) {
     te.positionX
@@ -464,10 +466,10 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
       : pe.g.connect(buses[te]),
       voicePools[te].push(pe));
   }
-  for (let te = 0; te < 22; te++) allocVoice('world', !0);
-  for (let te = 0; te < 12; te++) allocVoice('near', !1);
-  for (let te = 0; te < 8; te++) allocVoice('dry', !1);
-  for (let te = 0; te < 3; te++) allocVoice('music', !1);
+  for (let sfxName = 0; sfxName < 22; sfxName++) allocVoice('world', !0);
+  for (let sfxName = 0; sfxName < 12; sfxName++) allocVoice('near', !1);
+  for (let sfxName = 0; sfxName < 8; sfxName++) allocVoice('dry', !1);
+  for (let sfxName = 0; sfxName < 3; sfxName++) allocVoice('music', !1);
   let listenerPos = {
       x: 0,
       y: 1.7,
@@ -983,9 +985,9 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
         gain: 1,
         jitter: 0.012,
       }));
-    let te = webAudioCtx.currentTime;
-    ((lastShotAt = te),
-      te - lastTailAt > 0.28 && playTail(1),
+    let sfxName = webAudioCtx.currentTime;
+    ((lastShotAt = sfxName),
+      sfxName - lastTailAt > 0.28 && playTail(1),
       (musicDuck = Math.min(musicDuck, 0.55)),
       danger > 0.3 && (danger = Math.min(1, danger + 0.015)));
   }),
@@ -994,14 +996,14 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
         gain: 0.9,
       }),
     ),
-    onEvent('weapon:reload', (te) => {
-      te.phase === 'magout'
+    onEvent('weapon:reload', (sfxName) => {
+      sfxName.phase === 'magout'
         ? play('reload_magout')
-        : te.phase === 'magin'
+        : sfxName.phase === 'magin'
           ? play('reload_magin')
-          : te.phase === 'bolt'
+          : sfxName.phase === 'bolt'
             ? play('reload_bolt')
-            : te.phase === 'start' &&
+            : sfxName.phase === 'start' &&
               play('jump', {
                 gain: 0.5,
                 pitch: 1.3,
@@ -1013,96 +1015,104 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
         pitch: 1.2,
       }),
     ),
-    onEvent('shell:bounce', (te) => {
-      let he = webAudioCtx.currentTime;
-      he - lastShellAt < 0.04 ||
-        ((lastShellAt = he),
-        te.surface === 'water'
+    onEvent('shell:bounce', (sfxName) => {
+      let voiceOptions = webAudioCtx.currentTime;
+      voiceOptions - lastShellAt < 0.04 ||
+        ((lastShellAt = voiceOptions),
+        sfxName.surface === 'water'
           ? play('impact_water', {
-              pos: asVec3(te.pos),
+              pos: asVec3(sfxName.pos),
               gain: 0.25,
               pitch: 1.7,
             })
           : play('shell_bounce', {
-              pos: asVec3(te.pos),
-              gain: te.surface === 'metal' ? 1 : 0.8,
-              pitch: te.surface === 'metal' ? 1.12 : 1,
+              pos: asVec3(sfxName.pos),
+              gain: sfxName.surface === 'metal' ? 1 : 0.8,
+              pitch: sfxName.surface === 'metal' ? 1.12 : 1,
             }));
     }),
-    onEvent('impact', (te) => {
-      let he = webAudioCtx.currentTime;
-      if (he - lastImpactAt < 0.022) return;
-      lastImpactAt = he;
-      let pe = asVec3(te.point),
-        ge = te.surface;
-      if (te.enemy) {
+    onEvent('impact', (sfxName) => {
+      let voiceOptions = webAudioCtx.currentTime;
+      if (voiceOptions - lastImpactAt < 0.022) return;
+      lastImpactAt = voiceOptions;
+      let sfxRecipe = asVec3(sfxName.point),
+        variantIndex = sfxName.surface;
+      if (sfxName.enemy) {
         play('impact_enemy', {
-          pos: pe,
-          gain: te.part === 'weak' ? 1 : 0.85,
-          pitch: te.part === 'weak' ? 1.25 : 1,
+          pos: sfxRecipe,
+          gain: sfxName.part === 'weak' ? 1 : 0.85,
+          pitch: sfxName.part === 'weak' ? 1.25 : 1,
         });
         return;
       }
       if (
-        te.from === 'enemy' &&
-        pe &&
-        te.dir &&
-        typeof te.dir.x == 'number' &&
-        he - lastWhizAt > 0.09
+        sfxName.from === 'enemy' &&
+        sfxRecipe &&
+        sfxName.dir &&
+        typeof sfxName.dir.x == 'number' &&
+        voiceOptions - lastWhizAt > 0.09
       ) {
-        let ye = te.dir,
-          Le = ye.x * ye.x + ye.y * ye.y + ye.z * ye.z || 1,
-          ke =
-            ((listenerPos.x - pe.x) * ye.x +
-              (listenerPos.y - pe.y) * ye.y +
-              (listenerPos.z - pe.z) * ye.z) /
-            Le;
-        if (ke < -1.5) {
-          let Ue = pe.x + ye.x * ke,
-            ct = pe.y + ye.y * ke,
-            De = pe.z + ye.z * ke,
-            it = Math.hypot(listenerPos.x - Ue, listenerPos.y - ct, listenerPos.z - De);
-          it < 3.2 &&
-            ((lastWhizAt = he),
+        let cachedBuffer = sfxName.dir,
+          audioNow =
+            cachedBuffer.x * cachedBuffer.x +
+              cachedBuffer.y * cachedBuffer.y +
+              cachedBuffer.z * cachedBuffer.z || 1,
+          sourcePosition =
+            ((listenerPos.x - sfxRecipe.x) * cachedBuffer.x +
+              (listenerPos.y - sfxRecipe.y) * cachedBuffer.y +
+              (listenerPos.z - sfxRecipe.z) * cachedBuffer.z) /
+            audioNow;
+        if (sourcePosition < -1.5) {
+          let fadeSeconds = sfxRecipe.x + cachedBuffer.x * sourcePosition,
+            voicePoolRef = sfxRecipe.y + cachedBuffer.y * sourcePosition,
+            voiceSlot = sfxRecipe.z + cachedBuffer.z * sourcePosition,
+            startTimeSec = Math.hypot(
+              listenerPos.x - fadeSeconds,
+              listenerPos.y - voicePoolRef,
+              listenerPos.z - voiceSlot,
+            );
+          startTimeSec < 3.2 &&
+            ((lastWhizAt = voiceOptions),
             play('whiz', {
               pos: {
-                x: Ue,
-                y: ct,
-                z: De,
+                x: fadeSeconds,
+                y: voicePoolRef,
+                z: voiceSlot,
               },
-              gain: pi(1.15 - it / 3.5, 0.3, 1),
+              gain: pi(1.15 - startTimeSec / 3.5, 0.3, 1),
               jitter: 0.1,
             }));
         }
       }
-      (play(SURFACE_IMPACT_SFX[ge] || 'impact_concrete', {
-        pos: pe,
-        gain: te.from === 'enemy' ? 0.8 : 0.9,
-        pitch: ge === 'dirt' ? 0.8 : ge === 'rubber' ? 0.7 : 1,
+      (play(SURFACE_IMPACT_SFX[variantIndex] || 'impact_concrete', {
+        pos: sfxRecipe,
+        gain: sfxName.from === 'enemy' ? 0.8 : 0.9,
+        pitch: variantIndex === 'dirt' ? 0.8 : variantIndex === 'rubber' ? 0.7 : 1,
         jitter: 0.07,
       }),
-        he - lastRicochetAt > 0.22 &&
-          ((ge === 'metal' && rnd() < 0.24) || (ge === 'concrete' && rnd() < 0.07)) &&
-          ((lastRicochetAt = he),
+        voiceOptions - lastRicochetAt > 0.22 &&
+          ((variantIndex === 'metal' && rnd() < 0.24) ||
+            (variantIndex === 'concrete' && rnd() < 0.07)) &&
+          ((lastRicochetAt = voiceOptions),
           play('ricochet', {
-            pos: pe,
+            pos: sfxRecipe,
             gain: 0.75,
             delay: 0.012,
             jitter: 0.12,
           })));
     }),
-    onEvent('player:step', (te) => {
-      let he = te.surface || 'concrete';
+    onEvent('player:step', (sfxName) => {
+      let voiceOptions = sfxName.surface || 'concrete';
       try {
-        te.pos &&
+        sfxName.pos &&
           ctx.ground &&
           ctx.ground.isPuddle &&
-          ctx.ground.isPuddle(te.pos.x, te.pos.z) &&
-          (he = 'water');
+          ctx.ground.isPuddle(sfxName.pos.x, sfxName.pos.z) &&
+          (voiceOptions = 'water');
       } catch {}
-      play(SURFACE_STEP_SFX[he] || 'step_concrete', {
-        gain: (te.sprint ? 0.8 : 0.55) * (he === 'water' ? 0.9 : 1),
-        pitch: (te.sprint ? 1.05 : 1) * (he === 'wood' ? 1.18 : 1),
+      play(SURFACE_STEP_SFX[voiceOptions] || 'step_concrete', {
+        gain: (sfxName.sprint ? 0.8 : 0.55) * (voiceOptions === 'water' ? 0.9 : 1),
+        pitch: (sfxName.sprint ? 1.05 : 1) * (voiceOptions === 'wood' ? 1.18 : 1),
         jitter: 0.06,
       });
     }),
@@ -1111,32 +1121,32 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
         gain: 0.8,
       }),
     ),
-    onEvent('player:land', (te) => {
-      let he = pi(0.35 + (Math.abs(te.speed) || 4) / 10, 0.35, 1);
+    onEvent('player:land', (sfxName) => {
+      let voiceOptions = pi(0.35 + (Math.abs(sfxName.speed) || 4) / 10, 0.35, 1);
       (play('land', {
-        gain: he,
+        gain: voiceOptions,
       }),
-        (te.surface === 'water' || te.surface === 'metal') &&
-          play(SURFACE_STEP_SFX[te.surface], {
-            gain: he * 0.8,
+        (sfxName.surface === 'water' || sfxName.surface === 'metal') &&
+          play(SURFACE_STEP_SFX[sfxName.surface], {
+            gain: voiceOptions * 0.8,
             pitch: 0.9,
           }));
     }),
-    onEvent('player:hit', (te) => {
-      let he = +te.amount || 10,
-        pe = webAudioCtx.currentTime;
+    onEvent('player:hit', (sfxName) => {
+      let voiceOptions = +sfxName.amount || 10,
+        sfxRecipe = webAudioCtx.currentTime;
       (play('hurt', {
-        gain: pi(0.5 + he / 40, 0.5, 1),
+        gain: pi(0.5 + voiceOptions / 40, 0.5, 1),
         jitter: 0.08,
       }),
-        he >= 6 &&
-          pe - lastEarRingAt > 1.8 &&
-          ((lastEarRingAt = pe),
+        voiceOptions >= 6 &&
+          sfxRecipe - lastEarRingAt > 1.8 &&
+          ((lastEarRingAt = sfxRecipe),
           play('ear_ring', {
-            gain: pi(he / 28, 0.3, 1),
+            gain: pi(voiceOptions / 28, 0.3, 1),
             jitter: 0.02,
           })),
-        (muffle = Math.max(muffle, pi(he / 40, 0.2, 0.7))),
+        (muffle = Math.max(muffle, pi(voiceOptions / 40, 0.2, 0.7))),
         (danger = Math.min(1, Math.max(danger, 0.6) + 0.15)));
     }),
     onEvent('player:dead', () => {
@@ -1148,72 +1158,72 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
         })),
         (muffle = 1));
     }),
-    onEvent('enemy:spawn', (te) => trackEnemy(te.enemy)),
-    onEvent('enemy:alert', (te) => {
+    onEvent('enemy:spawn', (sfxName) => trackEnemy(sfxName.enemy)),
+    onEvent('enemy:alert', (sfxName) => {
       danger = Math.max(danger, 0.6);
-      let he = webAudioCtx.currentTime;
-      if (he - lastAlertAt < 0.12) return;
-      lastAlertAt = he;
-      let pe = te.enemy || {};
+      let voiceOptions = webAudioCtx.currentTime;
+      if (voiceOptions - lastAlertAt < 0.12) return;
+      lastAlertAt = voiceOptions;
+      let sfxRecipe = sfxName.enemy || {};
       play('alert', {
-        pos: asVec3(pe.pos) || asVec3(te.pos),
-        variant: pe.type === 'hound' ? 1 : 0,
+        pos: asVec3(sfxRecipe.pos) || asVec3(sfxName.pos),
+        variant: sfxRecipe.type === 'hound' ? 1 : 0,
         gain: 0.9,
       });
     }),
-    onEvent('enemy:fire', (te) => {
-      let he = te.type || (te.enemy && te.enemy.type),
-        pe = asVec3(te.pos) || (te.enemy && asVec3(te.enemy.pos));
-      (play(he === 'hound' ? 'hound_fire' : 'gull_fire', {
-        pos: pe,
+    onEvent('enemy:fire', (sfxName) => {
+      let voiceOptions = sfxName.type || (sfxName.enemy && sfxName.enemy.type),
+        sfxRecipe = asVec3(sfxName.pos) || (sfxName.enemy && asVec3(sfxName.enemy.pos));
+      (play(voiceOptions === 'hound' ? 'hound_fire' : 'gull_fire', {
+        pos: sfxRecipe,
         gain: 1,
         jitter: 0.04,
       }),
         (danger = Math.min(1, Math.max(danger, 0.6) + 0.05)));
     }),
-    onEvent('enemy:step', (te) => {
-      if (te.crash) {
+    onEvent('enemy:step', (sfxName) => {
+      if (sfxName.crash) {
         (play('hound_step', {
-          pos: asVec3(te.pos),
+          pos: asVec3(sfxName.pos),
           gain: 1,
           pitch: 0.72,
         }),
           play('impact_metal', {
-            pos: asVec3(te.pos),
+            pos: asVec3(sfxName.pos),
             gain: 0.8,
             pitch: 0.55,
           }));
         return;
       }
-      te.type !== 'gull' &&
+      sfxName.type !== 'gull' &&
         play('hound_step', {
-          pos: asVec3(te.pos),
-          gain: pi(0.6 + (+te.speed || 2) * 0.1, 0.6, 1),
+          pos: asVec3(sfxName.pos),
+          gain: pi(0.6 + (+sfxName.speed || 2) * 0.1, 0.6, 1),
           jitter: 0.06,
         });
     }),
-    onEvent('enemy:telegraph', (te) => {
-      let he = te.enemy || {},
-        pe = te.type || he.type,
-        ge = pi(+te.time || 0.55, 0.15, 1.5);
+    onEvent('enemy:telegraph', (sfxName) => {
+      let voiceOptions = sfxName.enemy || {},
+        sfxRecipe = sfxName.type || voiceOptions.type,
+        variantIndex = pi(+sfxName.time || 0.55, 0.15, 1.5);
       (play('telegraph', {
-        pos: asVec3(te.pos) || asVec3(he.pos),
-        variant: pe === 'hound' ? 1 : 0,
-        pitch: 0.55 / ge,
-        gain: te.melee ? 0.7 : 1,
+        pos: asVec3(sfxName.pos) || asVec3(voiceOptions.pos),
+        variant: sfxRecipe === 'hound' ? 1 : 0,
+        pitch: 0.55 / variantIndex,
+        gain: sfxName.melee ? 0.7 : 1,
         jitter: 0,
       }),
         (danger = Math.max(danger, 0.6)));
     }),
-    onEvent('enemy:melee', (te) => {
-      let he = asVec3(te.pos) || (te.enemy && asVec3(te.enemy.pos));
+    onEvent('enemy:melee', (sfxName) => {
+      let voiceOptions = asVec3(sfxName.pos) || (sfxName.enemy && asVec3(sfxName.enemy.pos));
       (play('hound_step', {
-        pos: he,
+        pos: voiceOptions,
         gain: 1,
         pitch: 0.8,
       }),
         play('impact_metal', {
-          pos: he,
+          pos: voiceOptions,
           gain: 0.9,
           pitch: 0.7,
         }),
@@ -1221,36 +1231,40 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
           gain: 0.6,
         }));
     }),
-    onEvent('enemy:killed', (te) => {
-      let he = te.enemy,
-        pe = te.type || (he && he.type),
-        ge = asVec3(te.pos) || (he && asVec3(he.pos));
-      (he && untrackEnemy(he),
-        play(pe === 'hound' ? 'hound_die' : 'gull_die', {
-          pos: ge,
+    onEvent('enemy:killed', (sfxName) => {
+      let voiceOptions = sfxName.enemy,
+        sfxRecipe = sfxName.type || (voiceOptions && voiceOptions.type),
+        variantIndex = asVec3(sfxName.pos) || (voiceOptions && asVec3(voiceOptions.pos));
+      (voiceOptions && untrackEnemy(voiceOptions),
+        play(sfxRecipe === 'hound' ? 'hound_die' : 'gull_die', {
+          pos: variantIndex,
           gain: 1,
           jitter: 0.05,
         }));
     }),
-    onEvent('explosion', (te) => {
-      let he = pi(+te.size || 1, 0.3, 3),
-        pe = asVec3(te.pos);
+    onEvent('explosion', (sfxName) => {
+      let voiceOptions = pi(+sfxName.size || 1, 0.3, 3),
+        sfxRecipe = asVec3(sfxName.pos);
       if (
         (play('explosion', {
-          pos: pe,
-          gain: pi(0.6 + 0.25 * he, 0.5, 1.1),
-          pitch: pi(1.12 - 0.1 * he, 0.8, 1.15),
+          pos: sfxRecipe,
+          gain: pi(0.6 + 0.25 * voiceOptions, 0.5, 1.1),
+          pitch: pi(1.12 - 0.1 * voiceOptions, 0.8, 1.15),
           jitter: 0.04,
         }),
-        pe)
+        sfxRecipe)
       ) {
-        let ge = Math.hypot(pe.x - listenerPos.x, pe.y - listenerPos.y, pe.z - listenerPos.z);
-        muffle = Math.max(muffle, pi(1 - (ge - 5) / 10, 0, 0.8));
+        let variantIndex = Math.hypot(
+          sfxRecipe.x - listenerPos.x,
+          sfxRecipe.y - listenerPos.y,
+          sfxRecipe.z - listenerPos.z,
+        );
+        muffle = Math.max(muffle, pi(1 - (variantIndex - 5) / 10, 0, 0.8));
       }
       ((danger = Math.max(danger, 0.6)), (musicDuck = Math.min(musicDuck, 0.4)));
     }),
-    onEvent('objective:done', (te) => {
-      (stopRelayHum(te),
+    onEvent('objective:done', (sfxName) => {
+      (stopRelayHum(sfxName),
         play('objective', {
           delay: 0.35,
           gain: 1,
@@ -1274,25 +1288,29 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
       }));
   };
   (onEvent('extraction:reached', onExtracted),
-    onEvent('thunder', (te) => {
-      let he = pi(te.intensity != null ? +te.intensity : 0.6, 0.1, 1);
+    onEvent('thunder', (sfxName) => {
+      let voiceOptions = pi(sfxName.intensity != null ? +sfxName.intensity : 0.6, 0.1, 1);
       play('thunder', {
-        variant: he > 0.6 ? 1 : 0,
-        delay: 0.5 + (1 - he) * 2 + rnd() * 0.6,
-        gain: 0.35 + 0.65 * he,
+        variant: voiceOptions > 0.6 ? 1 : 0,
+        delay: 0.5 + (1 - voiceOptions) * 2 + rnd() * 0.6,
+        gain: 0.35 + 0.65 * voiceOptions,
         jitter: 0.1,
       });
     }),
     onEvent('ui:click', () => play('ui_click')),
     onEvent('ui:hover', () => play('ui_hover')),
-    onEvent('game:state', (te) => {
-      let he = gameState;
-      if (((gameState = te.state || gameState), gameState === 'playing' && he !== 'paused')) {
+    onEvent('game:state', (sfxName) => {
+      let voiceOptions = gameState;
+      if (
+        ((gameState = sfxName.state || gameState),
+        gameState === 'playing' && voiceOptions !== 'paused')
+      ) {
         ((danger = 0), (muffle = 0), syncRelayHums());
-        for (let pe of [...tracked.keys()]) pe.alive === !1 && untrackEnemy(pe);
+        for (let sfxRecipe of [...tracked.keys()])
+          sfxRecipe.alive === !1 && untrackEnemy(sfxRecipe);
       }
       (gameState === 'complete' && onExtracted(),
-        gameState === 'paused' ? (paused = !0) : he === 'paused' && (paused = !1));
+        gameState === 'paused' ? (paused = !0) : voiceOptions === 'paused' && (paused = !1));
     }));
   function unlock() {
     if (((unlocked = !0), webAudioCtx.state !== 'running' && webAudioCtx.state !== 'closed'))
@@ -1302,13 +1320,13 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
       } catch {}
   }
   if (typeof window < 'u' && !opts) {
-    let te = () => {
+    let sfxName = () => {
       if ((unlock(), isLive()))
         for (let he of ['pointerdown', 'keydown', 'touchend', 'mousedown'])
-          window.removeEventListener(he, te, !0);
+          window.removeEventListener(he, sfxName, !0);
     };
-    for (let he of ['pointerdown', 'keydown', 'touchend', 'mousedown'])
-      window.addEventListener(he, te, {
+    for (let voiceOptions of ['pointerdown', 'keydown', 'touchend', 'mousedown'])
+      window.addEventListener(voiceOptions, sfxName, {
         capture: !0,
         passive: !0,
       });
@@ -1656,21 +1674,21 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
       update: update,
       ready: readyPromise,
       selfTest: selfTest,
-      setIntensity(te) {
-        intensityTarget = pi(+te || 0, 0, 1);
+      setIntensity(sfxName) {
+        intensityTarget = pi(+sfxName || 0, 0, 1);
       },
-      setInterior(te) {
-        interiorTarget = pi(+te || 0, 0, 1);
+      setInterior(sfxName) {
+        interiorTarget = pi(+sfxName || 0, 0, 1);
       },
-      setVolume(te) {
-        ((masterVolume = pi(+te, 0, 1)),
+      setVolume(sfxName) {
+        ((masterVolume = pi(+sfxName, 0, 1)),
           Number.isFinite(masterVolume) || (masterVolume = 0.9),
           (outputGain.gain.value = masterVolume));
       },
-      setPaused(te) {
-        paused = !!te;
+      setPaused(sfxName) {
+        paused = !!sfxName;
       },
-      names: Object.keys(SFX_RECIPES).filter((te) => !SFX_RECIPES[te].ir),
+      names: Object.keys(SFX_RECIPES).filter((sfxName) => !SFX_RECIPES[sfxName].ir),
       get intensity() {
         return intensity;
       },
@@ -1678,9 +1696,11 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
         return interior;
       },
       debug() {
-        let te = 0,
-          he = webAudioCtx.currentTime;
-        for (let pe in voicePools) for (let ge of voicePools[pe]) ge.end > he && te++;
+        let sfxName = 0,
+          voiceOptions = webAudioCtx.currentTime;
+        for (let sfxRecipe in voicePools)
+          for (let variantIndex of voicePools[sfxRecipe])
+            variantIndex.end > voiceOptions && sfxName++;
         return {
           state: webAudioCtx.state,
           sampleRate: webAudioCtx.sampleRate,
@@ -1688,7 +1708,7 @@ function createWebAudioEngine(ctx, webAudioCtx, opts) {
           queued: queue.length,
           genMs: Math.round(synthMs),
           bootMs: Math.round(bootMs),
-          voices: te,
+          voices: sfxName,
           loops: loops.size,
           tracked: tracked.size,
           music: music.on,

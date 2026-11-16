@@ -607,7 +607,7 @@ ${fe}`,
   } catch {
     supportsFloatColor = !1;
   }
-  let y = {
+  let renderTargets = {
       scene: createTarget(HALF_FLOAT_TYPE, LINEAR_FILTER),
       motion: createTarget(HALF_FLOAT_TYPE, LINEAR_FILTER),
       ldr: createTarget(UNSIGNED_BYTE_TYPE, LINEAR_FILTER),
@@ -632,11 +632,13 @@ ${fe}`,
       depthCopy: null,
     },
     BLOOM_LEVELS = 6;
-  for (let oe = 0; oe < BLOOM_LEVELS; oe++)
-    y.down.push(createTarget(HALF_FLOAT_TYPE, LINEAR_FILTER));
-  for (let oe = 0; oe < BLOOM_LEVELS - 1; oe++)
-    y.up.push(createTarget(HALF_FLOAT_TYPE, LINEAR_FILTER));
-  (y.adapt[0].setSize(1, 1), y.adapt[1].setSize(1, 1), y.dirt.setSize(512, 288));
+  for (let stageValue = 0; stageValue < BLOOM_LEVELS; stageValue++)
+    renderTargets.down.push(createTarget(HALF_FLOAT_TYPE, LINEAR_FILTER));
+  for (let stageValue = 0; stageValue < BLOOM_LEVELS - 1; stageValue++)
+    renderTargets.up.push(createTarget(HALF_FLOAT_TYPE, LINEAR_FILTER));
+  (renderTargets.adapt[0].setSize(1, 1),
+    renderTargets.adapt[1].setSize(1, 1),
+    renderTargets.dirt.setSize(512, 288));
   let adaptIndex = 0,
     frameCount = 0,
     dirtBaked = !1,
@@ -697,7 +699,7 @@ ${fe}`,
       SALTLINE_AO_FRAG,
       {
         tDepthHalf: {
-          value: y.depthHalf.texture,
+          value: renderTargets.depthHalf.texture,
         },
         uTanHalf: {
           value: new THREE.Vector2(),
@@ -726,7 +728,7 @@ ${fe}`,
       SALTLINE_VOLUMETRIC_FRAG,
       {
         tDepthHalf: {
-          value: y.depthHalf.texture,
+          value: renderTargets.depthHalf.texture,
         },
         tShadow: {
           value: null,
@@ -792,7 +794,7 @@ ${fe}`,
           value: null,
         },
         tDepthHalf: {
-          value: y.depthHalf.texture,
+          value: renderTargets.depthHalf.texture,
         },
         uDir: {
           value: new THREE.Vector2(),
@@ -812,7 +814,7 @@ ${fe}`,
           value: null,
         },
         tDepthHalf: {
-          value: y.depthHalf.texture,
+          value: renderTargets.depthHalf.texture,
         },
         uDir: {
           value: new THREE.Vector2(),
@@ -832,13 +834,13 @@ ${fe}`,
         value: null,
       },
       tDepthHalf: {
-        value: y.depthHalf.texture,
+        value: renderTargets.depthHalf.texture,
       },
       tAO: {
-        value: y.aoA.texture,
+        value: renderTargets.aoA.texture,
       },
       tVol: {
-        value: y.volA.texture,
+        value: renderTargets.volA.texture,
       },
       uHalfRes: {
         value: new THREE.Vector2(),
@@ -862,7 +864,7 @@ ${fe}`,
     }),
     motionMat = makePassMaterial('motion', SALTLINE_MOTIONBLUR_FRAG, {
       tColor: {
-        value: y.scene.texture,
+        value: renderTargets.scene.texture,
       },
       tDepth: {
         value: null,
@@ -959,16 +961,16 @@ ${fe}`,
           value: null,
         },
         tBloom: {
-          value: y.up[0].texture,
+          value: renderTargets.up[0].texture,
         },
         tBlur: {
-          value: y.down[1].texture,
+          value: renderTargets.down[1].texture,
         },
         tStreak: {
-          value: y.streakB.texture,
+          value: renderTargets.streakB.texture,
         },
         tDirt: {
-          value: y.dirt.texture,
+          value: renderTargets.dirt.texture,
         },
         ...exposureUniforms,
         uSunCol: {
@@ -1038,7 +1040,7 @@ ${fe}`,
     ),
     finalMat = makePassMaterial('final', SALTLINE_FINAL_FRAG, {
       tSrc: {
-        value: y.ldr.texture,
+        value: renderTargets.ldr.texture,
       },
       uTexel: {
         value: new THREE.Vector2(),
@@ -1082,35 +1084,42 @@ ${fe}`,
       (size.h = fe),
       (size.hw = Math.max(4, Math.ceil(oe / 2))),
       (size.hh = Math.max(4, Math.ceil(fe / 2))),
-      y.scene.setSize(oe, fe),
-      y.motion.setSize(oe, fe),
-      y.ldr.setSize(oe, fe),
-      y.depthCopy)
+      renderTargets.scene.setSize(oe, fe),
+      renderTargets.motion.setSize(oe, fe),
+      renderTargets.ldr.setSize(oe, fe),
+      renderTargets.depthCopy)
     ) {
-      y.depthCopy.setSize(oe, fe);
-      let I = y.depthCopy.depthTexture.image;
+      renderTargets.depthCopy.setSize(oe, fe);
+      let I = renderTargets.depthCopy.depthTexture.image;
       (I.width !== oe || I.height !== fe) &&
-        ((I.width = oe), (I.height = fe), (y.depthCopy.depthTexture.needsUpdate = !0));
+        ((I.width = oe), (I.height = fe), (renderTargets.depthCopy.depthTexture.needsUpdate = !0));
     }
-    for (let I of [y.depthHalf, y.aoA, y.aoB, y.volA, y.volB]) I.setSize(size.hw, size.hh);
+    for (let I of [
+      renderTargets.depthHalf,
+      renderTargets.aoA,
+      renderTargets.aoB,
+      renderTargets.volA,
+      renderTargets.volB,
+    ])
+      I.setSize(size.hw, size.hh);
     let le = size.hw,
       R = size.hh;
     for (let I = 0; I < BLOOM_LEVELS; I++)
-      (y.down[I].setSize(le, R),
-        I < BLOOM_LEVELS - 1 && y.up[I].setSize(le, R),
+      (renderTargets.down[I].setSize(le, R),
+        I < BLOOM_LEVELS - 1 && renderTargets.up[I].setSize(le, R),
         (le = Math.max(2, le >> 1)),
         (R = Math.max(2, R >> 1)));
-    (y.streakA.setSize(y.down[2].width, y.down[2].height),
-      y.streakB.setSize(y.down[2].width, y.down[2].height),
+    (renderTargets.streakA.setSize(renderTargets.down[2].width, renderTargets.down[2].height),
+      renderTargets.streakB.setSize(renderTargets.down[2].width, renderTargets.down[2].height),
       (hasPrevFrame = !1),
       syncQualityDefines());
   }
   function ensureDepthCopy() {
-    if (!y.depthCopy) {
+    if (!renderTargets.depthCopy) {
       let oe = new THREE.DepthTexture(size.w, size.h);
       ((oe.type = THREE.UnsignedIntType),
         (oe.minFilter = oe.magFilter = NEAREST_FILTER),
-        (y.depthCopy = new THREE.WebGLRenderTarget(size.w, size.h, {
+        (renderTargets.depthCopy = new THREE.WebGLRenderTarget(size.w, size.h, {
           type: UNSIGNED_BYTE_TYPE,
           format: THREE.RGBAFormat,
           minFilter: NEAREST_FILTER,
@@ -1120,16 +1129,17 @@ ${fe}`,
           depthTexture: oe,
           generateMipmaps: !1,
         })),
-        renderer.setRenderTarget(y.depthCopy),
+        renderer.setRenderTarget(renderTargets.depthCopy),
         renderer.setClearColor(0, 1),
         renderer.clear(!0, !0, !1),
         renderer.setRenderTarget(null));
     }
-    return y.depthCopy.depthTexture;
+    return renderTargets.depthCopy.depthTexture;
   }
   function copyDepth(oe) {
-    y.depthCopy &&
-      ((depthCopyMat.uniforms.tDepth.value = oe), renderPass(depthCopyMat, y.depthCopy));
+    renderTargets.depthCopy &&
+      ((depthCopyMat.uniforms.tDepth.value = oe),
+      renderPass(depthCopyMat, renderTargets.depthCopy));
   }
   function run({
     hdr: oe,
@@ -1148,18 +1158,20 @@ ${fe}`,
       Pe = 1 / _e[5],
       Re = Te / Pe,
       Fe = oe.depthTexture;
-    ((exposureUniforms.tAdapt.value = y.adapt[adaptIndex].texture),
+    ((exposureUniforms.tAdapt.value = renderTargets.adapt[adaptIndex].texture),
       (exposureUniforms.uExposure.value = se),
       (exposureUniforms.uAuto.value = pipeline.autoExposure ? 1 : 0),
       (exposureUniforms.uKey.value = TUNE.key),
       (exposureUniforms.uMinE.value = TUNE.minExposure),
       (exposureUniforms.uMaxE.value = TUNE.maxExposure),
       dirtBaked ||
-        ((dirtMat.uniforms.uAspect.value = 16 / 9), renderPass(dirtMat, y.dirt), (dirtBaked = !0)),
+        ((dirtMat.uniforms.uAspect.value = 16 / 9),
+        renderPass(dirtMat, renderTargets.dirt),
+        (dirtBaked = !0)),
       (depthHalfMat.uniforms.tDepth.value = Fe),
       (depthHalfMat.uniforms.uNear.value = fe.near),
       (depthHalfMat.uniforms.uFar.value = fe.far),
-      renderPass(depthHalfMat, y.depthHalf));
+      renderPass(depthHalfMat, renderTargets.depthHalf));
     let ze = 1 / size.hw,
       We = 1 / size.hh,
       Ne = !!ve.ao;
@@ -1167,13 +1179,13 @@ ${fe}`,
       (aoMat.uniforms.uTanHalf.value.set(Te, Pe),
       aoMat.uniforms.uTexel.value.set(ze, We),
       (aoMat.uniforms.uAspect.value = Re),
-      renderPass(aoMat, y.aoA),
-      (blurAoMat.uniforms.tSrc.value = y.aoA.texture),
+      renderPass(aoMat, renderTargets.aoA),
+      (blurAoMat.uniforms.tSrc.value = renderTargets.aoA.texture),
       blurAoMat.uniforms.uDir.value.set(ze, 0),
-      renderPass(blurAoMat, y.aoB),
-      (blurAoMat.uniforms.tSrc.value = y.aoB.texture),
+      renderPass(blurAoMat, renderTargets.aoB),
+      (blurAoMat.uniforms.tSrc.value = renderTargets.aoB.texture),
       blurAoMat.uniforms.uDir.value.set(0, We),
-      renderPass(blurAoMat, y.aoA));
+      renderPass(blurAoMat, renderTargets.aoA));
     let dt = (ve.volSteps | 0) > 0;
     if (dt) {
       let be = volMat.uniforms,
@@ -1195,13 +1207,13 @@ ${fe}`,
       be.uSunRad.value.set(le.color.r * ut, le.color.g * ut, le.color.b * ut);
       let nn = TUNE.volAmbient * (1 + ce * 1.5);
       (be.uAmb.value.set(SKY_COLORS.fog.r * nn, SKY_COLORS.fog.g * nn, SKY_COLORS.fog.b * nn),
-        renderPass(volMat, y.volA),
-        (blurVolMat.uniforms.tSrc.value = y.volA.texture),
+        renderPass(volMat, renderTargets.volA),
+        (blurVolMat.uniforms.tSrc.value = renderTargets.volA.texture),
         blurVolMat.uniforms.uDir.value.set(ze, 0),
-        renderPass(blurVolMat, y.volB),
-        (blurVolMat.uniforms.tSrc.value = y.volB.texture),
+        renderPass(blurVolMat, renderTargets.volB),
+        (blurVolMat.uniforms.tSrc.value = renderTargets.volB.texture),
         blurVolMat.uniforms.uDir.value.set(0, We),
-        renderPass(blurVolMat, y.volA));
+        renderPass(blurVolMat, renderTargets.volA));
     }
     {
       let be = compositeMat.uniforms;
@@ -1212,9 +1224,9 @@ ${fe}`,
         (be.uFar.value = fe.far),
         (be.uAoOn.value = Ne ? 1 : 0),
         (be.uVolOn.value = dt ? 1 : 0),
-        renderPass(compositeMat, y.scene));
+        renderPass(compositeMat, renderTargets.scene));
     }
-    let xe = y.scene.texture;
+    let xe = renderTargets.scene.texture;
     if (
       (viewProj.multiplyMatrices(fe.projectionMatrix, fe.matrixWorldInverse),
       ve.motionBlur && hasPrevFrame && R > 0)
@@ -1225,8 +1237,8 @@ ${fe}`,
         be.uPrevViewProj.value.copy(prevViewProj),
         (be.uShutter.value = Math.min(0.5, 1 / 190 / Math.max(R, 0.001))),
         be.uRes.value.set(size.w, size.h),
-        renderPass(motionMat, y.motion),
-        (xe = y.motion.texture));
+        renderPass(motionMat, renderTargets.motion),
+        (xe = renderTargets.motion.texture));
     }
     if ((prevViewProj.copy(viewProj), (hasPrevFrame = !0), ve.bloom)) {
       let be = xe,
@@ -1236,26 +1248,26 @@ ${fe}`,
         ((downMat.uniforms.tSrc.value = be),
           downMat.uniforms.uTexel.value.set(1 / Oe, 1 / pt),
           (downMat.uniforms.uFirst.value = bt === 0 ? 1 : 0),
-          renderPass(downMat, y.down[bt]),
-          (be = y.down[bt].texture),
-          (Oe = y.down[bt].width),
-          (pt = y.down[bt].height));
-      let ut = y.down[BLOOM_LEVELS - 1];
+          renderPass(downMat, renderTargets.down[bt]),
+          (be = renderTargets.down[bt].texture),
+          (Oe = renderTargets.down[bt].width),
+          (pt = renderTargets.down[bt].height));
+      let ut = renderTargets.down[BLOOM_LEVELS - 1];
       for (let bt = BLOOM_LEVELS - 2; bt >= 0; bt--)
         ((upMat.uniforms.tLow.value = ut.texture),
-          (upMat.uniforms.tHigh.value = y.down[bt].texture),
+          (upMat.uniforms.tHigh.value = renderTargets.down[bt].texture),
           upMat.uniforms.uTexel.value.set(1 / ut.width, 1 / ut.height),
-          renderPass(upMat, y.up[bt]),
-          (ut = y.up[bt]));
-      let nn = 1 / y.streakA.width;
-      ((streakMat.uniforms.tSrc.value = y.down[2].texture),
+          renderPass(upMat, renderTargets.up[bt]),
+          (ut = renderTargets.up[bt]));
+      let nn = 1 / renderTargets.streakA.width;
+      ((streakMat.uniforms.tSrc.value = renderTargets.down[2].texture),
         streakMat.uniforms.uDir.value.set(nn * 1.5, 0),
         (streakMat.uniforms.uThreshold.value = TUNE.streakThreshold),
-        renderPass(streakMat, y.streakA),
-        (streakMat.uniforms.tSrc.value = y.streakA.texture),
+        renderPass(streakMat, renderTargets.streakA),
+        (streakMat.uniforms.tSrc.value = renderTargets.streakA.texture),
         streakMat.uniforms.uDir.value.set(nn * 5, 0),
         (streakMat.uniforms.uThreshold.value = 0),
-        renderPass(streakMat, y.streakB));
+        renderPass(streakMat, renderTargets.streakB));
     }
     (sunClipPos
       .copy(SUN.dir)
@@ -1270,10 +1282,10 @@ ${fe}`,
       we = sunClipPos.y * 0.5 + 0.5;
     {
       let be = adaptMat.uniforms,
-        Oe = y.adapt[adaptIndex],
-        pt = y.adapt[1 - adaptIndex];
+        Oe = renderTargets.adapt[adaptIndex],
+        pt = renderTargets.adapt[1 - adaptIndex];
       ((be.tPrev.value = Oe.texture),
-        (be.tLum.value = ve.bloom ? y.down[BLOOM_LEVELS - 1].texture : xe),
+        (be.tLum.value = ve.bloom ? renderTargets.down[BLOOM_LEVELS - 1].texture : xe),
         (be.tDepth.value = Fe),
         be.uSunUv.value.set(Me, we),
         (be.uSunOn.value = Xe),
@@ -1288,7 +1300,7 @@ ${fe}`,
     {
       let be = gradeMat.uniforms;
       ((be.tScene.value = xe),
-        (exposureUniforms.tAdapt.value = y.adapt[adaptIndex].texture),
+        (exposureUniforms.tAdapt.value = renderTargets.adapt[adaptIndex].texture),
         be.uSunUv.value.set(Me, we),
         (be.uSunOn.value = Xe),
         (be.uAspect.value = Re),
@@ -1306,7 +1318,7 @@ ${fe}`,
         (be.uFlash.value = clamp01(I.flash)),
         (be.uFade.value = clamp01(I.fade)),
         (be.uSaturation.value = Number.isFinite(I.saturation) ? I.saturation : 1),
-        renderPass(gradeMat, y.ldr));
+        renderPass(gradeMat, renderTargets.ldr));
     }
     {
       let be = finalMat.uniforms;
@@ -1321,28 +1333,28 @@ ${fe}`,
   function dispose() {
     for (let fe of materials) fe.dispose();
     let oe = [
-      y.scene,
-      y.motion,
-      y.ldr,
-      y.depthHalf,
-      y.aoA,
-      y.aoB,
-      y.volA,
-      y.volB,
-      y.streakA,
-      y.streakB,
-      y.dirt,
-      ...y.down,
-      ...y.up,
-      ...y.adapt,
+      renderTargets.scene,
+      renderTargets.motion,
+      renderTargets.ldr,
+      renderTargets.depthHalf,
+      renderTargets.aoA,
+      renderTargets.aoB,
+      renderTargets.volA,
+      renderTargets.volB,
+      renderTargets.streakA,
+      renderTargets.streakB,
+      renderTargets.dirt,
+      ...renderTargets.down,
+      ...renderTargets.up,
+      ...renderTargets.adapt,
     ];
-    y.depthCopy && oe.push(y.depthCopy);
+    renderTargets.depthCopy && oe.push(renderTargets.depthCopy);
     for (let fe of oe) fe.dispose();
   }
   let readbackPixel = new Uint16Array(4);
   function readAdaptation() {
     try {
-      renderer.readRenderTargetPixels(y.adapt[adaptIndex], 0, 0, 1, 1, readbackPixel);
+      renderer.readRenderTargetPixels(renderTargets.adapt[adaptIndex], 0, 0, 1, 1, readbackPixel);
       let oe = THREE.DataUtils.fromHalfFloat(readbackPixel[0]),
         fe = Math.min(
           TUNE.maxExposure,
@@ -1366,7 +1378,7 @@ ${fe}`,
     applyQuality: syncQualityDefines,
     dispose: dispose,
     materials: materials,
-    rt: y,
+    rt: renderTargets,
     size: size,
     TUNE: TUNE,
     autoExposure: !0,

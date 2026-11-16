@@ -161,7 +161,7 @@ export function createMenus(ctx, actions) {
       </header>
       <div class="panel-b" data-pane="settings">
         <div class="row"><label id="l-q">Graphics quality</label>
-          <div class="seg" role="group" aria-labelledby="l-q">${QUALITY_NAMES.map((U) => `<button data-q="${U}" aria-pressed="false">${U}</button>`).join('')}</div></div>
+          <div class="seg" role="group" aria-labelledby="l-q">${QUALITY_NAMES.map((uiInput) => `<button data-q="${uiInput}" aria-pressed="false">${uiInput}</button>`).join('')}</div></div>
         <div class="row"><label for="s-sens">Mouse sensitivity</label><div class="slider"><input id="s-sens" type="range" min="0.2" max="3" step="0.05"><output data-o="sens"></output></div></div>
         <div class="row"><label id="l-inv">Invert Y</label><button class="toggle" data-act="invert" aria-labelledby="l-inv" aria-pressed="false"><i></i><span>Off</span></button></div>
         <div class="row"><label for="s-vol">Master volume</label><div class="slider"><input id="s-vol" type="range" min="0" max="100" step="1"><output data-o="vol"></output></div></div>
@@ -318,54 +318,61 @@ export function createMenus(ctx, actions) {
         });
       } catch {}
   }
-  (root.addEventListener('click', (U) => {
-    let T = U.target.closest('button');
-    if (!T || !root.contains(T)) return;
-    if ((ctx.events.emit('ui:click', {}), T.dataset.q)) {
-      ((settings.quality = T.dataset.q),
+  (root.addEventListener('click', (uiInput) => {
+    let elementRef = uiInput.target.closest('button');
+    if (!elementRef || !root.contains(elementRef)) return;
+    if ((ctx.events.emit('ui:click', {}), elementRef.dataset.q)) {
+      ((settings.quality = elementRef.dataset.q),
         applySettings('quality'),
         syncUi(),
         saveSettings(settings));
       return;
     }
-    if (T.dataset.tab) {
-      selectTab(T.dataset.tab);
+    if (elementRef.dataset.tab) {
+      selectTab(elementRef.dataset.tab);
       return;
     }
-    let D = T.dataset.act;
-    D === 'settings'
+    let actionKey = elementRef.dataset.act;
+    actionKey === 'settings'
       ? openPanel('settings')
-      : D === 'controls'
+      : actionKey === 'controls'
         ? openPanel('controls')
-        : D === 'close-panel'
+        : actionKey === 'close-panel'
           ? closePanel()
-          : D === 'invert'
+          : actionKey === 'invert'
             ? ((settings.invertY = !settings.invertY),
               applySettings('invertY'),
               syncUi(),
               saveSettings(settings))
-            : D === 'fullscreen'
+            : actionKey === 'fullscreen'
               ? toggleFullscreen()
-              : D && actions[D] && actions[D](U);
+              : actionKey && actions[actionKey] && actions[actionKey](uiInput);
   }),
-    root.addEventListener('mouseover', (U) => {
-      let T = U.target.closest('button');
-      T && U.relatedTarget && !T.contains(U.relatedTarget) && ctx.events.emit('ui:hover', {});
+    root.addEventListener('mouseover', (uiInput) => {
+      let elementRef = uiInput.target.closest('button');
+      elementRef &&
+        uiInput.relatedTarget &&
+        !elementRef.contains(uiInput.relatedTarget) &&
+        ctx.events.emit('ui:hover', {});
     }),
-    root.addEventListener('keydown', (U) => {
+    root.addEventListener('keydown', (uiInput) => {
       if (
-        (U.code === 'Escape' &&
+        (uiInput.code === 'Escape' &&
           !panel.hidden &&
-          (closePanel(), U.stopPropagation(), U.preventDefault()),
-        U.code === 'Tab' && !panel.hidden)
+          (closePanel(), uiInput.stopPropagation(), uiInput.preventDefault()),
+        uiInput.code === 'Tab' && !panel.hidden)
       ) {
-        let T = [...panel.querySelectorAll('button, input')].filter((G) => G.offsetParent !== null);
-        if (!T.length) return;
-        let D = T[0],
-          C = T[T.length - 1];
-        U.shiftKey && document.activeElement === D
-          ? (C.focus(), U.preventDefault())
-          : !U.shiftKey && document.activeElement === C && (D.focus(), U.preventDefault());
+        let elementRef = [...panel.querySelectorAll('button, input')].filter(
+          (focusableNode) => focusableNode.offsetParent !== null,
+        );
+        if (!elementRef.length) return;
+        let actionKey = elementRef[0],
+          lastTabStop = elementRef[elementRef.length - 1];
+        uiInput.shiftKey && document.activeElement === actionKey
+          ? (lastTabStop.focus(), uiInput.preventDefault())
+          : !uiInput.shiftKey &&
+            document.activeElement === lastTabStop &&
+            (actionKey.focus(), uiInput.preventDefault());
       }
     }));
   let fmtTime = (U) => (
@@ -383,34 +390,41 @@ export function createMenus(ctx, actions) {
         return !panel.hidden;
       },
       closePanel: closePanel,
-      show(U) {
-        U !== screen &&
-          ((screen = U),
-          (root.dataset.screen = U),
+      show(uiInput) {
+        uiInput !== screen &&
+          ((screen = uiInput),
+          (root.dataset.screen = uiInput),
           closePanel(),
-          root.classList.toggle('open', U !== 'none'),
-          U !== 'none'
+          root.classList.toggle('open', uiInput !== 'none'),
+          uiInput !== 'none'
             ? (syncUi(), setTimeout(focusPrimary, 30))
             : document.activeElement &&
               root.contains(document.activeElement) &&
               document.activeElement.blur());
       },
-      locationCard(U) {
-        locationCard.classList.toggle('on', !!U);
+      locationCard(uiInput) {
+        locationCard.classList.toggle('on', !!uiInput);
       },
-      setLookMode(U) {
-        field('lookmode').textContent = U || '';
+      setLookMode(uiInput) {
+        field('lookmode').textContent = uiInput || '';
       },
-      setDead({ time: U, relays: T, total: D }) {
-        ((field('dead-time').textContent = fmtTime(U)),
-          (field('dead-relays').textContent = `${T}/${D}`));
+      setDead({ time: uiInput, relays: elementRef, total: actionKey }) {
+        ((field('dead-time').textContent = fmtTime(uiInput)),
+          (field('dead-relays').textContent = `${elementRef}/${actionKey}`));
       },
-      setDebrief({ time: U, accuracy: T, kills: D, retries: C, rating: G }) {
-        ((field('time').textContent = fmtTime(U)),
-          (field('acc').textContent = T == null ? '\u2014' : Math.round(T * 100) + '%'),
-          (field('kills').textContent = String(D)),
-          (field('retries').textContent = String(C)),
-          (field('rating').textContent = G));
+      setDebrief({
+        time: uiInput,
+        accuracy: elementRef,
+        kills: actionKey,
+        retries: lastTabStop,
+        rating: focusableNode,
+      }) {
+        ((field('time').textContent = fmtTime(uiInput)),
+          (field('acc').textContent =
+            elementRef == null ? '\u2014' : Math.round(elementRef * 100) + '%'),
+          (field('kills').textContent = String(actionKey)),
+          (field('retries').textContent = String(lastTabStop)),
+          (field('rating').textContent = focusableNode));
       },
       applySettings: applySettings,
     };

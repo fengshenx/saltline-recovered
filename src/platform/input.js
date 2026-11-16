@@ -106,28 +106,28 @@ export function createInput(ctx) {
       sensitivity: 1,
       invertY: !1,
       mode: 'lock',
-      down(P) {
-        return held.has(P) && (gameplay || UNGATED_ACTIONS[P] === 1);
+      down(inputEvent) {
+        return held.has(inputEvent) && (gameplay || UNGATED_ACTIONS[inputEvent] === 1);
       },
-      pressed(P) {
-        return pressedSet.has(P) && (gameplay || UNGATED_ACTIONS[P] === 1);
+      pressed(inputEvent) {
+        return pressedSet.has(inputEvent) && (gameplay || UNGATED_ACTIONS[inputEvent] === 1);
       },
       update: update,
       endFrame: endFrame,
       requestLock: requestLock,
       exitLock: exitLock,
-      setGameplay(P) {
-        ((P = !!P),
-          P !== gameplay &&
-            ((gameplay = P),
-            P || clearAll(),
-            touchUI && touchUI.root.classList.toggle('on', P && state.touch)));
+      setGameplay(inputEvent) {
+        ((inputEvent = !!inputEvent),
+          inputEvent !== gameplay &&
+            ((gameplay = inputEvent),
+            inputEvent || clearAll(),
+            touchUI && touchUI.root.classList.toggle('on', inputEvent && state.touch)));
       },
-      setPrompt(P) {
-        touchUI && touchUI.btn.interact.classList.toggle('on', !!P);
+      setPrompt(inputEvent) {
+        touchUI && touchUI.btn.interact.classList.toggle('on', !!inputEvent);
       },
-      onModeChange(P) {
-        modeListeners.push(P);
+      onModeChange(inputEvent) {
+        modeListeners.push(inputEvent);
       },
       describeMode() {
         return state.mode === 'touch'
@@ -176,58 +176,66 @@ export function createInput(ctx) {
         (lookTouchId = -1),
         (fireTouchId = -1)));
   }
-  (addEventListener('keydown', (P) => {
-    let V = KEY_BINDINGS[P.code];
-    if (!V) return;
-    let Y = P.target;
-    (Y && (Y.tagName === 'INPUT' || Y.tagName === 'SELECT' || Y.tagName === 'TEXTAREA')) ||
-      (Y &&
-        Y.tagName === 'BUTTON' &&
-        (P.code === 'Space' || P.code === 'Enter' || P.code === 'NumpadEnter')) ||
+  (addEventListener('keydown', (inputEvent) => {
+    let actionName = KEY_BINDINGS[inputEvent.code];
+    if (!actionName) return;
+    let axisValue = inputEvent.target;
+    (axisValue &&
+      (axisValue.tagName === 'INPUT' ||
+        axisValue.tagName === 'SELECT' ||
+        axisValue.tagName === 'TEXTAREA')) ||
+      (axisValue &&
+        axisValue.tagName === 'BUTTON' &&
+        (inputEvent.code === 'Space' ||
+          inputEvent.code === 'Enter' ||
+          inputEvent.code === 'NumpadEnter')) ||
       (gameplay &&
-        (P.code === 'Space' || P.code.startsWith('Arrow') || P.code === 'ControlLeft') &&
-        P.preventDefault(),
-      !P.repeat && setSourceAction('key', V, !0));
+        (inputEvent.code === 'Space' ||
+          inputEvent.code.startsWith('Arrow') ||
+          inputEvent.code === 'ControlLeft') &&
+        inputEvent.preventDefault(),
+      !inputEvent.repeat && setSourceAction('key', actionName, !0));
   }),
-    addEventListener('keyup', (P) => {
-      setSourceAction('key', KEY_BINDINGS[P.code], !1);
+    addEventListener('keyup', (inputEvent) => {
+      setSourceAction('key', KEY_BINDINGS[inputEvent.code], !1);
     }),
     addEventListener('blur', () => {
       clearAll();
     }));
   let mouseAction = (P) => (P === 0 ? 'fire' : P === 2 ? 'ads' : P === 1 ? 'melee' : null);
-  (viewEl.addEventListener('mousedown', (P) => {
+  (viewEl.addEventListener('mousedown', (inputEvent) => {
     if (!(state.touch && performance.now() - lastTouchAt < 800) && gameplay) {
       if (!state.locked && state.mode === 'lock') {
-        (requestLock(), P.preventDefault());
+        (requestLock(), inputEvent.preventDefault());
         return;
       }
-      ((mouseButtons |= 1 << P.button),
-        setSourceAction('mouse', mouseAction(P.button), !0),
-        P.preventDefault());
+      ((mouseButtons |= 1 << inputEvent.button),
+        setSourceAction('mouse', mouseAction(inputEvent.button), !0),
+        inputEvent.preventDefault());
     }
   }),
-    addEventListener('mouseup', (P) => {
-      ((mouseButtons &= ~(1 << P.button)), setSourceAction('mouse', mouseAction(P.button), !1));
+    addEventListener('mouseup', (inputEvent) => {
+      ((mouseButtons &= ~(1 << inputEvent.button)),
+        setSourceAction('mouse', mouseAction(inputEvent.button), !1));
     }),
-    addEventListener('contextmenu', (P) => {
-      (P.target === viewEl || gameplay) && P.preventDefault();
+    addEventListener('contextmenu', (inputEvent) => {
+      (inputEvent.target === viewEl || gameplay) && inputEvent.preventDefault();
     }),
-    addEventListener('mousemove', (P) => {
+    addEventListener('mousemove', (inputEvent) => {
       if (
         gameplay &&
         (state.mode === 'drag' &&
-          ((cursorX = P.clientX / Math.max(1, innerWidth)),
-          (cursorY = P.clientY / Math.max(1, innerHeight)),
+          ((cursorX = inputEvent.clientX / Math.max(1, innerWidth)),
+          (cursorY = inputEvent.clientY / Math.max(1, innerHeight)),
           (cursorInside = !0)),
         state.locked || state.mode === 'drag')
       ) {
-        let V = P.movementX || 0,
-          Y = P.movementY || 0;
-        if (Math.abs(V) > 400 || Math.abs(Y) > 400) return;
-        ((state.look.dx += V * MOUSE_LOOK_SENSITIVITY * state.sensitivity),
+        let actionName = inputEvent.movementX || 0,
+          axisValue = inputEvent.movementY || 0;
+        if (Math.abs(actionName) > 400 || Math.abs(axisValue) > 400) return;
+        ((state.look.dx += actionName * MOUSE_LOOK_SENSITIVITY * state.sensitivity),
           (state.look.dy +=
-            Y * MOUSE_LOOK_SENSITIVITY * state.sensitivity * (state.invertY ? -1 : 1)));
+            axisValue * MOUSE_LOOK_SENSITIVITY * state.sensitivity * (state.invertY ? -1 : 1)));
       }
     }),
     document.addEventListener('pointerlockchange', () => {
@@ -238,7 +246,7 @@ export function createInput(ctx) {
           state.touch || setMode('lock'));
       else {
         (sources.mouse.clear(), held.delete('fire'), held.delete('ads'));
-        for (let P of sources.key) held.add(P);
+        for (let inputEvent of sources.key) held.add(inputEvent);
         mouseButtons = 0;
       }
       ctx.events.emit('input:lock', {
@@ -398,20 +406,22 @@ export function createInput(ctx) {
   ),
     viewEl.addEventListener(
       'touchstart',
-      (P) => {
-        if ((P.preventDefault(), !!gameplay))
-          for (let V of P.changedTouches)
-            V.clientX < innerWidth * 0.45 && stickId < 0
-              ? ((stickId = V.identifier),
-                (stickOriginX = V.clientX),
-                (stickOriginY = V.clientY),
+      (inputEvent) => {
+        if ((inputEvent.preventDefault(), !!gameplay))
+          for (let actionName of inputEvent.changedTouches)
+            actionName.clientX < innerWidth * 0.45 && stickId < 0
+              ? ((stickId = actionName.identifier),
+                (stickOriginX = actionName.clientX),
+                (stickOriginY = actionName.clientY),
                 (stickX = stickY = 0),
                 touchUI &&
                   ((touchUI.stick.style.transform = `translate3d(${stickOriginX}px,${stickOriginY}px,0)`),
                   (touchUI.nub.style.transform = 'translate3d(0,0,0)'),
                   touchUI.stick.classList.add('on')))
               : lookTouchId < 0 &&
-                ((lookTouchId = V.identifier), (lookTouchX = V.clientX), (lookTouchY = V.clientY));
+                ((lookTouchId = actionName.identifier),
+                (lookTouchX = actionName.clientX),
+                (lookTouchY = actionName.clientY));
       },
       {
         passive: !1,
@@ -419,24 +429,25 @@ export function createInput(ctx) {
     ),
     viewEl.addEventListener(
       'touchmove',
-      (P) => {
-        if ((P.preventDefault(), !!gameplay))
-          for (let V of P.changedTouches)
-            if (V.identifier === stickId) {
-              let Y = V.clientX - stickOriginX,
-                L = V.clientY - stickOriginY,
-                Z = Math.hypot(Y, L);
-              (Z > TOUCH_STICK_RADIUS &&
-                ((Y *= TOUCH_STICK_RADIUS / Z), (L *= TOUCH_STICK_RADIUS / Z)),
-                (stickX = Y / TOUCH_STICK_RADIUS),
-                (stickY = -L / TOUCH_STICK_RADIUS),
+      (inputEvent) => {
+        if ((inputEvent.preventDefault(), !!gameplay))
+          for (let actionName of inputEvent.changedTouches)
+            if (actionName.identifier === stickId) {
+              let axisValue = actionName.clientX - stickOriginX,
+                sourceSet = actionName.clientY - stickOriginY,
+                stickMagnitude = Math.hypot(axisValue, sourceSet);
+              (stickMagnitude > TOUCH_STICK_RADIUS &&
+                ((axisValue *= TOUCH_STICK_RADIUS / stickMagnitude),
+                (sourceSet *= TOUCH_STICK_RADIUS / stickMagnitude)),
+                (stickX = axisValue / TOUCH_STICK_RADIUS),
+                (stickY = -sourceSet / TOUCH_STICK_RADIUS),
                 touchUI &&
-                  (touchUI.nub.style.transform = `translate3d(${Y.toFixed(1)}px,${L.toFixed(1)}px,0)`));
+                  (touchUI.nub.style.transform = `translate3d(${axisValue.toFixed(1)}px,${sourceSet.toFixed(1)}px,0)`));
             } else
-              V.identifier === lookTouchId &&
-                (applyTouchLook(V.clientX - lookTouchX, V.clientY - lookTouchY),
-                (lookTouchX = V.clientX),
-                (lookTouchY = V.clientY));
+              actionName.identifier === lookTouchId &&
+                (applyTouchLook(actionName.clientX - lookTouchX, actionName.clientY - lookTouchY),
+                (lookTouchX = actionName.clientX),
+                (lookTouchY = actionName.clientY));
       },
       {
         passive: !1,

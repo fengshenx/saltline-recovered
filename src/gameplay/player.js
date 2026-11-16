@@ -73,14 +73,14 @@ export function createPlayer(ctx) {
       lookScale: 1,
       lastSafe: lastSafe,
       tuning: PLAYER_TUNING,
-      reset(F) {
-        let X = F ||
+      reset(frameDt) {
+        let inputState = frameDt ||
           (ctx.level && ctx.level.playerStart) || {
             pos: new THREE.Vector3(),
             yaw: 0,
           };
-        (player.pos.copy(X.pos),
-          (player.yaw = X.yaw || 0),
+        (player.pos.copy(inputState.pos),
+          (player.yaw = inputState.yaw || 0),
           (player.pitch = 0),
           player.vel.set(0, 0, 0),
           (player.health = player.maxHealth),
@@ -111,20 +111,23 @@ export function createPlayer(ctx) {
           (deathTime = 0),
           (player.hurtPulse = 0),
           lastSafe.copy(player.pos));
-        let ne = getPost();
-        ((ne.damage = 0), (ne.lowHealth = 0), (ne.ads = 0), updateView(0));
+        let weaponState = getPost();
+        ((weaponState.damage = 0),
+          (weaponState.lowHealth = 0),
+          (weaponState.ads = 0),
+          updateView(0));
       },
-      damage(F, X) {
+      damage(frameDt, inputState) {
         !player.alive ||
           player.invulnerable ||
-          !(F > 0) ||
-          ((player.health = Math.max(0, player.health - F)),
+          !(frameDt > 0) ||
+          ((player.health = Math.max(0, player.health - frameDt)),
           (sinceHit = 0),
-          (hurtPulse = Math.min(1, hurtPulse + 0.35 + F / 40)),
-          player.addShake(0.22 + F / 70),
+          (hurtPulse = Math.min(1, hurtPulse + 0.35 + frameDt / 40)),
+          player.addShake(0.22 + frameDt / 70),
           ctx.events.emit('player:hit', {
-            amount: F,
-            fromPos: X,
+            amount: frameDt,
+            fromPos: inputState,
           }),
           player.health <= 0 &&
             ((player.alive = !1),
@@ -132,37 +135,38 @@ export function createPlayer(ctx) {
             (player.sprinting = !1),
             ctx.events.emit('player:dead', {})));
       },
-      heal(F) {
-        player.alive && (player.health = Math.min(player.maxHealth, player.health + F));
+      heal(frameDt) {
+        player.alive && (player.health = Math.min(player.maxHealth, player.health + frameDt));
       },
-      addRecoil(F = 0, X = 0) {
-        let ne = PLAYER_TUNING.recoilKeep;
+      addRecoil(frameDt = 0, inputState = 0) {
+        let weaponState = PLAYER_TUNING.recoilKeep;
         ((player.pitch = clamp(
-          player.pitch + F * ne,
+          player.pitch + frameDt * weaponState,
           -PLAYER_TUNING.pitchLimit,
           PLAYER_TUNING.pitchLimit,
         )),
-          (player.yaw += X * ne),
-          (recoilPitch += F * (1 - ne)),
-          (recoilYaw += X * (1 - ne)),
+          (player.yaw += inputState * weaponState),
+          (recoilPitch += frameDt * (1 - weaponState)),
+          (recoilYaw += inputState * (1 - weaponState)),
           (recoilPitch = clamp(recoilPitch, -0.3, 0.3)),
           (recoilYaw = clamp(recoilYaw, -0.2, 0.2)),
           (recoilHold = PLAYER_TUNING.recoilHold));
       },
-      addShake(F = 0.3) {
-        shake = Math.min(1, shake + F);
+      addShake(frameDt = 0.3) {
+        shake = Math.min(1, shake + frameDt);
       },
-      setFov(F) {
-        player.baseFov = clamp(+F || PLAYER_SPEC.fov, 55, 100);
+      setFov(frameDt) {
+        player.baseFov = clamp(+frameDt || PLAYER_SPEC.fov, 55, 100);
       },
       update: update,
     };
-  ctx.events.on('explosion', (F) => {
-    if (!F || !F.pos) return;
-    let X = player.eye.distanceTo(F.pos),
-      ne = F.size || 1,
-      re = saturate(1 - X / (14 + ne * 10)) * (0.35 + 0.35 * ne);
-    re > 0.01 && player.addShake(re);
+  ctx.events.on('explosion', (frameDt) => {
+    if (!frameDt || !frameDt.pos) return;
+    let inputState = player.eye.distanceTo(frameDt.pos),
+      weaponState = frameDt.size || 1,
+      controlsEnabled =
+        saturate(1 - inputState / (14 + weaponState * 10)) * (0.35 + 0.35 * weaponState);
+    controlsEnabled > 0.01 && player.addShake(controlsEnabled);
   });
   function canStand() {
     let cost = ctx.physics && ctx.physics.boxes;

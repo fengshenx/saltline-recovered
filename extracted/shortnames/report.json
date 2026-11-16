@@ -1,8 +1,8 @@
 [
  {
   "function": "createWebAudioEngine",
-  "bytes": 38148,
-  "line": 37083,
+  "bytes": 40230,
+  "line": 38903,
   "params": [
    "ctx",
    "webAudioCtx",
@@ -40,9 +40,35 @@
   ]
  },
  {
+  "function": "buildQuayCrane",
+  "bytes": 36344,
+  "line": 24003,
+  "params": [
+   "ctx",
+   "lamps",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "Fe",
+   "I",
+   "Pe",
+   "R",
+   "Re",
+   "Te",
+   "_e",
+   "ae",
+   "ce",
+   "k",
+   "se",
+   "ve",
+   "ze"
+  ]
+ },
+ {
   "function": "createEffects",
-  "bytes": 35624,
-  "line": 31066,
+  "bytes": 36199,
+  "line": 32852,
   "params": [
    "ctx"
   ],
@@ -72,36 +98,36 @@
   ]
  },
  {
-  "function": "buildQuayCrane",
-  "bytes": 35324,
-  "line": 22833,
+  "function": "buildWorkshopShed",
+  "bytes": 35938,
+  "line": 19681,
   "params": [
-   "ctx",
-   "lamps",
-   "_"
+   "ctx"
   ],
   "shortParams": [],
   "shortLocals": [
    "Fe",
    "I",
+   "J",
+   "L",
    "Pe",
    "R",
    "Re",
    "Te",
-   "_e",
+   "Z",
    "ae",
    "ce",
+   "fe",
    "k",
-   "se",
-   "t",
-   "ve",
-   "ze"
+   "le",
+   "oe",
+   "se"
   ]
  },
  {
   "function": "createDrone",
-  "bytes": 31080,
-  "line": 46369,
+  "bytes": 32048,
+  "line": 48404,
   "params": [
    "ctx",
    "rigDef",
@@ -131,7 +157,6 @@
    "Z",
    "ae",
    "ce",
-   "dt",
    "ee",
    "fe",
    "ie",
@@ -147,39 +172,69 @@
   ]
  },
  {
-  "function": "buildWorkshopShed",
-  "bytes": 30133,
-  "line": 18912,
+  "function": "createDecalLibrary",
+  "bytes": 30683,
+  "line": 4341,
   "params": [
-   "ctx"
+   "app",
+   "_"
   ],
   "shortParams": [],
   "shortLocals": [
-   "Fe",
-   "I",
+   "A",
+   "C",
+   "D",
+   "E",
+   "G",
+   "H",
+   "M",
+   "O",
+   "S",
+   "T",
+   "U",
+   "_",
+   "ax",
+   "b",
+   "cx",
+   "cy",
+   "g",
+   "j",
+   "m",
+   "q",
+   "v",
+   "w",
+   "x",
+   "y",
+   "z"
+  ]
+ },
+ {
+  "function": "buildContainerShip",
+  "bytes": 28909,
+  "line": 25922,
+  "params": [
+   "ctx",
+   "lamps"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "B",
    "J",
    "L",
-   "Ne",
-   "Pe",
-   "R",
-   "Re",
-   "Te",
+   "P",
+   "V",
+   "Y",
    "Z",
-   "_e",
-   "ae",
-   "ce",
-   "fe",
-   "k",
-   "le",
-   "oe",
-   "se",
-   "ve"
+   "ee",
+   "me",
+   "ue"
   ]
  },
  {
   "function": "createWeapon",
-  "bytes": 25156,
-  "line": 43035,
+  "bytes": 25304,
+  "line": 45046,
   "params": [
    "ctx"
   ],
@@ -236,85 +291,19 @@
   ]
  },
  {
-  "function": "createDecalLibrary",
-  "bytes": 24913,
-  "line": 4292,
-  "params": [
-   "app",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "C",
-   "D",
-   "E",
-   "G",
-   "H",
-   "M",
-   "O",
-   "S",
-   "T",
-   "U",
-   "_",
-   "ax",
-   "b",
-   "g",
-   "j",
-   "m",
-   "q",
-   "v",
-   "w",
-   "x",
-   "y",
-   "z"
-  ]
- },
- {
-  "function": "buildContainerShip",
-  "bytes": 22188,
-  "line": 24811,
-  "params": [
-   "ctx",
-   "lamps"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "$",
-   "B",
-   "J",
-   "L",
-   "P",
-   "R",
-   "V",
-   "Y",
-   "Z",
-   "ee",
-   "fe",
-   "le",
-   "me",
-   "oe",
-   "ue"
-  ]
- },
- {
   "function": "buildPac9Geometry",
-  "bytes": 22012,
-  "line": 40074,
+  "bytes": 23770,
+  "line": 41952,
   "params": [],
   "shortParams": [],
   "shortLocals": [
-   "$",
-   "F",
-   "X",
-   "ne",
-   "re"
+   "F"
   ]
  },
  {
   "function": "createPostprocessing",
-  "bytes": 21735,
-  "line": 1824,
+  "bytes": 22959,
+  "line": 1828,
   "params": [
    "renderer",
    "ctx",
@@ -352,35 +341,13 @@
    "ve",
    "we",
    "xe",
-   "y",
    "ze"
   ]
  },
  {
-  "function": "buildForklift",
-  "bytes": 20719,
-  "line": 16000,
-  "params": [
-   "ctx",
-   "opts"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "$",
-   "F",
-   "K",
-   "P",
-   "R",
-   "X",
-   "ie",
-   "ne",
-   "re"
-  ]
- },
- {
   "function": "buildHarborSkyline",
-  "bytes": 20304,
-  "line": 26118,
+  "bytes": 22833,
+  "line": 27607,
   "params": [
    "ctx",
    "lamps"
@@ -442,60 +409,24 @@
   ]
  },
  {
-  "function": "createGameFlow",
-  "bytes": 20272,
-  "line": 49144,
+  "function": "buildForklift",
+  "bytes": 22467,
+  "line": 16693,
   "params": [
-   "ctx"
+   "ctx",
+   "opts"
   ],
   "shortParams": [],
   "shortLocals": [
-   "I",
-   "J",
-   "L",
-   "P",
+   "K",
    "R",
-   "Te",
-   "V",
-   "Y",
-   "Z",
-   "_e",
-   "ae",
-   "ce",
-   "fe",
-   "k",
-   "le",
-   "oe",
-   "se",
-   "ve"
-  ]
- },
- {
-  "function": "createRenderer",
-  "bytes": 19842,
-  "line": 2708,
-  "params": [
-   "ctx"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "$",
-   "B",
-   "F",
-   "P",
-   "X",
-   "ee",
-   "ie",
-   "me",
-   "ne",
-   "re",
-   "ue"
+   "ie"
   ]
  },
  {
   "function": "buildContainerParts",
-  "bytes": 19163,
-  "line": 8024,
+  "bytes": 22150,
+  "line": 8329,
   "params": [
    "ctx",
    "type",
@@ -534,9 +465,60 @@
   ]
  },
  {
+  "function": "createRenderer",
+  "bytes": 21851,
+  "line": 2724,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "B",
+   "F",
+   "P",
+   "X",
+   "ee",
+   "ie",
+   "me",
+   "ne",
+   "re",
+   "ue"
+  ]
+ },
+ {
+  "function": "createGameFlow",
+  "bytes": 20486,
+  "line": 51268,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "I",
+   "J",
+   "L",
+   "P",
+   "R",
+   "Te",
+   "V",
+   "Y",
+   "Z",
+   "_e",
+   "ae",
+   "ce",
+   "fe",
+   "k",
+   "le",
+   "oe",
+   "se",
+   "ve"
+  ]
+ },
+ {
   "function": "buildRelayNode",
-  "bytes": 18615,
-  "line": 11578,
+  "bytes": 19746,
+  "line": 12081,
   "params": [
    "ctx",
    "_"
@@ -555,9 +537,36 @@
   ]
  },
  {
+  "function": "createPhysics",
+  "bytes": 19556,
+  "line": 6791,
+  "params": [
+   "app"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "C",
+   "D",
+   "E",
+   "G",
+   "H",
+   "M",
+   "N",
+   "O",
+   "S",
+   "T",
+   "U",
+   "_",
+   "j",
+   "q",
+   "w",
+   "z"
+  ]
+ },
+ {
   "function": "createHUD",
-  "bytes": 17212,
-  "line": 48129,
+  "bytes": 18790,
+  "line": 50218,
   "params": [
    "ctx"
   ],
@@ -597,9 +606,39 @@
   ]
  },
  {
+  "function": "createDecalAtlas",
+  "bytes": 17908,
+  "line": 30898,
+  "params": [
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "$",
+   "E",
+   "F",
+   "H",
+   "M",
+   "O",
+   "S",
+   "T",
+   "U",
+   "X",
+   "_",
+   "az",
+   "me",
+   "ne",
+   "q",
+   "re",
+   "ue",
+   "w",
+   "z"
+  ]
+ },
+ {
   "function": "createWalker",
-  "bytes": 16843,
-  "line": 45692,
+  "bytes": 17653,
+  "line": 47721,
   "params": [
    "ctx",
    "rigDef",
@@ -648,99 +687,9 @@
   ]
  },
  {
-  "function": "createWalkerModel",
-  "bytes": 14874,
-  "line": 44322,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "a",
-   "o",
-   "r",
-   "s"
-  ]
- },
- {
-  "function": "createPhysics",
-  "bytes": 14480,
-  "line": 6581,
-  "params": [
-   "app"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "$",
-   "B",
-   "C",
-   "D",
-   "E",
-   "F",
-   "G",
-   "H",
-   "K",
-   "L",
-   "M",
-   "N",
-   "O",
-   "P",
-   "Q",
-   "S",
-   "T",
-   "U",
-   "V",
-   "X",
-   "Y",
-   "_",
-   "ee",
-   "ie",
-   "j",
-   "me",
-   "ne",
-   "q",
-   "re",
-   "ue",
-   "w",
-   "z"
-  ]
- },
- {
-  "function": "createDecalAtlas",
-  "bytes": 14430,
-  "line": 29231,
-  "params": [
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "$",
-   "C",
-   "D",
-   "E",
-   "F",
-   "G",
-   "H",
-   "M",
-   "O",
-   "S",
-   "T",
-   "U",
-   "X",
-   "_",
-   "az",
-   "j",
-   "me",
-   "ne",
-   "q",
-   "re",
-   "ue",
-   "w",
-   "z"
-  ]
- },
- {
   "function": "createEnemies",
-  "bytes": 14372,
-  "line": 47459,
+  "bytes": 17223,
+  "line": 49519,
   "params": [
    "ctx"
   ],
@@ -748,22 +697,19 @@
   "shortLocals": [
    "C",
    "D",
-   "F",
    "G",
    "K",
    "N",
    "Q",
    "T",
-   "X",
    "ie",
-   "j",
-   "ne"
+   "j"
   ]
  },
  {
   "function": "createInput",
-  "bytes": 14125,
-  "line": 38600,
+  "bytes": 15030,
+  "line": 40440,
   "params": [
    "ctx"
   ],
@@ -781,18 +727,29 @@
   ]
  },
  {
+  "function": "createWalkerModel",
+  "bytes": 14919,
+  "line": 46339,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "a",
+   "o",
+   "r",
+   "s"
+  ]
+ },
+ {
   "function": "createMenus",
-  "bytes": 13952,
-  "line": 48746,
+  "bytes": 14565,
+  "line": 50856,
   "params": [
    "ctx",
    "actions"
   ],
   "shortParams": [],
   "shortLocals": [
-   "C",
    "D",
-   "G",
    "T",
    "U",
    "qs"
@@ -800,8 +757,8 @@
  },
  {
   "function": "createPlayer",
-  "bytes": 13439,
-  "line": 39131,
+  "bytes": 13808,
+  "line": 40982,
   "params": [
    "ctx"
   ],
@@ -834,23 +791,27 @@
   ]
  },
  {
-  "function": "createDroneModel",
-  "bytes": 9971,
-  "line": 45115,
-  "params": [],
+  "function": "buildMooringBoat",
+  "bytes": 11072,
+  "line": 27161,
+  "params": [
+   "ctx",
+   "lamps"
+  ],
   "shortParams": [],
   "shortLocals": [
-   "c",
-   "f",
-   "h",
-   "l",
-   "u"
+   "C",
+   "D",
+   "G",
+   "T",
+   "U",
+   "j"
   ]
  },
  {
   "function": "buildGuardBooth",
-  "bytes": 9958,
-  "line": 9414,
+  "bytes": 10387,
+  "line": 9861,
   "params": [
    "ctx",
    "_"
@@ -867,26 +828,72 @@
   ]
  },
  {
-  "function": "placeYardLayout",
-  "bytes": 9708,
-  "line": 21181,
+  "function": "createDroneModel",
+  "bytes": 10221,
+  "line": 47128,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "c",
+   "f",
+   "h",
+   "l",
+   "u"
+  ]
+ },
+ {
+  "function": "createLevel",
+  "bytes": 9937,
+  "line": 23057,
   "params": [
-   "ctx"
+   "game"
   ],
   "shortParams": [],
   "shortLocals": [
-   "a",
-   "c",
-   "l",
-   "o",
-   "s",
-   "u"
+   "H",
+   "O",
+   "U",
+   "q",
+   "z"
+  ]
+ },
+ {
+  "function": "buildGenerator",
+  "bytes": 9905,
+  "line": 17823,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "m"
+  ]
+ },
+ {
+  "function": "buildTarpCargo",
+  "bytes": 9487,
+  "line": 15864,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "F",
+   "K",
+   "N",
+   "Q",
+   "X",
+   "ie",
+   "ne"
   ]
  },
  {
   "function": "updateAlive",
   "bytes": 9487,
-  "line": 46748,
+  "line": 48808,
   "params": [
    "T"
   ],
@@ -930,45 +937,22 @@
   ]
  },
  {
-  "function": "buildGenerator",
-  "bytes": 9465,
-  "line": 17091,
+  "function": "buildGloveHand",
+  "bytes": 9287,
+  "line": 44052,
   "params": [
-   "ctx",
-   "opts"
+   "handSpec"
   ],
   "shortParams": [],
   "shortLocals": [
-   "A",
-   "E",
-   "M",
-   "S",
-   "_",
-   "m",
-   "w",
-   "z"
-  ]
- },
- {
-  "function": "createLevel",
-  "bytes": 9233,
-  "line": 21890,
-  "params": [
-   "game"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "H",
-   "O",
-   "U",
-   "q",
-   "z"
+   "d",
+   "v"
   ]
  },
  {
   "function": "createLevelKit",
   "bytes": 9089,
-  "line": 18355,
+  "line": 19123,
   "params": [
    "ctx"
   ],
@@ -1001,43 +985,25 @@
   ]
  },
  {
-  "function": "buildQuayApron",
-  "bytes": 9014,
-  "line": 20801,
-  "params": [
-   "ctx"
-  ],
+  "function": "startGame",
+  "bytes": 9089,
+  "line": 52081,
+  "params": [],
   "shortParams": [],
   "shortLocals": [
-   "E",
-   "H",
-   "S",
-   "w",
-   "z"
-  ]
- },
- {
-  "function": "buildMooringBoat",
-  "bytes": 8957,
-  "line": 25828,
-  "params": [
-   "ctx",
-   "lamps"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "C",
-   "D",
-   "G",
-   "T",
-   "U",
-   "j"
+   "d",
+   "f",
+   "g",
+   "h",
+   "p",
+   "v",
+   "x"
   ]
  },
  {
   "function": "updateAlive",
   "bytes": 8879,
-  "line": 45984,
+  "line": 48019,
   "params": [
    "y"
   ],
@@ -1086,8 +1052,8 @@
  },
  {
   "function": "createMaterials",
-  "bytes": 8730,
-  "line": 6061,
+  "bytes": 8820,
+  "line": 6261,
   "params": [
    "app"
   ],
@@ -1116,7 +1082,7 @@
  {
   "function": "update",
   "bytes": 8651,
-  "line": 43552,
+  "line": 45563,
   "params": [
    "Me"
   ],
@@ -1174,26 +1140,9 @@
   ]
  },
  {
-  "function": "startGame",
-  "bytes": 8464,
-  "line": 49957,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "d",
-   "dt",
-   "f",
-   "g",
-   "h",
-   "p",
-   "v",
-   "x"
-  ]
- },
- {
   "function": "createApronMarkingsTexture",
-  "bytes": 8296,
-  "line": 27369,
+  "bytes": 8534,
+  "line": 29003,
   "params": [
    "size",
    "_"
@@ -1217,74 +1166,13 @@
    "j",
    "q",
    "w",
-   "x0",
-   "y0",
    "z"
-  ]
- },
- {
-  "function": "buildGloveHand",
-  "bytes": 8223,
-  "line": 42063,
-  "params": [
-   "handSpec"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "C",
-   "E",
-   "H",
-   "M",
-   "O",
-   "_",
-   "b",
-   "d",
-   "g",
-   "m",
-   "v",
-   "x",
-   "y",
-   "z"
-  ]
- },
- {
-  "function": "buildTarpCargo",
-  "bytes": 7658,
-  "line": 15215,
-  "params": [
-   "ctx",
-   "opts"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "$",
-   "B",
-   "F",
-   "J",
-   "K",
-   "L",
-   "N",
-   "P",
-   "Q",
-   "V",
-   "X",
-   "Y",
-   "Z",
-   "ee",
-   "fe",
-   "ie",
-   "me",
-   "ne",
-   "oe",
-   "re",
-   "ue"
   ]
  },
  {
   "function": "buildReeferUnit",
-  "bytes": 7386,
-  "line": 11215,
+  "bytes": 8179,
+  "line": 11673,
   "params": [
    "ctx",
    "_"
@@ -1299,8 +1187,8 @@
  },
  {
   "function": "buildDumpster",
-  "bytes": 7267,
-  "line": 17593,
+  "bytes": 7728,
+  "line": 18339,
   "params": [
    "ctx",
    "opts"
@@ -1310,34 +1198,46 @@
    "E",
    "H",
    "M",
-   "O",
    "S",
-   "q",
    "w",
    "z"
   ]
  },
  {
   "function": "buildToolboxCart",
-  "bytes": 6873,
-  "line": 17959,
+  "bytes": 7368,
+  "line": 18716,
   "params": [
    "ctx",
    "opts"
   ],
   "shortParams": [],
   "shortLocals": [
-   "A",
-   "_",
    "b",
-   "m",
    "y"
+  ]
+ },
+ {
+  "function": "addWoodCrateBody",
+  "bytes": 7153,
+  "line": 14184,
+  "params": [
+   "builder",
+   "width",
+   "height",
+   "depth",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "H",
+   "z"
   ]
  },
  {
   "function": "impactAt",
   "bytes": 6682,
-  "line": 31506,
+  "line": 33292,
   "params": [
    "ee",
    "B",
@@ -1374,29 +1274,9 @@
   ]
  },
  {
-  "function": "addWoodCrateBody",
-  "bytes": 6578,
-  "line": 13598,
-  "params": [
-   "builder",
-   "width",
-   "height",
-   "depth",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "H",
-   "O",
-   "U",
-   "q",
-   "z"
-  ]
- },
- {
   "function": "run",
-  "bytes": 6252,
-  "line": 2449,
+  "bytes": 6672,
+  "line": 2463,
   "params": [
    "_"
   ],
@@ -1436,9 +1316,27 @@
   ]
  },
  {
+  "function": "showcaseEffects",
+  "bytes": 6186,
+  "line": 34498,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "F",
+   "K",
+   "N",
+   "Q",
+   "X",
+   "fx",
+   "ie"
+  ]
+ },
+ {
   "function": "updateHud",
   "bytes": 6058,
-  "line": 48476,
+  "line": 50586,
   "params": [
    "k"
   ],
@@ -1481,8 +1379,8 @@
  },
  {
   "function": "buildFinger",
-  "bytes": 6011,
-  "line": 41611,
+  "bytes": 6026,
+  "line": 43598,
   "params": [
    "spec"
   ],
@@ -1507,46 +1405,47 @@
   ]
  },
  {
-  "function": "showcaseEffects",
-  "bytes": 5902,
-  "line": 32700,
+  "function": "createFxBatch",
+  "bytes": 5804,
+  "line": 31581,
   "params": [
-   "ctx"
+   "game",
+   "capacity",
+   "_"
   ],
   "shortParams": [],
   "shortLocals": [
-   "F",
-   "K",
-   "N",
-   "Q",
-   "X",
-   "fx",
-   "ie"
+   "S",
+   "z"
   ]
  },
  {
-  "function": "buildIbcTote",
-  "bytes": 5589,
-  "line": 13987,
+  "function": "addCardboardBox",
+  "bytes": 5616,
+  "line": 16224,
   "params": [
-   "ctx",
-   "opts"
+   "builder",
+   "width",
+   "height",
+   "depth",
+   "transform",
+   "_"
   ],
   "shortParams": [],
   "shortLocals": [
-   "A",
    "E",
+   "H",
    "M",
+   "S",
    "_",
-   "b",
-   "m",
-   "y"
+   "w",
+   "z"
   ]
  },
  {
   "function": "explosionAt",
   "bytes": 5464,
-  "line": 32091,
+  "line": 33877,
   "params": [
    "ee",
    "_"
@@ -1579,32 +1478,25 @@
   ]
  },
  {
-  "function": "addCardboardBox",
-  "bytes": 5230,
-  "line": 15542,
+  "function": "buildGasCylinders",
+  "bytes": 5349,
+  "line": 15384,
   "params": [
-   "builder",
-   "width",
-   "height",
-   "depth",
-   "transform",
-   "_"
+   "ctx",
+   "opts"
   ],
   "shortParams": [],
   "shortLocals": [
-   "E",
-   "H",
-   "M",
-   "S",
-   "_",
-   "w",
-   "z"
+   "f",
+   "h",
+   "p",
+   "u"
   ]
  },
  {
   "function": "update",
   "bytes": 5186,
-  "line": 39322,
+  "line": 41177,
   "params": [
    "F"
   ],
@@ -1638,36 +1530,9 @@
   ]
  },
  {
-  "function": "createOpticLens",
-  "bytes": 5086,
-  "line": 42571,
-  "params": [
-   "windowOutline",
-   "lensOffset"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "a",
-   "r"
-  ]
- },
- {
-  "function": "buildMetalStairs",
-  "bytes": 5059,
-  "line": 10495,
-  "params": [
-   "ctx",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "g"
-  ]
- },
- {
   "function": "buildLightMast",
-  "bytes": 5006,
-  "line": 9111,
+  "bytes": 5097,
+  "line": 9549,
   "params": [
    "ctx",
    "_"
@@ -1681,44 +1546,22 @@
   ]
  },
  {
-  "function": "createSeaSurface",
-  "bytes": 4976,
-  "line": 28195,
-  "params": [
-   "game",
-   "tex"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "M"
-  ]
- },
- {
-  "function": "buildGasCylinders",
-  "bytes": 4955,
-  "line": 14758,
+  "function": "buildMetalStairs",
+  "bytes": 4963,
+  "line": 10971,
   "params": [
    "ctx",
-   "opts"
+   "_"
   ],
   "shortParams": [],
   "shortLocals": [
-   "A",
-   "M",
-   "_",
-   "b",
-   "f",
-   "h",
-   "m",
-   "p",
-   "u",
-   "y"
+   "g"
   ]
  },
  {
   "function": "updateEmitters",
   "bytes": 4949,
-  "line": 32378,
+  "line": 34165,
   "params": [
    "ee"
   ],
@@ -1741,7 +1584,7 @@
  {
   "function": "createMuzzleFlash",
   "bytes": 4726,
-  "line": 42679,
+  "line": 44690,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -1755,41 +1598,9 @@
   ]
  },
  {
-  "function": "createSparkFlipbook",
-  "bytes": 4634,
-  "line": 29103,
-  "params": [
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "a",
-   "c",
-   "l"
-  ]
- },
- {
-  "function": "createRainSystem",
-  "bytes": 4525,
-  "line": 28502,
-  "params": [
-   "game",
-   "tex"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "H",
-   "O",
-   "S",
-   "q",
-   "w",
-   "z"
-  ]
- },
- {
   "function": "buildShelfRack",
-  "bytes": 4504,
-  "line": 10983,
+  "bytes": 4633,
+  "line": 11441,
   "params": [
    "ctx",
    "_"
@@ -1797,17 +1608,28 @@
   "shortParams": [],
   "shortLocals": [
    "b",
-   "g",
    "m",
-   "v",
-   "x",
    "y"
+  ]
+ },
+ {
+  "function": "buildPipeStack",
+  "bytes": 4561,
+  "line": 15623,
+  "params": [
+   "ctx",
+   "opts"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "f",
+   "h"
   ]
  },
  {
   "function": "selfTest",
   "bytes": 4497,
-  "line": 38248,
+  "line": 40086,
   "params": [
    "te"
   ],
@@ -1845,57 +1667,22 @@
   ]
  },
  {
-  "function": "createFxBatch",
-  "bytes": 4439,
-  "line": 29832,
+  "function": "createGround",
+  "bytes": 4444,
+  "line": 30312,
   "params": [
-   "game",
-   "capacity",
-   "_"
+   "game"
   ],
   "shortParams": [],
   "shortLocals": [
-   "C",
-   "D",
-   "F",
-   "G",
-   "H",
-   "K",
-   "N",
-   "O",
-   "Q",
-   "S",
-   "T",
-   "U",
-   "X",
-   "ie",
-   "j",
-   "ne",
-   "q",
-   "z"
-  ]
- },
- {
-  "function": "buildLabelAtlas",
-  "bytes": 4391,
-  "line": 18722,
-  "params": [
-   "root",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "S",
-   "_",
-   "b",
-   "m"
+   "E",
+   "M"
   ]
  },
  {
   "function": "addContainerWall",
   "bytes": 4390,
-  "line": 26229,
+  "line": 27718,
   "params": [
    "D",
    "C",
@@ -1964,8 +1751,8 @@
  },
  {
   "function": "buildCableReel",
-  "bytes": 4278,
-  "line": 14285,
+  "bytes": 4381,
+  "line": 14889,
   "params": [
    "ctx",
    "opts"
@@ -1973,32 +1760,13 @@
   "shortParams": [],
   "shortLocals": [
    "b",
-   "m",
    "y"
-  ]
- },
- {
-  "function": "createGround",
-  "bytes": 4123,
-  "line": 28654,
-  "params": [
-   "game"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "E",
-   "H",
-   "M",
-   "O",
-   "S",
-   "w",
-   "z"
   ]
  },
  {
   "function": "createPlanarReflectionPass",
   "bytes": 4101,
-  "line": 27927,
+  "line": 29569,
   "params": [
    "game",
    "uniforms",
@@ -2015,38 +1783,9 @@
   ]
  },
  {
-  "function": "buildPipeStack",
-  "bytes": 4076,
-  "line": 14987,
-  "params": [
-   "ctx",
-   "opts"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "E",
-   "M",
-   "S",
-   "_",
-   "b",
-   "d",
-   "f",
-   "g",
-   "h",
-   "m",
-   "p",
-   "v",
-   "w",
-   "x",
-   "y",
-   "z"
-  ]
- },
- {
   "function": "chamferedBoxGeometry",
-  "bytes": 3966,
-  "line": 7256,
+  "bytes": 4038,
+  "line": 7552,
   "params": [
    "width",
    "height",
@@ -2066,9 +1805,58 @@
   ]
  },
  {
+  "function": "roundedBoxGeometry",
+  "bytes": 3971,
+  "line": 13041,
+  "params": [
+   "width",
+   "height",
+   "depth",
+   "_",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "E",
+   "M",
+   "_",
+   "b",
+   "d",
+   "g",
+   "m",
+   "p",
+   "v",
+   "x",
+   "y"
+  ]
+ },
+ {
+  "function": "showcaseMaterials",
+  "bytes": 3945,
+  "line": 6605,
+  "params": [
+   "app"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "A",
+   "H",
+   "O",
+   "U",
+   "b",
+   "g",
+   "m",
+   "q",
+   "x",
+   "y",
+   "z"
+  ]
+ },
+ {
   "function": "placeGateArea",
   "bytes": 3923,
-  "line": 21730,
+  "line": 22897,
   "params": [
    "ctx"
   ],
@@ -2089,9 +1877,35 @@
   ]
  },
  {
+  "function": "showcaseRenderer",
+  "bytes": 3884,
+  "line": 3409,
+  "params": [
+   "app"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "h"
+  ]
+ },
+ {
+  "function": "buildBackdrop",
+  "bytes": 3818,
+  "line": 28517,
+  "params": [
+   "game",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "m"
+  ]
+ },
+ {
   "function": "addGantryCrane",
   "bytes": 3770,
-  "line": 26415,
+  "line": 27904,
   "params": [
    "D",
    "C",
@@ -2126,57 +1940,9 @@
   ]
  },
  {
-  "function": "showcaseRenderer",
-  "bytes": 3756,
-  "line": 3363,
-  "params": [
-   "app"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "h"
-  ]
- },
- {
-  "function": "buildBackdrop",
-  "bytes": 3728,
-  "line": 26886,
-  "params": [
-   "game",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "b",
-   "m"
-  ]
- },
- {
-  "function": "showcaseMaterials",
-  "bytes": 3632,
-  "line": 6405,
-  "params": [
-   "app"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "H",
-   "O",
-   "U",
-   "b",
-   "g",
-   "m",
-   "q",
-   "x",
-   "y",
-   "z"
-  ]
- },
- {
   "function": "buildGateArm",
-  "bytes": 3609,
-  "line": 9917,
+  "bytes": 3639,
+  "line": 10393,
   "params": [
    "ctx",
    "_"
@@ -2191,7 +1957,7 @@
  {
   "function": "loftProfileSurface",
   "bytes": 3572,
-  "line": 7412,
+  "line": 7714,
   "params": [
    "profile",
    "stations",
@@ -2207,7 +1973,7 @@
  {
   "function": "update",
   "bytes": 3493,
-  "line": 38147,
+  "line": 39985,
   "params": [
    "te"
   ],
@@ -2230,33 +1996,9 @@
   ]
  },
  {
-  "function": "buildBarrel",
-  "bytes": 3450,
-  "line": 13331,
-  "params": [
-   "ctx",
-   "opts",
-   "variant"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "E",
-   "M",
-   "b",
-   "d",
-   "g",
-   "m",
-   "v",
-   "w",
-   "x",
-   "y"
-  ]
- },
- {
   "function": "buildMarkingsAtlas",
-  "bytes": 3408,
-  "line": 42406,
+  "bytes": 3480,
+  "line": 44413,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -2272,30 +2014,24 @@
   ]
  },
  {
-  "function": "buildJerseyBarrier",
-  "bytes": 3401,
-  "line": 8936,
+  "function": "buildFencePanel",
+  "bytes": 3207,
+  "line": 9753,
   "params": [
    "ctx",
    "_"
   ],
   "shortParams": [],
   "shortLocals": [
-   "b",
    "d",
-   "f",
    "g",
-   "m",
-   "p",
-   "v",
-   "x",
-   "y"
+   "v"
   ]
  },
  {
   "function": "createMarkingsMesh",
   "bytes": 3200,
-  "line": 42493,
+  "line": 44502,
   "params": [
    "decals"
   ],
@@ -2310,58 +2046,9 @@
   ]
  },
  {
-  "function": "buildFencePanel",
-  "bytes": 3175,
-  "line": 9306,
-  "params": [
-   "ctx",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "d",
-   "g",
-   "v"
-  ]
- },
- {
-  "function": "createCombat",
-  "bytes": 3102,
-  "line": 39588,
-  "params": [
-   "ctx"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "a",
-   "c",
-   "f",
-   "h",
-   "l",
-   "n",
-   "o",
-   "r",
-   "s",
-   "u"
-  ]
- },
- {
-  "function": "createWetApron",
-  "bytes": 3051,
-  "line": 27806,
-  "params": [
-   "game",
-   "tex"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "r"
-  ]
- },
- {
   "function": "showcaseWeapon",
-  "bytes": 2972,
-  "line": 43843,
+  "bytes": 3028,
+  "line": 45854,
   "params": [
    "ctx"
   ],
@@ -2380,36 +2067,26 @@
   ]
  },
  {
-  "function": "roundedBoxGeometry",
-  "bytes": 2939,
-  "line": 12509,
+  "function": "createHollowPolygonExtrusion",
+  "bytes": 2856,
+  "line": 13365,
   "params": [
-   "width",
-   "height",
+   "polygon",
    "depth",
-   "_",
    "_"
   ],
   "shortParams": [],
   "shortLocals": [
-   "A",
-   "E",
-   "M",
-   "_",
-   "b",
+   "ax",
    "d",
    "g",
-   "m",
-   "p",
-   "v",
-   "x",
-   "y"
+   "v"
   ]
  },
  {
   "function": "buildJerryCan",
-  "bytes": 2809,
-  "line": 14563,
+  "bytes": 2842,
+  "line": 15175,
   "params": [
    "ctx",
    "opts",
@@ -2422,47 +2099,9 @@
   ]
  },
  {
-  "function": "enableBenchmark",
-  "bytes": 2773,
-  "line": 50236,
-  "params": [
-   "ctx"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "E",
-   "M",
-   "_",
-   "b",
-   "d",
-   "f",
-   "g",
-   "m",
-   "p",
-   "v",
-   "x",
-   "y"
-  ]
- },
- {
-  "function": "createGullFlock",
-  "bytes": 2749,
-  "line": 26808,
-  "params": [
-   "ctx",
-   "uTime",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "u"
-  ]
- },
- {
   "function": "renderReflection",
   "bytes": 2673,
-  "line": 27974,
+  "line": 29616,
   "params": [
    "g",
    "x",
@@ -2483,8 +2122,8 @@
  },
  {
   "function": "showcaseEnemies",
-  "bytes": 2659,
-  "line": 47991,
+  "bytes": 2665,
+  "line": 50080,
   "params": [
    "ctx"
   ],
@@ -2496,26 +2135,9 @@
   ]
  },
  {
-  "function": "createHollowPolygonExtrusion",
-  "bytes": 2594,
-  "line": 12809,
-  "params": [
-   "polygon",
-   "depth",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "ax",
-   "d",
-   "g",
-   "v"
-  ]
- },
- {
   "function": "buildTouchUI",
   "bytes": 2476,
-  "line": 38825,
+  "line": 40673,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -2531,36 +2153,9 @@
   ]
  },
  {
-  "function": "showcaseGround",
-  "bytes": 2461,
-  "line": 28786,
-  "params": [
-   "game"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "o"
-  ]
- },
- {
-  "function": "buildSkinnedRig",
-  "bytes": 2437,
-  "line": 44028,
-  "params": [
-   "def",
-   "materials",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "d",
-   "p"
-  ]
- },
- {
   "function": "poseRig",
   "bytes": 2430,
-  "line": 47150,
+  "line": 49210,
   "params": [
    "T"
   ],
@@ -2606,7 +2201,7 @@
  {
   "function": "update",
   "bytes": 2400,
-  "line": 49782,
+  "line": 51906,
   "params": [
    "P"
   ],
@@ -2622,7 +2217,7 @@
  {
   "function": "beveledBoxGeometry",
   "bytes": 2356,
-  "line": 618,
+  "line": 619,
   "params": [
    "width",
    "height",
@@ -2647,9 +2242,25 @@
   ]
  },
  {
+  "function": "addEuroPallet",
+  "bytes": 2351,
+  "line": 14034,
+  "params": [
+   "builder",
+   "rand",
+   "_"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "f",
+   "h",
+   "u"
+  ]
+ },
+ {
   "function": "pickFirePos",
   "bytes": 2347,
-  "line": 46681,
+  "line": 48741,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -2667,7 +2278,7 @@
  {
   "function": "roundedBoxGeometryGrid",
   "bytes": 2345,
-  "line": 12596,
+  "line": 13152,
   "params": [
    "width",
    "height",
@@ -2686,7 +2297,7 @@
  {
   "function": "bakeTerrainNormals",
   "bytes": 2344,
-  "line": 27287,
+  "line": 28921,
   "params": [
    "size"
   ],
@@ -2698,7 +2309,7 @@
  {
   "function": "getMaterial",
   "bytes": 2322,
-  "line": 6238,
+  "line": 6438,
   "params": [
    "O",
    "_"
@@ -2721,25 +2332,9 @@
   ]
  },
  {
-  "function": "addEuroPallet",
-  "bytes": 2235,
-  "line": 13448,
-  "params": [
-   "builder",
-   "rand",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "f",
-   "h",
-   "u"
-  ]
- },
- {
   "function": "updateDead",
   "bytes": 2221,
-  "line": 47248,
+  "line": 49308,
   "params": [
    "T"
   ],
@@ -2759,7 +2354,7 @@
  {
   "function": "buildCrateStack",
   "bytes": 2208,
-  "line": 13900,
+  "line": 14490,
   "params": [
    "ctx",
    "opts"
@@ -2777,7 +2372,7 @@
  {
   "function": "loop",
   "bytes": 2191,
-  "line": 37437,
+  "line": 39259,
   "params": [
    "te",
    "he"
@@ -2801,7 +2396,7 @@
  {
   "function": "updateView",
   "bytes": 2181,
-  "line": 39513,
+  "line": 41368,
   "params": [
    "F"
   ],
@@ -2829,7 +2424,7 @@
  {
   "function": "generateSet",
   "bytes": 2165,
-  "line": 6145,
+  "line": 6345,
   "params": [
    "O"
   ],
@@ -2860,7 +2455,7 @@
  {
   "function": "fireShot",
   "bytes": 2162,
-  "line": 43483,
+  "line": 45494,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -2882,7 +2477,7 @@
  {
   "function": "buildBollardPost",
   "bytes": 2144,
-  "line": 10143,
+  "line": 10619,
   "params": [
    "ctx",
    "_"
@@ -2899,7 +2494,7 @@
  {
   "function": "muzzleFlash",
   "bytes": 2133,
-  "line": 31975,
+  "line": 33761,
   "params": [
    "ee",
    "B",
@@ -2927,9 +2522,26 @@
   ]
  },
  {
+  "function": "fitSunShadowFrustum",
+  "bytes": 2108,
+  "line": 1174,
+  "params": [
+   "sunLight",
+   "boundsMin",
+   "boundsMax",
+   "casterMin",
+   "casterMax"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "b",
+   "y"
+  ]
+ },
+ {
   "function": "play",
   "bytes": 2071,
-  "line": 37345,
+  "line": 39167,
   "params": [
    "te",
    "he"
@@ -2960,7 +2572,7 @@
  {
   "function": "buildMooringBollard",
   "bytes": 2069,
-  "line": 10052,
+  "line": 10528,
   "params": [
    "ctx",
    "_"
@@ -2975,26 +2587,9 @@
   ]
  },
  {
-  "function": "fitSunShadowFrustum",
-  "bytes": 2063,
-  "line": 1170,
-  "params": [
-   "sunLight",
-   "boundsMin",
-   "boundsMax",
-   "casterMin",
-   "casterMax"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "b",
-   "y"
-  ]
- },
- {
   "function": "buildSandbags",
   "bytes": 2061,
-  "line": 15474,
+  "line": 16156,
   "params": [
    "ctx",
    "opts"
@@ -3018,7 +2613,7 @@
  {
   "function": "updateEnemyLoops",
   "bytes": 2008,
-  "line": 37675,
+  "line": 39497,
   "params": [
    "te"
   ],
@@ -3034,29 +2629,9 @@
   ]
  },
  {
-  "function": "createBlinkerBatch",
-  "bytes": 1910,
-  "line": 22695,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "a",
-   "c",
-   "f",
-   "h",
-   "l",
-   "n",
-   "o",
-   "p",
-   "r",
-   "s",
-   "u"
-  ]
- },
- {
   "function": "splashAt",
   "bytes": 1888,
-  "line": 31394,
+  "line": 33180,
   "params": [
    "ee",
    "_"
@@ -3082,7 +2657,7 @@
  {
   "function": "recomputeSmoothNormals",
   "bytes": 1887,
-  "line": 12667,
+  "line": 13223,
   "params": [
    "geometry"
   ],
@@ -3095,33 +2670,9 @@
   ]
  },
  {
-  "function": "addForkliftWheel",
-  "bytes": 1885,
-  "line": 15914,
-  "params": [
-   "builder",
-   "wheelX",
-   "radius",
-   "width",
-   "trackZ",
-   "side",
-   "rimRadius",
-   "segments",
-   "unused",
-   "rand"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "d",
-   "g",
-   "p",
-   "v"
-  ]
- },
- {
   "function": "buildDistantCrane",
   "bytes": 1884,
-  "line": 24570,
+  "line": 25681,
   "params": [
    "batcher",
    "mat",
@@ -3142,7 +2693,7 @@
  {
   "function": "addPortalFrame",
   "bytes": 1877,
-  "line": 22873,
+  "line": 24055,
   "params": [
    "R",
    "I"
@@ -3161,26 +2712,26 @@
   ]
  },
  {
-  "function": "mergeStaticMeshes",
-  "bytes": 1791,
-  "line": 831,
+  "function": "buildTrafficCone",
+  "bytes": 1773,
+  "line": 15304,
   "params": [
-   "root",
-   "_"
+   "ctx",
+   "opts",
+   "variant"
   ],
   "shortParams": [],
   "shortLocals": [
-   "a",
-   "c",
-   "l",
-   "r",
-   "u"
+   "d",
+   "f",
+   "h",
+   "p"
   ]
  },
  {
   "function": "synthMusicPerc",
   "bytes": 1727,
-  "line": 35860,
+  "line": 37674,
   "params": [
    "sampleRate",
    "rand"
@@ -3193,7 +2744,7 @@
  {
   "function": "orientTrianglesOutward",
   "bytes": 1716,
-  "line": 7371,
+  "line": 7673,
   "params": [
    "positions",
    "uvs",
@@ -3210,9 +2761,22 @@
   ]
  },
  {
+  "function": "synthRain",
+  "bytes": 1707,
+  "line": 37351,
+  "params": [
+   "sampleRate",
+   "rand"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d"
+  ]
+ },
+ {
   "function": "captureInteriorProbe",
   "bytes": 1690,
-  "line": 3247,
+  "line": 3291,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -3230,54 +2794,9 @@
   ]
  },
  {
-  "function": "buildTrafficCone",
-  "bytes": 1685,
-  "line": 14688,
-  "params": [
-   "ctx",
-   "opts",
-   "variant"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "d",
-   "f",
-   "h",
-   "p"
-  ]
- },
- {
-  "function": "synthRain",
-  "bytes": 1677,
-  "line": 35539,
-  "params": [
-   "sampleRate",
-   "rand"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "d",
-   "u"
-  ]
- },
- {
-  "function": "buildBasicContainer",
-  "bytes": 1639,
-  "line": 8875,
-  "params": [
-   "ctx",
-   "type",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "d"
-  ]
- },
- {
   "function": "updateDynamicRes",
   "bytes": 1580,
-  "line": 2918,
+  "line": 2951,
   "params": [
    "ie"
   ],
@@ -3294,7 +2813,7 @@
  {
   "function": "fireShot",
   "bytes": 1580,
-  "line": 47028,
+  "line": 49088,
   "params": [
    "T"
   ],
@@ -3313,7 +2832,7 @@
  {
   "function": "createCableReelDiscGeometries",
   "bytes": 1552,
-  "line": 14248,
+  "line": 14852,
   "params": [
    "radius",
    "segments",
@@ -3326,47 +2845,9 @@
   ]
  },
  {
-  "function": "graffiti_tag",
-  "bytes": 1518,
-  "line": 5018,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "E",
-   "M",
-   "S",
-   "_",
-   "b",
-   "g",
-   "m",
-   "v",
-   "w",
-   "x",
-   "y"
-  ]
- },
- {
-  "function": "csc_plate",
-  "bytes": 1518,
-  "line": 5117,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "M",
-   "_",
-   "b",
-   "g",
-   "m",
-   "v",
-   "x",
-   "y"
-  ]
- },
- {
   "function": "renderAdvanced",
   "bytes": 1512,
-  "line": 2999,
+  "line": 3032,
   "params": [
    "ie"
   ],
@@ -3382,23 +2863,9 @@
   ]
  },
  {
-  "function": "registerDetailedProps",
-  "bytes": 1498,
-  "line": 15163,
-  "params": [
-   "register"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "e",
-   "n",
-   "t"
-  ]
- },
- {
   "function": "updateDead",
   "bytes": 1456,
-  "line": 45933,
+  "line": 47968,
   "params": [
    "y"
   ],
@@ -3414,36 +2881,9 @@
   ]
  },
  {
-  "function": "mergeGeometryParts",
-  "bytes": 1448,
-  "line": 793,
-  "params": [
-   "geometries"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "c",
-   "l",
-   "u"
-  ]
- },
- {
-  "function": "synthRainInterior",
-  "bytes": 1441,
-  "line": 35582,
-  "params": [
-   "sampleRate",
-   "rand"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "c"
-  ]
- },
- {
   "function": "createDebrisGeometry",
   "bytes": 1427,
-  "line": 30407,
+  "line": 32193,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -3455,7 +2895,7 @@
  {
   "function": "update",
   "bytes": 1403,
-  "line": 39032,
+  "line": 40883,
   "params": [
    "P"
   ],
@@ -3475,7 +2915,7 @@
  {
   "function": "setShot",
   "bytes": 1382,
-  "line": 43867,
+  "line": 45878,
   "params": [
    "u",
    "_"
@@ -3499,7 +2939,7 @@
  {
   "function": "synthGullFire",
   "bytes": 1375,
-  "line": 34633,
+  "line": 36445,
   "params": [
    "sr",
    "rand",
@@ -3515,7 +2955,7 @@
  {
   "function": "buildDoor",
   "bytes": 1372,
-  "line": 11785,
+  "line": 12293,
   "params": [
    "le",
    "R",
@@ -3539,9 +2979,21 @@
   ]
  },
  {
+  "function": "createProps",
+  "bytes": 1371,
+  "line": 7416,
+  "params": [
+   "ctx"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "e"
+  ]
+ },
+ {
   "function": "step",
   "bytes": 1362,
-  "line": 32793,
+  "line": 34591,
   "params": [
    "N"
   ],
@@ -3556,7 +3008,7 @@
  {
   "function": "addColliders",
   "bytes": 1356,
-  "line": 18519,
+  "line": 19287,
   "params": [
    "T",
    "D",
@@ -3588,7 +3040,7 @@
  {
   "function": "createValueNoise",
   "bytes": 1352,
-  "line": 28869,
+  "line": 30535,
   "params": [
    "seed"
   ],
@@ -3614,7 +3066,7 @@
  {
   "function": "findPathCells",
   "bytes": 1349,
-  "line": 6994,
+  "line": 7285,
   "params": [
    "_",
    "M"
@@ -3645,7 +3097,7 @@
  {
   "function": "updateBolts",
   "bytes": 1346,
-  "line": 47715,
+  "line": 49792,
   "params": [
    "T"
   ],
@@ -3667,7 +3119,7 @@
  {
   "function": "createRoundedRectFanGeometry",
   "bytes": 1344,
-  "line": 7557,
+  "line": 7862,
   "params": [
    "width",
    "height",
@@ -3679,22 +3131,9 @@
   ]
  },
  {
-  "function": "synthGullRotor",
-  "bytes": 1342,
-  "line": 34507,
-  "params": [
-   "sampleRate",
-   "rand"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "l"
-  ]
- },
- {
-  "function": "H",
-  "bytes": 1305,
-  "line": 29325,
+  "function": "polygonBlotch",
+  "bytes": 1316,
+  "line": 30992,
   "params": [
    "centerX",
    "centerY",
@@ -3715,9 +3154,21 @@
   ]
  },
  {
+  "function": "makeLayer",
+  "bytes": 1309,
+  "line": 37352,
+  "params": [
+   "rnd"
+  ],
+  "shortParams": [],
+  "shortLocals": [
+   "d"
+  ]
+ },
+ {
   "function": "updateAmbience",
   "bytes": 1304,
-  "line": 37601,
+  "line": 39423,
   "params": [
    "te",
    "he"
@@ -3735,42 +3186,9 @@
   ]
  },
  {
-  "function": "bullet_concrete",
-  "bytes": 1285,
-  "line": 4890,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "E",
-   "M",
-   "_",
-   "b",
-   "g",
-   "m",
-   "v",
-   "w",
-   "x",
-   "y"
-  ]
- },
- {
-  "function": "makeLayer",
-  "bytes": 1279,
-  "line": 35540,
-  "params": [
-   "rnd"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "d",
-   "u"
-  ]
- },
- {
   "function": "fireImpact",
   "bytes": 1271,
-  "line": 32757,
+  "line": 34555,
   "params": [
    "N"
   ],
@@ -3784,36 +3202,9 @@
   ]
  },
  {
-  "function": "synthHoundServo",
-  "bytes": 1239,
-  "line": 34556,
-  "params": [
-   "sampleRate",
-   "rand"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "r"
-  ]
- },
- {
-  "function": "synthWhiz",
-  "bytes": 1236,
-  "line": 34428,
-  "params": [
-   "sampleRate",
-   "rand",
-   "variant"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "l"
-  ]
- },
- {
   "function": "pickSpawnPoint",
   "bytes": 1235,
-  "line": 49499,
+  "line": 51623,
   "params": [
    "P",
    "_"
@@ -3840,7 +3231,7 @@
  {
   "function": "synthAlert",
   "bytes": 1185,
-  "line": 35043,
+  "line": 36855,
   "params": [
    "sampleRate",
    "rand",
@@ -3861,71 +3252,29 @@
   ]
  },
  {
-  "function": "buildTireStack",
-  "bytes": 1170,
-  "line": 14531,
+  "function": "resize",
+  "bytes": 1167,
+  "line": 2398,
   "params": [
-   "ctx",
-   "opts"
+   "oe",
+   "fe"
   ],
-  "shortParams": [],
-  "shortLocals": [
-   "f",
-   "h",
-   "p",
-   "u"
-  ]
- },
- {
-  "function": "synthRelayHum",
-  "bytes": 1166,
-  "line": 34597,
-  "params": [
-   "sampleRate",
-   "rand"
+  "shortParams": [
+   "oe",
+   "fe"
   ],
-  "shortParams": [],
   "shortLocals": [
-   "r"
-  ]
- },
- {
-  "function": "createSandbagGeometry",
-  "bytes": 1151,
-  "line": 15446,
-  "params": [
-   "width",
-   "height",
-   "depth",
-   "rand"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "c",
-   "f",
-   "h",
-   "l",
-   "p",
-   "u"
-  ]
- },
- {
-  "function": "patchPac9DetailMaterial",
-  "bytes": 1146,
-  "line": 42883,
-  "params": [
-   "material",
-   "detailKind"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "t"
+   "I",
+   "R",
+   "fe",
+   "le",
+   "oe"
   ]
  },
  {
   "function": "getLabel",
   "bytes": 1127,
-  "line": 5254,
+  "line": 5451,
   "params": [
    "v",
    "_"
@@ -3961,7 +3310,7 @@
  {
   "function": "updateObjectives",
   "bytes": 1120,
-  "line": 49674,
+  "line": 51798,
   "params": [
    "P"
   ],
@@ -3979,7 +3328,7 @@
  {
   "function": "dustAt",
   "bytes": 1108,
-  "line": 31304,
+  "line": 33090,
   "params": [
    "ee",
    "B",
@@ -4008,7 +3357,7 @@
  {
   "function": "synthImpulseShed",
   "bytes": 1087,
-  "line": 36228,
+  "line": 38048,
   "params": [
    "sampleRate",
    "rand"
@@ -4024,23 +3373,9 @@
   ]
  },
  {
-  "function": "synthDeathSting",
-  "bytes": 1081,
-  "line": 36146,
-  "params": [
-   "sampleRate",
-   "rand"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "c",
-   "u"
-  ]
- },
- {
   "function": "synthMusicDrone",
   "bytes": 1077,
-  "line": 35749,
+  "line": 37563,
   "params": [
    "sr",
    "rand"
@@ -4059,52 +3394,20 @@
   ]
  },
  {
-  "function": "synthObjectiveAllSting",
-  "bytes": 1077,
-  "line": 36062,
-  "params": [
-   "sampleRate"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "n",
-   "t"
-  ]
- },
- {
-  "function": "createProps",
-  "bytes": 1074,
-  "line": 7125,
-  "params": [
-   "ctx"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "e",
-   "n",
-   "o",
-   "s",
-   "t"
-  ]
- },
- {
-  "function": "crack",
-  "bytes": 1067,
-  "line": 4974,
+  "function": "oil_stain",
+  "bytes": 1072,
+  "line": 4930,
   "params": [],
   "shortParams": [],
   "shortLocals": [
-   "b",
-   "g",
-   "v",
-   "x",
-   "y"
+   "cx",
+   "cy"
   ]
  },
  {
   "function": "stackContainers",
   "bytes": 1067,
-  "line": 18630,
+  "line": 19398,
   "params": [
    "T",
    "D",
@@ -4145,22 +3448,9 @@
   ]
  },
  {
-  "function": "hazard_flammable",
-  "bytes": 1066,
-  "line": 4384,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "g",
-   "v",
-   "x",
-   "y"
-  ]
- },
- {
   "function": "applySweptBiquad",
   "bytes": 1066,
-  "line": 32973,
+  "line": 34783,
   "params": [
    "buf",
    "type",
@@ -4176,21 +3466,9 @@
   ]
  },
  {
-  "function": "makeLayer",
-  "bytes": 1048,
-  "line": 35583,
-  "params": [
-   "rnd"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "c"
-  ]
- },
- {
   "function": "buildSideWall",
   "bytes": 1045,
-  "line": 9470,
+  "line": 9917,
   "params": [
    "H",
    "O"
@@ -4212,7 +3490,7 @@
  {
   "function": "synthImpulseOutdoor",
   "bytes": 1040,
-  "line": 36186,
+  "line": 38006,
   "params": [
    "sampleRate",
    "rand"
@@ -4230,7 +3508,7 @@
  {
   "function": "emitRing",
   "bytes": 1040,
-  "line": 41647,
+  "line": 43636,
   "params": [
    "M",
    "E",
@@ -4265,7 +3543,7 @@
  {
   "function": "pumpSpawnQueue",
   "bytes": 1021,
-  "line": 49584,
+  "line": 51708,
   "params": [
    "P"
   ],
@@ -4282,7 +3560,7 @@
  {
   "function": "synthStepConcrete",
   "bytes": 1009,
-  "line": 33846,
+  "line": 35656,
   "params": [
    "sr",
    "rand",
@@ -4298,7 +3576,7 @@
  {
   "function": "addWarehouse",
   "bytes": 995,
-  "line": 26660,
+  "line": 28242,
   "params": [
    "D",
    "C",
@@ -4336,7 +3614,7 @@
  {
   "function": "killHound",
   "bytes": 985,
-  "line": 47215,
+  "line": 49275,
   "params": [
    "T"
   ],
@@ -4353,21 +3631,9 @@
   ]
  },
  {
-  "function": "buildThumb",
-  "bytes": 982,
-  "line": 41848,
-  "params": [
-   "thumbDirs"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "o"
-  ]
- },
- {
   "function": "tracer",
   "bytes": 975,
-  "line": 31934,
+  "line": 33720,
   "params": [
    "alignDot",
    "B",
@@ -4393,7 +3659,7 @@
  {
   "function": "valueNoise3",
   "bytes": 965,
-  "line": 22385,
+  "line": 23555,
   "params": [
    "coordX",
    "coordY",
@@ -4409,7 +3675,7 @@
  {
   "function": "syncUi",
   "bytes": 959,
-  "line": 48883,
+  "line": 50993,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -4419,25 +3685,9 @@
   ]
  },
  {
-  "function": "bullet_metal",
-  "bytes": 956,
-  "line": 4850,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "b",
-   "g",
-   "m",
-   "v",
-   "x",
-   "y"
-  ]
- },
- {
   "function": "boxGeometry",
   "bytes": 946,
-  "line": 595,
+  "line": 596,
   "params": [
    "width",
    "height",
@@ -4454,22 +3704,9 @@
   ]
  },
  {
-  "function": "createRng",
-  "bytes": 938,
-  "line": 199,
-  "params": [
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "n",
-   "s"
-  ]
- },
- {
   "function": "buildGrid",
   "bytes": 938,
-  "line": 6876,
+  "line": 7167,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -4483,63 +3720,24 @@
   ]
  },
  {
-  "function": "tubeGeometry",
-  "bytes": 934,
-  "line": 704,
+  "function": "synthWind",
+  "bytes": 914,
+  "line": 37440,
   "params": [
-   "points",
-   "_",
-   "_",
-   "_",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "h"
-  ]
- },
- {
-  "function": "resize",
-  "bytes": 927,
-  "line": 2392,
-  "params": [
-   "oe",
-   "fe"
+   "sr",
+   "rand"
   ],
   "shortParams": [
-   "oe",
-   "fe"
+   "sr"
   ],
   "shortLocals": [
-   "I",
-   "R",
-   "fe",
-   "le",
-   "oe"
-  ]
- },
- {
-  "function": "buildCorrugationStations",
-  "bytes": 918,
-  "line": 7537,
-  "params": [
-   "min",
-   "max",
-   "pitch",
-   "depth",
-   "flat",
-   "slope",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "f"
+   "sr"
   ]
  },
  {
   "function": "pollGamepad",
   "bytes": 912,
-  "line": 39001,
+  "line": 40852,
   "params": [
    "P"
   ],
@@ -4557,29 +3755,9 @@
   ]
  },
  {
-  "function": "leak_stain",
-  "bytes": 911,
-  "line": 4815,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "E",
-   "M",
-   "_",
-   "b",
-   "g",
-   "m",
-   "v",
-   "w",
-   "x",
-   "y"
-  ]
- },
- {
   "function": "showcaseBackdrop",
   "bytes": 903,
-  "line": 27024,
+  "line": 28658,
   "params": [
    "game"
   ],
@@ -4591,7 +3769,7 @@
  {
   "function": "addStairFlight",
   "bytes": 894,
-  "line": 23918,
+  "line": 25055,
   "params": [
    "R",
    "I",
@@ -4627,7 +3805,7 @@
  {
   "function": "updateTitleCam",
   "bytes": 893,
-  "line": 49298,
+  "line": 51422,
   "params": [
    "P"
   ],
@@ -4644,56 +3822,9 @@
   ]
  },
  {
-  "function": "buildDrapedSlab",
-  "bytes": 891,
-  "line": 41530,
-  "params": [
-   "originX",
-   "originY",
-   "width",
-   "height",
-   "thickness",
-   "tint",
-   "heightFn",
-   "_",
-   "_",
-   "_",
-   "_"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "b",
-   "d",
-   "f",
-   "g",
-   "h",
-   "p",
-   "v",
-   "x",
-   "y"
-  ]
- },
- {
-  "function": "synthWind",
-  "bytes": 879,
-  "line": 35626,
-  "params": [
-   "sr",
-   "rand"
-  ],
-  "shortParams": [
-   "sr"
-  ],
-  "shortLocals": [
-   "a",
-   "r",
-   "sr"
-  ]
- },
- {
   "function": "resetRun",
   "bytes": 867,
-  "line": 49323,
+  "line": 51447,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -4705,7 +3836,7 @@
  {
   "function": "ibeam",
   "bytes": 861,
-  "line": 18432,
+  "line": 19200,
   "params": [
    "T",
    "D",
@@ -4749,29 +3880,9 @@
   ]
  },
  {
-  "function": "scorch",
-  "bytes": 856,
-  "line": 4939,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "E",
-   "M",
-   "_",
-   "b",
-   "g",
-   "m",
-   "v",
-   "w",
-   "x",
-   "y"
-  ]
- },
- {
   "function": "addLid",
   "bytes": 850,
-  "line": 17814,
+  "line": 18560,
   "params": [
    "M",
    "E"
@@ -4792,7 +3903,7 @@
  {
   "function": "applySettings",
   "bytes": 837,
-  "line": 48848,
+  "line": 50958,
   "params": [
    "U"
   ],
@@ -4806,43 +3917,9 @@
   ]
  },
  {
-  "function": "createEventBus",
-  "bytes": 835,
-  "line": 166,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "e",
-   "n",
-   "o",
-   "s",
-   "t"
-  ]
- },
- {
-  "function": "oil_stain",
-  "bytes": 830,
-  "line": 4782,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "E",
-   "M",
-   "_",
-   "b",
-   "g",
-   "m",
-   "v",
-   "w",
-   "x",
-   "y"
-  ]
- },
- {
   "function": "finishMission",
   "bytes": 830,
-  "line": 49752,
+  "line": 51876,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -4855,7 +3932,7 @@
  {
   "function": "placeDoorDecal",
   "bytes": 820,
-  "line": 8750,
+  "line": 9165,
   "params": [
    "$",
    "ue",
@@ -4898,7 +3975,7 @@
  {
   "function": "advancePath",
   "bytes": 813,
-  "line": 46657,
+  "line": 48717,
   "params": [
    "T",
    "D"
@@ -4920,24 +3997,9 @@
   ]
  },
  {
-  "function": "synthImpactMetal",
-  "bytes": 807,
-  "line": 34158,
-  "params": [
-   "sampleRate",
-   "rand",
-   "variant"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "a",
-   "r"
-  ]
- },
- {
   "function": "addGableEnds",
   "bytes": 800,
-  "line": 19192,
+  "line": 19961,
   "params": [
    "L",
    "Z",
@@ -4958,7 +4020,7 @@
  {
   "function": "valueNoise2",
   "bytes": 799,
-  "line": 27083,
+  "line": 28717,
   "params": [
    "px",
    "py",
@@ -4983,7 +4045,7 @@
  {
   "function": "addBag",
   "bytes": 796,
-  "line": 15480,
+  "line": 16162,
   "params": [
    "l",
    "c",
@@ -5014,7 +4076,7 @@
  {
   "function": "biquadCoeffs",
   "bytes": 786,
-  "line": 32932,
+  "line": 34742,
   "params": [
    "type",
    "cutoffHz",
@@ -5032,22 +4094,9 @@
   ]
  },
  {
-  "function": "synthObjectiveSting",
-  "bytes": 784,
-  "line": 36028,
-  "params": [
-   "sampleRate"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "n",
-   "t"
-  ]
- },
- {
   "function": "resetWeapon",
   "bytes": 780,
-  "line": 43414,
+  "line": 45425,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -5055,23 +4104,9 @@
   ]
  },
  {
-  "function": "createSfxBaker",
-  "bytes": 775,
-  "line": 36892,
-  "params": [
-   "name",
-   "_",
-   "sampleRate"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "l"
-  ]
- },
- {
   "function": "valueNoise3D",
   "bytes": 767,
-  "line": 12398,
+  "line": 12930,
   "params": [
    "px",
    "_",
@@ -5096,47 +4131,23 @@
   ]
  },
  {
-  "function": "rust_run",
-  "bytes": 761,
-  "line": 4753,
-  "params": [],
-  "shortParams": [],
+  "function": "synthCompleteSting",
+  "bytes": 756,
+  "line": 37942,
+  "params": [
+   "sr"
+  ],
+  "shortParams": [
+   "sr"
+  ],
   "shortLocals": [
-   "A",
-   "E",
-   "M",
-   "_",
-   "b",
-   "g",
-   "m",
-   "v",
-   "w",
-   "x",
-   "y"
-  ]
- },
- {
-  "function": "logo_c",
-  "bytes": 758,
-  "line": 4610,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "M",
-   "_",
-   "b",
-   "g",
-   "m",
-   "v",
-   "x",
-   "y"
+   "sr"
   ]
  },
  {
   "function": "nearestOpenCell",
   "bytes": 753,
-  "line": 6913,
+  "line": 7204,
   "params": [
    "_",
    "M"
@@ -5163,7 +4174,7 @@
  {
   "function": "mats",
   "bytes": 748,
-  "line": 337,
+  "line": 338,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -5174,7 +4185,7 @@
  {
   "function": "wallSpanZ",
   "bytes": 734,
-  "line": 18977,
+  "line": 19746,
   "params": [
    "L",
    "Z",
@@ -5207,7 +4218,7 @@
  {
   "function": "wallSpanX",
   "bytes": 734,
-  "line": 19029,
+  "line": 19798,
   "params": [
    "L",
    "Z",
@@ -5238,44 +4249,9 @@
   ]
  },
  {
-  "function": "logo_b",
-  "bytes": 730,
-  "line": 4574,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "E",
-   "M",
-   "_",
-   "b",
-   "g",
-   "m",
-   "v",
-   "x",
-   "y"
-  ]
- },
- {
-  "function": "synthCompleteSting",
-  "bytes": 729,
-  "line": 36122,
-  "params": [
-   "sr"
-  ],
-  "shortParams": [
-   "sr"
-  ],
-  "shortLocals": [
-   "n",
-   "sr",
-   "t"
-  ]
- },
- {
   "function": "buildImpulse",
   "bytes": 721,
-  "line": 36229,
+  "line": 38049,
   "params": [
    "mixedHash",
    "s"
@@ -5294,18 +4270,18 @@
  },
  {
   "function": "createShellGeometry",
-  "bytes": 715,
-  "line": 30601,
+  "bytes": 718,
+  "line": 32387,
   "params": [],
   "shortParams": [],
   "shortLocals": [
-   "s"
+   "pt"
   ]
  },
  {
   "function": "makeDecalMaterial",
   "bytes": 713,
-  "line": 4296,
+  "line": 4345,
   "params": [
    "v",
    "_"
@@ -5323,7 +4299,7 @@
  {
   "function": "fenceRun",
   "bytes": 710,
-  "line": 21738,
+  "line": 22905,
   "params": [
    "c",
    "u",
@@ -5356,7 +4332,7 @@
  {
   "function": "addBoxFaces",
   "bytes": 708,
-  "line": 26181,
+  "line": 27670,
   "params": [
    "D",
    "C",
@@ -5399,7 +4375,7 @@
  {
   "function": "cutRelay",
   "bytes": 707,
-  "line": 49712,
+  "line": 51836,
   "params": [
    "P"
   ],
@@ -5414,7 +4390,7 @@
  {
   "function": "debrisBurstAt",
   "bytes": 704,
-  "line": 31357,
+  "line": 33143,
   "params": [
    "ee",
    "_"
@@ -5437,7 +4413,7 @@
  {
   "function": "synthMechanicalSlide",
   "bytes": 703,
-  "line": 33534,
+  "line": 35344,
   "params": [
    "sr",
    "rand",
@@ -5454,9 +4430,19 @@
   ]
  },
  {
+  "function": "ensureDepthCopy",
+  "bytes": 700,
+  "line": 2436,
+  "params": [],
+  "shortParams": [],
+  "shortLocals": [
+   "oe"
+  ]
+ },
+ {
   "function": "setEmissive",
   "bytes": 697,
-  "line": 12255,
+  "line": 12780,
   "params": [
    "le",
    "R"
@@ -5473,7 +4459,7 @@
  {
   "function": "pushTri",
   "bytes": 689,
-  "line": 7296,
+  "line": 7592,
   "params": [
    "idxA",
    "idxB",
@@ -5489,7 +4475,7 @@
  {
   "function": "queueWave",
   "bytes": 682,
-  "line": 49563,
+  "line": 51687,
   "params": [
    "P"
   ],
@@ -5511,7 +4497,7 @@
  {
   "function": "makeIr",
   "bytes": 678,
-  "line": 36187,
+  "line": 38007,
   "params": [
    "mixedHash",
    "s"
@@ -5531,7 +4517,7 @@
  {
   "function": "buildCinematic",
   "bytes": 664,
-  "line": 49260,
+  "line": 51384,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -5543,7 +4529,7 @@
  {
   "function": "updateRadio",
   "bytes": 656,
-  "line": 48634,
+  "line": 50744,
   "params": [
    "k"
   ],
@@ -5557,19 +4543,9 @@
   ]
  },
  {
-  "function": "ensureDepthCopy",
-  "bytes": 652,
-  "line": 2423,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "oe"
-  ]
- },
- {
   "function": "pumpQueue",
   "bytes": 652,
-  "line": 37137,
+  "line": 38957,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -5582,7 +4558,7 @@
  {
   "function": "applyBiquad",
   "bytes": 642,
-  "line": 32956,
+  "line": 34766,
   "params": [
    "buf",
    "type",
@@ -5602,25 +4578,9 @@
   ]
  },
  {
-  "function": "logo_a",
-  "bytes": 633,
-  "line": 4534,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "b",
-   "g",
-   "m",
-   "v",
-   "x",
-   "y"
-  ]
- },
- {
   "function": "layerGen",
   "bytes": 626,
-  "line": 35752,
+  "line": 37566,
   "params": [
    "materialName"
   ],
@@ -5637,7 +4597,7 @@
  {
   "function": "addEmitterAt",
   "bytes": 624,
-  "line": 32345,
+  "line": 34132,
   "params": [
    "ee",
    "B",
@@ -5671,7 +4631,7 @@
  {
   "function": "addLampBar",
   "bytes": 622,
-  "line": 24170,
+  "line": 25318,
   "params": [
    "R",
    "I",
@@ -5701,7 +4661,7 @@
  {
   "function": "emitParticle",
   "bytes": 620,
-  "line": 31144,
+  "line": 32930,
   "params": [
    "ee",
    "B",
@@ -5767,7 +4727,7 @@
  {
   "function": "smokeAt",
   "bytes": 620,
-  "line": 31274,
+  "line": 33060,
   "params": [
    "ee",
    "_"
@@ -5791,7 +4751,7 @@
  {
   "function": "hasGridLine",
   "bytes": 617,
-  "line": 6939,
+  "line": 7230,
   "params": [
    "_",
    "M"
@@ -5819,7 +4779,7 @@
  {
   "function": "pushQuad",
   "bytes": 607,
-  "line": 26159,
+  "line": 27648,
   "params": [
    "D",
    "C",
@@ -5848,7 +4808,7 @@
  {
   "function": "update",
   "bytes": 605,
-  "line": 26974,
+  "line": 28608,
   "params": [
    "b"
   ],
@@ -5863,7 +4823,7 @@
  {
   "function": "startRun",
   "bytes": 604,
-  "line": 49395,
+  "line": 51519,
   "params": [
    "_"
   ],
@@ -5877,7 +4837,7 @@
  {
   "function": "addGirtSpanZ",
   "bytes": 590,
-  "line": 19081,
+  "line": 19850,
   "params": [
    "L",
    "Z",
@@ -5915,7 +4875,7 @@
  {
   "function": "addGirtSpanX",
   "bytes": 590,
-  "line": 19094,
+  "line": 19863,
   "params": [
    "L",
    "Z",
@@ -5953,7 +4913,7 @@
  {
   "function": "makePitchGlide",
   "bytes": 579,
-  "line": 33120,
+  "line": 34930,
   "params": [
    "sr",
    "seconds",
@@ -5972,7 +4932,7 @@
  {
   "function": "drawLogoLockup",
   "bytes": 575,
-  "line": 4361,
+  "line": 4410,
   "params": [
    "v",
    "g",
@@ -6008,7 +4968,7 @@
  {
   "function": "addMooringLine",
   "bytes": 570,
-  "line": 25734,
+  "line": 27062,
   "params": [
    "$",
    "ue",
@@ -6035,7 +4995,7 @@
  {
   "function": "catenaryPoints",
   "bytes": 560,
-  "line": 22620,
+  "line": 23790,
   "params": [
    "startPt",
    "endPt",
@@ -6048,23 +5008,9 @@
   ]
  },
  {
-  "function": "berth4",
-  "bytes": 557,
-  "line": 4678,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "b",
-   "g",
-   "v",
-   "x",
-   "y"
-  ]
- },
- {
   "function": "setFingerCurl",
   "bytes": 551,
-  "line": 43186,
+  "line": 45197,
   "params": [
    "Me"
   ],
@@ -6083,28 +5029,9 @@
   ]
  },
  {
-  "function": "grime_streak",
-  "bytes": 549,
-  "line": 4729,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "E",
-   "M",
-   "_",
-   "b",
-   "g",
-   "m",
-   "v",
-   "x",
-   "y"
-  ]
- },
- {
   "function": "tintAt",
   "bytes": 545,
-  "line": 26125,
+  "line": 27614,
   "params": [
    "D",
    "C",
@@ -6136,7 +5063,7 @@
  {
   "function": "drawLabel",
   "bytes": 542,
-  "line": 27410,
+  "line": 29044,
   "params": [
    "A",
    "_",
@@ -6168,7 +5095,7 @@
  {
   "function": "emitDebris",
   "bytes": 535,
-  "line": 31231,
+  "line": 33017,
   "params": [
    "ee",
    "B",
@@ -6228,21 +5155,9 @@
   ]
  },
  {
-  "function": "createSeededRandom",
-  "bytes": 534,
-  "line": 4144,
-  "params": [
-   "seed"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "t"
-  ]
- },
- {
   "function": "drawBayRow",
   "bytes": 524,
-  "line": 27490,
+  "line": 29127,
   "params": [
    "A",
    "_",
@@ -6281,7 +5196,7 @@
  {
   "function": "updateDead",
   "bytes": 523,
-  "line": 39490,
+  "line": 41345,
   "params": [
    "F"
   ],
@@ -6296,7 +5211,7 @@
  {
   "function": "buildCanvasDecal",
   "bytes": 520,
-  "line": 4324,
+  "line": 4373,
   "params": [
    "v",
    "g",
@@ -6323,21 +5238,9 @@
   ]
  },
  {
-  "function": "ao",
-  "bytes": 517,
-  "line": 32884,
-  "params": [
-   "seed"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "t"
-  ]
- },
- {
   "function": "addStairLanding",
   "bytes": 515,
-  "line": 23947,
+  "line": 25084,
   "params": [
    "R",
    "I",
@@ -6360,33 +5263,9 @@
   ]
  },
  {
-  "function": "createShapeFromPoints",
-  "bytes": 509,
-  "line": 39823,
-  "params": [
-   "points",
-   "holes"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "n",
-   "s"
-  ]
- },
- {
-  "function": "createRotorBellGeometry",
-  "bytes": 508,
-  "line": 45098,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "e"
-  ]
- },
- {
   "function": "emitStreak",
   "bytes": 507,
-  "line": 31165,
+  "line": 32951,
   "params": [
    "ee",
    "B",
@@ -6432,40 +5311,9 @@
   ]
  },
  {
-  "function": "arrow",
-  "bytes": 506,
-  "line": 4483,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "b",
-   "g",
-   "m",
-   "v",
-   "x",
-   "y"
-  ]
- },
- {
-  "function": "logo_d",
-  "bytes": 504,
-  "line": 4648,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "A",
-   "b",
-   "g",
-   "m",
-   "v",
-   "x",
-   "y"
-  ]
- },
- {
   "function": "samplePath",
   "bytes": 500,
-  "line": 49279,
+  "line": 51403,
   "params": [
    "P",
    "V",
@@ -6498,23 +5346,20 @@
   ]
  },
  {
-  "function": "caution_stripes",
+  "function": "readAdaptation",
   "bytes": 492,
-  "line": 4702,
+  "line": 2674,
   "params": [],
   "shortParams": [],
   "shortLocals": [
-   "b",
-   "g",
-   "v",
-   "x",
-   "y"
+   "fe",
+   "oe"
   ]
  },
  {
   "function": "relayInRange",
   "bytes": 492,
-  "line": 49656,
+  "line": 51780,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -6529,7 +5374,7 @@
  {
   "function": "startMusic",
   "bytes": 487,
-  "line": 37532,
+  "line": 39354,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -6540,20 +5385,9 @@
   ]
  },
  {
-  "function": "readAdaptation",
-  "bytes": 480,
-  "line": 2658,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "fe",
-   "oe"
-  ]
- },
- {
   "function": "syncRelayHums",
   "bytes": 480,
-  "line": 37737,
+  "line": 39559,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -6565,7 +5399,7 @@
  {
   "function": "addRollerDoor",
   "bytes": 478,
-  "line": 23808,
+  "line": 24948,
   "params": [
    "R",
    "I",
@@ -6596,36 +5430,20 @@
   ]
  },
  {
-  "function": "hazard_voltage",
-  "bytes": 477,
-  "line": 4430,
+  "function": "dispose",
+  "bytes": 474,
+  "line": 2652,
   "params": [],
   "shortParams": [],
   "shortLocals": [
-   "b",
-   "g",
-   "m",
-   "v",
-   "x",
-   "y"
-  ]
- },
- {
-  "function": "$a",
-  "bytes": 473,
-  "line": 7189,
-  "params": [
-   "seed"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "t"
+   "fe",
+   "oe"
   ]
  },
  {
   "function": "pickVoice",
   "bytes": 470,
-  "line": 37329,
+  "line": 39151,
   "params": [
    "te",
    "he",
@@ -6652,22 +5470,9 @@
   ]
  },
  {
-  "function": "hazard_general",
-  "bytes": 468,
-  "line": 4459,
-  "params": [],
-  "shortParams": [],
-  "shortLocals": [
-   "g",
-   "v",
-   "x",
-   "y"
-  ]
- },
- {
   "function": "getDigit",
   "bytes": 451,
-  "line": 5231,
+  "line": 5428,
   "params": [
    "v"
   ],
@@ -6683,7 +5488,7 @@
  {
   "function": "update",
   "bytes": 449,
-  "line": 32643,
+  "line": 34440,
   "params": [
    "ee"
   ],
@@ -6698,7 +5503,7 @@
  {
   "function": "paintColorFn",
   "bytes": 441,
-  "line": 8071,
+  "line": 8381,
   "params": [
    "$",
    "ue",
@@ -6721,7 +5526,7 @@
  {
   "function": "place",
   "bytes": 437,
-  "line": 18568,
+  "line": 19336,
   "params": [
    "T",
    "D",
@@ -6751,7 +5556,7 @@
  {
   "function": "groundSurface",
   "bytes": 432,
-  "line": 39304,
+  "line": 41159,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -6760,22 +5565,9 @@
   ]
  },
  {
-  "function": "registerCharacterProps",
-  "bytes": 430,
-  "line": 15846,
-  "params": [
-   "register"
-  ],
-  "shortParams": [],
-  "shortLocals": [
-   "e",
-   "t"
-  ]
- },
- {
   "function": "registerBuffer",
   "bytes": 430,
-  "line": 37092,
+  "line": 38912,
   "params": [
    "te",
    "he"
@@ -6796,7 +5588,7 @@
  {
   "function": "writeTone",
   "bytes": 427,
-  "line": 35048,
+  "line": 36860,
   "params": [
    "l",
    "c",
@@ -6825,7 +5617,7 @@
  {
   "function": "emitSparkBurst",
   "bytes": 421,
-  "line": 31183,
+  "line": 32969,
   "params": [
    "ee",
    "B",
@@ -6874,7 +5666,7 @@
  {
   "function": "refreshLookMode",
   "bytes": 417,
-  "line": 49436,
+  "line": 51560,
   "params": [
    "P"
   ],
@@ -6889,7 +5681,7 @@
  {
   "function": "requestLock",
   "bytes": 415,
-  "line": 38786,
+  "line": 40634,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -6899,7 +5691,7 @@
  {
   "function": "createEl",
   "bytes": 413,
-  "line": 48121,
+  "line": 50210,
   "params": [
    "tag",
    "className",
@@ -6913,7 +5705,7 @@
  {
   "function": "pushTri",
   "bytes": 411,
-  "line": 12533,
+  "line": 13073,
   "params": [
    "p",
    "d",
@@ -6948,7 +5740,7 @@
  {
   "function": "getTintedMaterial",
   "bytes": 411,
-  "line": 22465,
+  "line": 23635,
   "params": [
    "ctx",
    "name",
@@ -6963,7 +5755,7 @@
  {
   "function": "makeTarget",
   "bytes": 410,
-  "line": 6128,
+  "line": 6328,
   "params": [
    "O",
    "q"
@@ -6981,7 +5773,7 @@
  {
   "function": "emitRipple",
   "bytes": 410,
-  "line": 31216,
+  "line": 33002,
   "params": [
    "ee",
    "B",
@@ -7020,7 +5812,7 @@
  {
   "function": "refreshMarkers",
   "bytes": 410,
-  "line": 49373,
+  "line": 51497,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -7031,7 +5823,7 @@
  {
   "function": "heapPop",
   "bytes": 409,
-  "line": 6978,
+  "line": 7269,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -7044,9 +5836,30 @@
   ]
  },
  {
+  "function": "polygonBlotch",
+  "bytes": 409,
+  "line": 31150,
+  "params": [
+   "O",
+   "q",
+   "U",
+   "centerX"
+  ],
+  "shortParams": [
+   "O",
+   "q",
+   "U"
+  ],
+  "shortLocals": [
+   "O",
+   "U",
+   "q"
+  ]
+ },
+ {
   "function": "quad",
   "bytes": 408,
-  "line": 18478,
+  "line": 19246,
   "params": [
    "T",
    "D",
@@ -7081,7 +5894,7 @@
  {
   "function": "addPiece",
   "bytes": 407,
-  "line": 26140,
+  "line": 27629,
   "params": [
    "D",
    "C"
@@ -7105,7 +5918,7 @@
  {
   "function": "stopRelayHum",
   "bytes": 406,
-  "line": 37760,
+  "line": 39582,
   "params": [
    "te"
   ],
@@ -7121,7 +5934,7 @@
  {
   "function": "getCentroid",
   "bytes": 404,
-  "line": 7464,
+  "line": 7766,
   "params": [],
   "shortParams": [],
   "shortLocals": [
@@ -7132,7 +5945,7 @@
  {
   "function": "palmTopY",
   "bytes": 400,
-  "line": 41910,
+  "line": 43899,
   "params": [
    "x",
    "z"

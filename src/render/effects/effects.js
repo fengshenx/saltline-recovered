@@ -562,7 +562,7 @@ export function createShellGeometry() {
       [0.0031, 0.044719999999999996],
     ],
     shellGeo = new THREE.LatheGeometry(
-      profile.map((s) => new THREE.Vector2(s[0], s[1] - 0.052 / 2)),
+      profile.map((pt) => new THREE.Vector2(pt[0], pt[1] - 0.052 / 2)),
       10,
     );
   return (shellGeo.computeVertexNormals(), shellGeo);
@@ -1926,8 +1926,8 @@ export async function createEffects(ctx) {
       ctx.events.emit('explosion', explosionEvent));
   }
   let emitterPool = [];
-  for (let fxPos = 0; fxPos < 24; fxPos++) {
-    let fxDir = {
+  for (let effectPos = 0; effectPos < 24; effectPos++) {
+    let surfaceNormal = {
       active: !1,
       kind: 'steam',
       pos: new THREE.Vector3(),
@@ -1940,13 +1940,14 @@ export async function createEffects(ctx) {
       light: null,
       drop: -1,
     };
-    ((fxDir.stop = () => {
-      ((fxDir.active = !1), fxDir.light && (fxDir.light.release(), (fxDir.light = null)));
+    ((surfaceNormal.stop = () => {
+      ((surfaceNormal.active = !1),
+        surfaceNormal.light && (surfaceNormal.light.release(), (surfaceNormal.light = null)));
     }),
-      (fxDir.setPos = (P) => {
-        fxDir.pos.copy(P);
+      (surfaceNormal.setPos = (effectCount) => {
+        surfaceNormal.pos.copy(effectCount);
       }),
-      emitterPool.push(fxDir));
+      emitterPool.push(surfaceNormal));
   }
   let NULL_EMITTER = {
     active: !1,
@@ -2199,8 +2200,16 @@ export async function createEffects(ctx) {
       }
     }
   }
-  ctx.events.on('impact', (ee) => {
-    !ee || !ee.point || impactAt(ee.point, ee.normal, ee.surface, ee.dir, ee.enemy);
+  ctx.events.on('impact', (effectPos) => {
+    !effectPos ||
+      !effectPos.point ||
+      impactAt(
+        effectPos.point,
+        effectPos.normal,
+        effectPos.surface,
+        effectPos.dir,
+        effectPos.enemy,
+      );
   });
   let isPuddleAt = (ee, B) => {
     try {
@@ -2209,32 +2218,34 @@ export async function createEffects(ctx) {
       return !1;
     }
   };
-  (ctx.events.on('player:step', (ee) => {
-    let B = (ee && ee.pos) || (ctx.player && ctx.player.pos);
-    B &&
-      ((ee && ee.surface === 'water') || isPuddleAt(B.x, B.z)) &&
-      (FX_SCRATCH_VEC_F.set(B.x, Math.max(0, B.y), B.z),
-      splashAt(FX_SCRATCH_VEC_F, ee && ee.sprint ? 0.55 : 0.4));
+  (ctx.events.on('player:step', (effectPos) => {
+    let surfaceNormal = (effectPos && effectPos.pos) || (ctx.player && ctx.player.pos);
+    surfaceNormal &&
+      ((effectPos && effectPos.surface === 'water') ||
+        isPuddleAt(surfaceNormal.x, surfaceNormal.z)) &&
+      (FX_SCRATCH_VEC_F.set(surfaceNormal.x, Math.max(0, surfaceNormal.y), surfaceNormal.z),
+      splashAt(FX_SCRATCH_VEC_F, effectPos && effectPos.sprint ? 0.55 : 0.4));
   }),
-    ctx.events.on('player:land', (ee) => {
-      let B = ctx.player && ctx.player.pos;
-      if (B) {
+    ctx.events.on('player:land', (effectPos) => {
+      let surfaceNormal = ctx.player && ctx.player.pos;
+      if (surfaceNormal) {
         if (
-          (FX_SCRATCH_VEC_F.set(B.x, Math.max(0, B.y), B.z),
-          (ee && ee.surface === 'water') || isPuddleAt(B.x, B.z))
+          (FX_SCRATCH_VEC_F.set(surfaceNormal.x, Math.max(0, surfaceNormal.y), surfaceNormal.z),
+          (effectPos && effectPos.surface === 'water') ||
+            isPuddleAt(surfaceNormal.x, surfaceNormal.z))
         )
           splashAt(FX_SCRATCH_VEC_F, 0.9);
-        else if (ee && ee.speed > 5) {
-          let P = shadeAt(FX_SCRATCH_VEC_F, Ei);
-          for (let V = 0; V < 6; V++) {
-            let Y = fxRandom() * 6.283;
+        else if (effectPos && effectPos.speed > 5) {
+          let effectCount = shadeAt(FX_SCRATCH_VEC_F, Ei);
+          for (let effectLife = 0; effectLife < 6; effectLife++) {
+            let riseSpeed = fxRandom() * 6.283;
             emitParticle(
-              FX_SCRATCH_VEC_F.x + Math.cos(Y) * 0.2,
+              FX_SCRATCH_VEC_F.x + Math.cos(riseSpeed) * 0.2,
               FX_SCRATCH_VEC_F.y + 0.08,
-              FX_SCRATCH_VEC_F.z + Math.sin(Y) * 0.2,
-              Math.cos(Y) * 1.6,
+              FX_SCRATCH_VEC_F.z + Math.sin(riseSpeed) * 0.2,
+              Math.cos(riseSpeed) * 1.6,
               0.3,
-              Math.sin(Y) * 1.6,
+              Math.sin(riseSpeed) * 1.6,
               randRange(0.7, 1.2),
               0.15,
               randRange(0.5, 0.8),
@@ -2242,7 +2253,7 @@ export async function createEffects(ctx) {
               0.44,
               0.42,
               0.22,
-              P,
+              effectCount,
               3,
               0.1,
               0.8,
@@ -2289,8 +2300,9 @@ export async function createEffects(ctx) {
     splash: splashAt,
     addEmitter: addEmitter,
     debris: debrisBurstAt,
-    decal(ee, B, P = 'bullet_concrete', V) {
-      (FX_SCRATCH_VEC_A.copy(B || Ei), decalPool.add(ee, FX_SCRATCH_VEC_A, P, V));
+    decal(effectPos, surfaceNormal, effectCount = 'bullet_concrete', effectLife) {
+      (FX_SCRATCH_VEC_A.copy(surfaceNormal || Ei),
+        decalPool.add(effectPos, FX_SCRATCH_VEC_A, effectCount, effectLife));
     },
     wind: windDir,
     root: root,
@@ -2455,31 +2467,43 @@ export function showcaseEffects(ctx) {
   }
   let frozen = !1,
     baseUpdate = fx.update;
-  fx.update = (N) => {
-    frozen || baseUpdate(N);
+  fx.update = (geometryOrDelta) => {
+    frozen || baseUpdate(geometryOrDelta);
   };
   let prevSetShot = window.__setShot;
   return (
     prevSetShot &&
-      (window.__setShot = (N) => {
-        if (N && N.fxage !== void 0) {
-          (fx.clear(), effectPos.set(0, 0.25, 3.5), fx.explosion(effectPos, +(N.fxsize || 1.2)));
-          let Q = +N.fxage;
-          for (let K = 0; K < Q - 1e-6; K += 1 / 60) baseUpdate(1 / 60);
+      (window.__setShot = (geometryOrDelta) => {
+        if (geometryOrDelta && geometryOrDelta.fxage !== void 0) {
+          (fx.clear(),
+            effectPos.set(0, 0.25, 3.5),
+            fx.explosion(effectPos, +(geometryOrDelta.fxsize || 1.2)));
+          let materialOrScalar = +geometryOrDelta.fxage;
+          for (
+            let coordXOrElapsed = 0;
+            coordXOrElapsed < materialOrScalar - 1e-6;
+            coordXOrElapsed += 1 / 60
+          )
+            baseUpdate(1 / 60);
           (baseUpdate(0), (frozen = !0));
         }
-        prevSetShot(N);
+        prevSetShot(geometryOrDelta);
       }),
     {
       cam: mode === 'explosion' ? [0, 2, 12.5] : [0.3, 1.6, 7.2],
       target: mode === 'explosion' ? [0, 2.2, 3.5] : [0.2, 1, 0],
-      update(N) {
+      update(geometryOrDelta) {
         if (!warmedUp) {
           warmedUp = !0;
-          let Q = +(ctx.params.fxt || 0);
-          for (let K = 0; K < Q; K += 1 / 30) (step(1 / 30), fx.update(1 / 30));
+          let materialOrScalar = +(ctx.params.fxt || 0);
+          for (
+            let coordXOrElapsed = 0;
+            coordXOrElapsed < materialOrScalar;
+            coordXOrElapsed += 1 / 30
+          )
+            (step(1 / 30), fx.update(1 / 30));
         }
-        frozen || step(N);
+        frozen || step(geometryOrDelta);
       },
     }
   );

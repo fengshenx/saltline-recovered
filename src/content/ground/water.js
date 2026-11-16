@@ -110,7 +110,7 @@ export function createSeaSurface(game, tex) {
     xSteps = buildSeaGridSteps(27.5, 880, 0.75, 1.075, 120),
     zSteps = buildSeaGridSteps(48, 880, 0.9, 1.085, 120),
     zRows = zSteps
-      .map((M) => -M)
+      .map((shaderProgram) => -shaderProgram)
       .reverse()
       .concat(buildSeaGridSteps(-48 + 0.9, 48 - 0.9, 0.9, 1, 0.9), zSteps.slice(0)),
     xCount = xSteps.length,
@@ -119,14 +119,14 @@ export function createSeaSurface(game, tex) {
     positions = new Float32Array((xCount * zCount + extraQuads) * 3),
     indices = [],
     writeIdx = 0;
-  for (let rowIdx = 0; rowIdx < zCount; rowIdx++)
+  for (let shaderProgram = 0; shaderProgram < zCount; shaderProgram++)
     for (let colIdx = 0; colIdx < xCount; colIdx++)
       ((positions[writeIdx++] = xSteps[colIdx]),
         (positions[writeIdx++] = seaLevel),
-        (positions[writeIdx++] = zRows[rowIdx]));
-  for (let rowIdx = 0; rowIdx < zCount - 1; rowIdx++)
+        (positions[writeIdx++] = zRows[shaderProgram]));
+  for (let shaderProgram = 0; shaderProgram < zCount - 1; shaderProgram++)
     for (let colIdx = 0; colIdx < xCount - 1; colIdx++) {
-      let topLeftIdx = rowIdx * xCount + colIdx,
+      let topLeftIdx = shaderProgram * xCount + colIdx,
         topRightIdx = topLeftIdx + 1,
         bottomLeftIdx = topLeftIdx + xCount,
         bottomRightIdx = bottomLeftIdx + 1;
@@ -156,7 +156,8 @@ export function createSeaSurface(game, tex) {
   let geometry = new THREE.BufferGeometry();
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   let normals = new Float32Array(positions.length);
-  for (let rowIdx = 1; rowIdx < normals.length; rowIdx += 3) normals[rowIdx] = 1;
+  for (let shaderProgram = 1; shaderProgram < normals.length; shaderProgram += 3)
+    normals[shaderProgram] = 1;
   (geometry.setAttribute('normal', new THREE.BufferAttribute(normals, 3)),
     geometry.setIndex(indices),
     (geometry.boundingSphere = new THREE.Sphere(new THREE.Vector3(0, seaLevel, 0), 1300)));
@@ -188,12 +189,12 @@ export function createSeaSurface(game, tex) {
       metalness: 0,
     });
   ((material.name = 'sea'),
-    (material.onBeforeCompile = (M) => {
-      (Object.assign(M.uniforms, uniforms),
-        (M.vertexShader =
+    (material.onBeforeCompile = (shaderProgram) => {
+      (Object.assign(shaderProgram.uniforms, uniforms),
+        (shaderProgram.vertexShader =
           `uniform float uTime; varying vec3 vGWorld; varying float vSAmp;
 ` +
-          M.vertexShader.replace(
+          shaderProgram.vertexShader.replace(
             '#include <begin_vertex>',
             `#include <begin_vertex>
   vec3 swp = (modelMatrix * vec4(transformed, 1.0)).xyz;
@@ -203,7 +204,7 @@ ${SEA_WAVE_DISPLACE_VERT}
   transformed += sdisp * vSAmp;
   vGWorld = swp;`,
           )),
-        (M.fragmentShader = M.fragmentShader
+        (shaderProgram.fragmentShader = shaderProgram.fragmentShader
           .replace(
             '#include <common>',
             `#include <common>
@@ -516,42 +517,57 @@ export function createRainSystem(game, tex) {
     rain: streakMesh,
     splash: splashMesh,
     wind: streakUniforms.uVel.value,
-    setRain(w) {
-      targetLevel = Math.min(1, Math.max(0, w));
+    setRain(deltaSeconds) {
+      targetLevel = Math.min(1, Math.max(0, deltaSeconds));
     },
     get rainLevel() {
       return rainLevel;
     },
-    update(w) {
-      ((time += w),
-        (rainLevel += (targetLevel - rainLevel) * Math.min(1, w * 0.8)),
+    update(deltaSeconds) {
+      ((time += deltaSeconds),
+        (rainLevel += (targetLevel - rainLevel) * Math.min(1, deltaSeconds * 0.8)),
         (baseUniforms.uTime.value = time),
         (baseUniforms.uRain.value = rainLevel),
         (streakMesh.visible = splashMesh.visible = rainLevel > 0.01));
-      let S = game.camera;
-      if (S) {
-        let O = game.render && game.render.resolution;
-        (O && O.x > 8 ? bufferSize.copy(O) : game.renderer.getDrawingBufferSize(bufferSize),
+      let activeCamera = game.camera;
+      if (activeCamera) {
+        let bufferResolution = game.render && game.render.resolution;
+        (bufferResolution && bufferResolution.x > 8
+          ? bufferSize.copy(bufferResolution)
+          : game.renderer.getDrawingBufferSize(bufferSize),
           (streakUniforms.uPix.value =
-            (2 * Math.tan((S.fov * Math.PI) / 360)) / Math.max(1, bufferSize.y)));
+            (2 * Math.tan((activeCamera.fov * Math.PI) / 360)) / Math.max(1, bufferSize.y)));
       }
-      let z = (game.level && game.level.interiorBoxes) || [];
-      for (let O = 0; O < 4; O++) {
-        let q = z[O];
-        q && q.min && q.max
-          ? (boxMin[O].set(q.min.x - 0.15, q.min.y - 1, q.min.z - 0.15),
-            boxMax[O].set(q.max.x + 0.15, q.max.y + 0.3, q.max.z + 0.15))
-          : (boxMin[O].set(0, 0, 0), boxMax[O].set(0, 0, 0));
+      let interiorBoxList = (game.level && game.level.interiorBoxes) || [];
+      for (let bufferResolution = 0; bufferResolution < 4; bufferResolution++) {
+        let boxEntry = interiorBoxList[bufferResolution];
+        boxEntry && boxEntry.min && boxEntry.max
+          ? (boxMin[bufferResolution].set(
+              boxEntry.min.x - 0.15,
+              boxEntry.min.y - 1,
+              boxEntry.min.z - 0.15,
+            ),
+            boxMax[bufferResolution].set(
+              boxEntry.max.x + 0.15,
+              boxEntry.max.y + 0.3,
+              boxEntry.max.z + 0.15,
+            ))
+          : (boxMin[bufferResolution].set(0, 0, 0), boxMax[bufferResolution].set(0, 0, 0));
       }
-      streakUniforms.uDrip.value = z.length ? 1 : 0;
-      let H = (game.level && game.level.skylights) || [];
-      for (let O = 0; O < 8; O++) {
-        let q = H[O];
-        q && q.w > 0
-          ? skylights[O].set(q.x, q.z, q.w * 0.5, (q.d || q.w) * 0.5)
-          : skylights[O].set(0, 0, -1, -1);
+      streakUniforms.uDrip.value = interiorBoxList.length ? 1 : 0;
+      let skylightList = (game.level && game.level.skylights) || [];
+      for (let bufferResolution = 0; bufferResolution < 8; bufferResolution++) {
+        let boxEntry = skylightList[bufferResolution];
+        boxEntry && boxEntry.w > 0
+          ? skylights[bufferResolution].set(
+              boxEntry.x,
+              boxEntry.z,
+              boxEntry.w * 0.5,
+              (boxEntry.d || boxEntry.w) * 0.5,
+            )
+          : skylights[bufferResolution].set(0, 0, -1, -1);
       }
-      ((thunderIn -= w),
+      ((thunderIn -= deltaSeconds),
         thunderIn <= 0 &&
           ((thunderIn = 30 + rng() * 30),
           game.events.emit('thunder', {

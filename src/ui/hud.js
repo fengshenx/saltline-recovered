@@ -54,16 +54,16 @@ export function createHUD(ctx) {
   let compass = createEl('div', 'h-compass'),
     tape = createEl('div', 'h-tape'),
     tapeHtml = '';
-  for (let k = COMPASS_MIN_DEG; k <= COMPASS_MAX_DEG; k += 5) {
-    let ce = (k - COMPASS_MIN_DEG) * COMPASS_PX_PER_DEG,
-      ve = ((k % 360) + 360) % 360,
-      _e = ve % 45 === 0,
-      Te = ve % 15 === 0;
-    ((tapeHtml += `<i class="${_e ? 'mj' : Te ? 'md' : 'mn'}" style="left:${ce}px"></i>`),
-      _e
-        ? (tapeHtml += `<b class="${ve % 90 === 0 ? 'card' : 'ic'}" style="left:${ce}px">${COMPASS_CARDINALS[ve]}</b>`)
-        : ve % 15 === 0 &&
-          (tapeHtml += `<b class="num" style="left:${ce}px">${String(ve).padStart(3, '0')}</b>`));
+  for (let frameDelta = COMPASS_MIN_DEG; frameDelta <= COMPASS_MAX_DEG; frameDelta += 5) {
+    let playerState = (frameDelta - COMPASS_MIN_DEG) * COMPASS_PX_PER_DEG,
+      weaponState = ((frameDelta % 360) + 360) % 360,
+      viewCamera = weaponState % 45 === 0,
+      adsAmount = weaponState % 15 === 0;
+    ((tapeHtml += `<i class="${viewCamera ? 'mj' : adsAmount ? 'md' : 'mn'}" style="left:${playerState}px"></i>`),
+      viewCamera
+        ? (tapeHtml += `<b class="${weaponState % 90 === 0 ? 'card' : 'ic'}" style="left:${playerState}px">${COMPASS_CARDINALS[weaponState]}</b>`)
+        : weaponState % 15 === 0 &&
+          (tapeHtml += `<b class="num" style="left:${playerState}px">${String(weaponState).padStart(3, '0')}</b>`));
   }
   tape.innerHTML = tapeHtml;
   let tapeWrap = createEl('div', 'h-tape-wrap');
@@ -90,15 +90,15 @@ export function createHUD(ctx) {
     hitEl = createEl('div', 'h-hit', '<i></i><i></i><i></i><i></i>'),
     arcsWrap = createEl('div', 'h-arcs'),
     arcs = [];
-  for (let k = 0; k < 4; k++) {
-    let ce = createEl(
+  for (let frameDelta = 0; frameDelta < 4; frameDelta++) {
+    let playerState = createEl(
       'div',
       'h-arc',
       '<svg viewBox="-100 -100 200 200"><path d="M -38 -84 A 92 92 0 0 1 38 -84" /><path class="tip" d="M -7 -97 L 0 -106 L 7 -97" /></svg>',
     );
-    (arcsWrap.appendChild(ce),
+    (arcsWrap.appendChild(playerState),
       arcs.push({
-        el: ce,
+        el: playerState,
         life: 0,
         src: new THREE.Vector3(),
         op: -1,
@@ -209,88 +209,103 @@ export function createHUD(ctx) {
     for (let k of markers) ((k.lastC = 1e9), (k.lastW = ''));
   }
   (addEventListener('resize', relayout),
-    ctx.events.on('player:hitEnemy', (k) => {
-      (hud.hitmarker(k && k.killed ? 'kill' : k && (k.weak || k.part === 'weak') ? 'weak' : 'hit'),
-        k &&
-          k.killed &&
-          k.weak &&
+    ctx.events.on('player:hitEnemy', (frameDelta) => {
+      (hud.hitmarker(
+        frameDelta && frameDelta.killed
+          ? 'kill'
+          : frameDelta && (frameDelta.weak || frameDelta.part === 'weak')
+            ? 'weak'
+            : 'hit',
+      ),
+        frameDelta &&
+          frameDelta.killed &&
+          frameDelta.weak &&
           lastFeedItem &&
           lastKillFrame === ctx.time.frame &&
           !lastFeedItem.weak &&
           ((lastFeedItem.weak = !0), (lastFeedItem.el.innerHTML += '<em>Weak point</em>')));
     }),
-    ctx.events.on('enemy:killed', (k) => {
-      let ce = String((k && (k.type || (k.enemy && k.enemy.type))) || 'machine').toUpperCase();
-      ((lastFeedItem = hud.feed(`<b>${ce}</b> destroyed`)), (lastKillFrame = ctx.time.frame));
+    ctx.events.on('enemy:killed', (frameDelta) => {
+      let playerState = String(
+        (frameDelta && (frameDelta.type || (frameDelta.enemy && frameDelta.enemy.type))) ||
+          'machine',
+      ).toUpperCase();
+      ((lastFeedItem = hud.feed(`<b>${playerState}</b> destroyed`)),
+        (lastKillFrame = ctx.time.frame));
     }),
-    ctx.events.on('player:hit', (k) => {
-      if (!k || !k.fromPos) return;
-      let ce = arcs[0];
-      for (let ve of arcs) {
-        if (ve.life <= 0) {
-          ce = ve;
+    ctx.events.on('player:hit', (frameDelta) => {
+      if (!frameDelta || !frameDelta.fromPos) return;
+      let playerState = arcs[0];
+      for (let weaponState of arcs) {
+        if (weaponState.life <= 0) {
+          playerState = weaponState;
           break;
         }
-        ve.life < ce.life && (ce = ve);
+        weaponState.life < playerState.life && (playerState = weaponState);
       }
-      (ce.src.copy(k.fromPos), (ce.life = 1.5), (ce.max = 1.5));
+      (playerState.src.copy(frameDelta.fromPos), (playerState.life = 1.5), (playerState.max = 1.5));
     }));
   let hud = {
     root: root,
-    show(k) {
-      ((k = !!k),
-        k !== visible && ((visible = k), root.classList.toggle('on', k), k && relayout()));
+    show(frameDelta) {
+      ((frameDelta = !!frameDelta),
+        frameDelta !== visible &&
+          ((visible = frameDelta),
+          root.classList.toggle('on', frameDelta),
+          frameDelta && relayout()));
     },
-    setObjective(k) {
-      ((k = k || ''),
-        k !== objectiveText &&
-          ((objectiveText = k),
+    setObjective(frameDelta) {
+      ((frameDelta = frameDelta || ''),
+        frameDelta !== objectiveText &&
+          ((objectiveText = frameDelta),
           (objectiveChars = 0),
           (objectiveProgress = 0),
           (objText.textContent = ''),
-          objBlock.classList.toggle('has', !!k),
+          objBlock.classList.toggle('has', !!frameDelta),
           objBlock.classList.remove('flash'),
           objBlock.offsetWidth,
           objBlock.classList.add('flash')));
     },
-    setRelays(k, ce) {
-      if (!(k === cache.done && ce === cache.total)) {
-        if (ce !== cache.total) {
-          (relayPips.forEach((ve) => ve.remove()), (relayPips = []));
-          for (let ve = 0; ve < ce; ve++) {
-            let _e = document.createElement('i');
-            (relayRow.insertBefore(_e, relayCount), relayPips.push(_e));
+    setRelays(frameDelta, playerState) {
+      if (!(frameDelta === cache.done && playerState === cache.total)) {
+        if (playerState !== cache.total) {
+          (relayPips.forEach((weaponState) => weaponState.remove()), (relayPips = []));
+          for (let weaponState = 0; weaponState < playerState; weaponState++) {
+            let viewCamera = document.createElement('i');
+            (relayRow.insertBefore(viewCamera, relayCount), relayPips.push(viewCamera));
           }
         }
-        ((cache.done = k),
-          (cache.total = ce),
-          relayPips.forEach((ve, _e) => ve.classList.toggle('cut', _e < k)),
-          (relayCount.textContent = `${k}/${ce}`),
-          relayRow.classList.toggle('all', k >= ce && ce > 0));
+        ((cache.done = frameDelta),
+          (cache.total = playerState),
+          relayPips.forEach((weaponState, viewCamera) =>
+            weaponState.classList.toggle('cut', viewCamera < frameDelta),
+          ),
+          (relayCount.textContent = `${frameDelta}/${playerState}`),
+          relayRow.classList.toggle('all', frameDelta >= playerState && playerState > 0));
       }
     },
-    setMarkers(k) {
-      for (let ce of markers) (ce.cEl.remove(), ce.wEl.remove());
-      markers = (k || []).map((ce) => {
-        let ve = createEl(
+    setMarkers(frameDelta) {
+      for (let playerState of markers) (playerState.cEl.remove(), playerState.wEl.remove());
+      markers = (frameDelta || []).map((playerState) => {
+        let weaponState = createEl(
             'div',
-            'h-cm ' + (ce.kind || 'relay'),
-            `<i></i><b>${ce.short || ''}</b><span></span>`,
+            'h-cm ' + (playerState.kind || 'relay'),
+            `<i></i><b>${playerState.short || ''}</b><span></span>`,
           ),
-          _e = createEl(
+          viewCamera = createEl(
             'div',
-            'h-wm ' + (ce.kind || 'relay'),
-            `<i></i><b>${ce.short || ''}</b><span></span>`,
+            'h-wm ' + (playerState.kind || 'relay'),
+            `<i></i><b>${playerState.short || ''}</b><span></span>`,
           );
         return (
-          compassMarks.appendChild(ve),
-          marksEl.appendChild(_e),
+          compassMarks.appendChild(weaponState),
+          marksEl.appendChild(viewCamera),
           {
-            ...ce,
-            cEl: ve,
-            wEl: _e,
-            cDist: ve.querySelector('span'),
-            wDist: _e.querySelector('span'),
+            ...playerState,
+            cEl: weaponState,
+            wEl: viewCamera,
+            cDist: weaponState.querySelector('span'),
+            wDist: viewCamera.querySelector('span'),
             lastD: -1,
             lastC: 1e9,
             lastW: '',
@@ -299,69 +314,75 @@ export function createHUD(ctx) {
         );
       });
     },
-    setPrompt(k, ce = 0) {
-      let ve = !!k;
+    setPrompt(frameDelta, playerState = 0) {
+      let weaponState = !!frameDelta;
       if (
-        (ve !== cache.promptOn &&
-          ((cache.promptOn = ve),
-          promptEl.classList.toggle('on', ve),
-          ctx.input.setPrompt && ctx.input.setPrompt(ve)),
-        !ve)
+        (weaponState !== cache.promptOn &&
+          ((cache.promptOn = weaponState),
+          promptEl.classList.toggle('on', weaponState),
+          ctx.input.setPrompt && ctx.input.setPrompt(weaponState)),
+        !weaponState)
       )
         return;
-      let _e = ctx.input.touch ? 'USE' : ctx.input.gamepad && !ctx.input.locked ? 'Y' : 'E';
-      _e !== cache.promptKey &&
-        ((cache.promptKey = _e),
-        (promptKey.textContent = _e),
-        promptKey.classList.toggle('wide', _e.length > 1));
-      let Te = `Hold ${_e} \u2014 ${k}`;
-      Te !== cache.promptText && ((cache.promptText = Te), (promptLabel.textContent = Te));
-      let Pe = Math.round(ce * 200) / 200;
-      Pe !== cache.promptT &&
-        ((cache.promptT = Pe),
-        promptRing.setAttribute('stroke-dashoffset', (PROMPT_RING_LENGTH * (1 - Pe)).toFixed(2)),
-        promptEl.classList.toggle('busy', Pe > 0));
+      let viewCamera = ctx.input.touch ? 'USE' : ctx.input.gamepad && !ctx.input.locked ? 'Y' : 'E';
+      viewCamera !== cache.promptKey &&
+        ((cache.promptKey = viewCamera),
+        (promptKey.textContent = viewCamera),
+        promptKey.classList.toggle('wide', viewCamera.length > 1));
+      let adsAmount = `Hold ${viewCamera} \u2014 ${frameDelta}`;
+      adsAmount !== cache.promptText &&
+        ((cache.promptText = adsAmount), (promptLabel.textContent = adsAmount));
+      let headingDegrees = Math.round(playerState * 200) / 200;
+      headingDegrees !== cache.promptT &&
+        ((cache.promptT = headingDegrees),
+        promptRing.setAttribute(
+          'stroke-dashoffset',
+          (PROMPT_RING_LENGTH * (1 - headingDegrees)).toFixed(2),
+        ),
+        promptEl.classList.toggle('busy', headingDegrees > 0));
     },
-    radio(k, ce = 4.5) {
-      k &&
+    radio(frameDelta, playerState = 4.5) {
+      frameDelta &&
         radioQueue.push({
-          text: k,
-          secs: ce,
+          text: frameDelta,
+          secs: playerState,
         });
     },
     clearRadio() {
       ((radioQueue.length = 0), (radioLine = null), comms.classList.remove('on'));
     },
-    warn(k, ce = 3) {
-      ((warnEl.textContent = k),
-        (warnT = ce),
+    warn(frameDelta, playerState = 3) {
+      ((warnEl.textContent = frameDelta),
+        (warnT = playerState),
         warnEl.classList.remove('on'),
         warnEl.offsetWidth,
         warnEl.classList.add('on'));
     },
-    message(k, ce = 3) {
-      ((msgEl.textContent = k || ''), (messageT = k ? ce : 0), msgEl.classList.toggle('on', !!k));
+    message(frameDelta, playerState = 3) {
+      ((msgEl.textContent = frameDelta || ''),
+        (messageT = frameDelta ? playerState : 0),
+        msgEl.classList.toggle('on', !!frameDelta));
     },
-    feed(k) {
-      let ce = createEl('div', 'h-fl', k);
-      feedEl.appendChild(ce);
-      let ve = {
-        el: ce,
+    feed(frameDelta) {
+      let playerState = createEl('div', 'h-fl', frameDelta);
+      feedEl.appendChild(playerState);
+      let weaponState = {
+        el: playerState,
         life: 4.2,
         weak: !1,
       };
-      for (feedItems.push(ve); feedItems.length > 4;) feedItems.shift().el.remove();
-      return ve;
+      for (feedItems.push(weaponState); feedItems.length > 4;) feedItems.shift().el.remove();
+      return weaponState;
     },
-    hitmarker(k = 'hit') {
-      hitEl.className = 'h-hit ' + k;
-      let ce = k === 'weak' || k === 'kill' ? 1.5 : 1.15;
+    hitmarker(frameDelta = 'hit') {
+      hitEl.className = 'h-hit ' + frameDelta;
+      let playerState = frameDelta === 'weak' || frameDelta === 'kill' ? 1.5 : 1.15;
       try {
         hitEl.animate(
           [
             {
               opacity: 1,
-              transform: `translate(-50%,-50%) scale(${ce})`,
+              transform: `translate(-50%,-50%) scale(${playerState})`,
             },
             {
               opacity: 1,
@@ -374,7 +395,7 @@ export function createHUD(ctx) {
             },
           ],
           {
-            duration: k === 'kill' ? 420 : 240,
+            duration: frameDelta === 'kill' ? 420 : 240,
             easing: 'ease-out',
           },
         );
@@ -382,9 +403,9 @@ export function createHUD(ctx) {
     },
     reset() {
       ((radioQueue.length = 0), (radioLine = null), comms.classList.remove('on'));
-      for (let k of feedItems) k.el.remove();
+      for (let frameDelta of feedItems) frameDelta.el.remove();
       feedItems.length = 0;
-      for (let k of arcs) k.life = 0;
+      for (let frameDelta of arcs) frameDelta.life = 0;
       ((warnT = 0),
         warnEl.classList.remove('on'),
         hud.message(''),

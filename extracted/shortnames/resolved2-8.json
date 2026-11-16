@@ -91,13 +91,13 @@
     "E": "linerGeo"
   },
   "showcaseMaterials": {
-    "g": "matName",
-    "x": "colIdx",
-    "y": "xPos",
-    "b": "rowZ",
-    "m": "surfaceMat",
-    "A": "meshObj",
-    "q": "decalW",
+    "g": "materialKey",
+    "x": "columnIndex",
+    "y": "posX",
+    "b": "posY",
+    "m": "materialRef",
+    "A": "tileMesh",
+    "q": "decalWidth",
     "H": "decalHeight",
     "O": "decalName",
     "U": "decalMesh",
@@ -165,9 +165,29 @@
     "g": "chamferGeo"
   },
   "update": {
-    "P": "dt",
-    "V": "",
-    "Y": ""
+    "B": "showcaseBall",
+    "F": "showcaseFrame",
+    "I": "showcaseIndex",
+    "J": "showcaseInnerIndex",
+    "L": "showcaseLight",
+    "P": "showcasePosition",
+    "R": "showcaseRadius",
+    "V": "showcaseVector",
+    "X": "showcaseX",
+    "Y": "showcaseY",
+    "Z": "showcaseZ",
+    "ae": "showcaseAngle",
+    "ce": "cyclePhase",
+    "ee": "elapsedSeconds",
+    "fe": "floatParam",
+    "k": "frameCounter",
+    "le": "loopLerp",
+    "me": "matrixRef",
+    "ne": "nodeRef",
+    "oe": "orbitAngle",
+    "re": "rotationRef",
+    "se": "scaleRef",
+    "ue": "uniformRef"
   },
   "createMarkingsMesh": {
     "e": "posArr",
@@ -634,5 +654,119 @@
   },
   "createEl": {
     "n": "el"
+  },
+  "buildQuayCrane": {
+    "Fe": "stairPointX",
+    "I": "frameZ",
+    "Pe": "segmentIndex",
+    "R": "frameX",
+    "Re": "stepFraction",
+    "Te": "slatIndex",
+    "_e": "segmentCount",
+    "ae": "spanExtent",
+    "ce": "offsetAlong",
+    "k": "offsetValue",
+    "se": "segmentValue",
+    "t": "craneOptions",
+    "ve": "geometryList",
+    "ze": "stairPointY"
+  },
+  "createRenderer": {
+    "$": "savedState",
+    "B": "materialList",
+    "F": "scratchRef",
+    "P": "interiorMaterial",
+    "X": "localRef",
+    "ee": "cubeTarget",
+    "ie": "frameDelta",
+    "me": "targetWidth",
+    "ne": "targetHeight",
+    "re": "scaleFactor",
+    "ue": "pixelCount"
+  },
+  "createInput": {
+    "J": "iterationRef",
+    "L": "sourceSet",
+    "P": "inputEvent",
+    "V": "actionName",
+    "Y": "axisValue",
+    "Z": "stickMagnitude",
+    "fe": "touchPoint",
+    "le": "touchRecord",
+    "oe": "touchEvent"
+  },
+  "createLevel": {
+    "H": "materialRef",
+    "O": "zoneName",
+    "U": "probeZ",
+    "q": "probeX",
+    "z": "sceneNode"
+  },
+  "startGame": {
+    "d": "requiredFlag",
+    "dt": "showcaseError",
+    "f": "frameDelta",
+    "g": "loadDuration",
+    "h": "moduleName",
+    "p": "moduleRef",
+    "v": "startTime",
+    "x": "caughtError"
+  },
+  "run": {
+    "Be": "sunClipExtent",
+    "Fe": "sceneDepthTexture",
+    "I": "postState",
+    "Ie": "sunInFront",
+    "Me": "sunUvX",
+    "Ne": "aoEnabled",
+    "Oe": "scratchRef",
+    "Pe": "tanHalfFovY",
+    "R": "frameDelta",
+    "Re": "aspectRatio",
+    "Te": "tanHalfFovX",
+    "We": "invHalfHeight",
+    "Xe": "sunVisibility",
+    "_e": "projElements",
+    "ae": "elapsedTime",
+    "be": "shaderUniforms",
+    "bt": "bloomLevel",
+    "ce": "thunderLevel",
+    "dt": "volumetricEnabled",
+    "fe": "mainCamera",
+    "k": "fastMode",
+    "le": "sunLight",
+    "nn": "ambientScale",
+    "oe": "hdrTarget",
+    "pt": "shadowTexture",
+    "se": "exposureValue",
+    "ut": "sunRadiance",
+    "ve": "quality",
+    "we": "sunUvY",
+    "xe": "sceneTexture",
+    "ze": "invHalfWidth"
+  },
+  "createSparkFlipbook": {
+    "a": "spokeCount",
+    "c": "spokeIndex",
+    "l": "spokeList"
+  },
+  "createGround": {
+    "E": "worldZ",
+    "H": "deepMask",
+    "M": "worldX",
+    "O": "detailMask",
+    "S": "smoothstepFn",
+    "w": "puddleValue",
+    "z": "shallowMask"
+  },
+  "buildFencePanel": {
+    "d": "surfaceU",
+    "g": "greyTone",
+    "v": "surfaceV"
+  },
+  "showcaseEnemies": {
+    "c": "vecY",
+    "l": "vecX",
+    "u": "vecZ"
   }
 }

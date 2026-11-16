@@ -28,7 +28,7 @@ export function showcaseMaterials(app) {
   app.scene.add(group);
   let onlyList = app.params.only ? String(app.params.only).split(',').filter(Boolean) : null,
     showDecals = !onlyList || onlyList.includes('decals'),
-    matNames = onlyList ? onlyList.filter((g) => g !== 'decals') : mats.names,
+    matNames = onlyList ? onlyList.filter((materialKey) => materialKey !== 'decals') : mats.names,
     cols = onlyList ? Math.max(1, matNames.length) : 10,
     spacingX = 1.9,
     rowGap = 3.6,
@@ -39,29 +39,29 @@ export function showcaseMaterials(app) {
       let A = new THREE.Mesh(g, x);
       return (A.position.set(y, b, m), (A.castShadow = A.receiveShadow = !0), group.add(A), A);
     };
-  matNames.forEach((g, x) => {
-    let y = ((x % cols) - (cols - 1) / 2) * spacingX,
-      b = -Math.floor(x / cols) * rowGap,
-      m = mats.get(
-        g,
-        g.startsWith('glass') || g === 'chainlink'
+  matNames.forEach((materialKey, columnIndex) => {
+    let posX = ((columnIndex % cols) - (cols - 1) / 2) * spacingX,
+      posY = -Math.floor(columnIndex / cols) * rowGap,
+      materialRef = mats.get(
+        materialKey,
+        materialKey.startsWith('glass') || materialKey === 'chainlink'
           ? {
               doubleSide: !0,
             }
           : {},
       );
-    (addMesh(wallGeo, m, y, 0.76, b),
-      addMesh(floorGeo, m, y, 0.012, b + 1.1),
+    (addMesh(wallGeo, materialRef, posX, 0.76, posY),
+      addMesh(floorGeo, materialRef, posX, 0.012, posY + 1.1),
       addMesh(
         sphereGeo,
-        TRIPLANAR_MATERIALS.has(g)
-          ? mats.get(g, {
+        TRIPLANAR_MATERIALS.has(materialKey)
+          ? mats.get(materialKey, {
               triplanar: !0,
             })
-          : m,
-        y,
+          : materialRef,
+        posX,
         0.46,
-        b + 1.25,
+        posY + 1.25,
       ));
   });
   let camPos,
@@ -73,39 +73,49 @@ export function showcaseMaterials(app) {
       : ((camPos = [0, 9.5, 12]), (camTarget = [0, 0, -7])),
     showDecals)
   ) {
-    let matName = onlyList && !matNames.length ? 0 : rowWidth / 2 + 5.5,
-      colIdx = 8.4,
-      xPos = 3.3,
-      rowZ = addMesh(createTiledPlane(colIdx, xPos), mats.get('paint_blue'), matName, xPos / 2, -1),
-      surfaceMat = addMesh(
-        createTiledPlane(colIdx, xPos),
+    let materialKey = onlyList && !matNames.length ? 0 : rowWidth / 2 + 5.5,
+      columnIndex = 8.4,
+      posX = 3.3,
+      posY = addMesh(
+        createTiledPlane(columnIndex, posX),
+        mats.get('paint_blue'),
+        materialKey,
+        posX / 2,
+        -1,
+      ),
+      materialRef = addMesh(
+        createTiledPlane(columnIndex, posX),
         mats.get('concrete'),
-        matName,
-        xPos / 2,
+        materialKey,
+        posX / 2,
         -1.01,
       );
-    surfaceMat.position.x += colIdx;
-    let meshObj = mats.decalNames,
-      cursorX = -colIdx / 2 + 0.25,
-      cursorY = xPos - 0.75,
+    materialRef.position.x += columnIndex;
+    let tileMesh = mats.decalNames,
+      cursorX = -columnIndex / 2 + 0.25,
+      cursorY = posX - 0.75,
       decalH = 0.62,
       placeDecal = (z, H, O) => {
         let q = H * z.aspect;
-        if (cursorX + q > colIdx * 1.5 - 0.2) return;
-        cursorX < colIdx / 2 && cursorX + q > colIdx / 2 - 0.15 && (cursorX = colIdx / 2 + 0.25);
+        if (cursorX + q > columnIndex * 1.5 - 0.2) return;
+        cursorX < columnIndex / 2 &&
+          cursorX + q > columnIndex / 2 - 0.15 &&
+          (cursorX = columnIndex / 2 + 0.25);
         let U = new THREE.Mesh(new THREE.PlaneGeometry(q, H), z.material);
-        (U.position.set(matName + cursorX + q / 2, cursorY + H / 2, -0.996),
+        (U.position.set(materialKey + cursorX + q / 2, cursorY + H / 2, -0.996),
           (U.renderOrder = 2),
           group.add(U),
           (cursorX += q + 0.14));
       };
-    ([meshObj.slice(0, 9), meshObj.slice(9, 17), meshObj.slice(17)].forEach((z, H) => {
-      ((cursorX = -colIdx / 2 + 0.25),
-        (cursorY = xPos - 0.75 - H * 0.78),
-        z.forEach((O) => placeDecal(mats.decal(O), decalH)));
-    }),
-      (cursorX = -colIdx / 2 + 0.25),
-      (cursorY = xPos - 0.75 - 3 * 0.78 - 0.05),
+    ([tileMesh.slice(0, 9), tileMesh.slice(9, 17), tileMesh.slice(17)].forEach(
+      (decalSpec, decalHeight) => {
+        ((cursorX = -columnIndex / 2 + 0.25),
+          (cursorY = posX - 0.75 - decalHeight * 0.78),
+          decalSpec.forEach((decalName) => placeDecal(mats.decal(decalName), decalH)));
+      },
+    ),
+      (cursorX = -columnIndex / 2 + 0.25),
+      (cursorY = posX - 0.75 - 3 * 0.78 - 0.05),
       placeDecal(
         mats.label('SALTLINE TERMINAL  B4-0271', {
           color: 'white',
@@ -137,7 +147,7 @@ export function showcaseMaterials(app) {
       placeDecal(mats.number(7), 0.3),
       onlyList &&
         !matNames.length &&
-        ((camPos = [colIdx / 2, 1.7, 7.2]), (camTarget = [colIdx / 2, 1.6, -1])));
+        ((camPos = [columnIndex / 2, 1.7, 7.2]), (camTarget = [columnIndex / 2, 1.6, -1])));
   }
   return (
     app.params.wet !== void 0 && (mats.uniforms.wet.value = +app.params.wet),

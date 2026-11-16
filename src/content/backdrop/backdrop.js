@@ -230,18 +230,18 @@ function buildBackdrop(game, { only: onlyPart = null, showcase = !1 } = {}) {
       backdropRoot.add(boat.root)),
     boat && !showcase)
   ) {
-    let partName = new MeshBatcher(),
-      ropeMat = game.mats.get('rope');
-    (partName.add(
-      ropeMat,
+    let partRef = new MeshBatcher(),
+      colliderSurface = game.mats.get('rope');
+    (partRef.add(
+      colliderSurface,
       strutsAlongPath(
         catenaryPoints(newVec3(3.2, 0.95, 0.05), newVec3(4.6, 2.12, 2.3), 0.22, 7),
         0.016,
         5,
       ),
     ),
-      partName.add(
-        ropeMat,
+      partRef.add(
+        colliderSurface,
         strutsAlongPath(
           catenaryPoints(newVec3(-3.25, 0.82, 0.95), newVec3(-4.6, 2.12, 2.3), 0.2, 7),
           0.016,
@@ -249,7 +249,7 @@ function buildBackdrop(game, { only: onlyPart = null, showcase = !1 } = {}) {
         ),
       ),
       boat.root.add(
-        partName.build({
+        partRef.build({
           cast: !1,
           recv: !1,
         }),
@@ -277,8 +277,8 @@ function buildBackdrop(game, { only: onlyPart = null, showcase = !1 } = {}) {
           }),
         );
     };
-  if (crane) for (let partName of crane.colliders) addCollider(partName, 'metal');
-  if (ship) for (let partName of ship.colliders) addCollider(partName, 'metal');
+  if (crane) for (let partRef of crane.colliders) addCollider(partRef, 'metal');
+  if (ship) for (let partRef of ship.colliders) addCollider(partRef, 'metal');
   boat &&
     !showcase &&
     addCollider(
@@ -290,11 +290,14 @@ function buildBackdrop(game, { only: onlyPart = null, showcase = !1 } = {}) {
     );
   let triCount = 0,
     meshCount = 0;
-  backdropRoot.traverse((b) => {
-    if (b.isMesh) {
+  backdropRoot.traverse((partRef) => {
+    if (partRef.isMesh) {
       meshCount++;
-      let m = b.geometry;
-      triCount += (m.index ? m.index.count : m.attributes.position.count) / 3;
+      let colliderSurface = partRef.geometry;
+      triCount +=
+        (colliderSurface.index
+          ? colliderSurface.index.count
+          : colliderSurface.attributes.position.count) / 3;
     }
   });
   let elapsed = 0;

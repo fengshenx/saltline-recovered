@@ -109,7 +109,8 @@ export function createApronMarkingsTexture(size, anisotropy = 1) {
     drawArrow(-16, 15.2, 1, paintGreen),
     drawArrow(2, 17.5, -1, paintGreen),
     fillBox(-26.2, 3.6, -25.75, 8.4, paintGreen));
-  for (let x0 = 2.75; x0 < 9; x0 += 1) fillBox(-31.2, x0, -28.2, x0 + 0.5, paintGreen);
+  for (let xStart = 2.75; xStart < 9; xStart += 1)
+    fillBox(-31.2, xStart, -28.2, xStart + 0.5, paintGreen);
   (drawLabel('SLOW', -21.4, 6, 1.7, Math.PI / 2, paintGreen),
     drawLabel('10', -19, 6, 1.8, Math.PI / 2, paintGreen),
     (ctx.strokeStyle = paintGreen),
@@ -121,8 +122,10 @@ export function createApronMarkingsTexture(size, anisotropy = 1) {
     drawLine(-29, 2.6, -29, -8.8, 0.12, paintGreen),
     drawLine(-30.4, -10.2, -7, -10.2, 0.12, paintGreen),
     drawLine(-29, -8.8, -7, -8.8, 0.12, paintGreen));
-  for (let x0 = -28; x0 < -7.5; x0 += 2.2) drawLine(x0, -10.2, x0 + 0.9, -8.8, 0.1, paintGreen);
-  for (let x0 = -7.5; x0 < 2; x0 += 2.2) drawLine(-30.4, x0, -29, x0 + 0.9, 0.1, paintGreen);
+  for (let xStart = -28; xStart < -7.5; xStart += 2.2)
+    drawLine(xStart, -10.2, xStart + 0.9, -8.8, 0.1, paintGreen);
+  for (let xStart = -7.5; xStart < 2; xStart += 2.2)
+    drawLine(-30.4, xStart, -29, xStart + 0.9, 0.1, paintGreen);
   let bayGaps = [
       [-22.5, -10.3],
       [-5.3, 6.9],
@@ -148,11 +151,11 @@ export function createApronMarkingsTexture(size, anisotropy = 1) {
     drawBayRow(0.86, 3.3, 'C0', -0.15, 0, !1),
     drawBayRow(8.7, 13.64, 'B0', 14.75, Math.PI, !0),
     drawBayRow(18.9, 23.84, 'A0', 17.85, 0, !1));
-  for (let x0 of [-10.3, -5.3, 6.9, 10.5])
+  for (let xStart of [-10.3, -5.3, 6.9, 10.5])
     drawLine(
-      x0 + (x0 === -10.3 || x0 === 6.9 ? 0.35 : -0.35),
+      xStart + (xStart === -10.3 || xStart === 6.9 ? 0.35 : -0.35),
       -6.3,
-      x0 + (x0 === -10.3 || x0 === 6.9 ? 0.35 : -0.35),
+      xStart + (xStart === -10.3 || xStart === 6.9 ? 0.35 : -0.35),
       23.8,
       0.1,
       paintRed,
@@ -170,11 +173,11 @@ export function createApronMarkingsTexture(size, anisotropy = 1) {
     drawLine(27.7, -29.5, 27.7, 27.5, 0.1, paintRed, [1, 1]),
     drawLabel('BERTH 4', 23.5, 21.6, 1.9, 0, paintGreen),
     drawLabel('BERTH 4', 23.5, -7.7, 1.7, Math.PI, paintGreen));
-  for (let x0 = -27; x0 < 27; x0 += 9)
+  for (let xStart = -27; xStart < 27; xStart += 9)
     drawLabel(
-      String(400 + Math.round((x0 + 27) / 9) * 5),
+      String(400 + Math.round((xStart + 27) / 9) * 5),
       26.9,
-      x0 + 2,
+      xStart + 2,
       0.5,
       Math.PI / 2,
       paintGreen,
@@ -195,41 +198,46 @@ export function createApronMarkingsTexture(size, anisotropy = 1) {
           ),
           ctx.stroke());
   };
-  for (let x0 = 0; x0 < 46; x0++) {
-    let y0 = rand() < 0.68 ? 6 : 16.3,
-      M = y0 + (rand() - 0.5) * 2.6,
-      E = -36 + rand() * 40,
-      lineWidth = 8 + rand() * 26;
+  for (let xStart = 0; xStart < 46; xStart++) {
+    let yStart = rand() < 0.68 ? 6 : 16.3,
+      xEnd = yStart + (rand() - 0.5) * 2.6,
+      yEnd = -36 + rand() * 40,
+      strokeWidth = 8 + rand() * 26;
     drawSkid(
-      E,
-      M,
-      Math.min(E + lineWidth, 28),
-      M + (rand() - 0.5) * 1.6,
+      yEnd,
+      xEnd,
+      Math.min(yEnd + strokeWidth, 28),
+      xEnd + (rand() - 0.5) * 1.6,
       (rand() - 0.5) * 1.4,
       0.1 + rand() * 0.22,
     );
   }
-  for (let x0 = 0; x0 < 12; x0++) {
-    let y0 = rand() < 0.5 ? 6 : 16.3,
-      M = rand() < 0.5 ? -1 : 1,
-      E = 0.12 + rand() * 0.2;
-    ((ctx.strokeStyle = `rgba(0,0,255,${E})`),
+  for (let xStart = 0; xStart < 12; xStart++) {
+    let yStart = rand() < 0.5 ? 6 : 16.3,
+      xEnd = rand() < 0.5 ? -1 : 1,
+      yEnd = 0.12 + rand() * 0.2;
+    ((ctx.strokeStyle = `rgba(0,0,255,${yEnd})`),
       (ctx.lineWidth = 0.3),
       ctx.beginPath(),
-      ctx.moveTo(10 + rand() * 4, y0 + (rand() - 0.5) * 2),
-      ctx.quadraticCurveTo(21 + rand() * 3, y0, 22 + rand() * 4, y0 + M * (8 + rand() * 10)),
+      ctx.moveTo(10 + rand() * 4, yStart + (rand() - 0.5) * 2),
+      ctx.quadraticCurveTo(
+        21 + rand() * 3,
+        yStart,
+        22 + rand() * 4,
+        yStart + xEnd * (8 + rand() * 10),
+      ),
       ctx.stroke());
   }
-  for (let x0 = 0; x0 < 60; x0++) {
-    let y0 = -34 + rand() * 62,
-      M = -8 + rand() * 34,
-      E = 0.6 + rand() * 2.5,
-      lineWidth = (rand() - 0.5) * 0.5;
+  for (let xStart = 0; xStart < 60; xStart++) {
+    let yStart = -34 + rand() * 62,
+      xEnd = -8 + rand() * 34,
+      yEnd = 0.6 + rand() * 2.5,
+      strokeWidth = (rand() - 0.5) * 0.5;
     ((ctx.strokeStyle = `rgba(0,0,255,${0.15 + rand() * 0.3})`),
       (ctx.lineWidth = 0.12 + rand() * 0.2),
       ctx.beginPath(),
-      ctx.moveTo(y0, M),
-      ctx.lineTo(y0 + Math.cos(lineWidth) * E, M + Math.sin(lineWidth) * E),
+      ctx.moveTo(yStart, xEnd),
+      ctx.lineTo(yStart + Math.cos(strokeWidth) * yEnd, xEnd + Math.sin(strokeWidth) * yEnd),
       ctx.stroke());
   }
   let texture = new THREE.CanvasTexture(canvas);

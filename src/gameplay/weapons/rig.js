@@ -62,15 +62,16 @@ function buildDrapedSlab(
   sampleCountU = SHEET_SAMPLES,
   sampleCountV = SHEET_SAMPLES,
 ) {
-  return buildGridSurface(sampleCountU, sampleCountV, (h, f, p) => {
-    let d = originX + h * width,
-      v = originY + (flipV ? f : -f) * height,
-      g = Math.min(sheetEdgeWeight(h), sheetEdgeWeight(f)),
-      x = heightFn(d, v) + (g < 0 ? -0.0022 : thickness * g);
-    (p.set(d, flipV ? -x : x, v), transformFn && transformFn(p));
-    let y = typeof tint == 'function' ? tint(h, f) : tint,
-      b = g < 0 ? 0.5 : g < 1 ? 0.8 : 1;
-    return [y[0] * b, y[1] * b, y[2] * b];
+  return buildGridSurface(sampleCountU, sampleCountV, (uFrac, vFrac, outVec) => {
+    let worldX = originX + uFrac * width,
+      worldY = originY + (flipV ? vFrac : -vFrac) * height,
+      edgeWeight = Math.min(sheetEdgeWeight(uFrac), sheetEdgeWeight(vFrac)),
+      surfHeight = heightFn(worldX, worldY) + (edgeWeight < 0 ? -0.0022 : thickness * edgeWeight);
+    (outVec.set(worldX, flipV ? -surfHeight : surfHeight, worldY),
+      transformFn && transformFn(outVec));
+    let tintColor = typeof tint == 'function' ? tint(uFrac, vFrac) : tint,
+      shadeMul = edgeWeight < 0 ? 0.5 : edgeWeight < 1 ? 0.8 : 1;
+    return [tintColor[0] * shadeMul, tintColor[1] * shadeMul, tintColor[2] * shadeMul];
   });
 }
 
@@ -83,38 +84,52 @@ export function buildGloveHand(handSpec) {
     addPart = (d, v) => (parts.push(v), debugParts && debugParts.push([d, v]), v);
   addPart('palm', buildPalm());
   {
-    let barIndex = [];
-    for (let cuffBuilder = 0; cuffBuilder <= 30; cuffBuilder++)
-      barIndex.push(-1 + cuffBuilder / 15);
+    let pointVec = [];
+    for (let partGeometry = 0; partGeometry <= 30; partGeometry++)
+      pointVec.push(-1 + partGeometry / 15);
     addPart(
       'guard',
-      buildGridSurface(barIndex, [-1, -0.9, -0.5, 0, 0.5, 0.9, 1], (v, g, x) => {
-        let y = -5e-4 + v * 0.0405,
-          b = palmProfileZ(y) + 0.0045 - g * 0.011,
-          m = Math.min(sheetEdgeWeight(v), sheetEdgeWeight(g)),
-          A = 0;
-        for (let M = 0; M < 4; M++) {
-          let E = (y - FINGER_SEGMENTS[M].base[0]) / 0.0058;
-          A += (M === 3 ? 0.8 : 1) * Math.exp(-E * E);
-        }
-        ((A = Math.min(1, A) * (1 - 0.55 * g * g)),
-          x.set(
-            y,
-            palmTopY(y, b) + (m < 0 ? (g > 0.95 ? -0.008 : -0.003) : (0.0016 + 0.006 * A) * m),
-            b,
-          ));
-        let _ = m < 0 ? 0.6 : 0.85 + 1.3 * A;
-        return [GLOVE_TONE_GUARD[0] * _, GLOVE_TONE_GUARD[1] * _, GLOVE_TONE_GUARD[2] * _];
-      }),
+      buildGridSurface(
+        pointVec,
+        [-1, -0.9, -0.5, 0, 0.5, 0.9, 1],
+        (partGeometry, acrossCoord, outPoint) => {
+          let alongAxis = -5e-4 + partGeometry * 0.0405,
+            palmProfileDepth = palmProfileZ(alongAxis) + 0.0045 - acrossCoord * 0.011,
+            edgeWeightMin = Math.min(sheetEdgeWeight(partGeometry), sheetEdgeWeight(acrossCoord)),
+            knuckleSum = 0;
+          for (let fingerSlotIndex = 0; fingerSlotIndex < 4; fingerSlotIndex++) {
+            let bandDistance = (alongAxis - FINGER_SEGMENTS[fingerSlotIndex].base[0]) / 0.0058;
+            knuckleSum +=
+              (fingerSlotIndex === 3 ? 0.8 : 1) * Math.exp(-bandDistance * bandDistance);
+          }
+          ((knuckleSum = Math.min(1, knuckleSum) * (1 - 0.55 * acrossCoord * acrossCoord)),
+            outPoint.set(
+              alongAxis,
+              palmTopY(alongAxis, palmProfileDepth) +
+                (edgeWeightMin < 0
+                  ? acrossCoord > 0.95
+                    ? -0.008
+                    : -0.003
+                  : (0.0016 + 0.006 * knuckleSum) * edgeWeightMin),
+              palmProfileDepth,
+            ));
+          let toneMultiplier = edgeWeightMin < 0 ? 0.6 : 0.85 + 1.3 * knuckleSum;
+          return [
+            GLOVE_TONE_GUARD[0] * toneMultiplier,
+            GLOVE_TONE_GUARD[1] * toneMultiplier,
+            GLOVE_TONE_GUARD[2] * toneMultiplier,
+          ];
+        },
+      ),
     );
   }
-  for (let barIndex = 0; barIndex < 3; barIndex++)
+  for (let pointVec = 0; pointVec < 3; pointVec++)
     addPart(
       'bar',
       buildDrapedSlab(
         0.001,
-        -0.034 - barIndex * 0.015,
-        0.023 + barIndex * 0.0025,
+        -0.034 - pointVec * 0.015,
+        0.023 + pointVec * 0.0025,
         0.0052,
         0.0019,
         GLOVE_TONE_BAR,
@@ -129,12 +144,12 @@ export function buildGloveHand(handSpec) {
       0.027,
       0.0013,
       9e-4,
-      GLOVE_TONE_SEAM.map((d) => d * 0.8),
+      GLOVE_TONE_SEAM.map((pointVec) => pointVec * 0.8),
       palmTopY,
       null,
       !1,
       SHEET_SAMPLES,
-      [-1, 0, 1].map((d) => d * 0.9),
+      [-1, 0, 1].map((pointVec) => pointVec * 0.9),
     ),
   ),
     addPart(
@@ -142,15 +157,15 @@ export function buildGloveHand(handSpec) {
       buildDrapedSlab(0.013, -0.03, 0.0135, 0.017, 0.0017, GLOVE_TONE_BAR, palmBottomY, null, !0),
     ));
   let indexGeoms = [];
-  for (let barIndex = 0; barIndex < 4; barIndex++) {
-    if (barIndex === 0 && handSpec.indexPoses) {
-      for (let cuffBuilder of handSpec.indexPoses)
-        indexGeoms.push(buildFingerFromSpec(FINGER_SEGMENTS[0], cuffBuilder));
+  for (let pointVec = 0; pointVec < 4; pointVec++) {
+    if (pointVec === 0 && handSpec.indexPoses) {
+      for (let partGeometry of handSpec.indexPoses)
+        indexGeoms.push(buildFingerFromSpec(FINGER_SEGMENTS[0], partGeometry));
       continue;
     }
     addPart(
-      'finger' + barIndex,
-      buildFingerFromSpec(FINGER_SEGMENTS[barIndex], handSpec.fingers[barIndex]),
+      'finger' + pointVec,
+      buildFingerFromSpec(FINGER_SEGMENTS[pointVec], handSpec.fingers[pointVec]),
     );
   }
   (addPart('thumb', buildThumb(handSpec.thumb)),
@@ -178,9 +193,9 @@ export function buildGloveHand(handSpec) {
       d
     );
   {
-    let cuffBuilder = new RingMeshBuilder(24),
-      acrossParam = new Vec3(),
-      outVec = [
+    let partGeometry = new RingMeshBuilder(24),
+      acrossCoord = new Vec3(),
+      outPoint = [
         [-0.0085, -0.0015, GLOVE_TONE_CUFF, 0.6],
         [-0.009, 0.0022, GLOVE_TONE_CUFF, 1.3],
         [-0.006, 0.0026, GLOVE_TONE_CUFF, 1.3],
@@ -195,24 +210,24 @@ export function buildGloveHand(handSpec) {
         [0.058, 0.0026, GLOVE_TONE_SEAM, 0.7],
         [0.058, -0.004, GLOVE_TONE_SOFT, 0.4],
       ];
-    for (let [surfaceY, profileZ, edgeWeight, knuckleBump] of outVec)
-      for (let _ = 0; _ < 24; _++) {
-        let fingerIndex = ((_ + 0.5) / 24) * Math.PI * 2,
-          knuckleDist = Math.sin(fingerIndex);
-        cuffBuilder.v(
+    for (let [alongAxis, palmProfileDepth, edgeWeightMin, knuckleSum] of outPoint)
+      for (let toneMultiplier = 0; toneMultiplier < 24; toneMultiplier++) {
+        let fingerSlotIndex = ((toneMultiplier + 0.5) / 24) * Math.PI * 2,
+          bandDistance = Math.sin(fingerSlotIndex);
+        partGeometry.v(
           bendInto(
-            acrossParam.set(
-              (0.0296 + profileZ) * signedPow(Math.cos(fingerIndex), 0.8),
-              (knuckleDist >= 0 ? 0.0185 + profileZ : 0.0204 + profileZ) *
-                signedPow(knuckleDist, 0.8),
-              surfaceY,
+            acrossCoord.set(
+              (0.0296 + palmProfileDepth) * signedPow(Math.cos(fingerSlotIndex), 0.8),
+              (bandDistance >= 0 ? 0.0185 + palmProfileDepth : 0.0204 + palmProfileDepth) *
+                signedPow(bandDistance, 0.8),
+              alongAxis,
             ),
           ),
-          edgeWeight,
-          knuckleBump,
+          edgeWeightMin,
+          knuckleSum,
         );
       }
-    addPart('cuff', cuffBuilder.geo(!0));
+    addPart('cuff', partGeometry.geo(!0));
   }
   (addPart(
     'strapTab',
@@ -222,8 +237,10 @@ export function buildGloveHand(handSpec) {
       0.0135,
       0.0076,
       0.0017,
-      (d) => (d > 0.55 ? GLOVE_TONE_SEAM.map((v) => v * 0.75) : [9, 9, 9.6]),
-      (d) => 0.0217 * Math.pow(1 - Math.pow(Math.min(0.999, Math.abs(d / 0.0328)), 2.5), 0.4),
+      (pointVec) =>
+        pointVec > 0.55 ? GLOVE_TONE_SEAM.map((partGeometry) => partGeometry * 0.75) : [9, 9, 9.6],
+      (pointVec) =>
+        0.0217 * Math.pow(1 - Math.pow(Math.min(0.999, Math.abs(pointVec / 0.0328)), 2.5), 0.4),
       bendInto,
     ),
   ),
@@ -242,19 +259,19 @@ export function buildGloveHand(handSpec) {
       ),
     ));
   {
-    let barIndex = [];
-    for (let z = 0; z < 24; z++)
-      (barIndex.push(z * 15),
-        (z === 4 || z === 16) && barIndex.push(z * 15 + 11.5),
-        (z === 5 || z === 17) && barIndex.push(z * 15 + 3.5));
-    barIndex.sort((z, H) => z - H);
-    let cuffBuilder = barIndex.length,
-      acrossParam = barIndex.indexOf(75),
-      outVec = barIndex.indexOf(255),
-      surfaceY = new RingMeshBuilder(cuffBuilder),
-      profileZ = new Vec3(),
-      edgeWeight = 0.04 + sleeveLength,
-      knuckleBump = [
+    let pointVec = [];
+    for (let arcZ = 0; arcZ < 24; arcZ++)
+      (pointVec.push(arcZ * 15),
+        (arcZ === 4 || arcZ === 16) && pointVec.push(arcZ * 15 + 11.5),
+        (arcZ === 5 || arcZ === 17) && pointVec.push(arcZ * 15 + 3.5));
+    pointVec.sort((arcZ, bandId) => arcZ - bandId);
+    let partGeometry = pointVec.length,
+      acrossCoord = pointVec.indexOf(75),
+      outPoint = pointVec.indexOf(255),
+      alongAxis = new RingMeshBuilder(partGeometry),
+      palmProfileDepth = new Vec3(),
+      edgeWeightMin = 0.04 + sleeveLength,
+      knuckleSum = [
         [0.0415, 0],
         [0.04, 1],
         [0.044, 2],
@@ -264,39 +281,40 @@ export function buildGloveHand(handSpec) {
         [0.0655, 4],
         [0.0685, 5],
       ],
-      _ = [0.1415, 0.143, 0.157, 0.1582, 0.1662, 0.1674, 0.181, 0.1825],
-      fingerIndex = _.slice(),
-      knuckleDist = Math.ceil((edgeWeight - 0.074) / 0.0052);
-    for (let z = 0; z <= knuckleDist; z++) {
-      let H = 0.074 + ((edgeWeight - 0.074) * z) / knuckleDist;
-      _.some((O) => Math.abs(O - H) < 0.0016) || fingerIndex.push(H);
+      toneMultiplier = [0.1415, 0.143, 0.157, 0.1582, 0.1662, 0.1674, 0.181, 0.1825],
+      fingerSlotIndex = toneMultiplier.slice(),
+      bandDistance = Math.ceil((edgeWeightMin - 0.074) / 0.0052);
+    for (let arcZ = 0; arcZ <= bandDistance; arcZ++) {
+      let bandId = 0.074 + ((edgeWeightMin - 0.074) * arcZ) / bandDistance;
+      toneMultiplier.some((ringIndex) => Math.abs(ringIndex - bandId) < 0.0016) ||
+        fingerSlotIndex.push(bandId);
     }
-    fingerIndex.sort((z, H) => z - H);
-    for (let z of fingerIndex) knuckleBump.push([z, 6]);
+    fingerSlotIndex.sort((arcZ, bandId) => arcZ - bandId);
+    for (let arcZ of fingerSlotIndex) knuckleSum.push([arcZ, 6]);
     let stripeIndex = 0;
-    for (let [z, H] of knuckleBump)
-      for (let O = 0; O < cuffBuilder; O++) {
-        let ringAngle = (barIndex[O] * Math.PI) / 180,
+    for (let [arcZ, bandId] of knuckleSum)
+      for (let ringIndex = 0; ringIndex < partGeometry; ringIndex++) {
+        let ringAngle = (pointVec[ringIndex] * Math.PI) / 180,
           ringRadius,
           toneMul = 1,
           ringTone = GLOVE_TONE_SLEEVE;
-        if (H === 0) ((ringRadius = 0.0292), (toneMul = 0.4));
-        else if (H === 1) ((ringRadius = 0.0372), (toneMul = 1.15));
-        else if (H === 2) ((ringRadius = 0.0377), (toneMul = 1.1));
-        else if (H === 3) {
-          let C = Math.cos(ringAngle * 12);
-          ((ringRadius = 0.0368 + 0.0012 * C), (toneMul = 0.62 + 0.26 * C));
-        } else if (H === 4) ((ringRadius = 0.0356), (toneMul = 0.55));
-        else if (H === 5) ((ringRadius = 0.038), (toneMul = 0.9));
+        if (bandId === 0) ((ringRadius = 0.0292), (toneMul = 0.4));
+        else if (bandId === 1) ((ringRadius = 0.0372), (toneMul = 1.15));
+        else if (bandId === 2) ((ringRadius = 0.0377), (toneMul = 1.1));
+        else if (bandId === 3) {
+          let bandCos = Math.cos(ringAngle * 12);
+          ((ringRadius = 0.0368 + 0.0012 * bandCos), (toneMul = 0.62 + 0.26 * bandCos));
+        } else if (bandId === 4) ((ringRadius = 0.0356), (toneMul = 0.55));
+        else if (bandId === 5) ((ringRadius = 0.038), (toneMul = 0.9));
         else {
-          let C = (z - 0.0685) / (edgeWeight - 0.0685),
-            knotAmp = 0.0048 * Math.exp(-Math.pow((C - 0.13) / 0.11, 2)),
-            strapAmp = 0.0048 * smoothRange(0.62, 0.85, C),
+          let bandCos = (arcZ - 0.0685) / (edgeWeightMin - 0.0685),
+            knotAmp = 0.0048 * Math.exp(-Math.pow((bandCos - 0.13) / 0.11, 2)),
+            strapAmp = 0.0048 * smoothRange(0.62, 0.85, bandCos),
             bandNoiseA =
               Math.pow(
                 Math.abs(
                   Math.sin(
-                    (Math.PI * z) / 0.027 +
+                    (Math.PI * arcZ) / 0.027 +
                       1.7 * Math.sin(ringAngle + 0.5) +
                       0.8 * Math.sin(2 * ringAngle + 1.3),
                   ),
@@ -309,7 +327,7 @@ export function buildGloveHand(handSpec) {
               Math.pow(
                 Math.abs(
                   Math.sin(
-                    (Math.PI * z) / 0.034 +
+                    (Math.PI * arcZ) / 0.034 +
                       1.9 * Math.sin(ringAngle - 0.8) +
                       0.7 * Math.sin(2 * ringAngle),
                   ),
@@ -319,12 +337,12 @@ export function buildGloveHand(handSpec) {
                 2 -
               1.25,
             wrinkleNoise =
-              Math.sin(z * 40 + 2 * Math.sin(ringAngle * 2 + 1)) +
-              0.6 * Math.sin(3 * ringAngle + z * 25);
+              Math.sin(arcZ * 40 + 2 * Math.sin(ringAngle * 2 + 1)) +
+              0.6 * Math.sin(3 * ringAngle + arcZ * 25);
           ((ringRadius =
             0.0405 +
-            0.012 * Math.pow(C, 0.85) +
-            0.0025 * Math.exp(-Math.pow((z - 0.082) / 0.012, 2)) +
+            0.012 * Math.pow(bandCos, 0.85) +
+            0.0025 * Math.exp(-Math.pow((arcZ - 0.082) / 0.012, 2)) +
             knotAmp * bandNoiseA +
             strapAmp * bandNoiseB +
             0.0016 * wrinkleNoise),
@@ -338,28 +356,29 @@ export function buildGloveHand(handSpec) {
                 ) +
               0.04 * wrinkleNoise));
           let stripeJitter = hash1(stripeIndex);
-          z > 0.1575 && z < 0.167
+          arcZ > 0.1575 && arcZ < 0.167
             ? ((ringTone = GLOVE_TONE_WATCH), (toneMul *= 0.85 + 0.25 * stripeJitter))
-            : z > 0.1425 &&
-              z < 0.1815 &&
+            : arcZ > 0.1425 &&
+              arcZ < 0.1815 &&
               ((ringTone = GLOVE_TONE_STRAP), (toneMul *= 0.78 + 0.3 * stripeJitter));
         }
-        (H > 0 &&
-          (O === acrossParam || O === outVec
+        (bandId > 0 &&
+          (ringIndex === acrossCoord || ringIndex === outPoint
             ? ((ringRadius += 0.0019), (toneMul *= 1.3))
-            : (Math.abs(O - acrossParam) === 1 || Math.abs(O - outVec) === 1) && (toneMul *= 0.52)),
-          profileZ.set(
+            : (Math.abs(ringIndex - acrossCoord) === 1 || Math.abs(ringIndex - outPoint) === 1) &&
+              (toneMul *= 0.52)),
+          palmProfileDepth.set(
             Math.cos(ringAngle) * ringRadius,
             Math.sin(ringAngle) * ringRadius * 0.84,
-            z,
+            arcZ,
           ),
-          surfaceY.v(profileZ, ringTone, toneMul),
+          alongAxis.v(palmProfileDepth, ringTone, toneMul),
           stripeIndex++);
       }
-    for (let z = 0; z < cuffBuilder; z++)
-      surfaceY.v(profileZ.set(0, 0, edgeWeight + 0.006), GLOVE_TONE_SLEEVE, 0.3);
-    surfaceY.collapse();
-    let sleeveGeo = surfaceY.geo(!0);
+    for (let arcZ = 0; arcZ < partGeometry; arcZ++)
+      alongAxis.v(palmProfileDepth.set(0, 0, edgeWeightMin + 0.006), GLOVE_TONE_SLEEVE, 0.3);
+    alongAxis.collapse();
+    let sleeveGeo = alongAxis.geo(!0);
     (sleeveGeo.applyMatrix4(
       new Mat4()
         .makeTranslation(0, 0, sleeveInset)
@@ -415,10 +434,10 @@ export function buildMarkingsAtlas() {
     drawStamp('semi', '1', `700 30px ${sansFont}`, inkColor, 'center'),
     drawStamp('auto', 'A', `700 30px ${sansFont}`, 'rgba(205,60,40,0.95)', 'center'),
     drawStamp('rack', 'B4-07', `800 104px ${displayFont}`, 'rgba(214,206,170,0.9)', 'center'));
-  for (let regionKey of [2, 4, 6, 8, 10, 12])
+  for (let regionKeyName of [2, 4, 6, 8, 10, 12])
     drawStamp(
-      'r' + regionKey,
-      'T' + regionKey,
+      'r' + regionKeyName,
+      'T' + regionKeyName,
       `600 30px ${monoFont}`,
       'rgba(190,192,188,0.85)',
       'center',
@@ -426,7 +445,7 @@ export function buildMarkingsAtlas() {
   (drawStamp('optic', 'HX-2 REFLEX', `700 44px ${sansFont}`, inkColor, 'center'),
     drawStamp('light', '900 LM  IPX8', `600 40px ${sansFont}`, inkColor, 'center'));
   {
-    let [regionKey, labelText] = PAC9_MARK_REGIONS.warn;
+    let [regionKeyName, stampText] = PAC9_MARK_REGIONS.warn;
     ((g2d.fillStyle = inkColor),
       (g2d.textAlign = 'left'),
       (g2d.font = `600 24px ${sansFont}`),
@@ -434,30 +453,32 @@ export function buildMarkingsAtlas() {
         'WARNING \u2014 CLEAR CHAMBER BEFORE',
         'STOWAGE. AUTHORISED BREACH',
         'PERSONNEL ONLY. PA-REG 44/7',
-      ].forEach((f, p) => g2d.fillText(f, regionKey + 2, labelText + 20 + p * 34)));
+      ].forEach((stampFont, stampInk) =>
+        g2d.fillText(stampFont, regionKeyName + 2, stampText + 20 + stampInk * 34),
+      ));
   }
   {
-    let [regionKey, labelText, fontSpec, fillColor] = PAC9_MARK_REGIONS.dots;
+    let [regionKeyName, stampText, stampFont, stampInk] = PAC9_MARK_REGIONS.dots;
     ((g2d.fillStyle = inkColor),
       g2d.beginPath(),
-      g2d.arc(regionKey + 12, labelText + fillColor / 2, 7, 0, 7),
+      g2d.arc(regionKeyName + 12, stampText + stampInk / 2, 7, 0, 7),
       g2d.fill(),
       (g2d.fillStyle = 'rgba(205,60,40,0.95)'),
       g2d.beginPath(),
-      g2d.arc(regionKey + 40, labelText + fillColor / 2, 7, 0, 7),
+      g2d.arc(regionKeyName + 40, stampText + stampInk / 2, 7, 0, 7),
       g2d.fill());
   }
   g2d.globalCompositeOperation = 'destination-out';
   let rngState = 7,
     rng = () => ((rngState = (rngState * 16807) % 2147483647), rngState / 2147483647);
-  for (let regionKey = 0; regionKey < 2600; regionKey++) {
+  for (let regionKeyName = 0; regionKeyName < 2600; regionKeyName++) {
     g2d.fillStyle = `rgba(0,0,0,${0.25 + rng() * 0.6})`;
-    let labelText = rng() < 0.9 ? 1 + rng() * 1.5 : 2 + rng() * 5;
+    let stampText = rng() < 0.9 ? 1 + rng() * 1.5 : 2 + rng() * 5;
     g2d.fillRect(
       rng() * MARK_ATLAS_WIDTH,
       rng() * MARK_ATLAS_HEIGHT,
-      labelText,
-      labelText * (0.4 + rng()),
+      stampText,
+      stampText * (0.4 + rng()),
     );
   }
   let atlasTexture = new THREE.CanvasTexture(atlasCanvas);
@@ -475,20 +496,22 @@ export function buildMarkingsAtlas() {
  */
 export function createOpticLens(windowOutline, lensOffset) {
   let lensShape = new THREE.Shape();
-  (windowOutline.forEach((r, a) =>
-    a ? lensShape.lineTo(r[0], r[1]) : lensShape.moveTo(r[0], r[1]),
+  (windowOutline.forEach((outlineVertex, vertexIndex) =>
+    vertexIndex
+      ? lensShape.lineTo(outlineVertex[0], outlineVertex[1])
+      : lensShape.moveTo(outlineVertex[0], outlineVertex[1]),
   ),
     lensShape.closePath());
   let lensGeo = new THREE.ShapeGeometry(lensShape);
   lensGeo.translate(0, 0, -lensOffset);
   {
-    let minX = 1e9,
-      maxX = -1e9,
+    let outlineVertex = 1e9,
+      vertexIndex = -1e9,
       minY = 1e9,
       maxY = -1e9;
     for (let vertIdx of windowOutline)
-      ((minX = Math.min(minX, vertIdx[0])),
-        (maxX = Math.max(maxX, vertIdx[0])),
+      ((outlineVertex = Math.min(outlineVertex, vertIdx[0])),
+        (vertexIndex = Math.max(vertexIndex, vertIdx[0])),
         (minY = Math.min(minY, vertIdx[1])),
         (maxY = Math.max(maxY, vertIdx[1])));
     let posAttr = lensGeo.attributes.position,
@@ -496,7 +519,7 @@ export function createOpticLens(windowOutline, lensOffset) {
     for (let vertIdx = 0; vertIdx < posAttr.count; vertIdx++)
       uvAttr.setXY(
         vertIdx,
-        (posAttr.getX(vertIdx) - minX) / (maxX - minX),
+        (posAttr.getX(vertIdx) - outlineVertex) / (vertexIndex - outlineVertex),
         (posAttr.getY(vertIdx) - minY) / (maxY - minY),
       );
   }
@@ -780,12 +803,12 @@ normal = dBump(normal, dHt + dDropH * 0.32);
  */
 export function patchPac9DetailMaterial(material, detailKind) {
   return (
-    (material.onBeforeCompile = (t) => {
-      ((t.uniforms.uKind = {
+    (material.onBeforeCompile = (shader) => {
+      ((shader.uniforms.uKind = {
         value: detailKind,
       }),
-        (t.uniforms.uRain = PAC9_RAIN_UNIFORM),
-        (t.vertexShader = t.vertexShader
+        (shader.uniforms.uRain = PAC9_RAIN_UNIFORM),
+        (shader.vertexShader = shader.vertexShader
           .replace(
             '#include <common>',
             `#include <common>
@@ -796,7 +819,7 @@ varying vec3 vObjP; varying vec3 vWNrm; varying vec3 vONrm;`,
             `#include <begin_vertex>
 vObjP = position; vONrm = normal; vWNrm = normalize(mat3(modelMatrix) * normal);`,
           )),
-        (t.fragmentShader = t.fragmentShader
+        (shader.fragmentShader = shader.fragmentShader
           .replace(
             '#include <common>',
             `#include <common>

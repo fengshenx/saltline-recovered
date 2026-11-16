@@ -85,46 +85,47 @@ export async function createLevel(game) {
     ),
     ctx.staticRoot.updateMatrixWorld(!0));
   let detachList = [];
-  ctx.staticRoot.traverse((z) => {
-    z.userData &&
-      z.userData.noMerge &&
-      !(z.parent && hasNoMergeAncestor(z.parent, ctx.staticRoot)) &&
-      detachList.push(z);
+  ctx.staticRoot.traverse((sceneNode) => {
+    sceneNode.userData &&
+      sceneNode.userData.noMerge &&
+      !(sceneNode.parent && hasNoMergeAncestor(sceneNode.parent, ctx.staticRoot)) &&
+      detachList.push(sceneNode);
   });
-  for (let z of detachList) ctx.dynRoot.attach(z);
+  for (let sceneNode of detachList) ctx.dynRoot.attach(sceneNode);
   let materials = new Set();
-  ctx.staticRoot.traverse((z) => {
-    z.isMesh && !Array.isArray(z.material) && materials.add(z.material);
+  ctx.staticRoot.traverse((sceneNode) => {
+    sceneNode.isMesh && !Array.isArray(sceneNode.material) && materials.add(sceneNode.material);
   });
   let colorSwap = new Map();
-  for (let z of materials)
+  for (let sceneNode of materials)
     if (!(
-      !z.isMeshStandardMaterial ||
-      z.vertexColors ||
-      z.transparent ||
-      !z.name ||
-      !(game.mats.names || []).includes(z.name)
+      !sceneNode.isMeshStandardMaterial ||
+      sceneNode.vertexColors ||
+      sceneNode.transparent ||
+      !sceneNode.name ||
+      !(game.mats.names || []).includes(sceneNode.name)
     ))
       try {
-        let H =
-          z.userData && z.userData.interior
+        let materialRef =
+          sceneNode.userData && sceneNode.userData.interior
             ? {
                 interior: !0,
               }
             : {};
-        if (game.mats.get(z.name, H) !== z) continue;
-        let O = game.mats.get(z.name, {
-          ...H,
+        if (game.mats.get(sceneNode.name, materialRef) !== sceneNode) continue;
+        let zoneName = game.mats.get(sceneNode.name, {
+          ...materialRef,
           vertexColors: !0,
         });
-        O !== z && materials.has(O) && colorSwap.set(z, O);
+        zoneName !== sceneNode && materials.has(zoneName) && colorSwap.set(sceneNode, zoneName);
       } catch {}
-  ctx.staticRoot.traverse((z) => {
-    if (!z.isMesh || Array.isArray(z.material)) return;
-    let H = colorSwap.get(z.material);
-    H && (z.material = H);
-    let O = !z.material.transparent && !z.material.isMeshBasicMaterial;
-    ((z.castShadow = O), (z.receiveShadow = !z.material.isMeshBasicMaterial));
+  ctx.staticRoot.traverse((sceneNode) => {
+    if (!sceneNode.isMesh || Array.isArray(sceneNode.material)) return;
+    let materialRef = colorSwap.get(sceneNode.material);
+    materialRef && (sceneNode.material = materialRef);
+    let zoneName = !sceneNode.material.transparent && !sceneNode.material.isMeshBasicMaterial;
+    ((sceneNode.castShadow = zoneName),
+      (sceneNode.receiveShadow = !sceneNode.material.isMeshBasicMaterial));
   });
   let labelAtlas = {
     count: 0,
@@ -132,20 +133,22 @@ export async function createLevel(game) {
   };
   try {
     labelAtlas = buildLabelAtlas(ctx.staticRoot);
-  } catch (z) {
-    console.error('[level] label atlas failed', z);
+  } catch (sceneNode) {
+    console.error('[level] label atlas failed', sceneNode);
   }
   let mergedRoot = mergeStaticMeshes(ctx.staticRoot);
   ((mergedRoot.name = 'level-merged'), levelRoot.add(mergedRoot), levelRoot.add(ctx.dynRoot));
-  for (let z of [relayYard, relayShed, relayQuay]) {
-    for (let H = z.children.length - 1; H >= 0; H--) z.remove(z.children[H]);
-    ctx.dynRoot.add(z);
+  for (let sceneNode of [relayYard, relayShed, relayQuay]) {
+    for (let materialRef = sceneNode.children.length - 1; materialRef >= 0; materialRef--)
+      sceneNode.remove(sceneNode.children[materialRef]);
+    ctx.dynRoot.add(sceneNode);
   }
   let triCount = 0;
-  mergedRoot.traverse((z) => {
-    if (z.isMesh) {
-      let H = z.geometry;
-      triCount += (H.index ? H.index.count : H.attributes.position.count) / 3;
+  mergedRoot.traverse((sceneNode) => {
+    if (sceneNode.isMesh) {
+      let materialRef = sceneNode.geometry;
+      triCount +=
+        (materialRef.index ? materialRef.index.count : materialRef.attributes.position.count) / 3;
     }
   });
   let playerStart = {
@@ -378,8 +381,8 @@ export async function createLevel(game) {
           }
     };
   (coverPoints.forEach(snapToWalkable),
-    enemySpawns.forEach((z) => {
-      z.type === 'ground' && snapToWalkable(z.pos);
+    enemySpawns.forEach((sceneNode) => {
+      sceneNode.type === 'ground' && snapToWalkable(sceneNode.pos);
     }));
   let updateErrorLogged = !1;
   return {
@@ -403,23 +406,23 @@ export async function createLevel(game) {
     },
     stats: {
       labelsAtlased: labelAtlas.count,
-      containers: ctx.placed.filter((z) => z.name.startsWith('container')).length,
+      containers: ctx.placed.filter((sceneNode) => sceneNode.name.startsWith('container')).length,
       props: ctx.placed.length,
       tris: Math.round(triCount),
       meshes: mergedRoot.children.length + countMeshes(ctx.dynRoot),
     },
     placed: ctx.placed,
-    groundSurfaceAt(z, H) {
-      return ctx.isMetal(z, H) ? 'metal' : 'concrete';
+    groundSurfaceAt(sceneNode, materialRef) {
+      return ctx.isMetal(sceneNode, materialRef) ? 'metal' : 'concrete';
     },
-    update(z) {
-      (shed.update(z), labelAtlas.update(z));
-      for (let H = 0; H < ctx.updaters.length; H++)
+    update(sceneNode) {
+      (shed.update(sceneNode), labelAtlas.update(sceneNode));
+      for (let materialRef = 0; materialRef < ctx.updaters.length; materialRef++)
         try {
-          ctx.updaters[H](z);
-        } catch (O) {
+          ctx.updaters[materialRef](sceneNode);
+        } catch (zoneName) {
           updateErrorLogged ||
-            ((updateErrorLogged = !0), console.error('[level] prop update threw', O));
+            ((updateErrorLogged = !0), console.error('[level] prop update threw', zoneName));
         }
     },
   };

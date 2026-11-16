@@ -42,37 +42,37 @@ function buildTarpCargo(ctx, opts) {
       [0.02, 0.62, 0.16, 0.58, rand.range(0.72, 0.86)],
       [0.66, 1.06, 0.18, 0.56, rand.range(0.5, 0.62)],
     ];
-  for (let N of [-0.6, 0.6])
+  for (let gridRow of [-0.6, 0.6])
     (assembler.push({
-      p: [N, 0, 0],
+      p: [gridRow, 0, 0],
       r: [0, 0, 0],
     }),
       addEuroPallet(assembler, rand, {
         stamp: !1,
       }),
       assembler.pop());
-  for (let N of loadBlocks) {
-    let Q = N[1] - N[0],
-      K = N[3] - N[2],
-      ie = N[4] - palletHeight,
-      F = (N[0] + N[1]) / 2,
-      X = (N[2] + N[3]) / 2,
-      ne = rand.range(0.7, 0.95);
+  for (let gridRow of loadBlocks) {
+    let gridCol = gridRow[1] - gridRow[0],
+      cellIndex = gridRow[3] - gridRow[2],
+      cellId = gridRow[4] - palletHeight,
+      gridCursor = (gridRow[0] + gridRow[1]) / 2,
+      vertexId = (gridRow[2] + gridRow[3]) / 2,
+      basePointX = rand.range(0.7, 0.95);
     (assembler.add(
       'wood_pallet',
-      roundedBoxGeometry(Q, ie, K, 0.006),
+      roundedBoxGeometry(gridCol, cellId, cellIndex, 0.006),
       {
-        p: [F, palletHeight + ie / 2, X],
+        p: [gridCursor, palletHeight + cellId / 2, vertexId],
       },
-      [ne, ne * 0.95, ne * 0.88],
+      [basePointX, basePointX * 0.95, basePointX * 0.88],
     ),
       assembler.add(
         'wood_pallet',
-        boxGeometry(Q + 0.012, 0.07, K + 0.012),
+        boxGeometry(gridCol + 0.012, 0.07, cellIndex + 0.012),
         {
-          p: [F, palletHeight + 0.04, X],
+          p: [gridCursor, palletHeight + 0.04, vertexId],
         },
-        ne * 0.75,
+        basePointX * 0.75,
       ));
   }
   let uvScale = 1.9,
@@ -103,75 +103,93 @@ function buildTarpCargo(ctx, opts) {
     uvs = [],
     indices = [],
     gridIndex = (N, Q) => Q * (gridX + 1) + N;
-  for (let N = 0; N <= gridZ; N++)
-    for (let Q = 0; Q <= gridX; Q++) {
-      let K = minX + ((maxX - minX) * Q) / gridX,
-        ie = minZ + ((maxZ - minZ) * N) / gridZ;
-      (positions.push(K, tarpHeightAt(K, ie), ie), uvs.push(K * uvScale, ie * uvScale));
+  for (let gridRow = 0; gridRow <= gridZ; gridRow++)
+    for (let gridCol = 0; gridCol <= gridX; gridCol++) {
+      let cellIndex = minX + ((maxX - minX) * gridCol) / gridX,
+        cellId = minZ + ((maxZ - minZ) * gridRow) / gridZ;
+      (positions.push(cellIndex, tarpHeightAt(cellIndex, cellId), cellId),
+        uvs.push(cellIndex * uvScale, cellId * uvScale));
     }
-  for (let N = 0; N < gridZ; N++)
-    for (let Q = 0; Q < gridX; Q++) {
-      let K = gridIndex(Q, N),
-        ie = gridIndex(Q + 1, N),
-        F = gridIndex(Q + 1, N + 1),
-        X = gridIndex(Q, N + 1);
-      indices.push(K, X, ie, ie, X, F);
+  for (let gridRow = 0; gridRow < gridZ; gridRow++)
+    for (let gridCol = 0; gridCol < gridX; gridCol++) {
+      let cellIndex = gridIndex(gridCol, gridRow),
+        cellId = gridIndex(gridCol + 1, gridRow),
+        gridCursor = gridIndex(gridCol + 1, gridRow + 1),
+        vertexId = gridIndex(gridCol, gridRow + 1);
+      indices.push(cellIndex, vertexId, cellId, cellId, vertexId, gridCursor);
     }
   let perimeterLoop = [];
-  for (let N = 0; N < gridX; N++) perimeterLoop.push([N, 0, 0, -1]);
-  for (let N = 0; N < gridZ; N++) perimeterLoop.push([gridX, N, 1, 0]);
-  for (let N = gridX; N > 0; N--) perimeterLoop.push([N, gridZ, 0, 1]);
-  for (let N = gridZ; N > 0; N--) perimeterLoop.push([0, N, -1, 0]);
+  for (let gridRow = 0; gridRow < gridX; gridRow++) perimeterLoop.push([gridRow, 0, 0, -1]);
+  for (let gridRow = 0; gridRow < gridZ; gridRow++) perimeterLoop.push([gridX, gridRow, 1, 0]);
+  for (let gridRow = gridX; gridRow > 0; gridRow--) perimeterLoop.push([gridRow, gridZ, 0, 1]);
+  for (let gridRow = gridZ; gridRow > 0; gridRow--) perimeterLoop.push([0, gridRow, -1, 0]);
   let perimeterCount = perimeterLoop.length,
     baseVertexCount = (gridX + 1) * (gridZ + 1),
     cornerIndexMap = new Map(),
     tearAngle = rand() * perimeterCount;
-  perimeterLoop.forEach((N, Q) => {
-    cornerIndexMap.set(N[0] + ',' + N[1], Q);
-    let K = (N[0] === 0 || N[0] === gridX) && (N[1] === 0 || N[1] === gridZ),
-      ie = N[2],
-      F = N[3];
-    K && ((ie = N[0] === 0 ? -0.707 : 0.707), (F = N[1] === 0 ? -0.707 : 0.707));
-    let X = gridIndex(N[0], N[1]),
-      ne = positions[X * 3],
-      re = positions[X * 3 + 1],
-      $ = positions[X * 3 + 2],
-      ue = Math.abs(Q - tearAngle);
-    ue = Math.min(ue, perimeterCount - ue);
-    let me =
+  perimeterLoop.forEach((gridRow, gridCol) => {
+    cornerIndexMap.set(gridRow[0] + ',' + gridRow[1], gridCol);
+    let cellIndex =
+        (gridRow[0] === 0 || gridRow[0] === gridX) && (gridRow[1] === 0 || gridRow[1] === gridZ),
+      cellId = gridRow[2],
+      gridCursor = gridRow[3];
+    cellIndex &&
+      ((cellId = gridRow[0] === 0 ? -0.707 : 0.707),
+      (gridCursor = gridRow[1] === 0 ? -0.707 : 0.707));
+    let vertexId = gridIndex(gridRow[0], gridRow[1]),
+      basePointX = positions[vertexId * 3],
+      basePointY = positions[vertexId * 3 + 1],
+      baseZ = positions[vertexId * 3 + 2],
+      tearDistance = Math.abs(gridCol - tearAngle);
+    tearDistance = Math.min(tearDistance, perimeterCount - tearDistance);
+    let skirtDrop =
         0.17 +
-        0.07 * Math.sin(Q * 0.55 + noiseSeed) +
-        0.07 * valueNoise3D(Q * 0.31 + noiseSeed, 2.2) +
-        0.3 * Math.exp((-ue * ue) / 14),
-      ee = rand() * 6;
-    for (let B = 1; B <= skirtSteps; B++) {
-      let P = B / skirtSteps,
-        V = re + (me - re) * (0.25 * P + 0.75 * P * P) - (B === 1 ? 0.02 : 0),
-        Y = (N[0] === 5 || N[0] === 16) && N[2] === 0 ? 0.035 * Math.sin(Math.PI * P) : 0,
-        L =
-          P * (0.04 * Math.sin(Q * 1.7 + ee * 0.2) + 0.028 * Math.sin(Q * 0.83 + 1.3 + noiseSeed)) +
-          0.02 * P * valueNoise3D(Q * 0.8, B * 0.9 + noiseSeed) -
-          Y,
-        Z = (B === 1 ? 0.028 : 0.04 + 0.03 * P) + L + (K ? 0.012 * P : 0),
-        J = clampValue(ne + ie * Z, -1.2, 1.2),
-        oe = clampValue($ + F * Z, -0.7, 0.7),
-        fe = re - V;
-      (positions.push(J, V, oe),
-        uvs.push((ne + ie * (Z + fe)) * uvScale, ($ + F * (Z + fe)) * uvScale));
+        0.07 * Math.sin(gridCol * 0.55 + noiseSeed) +
+        0.07 * valueNoise3D(gridCol * 0.31 + noiseSeed, 2.2) +
+        0.3 * Math.exp((-tearDistance * tearDistance) / 14),
+      skirtSeed = rand() * 6;
+    for (let skirtStep = 1; skirtStep <= skirtSteps; skirtStep++) {
+      let skirtT = skirtStep / skirtSteps,
+        skirtY =
+          basePointY +
+          (skirtDrop - basePointY) * (0.25 * skirtT + 0.75 * skirtT * skirtT) -
+          (skirtStep === 1 ? 0.02 : 0),
+        tensionSag =
+          (gridRow[0] === 5 || gridRow[0] === 16) && gridRow[2] === 0
+            ? 0.035 * Math.sin(Math.PI * skirtT)
+            : 0,
+        lateralWobble =
+          skirtT *
+            (0.04 * Math.sin(gridCol * 1.7 + skirtSeed * 0.2) +
+              0.028 * Math.sin(gridCol * 0.83 + 1.3 + noiseSeed)) +
+          0.02 * skirtT * valueNoise3D(gridCol * 0.8, skirtStep * 0.9 + noiseSeed) -
+          tensionSag,
+        skirtOffset =
+          (skirtStep === 1 ? 0.028 : 0.04 + 0.03 * skirtT) +
+          lateralWobble +
+          (cellIndex ? 0.012 * skirtT : 0),
+        skirtX = clampValue(basePointX + cellId * skirtOffset, -1.2, 1.2),
+        skirtZ = clampValue(baseZ + gridCursor * skirtOffset, -0.7, 0.7),
+        hemDrop = basePointY - skirtY;
+      (positions.push(skirtX, skirtY, skirtZ),
+        uvs.push(
+          (basePointX + cellId * (skirtOffset + hemDrop)) * uvScale,
+          (baseZ + gridCursor * (skirtOffset + hemDrop)) * uvScale,
+        ));
     }
   });
   let vertexIndexAt = (N, Q) =>
     Q === 0
       ? gridIndex(perimeterLoop[N][0], perimeterLoop[N][1])
       : baseVertexCount + N * skirtSteps + (Q - 1);
-  for (let N = 0; N < perimeterCount; N++)
-    for (let Q = 0; Q < skirtSteps; Q++) {
-      let K = (N + 1) % perimeterCount,
-        ie = vertexIndexAt(N, Q),
-        F = vertexIndexAt(K, Q),
-        X = vertexIndexAt(K, Q + 1),
-        ne = vertexIndexAt(N, Q + 1);
-      indices.push(ie, F, ne, F, X, ne);
+  for (let gridRow = 0; gridRow < perimeterCount; gridRow++)
+    for (let gridCol = 0; gridCol < skirtSteps; gridCol++) {
+      let cellIndex = (gridRow + 1) % perimeterCount,
+        cellId = vertexIndexAt(gridRow, gridCol),
+        gridCursor = vertexIndexAt(cellIndex, gridCol),
+        vertexId = vertexIndexAt(cellIndex, gridCol + 1),
+        basePointX = vertexIndexAt(gridRow, gridCol + 1);
+      indices.push(cellId, gridCursor, basePointX, gridCursor, vertexId, basePointX);
     }
   let tarpGeo = new THREE.BufferGeometry();
   (tarpGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3)),
@@ -186,27 +204,31 @@ function buildTarpCargo(ctx, opts) {
       posAttr.getZ(N) + normalAttr.getZ(N) * Q,
     ],
     edgePaths = [];
-  for (let N of [5, 16]) {
-    let Q = [],
-      K = cornerIndexMap.get(N + ',0'),
-      ie = cornerIndexMap.get(N + ',' + gridZ);
-    Q.push([posAttr.getX(vertexIndexAt(K, skirtSteps)), 0.11, -0.52]);
-    for (let F = skirtSteps; F >= 1; F--) Q.push(offsetAlongNormal(vertexIndexAt(K, F), 0.007));
-    for (let F = 0; F <= gridZ; F++) Q.push(offsetAlongNormal(gridIndex(N, F), 0.007));
-    for (let F = 1; F <= skirtSteps; F++) Q.push(offsetAlongNormal(vertexIndexAt(ie, F), 0.007));
-    (Q.push([posAttr.getX(vertexIndexAt(ie, skirtSteps)), 0.11, 0.52]), edgePaths.push(Q));
+  for (let gridRow of [5, 16]) {
+    let gridCol = [],
+      cellIndex = cornerIndexMap.get(gridRow + ',0'),
+      cellId = cornerIndexMap.get(gridRow + ',' + gridZ);
+    gridCol.push([posAttr.getX(vertexIndexAt(cellIndex, skirtSteps)), 0.11, -0.52]);
+    for (let gridCursor = skirtSteps; gridCursor >= 1; gridCursor--)
+      gridCol.push(offsetAlongNormal(vertexIndexAt(cellIndex, gridCursor), 0.007));
+    for (let gridCursor = 0; gridCursor <= gridZ; gridCursor++)
+      gridCol.push(offsetAlongNormal(gridIndex(gridRow, gridCursor), 0.007));
+    for (let gridCursor = 1; gridCursor <= skirtSteps; gridCursor++)
+      gridCol.push(offsetAlongNormal(vertexIndexAt(cellId, gridCursor), 0.007));
+    (gridCol.push([posAttr.getX(vertexIndexAt(cellId, skirtSteps)), 0.11, 0.52]),
+      edgePaths.push(gridCol));
   }
   let strapZ = 6,
     strapPath = [],
     strapStart = cornerIndexMap.get('0,' + strapZ),
     strapEnd = cornerIndexMap.get(gridX + ',' + strapZ);
   strapPath.push([-1.1, 0.1, posAttr.getZ(vertexIndexAt(strapStart, skirtSteps))]);
-  for (let N = skirtSteps; N >= 1; N -= 2)
-    strapPath.push(offsetAlongNormal(vertexIndexAt(strapStart, N), 0.012));
-  for (let N = 0; N <= gridX; N += 2)
-    strapPath.push(offsetAlongNormal(gridIndex(N, strapZ), 0.012));
-  for (let N = 1; N <= skirtSteps; N += 2)
-    strapPath.push(offsetAlongNormal(vertexIndexAt(strapEnd, N), 0.012));
+  for (let gridRow = skirtSteps; gridRow >= 1; gridRow -= 2)
+    strapPath.push(offsetAlongNormal(vertexIndexAt(strapStart, gridRow), 0.012));
+  for (let gridRow = 0; gridRow <= gridX; gridRow += 2)
+    strapPath.push(offsetAlongNormal(gridIndex(gridRow, strapZ), 0.012));
+  for (let gridRow = 1; gridRow <= skirtSteps; gridRow += 2)
+    strapPath.push(offsetAlongNormal(vertexIndexAt(strapEnd, gridRow), 0.012));
   (strapPath.push([1.1, 0.1, posAttr.getZ(vertexIndexAt(strapEnd, skirtSteps))]),
     assembler.add(
       assembler.mat('tarp', {
@@ -214,22 +236,29 @@ function buildTarpCargo(ctx, opts) {
       }),
       tarpGeo,
       null,
-      (N, Q, K) => {
-        let ie = valueNoise3D(N * 2.3 + noiseSeed, Q * 2.3, K * 2.3),
-          F = valueNoise3D(N * 11, Q * 11, K * 11 + noiseSeed);
+      (gridRow, gridCol, cellIndex) => {
+        let cellId = valueNoise3D(gridRow * 2.3 + noiseSeed, gridCol * 2.3, cellIndex * 2.3),
+          gridCursor = valueNoise3D(gridRow * 11, gridCol * 11, cellIndex * 11 + noiseSeed);
         return (
-          (0.72 + 0.28 * ie) * (0.9 + 0.1 * F) * (0.8 + 0.2 * smoothstepRangeAlt2(0.15, 0.6, Q))
+          (0.72 + 0.28 * cellId) *
+          (0.9 + 0.1 * gridCursor) *
+          (0.8 + 0.2 * smoothstepRangeAlt2(0.15, 0.6, gridCol))
         );
       },
     ));
-  for (let N of edgePaths) {
-    assembler.add('paint_orange', createRibbonFromPolyline(N, [0.024, 0, 0]), null, [1, 0.82, 0.5]);
-    let Q = N[N.length - 4];
+  for (let gridRow of edgePaths) {
+    assembler.add(
+      'paint_orange',
+      createRibbonFromPolyline(gridRow, [0.024, 0, 0]),
+      null,
+      [1, 0.82, 0.5],
+    );
+    let gridCol = gridRow[gridRow.length - 4];
     (assembler.add(
       'steel_worn',
       roundedBoxGeometry(0.065, 0.1, 0.03, 0.006),
       {
-        p: [Q[0], Q[1], Q[2] + 0.014],
+        p: [gridCol[0], gridCol[1], gridCol[2] + 0.014],
         r: [0.25, 0, 0],
       },
       0.8,
@@ -238,7 +267,7 @@ function buildTarpCargo(ctx, opts) {
         'steel_dark',
         roundedBoxGeometry(0.02, 0.09, 0.012, 0.003),
         {
-          p: [Q[0] + 0.03, Q[1] + 0.06, Q[2] + 0.04],
+          p: [gridCol[0] + 0.03, gridCol[1] + 0.06, gridCol[2] + 0.04],
           r: [0.9, 0, 0],
         },
         0.8,
@@ -246,7 +275,7 @@ function buildTarpCargo(ctx, opts) {
   }
   assembler.add('rope', tubeGeometry(strapPath, 0.009, 4, !1, 0.5), null, 0.85);
   let reportedSize = [2.4, 1.5, 1.4],
-    cargoTopY = Math.max(...loadBlocks.map((N) => N[4])) + 0.04;
+    cargoTopY = Math.max(...loadBlocks.map((gridRow) => gridRow[4])) + 0.04;
   return assembler.finish({
     size: reportedSize,
     colliders: [
@@ -376,30 +405,34 @@ function addCardboardBox(
       return [z * (0.5 + 0.5 * S), z * (0.47 + 0.53 * S), z * (0.42 + 0.58 * S)];
     };
   {
-    let vert = bodyGeo.attributes.position,
-      yCoord = new Float32Array(vert.count * 3);
-    for (let vertIdx = 0; vertIdx < vert.count; vertIdx++) {
-      let randVal = colorFn(vert.getX(vertIdx), vert.getY(vertIdx), vert.getZ(vertIdx));
-      ((yCoord[vertIdx * 3] = randVal[0]),
-        (yCoord[vertIdx * 3 + 1] = randVal[1]),
-        (yCoord[vertIdx * 3 + 2] = randVal[2]));
+    let vertPoint = bodyGeo.attributes.position,
+      heightRatio = new Float32Array(vertPoint.count * 3);
+    for (let heightCurveSq = 0; heightCurveSq < vertPoint.count; heightCurveSq++) {
+      let noiseSample = colorFn(
+        vertPoint.getX(heightCurveSq),
+        vertPoint.getY(heightCurveSq),
+        vertPoint.getZ(heightCurveSq),
+      );
+      ((heightRatio[heightCurveSq * 3] = noiseSample[0]),
+        (heightRatio[heightCurveSq * 3 + 1] = noiseSample[1]),
+        (heightRatio[heightCurveSq * 3 + 2] = noiseSample[2]));
     }
-    bodyGeo.setAttribute('color', new THREE.BufferAttribute(yCoord, 3));
+    bodyGeo.setAttribute('color', new THREE.BufferAttribute(heightRatio, 3));
   }
   builder.add('cardboard', bodyGeo);
   let tapeOverhang = 0.0025;
   if (isOpen) {
-    let vert = Math.min(0.16, height * 0.6);
+    let vertPoint = Math.min(0.16, height * 0.6);
     builder.add(
       'cardboard',
       createPlaneGeometryOffsetUVAlt(width - 0.012, depth - 0.012),
       {
-        p: [0, height - vert, 0],
+        p: [0, height - vertPoint, 0],
         r: [-HALF_PI, 0, 0],
       },
       0.45 * tintMul,
     );
-    for (let [vertIdx, randVal, sideOffset] of [
+    for (let [heightCurveSq, noiseSample, angleParam] of [
       [0, width, depth / 2],
       [PI_TWO, width, depth / 2],
       [HALF_PI, depth, width / 2],
@@ -407,39 +440,39 @@ function addCardboardBox(
     ])
       builder.add(
         'cardboard',
-        flipGeometryWinding(createPlaneGeometryOffsetUVAlt(randVal - 0.012, vert)),
+        flipGeometryWinding(createPlaneGeometryOffsetUVAlt(noiseSample - 0.012, vertPoint)),
         {
           p: [
-            Math.sin(vertIdx) * (sideOffset - 0.006),
-            height - vert / 2,
-            Math.cos(vertIdx) * (sideOffset - 0.006),
+            Math.sin(heightCurveSq) * (angleParam - 0.006),
+            height - vertPoint / 2,
+            Math.cos(heightCurveSq) * (angleParam - 0.006),
           ],
-          r: [0, vertIdx, 0],
+          r: [0, heightCurveSq, 0],
         },
         0.55 * tintMul,
       );
-    let yCoord = (E, w, S) => {
+    let heightRatio = (E, w, S) => {
       let z = Math.sin(S),
         H = Math.cos(S);
       return [E, w, z, H];
     };
-    for (let vertIdx of [1, -1]) {
-      let randVal = rand.range(0.3, 1.9),
-        sideOffset = depth / 2 - 0.01;
+    for (let heightCurveSq of [1, -1]) {
+      let noiseSample = rand.range(0.3, 1.9),
+        angleParam = depth / 2 - 0.01;
       builder.add(
         'cardboard',
         createRibbonFromPolyline(
           [
-            [0, height, (vertIdx * depth) / 2],
+            [0, height, (heightCurveSq * depth) / 2],
             [
               0,
-              height + Math.sin(randVal) * sideOffset * 0.5,
-              vertIdx * (depth / 2 + Math.cos(randVal) * sideOffset * 0.5),
+              height + Math.sin(noiseSample) * angleParam * 0.5,
+              heightCurveSq * (depth / 2 + Math.cos(noiseSample) * angleParam * 0.5),
             ],
             [
               0,
-              height + Math.sin(randVal) * sideOffset,
-              vertIdx * (depth / 2 + Math.cos(randVal) * sideOffset + 0.01),
+              height + Math.sin(noiseSample) * angleParam,
+              heightCurveSq * (depth / 2 + Math.cos(noiseSample) * angleParam + 0.01),
             ],
           ],
           [width / 2 - 0.004, 0, 0],
@@ -448,17 +481,17 @@ function addCardboardBox(
         0.9 * tintMul,
       );
     }
-    for (let vertIdx of [1, -1]) {
-      let randVal = rand.range(0.9, 2.3),
-        sideOffset = depth / 2 - 0.02;
+    for (let heightCurveSq of [1, -1]) {
+      let noiseSample = rand.range(0.9, 2.3),
+        angleParam = depth / 2 - 0.02;
       builder.add(
         'cardboard',
         createRibbonFromPolyline(
           [
-            [(vertIdx * width) / 2, height, 0],
+            [(heightCurveSq * width) / 2, height, 0],
             [
-              vertIdx * (width / 2 + Math.cos(randVal) * sideOffset),
-              height + Math.sin(randVal) * sideOffset,
+              heightCurveSq * (width / 2 + Math.cos(noiseSample) * angleParam),
+              height + Math.sin(noiseSample) * angleParam,
               0,
             ],
           ],
@@ -469,19 +502,23 @@ function addCardboardBox(
       );
     }
   } else if (hasTape) {
-    let yCoord = [];
-    yCoord.push([-width / 2 - tapeOverhang, height - 0.075, 0]);
-    for (let randVal = 0; randVal <= 8; randVal++)
-      yCoord.push([(-0.5 + randVal / 8) * (width + 2 * tapeOverhang), height + tapeOverhang, 0]);
-    yCoord.push([width / 2 + tapeOverhang, height - 0.075, 0]);
-    let vertIdx = new THREE.Vector3();
-    for (let randVal of yCoord)
-      (vertIdx.set(randVal[0], randVal[1], randVal[2]),
-        crushVertex(vertIdx),
-        (randVal[0] = vertIdx.x),
-        (randVal[1] = vertIdx.y + (crushAmt ? 0.004 : 0)),
-        (randVal[2] = vertIdx.z));
-    builder.add('polymer_tan', createRibbonFromPolyline(yCoord, [0, 0, 0.025], !1), null, 0.9);
+    let heightRatio = [];
+    heightRatio.push([-width / 2 - tapeOverhang, height - 0.075, 0]);
+    for (let noiseSample = 0; noiseSample <= 8; noiseSample++)
+      heightRatio.push([
+        (-0.5 + noiseSample / 8) * (width + 2 * tapeOverhang),
+        height + tapeOverhang,
+        0,
+      ]);
+    heightRatio.push([width / 2 + tapeOverhang, height - 0.075, 0]);
+    let heightCurveSq = new THREE.Vector3();
+    for (let noiseSample of heightRatio)
+      (heightCurveSq.set(noiseSample[0], noiseSample[1], noiseSample[2]),
+        crushVertex(heightCurveSq),
+        (noiseSample[0] = heightCurveSq.x),
+        (noiseSample[1] = heightCurveSq.y + (crushAmt ? 0.004 : 0)),
+        (noiseSample[2] = heightCurveSq.z));
+    builder.add('polymer_tan', createRibbonFromPolyline(heightRatio, [0, 0, 0.025], !1), null, 0.9);
   }
   let frontZ = depth / 2 + tapeOverhang,
     labelHeight = Math.min(0.055, height * 0.2);
@@ -517,10 +554,10 @@ function addCardboardBox(
       })),
     showArrow && !crushAmt)
   )
-    for (let vert of [1, -1])
+    for (let vertPoint of [1, -1])
       builder.decal(ctx.mats.decal('arrow'), Math.min(0.09, height * 0.3), {
-        p: [vert * (width / 2 + tapeOverhang), height * 0.55, vert * depth * 0.2],
-        r: [0, vert * HALF_PI, HALF_PI],
+        p: [vertPoint * (width / 2 + tapeOverhang), height * 0.55, vertPoint * depth * 0.2],
+        r: [0, vertPoint * HALF_PI, HALF_PI],
       });
   builder.pop();
 }
@@ -635,7 +672,9 @@ function buildCardboardBoxes(ctx, opts) {
  * 登记篷布货垛、沙袋墙、散堆纸箱这三种软体/纸制品道具
  */
 export function registerCharacterProps(register) {
-  (register('tarp_cargo', (e, t = {}) => buildTarpCargo(e, t)),
-    register('sandbags', (e, t = {}) => buildSandbags(e, t)),
-    register('cardboard_boxes', (e, t = {}) => buildCardboardBoxes(e, t)));
+  (register('tarp_cargo', (propCtx, propOpts = {}) => buildTarpCargo(propCtx, propOpts)),
+    register('sandbags', (propCtx, propOpts = {}) => buildSandbags(propCtx, propOpts)),
+    register('cardboard_boxes', (propCtx, propOpts = {}) =>
+      buildCardboardBoxes(propCtx, propOpts),
+    ));
 }

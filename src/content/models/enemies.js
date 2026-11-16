@@ -300,17 +300,17 @@ export function createWalkerModel() {
     rig.bone('antenna', 'body', -0.105, 0.15, -0.46),
     rig.bone('beacon', 'body', 0.105, 0.2, -0.455));
   for (let partSlot = 0; partSlot < 4; partSlot++) {
-    let boneKey = metrics.legs[partSlot],
-      partGeometry = metrics.side[partSlot];
+    let slotName = metrics.legs[partSlot],
+      boneName = metrics.side[partSlot];
     (rig.bone(
-      'abd' + boneKey,
+      'abd' + slotName,
       'body',
-      partGeometry * metrics.hipX,
+      boneName * metrics.hipX,
       metrics.hipY,
       metrics.fore[partSlot] * metrics.hipZ,
     ),
-      rig.bone('thigh' + boneKey, 'abd' + boneKey, partGeometry * metrics.l0, 0, 0),
-      rig.bone('shin' + boneKey, 'thigh' + boneKey, 0, -metrics.L1, 0));
+      rig.bone('thigh' + slotName, 'abd' + slotName, boneName * metrics.l0, 0, 0),
+      rig.bone('shin' + slotName, 'thigh' + slotName, 0, -metrics.L1, 0));
   }
   let addPart = (mixedHash, s, o, r, a) => rig.add(mixedHash, s, o, r, a);
   (addPart(
@@ -338,8 +338,8 @@ export function createWalkerModel() {
       RIG_SHELL_COOL,
     ));
   for (let partSlot of [-0.15, 0.15])
-    for (let boneKey of [0.21, 0.45, -0.17, 0.145])
-      addPart('metal', 'body', makeBoltHexY(partSlot, 0.152, boneKey), RIG_METAL_BRIGHT);
+    for (let slotName of [0.21, 0.45, -0.17, 0.145])
+      addPart('metal', 'body', makeBoltHexY(partSlot, 0.152, slotName), RIG_METAL_BRIGHT);
   addPart(
     'metal',
     'body',
@@ -421,24 +421,24 @@ export function createWalkerModel() {
         transformGeom(createRoundedBox(0.028, 0.1, 0.11, 0.008), partSlot * 0.146, 0.01, 0.305),
         RIG_SHELL_DARK,
       ));
-    for (let boneKey = 0; boneKey < 4; boneKey++)
+    for (let slotName = 0; slotName < 4; slotName++)
       addPart(
         'metal',
         'body',
         transformGeom(
           createRoundedBox(0.004, 0.012, 0.085, 0.001),
           partSlot * 0.161,
-          -0.02 + boneKey * 0.022,
+          -0.02 + slotName * 0.022,
           0.305,
         ),
         RIG_METAL_BASE,
       );
-    for (let boneKey of [-0.035, 0.08])
-      for (let partGeometry of [-0.21, 0.06, 0.115, 0.21])
+    for (let slotName of [-0.035, 0.08])
+      for (let boneName of [-0.21, 0.06, 0.115, 0.21])
         addPart(
           'metal',
           'body',
-          makeBoltHexX(partSlot * 0.167, boneKey, partGeometry),
+          makeBoltHexX(partSlot * 0.167, slotName, boneName),
           RIG_METAL_BRIGHT,
         );
     addPart(
@@ -457,11 +457,11 @@ export function createWalkerModel() {
       ),
       RIG_METAL_BRIGHT,
     );
-    for (let boneKey of [0, 0.26])
+    for (let slotName of [0, 0.26])
       addPart(
         'metal',
         'body',
-        transformGeom(createCylinderY(0.008, 0.008, 0.06, 6), partSlot * 0.135, 0.178, boneKey),
+        transformGeom(createCylinderY(0.008, 0.008, 0.06, 6), partSlot * 0.135, 0.178, slotName),
         RIG_METAL_BRIGHT,
       );
     (addPart(
@@ -585,8 +585,8 @@ export function createWalkerModel() {
       RIG_METAL_BRIGHT,
     ));
   for (let partSlot of [-0.125, 0.125])
-    for (let boneKey of [-0.055, 0.055])
-      addPart('metal', 'body', makeBoltHexZ(partSlot, boneKey, -0.523), RIG_METAL_BRIGHT);
+    for (let slotName of [-0.055, 0.055])
+      addPart('metal', 'body', makeBoltHexZ(partSlot, slotName, -0.523), RIG_METAL_BRIGHT);
   (addPart(
     'shell',
     'body',
@@ -609,13 +609,13 @@ export function createWalkerModel() {
       RIG_METAL_BASE,
     ));
   for (let partSlot = 0; partSlot < 3; partSlot++) {
-    let boneKey = 0.2 + partSlot * 0.28;
+    let slotName = 0.2 + partSlot * 0.28;
     addPart(
       'shell',
       'neck',
       createStrut(
-        [0, -0.02 + 0.13 * boneKey - 0.008, -0.02 + 0.12 * boneKey - 0.0075],
-        [0, -0.02 + 0.13 * boneKey + 0.008, -0.02 + 0.12 * boneKey + 0.0075],
+        [0, -0.02 + 0.13 * slotName - 0.008, -0.02 + 0.12 * slotName - 0.0075],
+        [0, -0.02 + 0.13 * slotName + 0.008, -0.02 + 0.12 * slotName + 0.0075],
         0.052,
         0.052,
         10,
@@ -714,8 +714,8 @@ export function createWalkerModel() {
       RIG_METAL_WHITE,
     ));
   for (let partSlot of [-0.08, 0.08])
-    for (let boneKey of [-0.09, 0.07])
-      addPart('metal', 'head', makeBoltHexY(partSlot, 0.061, boneKey), RIG_METAL_BRIGHT);
+    for (let slotName of [-0.09, 0.07])
+      addPart('metal', 'head', makeBoltHexY(partSlot, 0.061, slotName), RIG_METAL_BRIGHT);
   (addPart(
     'metal',
     'turret',
@@ -855,44 +855,44 @@ export function createWalkerModel() {
       RIG_SHELL_RUST,
     ));
   for (let partSlot = 0; partSlot < 4; partSlot++) {
-    let boneKey = metrics.legs[partSlot],
-      partGeometry = metrics.side[partSlot],
-      partTint = 'abd' + boneKey,
-      castShadow = 'thigh' + boneKey,
-      shinKey = 'shin' + boneKey;
+    let slotName = metrics.legs[partSlot],
+      boneName = metrics.side[partSlot],
+      geometryPart = 'abd' + slotName,
+      castShadowFlag = 'thigh' + slotName,
+      shinKey = 'shin' + slotName;
     (addPart(
       'metal',
-      partTint,
-      transformGeom(createCylinderZ(0.06, 0.06, 0.17, 14), -partGeometry * 0.02, 0, 0),
+      geometryPart,
+      transformGeom(createCylinderZ(0.06, 0.06, 0.17, 14), -boneName * 0.02, 0, 0),
       RIG_METAL_BASE,
     ),
       addPart(
         'shell',
-        partTint,
-        transformGeom(createRoundedBox(0.11, 0.05, 0.155, 0.014), partGeometry * 0, 0.058, 0),
+        geometryPart,
+        transformGeom(createRoundedBox(0.11, 0.05, 0.155, 0.014), boneName * 0, 0.058, 0),
         RIG_SHELL_WHITE,
       ),
       addPart(
         'metal',
-        partTint,
-        transformGeom(createCylinderZ(0.03, 0.03, 0.18, 8), -partGeometry * 0.02, 0, 0),
+        geometryPart,
+        transformGeom(createCylinderZ(0.03, 0.03, 0.18, 8), -boneName * 0.02, 0, 0),
         RIG_METAL_BRIGHT,
       ),
       addPart(
         'shell',
-        castShadow,
+        castShadowFlag,
         transformGeom(createCylinderX(0.078, 0.078, 0.07, 18), 0, 0, 0),
         RIG_SHELL_WHITE,
       ),
       addPart(
         'shell',
-        castShadow,
-        transformGeom(createCylinderX(0.081, 0.081, 0.016, 18), partGeometry * 0.012, 0, 0),
+        castShadowFlag,
+        transformGeom(createCylinderX(0.081, 0.081, 0.016, 18), boneName * 0.012, 0, 0),
         RIG_SHELL_RUST,
       ),
       addPart(
         'metal',
-        castShadow,
+        castShadowFlag,
         transformGeom(createCylinderX(0.048, 0.048, 0.082, 12), 0, 0, 0),
         RIG_METAL_BASE,
       ));
@@ -900,18 +900,14 @@ export function createWalkerModel() {
       let boltPhase = boltIndex * 1.2566;
       addPart(
         'metal',
-        castShadow,
-        makeBoltHexX(
-          partGeometry * 0.039,
-          Math.cos(boltPhase) * 0.062,
-          Math.sin(boltPhase) * 0.062,
-        ),
+        castShadowFlag,
+        makeBoltHexX(boneName * 0.039, Math.cos(boltPhase) * 0.062, Math.sin(boltPhase) * 0.062),
         RIG_METAL_BRIGHT,
       );
     }
     (addPart(
       'shell',
-      castShadow,
+      castShadowFlag,
       transformGeom(
         createRoundedBox(0.062, metrics.L1 - 0.07, 0.1, 0.022),
         0,
@@ -922,7 +918,7 @@ export function createWalkerModel() {
     ),
       addPart(
         'metal',
-        castShadow,
+        castShadowFlag,
         transformGeom(
           createRoundedBox(0.044, metrics.L1 - 0.04, 0.06, 0.012),
           0,
@@ -933,25 +929,25 @@ export function createWalkerModel() {
       ),
       addPart(
         'shell',
-        castShadow,
+        castShadowFlag,
         transformGeom(createRoundedBox(0.065, 0.045, 0.103, 0.01), 0, -0.145, 0.004),
         RIG_SHELL_RUST,
       ),
       addPart(
         'shell',
-        castShadow,
+        castShadowFlag,
         transformGeom(createRoundedBox(0.064, 0.012, 0.102, 0.004), 0, -0.26, 0.004),
         RIG_SHELL_DARK,
       ),
       addPart(
         'metal',
-        castShadow,
+        castShadowFlag,
         createStrut([0, -0.06, -0.082], [0, -metrics.L1 * 0.62, -0.078], 0.021, 0.021, 10),
         RIG_METAL_BRIGHT,
       ),
       addPart(
         'metal',
-        castShadow,
+        castShadowFlag,
         createStrut(
           [0, -metrics.L1 * 0.62, -0.078],
           [0, -metrics.L1 + 0.025, -0.058],
@@ -963,19 +959,19 @@ export function createWalkerModel() {
       ),
       addPart(
         'metal',
-        castShadow,
+        castShadowFlag,
         transformGeom(createRoundedBox(0.05, 0.03, 0.035, 0.006), 0, -0.055, -0.07),
         RIG_METAL_WHITE,
       ),
       addPart(
         'shell',
-        castShadow,
+        castShadowFlag,
         tubeGeometry(
           [
-            [partGeometry * 0.036, -0.02, 0.05],
-            [partGeometry * 0.044, -0.13, 0.062],
-            [partGeometry * 0.042, -0.28, 0.058],
-            [partGeometry * 0.034, -metrics.L1 + 0.03, 0.035],
+            [boneName * 0.036, -0.02, 0.05],
+            [boneName * 0.044, -0.13, 0.062],
+            [boneName * 0.042, -0.28, 0.058],
+            [boneName * 0.034, -metrics.L1 + 0.03, 0.035],
           ],
           0.0065,
           5,
@@ -984,13 +980,13 @@ export function createWalkerModel() {
       ),
       addPart(
         'metal',
-        castShadow,
+        castShadowFlag,
         transformGeom(createCylinderX(0.05, 0.05, 0.086, 14), 0, -metrics.L1, 0),
         RIG_METAL_BASE,
       ),
       addPart(
         'shell',
-        castShadow,
+        castShadowFlag,
         transformGeom(createCylinderX(0.036, 0.036, 0.092, 12), 0, -metrics.L1, 0),
         RIG_SHELL_COOL,
       ),
@@ -1056,13 +1052,13 @@ export function createDroneModel() {
         fxRig.bone(mixBuf, dropBuf, workBuf, dropPos, dropLen));
     };
   (addBone('root', null, 0, 0, 0), addBone('body', 'root', 0, 0, 0));
-  for (let slotName = 0; slotName < 4; slotName++)
+  for (let slotBucket = 0; slotBucket < 4; slotBucket++)
     addBone(
-      'rotor' + slotName,
+      'rotor' + slotBucket,
       'body',
-      metrics.rotors[slotName][0],
-      metrics.rotors[slotName][1],
-      metrics.rotors[slotName][2],
+      metrics.rotors[slotBucket][0],
+      metrics.rotors[slotBucket][1],
+      metrics.rotors[slotBucket][2],
     );
   (addBone('gimbalYaw', 'body', metrics.gimbal[0], metrics.gimbal[1], metrics.gimbal[2]),
     addBone('ball', 'gimbalYaw', metrics.ball[0], metrics.ball[1], metrics.ball[2]),
@@ -1111,9 +1107,9 @@ export function createDroneModel() {
       transformGeom(createRoundedBox(0.03, 0.006, 0.2, 0.002), 0, 0.0975, -0.03),
       RIG_SHELL_RUST,
     ));
-  for (let slotName of [-0.05, 0.05])
-    for (let parentBone of [-0.12, 0.06])
-      addPart('metal', 'body', makeBoltHexY(slotName, 0.097, parentBone), RIG_METAL_BRIGHT);
+  for (let slotBucket of [-0.05, 0.05])
+    for (let boneTarget of [-0.12, 0.06])
+      addPart('metal', 'body', makeBoltHexY(slotBucket, 0.097, boneTarget), RIG_METAL_BRIGHT);
   (addPart(
     'metal',
     'body',
@@ -1139,15 +1135,15 @@ export function createDroneModel() {
       [0.3, 1.6, 0.4],
       !1,
     ));
-  for (let slotName of [1, -1]) {
-    for (let parentBone = 0; parentBone < 4; parentBone++)
+  for (let slotBucket of [1, -1]) {
+    for (let boneTarget = 0; boneTarget < 4; boneTarget++)
       addPart(
         'metal',
         'body',
         transformGeom(
           createRoundedBox(0.004, 0.01, 0.06, 0.001),
-          slotName * 0.0885,
-          -0.045 + parentBone * 0.016,
+          slotBucket * 0.0885,
+          -0.045 + boneTarget * 0.016,
           -0.06,
         ),
         [0.2, 0.2, 0.2],
@@ -1157,12 +1153,12 @@ export function createDroneModel() {
       'body',
       tubeGeometry(
         [
-          [slotName * 0.075, -0.055, 0.13],
-          [slotName * 0.135, -0.175, 0.16],
-          [slotName * 0.135, -0.192, 0.11],
-          [slotName * 0.135, -0.192, -0.14],
-          [slotName * 0.135, -0.175, -0.19],
-          [slotName * 0.075, -0.055, -0.15],
+          [slotBucket * 0.075, -0.055, 0.13],
+          [slotBucket * 0.135, -0.175, 0.16],
+          [slotBucket * 0.135, -0.192, 0.11],
+          [slotBucket * 0.135, -0.192, -0.14],
+          [slotBucket * 0.135, -0.175, -0.19],
+          [slotBucket * 0.075, -0.055, -0.15],
         ],
         0.0085,
         6,
@@ -1171,28 +1167,34 @@ export function createDroneModel() {
       ),
       RIG_METAL_BRIGHT,
     );
-    for (let parentBone of [0.07, -0.1])
+    for (let boneTarget of [0.07, -0.1])
       addPart(
         'shell',
         'body',
         transformGeom(
           createCylinderZ(0.0135, 0.0135, 0.07, 8),
-          slotName * 0.135,
+          slotBucket * 0.135,
           -0.192,
-          parentBone,
+          boneTarget,
         ),
         RIG_SHELL_SHADOW,
       );
     (addPart(
       'metal',
       'body',
-      createStrut([slotName * 0.04, 0.07, -0.17], [slotName * 0.085, 0.37, -0.27], 0.004, 0.002, 5),
+      createStrut(
+        [slotBucket * 0.04, 0.07, -0.17],
+        [slotBucket * 0.085, 0.37, -0.27],
+        0.004,
+        0.002,
+        5,
+      ),
       RIG_METAL_BASE,
     ),
       addPart(
         'metal',
         'body',
-        transformGeom(createCylinderY(0.008, 0.01, 0.025, 6), slotName * 0.04, 0.078, -0.17),
+        transformGeom(createCylinderY(0.008, 0.01, 0.025, 6), slotBucket * 0.04, 0.078, -0.17),
         RIG_METAL_BRIGHT,
       ));
   }
@@ -1215,16 +1217,16 @@ export function createDroneModel() {
       RIG_METAL_WHITE,
     ));
   let rotorBell = createRotorBellGeometry();
-  for (let slotName = 0; slotName < 4; slotName++) {
-    let [parentBone, rotorY, rotorZ] = metrics.rotors[slotName],
-      signX = Math.sign(parentBone),
-      signZ = Math.sign(rotorZ);
+  for (let slotBucket = 0; slotBucket < 4; slotBucket++) {
+    let [boneTarget, partGeometry, partTint] = metrics.rotors[slotBucket],
+      castShadowPart = Math.sign(boneTarget),
+      signZ = Math.sign(partTint);
     (addPart(
       'metal',
       'body',
       createStrut(
-        [signX * 0.07, 0, signZ * 0.09],
-        [parentBone, rotorY - 0.05, rotorZ],
+        [castShadowPart * 0.07, 0, signZ * 0.09],
+        [boneTarget, partGeometry - 0.05, partTint],
         0.017,
         0.015,
         8,
@@ -1236,11 +1238,11 @@ export function createDroneModel() {
         'body',
         transformGeom(
           createRoundedBox(0.07, 0.045, 0.07, 0.014),
-          signX * 0.085,
+          castShadowPart * 0.085,
           0,
           signZ * 0.1,
           0,
-          signX * signZ * 0.74,
+          castShadowPart * signZ * 0.74,
           0,
         ),
         RIG_SHELL_WHITE,
@@ -1250,9 +1252,9 @@ export function createDroneModel() {
         'body',
         tubeGeometry(
           [
-            [signX * 0.09, 0.02, signZ * 0.12],
-            [signX * 0.18, 0.012, signZ * 0.19],
-            [parentBone - signX * 0.05, rotorY - 0.03, rotorZ - signZ * 0.04],
+            [castShadowPart * 0.09, 0.02, signZ * 0.12],
+            [castShadowPart * 0.18, 0.012, signZ * 0.19],
+            [boneTarget - castShadowPart * 0.05, partGeometry - 0.03, partTint - signZ * 0.04],
           ],
           0.005,
           5,
@@ -1262,19 +1264,29 @@ export function createDroneModel() {
       addPart(
         'metal',
         'body',
-        transformGeom(createCylinderY(0.04, 0.03, 0.075, 12), parentBone, rotorY - 0.05, rotorZ),
+        transformGeom(
+          createCylinderY(0.04, 0.03, 0.075, 12),
+          boneTarget,
+          partGeometry - 0.05,
+          partTint,
+        ),
         RIG_METAL_BASE,
       ),
       addPart(
         'metal',
         'body',
-        transformGeom(createCylinderY(0.042, 0.042, 0.012, 12), parentBone, rotorY - 0.02, rotorZ),
+        transformGeom(
+          createCylinderY(0.042, 0.042, 0.012, 12),
+          boneTarget,
+          partGeometry - 0.02,
+          partTint,
+        ),
         RIG_METAL_BRIGHT,
       ),
       addPart(
         'shell',
         'body',
-        transformGeom(rotorBell.clone(), parentBone, rotorY, rotorZ),
+        transformGeom(rotorBell.clone(), boneTarget, partGeometry, partTint),
         RIG_SHELL_WHITE,
       ),
       addPart(
@@ -1282,9 +1294,9 @@ export function createDroneModel() {
         'body',
         transformGeom(
           new THREE.TorusGeometry(0.196, 0.0085, 6, 28),
-          parentBone,
-          rotorY + 0.036,
-          rotorZ,
+          boneTarget,
+          partGeometry + 0.036,
+          partTint,
           va,
           0,
           0,
@@ -1292,15 +1304,15 @@ export function createDroneModel() {
         RIG_SHELL_RUST,
       ));
     for (let bladeIndex = 0; bladeIndex < 3; bladeIndex++) {
-      let bladeAngle = bladeIndex * 2.094 + 0.5 + slotName;
+      let bladeAngle = bladeIndex * 2.094 + 0.5 + slotBucket;
       addPart(
         'metal',
         'body',
         transformGeom(
           createRoundedBox(0.145, 0.007, 0.016, 0.002),
-          parentBone + Math.cos(bladeAngle) * 0.105,
-          rotorY - 0.022,
-          rotorZ - Math.sin(bladeAngle) * 0.105,
+          boneTarget + Math.cos(bladeAngle) * 0.105,
+          partGeometry - 0.022,
+          partTint - Math.sin(bladeAngle) * 0.105,
           0,
           bladeAngle,
           0,
@@ -1309,15 +1321,15 @@ export function createDroneModel() {
       );
     }
     for (let bladeIndex = -1; bladeIndex <= 1; bladeIndex++) {
-      let bladeAngle = Math.atan2(signZ, signX) + bladeIndex * 0.2;
+      let bladeAngle = Math.atan2(signZ, castShadowPart) + bladeIndex * 0.2;
       addPart(
         'shell',
         'body',
         transformGeom(
           createRoundedBox(0.012, 0.05, 0.036, 0.003),
-          parentBone + Math.cos(bladeAngle) * 0.205,
-          rotorY,
-          rotorZ + Math.sin(bladeAngle) * 0.205,
+          boneTarget + Math.cos(bladeAngle) * 0.205,
+          partGeometry,
+          partTint + Math.sin(bladeAngle) * 0.205,
           0,
           -bladeAngle,
           0,
@@ -1327,31 +1339,31 @@ export function createDroneModel() {
     }
     (addPart(
       'metal',
-      'rotor' + slotName,
+      'rotor' + slotBucket,
       transformGeom(createCylinderY(0.017, 0.02, 0.03, 8), 0, -0.002, 0),
       RIG_METAL_BRIGHT,
     ),
       addPart(
         'metal',
-        'rotor' + slotName,
+        'rotor' + slotBucket,
         transformGeom(createRoundedBox(0.158, 0.0035, 0.03, 0.001), 0.088, 0.008, 0, 0.22, 0, 0),
         RIG_METAL_BASE,
       ),
       addPart(
         'metal',
-        'rotor' + slotName,
+        'rotor' + slotBucket,
         transformGeom(createRoundedBox(0.158, 0.0035, 0.03, 0.001), -0.088, 0.008, 0, -0.22, 0, 0),
         RIG_METAL_BASE,
       ),
       addPart(
         'shell',
-        'rotor' + slotName,
+        'rotor' + slotBucket,
         transformGeom(createRoundedBox(0.02, 0.004, 0.031, 0.001), 0.158, 0.008, 0, 0.22, 0, 0),
         RIG_SHELL_HAZARD,
       ),
       addPart(
         'shell',
-        'rotor' + slotName,
+        'rotor' + slotBucket,
         transformGeom(createRoundedBox(0.02, 0.004, 0.031, 0.001), -0.158, 0.008, 0, -0.22, 0, 0),
         RIG_SHELL_HAZARD,
       ));
@@ -1360,7 +1372,7 @@ export function createDroneModel() {
       fxRig.add(
         'disc',
         'body',
-        transformGeom(discGeom, parentBone, rotorY + 0.008, rotorZ),
+        transformGeom(discGeom, boneTarget, partGeometry + 0.008, partTint),
         [1, 1, 1],
         !1,
       ));
@@ -1412,11 +1424,11 @@ export function createDroneModel() {
       transformGeom(createRoundedBox(0.156, 0.01, 0.03, 0.003), 0, -0.014, 0),
       RIG_METAL_WHITE,
     ));
-  for (let slotName of [1, -1])
+  for (let slotBucket of [1, -1])
     addPart(
       'metal',
       'gimbalYaw',
-      transformGeom(createRoundedBox(0.009, 0.075, 0.03, 0.003), slotName * 0.0735, -0.05, 0),
+      transformGeom(createRoundedBox(0.009, 0.075, 0.03, 0.003), slotBucket * 0.0735, -0.05, 0),
       RIG_METAL_WHITE,
     );
   (addPart(
@@ -1469,10 +1481,10 @@ export function createDroneModel() {
       !1,
     ));
   {
-    let rotorY = new THREE.ConeGeometry(1.25, 9, 20, 6, !0);
-    (rotorY.translate(0, -9 / 2, 0),
-      rotorY.rotateX(-va),
-      fxRig.add('cone', 'lamp', rotorY, [1, 1, 1], !1));
+    let partGeometry = new THREE.ConeGeometry(1.25, 9, 20, 6, !0);
+    (partGeometry.translate(0, -9 / 2, 0),
+      partGeometry.rotateX(-va),
+      fxRig.add('cone', 'lamp', partGeometry, [1, 1, 1], !1));
   }
   (addPart(
     'metal',
@@ -1498,17 +1510,17 @@ export function createDroneModel() {
       transformGeom(createRoundedBox(0.054, 0.012, 0.05, 0.003), 0, -0.02, -0.03),
       RIG_SHELL_RUST,
     ));
-  for (let slotName of [-0.014, 0.014])
+  for (let slotBucket of [-0.014, 0.014])
     (addPart(
       'metal',
       'gun',
-      transformGeom(createCylinderZ(0.0085, 0.0085, 0.2, 8), slotName, -0.032, 0.16),
+      transformGeom(createCylinderZ(0.0085, 0.0085, 0.2, 8), slotBucket, -0.032, 0.16),
       RIG_METAL_BASE,
     ),
       addPart(
         'metal',
         'gun',
-        transformGeom(createCylinderZ(0.012, 0.012, 0.03, 8), slotName, -0.032, 0.255),
+        transformGeom(createCylinderZ(0.012, 0.012, 0.03, 8), slotBucket, -0.032, 0.255),
         RIG_METAL_WHITE,
       ));
   (addPart(

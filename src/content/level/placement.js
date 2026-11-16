@@ -599,28 +599,45 @@ export function buildQuayApron(ctx) {
     yellowPaintMat = matLit('paint_yellow'),
     ladderZ0 = ladderZ - 0.42,
     ladderZ1 = ladderZ + 0.42;
-  for (let [E, w] of [
+  for (let [alongQuayZ, sectionEndZ] of [
     [quayZ0 - 1, ladderZ0],
     [ladderZ1, quayZ1 + 1],
   ])
-    (addSlab(concreteMat, quayX - 0.65, -0.7, E, quayX, 0.028, w, {
+    (addSlab(concreteMat, quayX - 0.65, -0.7, alongQuayZ, quayX, 0.028, sectionEndZ, {
       bevel: 0.03,
     }),
-      addSlab(wornSteelMat, quayX - 0.07, -0.16, E, quayX + 0.022, 0.036, w, {
+      addSlab(wornSteelMat, quayX - 0.07, -0.16, alongQuayZ, quayX + 0.022, 0.036, sectionEndZ, {
         bevel: 0.012,
       }),
-      addSlab(yellowPaintMat, quayX - 0.66, 0, E, quayX - 0.5, 0.032, w),
-      addSlab(dirtyConcreteMat, quayX - 0.55, -4.2, E, quayX - 0.02, -0.7, w));
+      addSlab(yellowPaintMat, quayX - 0.66, 0, alongQuayZ, quayX - 0.5, 0.032, sectionEndZ),
+      addSlab(dirtyConcreteMat, quayX - 0.55, -4.2, alongQuayZ, quayX - 0.02, -0.7, sectionEndZ));
   (addSlab(concreteMat, quayX - 0.65, -0.7, ladderZ0, quayX - 0.38, 0.028, ladderZ1),
     addSlab(dirtyConcreteMat, quayX - 0.55, -4.2, ladderZ0, quayX - 0.38, -0.7, ladderZ1));
-  for (let E of [ladderZ0, ladderZ1])
-    addSlab(wornSteelMat, quayX - 0.38, -0.16, E - 0.02, quayX + 0.02, 0.034, E + 0.02);
-  for (let E = quayZ0 + 4; E < quayZ1; E += 6)
-    Math.abs(E - ladderZ) < 1 ||
-      (addSlab(darkSteelMat, quayX - 0.03, -4.2, E - 0.02, quayX - 0.012, -0.2, E + 0.02, {
-        cast: !1,
-      }),
-      ctx.decal('rust_run', 0.7, quayX - 0.015, -1.3, E + 1.4, 'x+'));
+  for (let alongQuayZ of [ladderZ0, ladderZ1])
+    addSlab(
+      wornSteelMat,
+      quayX - 0.38,
+      -0.16,
+      alongQuayZ - 0.02,
+      quayX + 0.02,
+      0.034,
+      alongQuayZ + 0.02,
+    );
+  for (let alongQuayZ = quayZ0 + 4; alongQuayZ < quayZ1; alongQuayZ += 6)
+    Math.abs(alongQuayZ - ladderZ) < 1 ||
+      (addSlab(
+        darkSteelMat,
+        quayX - 0.03,
+        -4.2,
+        alongQuayZ - 0.02,
+        quayX - 0.012,
+        -0.2,
+        alongQuayZ + 0.02,
+        {
+          cast: !1,
+        },
+      ),
+      ctx.decal('rust_run', 0.7, quayX - 0.015, -1.3, alongQuayZ + 1.4, 'x+'));
   (addCollider(quayX - 0.65, -4.2, quayZ0 - 1, quayX, 0.028, quayZ1 + 1, 'concrete', {
     noNav: !0,
   }),
@@ -628,19 +645,19 @@ export function buildQuayApron(ctx) {
       playerOnly: !0,
     }));
   {
-    let E = quayX - 0.12;
-    for (let S of [-1, 1]) {
-      let z = ladderZ + S * 0.26;
+    let alongQuayZ = quayX - 0.12;
+    for (let spanPartZ of [-1, 1]) {
+      let sideOffsetZ = ladderZ + spanPartZ * 0.26;
       (addTube(
         matLit('paint_yellow'),
         [
-          [E, -3.9, z],
-          [E, 0.2, z],
-          [E, 0.95, z],
-          [E - 0.12, 1.12, z],
-          [E - 0.5, 1.12, z],
-          [E - 0.62, 0.95, z],
-          [E - 0.62, 0.03, z],
+          [alongQuayZ, -3.9, sideOffsetZ],
+          [alongQuayZ, 0.2, sideOffsetZ],
+          [alongQuayZ, 0.95, sideOffsetZ],
+          [alongQuayZ - 0.12, 1.12, sideOffsetZ],
+          [alongQuayZ - 0.5, 1.12, sideOffsetZ],
+          [alongQuayZ - 0.62, 0.95, sideOffsetZ],
+          [alongQuayZ - 0.62, 0.03, sideOffsetZ],
         ],
         0.024,
         {
@@ -648,38 +665,49 @@ export function buildQuayApron(ctx) {
           tension: 0.2,
         },
       ),
-        addBox(darkSteelMat, 0.12, 0.012, 0.12, E - 0.62, 0.034, z));
+        addBox(darkSteelMat, 0.12, 0.012, 0.12, alongQuayZ - 0.62, 0.034, sideOffsetZ));
     }
-    for (let S = -3.7; S < 0; S += 0.3)
-      addRod(galvMat, [E, S, ladderZ - 0.26], [E, S, ladderZ + 0.26], 0.014, {
-        seg: 6,
-      });
-    for (let S of [-3, -1.6, -0.3])
-      for (let z of [-1, 1])
-        addRod(galvMat, [E, S, ladderZ + z * 0.26], [quayX - 0.38, S, ladderZ + z * 0.26], 0.012);
-    let w = [[ladderZ - 2.6], [ladderZ - 0.9], [ladderZ + 0.9], [ladderZ + 2.6]];
-    for (let [S] of w)
-      (addCyl(yellowPaintMat, 0.032, 1.05, quayX - 0.82, 0.525, S, {
+    for (let spanPartZ = -3.7; spanPartZ < 0; spanPartZ += 0.3)
+      addRod(
+        galvMat,
+        [alongQuayZ, spanPartZ, ladderZ - 0.26],
+        [alongQuayZ, spanPartZ, ladderZ + 0.26],
+        0.014,
+        {
+          seg: 6,
+        },
+      );
+    for (let spanPartZ of [-3, -1.6, -0.3])
+      for (let sideOffsetZ of [-1, 1])
+        addRod(
+          galvMat,
+          [alongQuayZ, spanPartZ, ladderZ + sideOffsetZ * 0.26],
+          [quayX - 0.38, spanPartZ, ladderZ + sideOffsetZ * 0.26],
+          0.012,
+        );
+    let sectionEndZ = [[ladderZ - 2.6], [ladderZ - 0.9], [ladderZ + 0.9], [ladderZ + 2.6]];
+    for (let [spanPartZ] of sectionEndZ)
+      (addCyl(yellowPaintMat, 0.032, 1.05, quayX - 0.82, 0.525, spanPartZ, {
         seg: 8,
       }),
-        addCyl(darkSteelMat, 0.09, 0.02, quayX - 0.82, 0.01, S, {
+        addCyl(darkSteelMat, 0.09, 0.02, quayX - 0.82, 0.01, spanPartZ, {
           seg: 10,
         }),
-        addCyl(darkSteelMat, 0.045, 0.03, quayX - 0.82, 1.06, S, {
+        addCyl(darkSteelMat, 0.045, 0.03, quayX - 0.82, 1.06, spanPartZ, {
           seg: 8,
         }));
-    for (let [S, z] of [
+    for (let [spanPartZ, sideOffsetZ] of [
       [ladderZ - 2.6, ladderZ - 0.9],
       [ladderZ + 0.9, ladderZ + 2.6],
     ])
-      for (let H of [0.98, 0.55])
+      for (let handrailLevel of [0.98, 0.55])
         addTube(
           galvMat,
           [
-            [quayX - 0.82, H, S],
-            [quayX - 0.82, H - 0.1, (S + z) / 2 - 0.3],
-            [quayX - 0.82, H - 0.12, (S + z) / 2 + 0.3],
-            [quayX - 0.82, H, z],
+            [quayX - 0.82, handrailLevel, spanPartZ],
+            [quayX - 0.82, handrailLevel - 0.1, (spanPartZ + sideOffsetZ) / 2 - 0.3],
+            [quayX - 0.82, handrailLevel - 0.12, (spanPartZ + sideOffsetZ) / 2 + 0.3],
+            [quayX - 0.82, handrailLevel, sideOffsetZ],
           ],
           0.012,
           {
@@ -694,84 +722,183 @@ export function buildQuayApron(ctx) {
   }
   let tireGeo = new THREE.TorusGeometry(0.4, 0.16, 8, 16);
   tireGeo.rotateY(Math.PI / 2);
-  for (let E = quayZ0 + 2.5, w = 0; E < quayZ1; E += 5, w++) {
-    if (Math.abs(E - ladderZ) < 2) continue;
-    (addSlab(matLit('wood_dark'), quayX + 0, -3.9, E - 0.16, quayX + 0.2, -0.25, E + 0.16, {
-      bevel: 0.02,
-    }),
-      addSlab(darkSteelMat, quayX - 0.01, -0.5, E - 0.2, quayX + 0.215, -0.42, E + 0.2),
-      addSlab(darkSteelMat, quayX - 0.01, -2.4, E - 0.2, quayX + 0.215, -2.32, E + 0.2));
-    let S = E + 2.4;
-    if (Math.abs(S - ladderZ) < 1.6 || S > quayZ1 - 0.5) continue;
-    let z = -0.85 - (w % 3) * 0.18;
+  for (
+    let alongQuayZ = quayZ0 + 2.5, sectionEndZ = 0;
+    alongQuayZ < quayZ1;
+    alongQuayZ += 5, sectionEndZ++
+  ) {
+    if (Math.abs(alongQuayZ - ladderZ) < 2) continue;
+    (addSlab(
+      matLit('wood_dark'),
+      quayX + 0,
+      -3.9,
+      alongQuayZ - 0.16,
+      quayX + 0.2,
+      -0.25,
+      alongQuayZ + 0.16,
+      {
+        bevel: 0.02,
+      },
+    ),
+      addSlab(
+        darkSteelMat,
+        quayX - 0.01,
+        -0.5,
+        alongQuayZ - 0.2,
+        quayX + 0.215,
+        -0.42,
+        alongQuayZ + 0.2,
+      ),
+      addSlab(
+        darkSteelMat,
+        quayX - 0.01,
+        -2.4,
+        alongQuayZ - 0.2,
+        quayX + 0.215,
+        -2.32,
+        alongQuayZ + 0.2,
+      ));
+    let spanPartZ = alongQuayZ + 2.4;
+    if (Math.abs(spanPartZ - ladderZ) < 1.6 || spanPartZ > quayZ1 - 0.5) continue;
+    let sideOffsetZ = -0.85 - (sectionEndZ % 3) * 0.18;
     (addGeometry(tireGeo.clone(), matLit('tire'), {
-      p: [quayX + 0.17, z, S],
+      p: [quayX + 0.17, sideOffsetZ, spanPartZ],
     }),
-      w % 2 &&
+      sectionEndZ % 2 &&
         addGeometry(tireGeo.clone(), matLit('tire'), {
-          p: [quayX + 0.17, z - 0.86, S + 0.05],
+          p: [quayX + 0.17, sideOffsetZ - 0.86, spanPartZ + 0.05],
         }));
-    for (let H of [-1, 1])
+    for (let handrailLevel of [-1, 1])
       addRod(
         galvMat,
-        [quayX - 0.02, 0.02, S + H * 0.3],
-        [quayX + 0.17, z + 0.36, S + H * 0.16],
+        [quayX - 0.02, 0.02, spanPartZ + handrailLevel * 0.3],
+        [quayX + 0.17, sideOffsetZ + 0.36, spanPartZ + handrailLevel * 0.16],
         0.011,
         {
           seg: 5,
         },
       );
-    addBox(darkSteelMat, 0.1, 0.03, 0.8, quayX - 0.06, 0.04, S);
+    addBox(darkSteelMat, 0.1, 0.03, 0.8, quayX - 0.06, 0.04, spanPartZ);
   }
   let bollardZs = [-22, -12, -2, 9, 16.4, 25.6];
-  for (let E of bollardZs)
-    placeProp('bollard_mooring', 29.2, E, 0, {
-      seed: Math.round(E + 40),
+  for (let alongQuayZ of bollardZs)
+    placeProp('bollard_mooring', 29.2, alongQuayZ, 0, {
+      seed: Math.round(alongQuayZ + 40),
     });
   {
-    let E = [...bollardZs.map((S) => [S - 1.1, S + 1.1]), [ladderZ - 3, ladderZ + 3]].sort(
-        (S, z) => S[0] - z[0],
-      ),
-      w = quayZ0 + 0.3;
-    for (let [S, z] of [...E, [quayZ1 - 0.3, quayZ1]]) {
-      if (S - w > 1) {
-        addSlab(yellowPaintMat, quayX - 0.4, 0.12, w, quayX - 0.2, 0.3, S, {
+    let alongQuayZ = [
+        ...bollardZs.map((spanPartZ) => [spanPartZ - 1.1, spanPartZ + 1.1]),
+        [ladderZ - 3, ladderZ + 3],
+      ].sort((spanPartZ, sideOffsetZ) => spanPartZ[0] - sideOffsetZ[0]),
+      sectionEndZ = quayZ0 + 0.3;
+    for (let [spanPartZ, sideOffsetZ] of [...alongQuayZ, [quayZ1 - 0.3, quayZ1]]) {
+      if (spanPartZ - sectionEndZ > 1) {
+        addSlab(yellowPaintMat, quayX - 0.4, 0.12, sectionEndZ, quayX - 0.2, 0.3, spanPartZ, {
           bevel: 0.02,
         });
-        for (let H = w + 0.3; H < S; H += 1.6)
-          addSlab(darkSteelMat, quayX - 0.42, 0.028, H - 0.12, quayX - 0.18, 0.12, H + 0.12);
+        for (let handrailLevel = sectionEndZ + 0.3; handrailLevel < spanPartZ; handrailLevel += 1.6)
+          addSlab(
+            darkSteelMat,
+            quayX - 0.42,
+            0.028,
+            handrailLevel - 0.12,
+            quayX - 0.18,
+            0.12,
+            handrailLevel + 0.12,
+          );
       }
-      w = Math.max(w, z);
+      sectionEndZ = Math.max(sectionEndZ, sideOffsetZ);
     }
   }
-  for (let E of QUAY_DIMS.RAILS) {
-    (addSlab(darkSteelMat, E - 0.19, 0, quayZ0 + 0.4, E + 0.19, 0.007, quayZ1 - 0.4, {
-      cast: !1,
-    }),
-      addSlab(matLit('steel_rust'), E - 0.075, 0, quayZ0 + 0.4, E + 0.075, 0.018, quayZ1 - 0.4, {
+  for (let alongQuayZ of QUAY_DIMS.RAILS) {
+    (addSlab(
+      darkSteelMat,
+      alongQuayZ - 0.19,
+      0,
+      quayZ0 + 0.4,
+      alongQuayZ + 0.19,
+      0.007,
+      quayZ1 - 0.4,
+      {
         cast: !1,
-      }),
-      addSlab(wornSteelMat, E - 0.037, 0, quayZ0 + 0.4, E + 0.037, 0.034, quayZ1 - 0.4, {
-        bevel: 0.008,
-        cast: !1,
-      }));
-    for (let w = quayZ0 + 0.8; w < quayZ1 - 0.5; w += 0.9)
-      for (let S of [-1, 1])
-        addBox(darkSteelMat, 0.07, 0.022, 0.1, E + S * 0.115, 0.012, w, {
+      },
+    ),
+      addSlab(
+        matLit('steel_rust'),
+        alongQuayZ - 0.075,
+        0,
+        quayZ0 + 0.4,
+        alongQuayZ + 0.075,
+        0.018,
+        quayZ1 - 0.4,
+        {
+          cast: !1,
+        },
+      ),
+      addSlab(
+        wornSteelMat,
+        alongQuayZ - 0.037,
+        0,
+        quayZ0 + 0.4,
+        alongQuayZ + 0.037,
+        0.034,
+        quayZ1 - 0.4,
+        {
+          bevel: 0.008,
+          cast: !1,
+        },
+      ));
+    for (let sectionEndZ = quayZ0 + 0.8; sectionEndZ < quayZ1 - 0.5; sectionEndZ += 0.9)
+      for (let spanPartZ of [-1, 1])
+        addBox(darkSteelMat, 0.07, 0.022, 0.1, alongQuayZ + spanPartZ * 0.115, 0.012, sectionEndZ, {
           cast: !1,
         });
-    for (let [w, S] of [
+    for (let [sectionEndZ, spanPartZ] of [
       [quayZ0 + 0.75, 1],
       [quayZ1 - 0.75, -1],
     ])
-      (addSlab(yellowPaintMat, E - 0.28, 0, w - 0.3, E + 0.28, 0.75, w + 0.3, {
-        bevel: 0.03,
-      }),
-        addSlab(matLit('rubber'), E - 0.16, 0.3, w + S * 0.3, E + 0.16, 0.62, w + S * 0.42, {
+      (addSlab(
+        yellowPaintMat,
+        alongQuayZ - 0.28,
+        0,
+        sectionEndZ - 0.3,
+        alongQuayZ + 0.28,
+        0.75,
+        sectionEndZ + 0.3,
+        {
           bevel: 0.03,
-        }),
-        addSlab(darkSteelMat, E - 0.34, 0, w - 0.38, E + 0.34, 0.04, w + 0.38),
-        addCollider(E - 0.28, 0, w - 0.36, E + 0.28, 0.75, w + 0.36, 'metal'));
+        },
+      ),
+        addSlab(
+          matLit('rubber'),
+          alongQuayZ - 0.16,
+          0.3,
+          sectionEndZ + spanPartZ * 0.3,
+          alongQuayZ + 0.16,
+          0.62,
+          sectionEndZ + spanPartZ * 0.42,
+          {
+            bevel: 0.03,
+          },
+        ),
+        addSlab(
+          darkSteelMat,
+          alongQuayZ - 0.34,
+          0,
+          sectionEndZ - 0.38,
+          alongQuayZ + 0.34,
+          0.04,
+          sectionEndZ + 0.38,
+        ),
+        addCollider(
+          alongQuayZ - 0.28,
+          0,
+          sectionEndZ - 0.36,
+          alongQuayZ + 0.28,
+          0.75,
+          sectionEndZ + 0.36,
+          'metal',
+        ));
   }
   return (
     buildPlateStack(ctx, 23.3, -15.4, 2, !0, 0.02),
@@ -1044,8 +1171,9 @@ export function placeYardLayout(ctx) {
     ctx.catwalk(8.98, 12.42, 0, 2.54, {
       seed: 10,
     }));
-  for (let s of [7.6, 10.36])
-    for (let o of [11.86, 12.98]) ctx.rod('steel_galv', [s, 0, o], [s, 2.5, o], 0.035);
+  for (let propColumnX of [7.6, 10.36])
+    for (let propRowZ of [11.86, 12.98])
+      ctx.rod('steel_galv', [propColumnX, 0, propRowZ], [propColumnX, 2.5, propRowZ], 0.035);
   (placeProp(
     'sandbags',
     15.95,
@@ -1136,15 +1264,15 @@ export function placeYardLayout(ctx) {
       [40, 'teal'],
       [40, 'orange'],
     ]));
-  for (let [s, o] of [
+  for (let [propColumnX, propRowZ] of [
     [-23.4, 0.5],
     [-23.4, 21.4],
     [17, -8.7],
     [17, 18.6],
     [-20.6, -11.6],
   ])
-    placeProp('light_mast', s, o, 0, {
-      seed: Math.round(s * 3 + o),
+    placeProp('light_mast', propColumnX, propRowZ, 0, {
+      seed: Math.round(propColumnX * 3 + propRowZ),
     });
   let cableRun = (rnd, hissLoop, bpLoop, bufLen = 0.018) => {
     let mixBuf = [];
@@ -1186,18 +1314,18 @@ export function placeYardLayout(ctx) {
       seed: 5,
     }));
   {
-    let a = Math.cos(-0.22),
-      l = -Math.sin(-0.22);
+    let forkliftCos = Math.cos(-0.22),
+      forkliftSin = -Math.sin(-0.22);
     placeProp('forklift', -8.6, 4.5, -0.22, {
       seed: 6,
       forksUp: 0.3,
     });
-    let c = -8.6 + a * 1.42,
-      u = 4.5 + l * 1.42;
+    let forkPalletX = -8.6 + forkliftCos * 1.42,
+      forkPalletZ = 4.5 + forkliftSin * 1.42;
     (placeProp(
       'pallet',
-      c,
-      u,
+      forkPalletX,
+      forkPalletZ,
       -0.22,
       {
         seed: 7,
@@ -1209,8 +1337,8 @@ export function placeYardLayout(ctx) {
     ),
       placeProp(
         'crate_wood',
-        c,
-        u,
+        forkPalletX,
+        forkPalletZ,
         -0.22 + 0.05,
         {
           seed: 8,
@@ -1221,12 +1349,12 @@ export function placeYardLayout(ctx) {
         },
       ),
       ctx.col(
-        c - 0.62,
+        forkPalletX - 0.62,
         FORKLIFT_FORK_Y - 0.1,
-        u - 0.62,
-        c + 0.62,
+        forkPalletZ - 0.62,
+        forkPalletX + 0.62,
         FORKLIFT_FORK_Y + 1.15,
-        u + 0.62,
+        forkPalletZ + 0.62,
         'wood',
       ),
       buildWheelChock(ctx, -8.6 - 1, 4.5 + 0.78, 0.2),
@@ -1272,14 +1400,14 @@ export function placeYardLayout(ctx) {
     placeProp('ibc_tote', 15.2, 10.2, 0.1, {
       seed: 82,
     }));
-  for (let [s, o] of [
+  for (let [propColumnX, propRowZ] of [
     [0.2, 6.3],
     [2.9, 6.4],
     [2.9, 8.8],
     [0.1, 8.7],
   ])
-    placeProp('traffic_cone', s, o, 0, {
-      seed: Math.round(s * 9 + o * 5),
+    placeProp('traffic_cone', propColumnX, propRowZ, 0, {
+      seed: Math.round(propColumnX * 9 + propRowZ * 5),
     });
   (buildSkipBin(ctx, -9.55, 9.3, 0.04),
     buildRebarBundle(ctx, -7.6, 11.9, ts + 0.06),

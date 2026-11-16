@@ -7,10 +7,10 @@ export function createSeededRandom(seed) {
   let rngState = seed >>> 0;
   return () => {
     ((rngState |= 0), (rngState = (rngState + 1831565813) | 0));
-    let t = Math.imul(rngState ^ (rngState >>> 15), 1 | rngState);
+    let mixedVal = Math.imul(rngState ^ (rngState >>> 15), 1 | rngState);
     return (
-      (t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t),
-      ((t ^ (t >>> 14)) >>> 0) / 4294967296
+      (mixedVal = (mixedVal + Math.imul(mixedVal ^ (mixedVal >>> 7), 61 | mixedVal)) ^ mixedVal),
+      ((mixedVal ^ (mixedVal >>> 14)) >>> 0) / 4294967296
     );
   };
 }

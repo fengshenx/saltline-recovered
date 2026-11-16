@@ -42,21 +42,29 @@ export function roundedBoxGeometry(
     nrmArr = [],
     uvArr = [],
     idxArr = [];
-  for (let cornerIdx = 0; cornerIdx < 8; cornerIdx++)
-    for (let axisIdx = 0; axisIdx < 3; axisIdx++) {
-      let vVal = [cornerIdx & 1 ? 1 : -1, cornerIdx & 2 ? 1 : -1, cornerIdx & 4 ? 1 : -1],
-        valG = [0, 1, 2].map((x) => vVal[x] * (halfSize[x] - (x !== axisIdx ? bevelRadius : 0)));
-      (posArr.push(valG[0], valG[1], valG[2]),
+  for (let triangleVertexFirst = 0; triangleVertexFirst < 8; triangleVertexFirst++)
+    for (let triangleVertexSecond = 0; triangleVertexSecond < 3; triangleVertexSecond++) {
+      let triangleVertexThird = [
+          triangleVertexFirst & 1 ? 1 : -1,
+          triangleVertexFirst & 2 ? 1 : -1,
+          triangleVertexFirst & 4 ? 1 : -1,
+        ],
+        normalCompX = [0, 1, 2].map(
+          (normalCompY) =>
+            triangleVertexThird[normalCompY] *
+            (halfSize[normalCompY] - (normalCompY !== triangleVertexSecond ? bevelRadius : 0)),
+        );
+      (posArr.push(normalCompX[0], normalCompX[1], normalCompX[2]),
         nrmArr.push(
-          axisIdx === 0 ? vVal[0] : 0,
-          axisIdx === 1 ? vVal[1] : 0,
-          axisIdx === 2 ? vVal[2] : 0,
+          triangleVertexSecond === 0 ? triangleVertexThird[0] : 0,
+          triangleVertexSecond === 1 ? triangleVertexThird[1] : 0,
+          triangleVertexSecond === 2 ? triangleVertexThird[2] : 0,
         ),
-        axisIdx === 0
-          ? uvArr.push(valG[2], valG[1])
-          : axisIdx === 1
-            ? uvArr.push(valG[0], valG[2])
-            : uvArr.push(valG[0], valG[1]));
+        triangleVertexSecond === 0
+          ? uvArr.push(normalCompX[2], normalCompX[1])
+          : triangleVertexSecond === 1
+            ? uvArr.push(normalCompX[0], normalCompX[2])
+            : uvArr.push(normalCompX[0], normalCompX[1]));
     }
   let vertIdx = (p, d) => p * 3 + d,
     pushTri = (p, d, v, g, x, y) => {
@@ -70,50 +78,66 @@ export function roundedBoxGeometry(
         ? idxArr.push(p, d, v)
         : idxArr.push(p, v, d);
     };
-  for (let cornerIdx = 0; cornerIdx < 3; cornerIdx++) {
-    let axisIdx = (cornerIdx + 1) % 3,
-      vVal = (cornerIdx + 2) % 3;
-    for (let valG of [0, 1]) {
-      let valX = [
+  for (let triangleVertexFirst = 0; triangleVertexFirst < 3; triangleVertexFirst++) {
+    let triangleVertexSecond = (triangleVertexFirst + 1) % 3,
+      triangleVertexThird = (triangleVertexFirst + 2) % 3;
+    for (let normalCompX of [0, 1]) {
+      let normalCompY = [
           [0, 0],
           [1, 0],
           [1, 1],
           [0, 1],
-        ].map(([b, m]) => (valG << cornerIdx) | (b << axisIdx) | (m << vVal)),
-        valY = [0, 0, 0];
-      ((valY[cornerIdx] = valG ? 1 : -1),
+        ].map(
+          ([edgeOneDx, edgeOneDy]) =>
+            (normalCompX << triangleVertexFirst) |
+            (edgeOneDx << triangleVertexSecond) |
+            (edgeOneDy << triangleVertexThird),
+        ),
+        normalCompZ = [0, 0, 0];
+      ((normalCompZ[triangleVertexFirst] = normalCompX ? 1 : -1),
         pushTri(
-          vertIdx(valX[0], cornerIdx),
-          vertIdx(valX[1], cornerIdx),
-          vertIdx(valX[2], cornerIdx),
-          ...valY,
+          vertIdx(normalCompY[0], triangleVertexFirst),
+          vertIdx(normalCompY[1], triangleVertexFirst),
+          vertIdx(normalCompY[2], triangleVertexFirst),
+          ...normalCompZ,
         ),
         pushTri(
-          vertIdx(valX[0], cornerIdx),
-          vertIdx(valX[2], cornerIdx),
-          vertIdx(valX[3], cornerIdx),
-          ...valY,
+          vertIdx(normalCompY[0], triangleVertexFirst),
+          vertIdx(normalCompY[2], triangleVertexFirst),
+          vertIdx(normalCompY[3], triangleVertexFirst),
+          ...normalCompZ,
         ));
     }
-    for (let valG of [0, 1])
-      for (let valX of [0, 1]) {
-        let valY = (valG << axisIdx) | (valX << vVal),
-          edgeDx = valY | (1 << cornerIdx),
-          valM = [0, 0, 0];
-        ((valM[axisIdx] = valG ? 1 : -1),
-          (valM[vVal] = valX ? 1 : -1),
-          pushTri(vertIdx(valY, axisIdx), vertIdx(edgeDx, axisIdx), vertIdx(edgeDx, vVal), ...valM),
-          pushTri(vertIdx(valY, axisIdx), vertIdx(edgeDx, vVal), vertIdx(valY, vVal), ...valM));
+    for (let normalCompX of [0, 1])
+      for (let normalCompY of [0, 1]) {
+        let normalCompZ =
+            (normalCompX << triangleVertexSecond) | (normalCompY << triangleVertexThird),
+          edgeOneDx = normalCompZ | (1 << triangleVertexFirst),
+          edgeOneDy = [0, 0, 0];
+        ((edgeOneDy[triangleVertexSecond] = normalCompX ? 1 : -1),
+          (edgeOneDy[triangleVertexThird] = normalCompY ? 1 : -1),
+          pushTri(
+            vertIdx(normalCompZ, triangleVertexSecond),
+            vertIdx(edgeOneDx, triangleVertexSecond),
+            vertIdx(edgeOneDx, triangleVertexThird),
+            ...edgeOneDy,
+          ),
+          pushTri(
+            vertIdx(normalCompZ, triangleVertexSecond),
+            vertIdx(edgeOneDx, triangleVertexThird),
+            vertIdx(normalCompZ, triangleVertexThird),
+            ...edgeOneDy,
+          ));
       }
   }
-  for (let cornerIdx = 0; cornerIdx < 8; cornerIdx++)
+  for (let triangleVertexFirst = 0; triangleVertexFirst < 8; triangleVertexFirst++)
     pushTri(
-      vertIdx(cornerIdx, 0),
-      vertIdx(cornerIdx, 1),
-      vertIdx(cornerIdx, 2),
-      cornerIdx & 1 ? 1 : -1,
-      cornerIdx & 2 ? 1 : -1,
-      cornerIdx & 4 ? 1 : -1,
+      vertIdx(triangleVertexFirst, 0),
+      vertIdx(triangleVertexFirst, 1),
+      vertIdx(triangleVertexFirst, 2),
+      triangleVertexFirst & 1 ? 1 : -1,
+      triangleVertexFirst & 2 ? 1 : -1,
+      triangleVertexFirst & 4 ? 1 : -1,
     );
   let boxGeo = createGeometryFromArrays(posArr, nrmArr, uvArr, idxArr);
   return (anchorMode === 'bottom' && boxGeo.translate(0, height / 2, 0), boxGeo);
@@ -355,59 +379,89 @@ export function buildBarrel(ctx, opts, variant) {
     });
   let shellGeo = revolveProfileGeometry(barrelProfile(!!opts.open), radialSegments),
     dents = [];
-  for (let vertD = 0; vertD < 2 + (variant % 2); vertD++)
+  for (let vertexCoord = 0; vertexCoord < 2 + (variant % 2); vertexCoord++)
     dents.push([
       rng() * PI_TWO * 2,
       rng.range(0.12, 0.78),
       rng.range(0.07, 0.13),
       rng.range(0.006, 0.014),
     ]);
-  (mapVertices(shellGeo, (d) => {
-    let v = Math.hypot(d.x, d.z);
-    if (v < 0.27) return;
-    let g = Math.atan2(d.z, d.x);
-    for (let x of dents) {
-      let y = Math.abs(g - x[0]) % (PI_TWO * 2);
-      y > PI_TWO && (y = PI_TWO * 2 - y);
-      let b = Math.hypot(y * 0.285, d.y - x[1]);
-      if (b < x[2]) {
-        let m = 1 - (x[3] * (0.5 + 0.5 * Math.cos((PI_TWO * b) / x[2]))) / v;
-        ((d.x *= m), (d.z *= m));
+  (mapVertices(shellGeo, (vertexCoord) => {
+    let radiusOrHeight = Math.hypot(vertexCoord.x, vertexCoord.z);
+    if (radiusOrHeight < 0.27) return;
+    let azimuthOrDepth = Math.atan2(vertexCoord.z, vertexCoord.x);
+    for (let dentSpec of dents) {
+      let angleDelta = Math.abs(azimuthOrDepth - dentSpec[0]) % (PI_TWO * 2);
+      angleDelta > PI_TWO && (angleDelta = PI_TWO * 2 - angleDelta);
+      let dentDistanceNoise = Math.hypot(angleDelta * 0.285, vertexCoord.y - dentSpec[1]);
+      if (dentDistanceNoise < dentSpec[2]) {
+        let dentScaleFactor =
+          1 -
+          (dentSpec[3] * (0.5 + 0.5 * Math.cos((PI_TWO * dentDistanceNoise) / dentSpec[2]))) /
+            radiusOrHeight;
+        ((vertexCoord.x *= dentScaleFactor), (vertexCoord.z *= dentScaleFactor));
       }
     }
   }),
     shellGeo.computeVertexNormals());
   let normals = shellGeo.attributes.normal,
     ringCount = shellGeo.attributes.position.count / (radialSegments + 1);
-  for (let vertD = 0; vertD < ringCount; vertD++) {
-    let vertV = vertD * (radialSegments + 1),
-      coordG = vertV + radialSegments,
-      compX = normals.getX(vertV) + normals.getX(coordG),
-      angleY = normals.getY(vertV) + normals.getY(coordG),
-      valB = normals.getZ(vertV) + normals.getZ(coordG),
-      valM = Math.hypot(compX, angleY, valB) || 1;
-    (normals.setXYZ(vertV, compX / valM, angleY / valM, valB / valM),
-      normals.setXYZ(coordG, compX / valM, angleY / valM, valB / valM));
+  for (let vertexCoord = 0; vertexCoord < ringCount; vertexCoord++) {
+    let radiusOrHeight = vertexCoord * (radialSegments + 1),
+      azimuthOrDepth = radiusOrHeight + radialSegments,
+      dentSpec = normals.getX(radiusOrHeight) + normals.getX(azimuthOrDepth),
+      angleDelta = normals.getY(radiusOrHeight) + normals.getY(azimuthOrDepth),
+      dentDistanceNoise = normals.getZ(radiusOrHeight) + normals.getZ(azimuthOrDepth),
+      dentScaleFactor = Math.hypot(dentSpec, angleDelta, dentDistanceNoise) || 1;
+    (normals.setXYZ(
+      radiusOrHeight,
+      dentSpec / dentScaleFactor,
+      angleDelta / dentScaleFactor,
+      dentDistanceNoise / dentScaleFactor,
+    ),
+      normals.setXYZ(
+        azimuthOrDepth,
+        dentSpec / dentScaleFactor,
+        angleDelta / dentScaleFactor,
+        dentDistanceNoise / dentScaleFactor,
+      ));
   }
   let noiseOffset = variant * 2.37,
     isRust = opts.color === 'rust';
   return (
-    rand.add(bodyMat, shellGeo, null, (d, v, g) => {
-      let x = Math.hypot(d, g),
-        y = Math.atan2(g, d);
-      if (x < 0.27) {
-        let w = v > 0.5 ? 0.62 + 0.3 * valueNoise3D(d * 9 + noiseOffset, g * 9) : 0.6;
-        return [w, w, w];
+    rand.add(bodyMat, shellGeo, null, (vertexCoord, radiusOrHeight, azimuthOrDepth) => {
+      let dentSpec = Math.hypot(vertexCoord, azimuthOrDepth),
+        angleDelta = Math.atan2(azimuthOrDepth, vertexCoord);
+      if (dentSpec < 0.27) {
+        let capShadeValue =
+          radiusOrHeight > 0.5
+            ? 0.62 + 0.3 * valueNoise3D(vertexCoord * 9 + noiseOffset, azimuthOrDepth * 9)
+            : 0.6;
+        return [capShadeValue, capShadeValue, capShadeValue];
       }
-      let b = Math.pow(valueNoise3D(y * 2.6 + noiseOffset, 3.1), 2.2),
-        m = v > 0.6 ? (0.88 - v) / 0.28 : v > 0.31 ? (0.6 - v) / 0.29 : (0.31 - v) / 0.31,
-        A = 1 - 0.55 * b * (1 - 0.6 * clampValue(m, 0, 1)),
-        M = (x > 0.289 ? 1 : 0) * (0.35 + 0.65 * valueNoise3D(y * 7 + noiseOffset, v * 20)),
-        E = [A * (1 - 0.25 * M), A * (1 - 0.42 * M), A * (1 - 0.55 * M)];
+      let dentDistanceNoise = Math.pow(valueNoise3D(angleDelta * 2.6 + noiseOffset, 3.1), 2.2),
+        dentScaleFactor =
+          radiusOrHeight > 0.6
+            ? (0.88 - radiusOrHeight) / 0.28
+            : radiusOrHeight > 0.31
+              ? (0.6 - radiusOrHeight) / 0.29
+              : (0.31 - radiusOrHeight) / 0.31,
+        baseShadeValue =
+          1 - 0.55 * dentDistanceNoise * (1 - 0.6 * clampValue(dentScaleFactor, 0, 1)),
+        rimWearAmount =
+          (dentSpec > 0.289 ? 1 : 0) *
+          (0.35 + 0.65 * valueNoise3D(angleDelta * 7 + noiseOffset, radiusOrHeight * 20)),
+        barrelColorRgb = [
+          baseShadeValue * (1 - 0.25 * rimWearAmount),
+          baseShadeValue * (1 - 0.42 * rimWearAmount),
+          baseShadeValue * (1 - 0.55 * rimWearAmount),
+        ];
       return (
         typeof bodyTint != 'number' &&
-          ((E[0] *= bodyTint[0]), (E[1] *= bodyTint[1]), (E[2] *= bodyTint[2])),
-        E
+          ((barrelColorRgb[0] *= bodyTint[0]),
+          (barrelColorRgb[1] *= bodyTint[1]),
+          (barrelColorRgb[2] *= bodyTint[2])),
+        barrelColorRgb
       );
     }),
     opts.open ||

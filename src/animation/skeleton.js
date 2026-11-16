@@ -16,23 +16,27 @@ export function buildSkinnedRig(
     extra: extraRig = null,
   } = {},
 ) {
-  let boneList = def.bones.map((p) => {
-    let d = new THREE.Bone();
-    return ((d.name = p.name), d.position.set(p.local[0], p.local[1], p.local[2]), d);
+  let boneList = def.bones.map((boneDef) => {
+    let boneObj = new THREE.Bone();
+    return (
+      (boneObj.name = boneDef.name),
+      boneObj.position.set(boneDef.local[0], boneDef.local[1], boneDef.local[2]),
+      boneObj
+    );
   });
-  def.bones.forEach((p, d) => {
-    p.parent >= 0 && boneList[p.parent].add(boneList[d]);
+  def.bones.forEach((boneDef, boneObj) => {
+    boneDef.parent >= 0 && boneList[boneDef.parent].add(boneList[boneObj]);
   });
   let rigGroup = new THREE.Group(),
     skinMesh = new THREE.SkinnedMesh(
       def.geometry,
-      def.slots.map((p) => materials[p]),
+      def.slots.map((boneDef) => materials[boneDef]),
     );
   ((skinMesh.castShadow = castShadowOn),
     (skinMesh.receiveShadow = receiveShadowOn),
     rigGroup.add(skinMesh),
-    def.bones.forEach((p, d) => {
-      p.parent < 0 && skinMesh.add(boneList[d]);
+    def.bones.forEach((boneDef, boneObj) => {
+      boneDef.parent < 0 && skinMesh.add(boneList[boneObj]);
     }),
     rigGroup.updateMatrixWorld(!0));
   let skeleton = new THREE.Skeleton(boneList);
@@ -54,8 +58,8 @@ export function buildSkinnedRig(
       ),
     )));
   let boneMap = {};
-  boneList.forEach((p) => {
-    boneMap[p.name] = p;
+  boneList.forEach((boneDef) => {
+    boneMap[boneDef.name] = boneDef;
   });
   let rigResult = {
     group: rigGroup,
@@ -67,7 +71,7 @@ export function buildSkinnedRig(
   if (extraRig) {
     let boneDef = new THREE.SkinnedMesh(
       extraRig.def.geometry,
-      extraRig.def.slots.map((d) => materials[d]),
+      extraRig.def.slots.map((boneObj) => materials[boneObj]),
     );
     ((boneDef.castShadow = !1),
       (boneDef.receiveShadow = !1),

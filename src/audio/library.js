@@ -998,10 +998,10 @@ function synthImpactMetal(sampleRate, rand, variant) {
       makeModalResonance(
         sampleRate,
         0.48,
-        [1, 1.58, 2.24, 2.92, 3.71, 4.93, 6.31, 8.1].map((r, a) => [
-          baseFreq * r,
-          0.13 / (1 + a * 0.55),
-          1 / (1 + a * 0.5),
+        [1, 1.58, 2.24, 2.92, 3.71, 4.93, 6.31, 8.1].map((partialRatio, partialIndex) => [
+          baseFreq * partialRatio,
+          0.13 / (1 + partialIndex * 0.55),
+          1 / (1 + partialIndex * 0.5),
         ]),
         rand,
       ),
@@ -1261,7 +1261,7 @@ function synthWhiz(sampleRate, rand, variant) {
     applySweptBiquad(
       airNoise,
       'bp',
-      (l) => freqEnd + (freqStart - freqEnd) * Math.exp((-l * 0.75) / 0.16),
+      (sampleIdx) => freqEnd + (freqStart - freqEnd) * Math.exp((-sampleIdx * 0.75) / 0.16),
       6,
       sampleRate,
     ),
@@ -1347,8 +1347,9 @@ function* synthGullRotor(sampleRate, rand) {
       sampleRate,
       2,
       rand,
-      (l) => {
-        (applyBiquad(l, 'hp', 1100, 0.7, sampleRate), applyBiquad(l, 'lp', 5200, 0.7, sampleRate));
+      (partFreq) => {
+        (applyBiquad(partFreq, 'hp', 1100, 0.7, sampleRate),
+          applyBiquad(partFreq, 'lp', 5200, 0.7, sampleRate));
       },
       0.25,
     ),
@@ -1391,8 +1392,9 @@ function synthHoundServo(sampleRate, rand) {
     sampleRate,
     2,
     rand,
-    (r) => {
-      (applyBiquad(r, 'hp', 2800, 0.7, sampleRate), applyBiquad(r, 'lp', 7e3, 0.7, sampleRate));
+    (sIdx) => {
+      (applyBiquad(sIdx, 'hp', 2800, 0.7, sampleRate),
+        applyBiquad(sIdx, 'lp', 7e3, 0.7, sampleRate));
     },
     0.25,
   );
@@ -1427,7 +1429,7 @@ function synthRelayHum(sampleRate, rand) {
     sampleRate,
     2,
     rand,
-    (r) => applyBiquad(r, 'bp', 2100, 1.2, sampleRate),
+    (sampIdx) => applyBiquad(sampIdx, 'bp', 2100, 1.2, sampleRate),
     0.25,
   );
   for (let sampIdx = 0; sampIdx < frameLen; sampIdx++)
@@ -2349,12 +2351,13 @@ function synthUiHover(sr, rand) {
  */
 function* synthRain(sampleRate, rand) {
   let makeLayer = function* (rnd) {
-    let hissLoop = makeFilteredLoop(sampleRate, 6, rnd, (u) => {
-      (applyBiquad(u, 'hp', 900, 0.6, sampleRate), applyBiquad(u, 'lp', 8500, 0.6, sampleRate));
+    let hissLoop = makeFilteredLoop(sampleRate, 6, rnd, (workBuf) => {
+      (applyBiquad(workBuf, 'hp', 900, 0.6, sampleRate),
+        applyBiquad(workBuf, 'lp', 8500, 0.6, sampleRate));
     });
     yield;
-    let bpLoop = makeFilteredLoop(sampleRate, 6, rnd, (u) => {
-        applyBiquad(u, 'bp', 420, 0.5, sampleRate);
+    let bpLoop = makeFilteredLoop(sampleRate, 6, rnd, (workBuf) => {
+        applyBiquad(workBuf, 'bp', 420, 0.5, sampleRate);
       }),
       bufLen = hissLoop.length,
       mixBuf = sumLayers(bufLen, [hissLoop, 0.5], [bpLoop, 0.75]),
@@ -2392,8 +2395,9 @@ function* synthRain(sampleRate, rand) {
  */
 function* synthRainInterior(sampleRate, rand) {
   let makeLayer = function* (rnd) {
-    let hissLoop = makeFilteredLoop(sampleRate, 6, rnd, (c) => {
-        (applyBiquad(c, 'lp', 1300, 0.6, sampleRate), applyBiquad(c, 'hp', 110, 0.7, sampleRate));
+    let hissLoop = makeFilteredLoop(sampleRate, 6, rnd, (dropBuf) => {
+        (applyBiquad(dropBuf, 'lp', 1300, 0.6, sampleRate),
+          applyBiquad(dropBuf, 'hp', 110, 0.7, sampleRate));
       }),
       bpLoop = hissLoop.length,
       bufLen = new Float32Array(bpLoop);
@@ -2440,9 +2444,9 @@ function synthWind(sr, rand) {
   (applySweptBiquad(
     windBuf,
     'bp',
-    (r) => {
-      let a = r * 8.5;
-      return 380 + 190 * Math.sin((TAU * a) / 8) + 90 * Math.sin((TAU * a) / 2.667 + 1);
+    (bufIdx) => {
+      let tSec = bufIdx * 8.5;
+      return 380 + 190 * Math.sin((TAU * tSec) / 8) + 90 * Math.sin((TAU * tSec) / 2.667 + 1);
     },
     1.3,
     sr,
@@ -2450,9 +2454,9 @@ function synthWind(sr, rand) {
     applySweptBiquad(
       gustBuf,
       'bp',
-      (r) => {
-        let a = r * 8.5;
-        return 1350 + 260 * Math.sin((TAU * a) / 4 + 2);
+      (bufIdx) => {
+        let tSec = bufIdx * 8.5;
+        return 1350 + 260 * Math.sin((TAU * tSec) / 4 + 2);
       },
       9,
       sr,
@@ -2828,15 +2832,21 @@ function* synthMusicMotif(sampleRate) {
  */
 function* synthObjectiveSting(sampleRate) {
   let buffer = allocSamples(sampleRate, 2.8);
-  ([57, 62, 65, 69].forEach((t, n) => {
+  ([57, 62, 65, 69].forEach((midiNote, noteIdx) => {
     (mixBufferAt(
       buffer,
-      synthBellTone(sampleRate, midiToFreq(t), 1.6),
-      n * 0.15,
-      0.45 + n * 0.08,
+      synthBellTone(sampleRate, midiToFreq(midiNote), 1.6),
+      noteIdx * 0.15,
+      0.45 + noteIdx * 0.08,
       sampleRate,
     ),
-      mixBufferAt(buffer, synthPercHit(sampleRate, midiToFreq(t), 1), n * 0.15, 0.3, sampleRate));
+      mixBufferAt(
+        buffer,
+        synthPercHit(sampleRate, midiToFreq(midiNote), 1),
+        noteIdx * 0.15,
+        0.3,
+        sampleRate,
+      ));
   }),
     mixBufferAt(
       buffer,
@@ -2904,11 +2914,11 @@ function* synthObjectiveAllSting(sampleRate) {
     ),
       yield);
   return (
-    [62, 65, 69, 74].forEach((t, n) =>
+    [62, 65, 69, 74].forEach((midiNote, bellIndex) =>
       mixBufferAt(
         outBuffer,
-        synthBellTone(sampleRate, midiToFreq(t), 2),
-        1.2 + n * 0.15,
+        synthBellTone(sampleRate, midiToFreq(midiNote), 2),
+        1.2 + bellIndex * 0.15,
         0.4,
         sampleRate,
       ),
@@ -2933,9 +2943,9 @@ function* synthCompleteSting(sr) {
   ])
     (mixBufferAt(buf, synthBrassNote(sr, midiToFreq(midiNote), 5.6), 0, 0.14 * amp, sr), yield);
   return (
-    [62, 66, 69, 74, 78, 81].forEach((t, n) => {
-      (mixBufferAt(buf, synthBellTone(sr, midiToFreq(t), 3), 0.3 + n * 0.3, 0.42, sr),
-        mixBufferAt(buf, synthBellTone(sr, midiToFreq(t), 3), 0.75 + n * 0.3, 0.12, sr));
+    [62, 66, 69, 74, 78, 81].forEach((midiNote, amp) => {
+      (mixBufferAt(buf, synthBellTone(sr, midiToFreq(midiNote), 3), 0.3 + amp * 0.3, 0.42, sr),
+        mixBufferAt(buf, synthBellTone(sr, midiToFreq(midiNote), 3), 0.75 + amp * 0.3, 0.12, sr));
     }),
     buf
   );
@@ -2952,10 +2962,10 @@ function synthDeathSting(sampleRate, rand) {
     let tSec = sIdx / sampleRate,
       envAmp = Math.pow(2, -1.1 * Math.pow(tSec / 3.8, 0.7)),
       mixVal = 0;
-    ([73.42, 110, 146.83].forEach((c, u) => {
-      ((phases[u] += (c * envAmp * (1 + u * 0.002)) / sampleRate),
-        (phases[u] -= Math.floor(phases[u])),
-        (mixVal += (2 * phases[u] - 1) * (u === 1 ? 0.6 : 1)));
+    ([73.42, 110, 146.83].forEach((noteHz, noteIdx) => {
+      ((phases[noteIdx] += (noteHz * envAmp * (1 + noteIdx * 0.002)) / sampleRate),
+        (phases[noteIdx] -= Math.floor(phases[noteIdx])),
+        (mixVal += (2 * phases[noteIdx] - 1) * (noteIdx === 1 ? 0.6 : 1)));
     }),
       (outBuf[sIdx] = mixVal * 0.3 * Math.pow(1 - tSec / 3.8, 1.3) * (1 - Math.exp(-tSec / 0.01))));
   }
@@ -3701,9 +3711,9 @@ export function createSfxBaker(name, variant = 0, sampleRate) {
     step() {
       if (baked) return baked;
       if (isIterator(generator)) {
-        let l = generator.next();
-        if (!l.done) return null;
-        generator = l.value;
+        let step = generator.next();
+        if (!step.done) return null;
+        generator = step.value;
       }
       return (baked = finalizeSample(recipe, generator, rate));
     },

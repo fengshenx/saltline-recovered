@@ -188,134 +188,151 @@ export async function createEnemies(ctx) {
         hound: -9,
       },
       mergeSimple: (T) => mergeGeometries(T, !1),
-      requestToken(T) {
-        if (T.hasToken) return !0;
-        let D = 0;
-        for (let Q of list) Q.alive && D++;
-        let C = D > 5 ? AI_TUNE.maxTokensCrowd : AI_TUNE.maxTokens,
-          G = shared.t - shared.tokenT,
-          j = T.type === 'gull' ? 'hound' : 'gull',
-          N =
-            shared.lastType === T.type &&
-            shared.t - shared.wantT[j] < 0.5 &&
-            G < AI_TUNE.tokenGap * 2.2;
-        return shared.tokens >= C || G < AI_TUNE.tokenGap || N
-          ? ((shared.wantT[T.type] = shared.t), !1)
+      requestToken(enemyUnit) {
+        if (enemyUnit.hasToken) return !0;
+        let deltaTime = 0;
+        for (let deltaX of list) deltaX.alive && deltaTime++;
+        let tokenLimit = deltaTime > 5 ? AI_TUNE.maxTokensCrowd : AI_TUNE.maxTokens,
+          playerOrPool = shared.t - shared.tokenT,
+          tempFlag = enemyUnit.type === 'gull' ? 'hound' : 'gull',
+          targetDelta =
+            shared.lastType === enemyUnit.type &&
+            shared.t - shared.wantT[tempFlag] < 0.5 &&
+            playerOrPool < AI_TUNE.tokenGap * 2.2;
+        return shared.tokens >= tokenLimit || playerOrPool < AI_TUNE.tokenGap || targetDelta
+          ? ((shared.wantT[enemyUnit.type] = shared.t), !1)
           : (shared.tokens++,
             (shared.tokenT = shared.t),
-            (shared.lastType = T.type),
-            (T.hasToken = !0),
+            (shared.lastType = enemyUnit.type),
+            (enemyUnit.hasToken = !0),
             !0);
       },
-      releaseToken(T) {
-        T.hasToken && ((T.hasToken = !1), (shared.tokens = Math.max(0, shared.tokens - 1)));
+      releaseToken(enemyUnit) {
+        enemyUnit.hasToken &&
+          ((enemyUnit.hasToken = !1), (shared.tokens = Math.max(0, shared.tokens - 1)));
       },
-      think(T, D, C) {
-        let G = ctx.player;
-        if (T.passive || !G) {
-          T.los = !1;
+      think(enemyUnit, deltaTime, tokenLimit) {
+        let playerOrPool = ctx.player;
+        if (enemyUnit.passive || !playerOrPool) {
+          enemyUnit.los = !1;
           return;
         }
-        if (((T.senseT -= D), T.senseT <= 0)) {
-          T.senseT = 0.11 + rand() * 0.08;
-          let j = !1;
-          if (G.alive !== !1) {
-            let N = G.eye || G.pos,
-              Q = N.x - T.sensor.x,
-              K = N.y - T.sensor.y,
-              ie = N.z - T.sensor.z,
-              F = Math.hypot(Q, K, ie);
-            if (F < AI_TUNE.sightRange) {
-              let X = Math.hypot(Q, ie) || 1e-4,
-                ne = (Q * T.fwd.x + ie * T.fwd.z) / X;
-              (T.mode === 'engage' || ne > SIGHT_COS_HALF || F < 3.5) &&
-                (j = ctx.physics.lineOfSight(T.sensor, N));
+        if (((enemyUnit.senseT -= deltaTime), enemyUnit.senseT <= 0)) {
+          enemyUnit.senseT = 0.11 + rand() * 0.08;
+          let tempFlag = !1;
+          if (playerOrPool.alive !== !1) {
+            let targetDelta = playerOrPool.eye || playerOrPool.pos,
+              deltaX = targetDelta.x - enemyUnit.sensor.x,
+              deltaHeight = targetDelta.y - enemyUnit.sensor.y,
+              deltaZ = targetDelta.z - enemyUnit.sensor.z,
+              sightDistance = Math.hypot(deltaX, deltaHeight, deltaZ);
+            if (sightDistance < AI_TUNE.sightRange) {
+              let planarDistance = Math.hypot(deltaX, deltaZ) || 1e-4,
+                facingDot = (deltaX * enemyUnit.fwd.x + deltaZ * enemyUnit.fwd.z) / planarDistance;
+              (enemyUnit.mode === 'engage' || facingDot > SIGHT_COS_HALF || sightDistance < 3.5) &&
+                (tempFlag = ctx.physics.lineOfSight(enemyUnit.sensor, targetDelta));
             }
           }
-          T.los = j;
+          enemyUnit.los = tempFlag;
         }
-        (T.los
-          ? ((T.seeT += D),
-            (T.noSeeT = 0),
-            T.lastKnown.copy(G.pos),
-            (T.exposure = Math.min(1, T.exposure + D * AI_TUNE.exposureUp)))
-          : ((T.noSeeT += D),
-            (T.seeT = Math.max(0, T.seeT - D * 0.6)),
-            (T.exposure = Math.max(0, T.exposure - D * AI_TUNE.exposureDown))),
-          T.mode === 'engage'
-            ? (T.noSeeT > AI_TUNE.loseSight || G.alive === !1) &&
-              ((T.mode = 'search'),
-              (T.modeT = AI_TUNE.searchTime + rand() * 3),
-              shared.releaseToken(T))
-            : T.los && T.seeT > (T.mode === 'patrol' ? C : C * 0.45)
-              ? ((T.mode = 'engage'),
-                (T.noSeeT = 0),
+        (enemyUnit.los
+          ? ((enemyUnit.seeT += deltaTime),
+            (enemyUnit.noSeeT = 0),
+            enemyUnit.lastKnown.copy(playerOrPool.pos),
+            (enemyUnit.exposure = Math.min(1, enemyUnit.exposure + deltaTime * AI_TUNE.exposureUp)))
+          : ((enemyUnit.noSeeT += deltaTime),
+            (enemyUnit.seeT = Math.max(0, enemyUnit.seeT - deltaTime * 0.6)),
+            (enemyUnit.exposure = Math.max(
+              0,
+              enemyUnit.exposure - deltaTime * AI_TUNE.exposureDown,
+            ))),
+          enemyUnit.mode === 'engage'
+            ? (enemyUnit.noSeeT > AI_TUNE.loseSight || playerOrPool.alive === !1) &&
+              ((enemyUnit.mode = 'search'),
+              (enemyUnit.modeT = AI_TUNE.searchTime + rand() * 3),
+              shared.releaseToken(enemyUnit))
+            : enemyUnit.los &&
+                enemyUnit.seeT > (enemyUnit.mode === 'patrol' ? tokenLimit : tokenLimit * 0.45)
+              ? ((enemyUnit.mode = 'engage'),
+                (enemyUnit.noSeeT = 0),
                 ctx.events.emit('enemy:alert', {
-                  enemy: T,
+                  enemy: enemyUnit,
                 }),
-                shared.rally(T.pos, 18, G.pos, T))
-              : T.mode !== 'patrol' &&
-                ((T.modeT -= D),
-                T.modeT <= 0 && ((T.mode = 'patrol'), (T.home.x = T.pos.x), (T.home.z = T.pos.z))));
+                shared.rally(enemyUnit.pos, 18, playerOrPool.pos, enemyUnit))
+              : enemyUnit.mode !== 'patrol' &&
+                ((enemyUnit.modeT -= deltaTime),
+                enemyUnit.modeT <= 0 &&
+                  ((enemyUnit.mode = 'patrol'),
+                  (enemyUnit.home.x = enemyUnit.pos.x),
+                  (enemyUnit.home.z = enemyUnit.pos.z))));
       },
-      rally(T, D, C, G) {
-        for (let j of list)
-          j === G ||
-            !j.alive ||
-            j.passive ||
-            j.mode === 'engage' ||
-            j.pos.distanceToSquared(T) > D * D ||
-            (j.lastKnown.copy(C), (j.mode = 'investigate'), (j.modeT = 9 + rand() * 4));
+      rally(enemyUnit, deltaTime, tokenLimit, playerOrPool) {
+        for (let tempFlag of list)
+          tempFlag === playerOrPool ||
+            !tempFlag.alive ||
+            tempFlag.passive ||
+            tempFlag.mode === 'engage' ||
+            tempFlag.pos.distanceToSquared(enemyUnit) > deltaTime * deltaTime ||
+            (tempFlag.lastKnown.copy(tokenLimit),
+            (tempFlag.mode = 'investigate'),
+            (tempFlag.modeT = 9 + rand() * 4));
       },
-      provoke(T) {
-        let D = ctx.player;
-        !D ||
-          T.passive ||
-          !T.alive ||
-          (T.mode !== 'engage' &&
-            (T.lastKnown.copy(D.pos),
-            (T.mode = 'investigate'),
-            (T.modeT = 10),
-            (T.seeT = 1),
-            (T.senseT = 0)),
-          shared.rally(T.pos, 20, D.pos, T));
+      provoke(enemyUnit) {
+        let deltaTime = ctx.player;
+        !deltaTime ||
+          enemyUnit.passive ||
+          !enemyUnit.alive ||
+          (enemyUnit.mode !== 'engage' &&
+            (enemyUnit.lastKnown.copy(deltaTime.pos),
+            (enemyUnit.mode = 'investigate'),
+            (enemyUnit.modeT = 10),
+            (enemyUnit.seeT = 1),
+            (enemyUnit.senseT = 0)),
+          shared.rally(enemyUnit.pos, 20, deltaTime.pos, enemyUnit));
       },
-      fireBolt(T, D, C) {
-        let G = null;
-        for (let j = 0; j < bolts.length; j++)
-          if (!bolts[j].on) {
-            G = bolts[j];
+      fireBolt(enemyUnit, deltaTime, tokenLimit) {
+        let playerOrPool = null;
+        for (let tempFlag = 0; tempFlag < bolts.length; tempFlag++)
+          if (!bolts[tempFlag].on) {
+            playerOrPool = bolts[tempFlag];
             break;
           }
-        G &&
-          ((G.on = !0), (G.life = 1.3), G.pos.copy(T), G.dir.copy(D), G.from.copy(T), (G.len = 0));
+        playerOrPool &&
+          ((playerOrPool.on = !0),
+          (playerOrPool.life = 1.3),
+          playerOrPool.pos.copy(enemyUnit),
+          playerOrPool.dir.copy(deltaTime),
+          playerOrPool.from.copy(enemyUnit),
+          (playerOrPool.len = 0));
       },
-      addWreck(T) {
-        for (wrecks.push(T); wrecks.length > AI_TUNE.maxWrecks;) {
-          let D = wrecks.shift();
-          D.active && (D.sink = 0.001);
+      addWreck(enemyUnit) {
+        for (wrecks.push(enemyUnit); wrecks.length > AI_TUNE.maxWrecks;) {
+          let deltaTime = wrecks.shift();
+          deltaTime.active && (deltaTime.sink = 0.001);
         }
       },
-      retire(T) {
-        T._deactivate();
-        let D = list.indexOf(T);
-        (D >= 0 && list.splice(D, 1), (D = wrecks.indexOf(T)), D >= 0 && wrecks.splice(D, 1));
+      retire(enemyUnit) {
+        enemyUnit._deactivate();
+        let deltaTime = list.indexOf(enemyUnit);
+        (deltaTime >= 0 && list.splice(deltaTime, 1),
+          (deltaTime = wrecks.indexOf(enemyUnit)),
+          deltaTime >= 0 && wrecks.splice(deltaTime, 1));
       },
     },
     gullDef = createDroneModel(),
     houndDef = createWalkerModel(),
     gullPool = [],
     houndPool = [];
-  for (let T = 0; T < AI_TUNE.poolGulls; T++) {
-    let D = createWalker(shared, gullDef, materials, T);
-    (gullPool.push(D), group.add(D.rig.group));
+  for (let enemyUnit = 0; enemyUnit < AI_TUNE.poolGulls; enemyUnit++) {
+    let deltaTime = createWalker(shared, gullDef, materials, enemyUnit);
+    (gullPool.push(deltaTime), group.add(deltaTime.rig.group));
   }
-  for (let T = 0; T < AI_TUNE.poolHounds; T++) {
-    let D = createDrone(shared, houndDef, materials, T);
-    (houndPool.push(D), group.add(D.rig.group));
+  for (let enemyUnit = 0; enemyUnit < AI_TUNE.poolHounds; enemyUnit++) {
+    let deltaTime = createDrone(shared, houndDef, materials, enemyUnit);
+    (houndPool.push(deltaTime), group.add(deltaTime.rig.group));
   }
   let bolts = [];
-  for (let T = 0; T < AI_TUNE.maxBolts; T++)
+  for (let enemyUnit = 0; enemyUnit < AI_TUNE.maxBolts; enemyUnit++)
     bolts.push({
       on: !1,
       life: 0,
@@ -456,92 +473,103 @@ export async function createEnemies(ctx) {
     system = {
       list: list,
       TUNE: AI_TUNE,
-      spawn(T, D, C = {}) {
-        let G = T === 'gull' ? gullPool : T === 'hound' ? houndPool : null;
-        if (!G) return null;
-        let j = null;
-        for (let N of G)
-          if (!N.active) {
-            j = N;
+      spawn(enemyUnit, deltaTime, tokenLimit = {}) {
+        let playerOrPool =
+          enemyUnit === 'gull' ? gullPool : enemyUnit === 'hound' ? houndPool : null;
+        if (!playerOrPool) return null;
+        let tempFlag = null;
+        for (let targetDelta of playerOrPool)
+          if (!targetDelta.active) {
+            tempFlag = targetDelta;
             break;
           }
-        if (!j && T === 'hound' && wrecks.length) {
-          let N = wrecks[0];
-          (shared.retire(N), (j = N));
+        if (!tempFlag && enemyUnit === 'hound' && wrecks.length) {
+          let targetDelta = wrecks[0];
+          (shared.retire(targetDelta), (tempFlag = targetDelta));
         }
-        return j
-          ? ((j.id = nextId++),
-            list.push(j),
-            j._activate(D, C),
+        return tempFlag
+          ? ((tempFlag.id = nextId++),
+            list.push(tempFlag),
+            tempFlag._activate(deltaTime, tokenLimit),
             ctx.events.emit('enemy:spawn', {
-              enemy: j,
+              enemy: tempFlag,
             }),
-            j)
+            tempFlag)
           : null;
       },
-      raycast(T, D, C = 300) {
-        let G = null;
-        for (let j = 0; j < list.length; j++) {
-          let N = list[j];
-          if (!N.alive) continue;
-          let Q = N.pos.x - T.x,
-            K = N.pos.y + (N.type === 'hound' ? 0.6 : 0) - T.y,
-            ie = N.pos.z - T.z,
-            F = Q * D.x + K * D.y + ie * D.z;
-          F < -1.5 ||
-            F > C + 1.5 ||
-            Q * Q + K * K + ie * ie - F * F > 1.7 ||
-            (G ||
-              (G = {
+      raycast(enemyUnit, deltaTime, tokenLimit = 300) {
+        let playerOrPool = null;
+        for (let tempFlag = 0; tempFlag < list.length; tempFlag++) {
+          let targetDelta = list[tempFlag];
+          if (!targetDelta.alive) continue;
+          let deltaX = targetDelta.pos.x - enemyUnit.x,
+            deltaHeight =
+              targetDelta.pos.y + (targetDelta.type === 'hound' ? 0.6 : 0) - enemyUnit.y,
+            deltaZ = targetDelta.pos.z - enemyUnit.z,
+            sightDistance = deltaX * deltaTime.x + deltaHeight * deltaTime.y + deltaZ * deltaTime.z;
+          sightDistance < -1.5 ||
+            sightDistance > tokenLimit + 1.5 ||
+            deltaX * deltaX +
+              deltaHeight * deltaHeight +
+              deltaZ * deltaZ -
+              sightDistance * sightDistance >
+              1.7 ||
+            (playerOrPool ||
+              (playerOrPool = {
                 dist: 1 / 0,
                 point: new THREE.Vector3(),
                 normal: new THREE.Vector3(),
                 enemy: null,
                 part: 'body',
               }),
-            N._raycast(T, D, C, G));
+            targetDelta._raycast(enemyUnit, deltaTime, tokenLimit, playerOrPool));
         }
-        return G && G.enemy ? G : null;
+        return playerOrPool && playerOrPool.enemy ? playerOrPool : null;
       },
       aliveCount() {
-        let T = 0;
-        for (let D of list) D.alive && T++;
-        return T;
+        let enemyUnit = 0;
+        for (let deltaTime of list) deltaTime.alive && enemyUnit++;
+        return enemyUnit;
       },
       clear() {
-        for (let T of gullPool) T.active && T._deactivate();
-        for (let T of houndPool) T.active && T._deactivate();
+        for (let enemyUnit of gullPool) enemyUnit.active && enemyUnit._deactivate();
+        for (let enemyUnit of houndPool) enemyUnit.active && enemyUnit._deactivate();
         ((list.length = 0), (wrecks.length = 0), (shared.tokens = 0));
-        for (let T of bolts) T.on = !1;
+        for (let enemyUnit of bolts) enemyUnit.on = !1;
         ((boltMesh.count = 0),
           lightHandle && lightHandle.light && (lightHandle.light.intensity = 0));
       },
-      alert(T, D = 40) {
-        for (let C of list)
-          !C.alive ||
-            C.passive ||
-            C.mode === 'engage' ||
-            C.pos.distanceToSquared(T) > D * D ||
-            (C.lastKnown.copy(T),
-            (C.lastKnown.y = Math.max(0, T.y - 1.6)),
-            C.mode === 'patrol' &&
+      alert(enemyUnit, deltaTime = 40) {
+        for (let tokenLimit of list)
+          !tokenLimit.alive ||
+            tokenLimit.passive ||
+            tokenLimit.mode === 'engage' ||
+            tokenLimit.pos.distanceToSquared(enemyUnit) > deltaTime * deltaTime ||
+            (tokenLimit.lastKnown.copy(enemyUnit),
+            (tokenLimit.lastKnown.y = Math.max(0, enemyUnit.y - 1.6)),
+            tokenLimit.mode === 'patrol' &&
               ctx.events.emit('enemy:alert', {
-                enemy: C,
+                enemy: tokenLimit,
                 noise: !0,
               }),
-            (C.mode = 'investigate'),
-            (C.modeT = 9 + rand() * 4));
+            (tokenLimit.mode = 'investigate'),
+            (tokenLimit.modeT = 9 + rand() * 4));
       },
-      update(T) {
-        if (T <= 0) return;
-        (T > 0.05 && (T = 0.05), (shared.t += T), (hearCooldown -= T));
-        let D = ctx.player;
-        if (D) {
-          let C = D.vel ? Math.hypot(D.vel.x, D.vel.z) : D.speed || 0;
-          shared.playerSpeed += (C - shared.playerSpeed) * (1 - Math.exp(-6 * T));
+      update(enemyUnit) {
+        if (enemyUnit <= 0) return;
+        (enemyUnit > 0.05 && (enemyUnit = 0.05),
+          (shared.t += enemyUnit),
+          (hearCooldown -= enemyUnit));
+        let deltaTime = ctx.player;
+        if (deltaTime) {
+          let tokenLimit = deltaTime.vel
+            ? Math.hypot(deltaTime.vel.x, deltaTime.vel.z)
+            : deltaTime.speed || 0;
+          shared.playerSpeed += (tokenLimit - shared.playerSpeed) * (1 - Math.exp(-6 * enemyUnit));
         }
-        for (let C = list.length - 1; C >= 0; C--) list[C]._update(T);
-        (updateBolts(T), updateGullLight(T));
+        for (let tokenLimit = list.length - 1; tokenLimit >= 0; tokenLimit--)
+          list[tokenLimit]._update(enemyUnit);
+        (updateBolts(enemyUnit), updateGullLight(enemyUnit));
       },
       debug: {
         ctx: shared,
@@ -557,17 +585,18 @@ export async function createEnemies(ctx) {
       },
     };
   return (
-    ctx.events.on('weapon:fire', (T) => {
+    ctx.events.on('weapon:fire', (enemyUnit) => {
       if (hearCooldown > 0) return;
       hearCooldown = 0.3;
-      let D = (T && (T.origin || T.muzzle)) || (ctx.player && ctx.player.pos);
-      D && system.alert(D, AI_TUNE.hearRadius);
+      let deltaTime =
+        (enemyUnit && (enemyUnit.origin || enemyUnit.muzzle)) || (ctx.player && ctx.player.pos);
+      deltaTime && system.alert(deltaTime, AI_TUNE.hearRadius);
     }),
-    ctx.events.on('explosion', (T) => {
-      T && T.pos && system.alert(T.pos, 30);
+    ctx.events.on('explosion', (enemyUnit) => {
+      enemyUnit && enemyUnit.pos && system.alert(enemyUnit.pos, 30);
     }),
-    ctx.events.on('game:state', (T) => {
-      T && T.state === 'title' && system.clear();
+    ctx.events.on('game:state', (enemyUnit) => {
+      enemyUnit && enemyUnit.state === 'title' && system.clear();
     }),
     system
   );
@@ -623,11 +652,11 @@ export async function showcaseEnemies(ctx) {
       (camTarget = [0, 2.2, -5]),
       (preSeconds = 7));
   else if (mode === 'dead') {
-    let posX = enemies.spawn('hound', vec(0, 0, 0), {
+    let vecX = enemies.spawn('hound', vec(0, 0, 0), {
         passive: !0,
         yaw: 0.8,
       }),
-      posY = enemies.spawn('gull', vec(-1.6, 3.4, -0.5), {
+      vecY = enemies.spawn('gull', vec(-1.6, 3.4, -0.5), {
         passive: !0,
         hover: 3.4,
         patrolRadius: 0.02,
@@ -637,10 +666,10 @@ export async function showcaseEnemies(ctx) {
       yaw: -0.6,
       patrolLine: [vec(2.2, 0, -1.6), vec(3.4, 0, -3)],
     });
-    for (let posZ = 0; posZ < 30; posZ++) enemies.update(1 / 60);
-    posX.damage(999, posX.pos, vec(0.6, 0, -0.8), 'body');
-    for (let posZ = 0; posZ < 110; posZ++) enemies.update(1 / 60);
-    (posY.damage(999, posY.pos, vec(0, 0, 1), 'body'),
+    for (let vecZ = 0; vecZ < 30; vecZ++) enemies.update(1 / 60);
+    vecX.damage(999, vecX.pos, vec(0.6, 0, -0.8), 'body');
+    for (let vecZ = 0; vecZ < 110; vecZ++) enemies.update(1 / 60);
+    (vecY.damage(999, vecY.pos, vec(0, 0, 1), 'body'),
       (camPos = [2.6, 1.3, 3.2]),
       (camTarget = [0, 0.5, 0]),
       (preSeconds = 0.42));
@@ -657,14 +686,14 @@ export async function showcaseEnemies(ctx) {
         patrolLine: [vec(2.6, 0, 1.2), vec(-1.8, 0, 0.2)],
       }));
   ctx.params.epre != null && (preSeconds = +ctx.params.epre);
-  for (let posX = 0, posY = Math.round(preSeconds * 60); posX < posY; posX++)
+  for (let vecX = 0, vecY = Math.round(preSeconds * 60); vecX < vecY; vecX++)
     enemies.update(1 / 60);
   let frozen = !!ctx.params.efreeze;
   return {
     cam: camPos,
     target: camTarget,
-    update(l) {
-      frozen || enemies.update(l);
+    update(vecX) {
+      frozen || enemies.update(vecX);
     },
   };
 }

@@ -153,12 +153,22 @@ for (const [compressedFn, params] of Object.entries(merged.params)) {
 
 // 局部变量：先一遍收集"哪个作用域里的哪个绑定要改名"，再统一执行。
 // （早期版本对每个 (函数, 变量) 各做一次子树遍历，几百次递归把工具跑成了分钟级。）
+// owner 必须向上找最近的**具名**函数：回调与匿名箭头函数在 fnNameCache 里没有条目，
+// 而压缩后的局部变量大多就住在这类作用域里，只取直接父函数会让整批映射静默失效。
+const ownerFnName = (path) => {
+  let fn = path.isFunction() ? path : path.getFunctionParent();
+  while (fn) {
+    const name = fnNameCache.get(fn.node);
+    if (name) return name;
+    fn = fn.getFunctionParent();
+  }
+  return null;
+};
+
 const renameJobs = [];
 traverse(ast, {
   Scopable(path) {
-    const owner = path.isFunction()
-      ? fnNameCache.get(path.node)
-      : fnNameCache.get(path.getFunctionParent()?.node);
+    const owner = ownerFnName(path);
     if (!owner) return;
     const mapping = merged.locals[owner];
     if (!mapping) return;

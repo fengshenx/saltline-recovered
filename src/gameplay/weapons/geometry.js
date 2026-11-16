@@ -310,9 +310,9 @@ export function buildPac9Geometry() {
     [-0.0084, 0.0435],
     [-0.0106, 0.0408],
   ];
-  for (let F = 0; F < 49; F++) {
-    let X = -0.094 + F * 0.01;
-    anoParts.push(buildPlateZ(railToothProfile, X, X + 0.0048, 8e-4, anoColor, bevelHigh));
+  for (let partIndex = 0; partIndex < 49; partIndex++) {
+    let slotZ = -0.094 + partIndex * 0.01;
+    anoParts.push(buildPlateZ(railToothProfile, slotZ, slotZ + 0.0048, 8e-4, anoColor, bevelHigh));
   }
   let magOutline = [
     [-0.1, -0.021],
@@ -351,9 +351,9 @@ export function buildPac9Geometry() {
     gunParts.push(buildRoundedTab(0.0038, 0.0396, 0, -0.029, 0.087, steelBright, 12)),
     gunParts.push(buildRoundedTab(0.0022, 0.0392, 0, -0.04, -0.012, steelBright, 8)),
     gunParts.push(buildRoundedTab(0.0022, 0.0392, 0, -0.032, -0.032, steelBright, 8)));
-  for (let F of [-1, 1])
+  for (let partIndex of [-1, 1])
     (gunParts.push(
-      buildRoundedTab(0.0068, 0.004, F * 0.0205, -0.036, -0.048, gunColor, 14, bevelLow),
+      buildRoundedTab(0.0068, 0.004, partIndex * 0.0205, -0.036, -0.048, gunColor, 14, bevelLow),
     ),
       gunParts.push(
         buildRoundedBox(
@@ -361,7 +361,7 @@ export function buildPac9Geometry() {
           0.006,
           0.024,
           0.0015,
-          F * 0.0228,
+          partIndex * 0.0228,
           -0.036,
           -0.036,
           gunColor,
@@ -372,7 +372,7 @@ export function buildPac9Geometry() {
   gunParts.push(
     buildRoundedBox(0.0045, 0.024, 0.013, 0.0015, -0.0212, -0.03, 0.022, gunColor, bevelLow),
   );
-  for (let F = 0; F < 4; F++)
+  for (let partIndex = 0; partIndex < 4; partIndex++)
     gunParts.push(
       buildRoundedBox(
         0.0012,
@@ -380,7 +380,7 @@ export function buildPac9Geometry() {
         0.012,
         5e-4,
         -0.0238,
-        -0.021 - F * 0.0045,
+        -0.021 - partIndex * 0.0045,
         0.022,
         gunColor,
         bevelLow,
@@ -463,18 +463,40 @@ export function buildPac9Geometry() {
         wearPoly,
       ),
     ));
-  for (let F = 0; F < 9; F++) {
-    let X = -0.078 - F * 0.0082,
-      ne = -0.073 + (X + 0.078) * 0.26;
+  for (let partIndex = 0; partIndex < 9; partIndex++) {
+    let slotZ = -0.078 - partIndex * 0.0082,
+      slotIndex = -0.073 + (slotZ + 0.078) * 0.26;
     polyParts.push(
-      buildRoundedBox(0.0345, 0.0028, 0.03, 0.001, 0, X, ne, polyColor, wearPoly, [-0.25, 0, 0]),
+      buildRoundedBox(
+        0.0345,
+        0.0028,
+        0.03,
+        0.001,
+        0,
+        slotZ,
+        slotIndex,
+        polyColor,
+        wearPoly,
+        [-0.25, 0, 0],
+      ),
     );
   }
-  for (let F = 0; F < 7; F++) {
-    let X = -0.078 - F * 0.01,
-      ne = -0.098 + (X + 0.078) * 0.14;
+  for (let partIndex = 0; partIndex < 7; partIndex++) {
+    let slotZ = -0.078 - partIndex * 0.01,
+      slotIndex = -0.098 + (slotZ + 0.078) * 0.14;
     polyParts.push(
-      buildRoundedBox(0.022, 0.0045, 0.006, 0.0015, 0, X, ne, polyColor, wearPoly, [-0.14, 0, 0]),
+      buildRoundedBox(
+        0.022,
+        0.0045,
+        0.006,
+        0.0015,
+        0,
+        slotZ,
+        slotIndex,
+        polyColor,
+        wearPoly,
+        [-0.14, 0, 0],
+      ),
     );
   }
   (polyParts.push(
@@ -503,28 +525,28 @@ export function buildPac9Geometry() {
       [guardZ1, guardHalfHeight],
       [guardZ0, guardHalfHeight],
     ];
-  for (let F = 0; F < 8; F++) {
-    let X = [];
-    if (F === 0 || F === 4 || F === 6)
-      for (let slotIdx = 0; slotIdx < 6; slotIdx++)
-        X.push(roundedSlotOutline(0.13 + slotIdx * 0.047, 0, 0.032, 0.007, 4));
-    else if (F !== 2)
-      for (let slotIdx = 0; slotIdx < 10; slotIdx++) {
-        let guardSlotZ = 0.124 + slotIdx * 0.027;
-        (F === 3 && guardSlotZ > 0.3) ||
-          X.push(roundedSlotOutline(guardSlotZ, 0, 0.013, 0.0052, 3));
+  for (let partIndex = 0; partIndex < 8; partIndex++) {
+    let slotZ = [];
+    if (partIndex === 0 || partIndex === 4 || partIndex === 6)
+      for (let profilePoint = 0; profilePoint < 6; profilePoint++)
+        slotZ.push(roundedSlotOutline(0.13 + profilePoint * 0.047, 0, 0.032, 0.007, 4));
+    else if (partIndex !== 2)
+      for (let profilePoint = 0; profilePoint < 10; profilePoint++) {
+        let guardSlotZ = 0.124 + profilePoint * 0.027;
+        (partIndex === 3 && guardSlotZ > 0.3) ||
+          slotZ.push(roundedSlotOutline(guardSlotZ, 0, 0.013, 0.0052, 3));
       }
-    let ne = buildPlateX(
+    let slotIndex = buildPlateX(
       guardRect,
       handguardR - guardInset,
       handguardR,
       9e-4,
       anoColor,
       bevelHigh,
-      X,
+      slotZ,
     );
-    (ne.rotateZ((F * Math.PI) / 4), anoParts.push(ne));
-    let re = ((F + 0.5) * Math.PI) / 4;
+    (slotIndex.rotateZ((partIndex * Math.PI) / 4), anoParts.push(slotIndex));
+    let ringAngle = ((partIndex + 0.5) * Math.PI) / 4;
     anoParts.push(
       buildLatheBody(
         [
@@ -536,8 +558,8 @@ export function buildPac9Geometry() {
         8,
         anoColor,
         0,
-        Math.cos(re) * 0.0197,
-        Math.sin(re) * 0.0197,
+        Math.cos(ringAngle) * 0.0197,
+        Math.sin(ringAngle) * 0.0197,
       ),
     );
   }
@@ -588,11 +610,13 @@ export function buildPac9Geometry() {
         bevelHigh,
       ),
     ));
-  for (let F of [-1, 1])
-    for (let X of [0.112, 0.126])
-      gunParts.push(buildRoundedTab(0.0024, 0.0024, F * 0.0212, -0.004, X, steelBright, 10));
-  for (let F of [0.115, 0.215, 0.3, 0.385])
-    for (let X of [-1, 1])
+  for (let partIndex of [-1, 1])
+    for (let slotZ of [0.112, 0.126])
+      gunParts.push(
+        buildRoundedTab(0.0024, 0.0024, partIndex * 0.0212, -0.004, slotZ, steelBright, 10),
+      );
+  for (let partIndex of [0.115, 0.215, 0.3, 0.385])
+    for (let slotZ of [-1, 1])
       gunParts.push(
         buildLatheBody(
           [
@@ -609,10 +633,10 @@ export function buildPac9Geometry() {
           0,
         )
           .rotateX(Math.PI / 2)
-          .translate(X * 0.0098, 0.0312, -F),
+          .translate(slotZ * 0.0098, 0.0312, -partIndex),
       );
   {
-    let X = [
+    let slotZ = [
       buildPlateZ(
         [
           [-0.0078, 0.0206],
@@ -627,37 +651,37 @@ export function buildPac9Geometry() {
         0,
       ),
     ];
-    for (let ne = 0; ne < 8; ne++) {
-      let re = 0.319 + ne * 0.01;
-      X.push(
+    for (let slotIndex = 0; slotIndex < 8; slotIndex++) {
+      let ringAngle = 0.319 + slotIndex * 0.01;
+      slotZ.push(
         buildPlateZ(
-          railToothProfile.map(($) => [$[0], $[1] - 0.016]),
-          re,
-          re + 0.0048,
+          railToothProfile.map((profilePoint) => [profilePoint[0], profilePoint[1] - 0.016]),
+          ringAngle,
+          ringAngle + 0.0048,
           5e-4,
           anoColor,
           bevelHigh,
         ),
       );
     }
-    for (let ne of X) (ne.rotateZ(Math.PI / 4), anoParts.push(ne));
+    for (let slotIndex of slotZ) (slotIndex.rotateZ(Math.PI / 4), anoParts.push(slotIndex));
   }
   {
-    let F = [];
-    for (let X = 0; X < 4; X++) {
-      let ne = 0.352 + X * 0.01;
-      F.push(
+    let partIndex = [];
+    for (let slotZ = 0; slotZ < 4; slotZ++) {
+      let slotIndex = 0.352 + slotZ * 0.01;
+      partIndex.push(
         buildPlateZ(
-          railToothProfile.map((re) => [re[0], re[1] - 0.016]),
-          ne,
-          ne + 0.0048,
+          railToothProfile.map((ringAngle) => [ringAngle[0], ringAngle[1] - 0.016]),
+          slotIndex,
+          slotIndex + 0.0048,
           5e-4,
           anoColor,
           bevelHigh,
         ),
       );
     }
-    F.push(
+    partIndex.push(
       buildPlateZ(
         [
           [-0.0078, 0.0206],
@@ -672,7 +696,7 @@ export function buildPac9Geometry() {
         0,
       ),
     );
-    for (let X of F) (X.rotateZ(Math.PI), anoParts.push(X));
+    for (let slotZ of partIndex) (slotZ.rotateZ(Math.PI), anoParts.push(slotZ));
   }
   (polyParts.push(
     buildPlateX(
@@ -710,7 +734,7 @@ export function buildPac9Geometry() {
         wearPoly,
       ),
     ));
-  for (let F = 0; F < 6; F++)
+  for (let partIndex = 0; partIndex < 6; partIndex++)
     polyParts.push(
       buildRoundedBox(
         0.0292,
@@ -718,8 +742,8 @@ export function buildPac9Geometry() {
         0.0315,
         8e-4,
         0,
-        -0.04 - F * 0.0085,
-        0.256 - F * 3e-4,
+        -0.04 - partIndex * 0.0085,
+        0.256 - partIndex * 3e-4,
         polyColor,
         wearPoly,
       ),
@@ -806,16 +830,16 @@ export function buildPac9Geometry() {
         darkColor,
       ),
     ));
-  for (let F of [0.4865, 0.4965, 0.5065])
+  for (let partIndex of [0.4865, 0.4965, 0.5065])
     gunParts.push(
       buildLatheBody(
         [
-          [0.0052, F - 0.0019],
-          [0.011, F - 0.0019],
-          [0.0116, F - 0.0012],
-          [0.0116, F + 0.0012],
-          [0.011, F + 0.0019],
-          [0.0052, F + 0.0019],
+          [0.0052, partIndex - 0.0019],
+          [0.011, partIndex - 0.0019],
+          [0.0116, partIndex - 0.0012],
+          [0.0116, partIndex + 0.0012],
+          [0.011, partIndex + 0.0019],
+          [0.0052, partIndex + 0.0019],
         ],
         20,
         gunColor,
@@ -839,15 +863,25 @@ export function buildPac9Geometry() {
       bevelLow,
       0,
       0,
-      (F, X, ne) => (F < 0.0047 ? [0.25, 0.25, 0.25] : ne),
+      (partIndex, slotZ, slotIndex) => (partIndex < 0.0047 ? [0.25, 0.25, 0.25] : slotIndex),
     ),
   );
-  for (let F of [-1, 1])
+  for (let partIndex of [-1, 1])
     gunParts.push(
-      buildRoundedBox(0.0125, 0.0042, 0.042, 0.0012, 0, F * 0.0096, 0.496, gunColor, bevelLow),
+      buildRoundedBox(
+        0.0125,
+        0.0042,
+        0.042,
+        0.0012,
+        0,
+        partIndex * 0.0096,
+        0.496,
+        gunColor,
+        bevelLow,
+      ),
     );
-  for (let F = 0; F < 3; F++)
-    gunParts.push(buildRoundedTab(0.0016, 0.0236, 0, 0, 0.4675 + F * 0.0035, darkColor, 6));
+  for (let partIndex = 0; partIndex < 3; partIndex++)
+    gunParts.push(buildRoundedTab(0.0016, 0.0236, 0, 0, 0.4675 + partIndex * 0.0035, darkColor, 6));
   (anoParts.push(
     buildLatheBody(
       [
@@ -877,7 +911,7 @@ export function buildPac9Geometry() {
       ),
     ));
   {
-    let F = [
+    let partIndex = [
         [-0.019, -0.024],
         [0.019, -0.024],
         [0.021, -0.018],
@@ -892,7 +926,7 @@ export function buildPac9Geometry() {
         [-0.034, -0.02],
         [-0.021, -0.02],
       ],
-      X = [
+      slotZ = [
         [-0.025, -0.014],
         [-0.025, -0.002],
         [-0.033, -5e-4],
@@ -900,7 +934,9 @@ export function buildPac9Geometry() {
         [-0.036, -0.012],
         [-0.032, -0.016],
       ];
-    gunParts.push(buildPlateZ(F, -0.1095, -0.1045, 8e-4, [1.6, 1.6, 1.65], bevelLow, [X]));
+    gunParts.push(
+      buildPlateZ(partIndex, -0.1095, -0.1045, 8e-4, [1.6, 1.6, 1.65], bevelLow, [slotZ]),
+    );
   }
   (polyParts.push(
     buildPlateX(
@@ -932,18 +968,30 @@ export function buildPac9Geometry() {
     polyParts.push(
       buildRoundedBox(0.033, 0.016, 0.118, 0.006, 0, 0.031, -0.232, polyColor, wearPoly),
     ));
-  for (let F of [-0.196, -0.268])
-    gunParts.push(buildRoundedTab(0.0032, 0.035, 0, 0.03, F, steelBright, 8));
+  for (let partIndex of [-0.196, -0.268])
+    gunParts.push(buildRoundedTab(0.0032, 0.035, 0, 0.03, partIndex, steelBright, 8));
   (polyParts.push(
     buildRoundedBox(0.012, 0.012, 0.04, 0.003, 0, -0.033, -0.19, polyColor, wearPoly, [0.2, 0, 0]),
   ),
     plainParts.push(buildRoundedBox(0.037, 0.12, 0.011, 0.004, 0, -0.04, -0.3395, rubberColor, 0)));
-  for (let F = 0; F < 9; F++)
+  for (let partIndex = 0; partIndex < 9; partIndex++)
     plainParts.push(
-      buildRoundedBox(0.031, 0.004, 0.003, 0.001, 0, 0.004 - F * 0.011, -0.3455, rubberColor, 0),
+      buildRoundedBox(
+        0.031,
+        0.004,
+        0.003,
+        0.001,
+        0,
+        0.004 - partIndex * 0.011,
+        -0.3455,
+        rubberColor,
+        0,
+      ),
     );
-  for (let F of [-1, 1])
-    gunParts.push(buildRoundedTab(0.0065, 0.003, F * 0.0195, -0.06, -0.318, steelBright, 12));
+  for (let partIndex of [-1, 1])
+    gunParts.push(
+      buildRoundedTab(0.0065, 0.003, partIndex * 0.0195, -0.06, -0.318, steelBright, 12),
+    );
   let sightY = PAC9_DIMENSIONS.sightY,
     sightWindow = PAC9_DIMENSIONS.window,
     glassTint = [0.012, 0.012, 0.013];
@@ -951,9 +999,9 @@ export function buildPac9Geometry() {
     anoParts.push(
       buildRoundedBox(0.0045, 0.0085, 0.034, 0.001, -0.0162, 0.0452, 0.021, anoColor, bevelHigh),
     ));
-  for (let F of [0.009, 0.033])
-    (gunParts.push(buildRoundedTab(0.004, 0.0042, -0.02, 0.0452, F, steelBright, 6)),
-      gunParts.push(buildRoundedTab(0.003, 0.0022, 0.016, 0.0452, F, steelBright, 10)));
+  for (let partIndex of [0.009, 0.033])
+    (gunParts.push(buildRoundedTab(0.004, 0.0042, -0.02, 0.0452, partIndex, steelBright, 6)),
+      gunParts.push(buildRoundedTab(0.003, 0.0022, 0.016, 0.0452, partIndex, steelBright, 10)));
   let hoodOuter = [
     [-0.0192, 0.0525],
     [0.0192, 0.0525],
@@ -965,13 +1013,21 @@ export function buildPac9Geometry() {
   (anoParts.push(buildPlateZ(hoodOuter, 0.008, 0.034, 0.001, anoColor, bevelHigh, [sightWindow])),
     plainParts.push(
       buildPlateZ(
-        sightWindow.map((F) => [F[0] * 1.004, (F[1] - sightY) * 1.004 + sightY]),
+        sightWindow.map((partIndex) => [
+          partIndex[0] * 1.004,
+          (partIndex[1] - sightY) * 1.004 + sightY,
+        ]),
         0.0078,
         0.0342,
         0,
         glassTint,
         0,
-        [sightWindow.map((F) => [F[0] * 0.982, (F[1] - sightY) * 0.982 + sightY])],
+        [
+          sightWindow.map((partIndex) => [
+            partIndex[0] * 0.982,
+            (partIndex[1] - sightY) * 0.982 + sightY,
+          ]),
+        ],
       ),
     ));
   let hoodInner = [
@@ -1008,15 +1064,17 @@ export function buildPac9Geometry() {
         .rotateY(Math.PI / 2)
         .translate(0.0222, 0.0625, -0.021),
     ));
-  for (let F of [0.0165, 0.0245])
+  for (let partIndex of [0.0165, 0.0245])
     plainParts.push(
-      buildRoundedBox(0.0022, 0.0055, 0.0055, 9e-4, -0.0196, 0.064, F, rubberColor, 0),
+      buildRoundedBox(0.0022, 0.0055, 0.0055, 9e-4, -0.0196, 0.064, partIndex, rubberColor, 0),
     );
-  for (let F of [0.012, 0.03])
-    for (let X of [-1, 1])
-      gunParts.push(buildRoundedTab(0.0016, 0.0012, X * 0.0195, 0.0555, F, steelBright, 8));
+  for (let partIndex of [0.012, 0.03])
+    for (let slotZ of [-1, 1])
+      gunParts.push(
+        buildRoundedTab(0.0016, 0.0012, slotZ * 0.0195, 0.0555, partIndex, steelBright, 8),
+      );
   plainParts.push(buildRoundedBox(0.009, 0.0026, 0.006, 6e-4, 0, 0.058, 0.0115, glassTint));
-  for (let [F, X] of [
+  for (let [partIndex, slotZ] of [
     [0.0128, 0.0548],
     [-0.0128, 0.0548],
   ])
@@ -1032,8 +1090,8 @@ export function buildPac9Geometry() {
         10,
         steelBright,
         0,
-        F,
-        X,
+        partIndex,
+        slotZ,
       )
         .translate(0, 0, -0.008 + 1e-4)
         .rotateY(0),
@@ -1059,22 +1117,51 @@ export function buildPac9Geometry() {
     plainParts.push(buildRoundedBox(0.0012, 2e-4, 0.0044, 5e-5, 0.009, 0.0855, 0.014, glassTint)),
     plainParts.push(
       buildPlateZ(sightWindow, 0.0304, 0.0318, 0, glassTint, 0, [
-        sightWindow.map((F) => [F[0] * 0.955, (F[1] - sightY) * 0.955 + sightY]),
+        sightWindow.map((partIndex) => [
+          partIndex[0] * 0.955,
+          (partIndex[1] - sightY) * 0.955 + sightY,
+        ]),
       ]),
     ));
-  for (let [F, X] of [
+  for (let [partIndex, slotZ] of [
     [-0.03, 1],
     [0.372, -1],
   ])
-    (gunParts.push(buildRoundedBox(0.021, 0.0075, 0.03, 0.0015, 0, 0.0472, F, gunColor, bevelLow)),
+    (gunParts.push(
+      buildRoundedBox(0.021, 0.0075, 0.03, 0.0015, 0, 0.0472, partIndex, gunColor, bevelLow),
+    ),
       gunParts.push(
-        buildRoundedBox(0.0125, 0.004, 0.036, 0.001, 0, 0.0527, F + X * 0.004, gunColor, bevelLow),
+        buildRoundedBox(
+          0.0125,
+          0.004,
+          0.036,
+          0.001,
+          0,
+          0.0527,
+          partIndex + slotZ * 0.004,
+          gunColor,
+          bevelLow,
+        ),
       ),
-      gunParts.push(buildRoundedTab(0.0028, 0.024, 0, 0.0505, F - X * 0.013, gunColor, 8)),
       gunParts.push(
-        buildRoundedBox(0.004, 0.006, 0.006, 0.001, X * 0.0125, 0.0475, F, gunColor, bevelLow),
+        buildRoundedTab(0.0028, 0.024, 0, 0.0505, partIndex - slotZ * 0.013, gunColor, 8),
       ),
-      gunParts.push(buildRoundedTab(0.0042, 0.0045, -0.0125, 0.0475, F + 0.006, steelBright, 8)));
+      gunParts.push(
+        buildRoundedBox(
+          0.004,
+          0.006,
+          0.006,
+          0.001,
+          slotZ * 0.0125,
+          0.0475,
+          partIndex,
+          gunColor,
+          bevelLow,
+        ),
+      ),
+      gunParts.push(
+        buildRoundedTab(0.0042, 0.0045, -0.0125, 0.0475, partIndex + 0.006, steelBright, 8),
+      ));
   (gunParts.push(
     buildLatheBody(
       [
@@ -1096,7 +1183,7 @@ export function buildPac9Geometry() {
       .translate(0, 0.0553, 0.016),
   ),
     gunParts.push(buildRoundedTab(0.0048, 0.005, 0.015, 0.049, -0.036, gunColor, 12, bevelLow)));
-  for (let F = 0; F < 6; F++)
+  for (let partIndex = 0; partIndex < 6; partIndex++)
     gunParts.push(
       buildRoundedBox(
         0.0044,
@@ -1104,8 +1191,8 @@ export function buildPac9Geometry() {
         0.001,
         3e-4,
         0.015,
-        0.049 + Math.sin(F * 1.047) * 0.0046,
-        -0.036 + Math.cos(F * 1.047) * 0.0046,
+        0.049 + Math.sin(partIndex * 1.047) * 0.0046,
+        -0.036 + Math.cos(partIndex * 1.047) * 0.0046,
         gunColor,
         bevelLow,
       ),
@@ -1116,7 +1203,7 @@ export function buildPac9Geometry() {
     gunParts.push(
       buildRoundedBox(0.01, 0.003, 0.008, 8e-4, 0, 0.0392, -0.0985, gunColor, bevelLow),
     ));
-  for (let F = 0; F < 4; F++)
+  for (let partIndex = 0; partIndex < 4; partIndex++)
     gunParts.push(
       buildRoundedBox(
         0.0092,
@@ -1125,7 +1212,7 @@ export function buildPac9Geometry() {
         3e-4,
         0,
         0.0409,
-        -0.0958 - F * 0.0018,
+        -0.0958 - partIndex * 0.0018,
         gunColor,
         bevelLow,
       ),
@@ -1171,14 +1258,14 @@ export function buildPac9Geometry() {
         triggerHalfY1,
       ),
     ));
-  for (let F = 0; F < 5; F++)
+  for (let partIndex = 0; partIndex < 5; partIndex++)
     gunParts.push(
       buildLatheBody(
         [
-          [0.0118, 0.33 + F * 0.008],
-          [0.0124, 0.3305 + F * 0.008],
-          [0.0124, 0.3335 + F * 0.008],
-          [0.0118, 0.334 + F * 0.008],
+          [0.0118, 0.33 + partIndex * 0.008],
+          [0.0124, 0.3305 + partIndex * 0.008],
+          [0.0124, 0.3335 + partIndex * 0.008],
+          [0.0118, 0.334 + partIndex * 0.008],
         ],
         18,
         gunColor,
@@ -1188,17 +1275,27 @@ export function buildPac9Geometry() {
       ),
     );
   {
-    let F = buildRoundedBox(0.02, 0.008, 0.04, 0.0012, 0, 0.028, 0.352, gunColor, bevelLow);
-    (F.rotateZ(Math.PI / 4), gunParts.push(F));
+    let partIndex = buildRoundedBox(0.02, 0.008, 0.04, 0.0012, 0, 0.028, 0.352, gunColor, bevelLow);
+    (partIndex.rotateZ(Math.PI / 4), gunParts.push(partIndex));
   }
   {
-    let F = buildRoundedTab(0.004, 0.006, 0.0135, 0.028, 0.352, steelBright, 8);
-    (F.rotateZ(Math.PI / 4), gunParts.push(F));
+    let partIndex = buildRoundedTab(0.004, 0.006, 0.0135, 0.028, 0.352, steelBright, 8);
+    (partIndex.rotateZ(Math.PI / 4), gunParts.push(partIndex));
   }
   plainParts.push(buildRoundedBox(0.0185, 0.0065, 0.07, 0.0025, 0, 0.0468, 0.214, rubberColor, 0));
-  for (let F = 0; F < 6; F++)
+  for (let partIndex = 0; partIndex < 6; partIndex++)
     plainParts.push(
-      buildRoundedBox(0.014, 0.0012, 0.004, 5e-4, 0, 0.0503, 0.192 + F * 0.009, rubberColor, 0),
+      buildRoundedBox(
+        0.014,
+        0.0012,
+        0.004,
+        5e-4,
+        0,
+        0.0503,
+        0.192 + partIndex * 0.009,
+        rubberColor,
+        0,
+      ),
     );
   let triggerTube = tubeGeometry(
     [
@@ -1215,12 +1312,14 @@ export function buildPac9Geometry() {
     6,
   );
   (applyVertexShading(triggerTube, rubberColor, 0), plainParts.push(triggerTube));
-  for (let F of [
+  for (let partIndex of [
     [-0.0262, 0.0228, 0.28],
     [-0.0242, 0.0255, 0.265],
   ]) {
-    let X = buildRoundedBox(0.0065, 0.0026, 0.0035, 8e-4, 0, 0, 0, [0.03, 0.03, 0.03], 0);
-    (X.rotateZ(Math.PI / 4), X.translate(F[0], F[1], -F[2]), plainParts.push(X));
+    let slotZ = buildRoundedBox(0.0065, 0.0026, 0.0035, 8e-4, 0, 0, 0, [0.03, 0.03, 0.03], 0);
+    (slotZ.rotateZ(Math.PI / 4),
+      slotZ.translate(partIndex[0], partIndex[1], -partIndex[2]),
+      plainParts.push(slotZ));
   }
   boltParts.push(
     buildLatheBody(
@@ -1246,7 +1345,7 @@ export function buildPac9Geometry() {
       0.001,
     ),
   );
-  for (let F = 0; F < 5; F++)
+  for (let partIndex = 0; partIndex < 5; partIndex++)
     boltParts.push(
       buildRoundedBox(
         0.0015,
@@ -1255,7 +1354,7 @@ export function buildPac9Geometry() {
         5e-4,
         0.0122,
         0.001,
-        0.01 + F * 0.007,
+        0.01 + partIndex * 0.007,
         [1.2, 1.2, 1.2],
         0,
       ),
@@ -1264,7 +1363,7 @@ export function buildPac9Geometry() {
     buildRoundedBox(0.012, 0.0055, 0.014, 0.0015, -0.0165, 0.007, 0.078, gunColor, bevelLow),
   );
   {
-    let F = buildLatheBody(
+    let partIndex = buildLatheBody(
       [
         [0, -0.009],
         [0.0045, -0.009],
@@ -1281,7 +1380,9 @@ export function buildPac9Geometry() {
       gunColor,
       bevelLow,
     );
-    (F.rotateY(Math.PI / 2), F.translate(-0.031, 0.007, -0.078), boltParts.push(F));
+    (partIndex.rotateY(Math.PI / 2),
+      partIndex.translate(-0.031, 0.007, -0.078),
+      boltParts.push(partIndex));
   }
   let magOffset = (F) => 1.5 * Math.pow(Math.max(0, F - 0.07), 2),
     magSlope = (F) => 3 * Math.max(0, F - 0.07),
@@ -1289,33 +1390,40 @@ export function buildPac9Geometry() {
     magProfile = [],
     magDepth = 0.212,
     magSegments = 12;
-  for (let F = 0; F <= magSegments; F++) {
-    let X = -0.004 + ((magDepth + 0.004) * F) / magSegments;
-    magProfile.push([magOffset(X) + 0.0298, -X]);
+  for (let partIndex = 0; partIndex <= magSegments; partIndex++) {
+    let slotZ = -0.004 + ((magDepth + 0.004) * partIndex) / magSegments;
+    magProfile.push([magOffset(slotZ) + 0.0298, -slotZ]);
   }
-  for (let F = magSegments; F >= 0; F--) {
-    let X = -0.004 + ((magDepth + 0.004) * F) / magSegments;
-    magProfile.push([magOffset(X) - 0.0298, -X]);
+  for (let partIndex = magSegments; partIndex >= 0; partIndex--) {
+    let slotZ = -0.004 + ((magDepth + 0.004) * partIndex) / magSegments;
+    magProfile.push([magOffset(slotZ) - 0.0298, -slotZ]);
   }
   magParts.push(buildPlateX(magProfile, -0.0113, 0.0113, 0.002, magTint, 0.25));
-  for (let F = 0; F < 8; F++) {
-    let X = 0.082 + F * 0.0155;
+  for (let partIndex = 0; partIndex < 8; partIndex++) {
+    let slotZ = 0.082 + partIndex * 0.0155;
     magParts.push(
-      buildRoundedBox(0.0246, 0.0058, 0.05, 0.0016, 0, -X, magOffset(X), magTint, 0.3, [
-        Math.atan(magSlope(X)),
+      buildRoundedBox(0.0246, 0.0058, 0.05, 0.0016, 0, -slotZ, magOffset(slotZ), magTint, 0.3, [
+        Math.atan(magSlope(slotZ)),
         0,
         0,
       ]),
     );
   }
-  for (let F = 0; F < 10; F++) {
-    let X = 0.078 + F * 0.013;
+  for (let partIndex = 0; partIndex < 10; partIndex++) {
+    let slotZ = 0.078 + partIndex * 0.013;
     magParts.push(
-      buildRoundedBox(0.012, 0.011, 0.004, 0.001, 0, -X, magOffset(X) + 0.0302, magTint, 0.3, [
-        Math.atan(magSlope(X)),
+      buildRoundedBox(
+        0.012,
+        0.011,
+        0.004,
+        0.001,
         0,
-        0,
-      ]),
+        -slotZ,
+        magOffset(slotZ) + 0.0302,
+        magTint,
+        0.3,
+        [Math.atan(magSlope(slotZ)), 0, 0],
+      ),
     );
   }
   (magParts.push(
@@ -1406,14 +1514,14 @@ export function buildPac9Geometry() {
     mag: mergeGeometryParts(magParts),
     round: mergeGeometryParts(roundParts),
   };
-  for (let F of ['ano', 'gun', 'poly', 'plain', 'bolt']) {
-    let X = parts[F].attributes.position;
-    for (let ne = 0; ne < X.count; ne++)
-      X.getZ(ne) > -0.1002 &&
-        X.getY(ne) < 0.0341 &&
-        X.setX(ne, X.getX(ne) * PAC9_DIMENSIONS.squeeze);
+  for (let partIndex of ['ano', 'gun', 'poly', 'plain', 'bolt']) {
+    let slotZ = parts[partIndex].attributes.position;
+    for (let slotIndex = 0; slotIndex < slotZ.count; slotIndex++)
+      slotZ.getZ(slotIndex) > -0.1002 &&
+        slotZ.getY(slotIndex) < 0.0341 &&
+        slotZ.setX(slotIndex, slotZ.getX(slotIndex) * PAC9_DIMENSIONS.squeeze);
   }
-  for (let F in parts) parts[F].computeBoundingSphere();
+  for (let partIndex in parts) parts[partIndex].computeBoundingSphere();
   return parts;
 }
 

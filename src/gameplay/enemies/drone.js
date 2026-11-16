@@ -52,7 +52,7 @@ export function createRotorBellGeometry() {
     [0.178, 0.032],
     [0.173, 0],
     [0.176, -0.036],
-  ].map((e) => new THREE.Vector2(e[0], e[1]));
+  ].map((profilePt) => new THREE.Vector2(profilePt[0], profilePt[1]));
   return new THREE.LatheGeometry(bellProfile, 28);
 }
 
@@ -161,10 +161,10 @@ export function createDrone(ctx, rigDef, materials, index) {
   let abdomenBones = [],
     thighBones = [],
     shinBones = [];
-  for (let dt = 0; dt < 4; dt++)
-    (abdomenBones.push(bones['abd' + HOUND_RIG_ALIAS.legs[dt]]),
-      thighBones.push(bones['thigh' + HOUND_RIG_ALIAS.legs[dt]]),
-      shinBones.push(bones['shin' + HOUND_RIG_ALIAS.legs[dt]]));
+  for (let deltaTime = 0; deltaTime < 4; deltaTime++)
+    (abdomenBones.push(bones['abd' + HOUND_RIG_ALIAS.legs[deltaTime]]),
+      thighBones.push(bones['thigh' + HOUND_RIG_ALIAS.legs[deltaTime]]),
+      shinBones.push(bones['shin' + HOUND_RIG_ALIAS.legs[deltaTime]]));
   let labelDef = simState.mats.label('H-' + String(index + 3).padStart(2, '0'), {
       color: 'black',
       font: 'stencil',
@@ -279,54 +279,56 @@ export function createDrone(ctx, rigDef, materials, index) {
       loop: null,
       prevSpeed: 0,
       maxSpeed: HOUND_TUNE_ALIAS.patrolSpeed,
-      damage(T, D, C, G) {
+      damage(deltaTime, playerEntity, strikeImpulse, gazeTarget) {
         if (!hound.alive) return !1;
         if (
-          ((hound.hp -= T),
+          ((hound.hp -= deltaTime),
           simState.events.emit('enemy:hit', {
             enemy: hound,
-            point: D,
-            part: G || 'body',
+            point: playerEntity,
+            part: gazeTarget || 'body',
           }),
-          C)
+          strikeImpulse)
         ) {
-          let j = Math.cos(hound.yaw),
-            N = Math.sin(hound.yaw),
-            Q = Math.min(1.6, T / 28),
-            K = C.x * N + C.z * j,
-            ie = C.x * j - C.z * N;
-          ((hound.sL.v += ie * 1.4 * Q),
-            (hound.sR.v += -ie * 3.2 * Q),
-            (hound.sP.v += K * 2.4 * Q * (G === 'weak' ? 1.6 : 1)),
-            (hound.sY.v -= 0.5 * Q));
+          let headLookPoint = Math.cos(hound.yaw),
+            crouchAmount = Math.sin(hound.yaw),
+            isLunging = Math.min(1.6, deltaTime / 28),
+            bodyHeight = strikeImpulse.x * crouchAmount + strikeImpulse.z * headLookPoint,
+            headingError = strikeImpulse.x * headLookPoint - strikeImpulse.z * crouchAmount;
+          ((hound.sL.v += headingError * 1.4 * isLunging),
+            (hound.sR.v += -headingError * 3.2 * isLunging),
+            (hound.sP.v += bodyHeight * 2.4 * isLunging * (gazeTarget === 'weak' ? 1.6 : 1)),
+            (hound.sY.v -= 0.5 * isLunging));
         }
-        return (ctx.provoke(hound), hound.hp <= 0 ? (killHound(C), !0) : !1);
+        return (ctx.provoke(hound), hound.hp <= 0 ? (killHound(strikeImpulse), !0) : !1);
       },
-      _activate(T, D = {}) {
+      _activate(deltaTime, playerEntity = {}) {
         ((hound.active = !0),
           (hound.alive = !0),
           (hound.wreck = !1),
           (hound.hp = HOUND_TUNE_ALIAS.hp),
-          (hound.passive = !!D.passive),
+          (hound.passive = !!playerEntity.passive),
           (hound.sink = 0),
-          hound.pos.copy(T),
-          (hound.pos.y = simState.physics.groundHeight(T.x, T.z, T.y + 1)),
+          hound.pos.copy(deltaTime),
+          (hound.pos.y = simState.physics.groundHeight(deltaTime.x, deltaTime.z, deltaTime.y + 1)),
           hound.home.copy(hound.pos),
-          (hound.yaw = D.yaw ?? rand() * 6.283),
+          (hound.yaw = playerEntity.yaw ?? rand() * 6.283),
           (hound.speed = 0),
           (hound.yawRate = 0),
           hound.push.set(0, 0, 0),
-          (hound.mode = D.state === 'alert' ? 'investigate' : 'patrol'),
+          (hound.mode = playerEntity.state === 'alert' ? 'investigate' : 'patrol'),
           (hound.modeT = 10),
           (hound.modeSeen = hound.mode),
-          hound.lastKnown.copy(D.target || (simState.player ? simState.player.pos : T)),
+          hound.lastKnown.copy(
+            playerEntity.target || (simState.player ? simState.player.pos : deltaTime),
+          ),
           (hound.los = !1),
           (hound.seeT = hound.noSeeT = 0),
           (hound.exposure = 0),
           (hound.senseT = rand() * 0.2),
           (hound.hasToken = !1),
-          (hound.patrolR = D.patrolRadius ?? 7),
-          (hound.patrolLine = D.patrolLine || null),
+          (hound.patrolR = playerEntity.patrolRadius ?? 7),
+          (hound.patrolLine = playerEntity.patrolLine || null),
           (hound.patrolI = 0),
           (hound.es = 'move'),
           (hound.cool = 0.6 + rand()),
@@ -345,9 +347,10 @@ export function createDrone(ctx, rigDef, materials, index) {
           (hound.dieT = 0),
           (hound.tyaw = hound.hyaw = 0),
           (hound.tpitch = hound.hpitch = 0));
-        for (let C of [hound.sY, hound.sP, hound.sR, hound.sL, hound.sA, hound.sA2])
-          ((C.x = 0), (C.v = 0));
-        for (let C = 0; C < 4; C++) footLocalPos(feet[C].p, C, hound.pos.x, hound.pos.z, hound.yaw);
+        for (let strikeImpulse of [hound.sY, hound.sP, hound.sR, hound.sL, hound.sA, hound.sA2])
+          ((strikeImpulse.x = 0), (strikeImpulse.v = 0));
+        for (let strikeImpulse = 0; strikeImpulse < 4; strikeImpulse++)
+          footLocalPos(feet[strikeImpulse].p, strikeImpulse, hound.pos.x, hound.pos.z, hound.yaw);
         if (
           (bones.neck.rotation.set(0, 0, 0),
           bones.gun.rotation.set(0, 0, 0),
@@ -379,26 +382,48 @@ export function createDrone(ctx, rigDef, materials, index) {
           hound.loop = null;
         }
       },
-      _raycast(T, D, C, G) {
-        let j = !1;
-        raySphere(T, D, hound.headPos, 0.155, C, G) &&
-          ((G.part = 'weak'), (G.enemy = hound), (j = !0));
-        let N = Math.cos(hound.yaw),
-          Q = Math.sin(hound.yaw),
-          K = hound.pos.y + HOUND_RIG_ALIAS.stand + hound.sY.x - hound.crouch;
+      _raycast(deltaTime, playerEntity, strikeImpulse, gazeTarget) {
+        let headLookPoint = !1;
+        raySphere(deltaTime, playerEntity, hound.headPos, 0.155, strikeImpulse, gazeTarget) &&
+          ((gazeTarget.part = 'weak'), (gazeTarget.enemy = hound), (headLookPoint = !0));
+        let crouchAmount = Math.cos(hound.yaw),
+          isLunging = Math.sin(hound.yaw),
+          bodyHeight = hound.pos.y + HOUND_RIG_ALIAS.stand + hound.sY.x - hound.crouch;
         return (
-          houndBodyStart.set(hound.pos.x - Q * 0.45, K + 0.03, hound.pos.z - N * 0.45),
-          houndBodyEnd.set(hound.pos.x + Q * 0.47, K + 0.03, hound.pos.z + N * 0.47),
-          rayCapsule(T, D, houndBodyStart, houndBodyEnd, 0.27, C, G) &&
-            ((G.part = 'body'), (G.enemy = hound), (j = !0)),
-          (houndBodyStart.y = houndBodyEnd.y = hound.pos.y + (K - hound.pos.y) * 0.45),
-          rayCapsule(T, D, houndBodyStart, houndBodyEnd, 0.25, C, G) &&
-            ((G.part = 'body'), (G.enemy = hound), (j = !0)),
-          j
+          houndBodyStart.set(
+            hound.pos.x - isLunging * 0.45,
+            bodyHeight + 0.03,
+            hound.pos.z - crouchAmount * 0.45,
+          ),
+          houndBodyEnd.set(
+            hound.pos.x + isLunging * 0.47,
+            bodyHeight + 0.03,
+            hound.pos.z + crouchAmount * 0.47,
+          ),
+          rayCapsule(
+            deltaTime,
+            playerEntity,
+            houndBodyStart,
+            houndBodyEnd,
+            0.27,
+            strikeImpulse,
+            gazeTarget,
+          ) && ((gazeTarget.part = 'body'), (gazeTarget.enemy = hound), (headLookPoint = !0)),
+          (houndBodyStart.y = houndBodyEnd.y = hound.pos.y + (bodyHeight - hound.pos.y) * 0.45),
+          rayCapsule(
+            deltaTime,
+            playerEntity,
+            houndBodyStart,
+            houndBodyEnd,
+            0.25,
+            strikeImpulse,
+            gazeTarget,
+          ) && ((gazeTarget.part = 'body'), (gazeTarget.enemy = hound), (headLookPoint = !0)),
+          headLookPoint
         );
       },
-      _update(T) {
-        hound.alive ? updateAlive(T) : updateDead(T);
+      _update(deltaTime) {
+        hound.alive ? updateAlive(deltaTime) : updateDead(deltaTime);
       },
     };
   function footLocalPos(T, D, C, G, j) {

@@ -15,23 +15,23 @@ export function createBlinkerBatch() {
       vertexColors: !0,
       fog: !1,
     });
-  ((blinkMat.onBeforeCompile = (n) => {
-    ((n.uniforms.uTime = timeUniform),
-      (n.vertexShader =
+  ((blinkMat.onBeforeCompile = (sourceGeo) => {
+    ((sourceGeo.uniforms.uTime = timeUniform),
+      (sourceGeo.vertexShader =
         `attribute vec3 blink;
 uniform float uTime;
 varying float vBlink;
 ` +
-        n.vertexShader.replace(
+        sourceGeo.vertexShader.replace(
           '#include <begin_vertex>',
           `#include <begin_vertex>
  float bph = fract(uTime / max(blink.x, 0.001) + blink.y);
  vBlink = blink.x <= 0.0 ? 1.0 : mix(0.02, 1.0, smoothstep(0.0, 0.06, bph) * (1.0 - smoothstep(blink.z, blink.z + 0.12, bph)));`,
         )),
-      (n.fragmentShader =
+      (sourceGeo.fragmentShader =
         `varying float vBlink;
 ` +
-        n.fragmentShader.replace(
+        sourceGeo.fragmentShader.replace(
           '#include <color_fragment>',
           `#include <color_fragment>
  diffuseColor.rgb *= vBlink;`,
@@ -42,29 +42,29 @@ varying float vBlink;
   return {
     uTime: timeUniform,
     mat: blinkMat,
-    add(n, s, o = 0, r = 0, a = 0.5) {
-      if (!n) return;
-      let l = n.index ? n.toNonIndexed() : n,
-        c = l.attributes.position.count,
-        u = new Float32Array(c * 3),
-        h = new Float32Array(c * 3);
-      for (let p = 0; p < c; p++)
-        ((u[p * 3] = s[0]),
-          (u[p * 3 + 1] = s[1]),
-          (u[p * 3 + 2] = s[2]),
-          (h[p * 3] = o),
-          (h[p * 3 + 1] = r),
-          (h[p * 3 + 2] = a));
-      let f = new THREE.BufferGeometry();
-      (f.setAttribute('position', l.attributes.position),
-        f.setAttribute('color', new THREE.BufferAttribute(u, 3)),
-        f.setAttribute('blink', new THREE.BufferAttribute(h, 3)),
-        geometryList.push(f));
+    add(sourceGeo, colorRgb, periodSec = 0, phase = 0, duty = 0.5) {
+      if (!sourceGeo) return;
+      let flatGeo = sourceGeo.index ? sourceGeo.toNonIndexed() : sourceGeo,
+        vertexCount = flatGeo.attributes.position.count,
+        colorBuf = new Float32Array(vertexCount * 3),
+        blinkBuf = new Float32Array(vertexCount * 3);
+      for (let vertIdx = 0; vertIdx < vertexCount; vertIdx++)
+        ((colorBuf[vertIdx * 3] = colorRgb[0]),
+          (colorBuf[vertIdx * 3 + 1] = colorRgb[1]),
+          (colorBuf[vertIdx * 3 + 2] = colorRgb[2]),
+          (blinkBuf[vertIdx * 3] = periodSec),
+          (blinkBuf[vertIdx * 3 + 1] = phase),
+          (blinkBuf[vertIdx * 3 + 2] = duty));
+      let blinkGeo = new THREE.BufferGeometry();
+      (blinkGeo.setAttribute('position', flatGeo.attributes.position),
+        blinkGeo.setAttribute('color', new THREE.BufferAttribute(colorBuf, 3)),
+        blinkGeo.setAttribute('blink', new THREE.BufferAttribute(blinkBuf, 3)),
+        geometryList.push(blinkGeo));
     },
     build() {
       if (!geometryList.length) return null;
-      let n = new THREE.Mesh(mergeGeometries(geometryList.splice(0), !1), blinkMat);
-      return ((n.castShadow = !1), (n.receiveShadow = !1), n);
+      let sourceGeo = new THREE.Mesh(mergeGeometries(geometryList.splice(0), !1), blinkMat);
+      return ((sourceGeo.castShadow = !1), (sourceGeo.receiveShadow = !1), sourceGeo);
     },
   };
 }

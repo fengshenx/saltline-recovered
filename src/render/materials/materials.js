@@ -417,11 +417,11 @@ export async function createMaterials(app) {
     names: Object.keys(SURFACE_LIB),
     decalNames: decals.names,
     uniforms: uniforms,
-    update(O) {
+    update(surfaceKey) {
       targetCache.size && performance.now() - lastUseTime > 4e3 && disposeCaches();
     },
-    prewarm(O) {
-      for (let q of O || Object.keys(SURFACE_LIB)) getMaterial(q);
+    prewarm(surfaceKey) {
+      for (let matOptions of surfaceKey || Object.keys(SURFACE_LIB)) getMaterial(matOptions);
     },
     stats() {
       return {
@@ -431,9 +431,9 @@ export async function createMaterials(app) {
         decalMB: +(decals.bytes() / 1048576).toFixed(1),
       };
     },
-    tileOf(O) {
-      let q = SURFACE_LIB[O];
-      return q ? SURFACE_DEFS[q.set].tile : 1;
+    tileOf(surfaceKey) {
+      let matOptions = SURFACE_LIB[surfaceKey];
+      return matOptions ? SURFACE_DEFS[matOptions.set].tile : 1;
     },
   };
 }

@@ -143,31 +143,31 @@ export function createDecalAtlas(cellSize = 256) {
       for (let [z, H] of w) S.addColorStop(z, H);
       return S;
     };
-  for (let _ of DECAL_ATLAS_FRAMES.bullet_metal)
-    drawCell(_, (M) => {
-      ((albedoCtx.fillStyle = radialGradient(albedoCtx, M * 0.1, M * 0.6, [
+  for (let frameSlot of DECAL_ATLAS_FRAMES.bullet_metal)
+    drawCell(frameSlot, (cellExtent) => {
+      ((albedoCtx.fillStyle = radialGradient(albedoCtx, cellExtent * 0.1, cellExtent * 0.6, [
         [0, 'rgba(14,13,12,0.4)'],
         [0.5, 'rgba(18,17,16,0.14)'],
         [1, 'rgba(20,20,20,0)'],
       ])),
-        albedoCtx.fillRect(-M, -M, 2 * M, 2 * M));
-      let E = 6 + Math.floor(rand() * 5);
-      for (let T = 0; T < E; T++) {
-        let D = rand() * TAU;
+        albedoCtx.fillRect(-cellExtent, -cellExtent, 2 * cellExtent, 2 * cellExtent));
+      let outerRadius = 6 + Math.floor(rand() * 5);
+      for (let crackIndex = 0; crackIndex < outerRadius; crackIndex++) {
+        let crackAngle = rand() * TAU;
         drawCrack(
           albedoCtx,
-          D,
-          M * 0.2,
-          M * (0.38 + rand() * 0.45),
+          crackAngle,
+          cellExtent * 0.2,
+          cellExtent * (0.38 + rand() * 0.45),
           0.3,
           0.8 + rand() * 1,
           'rgba(8,8,8,0.55)',
         );
       }
-      let w = M * (0.24 + rand() * 0.08),
-        S = 0.7 + rand() * 0.5,
-        z = rand() * TAU,
-        H = (centerX, centerY, radius, rotation, jitter, segmentCount) => {
+      let cellCenterY = cellExtent * (0.24 + rand() * 0.08),
+        cellHalfSize = 0.7 + rand() * 0.5,
+        rotationAngle = rand() * TAU,
+        polygonBlotch = (centerX, centerY, radius, rotation, jitter, segmentCount) => {
           for (let targetCtx of [albedoCtx, ormCtx])
             (targetCtx.save(), targetCtx.translate(centerX, centerY), targetCtx.rotate(rotation));
           let segmentScale = [];
@@ -179,7 +179,7 @@ export function createDecalAtlas(cellSize = 256) {
               let re = (ne / segmentCount) * TAU,
                 $ = radius * segmentScale[ne] * X,
                 ue = Math.cos(re) * $,
-                me = Math.sin(re) * $ * S;
+                me = Math.sin(re) * $ * cellHalfSize;
               ne ? F.lineTo(ue, me) : F.moveTo(ue, me);
             }
             F.closePath();
@@ -203,49 +203,71 @@ export function createDecalAtlas(cellSize = 256) {
             albedoCtx.restore(),
             ormCtx.restore());
         };
-      H(0, 0, w, z, 0.75, 11);
-      let O = 2 + Math.floor(rand() * 4);
-      for (let T = 0; T < O; T++) {
-        let D = rand() * TAU,
-          C = w * (1 + rand() * 0.7);
-        H(Math.cos(D) * C, Math.sin(D) * C, w * (0.15 + rand() * 0.3), rand() * TAU, 0.8, 7);
+      polygonBlotch(0, 0, cellCenterY, rotationAngle, 0.75, 11);
+      let blotchCount = 2 + Math.floor(rand() * 4);
+      for (let crackIndex = 0; crackIndex < blotchCount; crackIndex++) {
+        let crackAngle = rand() * TAU,
+          offsetRadius = cellCenterY * (1 + rand() * 0.7);
+        polygonBlotch(
+          Math.cos(crackAngle) * offsetRadius,
+          Math.sin(crackAngle) * offsetRadius,
+          cellCenterY * (0.15 + rand() * 0.3),
+          rand() * TAU,
+          0.8,
+          7,
+        );
       }
-      for (let T = 0; T < 9; T++) {
-        let D = rand() * TAU,
-          C = w * 0.3,
-          G = w * (0.6 + rand() * 0.3);
+      for (let crackIndex = 0; crackIndex < 9; crackIndex++) {
+        let crackAngle = rand() * TAU,
+          offsetRadius = cellCenterY * 0.3,
+          endRadius = cellCenterY * (0.6 + rand() * 0.3);
         (albedoCtx.beginPath(),
-          albedoCtx.moveTo(Math.cos(D) * C, Math.sin(D) * C),
-          albedoCtx.lineTo(Math.cos(D + 0.1) * G, Math.sin(D + 0.1) * G),
+          albedoCtx.moveTo(
+            Math.cos(crackAngle) * offsetRadius,
+            Math.sin(crackAngle) * offsetRadius,
+          ),
+          albedoCtx.lineTo(
+            Math.cos(crackAngle + 0.1) * endRadius,
+            Math.sin(crackAngle + 0.1) * endRadius,
+          ),
           (albedoCtx.strokeStyle = rand() < 0.5 ? 'rgba(245,246,248,0.7)' : 'rgba(70,72,76,0.5)'),
           (albedoCtx.lineWidth = 0.8),
           albedoCtx.stroke());
       }
-      let q = M * (0.1 + rand() * 0.025),
-        U = 8 + Math.floor(rand() * 5);
-      for (let T = 0; T < U; T++) {
+      let pitRadius = cellExtent * (0.1 + rand() * 0.025),
+        crackSegments = 8 + Math.floor(rand() * 5);
+      for (let crackIndex = 0; crackIndex < crackSegments; crackIndex++) {
         if (rand() < 0.15) continue;
-        let D = ((T + (rand() - 0.5) * 0.6) / U) * TAU,
-          C = q * (1.25 + rand() * 0.9),
-          G = 0.16 + rand() * 0.16,
-          j = 205 + Math.floor(rand() * 50);
+        let crackAngle = ((crackIndex + (rand() - 0.5) * 0.6) / crackSegments) * TAU,
+          offsetRadius = pitRadius * (1.25 + rand() * 0.9),
+          endRadius = 0.16 + rand() * 0.16,
+          flakeBrightness = 205 + Math.floor(rand() * 50);
         (albedoCtx.beginPath(),
-          albedoCtx.moveTo(Math.cos(D - G) * q * 0.9, Math.sin(D - G) * q * 0.9),
-          albedoCtx.lineTo(Math.cos(D) * C, Math.sin(D) * C),
-          albedoCtx.lineTo(Math.cos(D + G) * q * 0.9, Math.sin(D + G) * q * 0.9),
+          albedoCtx.moveTo(
+            Math.cos(crackAngle - endRadius) * pitRadius * 0.9,
+            Math.sin(crackAngle - endRadius) * pitRadius * 0.9,
+          ),
+          albedoCtx.lineTo(
+            Math.cos(crackAngle) * offsetRadius,
+            Math.sin(crackAngle) * offsetRadius,
+          ),
+          albedoCtx.lineTo(
+            Math.cos(crackAngle + endRadius) * pitRadius * 0.9,
+            Math.sin(crackAngle + endRadius) * pitRadius * 0.9,
+          ),
           albedoCtx.closePath(),
-          (albedoCtx.fillStyle = `rgb(${j},${j},${Math.min(255, j + 4)})`),
+          (albedoCtx.fillStyle = `rgb(${flakeBrightness},${flakeBrightness},${Math.min(255, flakeBrightness + 4)})`),
           albedoCtx.fill(),
           (albedoCtx.strokeStyle = 'rgba(40,40,42,0.6)'),
           (albedoCtx.lineWidth = 0.7),
           albedoCtx.stroke());
       }
       (ormCtx.beginPath(),
-        ormCtx.arc(0, 0, q * 1.8, 0, TAU),
+        ormCtx.arc(0, 0, pitRadius * 1.8, 0, TAU),
         (ormCtx.fillStyle = 'rgb(0,60,255)'),
         ormCtx.fill(),
-        blobPath(albedoCtx, q, 0.3, 11),
-        (albedoCtx.fillStyle = radialGradient(albedoCtx, 0, q, [
+        blobPath(albedoCtx, pitRadius, 0.3, 11),
+        (albedoCtx.fillStyle = radialGradient(albedoCtx, 0, pitRadius, [
           [0, '#000000'],
           [0.8, '#040404'],
           [1, '#141414'],
@@ -260,80 +282,103 @@ export function createDecalAtlas(cellSize = 256) {
             [0.62, 100],
             [1, 128],
           ],
-          q * 3.4,
+          pitRadius * 3.4,
         ),
-        blobPath(ormCtx, q, 0.1, 11),
+        blobPath(ormCtx, pitRadius, 0.1, 11),
         (ormCtx.fillStyle = 'rgb(0,250,0)'),
         ormCtx.fill());
     });
-  for (let _ of DECAL_ATLAS_FRAMES.bullet_concrete)
-    drawCell(_, (M) => {
-      ((albedoCtx.fillStyle = radialGradient(albedoCtx, M * 0.2, M * 0.9, [
+  for (let frameSlot of DECAL_ATLAS_FRAMES.bullet_concrete)
+    drawCell(frameSlot, (cellExtent) => {
+      ((albedoCtx.fillStyle = radialGradient(albedoCtx, cellExtent * 0.2, cellExtent * 0.9, [
         [0, 'rgba(186,180,168,0.22)'],
         [0.6, 'rgba(180,175,165,0.07)'],
         [1, 'rgba(170,165,155,0)'],
       ])),
-        albedoCtx.fillRect(-M, -M, 2 * M, 2 * M));
-      let E = 4 + Math.floor(rand() * 4);
-      for (let O = 0; O < E; O++) {
-        let q = rand() * TAU,
-          U = M * (0.5 + rand() * 0.42);
-        (drawCrack(albedoCtx, q, M * 0.25, U, 0.35, 1.3 + rand() * 1.3, 'rgba(20,19,18,0.75)'),
+        albedoCtx.fillRect(-cellExtent, -cellExtent, 2 * cellExtent, 2 * cellExtent));
+      let outerRadius = 4 + Math.floor(rand() * 4);
+      for (let blotchCount = 0; blotchCount < outerRadius; blotchCount++) {
+        let pitRadius = rand() * TAU,
+          crackSegments = cellExtent * (0.5 + rand() * 0.42);
+        (drawCrack(
+          albedoCtx,
+          pitRadius,
+          cellExtent * 0.25,
+          crackSegments,
+          0.35,
+          1.3 + rand() * 1.3,
+          'rgba(20,19,18,0.75)',
+        ),
           rand() < 0.5 &&
             drawCrack(
               albedoCtx,
-              q + (rand() - 0.5) * 0.6,
-              U * 0.7,
-              U * 1.05,
+              pitRadius + (rand() - 0.5) * 0.6,
+              crackSegments * 0.7,
+              crackSegments * 1.05,
               0.6,
               0.9,
               'rgba(20,19,18,0.5)',
             ));
       }
-      let w = M * (0.33 + rand() * 0.09),
-        S = 12,
-        z = [];
-      for (let O = 0; O < S; O++) z.push(1 + (rand() - 0.5) * 0.6);
-      let H = (O, q, U, centerX) => {
+      let cellCenterY = cellExtent * (0.33 + rand() * 0.09),
+        cellHalfSize = 12,
+        rotationAngle = [];
+      for (let blotchCount = 0; blotchCount < cellHalfSize; blotchCount++)
+        rotationAngle.push(1 + (rand() - 0.5) * 0.6);
+      let polygonBlotch = (O, q, U, centerX) => {
         O.beginPath();
-        for (let centerY = 0; centerY < S; centerY++) {
-          let radius = (centerY / S) * TAU,
-            rotation = w * z[centerY] * q;
+        for (let centerY = 0; centerY < cellHalfSize; centerY++) {
+          let radius = (centerY / cellHalfSize) * TAU,
+            rotation = cellCenterY * rotationAngle[centerY] * q;
           centerY
             ? O.lineTo(Math.cos(radius) * rotation + U, Math.sin(radius) * rotation + centerX)
             : O.moveTo(Math.cos(radius) * rotation + U, Math.sin(radius) * rotation + centerX);
         }
         O.closePath();
       };
-      (H(albedoCtx, 1.05, 1.5, 1.5),
+      (polygonBlotch(albedoCtx, 1.05, 1.5, 1.5),
         (albedoCtx.fillStyle = 'rgba(22,21,20,0.8)'),
         albedoCtx.fill(),
-        H(albedoCtx, 1, 0, 0),
-        (albedoCtx.fillStyle = radialGradient(albedoCtx, w * 0.1, w * 1.1, [
+        polygonBlotch(albedoCtx, 1, 0, 0),
+        (albedoCtx.fillStyle = radialGradient(albedoCtx, cellCenterY * 0.1, cellCenterY * 1.1, [
           [0, '#35332f'],
           [0.4, '#6f6b63'],
           [0.8, '#8f8b82'],
           [1, '#9a968c'],
         ])),
         albedoCtx.fill(),
-        H(albedoCtx, 0.97, -1, -1),
+        polygonBlotch(albedoCtx, 0.97, -1, -1),
         (albedoCtx.strokeStyle = 'rgba(206,201,190,0.55)'),
         (albedoCtx.lineWidth = 1.2),
         albedoCtx.stroke());
-      for (let O = 0; O < 6; O++) {
-        let q = rand() * TAU;
-        drawCrack(albedoCtx, q, w * 0.2, w * 0.9, 0.5, 1, 'rgba(28,27,25,0.5)');
+      for (let blotchCount = 0; blotchCount < 6; blotchCount++) {
+        let pitRadius = rand() * TAU;
+        drawCrack(
+          albedoCtx,
+          pitRadius,
+          cellCenterY * 0.2,
+          cellCenterY * 0.9,
+          0.5,
+          1,
+          'rgba(28,27,25,0.5)',
+        );
       }
-      for (let O = 0; O < 60; O++) {
-        let q = rand() * TAU,
-          U = Math.sqrt(rand()) * w * 0.85;
+      for (let blotchCount = 0; blotchCount < 60; blotchCount++) {
+        let pitRadius = rand() * TAU,
+          crackSegments = Math.sqrt(rand()) * cellCenterY * 0.85;
         ((albedoCtx.fillStyle = rand() < 0.55 ? 'rgba(36,34,32,0.6)' : 'rgba(196,191,180,0.6)'),
           albedoCtx.beginPath(),
-          albedoCtx.arc(Math.cos(q) * U, Math.sin(q) * U, 0.7 + rand() * 2, 0, TAU),
+          albedoCtx.arc(
+            Math.cos(pitRadius) * crackSegments,
+            Math.sin(pitRadius) * crackSegments,
+            0.7 + rand() * 2,
+            0,
+            TAU,
+          ),
           albedoCtx.fill());
       }
-      (blobPath(albedoCtx, w * 0.3, 0.45, 9),
-        (albedoCtx.fillStyle = radialGradient(albedoCtx, 0, w * 0.33, [
+      (blobPath(albedoCtx, cellCenterY * 0.3, 0.45, 9),
+        (albedoCtx.fillStyle = radialGradient(albedoCtx, 0, cellCenterY * 0.33, [
           [0, '#060606'],
           [0.7, '#161514'],
           [1, '#2c2a27'],
@@ -348,35 +393,42 @@ export function createDecalAtlas(cellSize = 256) {
             [0.88, 150],
             [1, 128],
           ],
-          w * 1.15,
+          cellCenterY * 1.15,
         ));
-      for (let O = 0; O < 22; O++) {
-        let q = rand() * TAU,
-          U = w * (1.15 + rand() * 1.3);
+      for (let blotchCount = 0; blotchCount < 22; blotchCount++) {
+        let pitRadius = rand() * TAU,
+          crackSegments = cellCenterY * (1.15 + rand() * 1.3);
         ((albedoCtx.fillStyle = rand() < 0.5 ? 'rgba(190,185,175,0.45)' : 'rgba(30,29,27,0.45)'),
           albedoCtx.beginPath(),
-          albedoCtx.arc(Math.cos(q) * U, Math.sin(q) * U, 0.6 + rand() * 1.6, 0, TAU),
+          albedoCtx.arc(
+            Math.cos(pitRadius) * crackSegments,
+            Math.sin(pitRadius) * crackSegments,
+            0.6 + rand() * 1.6,
+            0,
+            TAU,
+          ),
           albedoCtx.fill());
       }
     });
-  for (let _ of DECAL_ATLAS_FRAMES.bullet_wood)
-    drawCell(_, (M) => {
-      (blobPath(albedoCtx, M * 0.27, 0.7, 11, 1.45),
+  for (let frameSlot of DECAL_ATLAS_FRAMES.bullet_wood)
+    drawCell(frameSlot, (cellExtent) => {
+      (blobPath(albedoCtx, cellExtent * 0.27, 0.7, 11, 1.45),
         (albedoCtx.fillStyle = 'rgba(206,182,140,0.85)'),
         albedoCtx.fill());
-      for (let E = 0; E < 46; E++) {
-        let w = (rand() - 0.5) * M * 0.62,
-          S = M * (0.25 + rand() * 0.6) * (1 - Math.abs(w) / (M * 0.4)),
-          z = (rand() - 0.5) * M * 0.2;
+      for (let outerRadius = 0; outerRadius < 46; outerRadius++) {
+        let cellCenterY = (rand() - 0.5) * cellExtent * 0.62,
+          cellHalfSize =
+            cellExtent * (0.25 + rand() * 0.6) * (1 - Math.abs(cellCenterY) / (cellExtent * 0.4)),
+          rotationAngle = (rand() - 0.5) * cellExtent * 0.2;
         (albedoCtx.beginPath(),
-          albedoCtx.moveTo(w, z - S),
-          albedoCtx.lineTo(w + (rand() - 0.5) * 5, z + S),
+          albedoCtx.moveTo(cellCenterY, rotationAngle - cellHalfSize),
+          albedoCtx.lineTo(cellCenterY + (rand() - 0.5) * 5, rotationAngle + cellHalfSize),
           (albedoCtx.strokeStyle = rand() < 0.5 ? 'rgba(236,216,172,0.85)' : 'rgba(88,62,38,0.7)'),
           (albedoCtx.lineWidth = 0.8 + rand() * 2.2),
           albedoCtx.stroke());
       }
-      (blobPath(albedoCtx, M * 0.1, 0.5, 9, 1.1),
-        (albedoCtx.fillStyle = radialGradient(albedoCtx, 0, M * 0.12, [
+      (blobPath(albedoCtx, cellExtent * 0.1, 0.5, 9, 1.1),
+        (albedoCtx.fillStyle = radialGradient(albedoCtx, 0, cellExtent * 0.12, [
           [0, '#050403'],
           [0.8, '#140f0a'],
           [1, '#3a2a1a'],
@@ -389,90 +441,114 @@ export function createDecalAtlas(cellSize = 256) {
             [0.8, 140],
             [1, 128],
           ],
-          M * 0.17,
+          cellExtent * 0.17,
         ));
     });
-  for (let _ of DECAL_ATLAS_FRAMES.scorch)
-    drawCell(_, (M) => {
-      ((albedoCtx.fillStyle = radialGradient(albedoCtx, 0, M * 0.98, [
+  for (let frameSlot of DECAL_ATLAS_FRAMES.scorch)
+    drawCell(frameSlot, (cellExtent) => {
+      ((albedoCtx.fillStyle = radialGradient(albedoCtx, 0, cellExtent * 0.98, [
         [0, 'rgba(6,5,5,0.92)'],
         [0.3, 'rgba(10,9,8,0.85)'],
         [0.55, 'rgba(22,18,15,0.5)'],
         [0.8, 'rgba(30,24,20,0.16)'],
         [1, 'rgba(30,24,20,0)'],
       ])),
-        albedoCtx.fillRect(-M, -M, 2 * M, 2 * M));
-      for (let E = 0; E < 90; E++) {
-        let w = rand() * TAU,
-          S = M * (0.1 + rand() * 0.3),
-          z = M * (0.5 + rand() * 0.46);
+        albedoCtx.fillRect(-cellExtent, -cellExtent, 2 * cellExtent, 2 * cellExtent));
+      for (let outerRadius = 0; outerRadius < 90; outerRadius++) {
+        let cellCenterY = rand() * TAU,
+          cellHalfSize = cellExtent * (0.1 + rand() * 0.3),
+          rotationAngle = cellExtent * (0.5 + rand() * 0.46);
         (albedoCtx.beginPath(),
-          albedoCtx.moveTo(Math.cos(w - 0.03) * S, Math.sin(w - 0.03) * S),
-          albedoCtx.lineTo(Math.cos(w) * z, Math.sin(w) * z),
-          albedoCtx.lineTo(Math.cos(w + 0.03) * S, Math.sin(w + 0.03) * S),
+          albedoCtx.moveTo(
+            Math.cos(cellCenterY - 0.03) * cellHalfSize,
+            Math.sin(cellCenterY - 0.03) * cellHalfSize,
+          ),
+          albedoCtx.lineTo(
+            Math.cos(cellCenterY) * rotationAngle,
+            Math.sin(cellCenterY) * rotationAngle,
+          ),
+          albedoCtx.lineTo(
+            Math.cos(cellCenterY + 0.03) * cellHalfSize,
+            Math.sin(cellCenterY + 0.03) * cellHalfSize,
+          ),
           albedoCtx.closePath(),
           (albedoCtx.fillStyle = `rgba(8,7,6,${0.12 + rand() * 0.3})`),
           albedoCtx.fill());
       }
-      for (let E = 0; E < 60; E++) {
-        let w = rand() * TAU,
-          S = M * (0.15 + rand() * 0.6);
+      for (let outerRadius = 0; outerRadius < 60; outerRadius++) {
+        let cellCenterY = rand() * TAU,
+          cellHalfSize = cellExtent * (0.15 + rand() * 0.6);
         ((albedoCtx.fillStyle = rand() < 0.3 ? 'rgba(150,140,128,0.25)' : 'rgba(0,0,0,0.4)'),
           albedoCtx.beginPath(),
-          albedoCtx.arc(Math.cos(w) * S, Math.sin(w) * S, 1 + rand() * 4, 0, TAU),
+          albedoCtx.arc(
+            Math.cos(cellCenterY) * cellHalfSize,
+            Math.sin(cellCenterY) * cellHalfSize,
+            1 + rand() * 4,
+            0,
+            TAU,
+          ),
           albedoCtx.fill());
       }
     });
-  for (let _ of DECAL_ATLAS_FRAMES.soot)
-    drawCell(_, (M) => {
-      for (let E = 0; E < 14; E++) {
-        let w = rand() * TAU,
-          S = rand() * M * 0.3,
-          z = M * (0.15 + rand() * 0.3),
-          H = Math.cos(w) * S,
-          O = Math.sin(w) * S,
-          q = albedoCtx.createRadialGradient(H, O, 0, H, O, z);
-        (q.addColorStop(0, 'rgba(8,8,8,0.4)'),
-          q.addColorStop(1, 'rgba(8,8,8,0)'),
-          (albedoCtx.fillStyle = q),
-          albedoCtx.fillRect(-M, -M, 2 * M, 2 * M));
+  for (let frameSlot of DECAL_ATLAS_FRAMES.soot)
+    drawCell(frameSlot, (cellExtent) => {
+      for (let outerRadius = 0; outerRadius < 14; outerRadius++) {
+        let cellCenterY = rand() * TAU,
+          cellHalfSize = rand() * cellExtent * 0.3,
+          rotationAngle = cellExtent * (0.15 + rand() * 0.3),
+          polygonBlotch = Math.cos(cellCenterY) * cellHalfSize,
+          blotchCount = Math.sin(cellCenterY) * cellHalfSize,
+          pitRadius = albedoCtx.createRadialGradient(
+            polygonBlotch,
+            blotchCount,
+            0,
+            polygonBlotch,
+            blotchCount,
+            rotationAngle,
+          );
+        (pitRadius.addColorStop(0, 'rgba(8,8,8,0.4)'),
+          pitRadius.addColorStop(1, 'rgba(8,8,8,0)'),
+          (albedoCtx.fillStyle = pitRadius),
+          albedoCtx.fillRect(-cellExtent, -cellExtent, 2 * cellExtent, 2 * cellExtent));
       }
-      (blobPath(albedoCtx, M * 0.1, 0.4, 12),
+      (blobPath(albedoCtx, cellExtent * 0.1, 0.4, 12),
         (albedoCtx.fillStyle = 'rgba(0,0,0,0.9)'),
         albedoCtx.fill());
     });
-  for (let _ of DECAL_ATLAS_FRAMES.bullet_glass)
-    drawCell(_, (M) => {
-      ((albedoCtx.fillStyle = radialGradient(albedoCtx, 0, M * 0.5, [
+  for (let frameSlot of DECAL_ATLAS_FRAMES.bullet_glass)
+    drawCell(frameSlot, (cellExtent) => {
+      ((albedoCtx.fillStyle = radialGradient(albedoCtx, 0, cellExtent * 0.5, [
         [0, 'rgba(235,240,242,0.55)'],
         [1, 'rgba(235,240,242,0)'],
       ])),
-        albedoCtx.fillRect(-M, -M, 2 * M, 2 * M));
-      for (let E = 0; E < 13; E++) {
-        let w = ((E + rand() * 0.6) / 13) * TAU;
+        albedoCtx.fillRect(-cellExtent, -cellExtent, 2 * cellExtent, 2 * cellExtent));
+      for (let outerRadius = 0; outerRadius < 13; outerRadius++) {
+        let cellCenterY = ((outerRadius + rand() * 0.6) / 13) * TAU;
         drawCrack(
           albedoCtx,
-          w,
-          M * 0.07,
-          M * (0.5 + rand() * 0.45),
+          cellCenterY,
+          cellExtent * 0.07,
+          cellExtent * (0.5 + rand() * 0.45),
           0.12,
           0.9 + rand(),
           'rgba(240,246,248,0.85)',
         );
       }
-      for (let E = 0; E < 3; E++) {
-        let w = M * (0.2 + E * 0.17 + rand() * 0.05);
-        for (let S = 0; S < 9; S++) {
+      for (let outerRadius = 0; outerRadius < 3; outerRadius++) {
+        let cellCenterY = cellExtent * (0.2 + outerRadius * 0.17 + rand() * 0.05);
+        for (let cellHalfSize = 0; cellHalfSize < 9; cellHalfSize++) {
           if (rand() < 0.45) continue;
-          let z = (S / 9) * TAU;
+          let rotationAngle = (cellHalfSize / 9) * TAU;
           (albedoCtx.beginPath(),
-            albedoCtx.arc(0, 0, w, z, z + 0.5),
+            albedoCtx.arc(0, 0, cellCenterY, rotationAngle, rotationAngle + 0.5),
             (albedoCtx.strokeStyle = 'rgba(240,246,248,0.6)'),
             (albedoCtx.lineWidth = 1),
             albedoCtx.stroke());
         }
       }
-      (blobPath(albedoCtx, M * 0.07, 0.3, 10), (albedoCtx.fillStyle = '#060606'), albedoCtx.fill());
+      (blobPath(albedoCtx, cellExtent * 0.07, 0.3, 10),
+        (albedoCtx.fillStyle = '#060606'),
+        albedoCtx.fill());
     });
   let mapTexture = new THREE.CanvasTexture(albedoCanvas);
   ((mapTexture.colorSpace = THREE.SRGBColorSpace), (mapTexture.anisotropy = 4));
@@ -491,29 +567,35 @@ export function createDecalAtlas(cellSize = 256) {
     },
     normalTexture = null;
   try {
-    let _ = normalCtx.getImageData(0, 0, width, height),
-      M = _.data;
-    if (M && M.length === width * height * 4) {
-      let E = normalCtx.createImageData(width, height),
-        w = E.data,
-        S = 5 / 255;
-      for (let z = 0; z < height; z++) {
-        let H = Math.max(0, z - 1) * width,
-          O = Math.min(height - 1, z + 1) * width;
-        for (let q = 0; q < width; q++) {
-          let U = Math.max(0, q - 1),
-            T = Math.min(width - 1, q + 1),
-            D = (M[(z * width + T) * 4] - M[(z * width + U) * 4]) * S,
-            C = (M[(O + q) * 4] - M[(H + q) * 4]) * S,
-            G = 1 / Math.sqrt(D * D + C * C + 1),
-            j = (z * width + q) * 4;
-          ((w[j] = (-D * G * 0.5 + 0.5) * 255),
-            (w[j + 1] = (C * G * 0.5 + 0.5) * 255),
-            (w[j + 2] = (G * 0.5 + 0.5) * 255),
-            (w[j + 3] = 255));
+    let frameSlot = normalCtx.getImageData(0, 0, width, height),
+      cellExtent = frameSlot.data;
+    if (cellExtent && cellExtent.length === width * height * 4) {
+      let outerRadius = normalCtx.createImageData(width, height),
+        cellCenterY = outerRadius.data,
+        cellHalfSize = 5 / 255;
+      for (let rotationAngle = 0; rotationAngle < height; rotationAngle++) {
+        let polygonBlotch = Math.max(0, rotationAngle - 1) * width,
+          blotchCount = Math.min(height - 1, rotationAngle + 1) * width;
+        for (let pitRadius = 0; pitRadius < width; pitRadius++) {
+          let crackSegments = Math.max(0, pitRadius - 1),
+            crackIndex = Math.min(width - 1, pitRadius + 1),
+            crackAngle =
+              (cellExtent[(rotationAngle * width + crackIndex) * 4] -
+                cellExtent[(rotationAngle * width + crackSegments) * 4]) *
+              cellHalfSize,
+            offsetRadius =
+              (cellExtent[(blotchCount + pitRadius) * 4] -
+                cellExtent[(polygonBlotch + pitRadius) * 4]) *
+              cellHalfSize,
+            endRadius = 1 / Math.sqrt(crackAngle * crackAngle + offsetRadius * offsetRadius + 1),
+            flakeBrightness = (rotationAngle * width + pitRadius) * 4;
+          ((cellCenterY[flakeBrightness] = (-crackAngle * endRadius * 0.5 + 0.5) * 255),
+            (cellCenterY[flakeBrightness + 1] = (offsetRadius * endRadius * 0.5 + 0.5) * 255),
+            (cellCenterY[flakeBrightness + 2] = (endRadius * 0.5 + 0.5) * 255),
+            (cellCenterY[flakeBrightness + 3] = 255));
         }
       }
-      (normalCtx.putImageData(E, 0, 0),
+      (normalCtx.putImageData(outerRadius, 0, 0),
         (normalTexture = new THREE.CanvasTexture(normalCanvas)),
         (normalTexture.colorSpace = THREE.NoColorSpace));
     }
@@ -764,21 +846,35 @@ export function createFxBatch(
     (mesh.receiveShadow = !1),
     (mesh.matrixAutoUpdate = !1),
     (mesh.name = material.name),
-    (mesh.onBeforeRender = (S, z, H) => {
-      let O = S.getRenderTarget(),
-        q;
-      O ? (q = O.height) : (S.getDrawingBufferSize(FX_SCRATCH_SIZE), (q = FX_SCRATCH_SIZE.y));
-      let U = H.projectionMatrix.elements;
-      uniforms.uPx.value = 2 / (Math.max(U[5], 0.001) * Math.max(q, 1));
-      let T = game.render,
-        D = T && T.depthTexture;
-      D && D.image && H === game.camera && T.depthTextureIsLive !== !0 && game.params.fxsoft !== '0'
-        ? ((uniforms.uDepth.value = D),
+    (mesh.onBeforeRender = (rendererOrPositionX, sceneOrPositionY, cameraOrPositionZ) => {
+      let renderTargetOrSize = rendererOrPositionX.getRenderTarget(),
+        targetHeightOrAxisX;
+      renderTargetOrSize
+        ? (targetHeightOrAxisX = renderTargetOrSize.height)
+        : (rendererOrPositionX.getDrawingBufferSize(FX_SCRATCH_SIZE),
+          (targetHeightOrAxisX = FX_SCRATCH_SIZE.y));
+      let projectionOrAxisY = cameraOrPositionZ.projectionMatrix.elements;
+      uniforms.uPx.value =
+        2 / (Math.max(projectionOrAxisY[5], 0.001) * Math.max(targetHeightOrAxisX, 1));
+      let renderStateOrAxisZ = game.render,
+        depthTextureOrAxisW = renderStateOrAxisZ && renderStateOrAxisZ.depthTexture;
+      depthTextureOrAxisW &&
+      depthTextureOrAxisW.image &&
+      cameraOrPositionZ === game.camera &&
+      renderStateOrAxisZ.depthTextureIsLive !== !0 &&
+      game.params.fxsoft !== '0'
+        ? ((uniforms.uDepth.value = depthTextureOrAxisW),
           (uniforms.uSoft.value = 1),
-          T.resolution && T.resolution.x > 0
-            ? uniforms.uRes.value.set(T.resolution.x, T.resolution.y)
-            : uniforms.uRes.value.set(D.image.width || 1, D.image.height || 1),
-          uniforms.uNearFar.value.set(H.near, H.far))
+          renderStateOrAxisZ.resolution && renderStateOrAxisZ.resolution.x > 0
+            ? uniforms.uRes.value.set(
+                renderStateOrAxisZ.resolution.x,
+                renderStateOrAxisZ.resolution.y,
+              )
+            : uniforms.uRes.value.set(
+                depthTextureOrAxisW.image.width || 1,
+                depthTextureOrAxisW.image.height || 1,
+              ),
+          uniforms.uNearFar.value.set(cameraOrPositionZ.near, cameraOrPositionZ.far))
         : ((uniforms.uDepth.value = null), (uniforms.uSoft.value = 0));
     }));
   let posArray = posAttr.array,
@@ -796,28 +892,45 @@ export function createFxBatch(
       begin() {
         batch.n = 0;
       },
-      push(S, z, H, O, q, U, T, D, C, G, j, N, Q, K, ie, F) {
-        let X = batch.n;
-        if (X >= capacity) return !1;
-        let ne = X * 4;
+      push(
+        rendererOrPositionX,
+        sceneOrPositionY,
+        cameraOrPositionZ,
+        renderTargetOrSize,
+        targetHeightOrAxisX,
+        projectionOrAxisY,
+        renderStateOrAxisZ,
+        depthTextureOrAxisW,
+        colorRed,
+        colorGreen,
+        colorBlue,
+        colorAlpha,
+        miscFloatA,
+        miscFloatB,
+        miscFloatC,
+        miscFloatD,
+      ) {
+        let instanceSlot = batch.n;
+        if (instanceSlot >= capacity) return !1;
+        let floatOffset = instanceSlot * 4;
         return (
-          (posArray[ne] = S),
-          (posArray[ne + 1] = z),
-          (posArray[ne + 2] = H),
-          (posArray[ne + 3] = O),
-          (axisArray[ne] = q),
-          (axisArray[ne + 1] = U),
-          (axisArray[ne + 2] = T),
-          (axisArray[ne + 3] = D),
-          (colorArray[ne] = C),
-          (colorArray[ne + 1] = G),
-          (colorArray[ne + 2] = j),
-          (colorArray[ne + 3] = N),
-          (miscArray[ne] = Q),
-          (miscArray[ne + 1] = K),
-          (miscArray[ne + 2] = ie),
-          (miscArray[ne + 3] = F),
-          (batch.n = X + 1),
+          (posArray[floatOffset] = rendererOrPositionX),
+          (posArray[floatOffset + 1] = sceneOrPositionY),
+          (posArray[floatOffset + 2] = cameraOrPositionZ),
+          (posArray[floatOffset + 3] = renderTargetOrSize),
+          (axisArray[floatOffset] = targetHeightOrAxisX),
+          (axisArray[floatOffset + 1] = projectionOrAxisY),
+          (axisArray[floatOffset + 2] = renderStateOrAxisZ),
+          (axisArray[floatOffset + 3] = depthTextureOrAxisW),
+          (colorArray[floatOffset] = colorRed),
+          (colorArray[floatOffset + 1] = colorGreen),
+          (colorArray[floatOffset + 2] = colorBlue),
+          (colorArray[floatOffset + 3] = colorAlpha),
+          (miscArray[floatOffset] = miscFloatA),
+          (miscArray[floatOffset + 1] = miscFloatB),
+          (miscArray[floatOffset + 2] = miscFloatC),
+          (miscArray[floatOffset + 3] = miscFloatD),
+          (batch.n = instanceSlot + 1),
           !0
         );
       },
@@ -826,11 +939,17 @@ export function createFxBatch(
     attributes = [posAttr, axisAttr, colorAttr, miscAttr];
   return (
     (batch.end = () => {
-      let S = batch.n;
-      if (((geometry.instanceCount = S), (mesh.visible = S > 0), !!S))
-        for (let z = 0; z < 4; z++) {
-          let H = attributes[z];
-          (H.clearUpdateRanges(), H.addUpdateRange(0, S * 4), (H.needsUpdate = !0));
+      let rendererOrPositionX = batch.n;
+      if (
+        ((geometry.instanceCount = rendererOrPositionX),
+        (mesh.visible = rendererOrPositionX > 0),
+        !!rendererOrPositionX)
+      )
+        for (let sceneOrPositionY = 0; sceneOrPositionY < 4; sceneOrPositionY++) {
+          let cameraOrPositionZ = attributes[sceneOrPositionY];
+          (cameraOrPositionZ.clearUpdateRanges(),
+            cameraOrPositionZ.addUpdateRange(0, rendererOrPositionX * 4),
+            (cameraOrPositionZ.needsUpdate = !0));
         }
     }),
     batch

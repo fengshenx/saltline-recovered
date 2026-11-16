@@ -344,7 +344,9 @@ export function cylinderGeometry(
  * 沿点列生成 CatmullRom 管体（电缆、软管、缆绳）：段数与 UV 按实际弧长换算，并硬性限制 400 段以免长索把面数拉爆
  */
 export function tubeGeometry(points, radius = 0.03, radialSegments = 8, closed = !1, tension = 0) {
-  let ctrlPoints = points.map((h) => (h.isVector3 ? h : new THREE.Vector3(h[0], h[1], h[2]))),
+  let ctrlPoints = points.map((vertIdx) =>
+      vertIdx.isVector3 ? vertIdx : new THREE.Vector3(vertIdx[0], vertIdx[1], vertIdx[2]),
+    ),
     curve = new THREE.CatmullRomCurve3(ctrlPoints, closed, 'catmullrom', tension),
     curveLength = curve.getLength(),
     segCount = Math.max(2, Math.ceil(curveLength / Math.max(0.08, radius * 3))),
@@ -416,34 +418,35 @@ export function mergeGeometryParts(geometries) {
   let preparedGeos = geometries
     .filter(Boolean)
     .map(
-      (l) => (
-        l.attributes.uv ||
-          l.setAttribute(
+      (geo) => (
+        geo.attributes.uv ||
+          geo.setAttribute(
             'uv',
-            new THREE.BufferAttribute(new Float32Array(l.attributes.position.count * 2), 2),
+            new THREE.BufferAttribute(new Float32Array(geo.attributes.position.count * 2), 2),
           ),
-        l.attributes.normal || l.computeVertexNormals(),
-        l
+        geo.attributes.normal || geo.computeVertexNormals(),
+        geo
       ),
     );
   if (!preparedGeos.length) return new THREE.BufferGeometry();
-  let hasVertexColor = preparedGeos.some((l) => l.attributes.color),
-    normalizedGeos = preparedGeos.map((l) => {
-      let c = (l.index, l);
-      if (hasVertexColor && !c.attributes.color) {
-        let u = new Float32Array(c.attributes.position.count * 3).fill(1);
-        c.setAttribute('color', new THREE.BufferAttribute(u, 3));
+  let hasVertexColor = preparedGeos.some((geo) => geo.attributes.color),
+    normalizedGeos = preparedGeos.map((geo) => {
+      let currentGeo = (geo.index, geo);
+      if (hasVertexColor && !currentGeo.attributes.color) {
+        let colorArr = new Float32Array(currentGeo.attributes.position.count * 3).fill(1);
+        currentGeo.setAttribute('color', new THREE.BufferAttribute(colorArr, 3));
       }
-      for (let u of Object.keys(c.attributes))
-        ['position', 'normal', 'uv', 'color'].includes(u) || c.deleteAttribute(u);
-      return c;
+      for (let colorArr of Object.keys(currentGeo.attributes))
+        ['position', 'normal', 'uv', 'color'].includes(colorArr) ||
+          currentGeo.deleteAttribute(colorArr);
+      return currentGeo;
     }),
-    allIndexed = normalizedGeos.every((l) => l.index),
-    noneIndexed = normalizedGeos.every((l) => !l.index),
+    allIndexed = normalizedGeos.every((geo) => geo.index),
+    noneIndexed = normalizedGeos.every((geo) => !geo.index),
     mergeReady =
       allIndexed || noneIndexed
         ? normalizedGeos
-        : normalizedGeos.map((l) => (l.index ? l.toNonIndexed() : l));
+        : normalizedGeos.map((geo) => (geo.index ? geo.toNonIndexed() : geo));
   return mergeGeometries(mergeReady, !1) || new THREE.BufferGeometry();
 }
 
@@ -457,37 +460,37 @@ export function mergeStaticMeshes(
   root.updateMatrixWorld(!0);
   let groupMap = new Map(),
     unmergedMeshes = [];
-  root.traverse((r) => {
-    if (!r.isMesh) return;
-    let a = r,
-      l = !1;
-    for (; a;) {
-      if (a.userData && a.userData.noMerge) {
-        l = !0;
+  root.traverse((node) => {
+    if (!node.isMesh) return;
+    let ancestor = node,
+      skipMerge = !1;
+    for (; ancestor;) {
+      if (ancestor.userData && ancestor.userData.noMerge) {
+        skipMerge = !0;
         break;
       }
-      a = a.parent;
+      ancestor = ancestor.parent;
     }
-    if (l || r.isSkinnedMesh || r.isInstancedMesh || Array.isArray(r.material)) {
-      unmergedMeshes.push(r);
+    if (skipMerge || node.isSkinnedMesh || node.isInstancedMesh || Array.isArray(node.material)) {
+      unmergedMeshes.push(node);
       return;
     }
-    let c =
-      r.material.uuid +
-      (r.castShadow ? 'c' : 'n') +
-      (r.receiveShadow ? 'r' : 'n') +
+    let groupKey =
+      node.material.uuid +
+      (node.castShadow ? 'c' : 'n') +
+      (node.receiveShadow ? 'r' : 'n') +
       ':' +
-      r.layers.mask;
-    groupMap.has(c) ||
-      groupMap.set(c, {
-        mat: r.material,
+      node.layers.mask;
+    groupMap.has(groupKey) ||
+      groupMap.set(groupKey, {
+        mat: node.material,
         geos: [],
-        cast: r.castShadow,
-        recv: r.receiveShadow,
-        layers: r.layers.mask,
+        cast: node.castShadow,
+        recv: node.receiveShadow,
+        layers: node.layers.mask,
       });
-    let u = r.geometry.clone();
-    (u.applyMatrix4(r.matrixWorld), groupMap.get(c).geos.push(u));
+    let geoClone = node.geometry.clone();
+    (geoClone.applyMatrix4(node.matrixWorld), groupMap.get(groupKey).geos.push(geoClone));
   });
   let outGroup = new THREE.Group();
   for (let node of groupMap.values()) {
@@ -727,7 +730,10 @@ export function buildCorrugationStations(min, max, pitch, depth, flat, slope, or
     }
   return (
     stations.push(max),
-    stations.map((f) => [f, corrugationWaveOffset(f - origin, pitch, depth, flat, slope)])
+    stations.map((tileIdx) => [
+      tileIdx,
+      corrugationWaveOffset(tileIdx - origin, pitch, depth, flat, slope),
+    ])
   );
 }
 
@@ -1189,11 +1195,11 @@ export function createHollowPolygonExtrusion(
     edgeNormals = [],
     perimLen = 0,
     cumLen = [0];
-  for (let polyIdx = 0; polyIdx < vertCount; polyIdx++) {
-    let vertA = polygon[polyIdx],
-      vertB = polygon[(polyIdx + 1) % vertCount],
-      edgeDx = vertB[0] - vertA[0],
-      edgeDy = vertB[1] - vertA[1],
+  for (let edgeIndex = 0; edgeIndex < vertCount; edgeIndex++) {
+    let neighborOffset = polygon[edgeIndex],
+      edgeNormal = polygon[(edgeIndex + 1) % vertCount],
+      edgeDx = edgeNormal[0] - neighborOffset[0],
+      edgeDy = edgeNormal[1] - neighborOffset[1],
       edgeLen = Math.hypot(edgeDx, edgeDy) || 1;
     (edgeNormals.push([edgeDy / edgeLen, -edgeDx / edgeLen]),
       (perimLen += edgeLen),
@@ -1210,24 +1216,24 @@ export function createHollowPolygonExtrusion(
     }
     return g;
   };
-  for (let polyIdx = 0; polyIdx < vertCount; polyIdx++) {
-    let vertA = polygon[polyIdx],
-      vertB = polygon[(polyIdx + 1) % vertCount],
-      edgeDx = miterNorm(polyIdx, polyIdx - 1),
-      edgeDy = miterNorm(polyIdx, polyIdx + 1),
+  for (let edgeIndex = 0; edgeIndex < vertCount; edgeIndex++) {
+    let neighborOffset = polygon[edgeIndex],
+      edgeNormal = polygon[(edgeIndex + 1) % vertCount],
+      edgeDx = miterNorm(edgeIndex, edgeIndex - 1),
+      edgeDy = miterNorm(edgeIndex, edgeIndex + 1),
       edgeLen = positions.length / 3;
     (positions.push(
-      vertA[0],
-      vertA[1],
+      neighborOffset[0],
+      neighborOffset[1],
       halfDepth,
-      vertA[0],
-      vertA[1],
+      neighborOffset[0],
+      neighborOffset[1],
       -halfDepth,
-      vertB[0],
-      vertB[1],
+      edgeNormal[0],
+      edgeNormal[1],
       -halfDepth,
-      vertB[0],
-      vertB[1],
+      edgeNormal[0],
+      edgeNormal[1],
       halfDepth,
     ),
       normals.push(
@@ -1245,32 +1251,32 @@ export function createHollowPolygonExtrusion(
         0,
       ),
       uvs.push(
-        cumLen[polyIdx],
+        cumLen[edgeIndex],
         halfDepth,
-        cumLen[polyIdx],
+        cumLen[edgeIndex],
         -halfDepth,
-        cumLen[polyIdx + 1],
+        cumLen[edgeIndex + 1],
         -halfDepth,
-        cumLen[polyIdx + 1],
+        cumLen[edgeIndex + 1],
         halfDepth,
       ),
       indices.push(edgeLen, edgeLen + 1, edgeLen + 2, edgeLen, edgeLen + 2, edgeLen + 3));
   }
   if (withCaps) {
-    let polyIdx = THREE.ShapeUtils.triangulateShape(
-      polygon.map((v) => new THREE.Vector2(v[0], v[1])),
+    let edgeIndex = THREE.ShapeUtils.triangulateShape(
+      polygon.map((neighborOffset) => new THREE.Vector2(neighborOffset[0], neighborOffset[1])),
       [],
     );
-    for (let vertA of [1, -1]) {
-      let vertB = positions.length / 3;
+    for (let neighborOffset of [1, -1]) {
+      let edgeNormal = positions.length / 3;
       for (let edgeDx of polygon)
-        (positions.push(edgeDx[0], edgeDx[1], vertA * halfDepth),
-          normals.push(0, 0, vertA),
+        (positions.push(edgeDx[0], edgeDx[1], neighborOffset * halfDepth),
+          normals.push(0, 0, neighborOffset),
           uvs.push(edgeDx[0], edgeDx[1]));
-      for (let edgeDx of polyIdx)
-        vertA > 0
-          ? indices.push(vertB + edgeDx[0], vertB + edgeDx[1], vertB + edgeDx[2])
-          : indices.push(vertB + edgeDx[0], vertB + edgeDx[2], vertB + edgeDx[1]);
+      for (let edgeDx of edgeIndex)
+        neighborOffset > 0
+          ? indices.push(edgeNormal + edgeDx[0], edgeNormal + edgeDx[1], edgeNormal + edgeDx[2])
+          : indices.push(edgeNormal + edgeDx[0], edgeNormal + edgeDx[2], edgeNormal + edgeDx[1]);
     }
   }
   return createGeometryFromArrays(positions, normals, uvs, indices);
@@ -1779,12 +1785,16 @@ export function buildRoundedBox(
 function createShapeFromPoints(points, holes) {
   let shape = new THREE.Shape();
   if (
-    (points.forEach((n, s) => (s ? shape.lineTo(n[0], n[1]) : shape.moveTo(n[0], n[1]))),
+    (points.forEach((point, pointIdx) =>
+      pointIdx ? shape.lineTo(point[0], point[1]) : shape.moveTo(point[0], point[1]),
+    ),
     shape.closePath(),
     holes)
   )
     for (let point of holes)
-      shape.holes.push(new THREE.Path(point.map((s) => new THREE.Vector2(s[0], s[1]))));
+      shape.holes.push(
+        new THREE.Path(point.map((pointIdx) => new THREE.Vector2(pointIdx[0], pointIdx[1]))),
+      );
   return shape;
 }
 

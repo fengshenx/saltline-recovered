@@ -121,7 +121,7 @@ export function buildContainerShip(ctx, lamps) {
     addLampGeo = ($) => lamps.add($, hullTint, 0),
     addGeom = ($, ue, me) => batcher.add($, ue, me),
     stations = [0, 0.35, 0.9, 1.8, 3, 4.5, 6, 8, 10, 12, 14.5, 17, 20];
-  for (let $ = 23; $ < SHIP_LENGTH - 0.5; $ += 3) stations.push($);
+  for (let sideSign = 23; sideSign < SHIP_LENGTH - 0.5; sideSign += 3) stations.push(sideSign);
   stations.push(SHIP_LENGTH);
   let profileFractions = [0, 0.17, 0.34, 0.5, 0.66, 0.83, 1],
     profileAt = ($) => {
@@ -147,195 +147,284 @@ export function buildContainerShip(ctx, lamps) {
         P
       );
     };
-  for (let $ of [-1, 1])
-    for (let ue = 0; ue < stations.length - 1; ue++) {
-      let me = stations[ue],
-        ee = stations[ue + 1],
-        B = profileAt(me),
-        P = profileAt(ee);
-      for (let V = 0; V < heightSegs; V++) {
-        if (V === heightSegs - 1 && bulwarkHeightAt(me) < 0.02 && bulwarkHeightAt(ee) < 0.02)
+  for (let sideSign of [-1, 1])
+    for (let stationIndex = 0; stationIndex < stations.length - 1; stationIndex++) {
+      let stationPos = stations[stationIndex],
+        nextStationPos = stations[stationIndex + 1],
+        profileAtStation = profileAt(stationPos),
+        profileAtNextStation = profileAt(nextStationPos);
+      for (let rowIndex = 0; rowIndex < heightSegs; rowIndex++) {
+        if (
+          rowIndex === heightSegs - 1 &&
+          bulwarkHeightAt(stationPos) < 0.02 &&
+          bulwarkHeightAt(nextStationPos) < 0.02
+        )
           continue;
-        let Y = (V < bootRows ? 0.8 : 0.58) + 0.36 * hash2(ue * 7 + ($ > 0 ? 100 : 0), V),
-          L = [
-            hullPoint(me, B[V], $),
-            hullPoint(ee, P[V], $),
-            hullPoint(ee, P[V + 1], $),
-            hullPoint(me, B[V + 1], $),
+        let panelBrightness =
+            (rowIndex < bootRows ? 0.8 : 0.58) +
+            0.36 * hash2(stationIndex * 7 + (sideSign > 0 ? 100 : 0), rowIndex),
+          quadCorners = [
+            hullPoint(stationPos, profileAtStation[rowIndex], sideSign),
+            hullPoint(nextStationPos, profileAtNextStation[rowIndex], sideSign),
+            hullPoint(nextStationPos, profileAtNextStation[rowIndex + 1], sideSign),
+            hullPoint(stationPos, profileAtStation[rowIndex + 1], sideSign),
           ],
-          Z = [
-            hullNormal(me, B[V], $),
-            hullNormal(ee, P[V], $),
-            hullNormal(ee, P[V + 1], $),
-            hullNormal(me, B[V + 1], $),
+          quadNormals = [
+            hullNormal(stationPos, profileAtStation[rowIndex], sideSign),
+            hullNormal(nextStationPos, profileAtNextStation[rowIndex], sideSign),
+            hullNormal(nextStationPos, profileAtNextStation[rowIndex + 1], sideSign),
+            hullNormal(stationPos, profileAtStation[rowIndex + 1], sideSign),
           ],
-          J = [
-            [me, B[V]],
-            [ee, P[V]],
-            [ee, P[V + 1]],
-            [me, B[V + 1]],
+          quadUvs = [
+            [stationPos, profileAtStation[rowIndex]],
+            [nextStationPos, profileAtNextStation[rowIndex]],
+            [nextStationPos, profileAtNextStation[rowIndex + 1]],
+            [stationPos, profileAtStation[rowIndex + 1]],
           ],
-          oe = [
-            tintFor(L[0], V, !1, Y),
-            tintFor(L[1], V, !1, Y),
-            tintFor(L[2], V, !0, Y),
-            tintFor(L[3], V, !0, Y),
+          quadTint = [
+            tintFor(quadCorners[0], rowIndex, !1, panelBrightness),
+            tintFor(quadCorners[1], rowIndex, !1, panelBrightness),
+            tintFor(quadCorners[2], rowIndex, !0, panelBrightness),
+            tintFor(quadCorners[3], rowIndex, !0, panelBrightness),
           ];
-        if (me > 1.5 && V >= 2 && V < heightSegs - 1) {
-          let fe = L[0].clone().add(L[1]).add(L[2]).add(L[3]).multiplyScalar(0.25);
-          for (let le = 0; le < 4; le++)
-            Z[le].addScaledVector(fe.clone().sub(L[le]).normalize(), 0.075).normalize();
+        if (stationPos > 1.5 && rowIndex >= 2 && rowIndex < heightSegs - 1) {
+          let quadCenter = quadCorners[0]
+            .clone()
+            .add(quadCorners[1])
+            .add(quadCorners[2])
+            .add(quadCorners[3])
+            .multiplyScalar(0.25);
+          for (let cornerIndex = 0; cornerIndex < 4; cornerIndex++)
+            quadNormals[cornerIndex]
+              .addScaledVector(quadCenter.clone().sub(quadCorners[cornerIndex]).normalize(), 0.075)
+              .normalize();
         }
-        (V < bootRows ? bottomBuilder : hullBuilder).quad(L, Z, J, oe);
+        (rowIndex < bootRows ? bottomBuilder : hullBuilder).quad(
+          quadCorners,
+          quadNormals,
+          quadUvs,
+          quadTint,
+        );
       }
     }
   {
-    let $ = profileAt(0),
-      ue = profileAt(SHIP_LENGTH),
-      me = newVec3(0, 0.2, 1).normalize(),
-      ee = newVec3(0, 0, -1),
-      B = newVec3(0, 1, 0);
-    for (let P = 0; P < heightSegs; P++) {
-      let V = P < bootRows ? [0.8, 0.8, 0.8] : [0.9, 0.9, 0.9];
-      ((P < bootRows ? bottomBuilder : hullBuilder).quad(
+    let sideSign = profileAt(0),
+      stationIndex = profileAt(SHIP_LENGTH),
+      stationPos = newVec3(0, 0.2, 1).normalize(),
+      nextStationPos = newVec3(0, 0, -1),
+      profileAtStation = newVec3(0, 1, 0);
+    for (let profileAtNextStation = 0; profileAtNextStation < heightSegs; profileAtNextStation++) {
+      let rowIndex = profileAtNextStation < bootRows ? [0.8, 0.8, 0.8] : [0.9, 0.9, 0.9];
+      ((profileAtNextStation < bootRows ? bottomBuilder : hullBuilder).quad(
         [
-          hullPoint(0, $[P], -1),
-          hullPoint(0, $[P], 1),
-          hullPoint(0, $[P + 1], 1),
-          hullPoint(0, $[P + 1], -1),
+          hullPoint(0, sideSign[profileAtNextStation], -1),
+          hullPoint(0, sideSign[profileAtNextStation], 1),
+          hullPoint(0, sideSign[profileAtNextStation + 1], 1),
+          hullPoint(0, sideSign[profileAtNextStation + 1], -1),
         ],
-        [me, me, me, me],
+        [stationPos, stationPos, stationPos, stationPos],
         [
-          [0, $[P]],
-          [0.4, $[P]],
-          [0.4, $[P + 1]],
-          [0, $[P + 1]],
+          [0, sideSign[profileAtNextStation]],
+          [0.4, sideSign[profileAtNextStation]],
+          [0.4, sideSign[profileAtNextStation + 1]],
+          [0, sideSign[profileAtNextStation + 1]],
         ],
-        [V, V, V, V],
+        [rowIndex, rowIndex, rowIndex, rowIndex],
       ),
-        (P < bootRows ? bottomBuilder : hullBuilder).quad(
+        (profileAtNextStation < bootRows ? bottomBuilder : hullBuilder).quad(
           [
-            hullPoint(SHIP_LENGTH, ue[P], -1),
-            hullPoint(SHIP_LENGTH, ue[P], 1),
-            hullPoint(SHIP_LENGTH, ue[P + 1], 1),
-            hullPoint(SHIP_LENGTH, ue[P + 1], -1),
+            hullPoint(SHIP_LENGTH, stationIndex[profileAtNextStation], -1),
+            hullPoint(SHIP_LENGTH, stationIndex[profileAtNextStation], 1),
+            hullPoint(SHIP_LENGTH, stationIndex[profileAtNextStation + 1], 1),
+            hullPoint(SHIP_LENGTH, stationIndex[profileAtNextStation + 1], -1),
           ],
-          [ee, ee, ee, ee],
+          [nextStationPos, nextStationPos, nextStationPos, nextStationPos],
           [
-            [0, ue[P]],
-            [14, ue[P]],
-            [14, ue[P + 1]],
-            [0, ue[P + 1]],
+            [0, stationIndex[profileAtNextStation]],
+            [14, stationIndex[profileAtNextStation]],
+            [14, stationIndex[profileAtNextStation + 1]],
+            [0, stationIndex[profileAtNextStation + 1]],
           ],
-          [V, V, V, V],
+          [rowIndex, rowIndex, rowIndex, rowIndex],
         ));
     }
-    for (let P = 0; P < stations.length - 1; P++) {
-      let V = hullPoint(stations[P], deckHeightAt(stations[P]), -1),
-        Y = hullPoint(stations[P], deckHeightAt(stations[P]), 1),
-        L = hullPoint(stations[P + 1], deckHeightAt(stations[P + 1]), 1),
-        Z = hullPoint(stations[P + 1], deckHeightAt(stations[P + 1]), -1),
-        J = [0.75, 0.72, 0.7];
+    for (
+      let profileAtNextStation = 0;
+      profileAtNextStation < stations.length - 1;
+      profileAtNextStation++
+    ) {
+      let rowIndex = hullPoint(
+          stations[profileAtNextStation],
+          deckHeightAt(stations[profileAtNextStation]),
+          -1,
+        ),
+        panelBrightness = hullPoint(
+          stations[profileAtNextStation],
+          deckHeightAt(stations[profileAtNextStation]),
+          1,
+        ),
+        quadCorners = hullPoint(
+          stations[profileAtNextStation + 1],
+          deckHeightAt(stations[profileAtNextStation + 1]),
+          1,
+        ),
+        quadNormals = hullPoint(
+          stations[profileAtNextStation + 1],
+          deckHeightAt(stations[profileAtNextStation + 1]),
+          -1,
+        ),
+        quadUvs = [0.75, 0.72, 0.7];
       bottomBuilder.quad(
-        [V, Y, L, Z],
-        [B, B, B, B],
+        [rowIndex, panelBrightness, quadCorners, quadNormals],
+        [profileAtStation, profileAtStation, profileAtStation, profileAtStation],
         [
-          [V.x, V.z],
-          [Y.x, Y.z],
-          [L.x, L.z],
-          [Z.x, Z.z],
+          [rowIndex.x, rowIndex.z],
+          [panelBrightness.x, panelBrightness.z],
+          [quadCorners.x, quadCorners.z],
+          [quadNormals.x, quadNormals.z],
         ],
-        [J, J, J, J],
+        [quadUvs, quadUvs, quadUvs, quadUvs],
       );
     }
   }
   (addGeom(hullRedMat, bottomBuilder.geo()), addGeom(hullPaintMat, hullBuilder.geo()));
   {
-    let $ = (me, ee) => hullPoint(me, ee, -1).addScaledVector(hullNormal(me, ee, -1), 0.012),
-      ue = [1.05, 0.92, 0.8];
-    for (let me = 2; me < stations.length - 1; me++) {
-      let ee = profileAt(stations[me]),
-        B = profileAt(stations[me + 1]);
-      for (let P = 4; P <= 9; P++)
+    let sideSign = (me, ee) => hullPoint(me, ee, -1).addScaledVector(hullNormal(me, ee, -1), 0.012),
+      stationIndex = [1.05, 0.92, 0.8];
+    for (let stationPos = 2; stationPos < stations.length - 1; stationPos++) {
+      let nextStationPos = profileAt(stations[stationPos]),
+        profileAtStation = profileAt(stations[stationPos + 1]);
+      for (let profileAtNextStation = 4; profileAtNextStation <= 9; profileAtNextStation++)
         addGeom(
           hullPaintMat,
-          beamBetween($(stations[me], ee[P]), $(stations[me + 1], B[P]), 0.03, 0.045),
-          ue,
+          beamBetween(
+            sideSign(stations[stationPos], nextStationPos[profileAtNextStation]),
+            sideSign(stations[stationPos + 1], profileAtStation[profileAtNextStation]),
+            0.03,
+            0.045,
+          ),
+          stationIndex,
         );
-      for (let P = 3; P < 9; P++)
-        (me + P) % 2 === 0 &&
+      for (let profileAtNextStation = 3; profileAtNextStation < 9; profileAtNextStation++)
+        (stationPos + profileAtNextStation) % 2 === 0 &&
           addGeom(
             hullPaintMat,
-            beamBetween($(stations[me], ee[P]), $(stations[me], ee[P + 1]), 0.035, 0.03),
-            ue,
+            beamBetween(
+              sideSign(stations[stationPos], nextStationPos[profileAtNextStation]),
+              sideSign(stations[stationPos], nextStationPos[profileAtNextStation + 1]),
+              0.035,
+              0.03,
+            ),
+            stationIndex,
           );
     }
   }
-  for (let $ of [-1, 1]) {
-    for (let Y = 3; Y < stations.length - 1; Y++) {
-      let L = (Z, J) => hullPoint(Z, J, $).addScaledVector(hullNormal(Z, J, $), 0.07);
+  for (let sideSign of [-1, 1]) {
+    for (let panelBrightness = 3; panelBrightness < stations.length - 1; panelBrightness++) {
+      let quadCorners = (Z, J) =>
+        hullPoint(Z, J, sideSign).addScaledVector(hullNormal(Z, J, sideSign), 0.07);
       (addGeom(
         hullPaintMat,
-        beamBetween(L(stations[Y], 9.6), L(stations[Y + 1], 9.6), 0.16, 0.3),
+        beamBetween(
+          quadCorners(stations[panelBrightness], 9.6),
+          quadCorners(stations[panelBrightness + 1], 9.6),
+          0.16,
+          0.3,
+        ),
         [0.55, 0.55, 0.55],
       ),
-        bulwarkHeightAt(stations[Y]) > 0.6 &&
-          bulwarkHeightAt(stations[Y + 1]) > 0.6 &&
+        bulwarkHeightAt(stations[panelBrightness]) > 0.6 &&
+          bulwarkHeightAt(stations[panelBrightness + 1]) > 0.6 &&
           addGeom(
             darkSteelMat,
             strutBetween(
-              hullPoint(stations[Y], bulwarkTopAt(stations[Y]), $),
-              hullPoint(stations[Y + 1], bulwarkTopAt(stations[Y + 1]), $),
+              hullPoint(
+                stations[panelBrightness],
+                bulwarkTopAt(stations[panelBrightness]),
+                sideSign,
+              ),
+              hullPoint(
+                stations[panelBrightness + 1],
+                bulwarkTopAt(stations[panelBrightness + 1]),
+                sideSign,
+              ),
               0.07,
               6,
             ),
           ));
     }
-    for (let Y = 0; Y < 3; Y++)
+    for (let panelBrightness = 0; panelBrightness < 3; panelBrightness++)
       addGeom(
         darkSteelMat,
         strutBetween(
-          hullPoint(stations[Y], bulwarkTopAt(stations[Y]), $),
-          hullPoint(stations[Y + 1], bulwarkTopAt(stations[Y + 1]), $),
+          hullPoint(stations[panelBrightness], bulwarkTopAt(stations[panelBrightness]), sideSign),
+          hullPoint(
+            stations[panelBrightness + 1],
+            bulwarkTopAt(stations[panelBrightness + 1]),
+            sideSign,
+          ),
           0.07,
           6,
         ),
       );
-    let ue = [];
-    for (let Y = 18; Y <= SHIP_LENGTH - 10.4; Y += 3)
-      ue.push(hullPoint(Y, deckHeightAt(Y), $).add(newVec3(-$ * 0.12, 0, 0)));
-    addRailing(batcher, darkSteelMat, ue, {
+    let stationIndex = [];
+    for (let panelBrightness = 18; panelBrightness <= SHIP_LENGTH - 10.4; panelBrightness += 3)
+      stationIndex.push(
+        hullPoint(panelBrightness, deckHeightAt(panelBrightness), sideSign).add(
+          newVec3(-sideSign * 0.12, 0, 0),
+        ),
+      );
+    addRailing(batcher, darkSteelMat, stationIndex, {
       h: 1.05,
       post: 1.5,
       r: 0.028,
     });
-    let me = 4.6,
-      ee = deckHeightAt(me) - 2.3,
-      B = hullPoint(me, ee, $),
-      P = hullNormal(me, ee, $);
+    let stationPos = 4.6,
+      nextStationPos = deckHeightAt(stationPos) - 2.3,
+      profileAtStation = hullPoint(stationPos, nextStationPos, sideSign),
+      profileAtNextStation = hullNormal(stationPos, nextStationPos, sideSign);
     addGeom(
       darkSteelMat,
       strutBetween(
-        B.clone().addScaledVector(P, -0.3),
-        B.clone().addScaledVector(P, 0.22),
+        profileAtStation.clone().addScaledVector(profileAtNextStation, -0.3),
+        profileAtStation.clone().addScaledVector(profileAtNextStation, 0.22),
         0.5,
         12,
         !0,
       ),
     );
-    let V = (Y, L, Z) => hullPoint(Y, L, $).addScaledVector(hullNormal(Y, L, $), Z);
+    let rowIndex = (Y, L, Z) =>
+      hullPoint(Y, L, sideSign).addScaledVector(hullNormal(Y, L, sideSign), Z);
     (addGeom(
       darkSteelMat,
-      beamBetween(V(me, ee - 0.1, 0.34), V(me, ee - 2.3, 0.3), 0.22, 0.22, 0.03),
+      beamBetween(
+        rowIndex(stationPos, nextStationPos - 0.1, 0.34),
+        rowIndex(stationPos, nextStationPos - 2.3, 0.3),
+        0.22,
+        0.22,
+        0.03,
+      ),
     ),
       addGeom(
         darkSteelMat,
-        beamBetween(V(me - 0.95, ee - 2.45, 0.34), V(me + 0.95, ee - 2.45, 0.34), 0.42, 0.42, 0.05),
+        beamBetween(
+          rowIndex(stationPos - 0.95, nextStationPos - 2.45, 0.34),
+          rowIndex(stationPos + 0.95, nextStationPos - 2.45, 0.34),
+          0.42,
+          0.42,
+          0.05,
+        ),
       ));
-    for (let Y of [-0.8, 0.8])
+    for (let panelBrightness of [-0.8, 0.8])
       addGeom(
         darkSteelMat,
-        beamBetween(V(me + Y, ee - 2.4, 0.3), V(me + Y * 1.1, ee - 1.1, 0.34), 0.5, 0.12, 0.02),
+        beamBetween(
+          rowIndex(stationPos + panelBrightness, nextStationPos - 2.4, 0.3),
+          rowIndex(stationPos + panelBrightness * 1.1, nextStationPos - 1.1, 0.34),
+          0.5,
+          0.12,
+          0.02,
+        ),
       );
   }
   let nameLabel = ctx.mats.label('KITTIWAKE', {
@@ -344,11 +433,14 @@ export function buildContainerShip(ctx, lamps) {
     distress: 0.3,
   });
   {
-    let ue = Math.min(12, 1.7 * Math.max(2, nameLabel.aspect || 6));
-    (addGeom(nameLabel.material, hullPatchGeo(7.6, 7.6 + ue, 10.25, 10.25 + 1.7, -1, 0.014, 10, 1)),
+    let stationIndex = Math.min(12, 1.7 * Math.max(2, nameLabel.aspect || 6));
+    (addGeom(
+      nameLabel.material,
+      hullPatchGeo(7.6, 7.6 + stationIndex, 10.25, 10.25 + 1.7, -1, 0.014, 10, 1),
+    ),
       addGeom(
         nameLabel.material,
-        hullPatchGeo(7.6, 7.6 + ue, 10.25, 10.25 + 1.7, 1, 0.014, 10, 1),
+        hullPatchGeo(7.6, 7.6 + stationIndex, 10.25, 10.25 + 1.7, 1, 0.014, 10, 1),
       ));
   }
   let rustDecal = ctx.mats.decal('rust_run');
@@ -365,31 +457,56 @@ export function buildContainerShip(ctx, lamps) {
       3,
     ),
   );
-  for (let $ = 21.5; $ < SHIP_LENGTH - 11; $ += 5.5) {
-    let ue = hullPoint($, SHIP_DECK_Y - 0.45, -1);
+  for (let sideSign = 21.5; sideSign < SHIP_LENGTH - 11; sideSign += 5.5) {
+    let stationIndex = hullPoint(sideSign, SHIP_DECK_Y - 0.45, -1);
     addGeom(
       darkSteelMat,
-      boxFromBounds(ue.x - 0.04, ue.y - 0.09, ue.z - 0.3, ue.x + 0.01, ue.y + 0.09, ue.z + 0.3),
+      boxFromBounds(
+        stationIndex.x - 0.04,
+        stationIndex.y - 0.09,
+        stationIndex.z - 0.3,
+        stationIndex.x + 0.01,
+        stationIndex.y + 0.09,
+        stationIndex.z + 0.3,
+      ),
     );
-    let me = 2.6 + 3.2 * hash2(Math.round($ * 10), 5);
+    let stationPos = 2.6 + 3.2 * hash2(Math.round(sideSign * 10), 5);
     addGeom(
       rustDecal.material,
-      hullPatchGeo($ - 0.45, $ + 0.45, SHIP_DECK_Y - 0.5 - me, SHIP_DECK_Y - 0.5, -1, 0.012, 1, 1),
+      hullPatchGeo(
+        sideSign - 0.45,
+        sideSign + 0.45,
+        SHIP_DECK_Y - 0.5 - stationPos,
+        SHIP_DECK_Y - 0.5,
+        -1,
+        0.012,
+        1,
+        1,
+      ),
     );
   }
-  for (let $ of [6.4, SHIP_LENGTH - 7])
-    for (let ue = 0; ue < 9; ue++) {
-      let me = 1.6 + ue * 0.62;
+  for (let sideSign of [6.4, SHIP_LENGTH - 7])
+    for (let stationIndex = 0; stationIndex < 9; stationIndex++) {
+      let stationPos = 1.6 + stationIndex * 0.62;
       addGeom(
         whiteMat,
-        hullPatchGeo($, $ + (ue % 2 ? 0.28 : 0.5), me, me + 0.13, -1, 0.01, 1, 1),
+        hullPatchGeo(
+          sideSign,
+          sideSign + (stationIndex % 2 ? 0.28 : 0.5),
+          stationPos,
+          stationPos + 0.13,
+          -1,
+          0.01,
+          1,
+          1,
+        ),
         [1.1, 1.1, 1.05],
       );
     }
   (addGeom(whiteMat, hullPatchGeo(33, 33.9, 3.2, 3.3, -1, 0.01, 1, 1), [1.1, 1.1, 1.05]),
     addGeom(whiteMat, hullPatchGeo(33.4, 33.5, 2.4, 4.1, -1, 0.01, 1, 1), [1.1, 1.1, 1.05]));
   let bowDeckY = deckHeightAt(7);
-  for (let $ of [-1, 1]) {
+  for (let sideSign of [-1, 1]) {
     (addGeom(
       darkSteelMat,
       cylinderFromAxis(
@@ -397,7 +514,7 @@ export function buildContainerShip(ctx, lamps) {
         0.55,
         0.9,
         'x',
-        SHIP_CENTER_X + $ * 1.5,
+        SHIP_CENTER_X + sideSign * 1.5,
         bowDeckY + 0.75,
         SHIP_STERN_Z - 6.2,
         12,
@@ -406,16 +523,16 @@ export function buildContainerShip(ctx, lamps) {
       addGeom(
         darkSteelMat,
         boxFromBounds(
-          SHIP_CENTER_X + $ * 0.5,
+          SHIP_CENTER_X + sideSign * 0.5,
           bowDeckY,
           SHIP_STERN_Z - 6.9,
-          SHIP_CENTER_X + $ * 2.6,
+          SHIP_CENTER_X + sideSign * 2.6,
           bowDeckY + 0.5,
           SHIP_STERN_Z - 5.5,
           0.04,
         ),
       ));
-    for (let ue of [0, 0.7])
+    for (let stationIndex of [0, 0.7])
       addGeom(
         darkSteelMat,
         cylinderFromAxis(
@@ -423,9 +540,9 @@ export function buildContainerShip(ctx, lamps) {
           0.16,
           0.7,
           'y',
-          SHIP_CENTER_X + $ * 4.2,
+          SHIP_CENTER_X + sideSign * 4.2,
           bowDeckY + 0.35,
-          SHIP_STERN_Z - 8.5 - ue,
+          SHIP_STERN_Z - 8.5 - stationIndex,
           8,
         ),
       );
@@ -458,12 +575,12 @@ export function buildContainerShip(ctx, lamps) {
         5,
       ),
     ));
-  for (let $ of [-1, 1])
+  for (let sideSign of [-1, 1])
     (addGeom(
       darkSteelMat,
       strutBetween(
-        [SHIP_CENTER_X + $ * 2.5, bowDeckY + 10.2, foremastZ],
-        [SHIP_CENTER_X + $ * 5.6, bowDeckY + 0.6, foremastZ - 1.2],
+        [SHIP_CENTER_X + sideSign * 2.5, bowDeckY + 10.2, foremastZ],
+        [SHIP_CENTER_X + sideSign * 5.6, bowDeckY + 0.6, foremastZ - 1.2],
         0.022,
         4,
       ),
@@ -471,7 +588,7 @@ export function buildContainerShip(ctx, lamps) {
       addGeom(
         darkSteelMat,
         strutBetween(
-          [SHIP_CENTER_X + $ * 2.5, bowDeckY + 10.2, foremastZ],
+          [SHIP_CENTER_X + sideSign * 2.5, bowDeckY + 10.2, foremastZ],
           [SHIP_CENTER_X, foremastTopY, foremastZ],
           0.02,
           4,
@@ -534,66 +651,94 @@ export function buildContainerShip(ctx, lamps) {
     [-45.6, 12.19],
     [-32.7, 12.19],
     [-22.8, 6.06],
-  ].forEach(([$, ue], me) => {
+  ].forEach(([sideSign, stationIndex], stationPos) => {
     addGeom(
       hullRedMat,
       boxFromBounds(
         SHIP_CENTER_X - 7.7,
         SHIP_DECK_Y,
-        $ - ue / 2 - 0.2,
+        sideSign - stationIndex / 2 - 0.2,
         SHIP_CENTER_X + 7.7,
         SHIP_DECK_Y + 0.42,
-        $ + ue / 2 + 0.2,
+        sideSign + stationIndex / 2 + 0.2,
         0.04,
       ),
       [0.6, 0.6, 0.62],
     );
-    for (let ee = 0; ee < 6; ee++) {
-      let B = SHIP_CENTER_X + (ee - 2.5) * 2.52,
-        P = me === 2 ? 2 : 2 + (hash2(ee * 3 + me, 9) > 0.4 ? 1 : 0);
-      for (let V = 0; V < P; V++) {
-        let Y = SHIP_DECK_Y + 0.44 + V * 2.61,
-          L =
-            containerTints[Math.floor(hash2(ee * 5 + V * 13 + me * 29, 2) * containerTints.length)];
+    for (let nextStationPos = 0; nextStationPos < 6; nextStationPos++) {
+      let profileAtStation = SHIP_CENTER_X + (nextStationPos - 2.5) * 2.52,
+        profileAtNextStation =
+          stationPos === 2 ? 2 : 2 + (hash2(nextStationPos * 3 + stationPos, 9) > 0.4 ? 1 : 0);
+      for (let rowIndex = 0; rowIndex < profileAtNextStation; rowIndex++) {
+        let panelBrightness = SHIP_DECK_Y + 0.44 + rowIndex * 2.61,
+          quadCorners =
+            containerTints[
+              Math.floor(
+                hash2(nextStationPos * 5 + rowIndex * 13 + stationPos * 29, 2) *
+                  containerTints.length,
+              )
+            ];
         if (
           (addGeom(
             whiteMat,
-            boxFromBounds(B - 1.22, Y, $ - ue / 2, B + 1.22, Y + 2.59, $ + ue / 2, 0.035),
-            L,
+            boxFromBounds(
+              profileAtStation - 1.22,
+              panelBrightness,
+              sideSign - stationIndex / 2,
+              profileAtStation + 1.22,
+              panelBrightness + 2.59,
+              sideSign + stationIndex / 2,
+              0.035,
+            ),
+            quadCorners,
           ),
-          ee === 0)
+          nextStationPos === 0)
         )
-          for (let Z = $ - ue / 2 + 0.5; Z < $ + ue / 2 - 0.3; Z += 0.58)
+          for (
+            let quadNormals = sideSign - stationIndex / 2 + 0.5;
+            quadNormals < sideSign + stationIndex / 2 - 0.3;
+            quadNormals += 0.58
+          )
             addGeom(
               whiteMat,
-              boxFromBounds(B - 1.24, Y + 0.15, Z - 0.1, B - 1.21, Y + 2.45, Z + 0.1),
-              L,
+              boxFromBounds(
+                profileAtStation - 1.24,
+                panelBrightness + 0.15,
+                quadNormals - 0.1,
+                profileAtStation - 1.21,
+                panelBrightness + 2.45,
+                quadNormals + 0.1,
+              ),
+              quadCorners,
             );
       }
     }
-    for (let ee of [$ - ue / 2 - 0.45, $ + ue / 2 + 0.45]) {
-      for (let B = 0; B <= 6; B++)
+    for (let nextStationPos of [
+      sideSign - stationIndex / 2 - 0.45,
+      sideSign + stationIndex / 2 + 0.45,
+    ]) {
+      for (let profileAtStation = 0; profileAtStation <= 6; profileAtStation++)
         addGeom(
           darkSteelMat,
           boxFromBounds(
-            SHIP_CENTER_X + (B - 3) * 2.52 - 0.05,
+            SHIP_CENTER_X + (profileAtStation - 3) * 2.52 - 0.05,
             SHIP_DECK_Y,
-            ee - 0.05,
-            SHIP_CENTER_X + (B - 3) * 2.52 + 0.05,
+            nextStationPos - 0.05,
+            SHIP_CENTER_X + (profileAtStation - 3) * 2.52 + 0.05,
             SHIP_DECK_Y + 5.6,
-            ee + 0.05,
+            nextStationPos + 0.05,
           ),
         );
-      for (let B of [SHIP_DECK_Y + 2.9, SHIP_DECK_Y + 5.6])
+      for (let profileAtStation of [SHIP_DECK_Y + 2.9, SHIP_DECK_Y + 5.6])
         addGeom(
           darkSteelMat,
           boxFromBounds(
             SHIP_CENTER_X - 7.6,
-            B - 0.05,
-            ee - 0.12,
+            profileAtStation - 0.05,
+            nextStationPos - 0.12,
             SHIP_CENTER_X + 7.6,
-            B + 0.05,
-            ee + 0.12,
+            profileAtStation + 0.05,
+            nextStationPos + 0.12,
           ),
         );
     }
@@ -606,16 +751,16 @@ export function buildContainerShip(ctx, lamps) {
     [6.7, 15.9, 18.7, 0.5],
     [6.3, 18.7, 21.5, 1],
     [6.5, 21.5, 24.4, 1.5],
-  ].forEach(([$, ue, me, ee], B) => {
+  ].forEach(([sideSign, stationIndex, stationPos, nextStationPos], profileAtStation) => {
     (addGeom(
       whiteMat,
       boxFromBounds(
-        SHIP_CENTER_X - $,
-        ue,
-        hatchZ1 + ee * 0.4,
-        SHIP_CENTER_X + $,
-        me,
-        hatchZ0 - ee,
+        SHIP_CENTER_X - sideSign,
+        stationIndex,
+        hatchZ1 + nextStationPos * 0.4,
+        SHIP_CENTER_X + sideSign,
+        stationPos,
+        hatchZ0 - nextStationPos,
         0.08,
       ),
       whiteTint,
@@ -623,29 +768,29 @@ export function buildContainerShip(ctx, lamps) {
       addGeom(
         whiteMat,
         boxFromBounds(
-          SHIP_CENTER_X - $ - 0.7,
-          me - 0.06,
-          hatchZ1 + ee * 0.4 - 0.3,
-          SHIP_CENTER_X + $ + 0.7,
-          me + 0.06,
-          hatchZ0 - ee + 1,
+          SHIP_CENTER_X - sideSign - 0.7,
+          stationPos - 0.06,
+          hatchZ1 + nextStationPos * 0.4 - 0.3,
+          SHIP_CENTER_X + sideSign + 0.7,
+          stationPos + 0.06,
+          hatchZ0 - nextStationPos + 1,
         ),
         [0.7, 0.72, 0.72],
       ));
-    let P = me + 0.06,
-      V = SHIP_CENTER_X - $ - 0.67,
-      Y = SHIP_CENTER_X + $ + 0.67,
-      L = hatchZ0 - ee + 0.97,
-      Z = hatchZ1 + ee * 0.4 - 0.27;
+    let profileAtNextStation = stationPos + 0.06,
+      rowIndex = SHIP_CENTER_X - sideSign - 0.67,
+      panelBrightness = SHIP_CENTER_X + sideSign + 0.67,
+      quadCorners = hatchZ0 - nextStationPos + 0.97,
+      quadNormals = hatchZ1 + nextStationPos * 0.4 - 0.27;
     if (
       (addRailing(
         batcher,
         galvMat,
         [
-          [V, P, Z],
-          [V, P, L],
-          [Y, P, L],
-          [Y, P, Z],
+          [rowIndex, profileAtNextStation, quadNormals],
+          [rowIndex, profileAtNextStation, quadCorners],
+          [panelBrightness, profileAtNextStation, quadCorners],
+          [panelBrightness, profileAtNextStation, quadNormals],
         ],
         {
           h: 1.05,
@@ -653,33 +798,45 @@ export function buildContainerShip(ctx, lamps) {
           r: 0.026,
         },
       ),
-      B < 3)
+      profileAtStation < 3)
     )
-      for (let J = hatchZ0 - ee - 1.2, oe = 0; J > hatchZ1 + 1.5; J -= 1.45, oe++) {
-        let fe = hash2(oe * 3 + B * 11, 4) > 0.8;
-        for (let le of [-1, 1]) {
-          let R = boxFromBounds(
-            SHIP_CENTER_X + le * ($ + 0.012) - 0.012,
-            ue + 1.25,
-            J - 0.33,
-            SHIP_CENTER_X + le * ($ + 0.012) + 0.012,
-            ue + 1.85,
-            J + 0.33,
+      for (
+        let quadUvs = hatchZ0 - nextStationPos - 1.2, quadTint = 0;
+        quadUvs > hatchZ1 + 1.5;
+        quadUvs -= 1.45, quadTint++
+      ) {
+        let quadCenter = hash2(quadTint * 3 + profileAtStation * 11, 4) > 0.8;
+        for (let cornerIndex of [-1, 1]) {
+          let lampHousing = boxFromBounds(
+            SHIP_CENTER_X + cornerIndex * (sideSign + 0.012) - 0.012,
+            stationIndex + 1.25,
+            quadUvs - 0.33,
+            SHIP_CENTER_X + cornerIndex * (sideSign + 0.012) + 0.012,
+            stationIndex + 1.85,
+            quadUvs + 0.33,
           );
-          fe && le < 0 ? addLampGeo(R) : addGeom(darkSteelMat, R);
+          quadCenter && cornerIndex < 0
+            ? addLampGeo(lampHousing)
+            : addGeom(darkSteelMat, lampHousing);
         }
       }
-    if (B < 3)
-      for (let J = SHIP_CENTER_X - $ + 1, oe = 0; J < SHIP_CENTER_X + $ - 0.6; J += 1.5, oe++) {
-        let fe = boxFromBounds(
-          J - 0.33,
-          ue + 1.25,
-          hatchZ0 - ee - 0.01,
-          J + 0.33,
-          ue + 1.85,
-          hatchZ0 - ee + 0.014,
+    if (profileAtStation < 3)
+      for (
+        let quadUvs = SHIP_CENTER_X - sideSign + 1, quadTint = 0;
+        quadUvs < SHIP_CENTER_X + sideSign - 0.6;
+        quadUvs += 1.5, quadTint++
+      ) {
+        let quadCenter = boxFromBounds(
+          quadUvs - 0.33,
+          stationIndex + 1.25,
+          hatchZ0 - nextStationPos - 0.01,
+          quadUvs + 0.33,
+          stationIndex + 1.85,
+          hatchZ0 - nextStationPos + 0.014,
         );
-        hash2(oe + B * 7, 8) > 0.84 ? addLampGeo(fe) : addGeom(darkSteelMat, fe);
+        hash2(quadTint + profileAtStation * 7, 8) > 0.84
+          ? addLampGeo(quadCenter)
+          : addGeom(darkSteelMat, quadCenter);
       }
   });
   let winchY = 21.5,
@@ -697,34 +854,41 @@ export function buildContainerShip(ctx, lamps) {
     ),
   );
   for (
-    let $ = SHIP_CENTER_X - winchHalfW + 0.75, ue = 0;
-    $ < SHIP_CENTER_X + winchHalfW - 0.4;
-    $ += 1.05, ue++
+    let sideSign = SHIP_CENTER_X - winchHalfW + 0.75, stationIndex = 0;
+    sideSign < SHIP_CENTER_X + winchHalfW - 0.4;
+    sideSign += 1.05, stationIndex++
   )
-    (hash2(ue, 21) > 0.62 &&
+    (hash2(stationIndex, 21) > 0.62 &&
       addLampGeo(
         boxFromBounds(
-          $ - 0.44,
+          sideSign - 0.44,
           winchY + 1.36,
           winchZ + 0.02,
-          $ + 0.44,
+          sideSign + 0.44,
           winchY + 2.19,
           winchZ + 0.03,
         ),
       ),
       addGeom(
         whiteMat,
-        boxFromBounds($ + 0.48, winchY + 1.3, winchZ, $ + 0.57, winchY + 2.25, winchZ + 0.04),
+        boxFromBounds(
+          sideSign + 0.48,
+          winchY + 1.3,
+          winchZ,
+          sideSign + 0.57,
+          winchY + 2.25,
+          winchZ + 0.04,
+        ),
         whiteTint,
       ));
-  for (let $ of [-1, 1])
+  for (let sideSign of [-1, 1])
     (addGeom(
       darkSteelMat,
       boxFromBounds(
-        SHIP_CENTER_X + $ * winchHalfW - 0.02,
+        SHIP_CENTER_X + sideSign * winchHalfW - 0.02,
         winchY + 1.3,
         winchZ - 5,
-        SHIP_CENTER_X + $ * winchHalfW + 0.02,
+        SHIP_CENTER_X + sideSign * winchHalfW + 0.02,
         winchY + 2.25,
         winchZ - 0.2,
       ),
@@ -732,10 +896,10 @@ export function buildContainerShip(ctx, lamps) {
       addGeom(
         whiteMat,
         boxFromBounds(
-          SHIP_CENTER_X + $ * 6.4,
+          SHIP_CENTER_X + sideSign * 6.4,
           winchY - 0.12,
           winchZ - 3.4,
-          SHIP_CENTER_X + $ * 8.3,
+          SHIP_CENTER_X + sideSign * 8.3,
           winchY + 0.02,
           winchZ + 0.9,
           0.03,
@@ -745,10 +909,10 @@ export function buildContainerShip(ctx, lamps) {
       addGeom(
         whiteMat,
         boxFromBounds(
-          SHIP_CENTER_X + $ * 8.22,
+          SHIP_CENTER_X + sideSign * 8.22,
           winchY,
           winchZ - 3.4,
-          SHIP_CENTER_X + $ * 8.3,
+          SHIP_CENTER_X + sideSign * 8.3,
           winchY + 1.1,
           winchZ + 0.9,
         ),
@@ -757,10 +921,10 @@ export function buildContainerShip(ctx, lamps) {
       addGeom(
         whiteMat,
         boxFromBounds(
-          SHIP_CENTER_X + $ * 6.5,
+          SHIP_CENTER_X + sideSign * 6.5,
           winchY,
           winchZ + 0.82,
-          SHIP_CENTER_X + $ * 8.3,
+          SHIP_CENTER_X + sideSign * 8.3,
           winchY + 1.1,
           winchZ + 0.9,
         ),
@@ -769,15 +933,15 @@ export function buildContainerShip(ctx, lamps) {
       addGeom(
         darkSteelMat,
         beamBetween(
-          [SHIP_CENTER_X + $ * 6.6, winchY - 2.6, winchZ - 1.2],
-          [SHIP_CENTER_X + $ * 8.1, winchY - 0.1, winchZ - 1.2],
+          [SHIP_CENTER_X + sideSign * 6.6, winchY - 2.6, winchZ - 1.2],
+          [SHIP_CENTER_X + sideSign * 8.1, winchY - 0.1, winchZ - 1.2],
           0.12,
           0.12,
         ),
       ),
       lamps.add(
-        makeBeaconGeo(SHIP_CENTER_X + $ * 8.25, winchY + 1.35, winchZ - 0.4, 0.13),
-        $ < 0 ? [0.3, 5, 1.6] : [6, 0.4, 0.3],
+        makeBeaconGeo(SHIP_CENTER_X + sideSign * 8.25, winchY + 1.35, winchZ - 0.4, 0.13),
+        sideSign < 0 ? [0.3, 5, 1.6] : [6, 0.4, 0.3],
         0,
       ));
   (addLampGeo(
@@ -842,12 +1006,12 @@ export function buildContainerShip(ctx, lamps) {
       ),
       whiteTint,
     ));
-  for (let $ of [-2.3, -1.2, 1.2, 2.3])
+  for (let sideSign of [-2.3, -1.2, 1.2, 2.3])
     addGeom(
       darkSteelMat,
       strutBetween(
-        [mastPos.x + $, mastPos.y + 5.36, mastPos.z],
-        [mastPos.x + $, mastPos.y + 5.36 + (Math.abs($) > 2 ? 3.2 : 1.2), mastPos.z],
+        [mastPos.x + sideSign, mastPos.y + 5.36, mastPos.z],
+        [mastPos.x + sideSign, mastPos.y + 5.36 + (Math.abs(sideSign) > 2 ? 3.2 : 1.2), mastPos.z],
         0.012,
         4,
       ),
@@ -861,12 +1025,12 @@ export function buildContainerShip(ctx, lamps) {
       4,
     ),
   );
-  for (let $ of [-1, 1])
+  for (let sideSign of [-1, 1])
     addGeom(
       darkSteelMat,
       strutBetween(
-        [mastPos.x + $ * 2.3, mastPos.y + 5.3, mastPos.z],
-        [SHIP_CENTER_X + $ * 6, 24.5, hatchZ1 + 2],
+        [mastPos.x + sideSign * 2.3, mastPos.y + 5.3, mastPos.z],
+        [SHIP_CENTER_X + sideSign * 6, 24.5, hatchZ1 + 2],
         0.014,
         4,
       ),
@@ -919,10 +1083,10 @@ export function buildContainerShip(ctx, lamps) {
       ),
       [0.07, 0.07, 0.08],
     ));
-  for (let $ of [-0.9, 0.5])
+  for (let sideSign of [-0.9, 0.5])
     addGeom(
       darkSteelMat,
-      cylinderFromAxis(0.28, 0.28, 1.1, 'y', SHIP_CENTER_X, 30.7, funnelZ + $, 10),
+      cylinderFromAxis(0.28, 0.28, 1.1, 'y', SHIP_CENTER_X, 30.7, funnelZ + sideSign, 10),
     );
   let logoBDecal = ctx.mats.decal('logo_b');
   addGeom(
@@ -937,28 +1101,46 @@ export function buildContainerShip(ctx, lamps) {
     ),
   );
   {
-    let $ = SHIP_CENTER_X - 7.9,
-      ue = 17.5,
-      me = -61,
-      ee = [1.25, 0.42, 0.1],
-      B = new THREE.CapsuleGeometry(1.15, 3.6, 4, 12);
-    (B.rotateX(Math.PI / 2),
-      B.scale(0.95, 0.82, 1),
-      B.translate($, ue, me),
-      addGeom(whiteMat, B, ee),
+    let sideSign = SHIP_CENTER_X - 7.9,
+      stationIndex = 17.5,
+      stationPos = -61,
+      nextStationPos = [1.25, 0.42, 0.1],
+      profileAtStation = new THREE.CapsuleGeometry(1.15, 3.6, 4, 12);
+    (profileAtStation.rotateX(Math.PI / 2),
+      profileAtStation.scale(0.95, 0.82, 1),
+      profileAtStation.translate(sideSign, stationIndex, stationPos),
+      addGeom(whiteMat, profileAtStation, nextStationPos),
       addGeom(
         whiteMat,
-        boxFromBounds($ - 0.6, ue + 0.7, me - 1.2, $ + 0.6, ue + 1.25, me + 0.9, 0.12),
-        ee,
+        boxFromBounds(
+          sideSign - 0.6,
+          stationIndex + 0.7,
+          stationPos - 1.2,
+          sideSign + 0.6,
+          stationIndex + 1.25,
+          stationPos + 0.9,
+          0.12,
+        ),
+        nextStationPos,
       ));
-    for (let P of [-2.1, 2.1])
+    for (let profileAtNextStation of [-2.1, 2.1])
       (addGeom(
         darkSteelMat,
-        beamBetween([SHIP_CENTER_X - 6.9, 15.9, me + P], [$ - 0.2, ue + 2.3, me + P], 0.16, 0.22),
+        beamBetween(
+          [SHIP_CENTER_X - 6.9, 15.9, stationPos + profileAtNextStation],
+          [sideSign - 0.2, stationIndex + 2.3, stationPos + profileAtNextStation],
+          0.16,
+          0.22,
+        ),
       ),
         addGeom(
           darkSteelMat,
-          strutBetween([$ - 0.2, ue + 2.2, me + P], [$, ue + 0.9, me + P * 0.8], 0.02, 4),
+          strutBetween(
+            [sideSign - 0.2, stationIndex + 2.2, stationPos + profileAtNextStation],
+            [sideSign, stationIndex + 0.9, stationPos + profileAtNextStation * 0.8],
+            0.02,
+            4,
+          ),
         ));
   }
   (addGeom(
@@ -981,34 +1163,61 @@ export function buildContainerShip(ctx, lamps) {
       0,
     ));
   {
-    let $ = newVec3(32.55, 13, -51.5),
-      ue = newVec3(31.4, 1.25, -38.5);
-    for (let me of [-0.4, 0.4])
+    let sideSign = newVec3(32.55, 13, -51.5),
+      stationIndex = newVec3(31.4, 1.25, -38.5);
+    for (let stationPos of [-0.4, 0.4])
       (addGeom(
         galvMat,
-        beamBetween([$.x + me, $.y - 0.1, $.z], [ue.x + me, ue.y - 0.1, ue.z], 0.05, 0.3),
+        beamBetween(
+          [sideSign.x + stationPos, sideSign.y - 0.1, sideSign.z],
+          [stationIndex.x + stationPos, stationIndex.y - 0.1, stationIndex.z],
+          0.05,
+          0.3,
+        ),
       ),
         addGeom(
           galvMat,
-          strutBetween([$.x + me, $.y + 1, $.z], [ue.x + me, ue.y + 1, ue.z], 0.025, 5),
+          strutBetween(
+            [sideSign.x + stationPos, sideSign.y + 1, sideSign.z],
+            [stationIndex.x + stationPos, stationIndex.y + 1, stationIndex.z],
+            0.025,
+            5,
+          ),
         ),
         addGeom(
           galvMat,
-          strutBetween([$.x + me, $.y + 0.5, $.z], [ue.x + me, ue.y + 0.5, ue.z], 0.02, 4),
+          strutBetween(
+            [sideSign.x + stationPos, sideSign.y + 0.5, sideSign.z],
+            [stationIndex.x + stationPos, stationIndex.y + 0.5, stationIndex.z],
+            0.02,
+            4,
+          ),
         ));
-    for (let me = 0; me <= 8; me++) {
-      let ee = $.clone().lerp(ue, me / 8);
-      for (let B of [-0.4, 0.4])
+    for (let stationPos = 0; stationPos <= 8; stationPos++) {
+      let nextStationPos = sideSign.clone().lerp(stationIndex, stationPos / 8);
+      for (let profileAtStation of [-0.4, 0.4])
         addGeom(
           galvMat,
-          strutBetween([ee.x + B, ee.y - 0.1, ee.z], [ee.x + B, ee.y + 1, ee.z], 0.02, 4),
+          strutBetween(
+            [nextStationPos.x + profileAtStation, nextStationPos.y - 0.1, nextStationPos.z],
+            [nextStationPos.x + profileAtStation, nextStationPos.y + 1, nextStationPos.z],
+            0.02,
+            4,
+          ),
         );
     }
-    for (let me = 1; me < 44; me++) {
-      let ee = $.clone().lerp(ue, me / 44);
+    for (let stationPos = 1; stationPos < 44; stationPos++) {
+      let nextStationPos = sideSign.clone().lerp(stationIndex, stationPos / 44);
       addGeom(
         galvMat,
-        boxFromBounds(ee.x - 0.38, ee.y - 0.02, ee.z - 0.12, ee.x + 0.38, ee.y, ee.z + 0.12),
+        boxFromBounds(
+          nextStationPos.x - 0.38,
+          nextStationPos.y - 0.02,
+          nextStationPos.z - 0.12,
+          nextStationPos.x + 0.38,
+          nextStationPos.y,
+          nextStationPos.z + 0.12,
+        ),
       );
     }
     (addGeom(galvMat, boxFromBounds(31, 1.15, -38.5, 32, 1.2, -37.3)),
@@ -1027,9 +1236,17 @@ export function buildContainerShip(ctx, lamps) {
       ),
       addGeom(
         darkSteelMat,
-        strutBetween([$.x, $.y + 3.2, $.z + 4], [ue.x, ue.y + 1.2, ue.z + 0.3], 0.014, 4),
+        strutBetween(
+          [sideSign.x, sideSign.y + 3.2, sideSign.z + 4],
+          [stationIndex.x, stationIndex.y + 1.2, stationIndex.z + 0.3],
+          0.014,
+          4,
+        ),
       ),
-      addGeom(darkSteelMat, beamBetween([33.2, 13.2, $.z + 4], [32.2, 16.4, $.z + 4], 0.14, 0.14)));
+      addGeom(
+        darkSteelMat,
+        beamBetween([33.2, 13.2, sideSign.z + 4], [32.2, 16.4, sideSign.z + 4], 0.14, 0.14),
+      ));
   }
   let addMooringLine = ($, ue, me, ee) => {
     let B = hullPoint($, ue, -1);
@@ -1061,25 +1278,30 @@ export function buildContainerShip(ctx, lamps) {
       newVec3(29.2, 0.45, -58),
       1.2,
     ));
-  for (let $ of [-82, -58])
-    (addGeom(darkSteelMat, cylinderFromAxis(0.2, 0.26, 0.55, 'y', 29.2, 0.27, $, 10)),
-      addGeom(darkSteelMat, cylinderFromAxis(0.34, 0.3, 0.14, 'y', 29.2, 0.6, $, 10)));
-  for (let $ of [-17.6, -37, -54])
+  for (let sideSign of [-82, -58])
+    (addGeom(darkSteelMat, cylinderFromAxis(0.2, 0.26, 0.55, 'y', 29.2, 0.27, sideSign, 10)),
+      addGeom(darkSteelMat, cylinderFromAxis(0.34, 0.3, 0.14, 'y', 29.2, 0.6, sideSign, 10)));
+  for (let sideSign of [-17.6, -37, -54])
     (addGeom(
       rubberMat,
-      cylinderFromAxis(1.25, 1.25, 2.2, 'z', 31.55, SHIP_WATERLINE_Y + 0.35, $, 14),
+      cylinderFromAxis(1.25, 1.25, 2.2, 'z', 31.55, SHIP_WATERLINE_Y + 0.35, sideSign, 14),
     ),
       addGeom(
         rubberMat,
-        cylinderFromAxis(0.45, 1.25, 0.5, 'z', 31.55, SHIP_WATERLINE_Y + 0.35, $ + 1.35, 14),
+        cylinderFromAxis(0.45, 1.25, 0.5, 'z', 31.55, SHIP_WATERLINE_Y + 0.35, sideSign + 1.35, 14),
       ),
       addGeom(
         rubberMat,
-        cylinderFromAxis(1.25, 0.45, 0.5, 'z', 31.55, SHIP_WATERLINE_Y + 0.35, $ - 1.35, 14),
+        cylinderFromAxis(1.25, 0.45, 0.5, 'z', 31.55, SHIP_WATERLINE_Y + 0.35, sideSign - 1.35, 14),
       ),
       addGeom(
         ropeMat,
-        strutBetween([31.55, SHIP_WATERLINE_Y + 1.6, $], [29.9, 0.1, $ + 0.6], 0.03, 4),
+        strutBetween(
+          [31.55, SHIP_WATERLINE_Y + 1.6, sideSign],
+          [29.9, 0.1, sideSign + 0.6],
+          0.03,
+          4,
+        ),
       ));
   let hullMesh = batcher.build({
     cast: !0,
@@ -1145,50 +1367,66 @@ export function buildMooringBoat(ctx, lamps) {
       [3.3, 0.78, 0.22],
     ],
     hullPath = [
-      ...hullProfile.map((U) => newVec3(U[0], U[1], U[2])),
+      ...hullProfile.map((sideSignOrMaterial) =>
+        newVec3(sideSignOrMaterial[0], sideSignOrMaterial[1], sideSignOrMaterial[2]),
+      ),
       newVec3(3.43, 0.8, 0),
       ...hullProfile
         .slice()
         .reverse()
-        .map((U) => newVec3(U[0], U[1], -U[2])),
+        .map((sideSignOrMaterial) =>
+          newVec3(sideSignOrMaterial[0], sideSignOrMaterial[1], -sideSignOrMaterial[2]),
+        ),
     ],
     hullCurve = new THREE.CatmullRomCurve3(hullPath, !1, 'centripetal'),
     hullTube = new THREE.TubeGeometry(hullCurve, 60, 0.27, 12, !1);
   {
-    let U = hullTube.attributes.uv,
-      T = hullCurve.getLength();
-    for (let D = 0; D < U.count; D++) U.setXY(D, U.getX(D) * T, U.getY(D) * 1.7);
+    let sideSignOrMaterial = hullTube.attributes.uv,
+      curveParamOrGeometry = hullCurve.getLength();
+    for (let pointOrTint = 0; pointOrTint < sideSignOrMaterial.count; pointOrTint++)
+      sideSignOrMaterial.setXY(
+        pointOrTint,
+        sideSignOrMaterial.getX(pointOrTint) * curveParamOrGeometry,
+        sideSignOrMaterial.getY(pointOrTint) * 1.7,
+      );
   }
   addGeom(plasticMat, hullTube, hullTint);
-  for (let U of [-1, 1])
+  for (let sideSignOrMaterial of [-1, 1])
     addGeom(
       plasticMat,
-      cylinderFromAxis(0.07, 0.27, 0.42, 'x', -3.56, 0.5, U * 1.03, 12),
+      cylinderFromAxis(0.07, 0.27, 0.42, 'x', -3.56, 0.5, sideSignOrMaterial * 1.03, 12),
       hullTint,
     );
   let ringCount = 11,
     rubRails = [];
-  for (let U = 0; U < ringCount; U++) {
-    let T = 0.04 + (0.92 * U) / (ringCount - 1),
-      D = hullCurve.getPointAt(T),
-      C = hullCurve.getTangentAt(T),
-      G = new THREE.TorusGeometry(0.276, 0.016, 5, 14);
-    (G.applyQuaternion(new THREE.Quaternion().setFromUnitVectors(newVec3(0, 0, 1), C)),
-      G.translate(D.x, D.y, D.z),
-      addGeom(plasticMat, G, seamTint));
-    let j = newVec3(D.x, 0, D.z)
-      .sub(newVec3(Math.min(D.x, 2.2), 0, 0))
+  for (let sideSignOrMaterial = 0; sideSignOrMaterial < ringCount; sideSignOrMaterial++) {
+    let curveParamOrGeometry = 0.04 + (0.92 * sideSignOrMaterial) / (ringCount - 1),
+      pointOrTint = hullCurve.getPointAt(curveParamOrGeometry),
+      tangentOrNormal = hullCurve.getTangentAt(curveParamOrGeometry),
+      centroidOrGeometry = new THREE.TorusGeometry(0.276, 0.016, 5, 14);
+    (centroidOrGeometry.applyQuaternion(
+      new THREE.Quaternion().setFromUnitVectors(newVec3(0, 0, 1), tangentOrNormal),
+    ),
+      centroidOrGeometry.translate(pointOrTint.x, pointOrTint.y, pointOrTint.z),
+      addGeom(plasticMat, centroidOrGeometry, seamTint));
+    let outwardReference = newVec3(pointOrTint.x, 0, pointOrTint.z)
+      .sub(newVec3(Math.min(pointOrTint.x, 2.2), 0, 0))
       .normalize();
     rubRails.push(
-      D.clone()
-        .addScaledVector(j, 0.2)
+      pointOrTint
+        .clone()
+        .addScaledVector(outwardReference, 0.2)
         .add(newVec3(0, 0.2, 0)),
     );
   }
-  for (let U = 0; U < ringCount - 1; U++)
+  for (let sideSignOrMaterial = 0; sideSignOrMaterial < ringCount - 1; sideSignOrMaterial++)
     addGeom(
       plasticMat,
-      strutsAlongPath(catenaryPoints(rubRails[U], rubRails[U + 1], 0.1, 4), 0.012, 4),
+      strutsAlongPath(
+        catenaryPoints(rubRails[sideSignOrMaterial], rubRails[sideSignOrMaterial + 1], 0.1, 4),
+        0.012,
+        4,
+      ),
       darkTint,
     );
   let gunwaleStations = [-3.4, -2, -0.5, 1, 2, 2.8, 3.3],
@@ -1208,35 +1446,55 @@ export function buildMooringBoat(ctx, lamps) {
           ? deckTris.push(U.x, U.y, U.z, D.x, D.y, D.z, T.x, T.y, T.z)
           : deckTris.push(U.x, U.y, U.z, T.x, T.y, T.z, D.x, D.y, D.z));
     };
-  for (let U of [-1, 1]) {
-    for (let T = 0; T < gunwaleStations.length - 1; T++) {
-      let D = newVec3(gunwaleStations[T], gunwaleBases[T], 0),
-        C = newVec3(gunwaleStations[T + 1], gunwaleBases[T + 1], 0),
-        G = newVec3(gunwaleStations[T], gunwaleHeights[T], U * gunwaleHalfWidths[T]),
-        j = newVec3(gunwaleStations[T + 1], gunwaleHeights[T + 1], U * gunwaleHalfWidths[T + 1]),
+  for (let sideSignOrMaterial of [-1, 1]) {
+    for (
+      let curveParamOrGeometry = 0;
+      curveParamOrGeometry < gunwaleStations.length - 1;
+      curveParamOrGeometry++
+    ) {
+      let pointOrTint = newVec3(
+          gunwaleStations[curveParamOrGeometry],
+          gunwaleBases[curveParamOrGeometry],
+          0,
+        ),
+        tangentOrNormal = newVec3(
+          gunwaleStations[curveParamOrGeometry + 1],
+          gunwaleBases[curveParamOrGeometry + 1],
+          0,
+        ),
+        centroidOrGeometry = newVec3(
+          gunwaleStations[curveParamOrGeometry],
+          gunwaleHeights[curveParamOrGeometry],
+          sideSignOrMaterial * gunwaleHalfWidths[curveParamOrGeometry],
+        ),
+        outwardReference = newVec3(
+          gunwaleStations[curveParamOrGeometry + 1],
+          gunwaleHeights[curveParamOrGeometry + 1],
+          sideSignOrMaterial * gunwaleHalfWidths[curveParamOrGeometry + 1],
+        ),
         gunwaleFlareCur = newVec3(
-          gunwaleStations[T],
-          0.5 + Math.max(0, gunwaleHeights[T] - 0.22) * 0.6,
-          U * (gunwaleHalfWidths[T] + 0.1),
+          gunwaleStations[curveParamOrGeometry],
+          0.5 + Math.max(0, gunwaleHeights[curveParamOrGeometry] - 0.22) * 0.6,
+          sideSignOrMaterial * (gunwaleHalfWidths[curveParamOrGeometry] + 0.1),
         ),
         gunwaleFlareNext = newVec3(
-          gunwaleStations[T + 1],
-          0.5 + Math.max(0, gunwaleHeights[T + 1] - 0.22) * 0.6,
-          U * (gunwaleHalfWidths[T + 1] + 0.1),
+          gunwaleStations[curveParamOrGeometry + 1],
+          0.5 + Math.max(0, gunwaleHeights[curveParamOrGeometry + 1] - 0.22) * 0.6,
+          sideSignOrMaterial * (gunwaleHalfWidths[curveParamOrGeometry + 1] + 0.1),
         );
-      (pushTri(D, C, j),
-        pushTri(D, j, G),
-        pushTri(G, j, gunwaleFlareNext),
-        pushTri(G, gunwaleFlareNext, gunwaleFlareCur));
+      (pushTri(pointOrTint, tangentOrNormal, outwardReference),
+        pushTri(pointOrTint, outwardReference, centroidOrGeometry),
+        pushTri(centroidOrGeometry, outwardReference, gunwaleFlareNext),
+        pushTri(centroidOrGeometry, gunwaleFlareNext, gunwaleFlareCur));
     }
     (pushTri(
       newVec3(-3.4, gunwaleBases[0], 0),
-      newVec3(-3.4, gunwaleHeights[0], U * gunwaleHalfWidths[0]),
-      newVec3(-3.4, 0.78, U * (gunwaleHalfWidths[0] + 0.1)),
+      newVec3(-3.4, gunwaleHeights[0], sideSignOrMaterial * gunwaleHalfWidths[0]),
+      newVec3(-3.4, 0.78, sideSignOrMaterial * (gunwaleHalfWidths[0] + 0.1)),
     ),
       pushTri(
         newVec3(-3.4, gunwaleBases[0], 0),
-        newVec3(-3.4, 0.78, U * (gunwaleHalfWidths[0] + 0.1)),
+        newVec3(-3.4, 0.78, sideSignOrMaterial * (gunwaleHalfWidths[0] + 0.1)),
         newVec3(-3.4, 0.78, 0),
       ));
   }
@@ -1255,12 +1513,12 @@ export function buildMooringBoat(ctx, lamps) {
   (windshieldGeo.rotateZ(0.42),
     windshieldGeo.translate(0.95, 1.2, 0),
     addGeom(glassMat, windshieldGeo));
-  for (let U of [-0.43, 0.43])
+  for (let sideSignOrMaterial of [-0.43, 0.43])
     addGeom(
       galvMat,
       strutBetween(
-        [0.95, 1.2, U],
-        [0.95 - Math.sin(0.42) * 0.52, 1.2 + Math.cos(0.42) * 0.52, U],
+        [0.95, 1.2, sideSignOrMaterial],
+        [0.95 - Math.sin(0.42) * 0.52, 1.2 + Math.cos(0.42) * 0.52, sideSignOrMaterial],
         0.016,
         5,
       ),
@@ -1280,15 +1538,15 @@ export function buildMooringBoat(ctx, lamps) {
     searchLightTorus.translate(0.2, 1.12, -0.12),
     addGeom(blackPolymerMat, searchLightTorus),
     addGeom(galvMat, strutBetween([0.2, 1.12, -0.12], [0.36, 1.03, -0.12], 0.02, 5)));
-  for (let U of [0, 2.1, 4.2])
+  for (let sideSignOrMaterial of [0, 2.1, 4.2])
     addGeom(
       galvMat,
       strutBetween(
         [0.2, 1.12, -0.12],
         [
-          0.2 + Math.sin(-0.5) * Math.cos(U) * -0.17,
-          1.12 + Math.cos(-0.5) * Math.cos(U) * 0.17,
-          -0.12 + Math.sin(U) * 0.17,
+          0.2 + Math.sin(-0.5) * Math.cos(sideSignOrMaterial) * -0.17,
+          1.12 + Math.cos(-0.5) * Math.cos(sideSignOrMaterial) * 0.17,
+          -0.12 + Math.sin(sideSignOrMaterial) * 0.17,
         ],
         0.01,
         4,
@@ -1300,43 +1558,163 @@ export function buildMooringBoat(ctx, lamps) {
     addGeom(galvMat, strutBetween([0.35, 1, -0.46], [0.95, 1, -0.46], 0.02, 5)),
     addGeom(galvMat, strutBetween([0.35, 0.3, 0.46], [0.35, 1, 0.46], 0.02, 5)),
     addGeom(galvMat, strutBetween([0.35, 1, 0.46], [0.95, 1, 0.46], 0.02, 5)));
-  for (let U of [-0.75, -1.75])
+  for (let sideSignOrMaterial of [-0.75, -1.75])
     (addGeom(
       orangePaintMat,
-      boxFromBounds(U - 0.28, 0.26, -0.2, U + 0.28, 0.82, 0.2, 0.05),
+      boxFromBounds(
+        sideSignOrMaterial - 0.28,
+        0.26,
+        -0.2,
+        sideSignOrMaterial + 0.28,
+        0.82,
+        0.2,
+        0.05,
+      ),
       [1, 0.9, 0.85],
     ),
-      addGeom(blackPolymerMat, boxFromBounds(U - 0.3, 0.82, -0.22, U + 0.3, 0.93, 0.22, 0.04)),
-      addGeom(blackPolymerMat, boxFromBounds(U - 0.34, 0.93, -0.2, U - 0.26, 1.2, 0.2, 0.03)),
-      addGeom(galvMat, strutBetween([U + 0.3, 0.6, -0.22], [U + 0.3, 1.02, 0], 0.014, 4)),
-      addGeom(galvMat, strutBetween([U + 0.3, 0.6, 0.22], [U + 0.3, 1.02, 0], 0.014, 4)));
+      addGeom(
+        blackPolymerMat,
+        boxFromBounds(
+          sideSignOrMaterial - 0.3,
+          0.82,
+          -0.22,
+          sideSignOrMaterial + 0.3,
+          0.93,
+          0.22,
+          0.04,
+        ),
+      ),
+      addGeom(
+        blackPolymerMat,
+        boxFromBounds(
+          sideSignOrMaterial - 0.34,
+          0.93,
+          -0.2,
+          sideSignOrMaterial - 0.26,
+          1.2,
+          0.2,
+          0.03,
+        ),
+      ),
+      addGeom(
+        galvMat,
+        strutBetween(
+          [sideSignOrMaterial + 0.3, 0.6, -0.22],
+          [sideSignOrMaterial + 0.3, 1.02, 0],
+          0.014,
+          4,
+        ),
+      ),
+      addGeom(
+        galvMat,
+        strutBetween(
+          [sideSignOrMaterial + 0.3, 0.6, 0.22],
+          [sideSignOrMaterial + 0.3, 1.02, 0],
+          0.014,
+          4,
+        ),
+      ));
   addGeom(orangePaintMat, boxFromBounds(-2.9, 0.26, -0.3, -2.45, 0.58, 0.3, 0.04), [1.1, 0.5, 0.4]);
-  for (let U of [-1, 1])
-    (addGeom(galvMat, strutBetween([-2.95, 0.55, U * 0.9], [-2.75, 2, U * 0.55], 0.03, 6)),
-      addGeom(galvMat, strutBetween([-2.3, 0.55, U * 0.9], [-2.75, 1.3, U * 0.7], 0.022, 5)));
+  for (let sideSignOrMaterial of [-1, 1])
+    (addGeom(
+      galvMat,
+      strutBetween(
+        [-2.95, 0.55, sideSignOrMaterial * 0.9],
+        [-2.75, 2, sideSignOrMaterial * 0.55],
+        0.03,
+        6,
+      ),
+    ),
+      addGeom(
+        galvMat,
+        strutBetween(
+          [-2.3, 0.55, sideSignOrMaterial * 0.9],
+          [-2.75, 1.3, sideSignOrMaterial * 0.7],
+          0.022,
+          5,
+        ),
+      ));
   (addGeom(galvMat, strutBetween([-2.75, 2, -0.55], [-2.75, 2, 0.55], 0.03, 6)),
     addGeom(galvMat, boxFromBounds(-2.88, 2, -0.2, -2.62, 2.04, 0.2)),
     addGeom(blackPolymerMat, cylinderFromAxis(0.05, 0.06, 0.1, 'y', -2.75, 2.09, 0, 8)),
     addGeom(blackPolymerMat, strutBetween([-2.75, 2, 0.42], [-2.9, 3.7, 0.46], 0.011, 5)),
     addGeom(blackPolymerMat, cylinderFromAxis(0.16, 0.16, 0.07, 'y', -2.75, 2.1, -0.36, 10)));
-  for (let U of [-0.36, 0.36])
-    (addGeom(galvMat, boxFromBounds(-3.6, 0.42, U - 0.16, -3.44, 0.78, U + 0.16, 0.02)),
-      addGeom(blackPolymerMat, boxFromBounds(-4.1, 0.78, U - 0.23, -3.48, 1.4, U + 0.23, 0.09)),
+  for (let sideSignOrMaterial of [-0.36, 0.36])
+    (addGeom(
+      galvMat,
+      boxFromBounds(
+        -3.6,
+        0.42,
+        sideSignOrMaterial - 0.16,
+        -3.44,
+        0.78,
+        sideSignOrMaterial + 0.16,
+        0.02,
+      ),
+    ),
+      addGeom(
+        blackPolymerMat,
+        boxFromBounds(
+          -4.1,
+          0.78,
+          sideSignOrMaterial - 0.23,
+          -3.48,
+          1.4,
+          sideSignOrMaterial + 0.23,
+          0.09,
+        ),
+      ),
       addGeom(
         plasticMat,
-        boxFromBounds(-4.11, 1, U - 0.235, -3.47, 1.05, U + 0.235),
+        boxFromBounds(
+          -4.11,
+          1,
+          sideSignOrMaterial - 0.235,
+          -3.47,
+          1.05,
+          sideSignOrMaterial + 0.235,
+        ),
         [1.4, 1.4, 1.4],
       ),
-      addGeom(blackPolymerMat, boxFromBounds(-3.92, -0.05, U - 0.085, -3.62, 0.8, U + 0.085, 0.03)),
-      addGeom(blackPolymerMat, boxFromBounds(-4.02, -0.52, U - 0.04, -3.6, -0.05, U + 0.04, 0.015)),
-      addGeom(blackPolymerMat, cylinderFromAxis(0.07, 0.03, 0.42, 'x', -3.9, -0.3, U, 8)));
-  for (let U of [-1.8, 0.4, 1.7])
+      addGeom(
+        blackPolymerMat,
+        boxFromBounds(
+          -3.92,
+          -0.05,
+          sideSignOrMaterial - 0.085,
+          -3.62,
+          0.8,
+          sideSignOrMaterial + 0.085,
+          0.03,
+        ),
+      ),
+      addGeom(
+        blackPolymerMat,
+        boxFromBounds(
+          -4.02,
+          -0.52,
+          sideSignOrMaterial - 0.04,
+          -3.6,
+          -0.05,
+          sideSignOrMaterial + 0.04,
+          0.015,
+        ),
+      ),
+      addGeom(
+        blackPolymerMat,
+        cylinderFromAxis(0.07, 0.03, 0.42, 'x', -3.9, -0.3, sideSignOrMaterial, 8),
+      ));
+  for (let sideSignOrMaterial of [-1.8, 0.4, 1.7])
     (addGeom(
       orangePaintMat,
-      cylinderFromAxis(0.11, 0.11, 0.42, 'y', U, 0.42, 1.36, 10),
+      cylinderFromAxis(0.11, 0.11, 0.42, 'y', sideSignOrMaterial, 0.42, 1.36, 10),
       [1.2, 0.8, 0.7],
     ),
-      addGeom(plasticMat, strutBetween([U, 0.63, 1.36], [U, 0.78, 1.12], 0.01, 4), darkTint));
+      addGeom(
+        plasticMat,
+        strutBetween([sideSignOrMaterial, 0.63, 1.36], [sideSignOrMaterial, 0.78, 1.12], 0.01, 4),
+        darkTint,
+      ));
   let wheelTorus = new THREE.TorusGeometry(0.26, 0.07, 6, 16);
   (wheelTorus.rotateY(Math.PI / 2),
     wheelTorus.translate(1.02, 0.72, 0),

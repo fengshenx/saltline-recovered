@@ -15,9 +15,10 @@ export function createRng(seedValue = 1337) {
       );
     };
   return (
-    (nextRandom.range = (n, s) => n + (s - n) * nextRandom()),
-    (nextRandom.int = (n, s) => Math.floor(n + (s - n + 1) * nextRandom())),
-    (nextRandom.pick = (n) => n[Math.floor(nextRandom() * n.length)]),
+    (nextRandom.range = (mixValue, rangeMax) => mixValue + (rangeMax - mixValue) * nextRandom()),
+    (nextRandom.int = (mixValue, rangeMax) =>
+      Math.floor(mixValue + (rangeMax - mixValue + 1) * nextRandom())),
+    (nextRandom.pick = (mixValue) => mixValue[Math.floor(nextRandom() * mixValue.length)]),
     (nextRandom.sign = () => (nextRandom() < 0.5 ? -1 : 1)),
     (nextRandom.fork = () => createRng(Math.floor(nextRandom() * 4294967296))),
     nextRandom

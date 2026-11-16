@@ -264,17 +264,17 @@ export function createWetApron(game, tex) {
       metalness: 0,
     });
   ((material.name = 'apron_wet'),
-    (material.onBeforeCompile = (r) => {
-      (Object.assign(r.uniforms, uniforms),
-        (r.vertexShader =
+    (material.onBeforeCompile = (shader) => {
+      (Object.assign(shader.uniforms, uniforms),
+        (shader.vertexShader =
           `varying vec3 vGWorld;
 ` +
-          r.vertexShader.replace(
+          shader.vertexShader.replace(
             '#include <begin_vertex>',
             `#include <begin_vertex>
   vGWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;`,
           )),
-        (r.fragmentShader = r.fragmentShader
+        (shader.fragmentShader = shader.fragmentShader
           .replace(
             '#include <common>',
             `#include <common>

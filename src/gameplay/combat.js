@@ -20,103 +20,122 @@ export function createCombat(ctx) {
       reset() {
         stats.shots = stats.hits = stats.kills = 0;
       },
-      playerShot(n, s, { damage: o = 28, range: r = 300, impulse: a = 1 } = {}) {
+      playerShot(
+        originPoint,
+        shotDir,
+        { damage: damageAmount = 28, range: maxRange = 300, impulse: impulseScale = 1 } = {},
+      ) {
         stats.shots++;
-        let l = ctx.physics.raycast(n, s, r),
-          c = ctx.enemies.raycast(n, s, l ? l.dist : r);
-        if (c) {
+        let sceneHit = ctx.physics.raycast(originPoint, shotDir, maxRange),
+          enemyHit = ctx.enemies.raycast(originPoint, shotDir, sceneHit ? sceneHit.dist : maxRange);
+        if (enemyHit) {
           stats.hits++;
-          let u = c.part === 'weak' ? 2.2 : 1,
-            h = c.enemy.damage(o * u, c.point, s, c.part) === !0,
-            f = {
-              point: c.point,
-              normal: c.normal || s.clone().negate(),
-              dist: c.dist,
+          let weakMultiplier = enemyHit.part === 'weak' ? 2.2 : 1,
+            killFlag =
+              enemyHit.enemy.damage(
+                damageAmount * weakMultiplier,
+                enemyHit.point,
+                shotDir,
+                enemyHit.part,
+              ) === !0,
+            impactPayload = {
+              point: enemyHit.point,
+              normal: enemyHit.normal || shotDir.clone().negate(),
+              dist: enemyHit.dist,
               surface: 'enemy',
-              enemy: c.enemy,
-              part: c.part,
-              dir: s,
+              enemy: enemyHit.enemy,
+              part: enemyHit.part,
+              dir: shotDir,
               from: 'player',
-              killed: h,
+              killed: killFlag,
             };
           return (
-            ctx.events.emit('impact', f),
+            ctx.events.emit('impact', impactPayload),
             ctx.events.emit('player:hitEnemy', {
-              enemy: c.enemy,
-              part: c.part,
-              killed: h,
-              weak: c.part === 'weak',
+              enemy: enemyHit.enemy,
+              part: enemyHit.part,
+              killed: killFlag,
+              weak: enemyHit.part === 'weak',
             }),
-            f
+            impactPayload
           );
         }
-        if (l) {
-          let u = {
-            point: l.point,
-            normal: l.normal,
-            dist: l.dist,
-            surface: l.surface,
+        if (sceneHit) {
+          let weakMultiplier = {
+            point: sceneHit.point,
+            normal: sceneHit.normal,
+            dist: sceneHit.dist,
+            surface: sceneHit.surface,
             enemy: null,
-            dir: s,
+            dir: shotDir,
             from: 'player',
           };
-          return (ctx.events.emit('impact', u), u);
+          return (ctx.events.emit('impact', weakMultiplier), weakMultiplier);
         }
         return null;
       },
-      enemyShot(n, s, { damage: o = 6, range: r = 200 } = {}) {
-        let a = ctx.physics.raycast(n, s, r),
-          l = a ? a.dist : r,
-          c = ctx.player;
-        if (c && c.alive) {
-          let u = COMBAT_SCRATCH_POINT.copy(c.pos);
-          u.y += 1;
-          let h = u.sub(n).dot(s);
-          if (h > 0 && h < l) {
-            COMBAT_SCRATCH_DIR.copy(n).addScaledVector(s, h);
-            let f = Math.abs(COMBAT_SCRATCH_DIR.y - (c.pos.y + 0.95));
+      enemyShot(originPoint, shotDir, { damage: damageAmount = 6, range: maxRange = 200 } = {}) {
+        let impulseScale = ctx.physics.raycast(originPoint, shotDir, maxRange),
+          sceneHit = impulseScale ? impulseScale.dist : maxRange,
+          enemyHit = ctx.player;
+        if (enemyHit && enemyHit.alive) {
+          let weakMultiplier = COMBAT_SCRATCH_POINT.copy(enemyHit.pos);
+          weakMultiplier.y += 1;
+          let killFlag = weakMultiplier.sub(originPoint).dot(shotDir);
+          if (killFlag > 0 && killFlag < sceneHit) {
+            COMBAT_SCRATCH_DIR.copy(originPoint).addScaledVector(shotDir, killFlag);
+            let impactPayload = Math.abs(COMBAT_SCRATCH_DIR.y - (enemyHit.pos.y + 0.95));
             if (
-              Math.hypot(COMBAT_SCRATCH_DIR.x - c.pos.x, COMBAT_SCRATCH_DIR.z - c.pos.z) < 0.38 &&
-              f < 0.95
+              Math.hypot(
+                COMBAT_SCRATCH_DIR.x - enemyHit.pos.x,
+                COMBAT_SCRATCH_DIR.z - enemyHit.pos.z,
+              ) < 0.38 &&
+              impactPayload < 0.95
             )
-              return (c.damage(o, n), !0);
+              return (enemyHit.damage(damageAmount, originPoint), !0);
           }
         }
         return (
-          a &&
+          impulseScale &&
             ctx.events.emit('impact', {
-              point: a.point,
-              normal: a.normal,
-              dist: a.dist,
-              surface: a.surface,
+              point: impulseScale.point,
+              normal: impulseScale.normal,
+              dist: impulseScale.dist,
+              surface: impulseScale.surface,
               enemy: null,
-              dir: s,
+              dir: shotDir,
               from: 'enemy',
             }),
           !1
         );
       },
-      explode(n, s = 5, o = 80, r = 'player') {
-        for (let l of ctx.enemies.list) {
-          if (!l.alive) continue;
-          let c = l.pos.distanceTo(n);
-          c < s &&
-            ctx.physics.lineOfSight(n, COMBAT_SCRATCH_POINT.copy(l.pos).setY(l.pos.y + 0.5)) &&
-            l.damage(
-              o * (1 - c / s),
-              l.pos,
-              COMBAT_SCRATCH_DIR.copy(l.pos).sub(n).normalize(),
+      explode(originPoint, shotDir = 5, damageAmount = 80, maxRange = 'player') {
+        for (let sceneHit of ctx.enemies.list) {
+          if (!sceneHit.alive) continue;
+          let enemyHit = sceneHit.pos.distanceTo(originPoint);
+          enemyHit < shotDir &&
+            ctx.physics.lineOfSight(
+              originPoint,
+              COMBAT_SCRATCH_POINT.copy(sceneHit.pos).setY(sceneHit.pos.y + 0.5),
+            ) &&
+            sceneHit.damage(
+              damageAmount * (1 - enemyHit / shotDir),
+              sceneHit.pos,
+              COMBAT_SCRATCH_DIR.copy(sceneHit.pos).sub(originPoint).normalize(),
               'body',
             );
         }
-        let a = ctx.player;
-        if (a && a.alive) {
-          let l = COMBAT_SCRATCH_POINT.copy(a.pos)
-            .setY(a.pos.y + 1)
-            .distanceTo(n);
-          l < s &&
-            ctx.physics.lineOfSight(n, COMBAT_SCRATCH_POINT.copy(a.pos).setY(a.pos.y + 1)) &&
-            a.damage(o * 0.5 * (1 - l / s), n);
+        let impulseScale = ctx.player;
+        if (impulseScale && impulseScale.alive) {
+          let sceneHit = COMBAT_SCRATCH_POINT.copy(impulseScale.pos)
+            .setY(impulseScale.pos.y + 1)
+            .distanceTo(originPoint);
+          sceneHit < shotDir &&
+            ctx.physics.lineOfSight(
+              originPoint,
+              COMBAT_SCRATCH_POINT.copy(impulseScale.pos).setY(impulseScale.pos.y + 1),
+            ) &&
+            impulseScale.damage(damageAmount * 0.5 * (1 - sceneHit / shotDir), originPoint);
         }
       },
     }
