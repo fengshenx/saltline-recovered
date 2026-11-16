@@ -10,3 +10,4 @@ extracted/stage1.raw.js
 extracted/stage2.js
 extracted/segments/
 build/
+.DS_Store
