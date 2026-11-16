@@ -462,770 +462,770 @@
   "order": 16
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "mergeGeometries"
   ],
   "order": 17
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "mergeAttributes"
   ],
   "order": 18
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "SCRATCH_BEVEL_DIR"
   ],
   "order": 19
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "boxGeometry"
   ],
   "order": 20
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "beveledBoxGeometry"
   ],
   "order": 21
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "cylinderGeometry"
   ],
   "order": 22
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "tubeGeometry"
   ],
   "order": 23
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "SCRATCH_TRS_MATRIX"
   ],
   "order": 24
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "SCRATCH_ROTATION"
   ],
   "order": 25
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "SCRATCH_EULER"
   ],
   "order": 26
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "SCRATCH_POSITION"
   ],
   "order": 27
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "SCRATCH_SCALE"
   ],
   "order": 28
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "colorGeometry"
   ],
   "order": 30
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "mergeGeometryParts"
   ],
   "order": 31
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "mergeStaticMeshes"
   ],
   "order": 32
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createShadowMesh"
   ],
   "order": 33
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createTiledSphere"
   ],
   "order": 152
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createTiledPlane"
   ],
   "order": 153
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "orientTrianglesOutward"
   ],
   "order": 180
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "loftProfileSurface"
   ],
   "order": 181
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "corrugationWaveOffset"
   ],
   "order": 182
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "buildCorrugationStations"
   ],
   "order": 183
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createPlaneGeometry"
   ],
   "order": 185
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createPlaneGeometryWorldUV"
   ],
   "order": 186
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "flatShadeGeometry"
   ],
   "order": 187
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createSphereGeometry"
   ],
   "order": 188
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createLatheGeometryFromProfile"
   ],
   "order": 189
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_EULER_A"
   ],
   "order": 190
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_QUAT_A"
   ],
   "order": 191
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_MATRIX_A"
   ],
   "order": 192
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_POS_A"
   ],
   "order": 193
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "UNIT_SCALE"
   ],
   "order": 194
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "je"
   ],
   "order": 195
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "composeTransformMatrix"
   ],
   "order": 196
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "PartBuilder"
   ],
   "order": 197
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "buildPartsGroup"
   ],
   "order": 198
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "tagPropUserData"
   ],
   "order": 199
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "HALF_PI"
   ],
   "order": 262
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createGeometryFromArrays"
   ],
   "order": 266
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "revolveProfileGeometry"
   ],
   "order": 267
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "mapVertices"
   ],
   "order": 270
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "flipGeometryWinding"
   ],
   "order": 272
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "removeGeometryGroup"
   ],
   "order": 273
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_QUAT_B"
   ],
   "order": 274
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "UP_AXIS_VECTOR"
   ],
   "order": 275
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_DIR_B"
   ],
   "order": 276
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_MATRIX_B"
   ],
   "order": 277
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createCylinderBetween"
   ],
   "order": 278
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createHollowPolygonExtrusion"
   ],
   "order": 279
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createRibbonFromPolyline"
   ],
   "order": 280
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createDecalPlane"
   ],
   "order": 281
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createCurvedDecalQuad"
   ],
   "order": 282
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createTorusGeometryWorldUV"
   ],
   "order": 283
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createSphereGeometryWorldUV"
   ],
   "order": 284
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "bakeVertexColorTint"
   ],
   "order": 285
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_MATRIX_C"
   ],
   "order": 288
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_QUAT_C"
   ],
   "order": 289
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_EULER_C"
   ],
   "order": 290
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_POS_C"
   ],
   "order": 291
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_SCALE_C"
   ],
   "order": 292
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createPlaneGeometryOffsetUV"
   ],
   "order": 298
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "FACE_ROTATIONS"
   ],
   "order": 299
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createPlaneGeometryOffsetUVAlt"
   ],
   "order": 319
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_QUAT_D"
   ],
   "order": 327
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "UP_AXIS_VECTOR_B"
   ],
   "order": 328
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_DIR_C"
   ],
   "order": 329
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "TEMP_MATRIX_D"
   ],
   "order": 330
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createRoundedBeamBetween"
   ],
   "order": 331
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "ensurePolygonCCW"
   ],
   "order": 332
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "MeshBatcher"
   ],
   "order": 396
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "boxFromBounds"
   ],
   "order": 397
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "cylinderFromAxis"
   ],
   "order": 398
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "strutBetween"
   ],
   "order": 399
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "beamBetween"
   ],
   "order": 400
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "strutsAlongPath"
   ],
   "order": 401
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "catenaryPoints"
   ],
   "order": 402
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "planeAt"
   ],
   "order": 403
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "isBevelNormal"
   ],
   "order": 699
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "isLateralNormal"
   ],
   "order": 700
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "SCRATCH_ROTATION_MATRIX"
   ],
   "order": 703
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "buildRoundedBox"
   ],
   "order": 704
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createShapeFromPoints"
   ],
   "order": 705
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "extrudeShape"
   ],
   "order": 706
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "flattenCapNormals"
   ],
   "order": 707
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "buildPlateX"
   ],
   "order": 708
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "buildPlateZ"
   ],
   "order": 709
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "buildRoundedTab"
   ],
   "order": 711
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "roundedSlotOutline"
   ],
   "order": 712
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "roundedRectOutline"
   ],
   "order": 713
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "triangleCount"
   ],
   "order": 716
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "RingMeshBuilder"
   ],
   "order": 739
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "buildGridSurface"
   ],
   "order": 740
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "SHEET_SAMPLES"
   ],
   "order": 741
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "sheetEdgeWeight"
   ],
   "order": 742
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "mirrorGeometryX"
   ],
   "order": 766
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createRoundedBox"
   ],
   "order": 816
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "transformGeom"
   ],
   "order": 817
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createCylinderY"
   ],
   "order": 818
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createCylinderX"
   ],
   "order": 819
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createCylinderZ"
   ],
   "order": 820
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "strutFrom"
   ],
   "order": 821
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "strutTo"
   ],
   "order": 822
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "strutQuat"
   ],
   "order": 823
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "AXIS_Y"
   ],
   "order": 824
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "strutMatrix"
   ],
   "order": 825
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createStrut"
   ],
   "order": 827
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "createScaledSphere"
   ],
   "order": 828
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "makeBoltHexX"
   ],
   "order": 829
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "makeBoltHexY"
   ],
   "order": 830
  },
  {
-  "mod": "src/core/geometry.js",
+  "mod": "src/assets/procedural/geometry.js",
   "names": [
    "makeBoltHexZ"
   ],
@@ -2090,238 +2090,238 @@
   "order": 85
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SALTLINE_HEIGHT_TO_NORMAL_FRAG"
   ],
   "order": 109
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SALTLINE_TEX_COPY_FRAG"
   ],
   "order": 110
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "FONT_STACK_DISPLAY"
   ],
   "order": 111
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "FONT_STACK_SANS"
   ],
   "order": 112
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "FONT_STACK_MONO"
   ],
   "order": 113
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "INK_PALETTE"
   ],
   "order": 114
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "toRgba"
   ],
   "order": 115
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "NO_BRIDGE_GLYPHS"
   ],
   "order": 116
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "hashString"
   ],
   "order": 118
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "traceBlobPath"
   ],
   "order": 120
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "applyCanvasDistress"
   ],
   "order": 121
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "measureRunWidth"
   ],
   "order": 122
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "drawStencilRun"
   ],
   "order": 123
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "createDecalLibrary"
   ],
   "order": 124
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "CONTAINER_LOGO_DECALS"
   ],
   "order": 206
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SIGN_DECAL_NAMES"
   ],
   "order": 229
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "LABEL_ATLAS_GUTTER"
   ],
   "order": 346
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SMOKE_ATLAS_COLS"
   ],
   "order": 504
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SMOKE_ATLAS_ROWS"
   ],
   "order": 505
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "createSmokeFlipbook"
   ],
   "order": 506
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SPARK_ATLAS_COLS"
   ],
   "order": 507
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SPARK_ATLAS_ROWS"
   ],
   "order": 508
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SPARK_CELL_FLASH"
   ],
   "order": 509
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SPARK_CELL_STREAK"
   ],
   "order": 510
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SPARK_CELL_BURST_A"
   ],
   "order": 511
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SPARK_CELL_BURST_B"
   ],
   "order": 512
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SPARK_CELL_RING"
   ],
   "order": 513
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SPARK_CELL_PUFF"
   ],
   "order": 514
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SPARK_CELL_DISC"
   ],
   "order": 515
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "SPARK_CELL_SPIKE"
   ],
   "order": 516
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "createSparkFlipbook"
   ],
   "order": 517
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "PAC9_MARK_REGIONS"
   ],
   "order": 768
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "MARK_ATLAS_WIDTH"
   ],
   "order": 769
  },
  {
-  "mod": "src/render/materials/textures.js",
+  "mod": "src/assets/procedural/textures.js",
   "names": [
    "MARK_ATLAS_HEIGHT"
   ],
@@ -2622,154 +2622,154 @@
   "order": 154
  },
  {
-  "mod": "src/world/physics.js",
+  "mod": "src/physics/collision.js",
   "names": [
    "STEP_HEIGHT"
   ],
   "order": 155
  },
  {
-  "mod": "src/world/physics.js",
+  "mod": "src/physics/collision.js",
   "names": [
    "NAV_CELL_SIZE"
   ],
   "order": 156
  },
  {
-  "mod": "src/world/physics.js",
+  "mod": "src/physics/collision.js",
   "names": [
    "NAV_MIN_X"
   ],
   "order": 157
  },
  {
-  "mod": "src/world/physics.js",
+  "mod": "src/physics/collision.js",
   "names": [
    "NAV_MAX_X"
   ],
   "order": 158
  },
  {
-  "mod": "src/world/physics.js",
+  "mod": "src/physics/collision.js",
   "names": [
    "NAV_MIN_Z"
   ],
   "order": 159
  },
  {
-  "mod": "src/world/physics.js",
+  "mod": "src/physics/collision.js",
   "names": [
    "NAV_MAX_Z"
   ],
   "order": 160
  },
  {
-  "mod": "src/world/physics.js",
+  "mod": "src/physics/collision.js",
   "names": [
    "NAV_COLS"
   ],
   "order": 161
  },
  {
-  "mod": "src/world/physics.js",
+  "mod": "src/physics/collision.js",
   "names": [
    "NAV_ROWS"
   ],
   "order": 162
  },
  {
-  "mod": "src/world/physics.js",
+  "mod": "src/physics/collision.js",
   "names": [
    "NAV_CLEARANCE"
   ],
   "order": 163
  },
  {
-  "mod": "src/world/physics.js",
+  "mod": "src/physics/collision.js",
   "names": [
    "createPhysics"
   ],
   "order": 164
  },
  {
-  "mod": "src/world/physics.js",
+  "mod": "src/physics/collision.js",
   "names": [
    "toVector3"
   ],
   "order": 165
  },
  {
-  "mod": "src/world/props/registry.js",
+  "mod": "src/content/props/registry.js",
   "names": [
    "propsModule"
   ],
   "order": 166
  },
  {
-  "mod": "src/world/props/registry.js",
+  "mod": "src/content/props/registry.js",
   "names": [
    "PROP_SIZES"
   ],
   "order": 168
  },
  {
-  "mod": "src/world/props/registry.js",
+  "mod": "src/content/props/registry.js",
   "names": [
    "PROP_GENERATORS"
   ],
   "order": 169
  },
  {
-  "mod": "src/world/props/registry.js",
+  "mod": "src/content/props/registry.js",
   "names": [
    "registerPropBuilder"
   ],
   "order": 170
  },
  {
-  "mod": "src/world/props/registry.js",
+  "mod": "src/content/props/registry.js",
   "names": [
    "getPropSize3"
   ],
   "order": 219
  },
  {
-  "mod": "src/world/props/registry.js",
+  "mod": "src/content/props/registry.js",
   "names": [
    "getPropSize3Later"
   ],
   "order": 233
  },
  {
-  "mod": "src/world/props/registry.js",
+  "mod": "src/content/props/registry.js",
   "names": [
    "ASSEMBLER_GEOMETRY_CACHE"
   ],
   "order": 295
  },
  {
-  "mod": "src/world/props/registry.js",
+  "mod": "src/content/props/registry.js",
   "names": [
    "buildCachedPropClone"
   ],
   "order": 296
  },
  {
-  "mod": "src/world/props/registry.js",
+  "mod": "src/content/props/registry.js",
   "names": [
    "PROPS_MODULE_EXPORTS"
   ],
   "order": 342
  },
  {
-  "mod": "src/world/props/props.js",
+  "mod": "src/content/props/props.js",
   "names": [
    "createProps"
   ],
   "order": 171
  },
  {
-  "mod": "src/world/props/props.js",
+  "mod": "src/content/props/props.js",
   "names": [
    "showcaseProps"
   ],
@@ -2888,1827 +2888,1827 @@
   "order": 850
  },
  {
-  "mod": "src/world/props/geometry.js",
+  "mod": "src/content/props/geometry.js",
   "names": [
    "chamferedBoxGeometry"
   ],
   "order": 179
  },
  {
-  "mod": "src/world/props/geometry.js",
+  "mod": "src/content/props/geometry.js",
   "names": [
    "CONTAINER_SPECS"
   ],
   "order": 204
  },
  {
-  "mod": "src/world/props/geometry.js",
+  "mod": "src/content/props/geometry.js",
   "names": [
    "CONTAINER_OWNER_CODES"
   ],
   "order": 205
  },
  {
-  "mod": "src/world/props/geometry.js",
+  "mod": "src/content/props/geometry.js",
   "names": [
    "smoothstepRangeAlt"
   ],
   "order": 297
  },
  {
-  "mod": "src/effects/particles.js",
+  "mod": "src/render/effects/particles.js",
   "names": [
    "createRoundedRectFanGeometry"
   ],
   "order": 184
  },
  {
-  "mod": "src/effects/particles.js",
+  "mod": "src/render/effects/particles.js",
   "names": [
    "DECAL_ATLAS_COLS"
   ],
   "order": 518
  },
  {
-  "mod": "src/effects/particles.js",
+  "mod": "src/render/effects/particles.js",
   "names": [
    "DECAL_ATLAS_ROWS"
   ],
   "order": 519
  },
  {
-  "mod": "src/effects/particles.js",
+  "mod": "src/render/effects/particles.js",
   "names": [
    "DECAL_ATLAS_FRAMES"
   ],
   "order": 520
  },
  {
-  "mod": "src/effects/particles.js",
+  "mod": "src/render/effects/particles.js",
   "names": [
    "createDecalAtlas"
   ],
   "order": 521
  },
  {
-  "mod": "src/effects/particles.js",
+  "mod": "src/render/effects/particles.js",
   "names": [
    "FX_BILLBOARD_VERT"
   ],
   "order": 522
  },
  {
-  "mod": "src/effects/particles.js",
+  "mod": "src/render/effects/particles.js",
   "names": [
    "FX_SOFT_FRAG"
   ],
   "order": 523
  },
  {
-  "mod": "src/effects/particles.js",
+  "mod": "src/render/effects/particles.js",
   "names": [
    "FX_LIT_FRAG"
   ],
   "order": 524
  },
  {
-  "mod": "src/effects/particles.js",
+  "mod": "src/render/effects/particles.js",
   "names": [
    "FX_ADD_FRAG"
   ],
   "order": 525
  },
  {
-  "mod": "src/effects/particles.js",
+  "mod": "src/render/effects/particles.js",
   "names": [
    "createFxBatch"
   ],
   "order": 527
  },
  {
-  "mod": "src/effects/particles.js",
+  "mod": "src/render/effects/particles.js",
   "names": [
    "TRACER_FIELD_NAMES"
   ],
   "order": 533
  },
  {
-  "mod": "src/effects/particles.js",
+  "mod": "src/render/effects/particles.js",
   "names": [
    "DECAL_SIZES"
   ],
   "order": 548
  },
  {
-  "mod": "src/effects/particles.js",
+  "mod": "src/render/effects/particles.js",
   "names": [
    "DECAL_EVICT_FADE_COUNT"
   ],
   "order": 549
  },
  {
-  "mod": "src/world/backdrop/cranes.js",
+  "mod": "src/content/backdrop/cranes.js",
   "names": [
    "getLabelMaterial"
   ],
   "order": 201
  },
  {
-  "mod": "src/world/backdrop/cranes.js",
+  "mod": "src/content/backdrop/cranes.js",
   "names": [
    "getDecalMaterial"
   ],
   "order": 202
  },
  {
-  "mod": "src/world/backdrop/cranes.js",
+  "mod": "src/content/backdrop/cranes.js",
   "names": [
    "CRANE_PORTAL_X0"
   ],
   "order": 407
  },
  {
-  "mod": "src/world/backdrop/cranes.js",
+  "mod": "src/content/backdrop/cranes.js",
   "names": [
    "CRANE_PORTAL_X1"
   ],
   "order": 408
  },
  {
-  "mod": "src/world/backdrop/cranes.js",
+  "mod": "src/content/backdrop/cranes.js",
   "names": [
    "CRANE_PORTAL_HALF_Z"
   ],
   "order": 409
  },
  {
-  "mod": "src/world/backdrop/cranes.js",
+  "mod": "src/content/backdrop/cranes.js",
   "names": [
    "CRANE_GIRDER_Y0"
   ],
   "order": 410
  },
  {
-  "mod": "src/world/backdrop/cranes.js",
+  "mod": "src/content/backdrop/cranes.js",
   "names": [
    "CRANE_GIRDER_Y1"
   ],
   "order": 411
  },
  {
-  "mod": "src/world/backdrop/cranes.js",
+  "mod": "src/content/backdrop/cranes.js",
   "names": [
    "CRANE_BOOM_HALF_Z"
   ],
   "order": 412
  },
  {
-  "mod": "src/world/backdrop/cranes.js",
+  "mod": "src/content/backdrop/cranes.js",
   "names": [
    "CRANE_BOOM_X0"
   ],
   "order": 413
  },
  {
-  "mod": "src/world/backdrop/cranes.js",
+  "mod": "src/content/backdrop/cranes.js",
   "names": [
    "CRANE_BOOM_X1"
   ],
   "order": 414
  },
  {
-  "mod": "src/world/backdrop/cranes.js",
+  "mod": "src/content/backdrop/cranes.js",
   "names": [
    "CRANE_HOUSE_X"
   ],
   "order": 415
  },
  {
-  "mod": "src/world/backdrop/cranes.js",
+  "mod": "src/content/backdrop/cranes.js",
   "names": [
    "buildQuayCrane"
   ],
   "order": 420
  },
  {
-  "mod": "src/world/backdrop/cranes.js",
+  "mod": "src/content/backdrop/cranes.js",
   "names": [
    "buildDistantCrane"
   ],
   "order": 421
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "CONTAINER_WIDTH"
   ],
   "order": 203
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "CONTAINER_BODY_MATERIAL_KEY"
   ],
   "order": 208
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "CONTAINER_VARIANT_COUNT"
   ],
   "order": 209
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "CONTAINER_PARTS_CACHE"
   ],
   "order": 210
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "CORNER_BLOCK_LENGTH"
   ],
   "order": 211
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "CORNER_BLOCK_HEIGHT"
   ],
   "order": 212
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "CORNER_BLOCK_DEPTH"
   ],
   "order": 213
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "SIDE_CORRUGATION"
   ],
   "order": 214
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "FRONT_CORRUGATION"
   ],
   "order": 215
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "ROOF_CORRUGATION"
   ],
   "order": 216
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "addForkliftWheel"
   ],
   "order": 333
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "buildForklift"
   ],
   "order": 334
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "buildGenerator"
   ],
   "order": 335
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "buildDumpster"
   ],
   "order": 336
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "buildToolboxCart"
   ],
   "order": 337
  },
  {
-  "mod": "src/world/props/cargo-builders.js",
+  "mod": "src/content/props/cargo-builders.js",
   "names": [
    "registerCargoProps"
   ],
   "order": 338
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "CONTAINER_PAINT_COLORS"
   ],
   "order": 207
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "PI"
   ],
   "order": 220
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "buildPalletStack"
   ],
   "order": 304
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "buildMeshCage"
   ],
   "order": 360
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "buildSkipBin"
   ],
   "order": 361
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "buildRebarBundle"
   ],
   "order": 362
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "buildWheelChock"
   ],
   "order": 363
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "buildLaneSignpost"
   ],
   "order": 364
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "buildPlateStack"
   ],
   "order": 365
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "buildCableRun"
   ],
   "order": 366
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "buildUtilityStandpipe"
   ],
   "order": 367
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "buildQuayApron"
   ],
   "order": 369
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "FORKLIFT_FORK_Y"
   ],
   "order": 372
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "vec3"
   ],
   "order": 373
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "placeYardLayout"
   ],
   "order": 374
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "placeGateArea"
   ],
   "order": 375
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "hasNoMergeAncestor"
   ],
   "order": 377
  },
  {
-  "mod": "src/world/level/placement.js",
+  "mod": "src/content/level/placement.js",
   "names": [
    "countMeshes"
   ],
   "order": 378
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildContainerParts"
   ],
   "order": 217
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildBasicContainer"
   ],
   "order": 218
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildJerseyBarrier"
   ],
   "order": 221
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "addFloodlightHead"
   ],
   "order": 222
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildLightMast"
   ],
   "order": 223
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildFencePanel"
   ],
   "order": 224
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildGuardBooth"
   ],
   "order": 225
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildGateArm"
   ],
   "order": 226
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildMooringBollard"
   ],
   "order": 227
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildBollardPost"
   ],
   "order": 228
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "SIGN_TEXTS"
   ],
   "order": 230
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildSignPost"
   ],
   "order": 231
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildFloodlightStand"
   ],
   "order": 232
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildMetalStairs"
   ],
   "order": 235
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildCatwalk"
   ],
   "order": 236
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "addPalletDeck"
   ],
   "order": 237
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "addShelfLoad"
   ],
   "order": 238
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildShelfRack"
   ],
   "order": 239
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildReeferUnit"
   ],
   "order": 240
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "RELAY_COLOR_LIVE"
   ],
   "order": 242
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "RELAY_COLOR_CUT"
   ],
   "order": 243
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "RELAY_COLOR_CUTTING"
   ],
   "order": 244
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "buildRelayNode"
   ],
   "order": 245
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "barrelProfile"
   ],
   "order": 300
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "createTireProfileGeometry"
   ],
   "order": 311
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "smoothstepRangeAlt2"
   ],
   "order": 318
  },
  {
-  "mod": "src/world/props/basic-builders.js",
+  "mod": "src/content/props/basic-builders.js",
   "names": [
    "createSandbagGeometry"
   ],
   "order": 321
  },
  {
-  "mod": "src/world/props/detail-geometry.js",
+  "mod": "src/content/props/detail-geometry.js",
   "names": [
    "roundedBoxGeometry"
   ],
   "order": 268
  },
  {
-  "mod": "src/world/props/detail-geometry.js",
+  "mod": "src/content/props/detail-geometry.js",
   "names": [
    "roundedBoxGeometryGrid"
   ],
   "order": 269
  },
  {
-  "mod": "src/world/props/detail-geometry.js",
+  "mod": "src/content/props/detail-geometry.js",
   "names": [
    "recomputeSmoothNormals"
   ],
   "order": 271
  },
  {
-  "mod": "src/world/props/detail-geometry.js",
+  "mod": "src/content/props/detail-geometry.js",
   "names": [
    "PropAssembler"
   ],
   "order": 294
  },
  {
-  "mod": "src/world/props/detail-geometry.js",
+  "mod": "src/content/props/detail-geometry.js",
   "names": [
    "buildBarrel"
   ],
   "order": 301
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "PAINT_COLOR_ALIASES"
   ],
   "order": 286
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "groundModule"
   ],
   "order": 454
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "TERRAIN_BASE_HEIGHT"
   ],
   "order": 461
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "TERRAIN_BOUNDS"
   ],
   "order": 462
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "TERRAIN_DIPS"
   ],
   "order": 463
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "DIP_RADIUS_SCALE"
   ],
   "order": 464
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "DIP_DEPTH_BIAS"
   ],
   "order": 465
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "terrainHeight"
   ],
   "order": 466
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "bakeTerrainTexture"
   ],
   "order": 467
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "sampleTerrainTexture"
   ],
   "order": 468
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "bakeTerrainNormals"
   ],
   "order": 469
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "makeDataTexture"
   ],
   "order": 470
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "MARKING_BOUNDS"
   ],
   "order": 471
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "SEA_WAVE_MAIN"
   ],
   "order": 478
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "SEA_WAVE_DETAIL"
   ],
   "order": 479
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "formatGlslFloat"
   ],
   "order": 481
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "seaHeightAt"
   ],
   "order": 482
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "buildSeaGridSteps"
   ],
   "order": 489
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "createGround"
   ],
   "order": 498
  },
  {
-  "mod": "src/world/ground/ground.js",
+  "mod": "src/content/ground/ground.js",
   "names": [
    "showcaseGround"
   ],
   "order": 499
  },
  {
-  "mod": "src/world/level/buildings.js",
+  "mod": "src/content/level/buildings.js",
   "names": [
    "resolvePaintColorAlias"
   ],
   "order": 287
  },
  {
-  "mod": "src/world/level/buildings.js",
+  "mod": "src/content/level/buildings.js",
   "names": [
    "buildPallet"
   ],
   "order": 303
  },
  {
-  "mod": "src/world/level/buildings.js",
+  "mod": "src/content/level/buildings.js",
   "names": [
    "NO_COLLIDER_PROPS"
   ],
   "order": 344
  },
  {
-  "mod": "src/world/level/buildings.js",
+  "mod": "src/content/level/buildings.js",
   "names": [
    "createLevelKit"
   ],
   "order": 345
  },
  {
-  "mod": "src/world/level/buildings.js",
+  "mod": "src/content/level/buildings.js",
   "names": [
    "buildLabelAtlas"
   ],
   "order": 347
  },
  {
-  "mod": "src/world/level/buildings.js",
+  "mod": "src/content/level/buildings.js",
   "names": [
    "SHED_BOUNDS"
   ],
   "order": 348
  },
  {
-  "mod": "src/world/level/buildings.js",
+  "mod": "src/content/level/buildings.js",
   "names": [
    "SHED_BAY_XS"
   ],
   "order": 349
  },
  {
-  "mod": "src/world/level/buildings.js",
+  "mod": "src/content/level/buildings.js",
   "names": [
    "SHED_DOOR_OPENING"
   ],
   "order": 350
  },
  {
-  "mod": "src/world/level/buildings.js",
+  "mod": "src/content/level/buildings.js",
   "names": [
    "SHED_WINDOW_OPENING"
   ],
   "order": 351
  },
  {
-  "mod": "src/world/level/buildings.js",
+  "mod": "src/content/level/buildings.js",
   "names": [
    "ROOF_BAND_FRACTIONS"
   ],
   "order": 353
  },
  {
-  "mod": "src/world/level/buildings.js",
+  "mod": "src/content/level/buildings.js",
   "names": [
    "ROOF_COLUMN_COUNT"
   ],
   "order": 354
  },
  {
-  "mod": "src/world/level/buildings.js",
+  "mod": "src/content/level/buildings.js",
   "names": [
    "buildWorkshopShed"
   ],
   "order": 355
  },
  {
-  "mod": "src/world/props/detailed-builders.js",
+  "mod": "src/content/props/detailed-builders.js",
   "names": [
    "addEuroPallet"
   ],
   "order": 302
  },
  {
-  "mod": "src/world/props/detailed-builders.js",
+  "mod": "src/content/props/detailed-builders.js",
   "names": [
    "addWoodCrateBody"
   ],
   "order": 305
  },
  {
-  "mod": "src/world/props/detailed-builders.js",
+  "mod": "src/content/props/detailed-builders.js",
   "names": [
    "buildCrateWood"
   ],
   "order": 306
  },
  {
-  "mod": "src/world/props/detailed-builders.js",
+  "mod": "src/content/props/detailed-builders.js",
   "names": [
    "buildCrateStack"
   ],
   "order": 307
  },
  {
-  "mod": "src/world/props/detailed-builders.js",
+  "mod": "src/content/props/detailed-builders.js",
   "names": [
    "buildIbcTote"
   ],
   "order": 308
  },
  {
-  "mod": "src/world/props/detailed-builders.js",
+  "mod": "src/content/props/detailed-builders.js",
   "names": [
    "buildCableReel"
   ],
   "order": 310
  },
  {
-  "mod": "src/world/props/detailed-builders.js",
+  "mod": "src/content/props/detailed-builders.js",
   "names": [
    "buildTireStack"
   ],
   "order": 312
  },
  {
-  "mod": "src/world/props/detailed-builders.js",
+  "mod": "src/content/props/detailed-builders.js",
   "names": [
    "buildJerryCan"
   ],
   "order": 313
  },
  {
-  "mod": "src/world/props/detailed-builders.js",
+  "mod": "src/content/props/detailed-builders.js",
   "names": [
    "buildTrafficCone"
   ],
   "order": 314
  },
  {
-  "mod": "src/world/props/detailed-builders.js",
+  "mod": "src/content/props/detailed-builders.js",
   "names": [
    "buildGasCylinders"
   ],
   "order": 315
  },
  {
-  "mod": "src/world/props/detailed-builders.js",
+  "mod": "src/content/props/detailed-builders.js",
   "names": [
    "buildPipeStack"
   ],
   "order": 316
  },
  {
-  "mod": "src/world/props/detailed-builders.js",
+  "mod": "src/content/props/detailed-builders.js",
   "names": [
    "registerDetailedProps"
   ],
   "order": 317
  },
  {
-  "mod": "src/enemies/models.js",
+  "mod": "src/content/models/enemies.js",
   "names": [
    "createCableReelDiscGeometries"
   ],
   "order": 309
  },
  {
-  "mod": "src/enemies/models.js",
+  "mod": "src/content/models/enemies.js",
   "names": [
    "hullPatchGeo"
   ],
   "order": 437
  },
  {
-  "mod": "src/enemies/models.js",
+  "mod": "src/content/models/enemies.js",
   "names": [
    "createMarkingsMesh"
   ],
   "order": 772
  },
  {
-  "mod": "src/enemies/models.js",
+  "mod": "src/content/models/enemies.js",
   "names": [
    "Rig"
   ],
   "order": 801
  },
  {
-  "mod": "src/enemies/models.js",
+  "mod": "src/content/models/enemies.js",
   "names": [
    "createWalkerModel"
   ],
   "order": 833
  },
  {
-  "mod": "src/enemies/models.js",
+  "mod": "src/content/models/enemies.js",
   "names": [
    "createDroneModel"
   ],
   "order": 836
  },
  {
-  "mod": "src/world/props/character-builders.js",
+  "mod": "src/content/props/character-builders.js",
   "names": [
    "buildTarpCargo"
   ],
   "order": 320
  },
  {
-  "mod": "src/world/props/character-builders.js",
+  "mod": "src/content/props/character-builders.js",
   "names": [
    "buildSandbags"
   ],
   "order": 322
  },
  {
-  "mod": "src/world/props/character-builders.js",
+  "mod": "src/content/props/character-builders.js",
   "names": [
    "SANDBAG_MATERIAL"
   ],
   "order": 323
  },
  {
-  "mod": "src/world/props/character-builders.js",
+  "mod": "src/content/props/character-builders.js",
   "names": [
    "addCardboardBox"
   ],
   "order": 324
  },
  {
-  "mod": "src/world/props/character-builders.js",
+  "mod": "src/content/props/character-builders.js",
   "names": [
    "buildCardboardBoxes"
   ],
   "order": 325
  },
  {
-  "mod": "src/world/props/character-builders.js",
+  "mod": "src/content/props/character-builders.js",
   "names": [
    "registerCharacterProps"
   ],
   "order": 326
  },
  {
-  "mod": "src/world/backdrop/sky.js",
+  "mod": "src/content/backdrop/sky.js",
   "names": [
    "SHED_SKYLIGHT_HOLES"
   ],
   "order": 352
  },
  {
-  "mod": "src/world/backdrop/sky.js",
+  "mod": "src/content/backdrop/sky.js",
   "names": [
    "buildHarborSkyline"
   ],
   "order": 448
  },
  {
-  "mod": "src/world/backdrop/sky.js",
+  "mod": "src/content/backdrop/sky.js",
   "names": [
    "createGullFlock"
   ],
   "order": 449
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "makeStaticGroup"
   ],
   "order": 356
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "QUAY_DIMS"
   ],
   "order": 368
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "backdropModule"
   ],
   "order": 380
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "addRailing"
   ],
   "order": 404
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "makeBeaconGeo"
   ],
   "order": 406
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "TINT_PANEL"
   ],
   "order": 416
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "TINT_PANEL_DARK"
   ],
   "order": 417
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "TINT_YELLOW"
   ],
   "order": 418
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "TINT_WHITE"
   ],
   "order": 419
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "smoothstep01"
   ],
   "order": 429
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "deckSheerRise"
   ],
   "order": 430
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "deckHeightAt"
   ],
   "order": 431
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "bulwarkHeightAt"
   ],
   "order": 432
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "bulwarkTopAt"
   ],
   "order": 433
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "TINT_REF_COLOR"
   ],
   "order": 442
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "normalizeTint"
   ],
   "order": 443
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "HARBOR_CONTAINER_COLORS"
   ],
   "order": 444
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "DISTANT_CONTAINER_COLORS"
   ],
   "order": 445
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "distanceFade"
   ],
   "order": 447
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "BACKDROP_PARTS"
   ],
   "order": 450
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "buildBackdrop"
   ],
   "order": 451
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "createBackdrop"
   ],
   "order": 452
  },
  {
-  "mod": "src/world/backdrop/backdrop.js",
+  "mod": "src/content/backdrop/backdrop.js",
   "names": [
    "showcaseBackdrop"
   ],
   "order": 453
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "addRoundedBox"
   ],
   "order": 357
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "addCylinderMesh"
   ],
   "order": 358
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "UP_AXIS"
   ],
   "order": 384
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_MODULE"
   ],
   "order": 500
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_SIZE"
   ],
   "order": 526
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "PARTICLE_FLAG_BOUNCE"
   ],
   "order": 528
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "PARTICLE_FLAG_KILL_ON_GROUND"
   ],
   "order": 529
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "PARTICLE_FLAG_STICK"
   ],
   "order": 530
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "ParticlePool"
   ],
   "order": 531
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "TracerPool"
   ],
   "order": 532
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_MATRIX"
   ],
   "order": 534
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_QUAT"
   ],
   "order": 535
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_POS"
   ],
   "order": 536
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_SCALE"
   ],
   "order": 537
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_AXIS"
   ],
   "order": 538
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "createDebrisGeometry"
   ],
   "order": 539
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "RAY_DOWN"
   ],
   "order": 542
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_RAY_ORIGIN"
   ],
   "order": 543
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_SHELL_QUAT"
   ],
   "order": 544
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_EULER"
   ],
   "order": 545
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "createShellGeometry"
   ],
   "order": 546
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_LIT_PARTICLE_CAP"
   ],
   "order": 551
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_ADD_PARTICLE_CAP"
   ],
   "order": 552
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "fxRandom"
   ],
   "order": 553
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "randRange"
   ],
   "order": 554
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_VEC_A"
   ],
   "order": 555
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_VEC_B"
   ],
   "order": 556
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_VEC_C"
   ],
   "order": 557
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_VEC_D"
   ],
   "order": 558
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_VEC_E"
   ],
   "order": 559
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_VEC_F"
   ],
   "order": 560
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "DOWN_AXIS"
   ],
   "order": 562
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_COLOR"
   ],
   "order": 563
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "FX_SCRATCH_RGB"
   ],
   "order": 564
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "toRgbTriple"
   ],
   "order": 565
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "randomDirectionAround"
   ],
   "order": 566
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "createEffects"
   ],
   "order": 567
  },
  {
-  "mod": "src/effects/effects.js",
+  "mod": "src/render/effects/effects.js",
   "names": [
    "showcaseEffects"
   ],
   "order": 568
  },
  {
-  "mod": "src/world/level/level.js",
+  "mod": "src/content/level/level.js",
   "names": [
    "createLevel"
   ],
   "order": 376
  },
  {
-  "mod": "src/world/level/level.js",
+  "mod": "src/content/level/level.js",
   "names": [
    "showcaseLevel"
   ],
   "order": 379
  },
  {
-  "mod": "src/world/backdrop/geometry.js",
+  "mod": "src/content/backdrop/geometry.js",
   "names": [
    "createBlinkerBatch"
   ],
   "order": 405
  },
  {
-  "mod": "src/world/backdrop/ships.js",
+  "mod": "src/content/backdrop/ships.js",
   "names": [
    "SHIP_CENTER_X"
   ],
   "order": 422
  },
  {
-  "mod": "src/world/backdrop/ships.js",
+  "mod": "src/content/backdrop/ships.js",
   "names": [
    "SHIP_HALF_BEAM"
   ],
   "order": 423
  },
  {
-  "mod": "src/world/backdrop/ships.js",
+  "mod": "src/content/backdrop/ships.js",
   "names": [
    "SHIP_STERN_Z"
   ],
   "order": 424
  },
  {
-  "mod": "src/world/backdrop/ships.js",
+  "mod": "src/content/backdrop/ships.js",
   "names": [
    "SHIP_LENGTH"
   ],
   "order": 425
  },
  {
-  "mod": "src/world/backdrop/ships.js",
+  "mod": "src/content/backdrop/ships.js",
   "names": [
    "SHIP_KEEL_Y"
   ],
   "order": 426
  },
  {
-  "mod": "src/world/backdrop/ships.js",
+  "mod": "src/content/backdrop/ships.js",
   "names": [
    "SHIP_DECK_Y"
   ],
   "order": 427
  },
  {
-  "mod": "src/world/backdrop/ships.js",
+  "mod": "src/content/backdrop/ships.js",
   "names": [
    "SHIP_WATERLINE_Y"
   ],
   "order": 428
  },
  {
-  "mod": "src/world/backdrop/ships.js",
+  "mod": "src/content/backdrop/ships.js",
   "names": [
    "SHIP_STERN_TOP_Y"
   ],
   "order": 434
  },
  {
-  "mod": "src/world/backdrop/ships.js",
+  "mod": "src/content/backdrop/ships.js",
   "names": [
    "hullPoint"
   ],
   "order": 435
  },
  {
-  "mod": "src/world/backdrop/ships.js",
+  "mod": "src/content/backdrop/ships.js",
   "names": [
    "hullNormal"
   ],
   "order": 436
  },
  {
-  "mod": "src/world/backdrop/ships.js",
+  "mod": "src/content/backdrop/ships.js",
   "names": [
    "buildContainerShip"
   ],
   "order": 440
  },
  {
-  "mod": "src/world/backdrop/ships.js",
+  "mod": "src/content/backdrop/ships.js",
   "names": [
    "buildMooringBoat"
   ],
   "order": 441
  },
  {
-  "mod": "src/weapons/geometry.js",
+  "mod": "src/gameplay/weapons/geometry.js",
   "names": [
    "SurfaceBuilder"
   ],
   "order": 438
  },
  {
-  "mod": "src/weapons/geometry.js",
+  "mod": "src/gameplay/weapons/geometry.js",
   "names": [
    "applyVertexShading"
   ],
   "order": 701
  },
  {
-  "mod": "src/weapons/geometry.js",
+  "mod": "src/gameplay/weapons/geometry.js",
   "names": [
    "buildLatheBody"
   ],
   "order": 710
  },
  {
-  "mod": "src/weapons/geometry.js",
+  "mod": "src/gameplay/weapons/geometry.js",
   "names": [
    "PAC9_DIMENSIONS"
   ],
   "order": 714
  },
  {
-  "mod": "src/weapons/geometry.js",
+  "mod": "src/gameplay/weapons/geometry.js",
   "names": [
    "buildPac9Geometry"
   ],
   "order": 715
  },
  {
-  "mod": "src/weapons/geometry.js",
+  "mod": "src/gameplay/weapons/geometry.js",
   "names": [
    "PAC9_MAG_SIZE"
   ],
   "order": 782
  },
  {
-  "mod": "src/weapons/geometry.js",
+  "mod": "src/gameplay/weapons/geometry.js",
   "names": [
    "PAC9_DAMAGE"
   ],
   "order": 785
  },
  {
-  "mod": "src/world/ground/geometry.js",
+  "mod": "src/content/ground/geometry.js",
   "names": [
    "createApronMarkingsTexture"
   ],
   "order": 472
  },
  {
-  "mod": "src/world/ground/asphalt.js",
+  "mod": "src/content/ground/asphalt.js",
   "names": [
    "APRON_WET_SURF"
   ],
   "order": 473
  },
  {
-  "mod": "src/world/ground/asphalt.js",
+  "mod": "src/content/ground/asphalt.js",
   "names": [
    "APRON_WET_MAP_FRAG"
   ],
   "order": 474
  },
  {
-  "mod": "src/world/ground/asphalt.js",
+  "mod": "src/content/ground/asphalt.js",
   "names": [
    "APRON_WET_REFLECT_FRAG"
   ],
   "order": 475
  },
  {
-  "mod": "src/world/ground/asphalt.js",
+  "mod": "src/content/ground/asphalt.js",
   "names": [
    "createWetApron"
   ],
   "order": 476
  },
  {
-  "mod": "src/world/ground/asphalt.js",
+  "mod": "src/content/ground/asphalt.js",
   "names": [
    "createPlanarReflectionPass"
   ],
   "order": 477
  },
  {
-  "mod": "src/world/ground/water.js",
+  "mod": "src/content/ground/water.js",
   "names": [
    "SEA_WAVE_DISPLACE_VERT"
   ],
   "order": 483
  },
  {
-  "mod": "src/world/ground/water.js",
+  "mod": "src/content/ground/water.js",
   "names": [
    "SEA_WAVE_MAIN_SLOPE_FRAG"
   ],
   "order": 484
  },
  {
-  "mod": "src/world/ground/water.js",
+  "mod": "src/content/ground/water.js",
   "names": [
    "SEA_WAVE_DETAIL_SLOPE_FRAG"
   ],
   "order": 485
  },
  {
-  "mod": "src/world/ground/water.js",
+  "mod": "src/content/ground/water.js",
   "names": [
    "SEA_SURF_DECL"
   ],
   "order": 486
  },
  {
-  "mod": "src/world/ground/water.js",
+  "mod": "src/content/ground/water.js",
   "names": [
    "SEA_SURF_FRAG"
   ],
   "order": 487
  },
  {
-  "mod": "src/world/ground/water.js",
+  "mod": "src/content/ground/water.js",
   "names": [
    "SEA_HAZE_FRAG"
   ],
   "order": 488
  },
  {
-  "mod": "src/world/ground/water.js",
+  "mod": "src/content/ground/water.js",
   "names": [
    "createSeaSurface"
   ],
   "order": 490
  },
  {
-  "mod": "src/world/ground/water.js",
+  "mod": "src/content/ground/water.js",
   "names": [
    "RAIN_COMMON_VERT"
   ],
   "order": 491
  },
  {
-  "mod": "src/world/ground/water.js",
+  "mod": "src/content/ground/water.js",
   "names": [
    "RAIN_STREAK_VERT"
   ],
   "order": 492
  },
  {
-  "mod": "src/world/ground/water.js",
+  "mod": "src/content/ground/water.js",
   "names": [
    "RAIN_STREAK_FRAG"
   ],
   "order": 493
  },
  {
-  "mod": "src/world/ground/water.js",
+  "mod": "src/content/ground/water.js",
   "names": [
    "RAIN_SPLASH_VERT"
   ],
   "order": 494
  },
  {
-  "mod": "src/world/ground/water.js",
+  "mod": "src/content/ground/water.js",
   "names": [
    "RAIN_SPLASH_FRAG"
   ],
   "order": 495
  },
  {
-  "mod": "src/world/ground/water.js",
+  "mod": "src/content/ground/water.js",
   "names": [
    "createRainInstanceGeometry"
   ],
   "order": 496
  },
  {
-  "mod": "src/world/ground/water.js",
+  "mod": "src/content/ground/water.js",
   "names": [
    "createRainSystem"
   ],
   "order": 497
  },
  {
-  "mod": "src/effects/pools.js",
+  "mod": "src/render/effects/pools.js",
   "names": [
    "DebrisPool"
   ],
   "order": 540
  },
  {
-  "mod": "src/effects/pools.js",
+  "mod": "src/render/effects/pools.js",
   "names": [
    "ShellPool"
   ],
   "order": 547
  },
  {
-  "mod": "src/effects/pools.js",
+  "mod": "src/render/effects/pools.js",
   "names": [
    "DecalBatch"
   ],
@@ -5254,448 +5254,448 @@
   "order": 646
  },
  {
-  "mod": "src/input/input.js",
+  "mod": "src/platform/input.js",
   "names": [
    "KEY_BINDINGS"
   ],
   "order": 682
  },
  {
-  "mod": "src/input/input.js",
+  "mod": "src/platform/input.js",
   "names": [
    "MOUSE_LOOK_SENSITIVITY"
   ],
   "order": 683
  },
  {
-  "mod": "src/input/input.js",
+  "mod": "src/platform/input.js",
   "names": [
    "TOUCH_LOOK_SENSITIVITY"
   ],
   "order": 684
  },
  {
-  "mod": "src/input/input.js",
+  "mod": "src/platform/input.js",
   "names": [
    "ARROW_TURN_RATE"
   ],
   "order": 685
  },
  {
-  "mod": "src/input/input.js",
+  "mod": "src/platform/input.js",
   "names": [
    "PAD_LOOK_RATE"
   ],
   "order": 686
  },
  {
-  "mod": "src/input/input.js",
+  "mod": "src/platform/input.js",
   "names": [
    "TOUCH_STICK_RADIUS"
   ],
   "order": 687
  },
  {
-  "mod": "src/input/input.js",
+  "mod": "src/platform/input.js",
   "names": [
    "UNGATED_ACTIONS"
   ],
   "order": 688
  },
  {
-  "mod": "src/input/input.js",
+  "mod": "src/platform/input.js",
   "names": [
    "createInput"
   ],
   "order": 689
  },
  {
-  "mod": "src/input/input.js",
+  "mod": "src/platform/input.js",
   "names": [
    "createStubInput"
   ],
   "order": 927
  },
  {
-  "mod": "src/player/player.js",
+  "mod": "src/gameplay/player.js",
   "names": [
    "JUMP_SPEED"
   ],
   "order": 691
  },
  {
-  "mod": "src/player/player.js",
+  "mod": "src/gameplay/player.js",
   "names": [
    "createPlayer"
   ],
   "order": 692
  },
  {
-  "mod": "src/player/player.js",
+  "mod": "src/gameplay/player.js",
   "names": [
    "createStubPlayer"
   ],
   "order": 928
  },
  {
-  "mod": "src/combat/combat.js",
+  "mod": "src/gameplay/combat.js",
   "names": [
    "createCombat"
   ],
   "order": 693
  },
  {
-  "mod": "src/combat/combat.js",
+  "mod": "src/gameplay/combat.js",
   "names": [
    "COMBAT_SCRATCH_POINT"
   ],
   "order": 694
  },
  {
-  "mod": "src/combat/combat.js",
+  "mod": "src/gameplay/combat.js",
   "names": [
    "COMBAT_SCRATCH_DIR"
   ],
   "order": 695
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "weaponModule"
   ],
   "order": 696
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "GLOVE_TONE_TOP"
   ],
   "order": 720
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "GLOVE_TONE_BAR"
   ],
   "order": 721
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "GLOVE_TONE_GUARD"
   ],
   "order": 722
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "GLOVE_TONE_SIDE"
   ],
   "order": 723
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "GLOVE_TONE_MID"
   ],
   "order": 724
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "GLOVE_TONE_EDGE"
   ],
   "order": 725
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "GLOVE_TONE_SEAM"
   ],
   "order": 726
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "GLOVE_TONE_SOFT"
   ],
   "order": 727
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "GLOVE_TONE_CUFF"
   ],
   "order": 728
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "GLOVE_TONE_PULLTAB"
   ],
   "order": 729
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "GLOVE_TONE_SLEEVE"
   ],
   "order": 730
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "GLOVE_TONE_STRAP"
   ],
   "order": 731
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "GLOVE_TONE_WATCH"
   ],
   "order": 732
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "SCRATCH_VEC3"
   ],
   "order": 737
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "NEG_Z_DIR"
   ],
   "order": 738
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "FINGER_SEGMENTS"
   ],
   "order": 744
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "RING_ANGLES"
   ],
   "order": 745
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "RING_COUNT"
   ],
   "order": 746
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "PAD_RING_OFFSET"
   ],
   "order": 747
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "KNUCKLE_RINGS"
   ],
   "order": 748
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "FINGER_BUMP"
   ],
   "order": 749
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "buildFinger"
   ],
   "order": 750
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "buildFingerFromSpec"
   ],
   "order": 753
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "buildThumb"
   ],
   "order": 755
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "PALM_WRIST_Z"
   ],
   "order": 756
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "palmProfileZ"
   ],
   "order": 757
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "palmProfileZInner"
   ],
   "order": 758
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "palmHalfWidth"
   ],
   "order": 759
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "palmTopRadius"
   ],
   "order": 760
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "palmBottomRadius"
   ],
   "order": 761
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "palmTopY"
   ],
   "order": 762
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "palmBottomY"
   ],
   "order": 763
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "buildPalm"
   ],
   "order": 764
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "buildThumbWeb"
   ],
   "order": 765
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "PAC9_RAIN_UNIFORM"
   ],
   "order": 775
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "WeaponVec3"
   ],
   "order": 780
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "WeaponQuat"
   ],
   "order": 781
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "PAC9_RESERVE_AMMO"
   ],
   "order": 783
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "PAC9_RPM"
   ],
   "order": 784
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "PAC9_RANGE"
   ],
   "order": 786
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "HIP_POSE"
   ],
   "order": 787
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "ADS_POSE"
   ],
   "order": 788
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "SPRINT_POSE"
   ],
   "order": 789
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "RELOAD_POSE"
   ],
   "order": 790
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "RELOAD_TIME_TACTICAL"
   ],
   "order": 791
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "RELOAD_TIME_EMPTY"
   ],
   "order": 792
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "createWeapon"
   ],
   "order": 797
  },
  {
-  "mod": "src/weapons/weapon.js",
+  "mod": "src/gameplay/weapons/weapon.js",
   "names": [
    "showcaseWeapon"
   ],
@@ -5723,469 +5723,469 @@
   "order": 719
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "buildDrapedSlab"
   ],
   "order": 743
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "buildGloveHand"
   ],
   "order": 767
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "buildMarkingsAtlas"
   ],
   "order": 771
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "createOpticLens"
   ],
   "order": 773
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "createMuzzleFlash"
   ],
   "order": 774
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "PAC9_DETAIL_COMMON_GLSL"
   ],
   "order": 776
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "PAC9_DETAIL_ROUGHNESS_GLSL"
   ],
   "order": 777
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "PAC9_DETAIL_NORMAL_GLSL"
   ],
   "order": 778
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "patchPac9DetailMaterial"
   ],
   "order": 779
  },
  {
-  "mod": "src/weapons/rig.js",
-  "names": [
-   "buildSkinnedRig"
-  ],
-  "order": 802
- },
- {
-  "mod": "src/weapons/rig.js",
-  "names": [
-   "solveLegIK"
-  ],
-  "order": 803
- },
- {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "RIG_SHELL_WHITE"
   ],
   "order": 804
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "RIG_SHELL_COOL"
   ],
   "order": 805
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "RIG_SHELL_RUST"
   ],
   "order": 806
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "RIG_SHELL_DARK"
   ],
   "order": 807
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "RIG_SHELL_SHADOW"
   ],
   "order": 808
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "RIG_SHELL_HAZARD"
   ],
   "order": 809
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "RIG_METAL_WHITE"
   ],
   "order": 810
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "RIG_METAL_BRIGHT"
   ],
   "order": 811
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "RIG_METAL_BASE"
   ],
   "order": 812
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "RIG_METAL_CHROME"
   ],
   "order": 813
  },
  {
-  "mod": "src/weapons/rig.js",
+  "mod": "src/gameplay/weapons/rig.js",
   "names": [
    "RIG_METAL_BORE"
   ],
   "order": 814
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/animation/skeleton.js",
+  "names": [
+   "buildSkinnedRig"
+  ],
+  "order": 802
+ },
+ {
+  "mod": "src/animation/skeleton.js",
+  "names": [
+   "solveLegIK"
+  ],
+  "order": 803
+ },
+ {
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "HOUND_RIG"
   ],
   "order": 832
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "createWalker"
   ],
   "order": 851
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "HOUND_TUNE"
   ],
   "order": 852
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "HOUND_TUNE_ALIAS"
   ],
   "order": 853
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "HOUND_RIG_ALIAS"
   ],
   "order": 854
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "houndBodyStart"
   ],
   "order": 855
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "houndBodyEnd"
   ],
   "order": 856
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "houndDir"
   ],
   "order": 857
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "houndScratch"
   ],
   "order": 858
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "houndTracerEnd"
   ],
   "order": 859
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "houndAimPoint"
   ],
   "order": 860
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "HOUND_UP"
   ],
   "order": 861
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "LEG_IK_OUT"
   ],
   "order": 862
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "HOUND_LENS_IDLE"
   ],
   "order": 863
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "HOUND_LENS_ENGAGED"
   ],
   "order": 864
  },
  {
-  "mod": "src/enemies/walker.js",
+  "mod": "src/gameplay/enemies/walker.js",
   "names": [
    "HOUND_GAIT_PAIRS"
   ],
   "order": 867
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "GULL_RIG"
   ],
   "order": 834
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "createRotorBellGeometry"
   ],
   "order": 835
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "GULL_TUNE"
   ],
   "order": 837
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "GULL_TUNE_ALIAS"
   ],
   "order": 838
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "gullScratch"
   ],
   "order": 839
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "gullSpareA"
   ],
   "order": 840
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "gullDir"
   ],
   "order": 841
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "gullSteer"
   ],
   "order": 842
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "gullSpareB"
   ],
   "order": 843
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "gullAimPoint"
   ],
   "order": 844
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "AXIS_UP"
   ],
   "order": 845
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "AXIS_DOWN"
   ],
   "order": 846
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "GULL_LENS_IDLE"
   ],
   "order": 847
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "GULL_LENS_ENGAGED"
   ],
   "order": 848
  },
  {
-  "mod": "src/enemies/drone.js",
+  "mod": "src/gameplay/enemies/drone.js",
   "names": [
    "createDrone"
   ],
   "order": 869
  },
  {
-  "mod": "src/enemies/enemies.js",
+  "mod": "src/gameplay/enemies/enemies.js",
   "names": [
    "AI_TUNE"
   ],
   "order": 875
  },
  {
-  "mod": "src/enemies/enemies.js",
+  "mod": "src/gameplay/enemies/enemies.js",
   "names": [
    "SIGHT_COS_HALF"
   ],
   "order": 876
  },
  {
-  "mod": "src/enemies/enemies.js",
+  "mod": "src/gameplay/enemies/enemies.js",
   "names": [
    "boltEndPoint"
   ],
   "order": 877
  },
  {
-  "mod": "src/enemies/enemies.js",
+  "mod": "src/gameplay/enemies/enemies.js",
   "names": [
    "boltSpare"
   ],
   "order": 878
  },
  {
-  "mod": "src/enemies/enemies.js",
+  "mod": "src/gameplay/enemies/enemies.js",
   "names": [
    "gullLightDir"
   ],
   "order": 879
  },
  {
-  "mod": "src/enemies/enemies.js",
+  "mod": "src/gameplay/enemies/enemies.js",
   "names": [
    "boltQuat"
   ],
   "order": 880
  },
  {
-  "mod": "src/enemies/enemies.js",
+  "mod": "src/gameplay/enemies/enemies.js",
   "names": [
    "boltMatrix"
   ],
   "order": 881
  },
  {
-  "mod": "src/enemies/enemies.js",
+  "mod": "src/gameplay/enemies/enemies.js",
   "names": [
    "boltScale"
   ],
   "order": 882
  },
  {
-  "mod": "src/enemies/enemies.js",
+  "mod": "src/gameplay/enemies/enemies.js",
   "names": [
    "AXIS_Z"
   ],
   "order": 883
  },
  {
-  "mod": "src/enemies/enemies.js",
+  "mod": "src/gameplay/enemies/enemies.js",
   "names": [
    "DOWN_SPARE"
   ],
   "order": 884
  },
  {
-  "mod": "src/enemies/enemies.js",
+  "mod": "src/gameplay/enemies/enemies.js",
   "names": [
    "playerCapsuleLow"
   ],
   "order": 885
  },
  {
-  "mod": "src/enemies/enemies.js",
+  "mod": "src/gameplay/enemies/enemies.js",
   "names": [
    "playerCapsuleHigh"
   ],
   "order": 886
  },
  {
-  "mod": "src/enemies/enemies.js",
+  "mod": "src/gameplay/enemies/enemies.js",
   "names": [
    "createEnemies"
   ],
   "order": 887
  },
  {
-  "mod": "src/enemies/enemies.js",
+  "mod": "src/gameplay/enemies/enemies.js",
   "names": [
    "showcaseEnemies"
   ],
@@ -6297,70 +6297,70 @@
   "order": 907
  },
  {
-  "mod": "src/game/flow.js",
+  "mod": "src/app/flow.js",
   "names": [
    "MISSION_FLOW"
   ],
   "order": 908
  },
  {
-  "mod": "src/game/flow.js",
+  "mod": "src/app/flow.js",
   "names": [
    "COMPASS_NAMES"
   ],
   "order": 909
  },
  {
-  "mod": "src/game/flow.js",
+  "mod": "src/app/flow.js",
   "names": [
    "CONTROL_RADIO_LINES"
   ],
   "order": 910
  },
  {
-  "mod": "src/game/flow.js",
+  "mod": "src/app/flow.js",
   "names": [
    "createGameFlow"
   ],
   "order": 911
  },
  {
-  "mod": "src/game.js",
+  "mod": "src/app/showcase.js",
   "names": [
    "SHOWCASE_REGISTRY"
   ],
   "order": 912
  },
  {
-  "mod": "src/app/boot-screen.js",
+  "mod": "src/app/boot.js",
   "names": [
    "bootScreenEl"
   ],
   "order": 917
  },
  {
-  "mod": "src/app/boot-screen.js",
+  "mod": "src/app/boot.js",
   "names": [
    "bootMessageEl"
   ],
   "order": 918
  },
  {
-  "mod": "src/app/boot-screen.js",
+  "mod": "src/app/boot.js",
   "names": [
    "bootProgressEl"
   ],
   "order": 919
  },
  {
-  "mod": "src/app/boot-screen.js",
+  "mod": "src/app/boot.js",
   "names": [
    "yieldToPaint"
   ],
   "order": 923
  },
  {
-  "mod": "src/app/boot-screen.js",
+  "mod": "src/app/boot.js",
   "names": [
    "setBootProgress"
   ],

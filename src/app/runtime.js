@@ -4,53 +4,53 @@ import * as THREE from 'three';
 
 import { enableBenchmark } from './benchmark.js';
 
-import { bootScreenEl, setBootProgress } from './boot-screen.js';
+import { bootScreenEl, setBootProgress } from './boot.js';
 
 import { showFatalError } from './diagnostics.js';
 
+import { createGameFlow } from './flow.js';
+
+import { SHOWCASE_REGISTRY } from './showcase.js';
+
+import { createShadowMesh } from '../assets/procedural/geometry.js';
+
 import { createAudio } from '../audio/audio.js';
 
-import { createCombat } from '../combat/combat.js';
+import { createBackdrop } from '../content/backdrop/backdrop.js';
+
+import { createGround } from '../content/ground/ground.js';
+
+import { createLevel } from '../content/level/level.js';
+
+import { createProps } from '../content/props/props.js';
 
 import { createEventBus } from '../core/events.js';
 
 import { FALLBACKS } from '../core/fallbacks.js';
 
-import { createShadowMesh } from '../core/geometry.js';
-
 import { chooseQuality } from '../core/quality.js';
 
 import { createRng } from '../core/random.js';
 
-import { createEffects } from '../effects/effects.js';
+import { createCombat } from '../gameplay/combat.js';
 
-import { createEnemies } from '../enemies/enemies.js';
+import { createEnemies } from '../gameplay/enemies/enemies.js';
 
-import { SHOWCASE_REGISTRY } from '../game.js';
+import { createPlayer, createStubPlayer } from '../gameplay/player.js';
 
-import { createGameFlow } from '../game/flow.js';
+import { createWeapon } from '../gameplay/weapons/weapon.js';
 
-import { createInput, createStubInput } from '../input/input.js';
+import { createPhysics } from '../physics/collision.js';
 
-import { createPlayer, createStubPlayer } from '../player/player.js';
+import { createInput, createStubInput } from '../platform/input.js';
+
+import { createEffects } from '../render/effects/effects.js';
 
 import { createMaterials } from '../render/materials/materials.js';
 
 import { createRenderer } from '../render/renderer.js';
 
 import { createHUD } from '../ui/hud.js';
-
-import { createWeapon } from '../weapons/weapon.js';
-
-import { createBackdrop } from '../world/backdrop/backdrop.js';
-
-import { createGround } from '../world/ground/ground.js';
-
-import { createLevel } from '../world/level/level.js';
-
-import { createPhysics } from '../world/physics.js';
-
-import { createProps } from '../world/props/props.js';
 
 /**
  * 弹壳落地事件的复用负载对象（位置加表面材质），避免每次反弹都新建对象触发 GC

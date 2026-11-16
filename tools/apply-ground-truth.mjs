@@ -130,6 +130,56 @@ const MODULE_FALLBACK = {
   'src/ui/boot.js': 'src/app/boot-screen.js',
   'src/ui/dom.js': 'src/ui/hud.js',
 };
+
+//------------------------------------------------------------- 4. 目录重排
+// 上一步得到的是"对齐参考仓库"的文件边界（还算平铺）。这一步把模块收敛到目标工程结构：
+// 平台 / 核心 / 资源 / 渲染 / 音频 / 物理 / 动画 / 内容 / 玩法 / 应用 / UI 分层，层内按特性纵切。
+// 依赖方向单向向下：platform → core → 子系统 → 内容/物理 → 玩法 → app → ui。
+// 键是"当前路径"，前缀规则负责整目录搬迁；重跑时键已不存在，天然幂等。
+const MODULE_RELAYOUT_BY_SYMBOL = [
+  // 骨骼与 IK 是跨实体复用的动画能力，从武器视图模型里提出
+  { mod: 'src/weapons/rig.js', test: /SkinnedRig|LegIK/i, to: 'src/animation/skeleton.js' },
+];
+
+const MODULE_RELAYOUT_EXACT = {
+  // 物理：碰撞世界 + 导航网格
+  'src/world/physics.js': 'src/physics/collision.js',
+  // 资源：程序化生成的几何与纹理（"谁创建谁释放"要集中管）
+  'src/core/geometry.js': 'src/assets/procedural/geometry.js',
+  'src/render/materials/textures.js': 'src/assets/procedural/textures.js',
+  // 平台：浏览器事件隔离带
+  'src/input/input.js': 'src/platform/input.js',
+  // 内容：敌人/道具模型不参与玩法逻辑
+  'src/enemies/models.js': 'src/content/models/enemies.js',
+  // 应用：流程状态机、展示场景注册表、启动页
+  'src/game/flow.js': 'src/app/flow.js',
+  'src/game.js': 'src/app/showcase.js',
+  'src/app/boot-screen.js': 'src/app/boot.js',
+  // 渲染：特效与对象池服务渲染
+  'src/effects/effects.js': 'src/render/effects/effects.js',
+  'src/effects/particles.js': 'src/render/effects/particles.js',
+  'src/effects/pools.js': 'src/render/effects/pools.js',
+};
+
+const MODULE_RELAYOUT_PREFIX = [
+  ['src/world/backdrop/', 'src/content/backdrop/'],
+  ['src/world/ground/', 'src/content/ground/'],
+  ['src/world/level/', 'src/content/level/'],
+  ['src/world/props/', 'src/content/props/'],
+  ['src/enemies/', 'src/gameplay/enemies/'],
+  ['src/weapons/', 'src/gameplay/weapons/'],
+  ['src/player/', 'src/gameplay/'],
+  ['src/combat/', 'src/gameplay/'],
+];
+
+/** 把模块路径重写到目标结构，不命中则原样返回 */
+function relayoutModule(mod, name) {
+  for (const r of MODULE_RELAYOUT_BY_SYMBOL) if (r.mod === mod && r.test.test(name)) return r.to;
+  if (MODULE_RELAYOUT_EXACT[mod]) return MODULE_RELAYOUT_EXACT[mod];
+  for (const [from, to] of MODULE_RELAYOUT_PREFIX) if (mod.startsWith(from)) return to + mod.slice(from.length);
+  return mod;
+}
+
 const filePath = resolve('extracted/original-filemap.json');
 const fileMap = !mergeOnly && existsSync(filePath) ? JSON.parse(readFileSync(filePath, 'utf8')) : [];
 const fileByMine = new Map(fileMap.map((f) => [f.mine, f.file]));
@@ -154,6 +204,12 @@ for (const [, meta] of byCompressed) {
       meta.module = MODULE_FALLBACK[before];
       meta.moduleSource = 'fallback';
     }
+  }
+  // ④ 目录重排（最终结构，覆盖以上三步）
+  const relaid = relayoutModule(meta.module, meta.name);
+  if (relaid !== meta.module) {
+    meta.module = relaid;
+    meta.moduleSource = 'relayout';
   }
   if (meta.module !== before) remoduled++;
 }

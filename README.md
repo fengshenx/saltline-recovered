@@ -43,7 +43,7 @@ three.js 换成 npm 依赖。`src/` 改完能重新构建成单文件，行为�
 - [x] 阶段2 命名：8 域并行 → 顶层 851 / 参数 993 / 局部 1,979 / JSDoc 868
 - [x] 阶段3 `tools/split.mjs`：按归属切成 ES 模块，import/export 自动生成
 - [x] 对照参考仓库：`tools/match-original.mjs` + `tools/apply-ground-truth.mjs`
-      → 命名同名 374 中的 81 个（22%），文件边界对齐到 66 个模块（参考为 65）
+      → 命名同名 374 中的 81 个（22%），文件边界对齐到参考仓库后，再按分层目标结构重排（见 MODULES.md）
 - [x] 撞名收口：`_i/Pb/u_` 三处跨域命名冲突（`_i` 采纳参考仓库的 `registerProp`）
 - [x] `structures.js`（6,155 行）按构件拆成 `world/backdrop/{cranes,ships,sky,geometry}` +
       `world/level/buildings.js`；`assets/props/*` 36 个细文件收回 `world/props/*-builders.js`
@@ -56,7 +56,7 @@ three.js 换成 npm 依赖。`src/` 改完能重新构建成单文件，行为�
 
 | | 原件 | 还原后 | 参考仓库 |
 |---|---|---|---|
-| 形态 | 单 HTML 压缩 bundle | 66 个 ES 模块 + 10 个工具 | 65 个模块 + vendor |
+| 形态 | 单 HTML 压缩 bundle | 67 个 ES 模块（11 层目录）+ 10 个工具 | 65 个模块 + vendor |
 | JS 行数 | 6,200（45% 是 GLSL） | 51,272 | 45,154 |
 | 重新压缩体积 | 1,424,460 B | 1,391,000 B（−2.3%） | — |
 
@@ -67,7 +67,8 @@ input/      原件（只读）
 tools/      extract → deobfuscate → apply-names → split → link → build
             match-original / apply-ground-truth / find-shortnames / merge-shortnames
 extracted/  stage1/stage2 反混淆稿、符号表、分域命名、ground-truth 映射、短名分片、报告
-src/        还原后的模块化源码（改这里）
+src/        还原后的模块化源码（改这里）：platform core assets render audio
+            physics animation content gameplay ui app
 dist/       saltline.html（生产）/ saltline.dev.html（带启动诊断，支持 ?autostart=1）
 docs/       RECOVERY.md 还原方法 · MODULES.md 模块契约
 ```

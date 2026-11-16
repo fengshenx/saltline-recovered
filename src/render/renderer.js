@@ -2,9 +2,13 @@
 
 import * as THREE from 'three';
 
-import { LAYER_VIEWMODEL, LAYER_WORLD, PLAYER_SPEC, QUALITY_PRESETS, SUN } from '../core/config.js';
+import {
+  beveledBoxGeometry,
+  boxGeometry,
+  createShadowMesh,
+} from '../assets/procedural/geometry.js';
 
-import { beveledBoxGeometry, boxGeometry, createShadowMesh } from '../core/geometry.js';
+import { LAYER_VIEWMODEL, LAYER_WORLD, PLAYER_SPEC, QUALITY_PRESETS, SUN } from '../core/config.js';
 
 import { SALTLINE_POST_MARKER, createPostprocessing } from './postprocessing.js';
 

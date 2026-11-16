@@ -2,6 +2,12 @@
 
 import * as THREE from 'three';
 
+import {
+  SALTLINE_HEIGHT_TO_NORMAL_FRAG,
+  SALTLINE_TEX_COPY_FRAG,
+  createDecalLibrary,
+} from '../../assets/procedural/textures.js';
+
 import { valueNoise3 } from '../../core/math.js';
 
 import {
@@ -24,12 +30,6 @@ import {
   SALTLINE_SURF_PRELUDE_FRAG,
   SURFACE_SHADERS,
 } from './surface-shaders.js';
-
-import {
-  SALTLINE_HEIGHT_TO_NORMAL_FRAG,
-  SALTLINE_TEX_COPY_FRAG,
-  createDecalLibrary,
-} from './textures.js';
 
 /**
  * 材质模块的导出命名空间（create/applyPatch/showcase 三个惰性 getter），在启动时作为 app.mats 挂到上下文上，避免模块循环依赖

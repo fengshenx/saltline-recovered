@@ -1,26 +1,6 @@
 // init-order.js — 反混淆还原自 saltline.original.html（esbuild 产物），命名与注释为还原产物。
 
-import { FX_MODULE, createEffects, showcaseEffects } from './effects/effects.js';
-
-import { AI_TUNE, createEnemies, showcaseEnemies } from './enemies/enemies.js';
-
-import { ex } from './misc.js';
-
-import {
-  createMaterials,
-  materialsModule,
-  patchMaterialShader,
-} from './render/materials/materials.js';
-
-import { showcaseMaterials } from './render/materials/showcase.js';
-
-import { SALTLINE_PAINT_BODY, SURFACE_SHADERS } from './render/materials/surface-shaders.js';
-
-import { createRenderer, rendererModule, showcaseRenderer } from './render/renderer.js';
-
-import { createWeapon, showcaseWeapon, weaponModule } from './weapons/weapon.js';
-
-import { backdropModule, createBackdrop, showcaseBackdrop } from './world/backdrop/backdrop.js';
+import { backdropModule, createBackdrop, showcaseBackdrop } from './content/backdrop/backdrop.js';
 
 import {
   SEA_WAVE_DETAIL,
@@ -28,9 +8,9 @@ import {
   createGround,
   groundModule,
   showcaseGround,
-} from './world/ground/ground.js';
+} from './content/ground/ground.js';
 
-import { createLevel, showcaseLevel } from './world/level/level.js';
+import { createLevel, showcaseLevel } from './content/level/level.js';
 
 import {
   buildBasicContainer,
@@ -48,22 +28,42 @@ import {
   buildRelayNode,
   buildShelfRack,
   buildSignPost,
-} from './world/props/basic-builders.js';
+} from './content/props/basic-builders.js';
 
-import { registerCargoProps } from './world/props/cargo-builders.js';
+import { registerCargoProps } from './content/props/cargo-builders.js';
 
-import { registerCharacterProps } from './world/props/character-builders.js';
+import { registerCharacterProps } from './content/props/character-builders.js';
 
-import { registerDetailedProps } from './world/props/detailed-builders.js';
+import { registerDetailedProps } from './content/props/detailed-builders.js';
 
-import { createProps, showcaseProps } from './world/props/props.js';
+import { createProps, showcaseProps } from './content/props/props.js';
 
 import {
   PROPS_MODULE_EXPORTS,
   PROP_SIZES,
   propsModule,
   registerPropBuilder,
-} from './world/props/registry.js';
+} from './content/props/registry.js';
+
+import { AI_TUNE, createEnemies, showcaseEnemies } from './gameplay/enemies/enemies.js';
+
+import { createWeapon, showcaseWeapon, weaponModule } from './gameplay/weapons/weapon.js';
+
+import { ex } from './misc.js';
+
+import { FX_MODULE, createEffects, showcaseEffects } from './render/effects/effects.js';
+
+import {
+  createMaterials,
+  materialsModule,
+  patchMaterialShader,
+} from './render/materials/materials.js';
+
+import { showcaseMaterials } from './render/materials/showcase.js';
+
+import { SALTLINE_PAINT_BODY, SURFACE_SHADERS } from './render/materials/surface-shaders.js';
+
+import { createRenderer, rendererModule, showcaseRenderer } from './render/renderer.js';
 
 Object.defineProperties(rendererModule, {
   create: {

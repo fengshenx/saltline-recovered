@@ -2,10 +2,6 @@
 
 import * as THREE from 'three';
 
-import { SFX_ALIASES, SFX_RECIPES, bakeSfxBuffer, createSfxBaker } from './library.js';
-
-import { noop } from '../core/fallbacks.js';
-
 import {
   SCRATCH_EULER,
   SCRATCH_POSITION,
@@ -16,7 +12,11 @@ import {
   TEMP_POS_C,
   TEMP_QUAT_C,
   TEMP_SCALE_C,
-} from '../core/geometry.js';
+} from '../assets/procedural/geometry.js';
+
+import { SFX_ALIASES, SFX_RECIPES, bakeSfxBuffer, createSfxBaker } from './library.js';
+
+import { noop } from '../core/fallbacks.js';
 
 import { clamp01 } from '../core/math.js';
 

@@ -6,9 +6,9 @@ import { hash3, hashInt3 } from './random.js';
 
 import { Mat4, Quat, Vec3 } from './three-types.js';
 
-import { So, um } from '../misc.js';
+import { WeaponQuat } from '../gameplay/weapons/weapon.js';
 
-import { WeaponQuat } from '../weapons/weapon.js';
+import { So, um } from '../misc.js';
 
 /**
  * 数值限幅小工具（已存在同名语义的 Zn，此处为 gull 域内的局部副本）

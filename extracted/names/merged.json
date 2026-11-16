@@ -161,121 +161,121 @@
    "compressed": "sa",
    "name": "mergeGeometries",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "three BufferGeometryUtils.mergeGeometries 的内联副本：按属性语义合并多个几何（保留 index/morph/group），属性集合或类型不一致时报错并返回 null 而不是产出坏网格",
    "domain": "A-配置与渲染基础",
    "oldName": "mergeBufferGeometries",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ly",
    "name": "mergeAttributes",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "合并同名 BufferAttribute：先校验 array 构造类型/itemSize/normalized/gpuType 全部一致，再一次性分配拷贝；交错属性逐分量展开，是几何合并的底层搬运工",
    "domain": "A-配置与渲染基础",
    "oldName": "mergeBufferAttributes",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "oa",
    "name": "SCRATCH_BEVEL_DIR",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "倒角盒逐顶点计算外扩方向时复用的临时向量，避免每顶点新建 Vector3 造成的分配压力",
    "domain": "A-配置与渲染基础",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "$e",
    "name": "boxGeometry",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "盒体几何，UV 改为按世界坐标做三向平面投影，使不同尺寸的箱子/机柜贴图密度一致；anchor='bottom' 时原点落在盒底，便于按地面高度摆放",
    "domain": "A-配置与渲染基础",
    "oldName": "createPlanarBox",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Wi",
    "name": "beveledBoxGeometry",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "倒角盒：3×3 分段的盒体把棱/角顶点沿外法线内缩成小斜面并同步重算法线，让集装箱与机柜的边沿有真实高光；bevel 被限制在最短边一半以内，UV 仍走平面投影",
    "domain": "A-配置与渲染基础",
    "oldName": "createChamferedBox",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ot",
    "name": "cylinderGeometry",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "圆柱几何，侧面 UV 按周长×高度换算成米制，使管材/栏杆的纹理不随半径粗细被拉伸；顶底盖走平面投影",
    "domain": "A-配置与渲染基础",
    "oldName": "createMetricCylinder",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Fn",
    "name": "tubeGeometry",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "沿点列生成 CatmullRom 管体（电缆、软管、缆绳）：段数与 UV 按实际弧长换算，并硬性限制 400 段以免长索把面数拉爆",
    "domain": "A-配置与渲染基础",
    "oldName": "createTubeAlongPath",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ky",
    "name": "SCRATCH_TRS_MATRIX",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "applyTransform 复用的临时矩阵，避免每个零件变换都新建 Matrix4",
    "domain": "A-配置与渲染基础",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Fy",
    "name": "SCRATCH_ROTATION",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "applyTransform 复用的临时四元数",
    "domain": "A-配置与渲染基础",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Uy",
    "name": "SCRATCH_EULER",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "applyTransform 复用的临时欧拉角，承载 {r:[x,y,z]} 形式的旋转参数",
    "domain": "A-配置与渲染基础",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ny",
    "name": "SCRATCH_POSITION",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "applyTransform 复用的临时位置向量",
    "domain": "A-配置与渲染基础",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Fg",
    "name": "SCRATCH_SCALE",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "applyTransform 复用的临时缩放向量，同时兼容标量与三元组两种缩放写法",
    "domain": "A-配置与渲染基础",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Dc",
@@ -290,41 +290,41 @@
    "compressed": "Lc",
    "name": "colorGeometry",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "给几何写入逐顶点 color 属性（可传固定 RGB 或按坐标计算的函数），用于锈迹、水渍等顶点级染色，省掉一张贴图",
    "domain": "A-配置与渲染基础",
    "oldName": "applyVertexColor",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ii",
    "name": "mergeGeometryParts",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "合并前的规范化管线：补齐 uv/normal/color、剔除本例不需要的属性、统一 index 有无，再交给 mergeBufferGeometries，失败时退回空几何而不是崩掉",
    "domain": "A-配置与渲染基础",
    "oldName": "prepareAndMergeGeometries",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "By",
    "name": "mergeStaticMeshes",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "把一棵静态子树按「材质 uuid + 投影/接收阴影标志 + layer」分组烘成若干大网格以压 draw call；skinned/instanced/多材质以及带 userData.noMerge 标记的子树原样保留",
    "domain": "A-配置与渲染基础",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Qi",
    "name": "createShadowMesh",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "建 Mesh 并默认打开 castShadow/receiveShadow，统一道具与建筑对阴影的约定，可用 opts 逐处关掉",
    "domain": "A-配置与渲染基础",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Vg",
@@ -740,91 +740,91 @@
    "compressed": "i3",
    "name": "SALTLINE_HEIGHT_TO_NORMAL_FRAG",
    "kind": "shader",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "把高度图（RG 两字节编码，避免 8 位阶梯）做 Sobel 求梯度转成切线空间法线的片元着色器，uK 分别缩放 x/y 方向的凹凸强度",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "s3",
    "name": "SALTLINE_TEX_COPY_FRAG",
    "kind": "shader",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "纹理拷贝片元着色器：uSq 打开时把 albedo 平方（转到线性空间）再写进 sRGB 目标，否则原样搬运 ORM 数据",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "o3",
    "name": "FONT_STACK_DISPLAY",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "标题与铭牌主字用的窄体显示字体栈（Big Shoulders Display 优先，末位兜底 Impact/Arial），直接喂给 canvas ctx.font",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "r3",
    "name": "FONT_STACK_SANS",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "无衬线正文字体栈（Barlow Condensed 优先），用于铭牌小字与技术参数行",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "oA",
    "name": "FONT_STACK_MONO",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "等宽字体栈（IBM Plex Mono 优先），用于 CSC 铭牌上要对齐的技术参数列",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ut",
    "name": "INK_PALETTE",
    "kind": "table",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "贴花油墨色板（白/黑/黄/红/深藏青/橙六色的 RGB 数组）：危险标识、船公司 logo 与标牌配色全部取自这里，保证整场色调统一",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "An",
    "name": "toRgba",
    "kind": "function",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "把 INK_PALETTE 的 [r,g,b] 数组加 alpha 拼成 canvas 用的 rgba() 字符串，省掉每处手写模板串",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "rA",
    "name": "NO_BRIDGE_GLYPHS",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "不需要挖漏印桥接的字符集合（I/1/空格/标点等）：这些字形本来就没有闭环，硬挖反而把笔画切断",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "aA",
    "name": "createSeededRandom",
    "kind": "function",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "以 32 位种子驱动的 mulberry32 变体随机数发生器；贴花用它保证同名贴花每次生成的磨损形态完全一致",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "lA",
    "name": "hashString",
    "kind": "function",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "FNV-1a 字符串哈希，把贴花名折叠成稳定种子，使程序化贴花在多次会话、多台机器上可复现",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Wg",
@@ -839,46 +839,46 @@
    "compressed": "ra",
    "name": "traceBlobPath",
    "kind": "function",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "在 2D 上下文里描出一个半径随机抖动的多边形路径（可调抖动幅度与顶点数），用于锈斑、掉漆碎片、油渍这类有机形状",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ks",
    "name": "applyCanvasDistress",
    "kind": "function",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "对已画好的贴花做整体老化：destination-out 挖斑 + 定向划痕 + 细噪点 + 软暗斑，强度 0..1 决定老化程度，让每张标识都像风吹日晒过",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "a3",
    "name": "measureRunWidth",
    "kind": "function",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "按给定字距逐字累加 measureText 宽度，返回整串文字排版后的总宽，供自动缩放与居中计算",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "qa",
    "name": "drawStencilRun",
    "kind": "function",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "逐字绘制带字距的钢印/丝印文字：可选在字中间挖空模拟漏印桥接，按 maxW/fitW 自动缩放，支持左/中/右对齐，返回实际绘制宽度",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "l3",
    "name": "createDecalLibrary",
    "kind": "function",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "创建贴花与标牌材质库：22 个 canvas 2D 程序化配方（危险标识 3 种、箭头、禁行、四个船公司 logo、BERTH 4、警示斜纹、污垢/锈流/油渍/渗漏斑、金属与混凝土弹孔、烧灼、裂纹、涂鸦、CSC 铭牌、数字条），按名字缓存 CanvasTexture 与 MeshStandardMaterial，并在字体加载完成后重绘文字类贴花",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "c3",
@@ -1129,19 +1129,19 @@
    "compressed": "MA",
    "name": "createTiledSphere",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "按世界尺度重写球体 uv（乘 2πr 与 πr），使材质 tile 的物理尺寸与米一致，而不是每颗球都各自铺满一次",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "c1",
    "name": "createTiledPlane",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "按世界尺度重写平面 uv（乘宽高），使材质 tile 的物理尺寸与米一致，避免小面片贴图过密、大面片过大",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "wA",
@@ -1158,157 +1158,157 @@
    "compressed": "u1",
    "name": "STEP_HEIGHT",
    "kind": "const",
-   "module": "src/world/physics.js",
+   "module": "src/physics/collision.js",
    "doc": "可跨越高度（台阶容差）0.42m：胶囊推挤与导航可走格判定共用，改它会同时改变玩家能走上什么和 AI 认为哪里可走",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ls",
    "name": "NAV_CELL_SIZE",
    "kind": "const",
-   "module": "src/world/physics.js",
+   "module": "src/physics/collision.js",
    "doc": "导航网格的格子边长 0.5m：寻路精度与内存/构建开销的折中",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ya",
    "name": "NAV_MIN_X",
    "kind": "const",
-   "module": "src/world/physics.js",
+   "module": "src/physics/collision.js",
    "doc": "导航网格在世界 X 上的起点 -40（世界边界），网格索引与世界坐标的换算基准",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "EA",
    "name": "NAV_MAX_X",
    "kind": "const",
-   "module": "src/world/physics.js",
+   "module": "src/physics/collision.js",
    "doc": "导航网格在世界 X 上的终点 31（码头前沿附近），与 NAV_MIN_X 一起决定列数",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ol",
    "name": "NAV_MIN_Z",
    "kind": "const",
-   "module": "src/world/physics.js",
+   "module": "src/physics/collision.js",
    "doc": "导航网格在世界 Z 上的起点 -32",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "SA",
    "name": "NAV_MAX_Z",
    "kind": "const",
-   "module": "src/world/physics.js",
+   "module": "src/physics/collision.js",
    "doc": "导航网格在世界 Z 上的终点 30",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "qt",
    "name": "NAV_COLS",
    "kind": "const",
-   "module": "src/world/physics.js",
+   "module": "src/physics/collision.js",
    "doc": "导航网格列数，由 (NAV_MAX_X - NAV_MIN_X) / NAV_CELL_SIZE 取整得出，所有网格数组按它做行主序索引",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Qs",
    "name": "NAV_ROWS",
    "kind": "const",
-   "module": "src/world/physics.js",
+   "module": "src/physics/collision.js",
    "doc": "导航网格行数，由 (NAV_MAX_Z - NAV_MIN_Z) / NAV_CELL_SIZE 取整得出",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "yf",
    "name": "NAV_CLEARANCE",
    "kind": "const",
-   "module": "src/world/physics.js",
+   "module": "src/physics/collision.js",
    "doc": "障碍物在导航网格上的额外外扩 0.5m（相当于代理半径）：让 AI 不会贴着墙走、路径不必再做后处理偏移",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "d3",
    "name": "createPhysics",
    "kind": "function",
-   "module": "src/world/physics.js",
+   "module": "src/physics/collision.js",
    "doc": "创建碰撞与导航世界：AABB 盒集合 + 射线（区分地面/海水/盒面与表面材质）+ 视线遮挡 + 地面高度查询 + 胶囊分轴推挤移动 + 格子 A* 寻路，是玩家、敌人与子弹共用的物理底座",
    "domain": "B-渲染器与后处理、材质库",
    "oldName": "createCollisionWorld",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "f3",
    "name": "toVector3",
    "kind": "function",
-   "module": "src/world/physics.js",
+   "module": "src/physics/collision.js",
    "doc": "把 Vector3 或 [x,y,z] 统一成新的 Vector3 副本，让 addBox 同时接受两种写法且不持有外部引用",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "$g",
    "name": "propsModule",
    "kind": "table",
-   "module": "src/world/props/registry.js",
+   "module": "src/content/props/registry.js",
    "doc": "道具模块的导出命名空间（PROP_SIZES/create/register/showcase 四个惰性 getter），在启动时作为 app.props 挂到上下文上",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Gi",
    "name": "PROP_SIZES",
    "kind": "table",
-   "module": "src/world/props/registry.js",
+   "module": "src/content/props/registry.js",
    "doc": "36 种道具的尺寸与材质表：[宽, 高, 深, 主材质名, 物理/音效材质类]，关卡布置、物理盒与脚步材质都从这里取值，是道具几何尺寸的唯一真源",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Xg",
    "name": "PROP_GENERATORS",
    "kind": "table",
-   "module": "src/world/props/registry.js",
+   "module": "src/content/props/registry.js",
    "doc": "道具名到生成函数的注册表，由 registerProp 填充；与 PROP_SIZES 的键必须一致，否则 create 会报警并退回占位盒",
    "domain": "B-渲染器与后处理、材质库",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "_i",
    "name": "registerPropBuilder",
    "kind": "function",
-   "module": "src/world/props/registry.js",
+   "module": "src/content/props/registry.js",
    "doc": "把某个道具名对应的生成函数写进私有注册表，供工厂 build() 按名调度；未注册的道具会退化成占位方块",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Yg",
    "name": "createProps",
    "kind": "function",
-   "module": "src/world/props/props.js",
+   "module": "src/content/props/props.js",
    "doc": "道具工厂对象：暴露 names/has/build 三个入口，build 优先调用已注册生成器，抛错或未注册时退化为带尺寸与碰撞盒的占位方块，保证关卡布置不因缺道具而崩",
    "domain": "C-道具注册表与道具生成器",
    "oldName": "createPropFactory",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "AA",
    "name": "showcaseProps",
    "kind": "function",
-   "module": "src/world/props/props.js",
+   "module": "src/content/props/props.js",
    "doc": "道具陈列预览：把注册表里的道具按行排进场景（每行不超过 26 单位宽），返回相机位置与注视点，用于截图/调试素材",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "$a",
@@ -1363,145 +1363,145 @@
    "compressed": "p3",
    "name": "chamferedBoxGeometry",
    "kind": "function",
-   "module": "src/world/props/geometry.js",
+   "module": "src/content/props/geometry.js",
    "doc": "倒角方块几何：8 个角各拆成 3 个顶点形成 12 条倒角棱，低面数却不会出现硬边法线接缝；anchor='bottom' 时把原点移到底面，方便道具按地面摆放",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "m3",
    "name": "orientTrianglesOutward",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "三角绕序修正：用三角形质心相对参考点的有向体积判断整体朝向，需要时整片翻转索引与 UV，避免放样面朝内而黑掉",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "la",
    "name": "loftProfileSurface",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "截面放样：把二维截面对照着站点序列逐段投影成带状曲面（集装箱波纹板、天沟、包边都靠它），可选首尾封盖并统一朝外绕序",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "CA",
    "name": "corrugationWaveOffset",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "周期梯形波纹的高度函数：把沿板长的位置映射成「平台—斜坡—平台」的凹陷量，是集装箱侧板压型剖面的数学来源",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Uc",
    "name": "buildCorrugationStations",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "按给定跨距与波纹参数生成站点数组（位置 + 该处波纹偏移），只保留落在有效区间内的站点，供放样使用",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "pr",
    "name": "createRoundedRectFanGeometry",
    "kind": "function",
-   "module": "src/effects/particles.js",
+   "module": "src/render/effects/particles.js",
    "doc": "圆角矩形（跑道形）三角扇面：四段四分之一圆弧拼出的平面片，用来做舷窗盖、圆形开孔的贴面而不是实体",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "cn",
    "name": "createPlaneGeometry",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "平面几何简写；道具里大量贴花、铭牌、玻璃片都用它，命名统一便于后续替换成带细分的版本",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Nc",
    "name": "createPlaneGeometryWorldUV",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "UV 按世界尺寸缩放的平面：让警示条纹、锈迹贴图在任意大小的面上保持同一物理密度，而不是被拉伸",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "PA",
    "name": "flatShadeGeometry",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "去索引并重算法线，得到硬边平面着色；用于需要棱角分明的机械件（法兰、垫块）",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "mr",
    "name": "createSphereGeometry",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "带默认分段的球体简写，道具里用于球形护罩、焊点、橡胶垫脚",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "g1",
    "name": "createLatheGeometryFromProfile",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "把 [[半径, 高度], …] 剖面旋成回转体：系船柱、雷达罩、气瓶肩部这类有明确剖面线的零件都用它",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "f1",
    "name": "TEMP_EULER_A",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的欧拉角对象，避免每次变换都新建（道具生成一次会调用上万次 applyTransform）",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Fc",
    "name": "TEMP_QUAT_A",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的四元数，与 TEMP_EULER_A 配套",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "g3",
    "name": "TEMP_MATRIX_A",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的 4x4 矩阵，applyTransform 的临时载体",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "d1",
    "name": "TEMP_POS_A",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的平移向量",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "p1",
    "name": "UNIT_SCALE",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "常量 (1,1,1)，所有变换合成的缩放分量，避免反复分配",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "je",
@@ -1516,37 +1516,37 @@
    "compressed": "_o",
    "name": "composeTransformMatrix",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "由位移与欧拉角合成一个 4x4 变换矩阵，供装配器 push() 压栈时使用",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "jn",
    "name": "PartBuilder",
    "kind": "class",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "第一代道具零件装配器：按材质分桶收集几何、维护变换矩阵栈、提供 box/cyl/tube/bar/beam/decal 语法糖，最后 parts()/group() 合并成少量 Mesh",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Zg",
    "name": "buildPartsGroup",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "把分桶好的零件换成 Mesh 并组装成 Group；materialMap 允许按桶替换材质（集装箱按色号换漆就靠它）",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "qi",
    "name": "tagPropUserData",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "给生成好的道具打上 name / userData.size / userData.colliders，物理与关卡布置只认这三样",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "m1",
@@ -1561,174 +1561,174 @@
    "compressed": "Mi",
    "name": "getLabelMaterial",
    "kind": "function",
-   "module": "src/world/backdrop/cranes.js",
+   "module": "src/content/backdrop/cranes.js",
    "doc": "按文本+字体参数取（并缓存）铭牌材质，失败时退回 paint_white，保证贴图缺失不会打断道具生成",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Jn",
    "name": "getDecalMaterial",
    "kind": "function",
-   "module": "src/world/backdrop/cranes.js",
+   "module": "src/content/backdrop/cranes.js",
    "doc": "按贴花名取（并缓存）贴花材质，同样带 paint_white 兜底",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Bc",
    "name": "CONTAINER_WIDTH",
    "kind": "const",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "集装箱外部宽度 2.438m（ISO 标准），集装箱生成器里所有横向尺寸都从它派生",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "_3",
    "name": "CONTAINER_SPECS",
    "kind": "table",
-   "module": "src/world/props/geometry.js",
+   "module": "src/content/props/geometry.js",
    "doc": "三种箱型的铭牌数据表（箱型代码、总重/皮重/净重、容积、默认漆色），共 3 条，用来生成门板上的 MAX GROSS / TARE / NET / CU.CAP. 铭牌",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "v1",
    "name": "CONTAINER_OWNER_CODES",
    "kind": "table",
-   "module": "src/world/props/geometry.js",
+   "module": "src/content/props/geometry.js",
    "doc": "6 个虚构箱主代号（SLTU/HBMU/…），按 seed 轮换印在箱门与侧板上，让堆场里的箱子看起来不重复",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "v3",
    "name": "CONTAINER_LOGO_DECALS",
    "kind": "table",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "4 个箱主 logo 贴花名，配给箱体非门侧那面",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "jg",
    "name": "CONTAINER_PAINT_COLORS",
    "kind": "table",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "8 种可用箱漆色名，用于随机上色与合法性校验（传入非法色名时回退到箱型默认色）",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Jt",
    "name": "CONTAINER_BODY_MATERIAL_KEY",
    "kind": "table",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "箱体的假材质键 {body:true}：整个箱体（波纹板、门、角柱）共用一个键才能合并成一个带顶点色的 Mesh，真正的漆材质在出实例时替换",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "IA",
    "name": "CONTAINER_VARIANT_COUNT",
    "kind": "const",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "磨损变体数 6：seed 取模后共 6 种几何缓存，兼顾多样性与内存",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "x3",
    "name": "CONTAINER_PARTS_CACHE",
    "kind": "const",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "集装箱零件缓存（材质库 → key → parts），key 由箱型/变体/开门角度/磨损档组成，同参数只建一次几何",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "y3",
    "name": "CORNER_BLOCK_LENGTH",
    "kind": "const",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "角件沿箱长方向的尺寸 0.178m，决定角柱与角件的贴合位置",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "bf",
    "name": "CORNER_BLOCK_HEIGHT",
    "kind": "const",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "上/下角件高度 0.118m，也是门框横档的基准高度",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "b3",
    "name": "CORNER_BLOCK_DEPTH",
    "kind": "const",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "角件沿箱宽方向的尺寸 0.162m，决定角柱离侧板的距离",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Uo",
    "name": "SIDE_CORRUGATION",
    "kind": "table",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "侧板压型参数 {节距 0.278, 深度 0.036, 平台 0.072, 斜坡 0.068}，集装箱侧壁波纹的唯一真源",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "x1",
    "name": "FRONT_CORRUGATION",
    "kind": "table",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "端门面压型参数（更密更浅的波纹），与侧板参数区分开才符合真实箱体",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "y1",
    "name": "ROOF_CORRUGATION",
    "kind": "table",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "顶板压型参数，波距更大、深度更浅",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "zA",
    "name": "buildContainerParts",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "生成一个集装箱的全部几何与碰撞盒：角件/角柱、三面波纹板（带凹陷与锈迹顶点色）、门板（可开到指定角度并带锁杆）、内衬与铭牌贴花；结果按参数缓存复用",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "M3",
    "name": "buildBasicContainer",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "集装箱实例化入口：查零件缓存 → 按色号挑漆材质（顶点色相乘）→ 组装 Group 并打上尺寸/碰撞盒元数据",
    "domain": "C-道具注册表与道具生成器",
    "oldName": "createContainer",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ca",
    "name": "getPropSize3",
    "kind": "function",
-   "module": "src/world/props/registry.js",
+   "module": "src/content/props/registry.js",
    "doc": "取道具注册表里的 [宽,高,深] 前三项，尺寸缺失时的统一读数口径",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "hn",
@@ -1742,118 +1742,118 @@
    "compressed": "S3",
    "name": "buildJerseyBarrier",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "新泽西混凝土隔离墩：12 点梯形剖面放样 + 凿痕/污渍/缺角顶点色、顶部吊装孔与反光片，可选黄色警示带；碰撞盒分成底座与墙体两段",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "w3",
    "name": "addFloodlightHead",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "在灯杆顶部装一只泛光灯头：外壳+发光面+散热鳍片+接线盒，按 yaw/tilt 定位，可复用成整排灯头",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "T3",
    "name": "buildLightMast",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "高杆灯：混凝土基座、8.6° 收分的锥形杆身、法兰螺栓、爬梯与顶部横梁挂 4 只泛光灯；把灯位写进 userData.lamps 供光照系统点亮",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "A3",
    "name": "buildFencePanel",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "3m 链网围栏单元：立柱、上下横管、轻微波浪的网面与顶部拉伸刺丝；posts/lean 参数控制单/双侧立柱与刺丝倾倒方向",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "R3",
    "name": "buildGuardBooth",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "岗亭：2.6×2.2m 带玻璃窗的板房，含窗框、窗台、屋顶飞檐、雨落管、桌面、显示器与「GATE CONTROL」铭牌，灯位写进 userData.lamps",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "C3",
    "name": "buildGateArm",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "道闸：机箱、可绕轴转动的起落杆（open 参数 0..1 控制角度）、红白相间反光段与配对立柱；抬起时补一段碰撞盒防止穿模",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "P3",
    "name": "buildMooringBollard",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "码头系船柱：双柱帽形回转体 + 锈蚀底座 + 螺栓，钢面用值噪声做出即将锈穿的斑驳",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "I3",
    "name": "buildBollardPost",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "1m 黄色警示立柱：分段圆柱，把两段反光带用深色顶点色标出来，顶部球头与四颗地脚螺栓固定",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Jg",
    "name": "SIGN_DECAL_NAMES",
    "kind": "table",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "6 个可贴在标志牌上的警示图标贴花名（危险/禁入/高压/泊位/箭头/易燃），作为随机取用的白名单",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "E3",
    "name": "SIGN_TEXTS",
    "kind": "table",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "5 条英文安全标语，标志牌下副牌文案的随机池",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "z3",
    "name": "buildSignPost",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "立式标志牌：混凝土墩+镀锌管、铝背板 + 主图标 + 副牌文字，带轻微歪斜与安装抱箍；牌面碰撞盒标了 bulletOnly，只挡子弹不挡人",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "D3",
    "name": "buildFloodlightStand",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "移动式泛光灯架：三脚架、可转动的双灯头与拖地电缆、沙袋压脚，灯位写入 userData.lamps",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "b1",
    "name": "getPropSize3Later",
    "kind": "function",
-   "module": "src/world/props/registry.js",
+   "module": "src/content/props/registry.js",
    "doc": "与 getPropSize3 完全等价的重复实现（打包按模块边界复制），供后半段道具生成器读取尺寸",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "wi",
@@ -1867,57 +1867,57 @@
    "compressed": "k3",
    "name": "buildMetalStairs",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "12 级钢楼梯：花纹板踏步 + 黄色防滑边条、两侧斜梁与扶手（含竖杆与弯头），逐级写碰撞盒，末端带一小段平台",
    "domain": "C-道具注册表与道具生成器",
    "oldName": "buildStairsMetal",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "F3",
    "name": "buildCatwalk",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "3m 走道板：格栅铺面（细密横条 + 纵向支撑）、边框、可选单/双侧黄色护栏与踢脚板，护栏段单独出碰撞盒",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "L3",
    "name": "addPalletDeck",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "在一个位置上拼出标准木托盘的上中下三层板条与垫块，货架上的货垛底座复用它",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "DA",
    "name": "addShelfLoad",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "往货架层上码货：四种载荷形态（纸箱垛 / 缠膜托盘 / 四只化工桶 / 叠托盘），带贴花与薄膜缠绕细节",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "U3",
    "name": "buildShelfRack",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "重型横梁式货架：橙色立柱 + 三层层梁 + 镀锌格栅与层板，每层两侧随机摆放载荷形态，并贴 BAY/MAX 2000 KG 铭牌",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "N3",
    "name": "buildReeferUnit",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "冷藏箱机组：白色外壳、双风扇格栅、压缩机与铜管、控制面板指示灯、电源电缆与排水管；flip 参数决定机组朝向，装在集装箱端面",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "es",
@@ -1931,37 +1931,37 @@
    "compressed": "Kg",
    "name": "RELAY_COLOR_LIVE",
    "kind": "const",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "中继节点「通电」状态的青色电光颜色，是任务目标的常态色",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "LA",
    "name": "RELAY_COLOR_CUT",
    "kind": "const",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "中继节点「已切断」状态的余烬橙色，切断后先闪几下再熄灭",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "kA",
    "name": "RELAY_COLOR_CUTTING",
    "kind": "const",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "「正在被切断」时的爆闪色（偏白），与电弧闪烁频率一起构成切割反馈",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "B3",
    "name": "buildRelayNode",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "任务目标中继柜：配电柜体+可开合检修门+接线端子与线缆、三脚桁架天线与避雷针；暴露 setState/update 做 live→cutting→cut 的电光与散热风扇动画，是三个 uplink 目标的实体",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "At",
@@ -2007,244 +2007,244 @@
    "compressed": "Mf",
    "name": "createGeometryFromArrays",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "用裸数组直接组装 BufferGeometry；法线缺失时自动计算，是后半段所有手写几何的收口函数",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "us",
    "name": "revolveProfileGeometry",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "把 [半径, 高度] 剖面绕 Y 轴旋成回转体（油桶、气瓶、线缆盘、轮胎断面都靠它），自带沿剖面的弧长 UV",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ge",
    "name": "roundedBoxGeometry",
    "kind": "function",
-   "module": "src/world/props/detail-geometry.js",
+   "module": "src/content/props/detail-geometry.js",
    "doc": "圆角方块（8 角各 3 顶点，廉价倒角）；后半段道具默认的箱体基元，比纯 BoxGeometry 更有工业感",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "eo",
    "name": "roundedBoxGeometryGrid",
    "kind": "function",
-   "module": "src/world/props/detail-geometry.js",
+   "module": "src/content/props/detail-geometry.js",
    "doc": "带细分的圆角方块：用 BoxGeometry 顶点位移做出可被噪声扰动的圆角箱体（纸箱、篷布下的木箱、叉车机罩）",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "to",
    "name": "mapVertices",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "遍历顶点施加变形回调并回写，是所有「程序化揉形状」的入口",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "gr",
    "name": "recomputeSmoothNormals",
    "kind": "function",
-   "module": "src/world/props/detail-geometry.js",
+   "module": "src/content/props/detail-geometry.js",
    "doc": "按位置哈希合并重复顶点后求平均法线：顶点变形之后必须重算，否则倒角处会出现断裂的高光",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "M1",
    "name": "flipGeometryWinding",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "翻转三角绕序与法线，用来把一个几何反向成内侧/背面（篷布内壁、管道内壁）",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ev",
    "name": "removeGeometryGroup",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "按 group 索引删掉一段三角面（并修正后续 group 的 start 偏移），用于把箱体的某一面挖掉做开口",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "O3",
    "name": "TEMP_QUAT_B",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的四元数，createCylinderBetween 的朝向计算载体",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "FA",
    "name": "UP_AXIS_VECTOR",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "常量 (0,1,0)：所有「两点之间拉一根柱子」都用它做起始朝向",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "_1",
    "name": "TEMP_DIR_B",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的方向向量",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "H3",
    "name": "TEMP_MATRIX_B",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的 4x4 矩阵",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "vn",
    "name": "createCylinderBetween",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "在两点之间生成一根圆柱（可两端不同半径、可封口），栏杆、管件、螺栓全靠它，避免手动算角度",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Mo",
    "name": "createHollowPolygonExtrusion",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "把闭合二维多边形沿 Z 挤出成空心环带（可选倒角、封盖），用来做托盘垫块、箱盖、货箱翼板这类薄壁件",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "vr",
    "name": "createRibbonFromPolyline",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "沿三维折线生成有宽度的双面扁带：篷布绑带、开箱胶带、钢丝绳、垫片都用它",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "_f",
    "name": "createDecalPlane",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "贴花/铭牌专用的平面四边形（不投阴影），后半段装配器的 decal/label 全部基于它",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "UA",
    "name": "createCurvedDecalQuad",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "沿圆柱面弯曲的贴花四边形：贴在油桶、气瓶这种圆弧面上才不会被拉伸或切到表面",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ja",
    "name": "createTorusGeometryWorldUV",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "UV 按世界尺寸展开的圆环（卡箍、吊环、轮胎侧壁的钢丝圈）",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Y3",
    "name": "createSphereGeometryWorldUV",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "UV 按世界尺寸展开的球（线缆末端、球头手柄）",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "NA",
    "name": "bakeVertexColorTint",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "把色调（常数或回调）烘进顶点色属性：单个材质就能表现脏/旧/湿的差异，是控制道具 draw call 的关键手段",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "V3",
    "name": "PAINT_COLOR_ALIASES",
    "kind": "table",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "11 条漆色别名到「材质名 + 顶点色乘子」的映射（含 rust/black/olive 这类复合色），道具统一按别名取漆",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ja",
    "name": "resolvePaintColorAlias",
    "kind": "function",
-   "module": "src/world/level/buildings.js",
+   "module": "src/content/level/buildings.js",
    "doc": "查漆色别名，未知别名回退到调用方给的默认色，保证 e.color 传错也不炸",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "pI",
    "name": "TEMP_MATRIX_C",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的 4x4 矩阵（装配器变换缓存）",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "W3",
    "name": "TEMP_QUAT_C",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的四元数",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "G3",
    "name": "TEMP_EULER_C",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的欧拉角",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "q3",
    "name": "TEMP_POS_C",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的位置向量",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Qg",
    "name": "TEMP_SCALE_C",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的缩放向量",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "BA",
@@ -2259,556 +2259,556 @@
    "compressed": "Kn",
    "name": "PropAssembler",
    "kind": "class",
-   "module": "src/world/props/detail-geometry.js",
+   "module": "src/content/props/detail-geometry.js",
    "doc": "第二代道具装配器：矩阵栈 push/pop、按材质+是否投影分桶、add/decal/label/cdecal 语法糖；finish() 时合并几何并按噪声+朝上程度统一施加脏污顶点色，最后写尺寸与碰撞盒",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "X3",
    "name": "ASSEMBLER_GEOMETRY_CACHE",
    "kind": "const",
-   "module": "src/world/props/registry.js",
+   "module": "src/content/props/registry.js",
    "doc": "道具几何缓存：同 key 的整件道具只生成一次，后续一律 clone，是堆场大量重复道具不卡的关键",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "wf",
    "name": "buildCachedPropClone",
    "kind": "function",
-   "module": "src/world/props/registry.js",
+   "module": "src/content/props/registry.js",
    "doc": "按 key 取缓存的道具并深拷贝，未命中时调用工厂生成后缓存",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "j3",
    "name": "smoothstepRangeAlt",
    "kind": "const",
-   "module": "src/world/props/geometry.js",
+   "module": "src/content/props/geometry.js",
    "doc": "smoothstepRange 的重复实现（按模块边界复制），塑料桶液面渐变的过渡曲线",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "$3",
    "name": "createPlaneGeometryOffsetUV",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "UV 整体平移的平面：让木箱各面的木纹贴图错开，避免同一块面重复得一眼看出来",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "w1",
    "name": "FACE_ROTATIONS",
    "kind": "table",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "四个水平朝向（+Z/-Z/+X/-X）的欧拉角表，箱体贴面/贴花按面取角度",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "OA",
    "name": "barrelProfile",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "200L 油桶的回转剖面（含两圈加强箍），open 时给出开口桶沿的剖面",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "HA",
    "name": "buildBarrel",
    "kind": "function",
-   "module": "src/world/props/detail-geometry.js",
+   "module": "src/content/props/detail-geometry.js",
    "doc": "钢桶：旋成桶身 + 随机凹坑 + 桶盖/呼吸阀 + 危险品与 UN 编号贴花；lying 参数把桶放倒（碰撞盒同步改尺寸），rust 色额外跳过贴花",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "S1",
    "name": "addEuroPallet",
    "kind": "function",
-   "module": "src/world/props/detailed-builders.js",
+   "module": "src/content/props/detailed-builders.js",
    "doc": "EUR 标准木托盘：三根纵梁 + 9 个垫块 + 上下板条 + 侧面 EUR 烙印，随机微位移制造手工感，broken 时缺一块板条",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "VA",
    "name": "buildPallet",
    "kind": "function",
-   "module": "src/world/level/buildings.js",
+   "module": "src/content/level/buildings.js",
    "doc": "单只木托盘道具，委托 addEuroPallet 生成",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "WA",
    "name": "buildPalletStack",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "叠放托盘垛（1..12 只，默认 8）：每层随机偏转与错位，中间层可能缺板条，最上层带倒角",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "E1",
    "name": "addWoodCrateBody",
    "kind": "function",
-   "module": "src/world/props/detailed-builders.js",
+   "module": "src/content/props/detailed-builders.js",
    "doc": "板条木箱的通用构造：滑木 + 内衬箱体 + 四周板条（带缝隙与色差）+ 角部护铁 + FRAGILE/编号铭牌与箭头，木箱与其堆垛共用",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "GA",
    "name": "buildCrateWood",
    "kind": "function",
-   "module": "src/world/props/detailed-builders.js",
+   "module": "src/content/props/detailed-builders.js",
    "doc": "单只出口板条木箱，按 seed 轮换警示语与批次编号",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "qA",
    "name": "buildCrateStack",
    "kind": "function",
-   "module": "src/world/props/detailed-builders.js",
+   "module": "src/content/props/detailed-builders.js",
    "doc": "三层木箱堆垛：两只大箱错位叠放 + 顶端小箱，外侧用两条橙色打包带沿箱体轮廓缠绕",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "XA",
    "name": "buildIbcTote",
    "kind": "function",
-   "module": "src/world/props/detailed-builders.js",
+   "module": "src/content/props/detailed-builders.js",
    "doc": "1000L IBC 吨桶：镀锌托盘/笼架、半透明塑料内胆（带液面高度与鼓胀）、红色桶盖与提手、侧面危险品与 IBC 1000 L 铭牌",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Z3",
    "name": "createCableReelDiscGeometries",
    "kind": "function",
-   "module": "src/enemies/models.js",
+   "module": "src/content/models/enemies.js",
    "doc": "线缆盘木侧板的扇形拼板几何：把圆盘切成 9 瓣并给每瓣随机 UV 偏移，做出木板拼接而不是整圆",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "YA",
    "name": "buildCableReel",
    "kind": "function",
-   "module": "src/world/props/detailed-builders.js",
+   "module": "src/content/props/detailed-builders.js",
    "doc": "电缆盘：双面木侧板 + 内筒 + 缠绕的橡胶电缆（带外露线头）+ 地脚垫木与规格铭牌",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "tv",
    "name": "createTireProfileGeometry",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "轮胎断面回转几何：带胎肩圆角与两道花纹槽的剖面，UV 沿胎面展开",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "$A",
    "name": "buildTireStack",
    "kind": "function",
-   "module": "src/world/props/detailed-builders.js",
+   "module": "src/content/props/detailed-builders.js",
    "doc": "叠放轮胎（1..5 只）：每只随机转动，胎面用噪声做深浅，落地接触区压暗",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ZA",
    "name": "buildJerryCan",
    "kind": "function",
-   "module": "src/world/props/detailed-builders.js",
+   "module": "src/content/props/detailed-builders.js",
    "doc": "20L 军用油桶：圆角桶体 + 三条提手 + 侧面 X 形加强筋 + 注油口，带易燃标志贴花",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "jA",
    "name": "buildTrafficCone",
    "kind": "function",
-   "module": "src/world/props/detailed-builders.js",
+   "module": "src/content/props/detailed-builders.js",
    "doc": "交通锥：黑色橡胶底座 + 收分锥体，红白反光带用不同材质分段实现；lying 参数把锥放倒并换碰撞盒尺寸",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "JA",
    "name": "buildGasCylinders",
    "kind": "function",
-   "module": "src/world/props/detailed-builders.js",
+   "module": "src/content/props/detailed-builders.js",
    "doc": "三只工业气瓶立在有防滑板与护栏的支架里：瓶身/肩部/瓶阀分别配色，随机气种铭牌与瓶体环箍，配链条与减压阀",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "KA",
    "name": "buildPipeStack",
    "kind": "function",
-   "module": "src/world/props/detailed-builders.js",
+   "module": "src/content/props/detailed-builders.js",
    "doc": "钢管堆：木枕木上三层（4+3+2）错位排布的锈蚀钢管，两端开口带内壁，两端装钢挡架，附 API 5L 规格铭牌",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "J3",
    "name": "registerDetailedProps",
    "kind": "function",
-   "module": "src/world/props/detailed-builders.js",
+   "module": "src/content/props/detailed-builders.js",
    "doc": "把油桶/托盘/木箱/吨桶/线缆盘/轮胎/油桶/锥/气瓶/钢管这批用 PropAssembler 写的道具登记进注册表，可重复变体的按参数拼 key 走缓存",
    "domain": "C-道具注册表与道具生成器",
    "oldName": "registerLoftedProps",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Q3",
    "name": "smoothstepRangeAlt2",
    "kind": "const",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "smoothstepRange 的又一份模块内副本，用于纸箱受潮程度的分界过渡",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "nv",
    "name": "createPlaneGeometryOffsetUVAlt",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "与 createPlaneGeometryOffsetUV 等价的重复实现，纸箱各面贴图错位用",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "QA",
    "name": "buildTarpCargo",
    "kind": "function",
-   "module": "src/world/props/character-builders.js",
+   "module": "src/content/props/character-builders.js",
    "doc": "盖篷布的托盘货垛：托盘上四块高低不一的木箱把篷布顶成起伏曲面，篷布网格带褶皱/雨积水噪声、四周垂边与压绳，边角挂钢扣",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "eR",
    "name": "createSandbagGeometry",
    "kind": "function",
-   "module": "src/world/props/basic-builders.js",
+   "module": "src/content/props/basic-builders.js",
    "doc": "单只沙袋几何：圆角方块去顶盖后做「中间鼓、两端收、底面压扁」的变形，再叠值噪声做布褶",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "tR",
    "name": "buildSandbags",
    "kind": "function",
-   "module": "src/world/props/character-builders.js",
+   "module": "src/content/props/character-builders.js",
    "doc": "沙袋墙：交错层叠（偶数层 3 只、奇数层 5 只顺砌），每只随机尺寸/颜色/微倾，两侧补上缝合边，顶层扣掉一只留缺口",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "K3",
    "name": "SANDBAG_MATERIAL",
    "kind": "table",
-   "module": "src/world/props/character-builders.js",
+   "module": "src/content/props/character-builders.js",
    "doc": "沙袋布材质配置（glove_fabric + 卡其色），复用帆布手套的织物着色",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Oc",
    "name": "addCardboardBox",
    "kind": "function",
-   "module": "src/world/props/character-builders.js",
+   "module": "src/content/props/character-builders.js",
    "doc": "单只纸箱：可选压溃/受潮顶点色、开箱（掀盖+外翻四片）、封箱胶带、贴纸铭牌与「此面朝上」箭头，是纸箱堆的基础件",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "nR",
    "name": "buildCardboardBoxes",
    "kind": "function",
-   "module": "src/world/props/character-builders.js",
+   "module": "src/content/props/character-builders.js",
    "doc": "散堆纸箱道具：7 只大小不一的纸箱随机倾倒叠在一起，混合压溃、开箱、受潮三种状态",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "eb",
    "name": "registerCharacterProps",
    "kind": "function",
-   "module": "src/world/props/character-builders.js",
+   "module": "src/content/props/character-builders.js",
    "doc": "登记篷布货垛、沙袋墙、散堆纸箱这三种软体/纸制品道具",
    "domain": "C-道具注册表与道具生成器",
    "oldName": "registerFabricProps",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "tb",
    "name": "TEMP_QUAT_D",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的四元数，createRoundedBeamBetween 的朝向计算载体",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "iR",
    "name": "UP_AXIS_VECTOR_B",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "常量 (0,1,0) 的第二份副本",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "T1",
    "name": "TEMP_DIR_C",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的方向向量",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "nb",
    "name": "TEMP_MATRIX_D",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "复用的 4x4 矩阵",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "zr",
    "name": "createRoundedBeamBetween",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "在两点之间生成一根带圆角的方梁（可退化成硬边方料）：叉车护顶架、垃圾桶加强筋这类方截面杆件都靠它",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "sR",
    "name": "ensurePolygonCCW",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "按有向面积判断并统一多边形绕序为逆时针，挤出函数要求输入方向一致",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ib",
    "name": "addForkliftWheel",
    "kind": "function",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "装一只叉车轮：轮胎断面回转体 + 黄色轮辋 + 轮毂螺栓，按 ±side 决定轴向；第十个参数在源码中未使用",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "oR",
    "name": "buildForklift",
    "kind": "function",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "平衡重叉车：四轮、配重、护顶架、座椅与方向盘、机罩、可升降的门架与货叉（forksUp 控制举升高度）、侧贴编号与 SALTLINE 标识",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "rR",
    "name": "buildGenerator",
    "kind": "function",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "柴油发电机组：底架油箱、带百叶散热窗的机罩、控制面板（指示灯/急停/插座）、排气管与消声器，带 GEN-01 铭牌与油渍",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "aR",
    "name": "buildDumpster",
    "kind": "function",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "工业垃圾箱：梯形箱体（环带挤出）+ 加强筋、一对盖板、四只脚轮、箱内探出的垃圾袋与纸板，侧面留污渍与泄漏痕",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "lR",
    "name": "buildToolboxCart",
    "kind": "function",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "维修工具车：五层抽屉（其中一层半开并露出工具）、铝把手、万向轮，台面上散放扳手/螺丝刀/油壶/手套，带 MAINT 铭牌",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "sb",
    "name": "registerCargoProps",
    "kind": "function",
-   "module": "src/world/props/cargo-builders.js",
+   "module": "src/content/props/cargo-builders.js",
    "doc": "登记叉车、发电机、垃圾箱、工具车这四件大型可交互感道具",
    "domain": "C-道具注册表与道具生成器",
    "oldName": "registerIndustrialProps",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "cv",
    "name": "PROPS_MODULE_EXPORTS",
    "kind": "table",
-   "module": "src/world/props/registry.js",
+   "module": "src/content/props/registry.js",
    "doc": "第二组道具模块的导出命名空间（create→C1 主工厂、showcase→mR 陈列预览），与前半段的 $g 同一约定，供自由变量分析生成 import/export",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "cR",
    "name": "NO_COLLIDER_PROPS",
    "kind": "const",
-   "module": "src/world/level/buildings.js",
+   "module": "src/content/level/buildings.js",
    "doc": "不需要物理碰撞的道具白名单（交通锥、油桶体积小、踩过去无妨），关卡布置时跳过碰撞体生成",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ob",
    "name": "createLevelKit",
    "kind": "function",
-   "module": "src/world/level/buildings.js",
+   "module": "src/content/level/buildings.js",
    "doc": "关卡布置工具箱：提供静态/动态两个根节点与 add/box/slab/cyl/tube/rod/ibeam/quad/decal/label 造型语法、col 手动碰撞、place 摆道具并自动登记碰撞与 updater、stairs/catwalk 专用摆放、stack 集装箱堆叠（自动叠高、可带冷机）、isMetal 金属区查询",
    "domain": "C-道具注册表与道具生成器",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Dr",
    "name": "LABEL_ATLAS_GUTTER",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "铭牌图集每张贴图四周保留的像素边距，防止 mipmap 采样时相邻铭牌互相串色",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "rb",
    "name": "buildLabelAtlas",
    "kind": "function",
-   "module": "src/world/level/buildings.js",
+   "module": "src/content/level/buildings.js",
    "doc": "把场景里所有 name='label' 的铭牌贴图重排进一张 canvas 图集并改写各网格 UV，把几十次铭牌绘制压成一次；失败时返回空句柄让调用方静默跳过",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "no",
    "name": "SHED_BOUNDS",
    "kind": "table",
-   "module": "src/world/level/buildings.js",
+   "module": "src/content/level/buildings.js",
    "doc": "修理车间（BERTH 4 WORKSHOP）的平面与剖面尺寸：墙体 x/z 范围、檐口与屋脊高度、屋脊 z、地坪厚度，整栋建筑的唯一定义源",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "No",
    "name": "SHED_BAY_XS",
    "kind": "table",
-   "module": "src/world/level/buildings.js",
+   "module": "src/content/level/buildings.js",
    "doc": "车间沿 x 方向的 6 道墙板分格线，同时是抗风柱、屋架与地坪分段的参照点",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "yt",
    "name": "SHED_DOOR_OPENING",
    "kind": "table",
-   "module": "src/world/level/buildings.js",
+   "module": "src/content/level/buildings.js",
    "doc": "车间南墙卷帘门洞的 x 区间与门高，墙板铺装时在此挖空",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Yt",
    "name": "SHED_WINDOW_OPENING",
    "kind": "table",
-   "module": "src/world/level/buildings.js",
+   "module": "src/content/level/buildings.js",
    "doc": "车间东墙采光窗洞的 z 区间与窗高",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "iv",
    "name": "SHED_SKYLIGHT_HOLES",
    "kind": "table",
-   "module": "src/world/backdrop/sky.js",
+   "module": "src/content/backdrop/sky.js",
    "doc": "屋面天窗开洞表（南北坡、坡带序号、列序号共 8 处）；铺瓦楞板时跳过这些格子，并在洞下补漏痕贴花与滴水痕迹",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "A1",
    "name": "ROOF_BAND_FRACTIONS",
    "kind": "table",
-   "module": "src/world/level/buildings.js",
+   "module": "src/content/level/buildings.js",
    "doc": "屋面沿坡长方向的分带比例（0=屋脊，1=檐口），决定天窗与屋面檩条的分段位置",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "sv",
    "name": "ROOF_COLUMN_COUNT",
    "kind": "const",
-   "module": "src/world/level/buildings.js",
+   "module": "src/content/level/buildings.js",
    "doc": "屋面沿车间长度方向切分的列数，逐格铺屋面板并按 SHED_SKYLIGHT_HOLES 挖洞",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ab",
    "name": "buildWorkshopShed",
    "kind": "function",
-   "module": "src/world/level/buildings.js",
+   "module": "src/content/level/buildings.js",
    "doc": "搭建 BERTH 4 修理车间：瓦楞墙板与屋面、卷帘门、通风机、吊灯、货架与地面杂物，返回天窗矩形、室内灯光与中继节点位置",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Hc",
    "name": "makeStaticGroup",
    "kind": "function",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "在静态根节点下建一个带位移与朝向的空组，作为多部件道具（货架、叉车、板垛等）的装配锚点",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Rn",
    "name": "addRoundedBox",
    "kind": "function",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "往父节点上挂一块可倒圆角的板件；墙板、柱脚、横梁、小箱件全用它拼，倒角参数统一由调用方给",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ov",
    "name": "addCylinderMesh",
    "kind": "function",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "往父节点上挂一根圆柱（管、杆、罐体、轮盘），统一处理分段数、旋转与轴向对齐",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "rv",
@@ -2823,190 +2823,190 @@
    "compressed": "Ka",
    "name": "buildMeshCage",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "用角钢立柱、顶横梁和 chainlink 网片拼出的 2.2×1.25×1.2 m 笼式储物箱，配锈斑与磨损贴片，码头和堆场用它填充零散货位",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Qa",
    "name": "buildSkipBin",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "1.1×0.8×0.75 m 开口废料斗：角钢骨架、顶沿加强、内部深色底，四周散布凹痕，堆场与码头通用道具",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ef",
    "name": "buildRebarBundle",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "枕木上分层码放并捆扎的细钢筋/管束（3.4 m 长，9 根），用低廉面数在堆场角落补出工地质感",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "e0",
    "name": "buildWheelChock",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "橡胶三角挡轮块，斜面贴黄色反光条；摆在叉车与货车轮胎下，暗示车辆是作业中而非摆设",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Sf",
    "name": "buildLaneSignpost",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "行车道指示牌：镀锌立杆 + 黄底模版字标牌（LANE 1/2/3），带碰撞盒，用来给堆场分区命名",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "av",
    "name": "buildPlateStack",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "枕木上分层堆叠的 10.4×4.2 m 板料垛（每层带吊装缺口、黄色护角与橡胶挡边），返回垛高供上层堆叠",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Lr",
    "name": "buildCableRun",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "沿二维折线铺软管/电缆，跨度大于 2.2 m 时自动插点加垂坠和横向摆动，让地面线缆看起来是自然摊开的",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "lv",
    "name": "buildUtilityStandpipe",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "混凝土底板上立起的灰色设备柱（给水/消防立管），正面贴黄黑警示条，配碰撞盒",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "lb",
    "name": "QUAY_DIMS",
    "kind": "table",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "码头平台的关键尺寸：岸沿 x、舷梯 z、两条门机轨道 x、平台 z 范围",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "cb",
    "name": "buildQuayApron",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "搭建码头岸沿：混凝土护面与墙身、门机轨道、系缆桩、舷梯、靠泊轮胎护舷与栏杆，返回中继节点与撤离点",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "uR",
    "name": "PI",
    "kind": "const",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "π 常量，布置表里用来表达整圈朝向",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ts",
    "name": "HALF_PI",
    "kind": "const",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "π/2；布置表里绝大多数道具的直角朝向都取它",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "R1",
    "name": "FORKLIFT_FORK_Y",
    "kind": "const",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "叉车货叉举升高度（0.535 m），托盘与木箱按此高度摆放成被叉起的状态",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "mt",
    "name": "vec3",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "布置表里随手构造 Vector3 的简写别名",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "hR",
    "name": "placeYardLayout",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "堆场布置表：集装箱堆位、灯柱、围挡、杂物与地面标线的 place/stack 调用清单，是把美术意图落成坐标的地方",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "fR",
    "name": "placeGateArea",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "大门与围栏区布置：铁丝网围栏（带门洞）、道闸、门卫房、隔离墩与指示牌",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "C1",
    "name": "createLevel",
    "kind": "function",
-   "module": "src/world/level/level.js",
+   "module": "src/content/level/level.js",
    "doc": "装配整张关卡：建建筑/码头/堆场，合并静态网格、换合批材质、建标签图集，产出出生点、任务点、敌人刷新点、分区、掩体与演出数据",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "dR",
    "name": "hasNoMergeAncestor",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "沿父链检查是否存在 noMerge 标记，判断该节点能否被静态合批吞掉（动态件必须留在 dynRoot）",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "pR",
    "name": "countMeshes",
    "kind": "function",
-   "module": "src/world/level/placement.js",
+   "module": "src/content/level/placement.js",
    "doc": "递归统计子树网格数，用于关卡载入时的性能统计",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "mR",
    "name": "showcaseLevel",
    "kind": "function",
-   "module": "src/world/level/level.js",
+   "module": "src/content/level/level.js",
    "doc": "关卡模块的展示入口：只建关不跑游戏，返回固定机位与更新函数，供美术单独看结构",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "mv",
    "name": "backdropModule",
    "kind": "table",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "背景（远景）模块注册表，用 getter 惰性暴露 create/showcase 两个入口",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "_t",
@@ -3131,388 +3131,388 @@
    "compressed": "io",
    "name": "MeshBatcher",
    "kind": "class",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "按材质归并几何体的批处理器：先攒后一次性合并，把上千个小件压成几十个 draw call；支持材质重映射、整体平移和最小尺寸剔除（远景只保留大块）",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ee",
    "name": "boxFromBounds",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "用两个对角点描述一个方盒几何，是整套结构装配最常用的写法（可直接给出局部坐标区间）",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "xt",
    "name": "cylinderFromAxis",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "沿 x/y/z 轴摆放的圆柱/圆盘几何，省去每次手写旋转",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ke",
    "name": "strutBetween",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "两点之间生成一根圆柱杆件（栏杆、桁架、拉索），自动求朝向与长度",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "jt",
    "name": "beamBetween",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "两点之间生成一根可带锥度的方截面梁（斜撑、箱型杆），用于桁架与结构斜撑",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "kr",
    "name": "strutsAlongPath",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "把一串点连成连续杆件数组，一次性交给批处理器，用于管线与弯曲钢筋",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ua",
    "name": "catenaryPoints",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "在两点间生成带垂坠的控制点（抛物线近似），给电缆、缆绳做出自然下垂",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ll",
    "name": "planeAt",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "建一个已定位定向的平面片，专用于贴标牌、贴花与窗面",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ns",
    "name": "addRailing",
    "kind": "function",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "沿折线加整套栏杆（立柱 + 上下横杆 + 可选中杆），按间距自动分柱，桥吊与船体的防护栏统一走它",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "pb",
    "name": "createBlinkerBatch",
    "kind": "function",
-   "module": "src/world/backdrop/geometry.js",
+   "module": "src/content/backdrop/geometry.js",
    "doc": "把所有闪烁灯具收进一批（顶点属性记录周期/相位），用固定着色器统一驱动明灭，避免几十个独立灯对象",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Bn",
    "name": "makeBeaconGeo",
    "kind": "function",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "一个八面体小球，用作航空障碍灯/警示灯灯头，给定坐标即生成",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Bt",
    "name": "CRANE_PORTAL_X0",
    "kind": "const",
-   "module": "src/world/backdrop/cranes.js",
+   "module": "src/content/backdrop/cranes.js",
    "doc": "岸桥第一排支腿的 x 坐标（与码头轨道对齐）",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "is",
    "name": "CRANE_PORTAL_X1",
    "kind": "const",
-   "module": "src/world/backdrop/cranes.js",
+   "module": "src/content/backdrop/cranes.js",
    "doc": "岸桥第二排支腿的 x 坐标，两排间距由轨道决定，不可随意改",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Di",
    "name": "CRANE_PORTAL_HALF_Z",
    "kind": "const",
-   "module": "src/world/backdrop/cranes.js",
+   "module": "src/content/backdrop/cranes.js",
    "doc": "岸桥门架沿 z 方向的半跨（支腿 z 偏移），决定横梁与梯子位置",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "fv",
    "name": "CRANE_GIRDER_Y0",
    "kind": "const",
-   "module": "src/world/backdrop/cranes.js",
+   "module": "src/content/backdrop/cranes.js",
    "doc": "岸桥主梁下弦高度",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ai",
    "name": "CRANE_GIRDER_Y1",
    "kind": "const",
-   "module": "src/world/backdrop/cranes.js",
+   "module": "src/content/backdrop/cranes.js",
    "doc": "岸桥主梁上弦高度，与下弦一起围出主梁箱型断面",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "On",
    "name": "CRANE_BOOM_HALF_Z",
    "kind": "const",
-   "module": "src/world/backdrop/cranes.js",
+   "module": "src/content/backdrop/cranes.js",
    "doc": "岸桥臂架/大梁沿 z 方向的半宽，决定轨道与栏杆的横向位置",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "wo",
    "name": "CRANE_BOOM_X0",
    "kind": "const",
-   "module": "src/world/backdrop/cranes.js",
+   "module": "src/content/backdrop/cranes.js",
    "doc": "岸桥臂架（悬臂）起点 x，往岸内侧到这条线为止",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Xi",
    "name": "CRANE_BOOM_X1",
    "kind": "const",
-   "module": "src/world/backdrop/cranes.js",
+   "module": "src/content/backdrop/cranes.js",
    "doc": "岸桥臂架外伸末端 x，伸到水面之上；臂架端部的灯、栏杆、检修平台都以此为准",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ks",
    "name": "CRANE_HOUSE_X",
    "kind": "const",
-   "module": "src/world/backdrop/cranes.js",
+   "module": "src/content/backdrop/cranes.js",
    "doc": "岸桥机房（贴 SALTLINE 04 铭牌的白色小室）所在 x，吊具从它下方垂到舱口",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "wn",
    "name": "TINT_PANEL",
    "kind": "table",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "浅灰面板的顶点色偏移三元组（RGB 通道各不同，制造冷暖层次），岸桥大面板通用",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ms",
    "name": "TINT_PANEL_DARK",
    "kind": "table",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "深灰/背光面的顶点色偏移三元组，用来区分主梁的框与板",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "En",
    "name": "TINT_YELLOW",
    "kind": "table",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "黄色漆面（栏杆、护边）的顶点色偏移，让同一材质的护栏有轻微深浅变化",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "cl",
    "name": "TINT_WHITE",
    "kind": "table",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "白色漆面（机房外墙、舷窗框）的顶点色偏移",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "z1",
    "name": "buildQuayCrane",
    "kind": "function",
-   "module": "src/world/backdrop/cranes.js",
+   "module": "src/content/backdrop/cranes.js",
    "doc": "搭建 4 支腿岸桥（SALTLINE 04）：门架、主梁、臂架、机房、走梯、检修平台、灯具与吊具，返回根节点、碰撞盒与吊具对象；带 into 选项时只往外部批处理器灌几何（远景用）",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "mb",
    "name": "buildDistantCrane",
    "kind": "function",
-   "module": "src/world/backdrop/cranes.js",
+   "module": "src/content/backdrop/cranes.js",
    "doc": "极简版门式起重机剪影（只有箱型轮廓，无细节），用缩放与朝向做成远处集装箱码头的成排岸桥，返回臂架端高度以便挂障碍灯",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "rt",
    "name": "SHIP_CENTER_X",
    "kind": "const",
-   "module": "src/world/backdrop/ships.js",
+   "module": "src/content/backdrop/ships.js",
    "doc": "KITTIWAKE 号货船的中纵剖面 x，船体所有剖面点都以它为中线",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "vR",
    "name": "SHIP_HALF_BEAM",
    "kind": "const",
-   "module": "src/world/backdrop/ships.js",
+   "module": "src/content/backdrop/ships.js",
    "doc": "船体中段最大半宽（型宽一半），舷侧曲线在此处达到最宽",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Eo",
    "name": "SHIP_STERN_Z",
    "kind": "const",
-   "module": "src/world/backdrop/ships.js",
+   "module": "src/content/backdrop/ships.js",
    "doc": "船尾所在的 z；船体沿 -z 方向从船尾延伸到船首",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "qn",
    "name": "SHIP_LENGTH",
    "kind": "const",
-   "module": "src/world/backdrop/ships.js",
+   "module": "src/content/backdrop/ships.js",
    "doc": "船体总长（沿 z 的站号终值），船体放样、栏杆、舱盖与编号全靠它定位",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "xR",
    "name": "SHIP_KEEL_Y",
    "kind": "const",
-   "module": "src/world/backdrop/ships.js",
+   "module": "src/content/backdrop/ships.js",
    "doc": "船舯处龙骨（船底）的 y，作为横剖面曲线的底部起点",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Fs",
    "name": "SHIP_DECK_Y",
    "kind": "const",
-   "module": "src/world/backdrop/ships.js",
+   "module": "src/content/backdrop/ships.js",
    "doc": "主甲板高度 y；甲板上的集装箱、舱盖、桅杆都以它为基准",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Vc",
    "name": "SHIP_WATERLINE_Y",
    "kind": "const",
-   "module": "src/world/backdrop/ships.js",
+   "module": "src/content/backdrop/ships.js",
    "doc": "设计水线高度 y，吃水与护舷、系缆设备都相对它布置",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "gb",
    "name": "smoothstep01",
    "kind": "function",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "区间归一化 + smoothstep 的小工具，用于船体舷弧的平滑过渡",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "yR",
    "name": "deckSheerRise",
    "kind": "function",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "舷弧：船首与船尾甲板相对中段抬高的量（两端各一项二次曲线），让船体侧影不是一条直板",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "hs",
    "name": "deckHeightAt",
    "kind": "function",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "给定站号返回甲板高度（基高 + 舷弧）",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Tf",
    "name": "bulwarkHeightAt",
    "kind": "function",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "给定站号返回甲板以上舷墙高度；船首尾处降到 0，用来让舷墙自然收头",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Bo",
    "name": "bulwarkTopAt",
    "kind": "function",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "给定站号返回舷墙顶高度（甲板高度 + 舷墙高度），栏杆与系缆设备的落点",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "bR",
    "name": "SHIP_STERN_TOP_Y",
    "kind": "const",
-   "module": "src/world/backdrop/ships.js",
+   "module": "src/content/backdrop/ships.js",
    "doc": "船尾舷墙顶高度，作为船体放样时首尾收束的基准值",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "fn",
    "name": "hullPoint",
    "kind": "function",
-   "module": "src/world/backdrop/ships.js",
+   "module": "src/content/backdrop/ships.js",
    "doc": "船体放样函数：给（站号、高度、左右舷）返回船壳表面点；宽度沿船长按 sin 幂次收束，是整条船几何的唯一真源",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ha",
    "name": "hullNormal",
    "kind": "function",
-   "module": "src/world/backdrop/ships.js",
+   "module": "src/content/backdrop/ships.js",
    "doc": "用有限差分数值求船壳表面法线并翻向船外，供外板、贴花、栏杆偏移使用",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ul",
    "name": "hullPatchGeo",
    "kind": "function",
-   "module": "src/enemies/models.js",
+   "module": "src/content/models/enemies.js",
    "doc": "在船壳参数网格上贴出贴合曲面的补片（船名、锈痕、水线漆），自动沿法线外推避免 z-fighting",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "D1",
    "name": "SurfaceBuilder",
    "kind": "class",
-   "module": "src/weapons/geometry.js",
+   "module": "src/gameplay/weapons/geometry.js",
    "doc": "按顶点攒 position/normal/uv/color 再一次性出 BufferGeometry 的曲面构造器，带四边面朝向自动纠正，用于船体这类必须逐面给色的曲面",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "hl",
@@ -3527,136 +3527,136 @@
    "compressed": "vb",
    "name": "buildContainerShip",
    "kind": "function",
-   "module": "src/world/backdrop/ships.js",
+   "module": "src/content/backdrop/ships.js",
    "doc": "搭建 KITTIWAKE 号集装箱船：船体放样（水下/水线/舷侧分段配色）、甲板、舱盖、绑扎、上层建筑、桅杆、烟囱、救生艇与船名标识，返回根节点、雷达、碰撞盒",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "xb",
    "name": "buildMooringBoat",
    "kind": "function",
-   "module": "src/world/backdrop/ships.js",
+   "module": "src/content/backdrop/ships.js",
    "doc": "搭建岸桥旁系泊的橙色小工作艇：CatmullRom 曲线放样的船壳管体、护舷环、折角船底多边形、舷外机、探照灯与驾驶台；整船 noMerge 以便单独摇摆",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "dv",
    "name": "TINT_REF_COLOR",
    "kind": "const",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "顶点色的归一化参考色；把普通颜色除以它就能把色值压到以 1 为基准的着色范围",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "k1",
    "name": "normalizeTint",
    "kind": "function",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "把 sRGB 整数色除以参考色得到顶点色三元组（可整体调亮/调暗），远景集装箱配色都走它",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "yb",
    "name": "HARBOR_CONTAINER_COLORS",
    "kind": "table",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "远景码头集装箱的 18 色归一化调色板（海运公司涂装），供堆场随机取色",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "L1",
    "name": "DISTANT_CONTAINER_COLORS",
    "kind": "table",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "远景集装箱/建筑的原色调色板（10 色，直接当顶点色），用于仓库与货堆的大色块",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "_b",
    "name": "smoothstepRange",
    "kind": "function",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "区间归一化 + smoothstep，用于远景容器配色与高度衰减的平滑过渡",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "bb",
    "name": "distanceFade",
    "kind": "function",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "按到场景原点的距离压暗远景物体的系数，充当廉价的空气透视",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Mb",
    "name": "buildHarborSkyline",
    "kind": "function",
-   "module": "src/world/backdrop/sky.js",
+   "module": "src/content/backdrop/sky.js",
    "doc": "搭建对岸港口天际线：成片集装箱堆场（含门标、绑扎与箱门细节）、多台岸桥、仓库、灯柱、三角桅、灯塔与远景建筑，全部合并成一个 skyline 网格",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "wb",
    "name": "createGullFlock",
    "kind": "function",
-   "module": "src/world/backdrop/sky.js",
+   "module": "src/content/backdrop/sky.js",
    "doc": "用顶点属性驱动的海鸥群：每只鸟的盘旋参数存在 aOrbit/aPar 里，由顶点着色器算位置与拍翅，一次 draw call 就有一群会飞的海鸥",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "_R",
    "name": "BACKDROP_PARTS",
    "kind": "table",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "背景可单独挑选的部件名（岸桥/货船/小艇/天际线），调试与展示入口按它筛选",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Eb",
    "name": "buildBackdrop",
    "kind": "function",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "组装远景：岸桥、KITTIWAKE 号、系泊小艇、对岸天际线与海鸥，统一驱动吊具晃动、雷达旋转、船体涌动，并注册背景碰撞盒",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "pv",
    "name": "createBackdrop",
    "kind": "function",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "背景模块的 create 入口：正式游戏里按全量建远景",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "MR",
    "name": "showcaseBackdrop",
    "kind": "function",
-   "module": "src/world/backdrop/backdrop.js",
+   "module": "src/content/backdrop/backdrop.js",
    "doc": "背景模块的 showcase 入口：按 URL 参数只建单个部件并给出对应机位，供美术逐个检查",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "vv",
    "name": "groundModule",
    "kind": "table",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "地面/地形模块注册表，用 getter 惰性暴露 create/showcase 两个入口",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "F1",
@@ -3703,355 +3703,355 @@
    "compressed": "wR",
    "name": "TERRAIN_BASE_HEIGHT",
    "kind": "const",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "地面基准高度；高于它算旱地、低于它算积水，是贴图里水/陆分界的判据",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Li",
    "name": "TERRAIN_BOUNDS",
    "kind": "table",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "地面烘焙的覆盖范围（x0/z0/边长 80 m），决定高度图分辨率与世界坐标的换算",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Sb",
    "name": "TERRAIN_DIPS",
    "kind": "table",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "26 个地面凹陷印章（中心 x/z、椭圆半径、深度），在水泥地上压出坑洼与积水洼；纯数据，改这里就能改地形",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Tb",
    "name": "DIP_RADIUS_SCALE",
    "kind": "const",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "凹陷印章的半径缩放，整体调节坑洼大小",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ER",
    "name": "DIP_DEPTH_BIAS",
    "kind": "const",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "每个凹陷额外加的深度偏置，避免浅坑在量化后消失",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "SR",
    "name": "terrainHeight",
    "kind": "function",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "地面高度场：分形基准 + 26 个凹陷印章 + 车辙沟槽 + 码头侧抬升，返回该点的相对高度",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Rb",
    "name": "bakeTerrainTexture",
    "kind": "function",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "把高度场烘成一张 RGBA 数据贴图：R=高度、G=粗糙、B=积水、A=湿滑，供着色器直接采样",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "U1",
    "name": "sampleTerrainTexture",
    "kind": "function",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "按世界坐标双线性采样烘焙结果（可指定通道），让物理/寻路与视觉共用同一份地面数据",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Cb",
    "name": "bakeTerrainNormals",
    "kind": "function",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "由高度场差分出法线与湿滑通道（环形采样保证无缝），输出两张 RGBA 贴图给地面材质",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "N1",
    "name": "makeDataTexture",
    "kind": "function",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "把字节数组包成 DataTexture（可平铺、带 mipmap 与各向异性），地面烘焙结果统一走它",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "fa",
    "name": "MARKING_BOUNDS",
    "kind": "table",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "地面标线画布覆盖的世界范围（x0/z0/宽/高），canvas 像素坐标与场地坐标的换算基准",
    "domain": "D-结构装配、船体、关卡布置",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Pb",
    "name": "createApronMarkingsTexture",
    "kind": "function",
-   "module": "src/world/ground/geometry.js",
+   "module": "src/content/ground/geometry.js",
    "doc": "把停机坪地面标线按世界坐标烘焙成一张画布贴图（车道线、SLOW/10 限速椭圆、BERTH 4 泊位号、KEEP CLEAR 斜纹区、400 段泊位排号、蓝色刹车痕与滴漏痕），供湿滑地面材质做磨损剥落混合",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "TR",
    "name": "APRON_WET_SURF",
    "kind": "shader",
-   "module": "src/world/ground/asphalt.js",
+   "module": "src/content/ground/asphalt.js",
    "doc": "湿滑停机坪材质的 GLSL 公共层：哈希与值噪声、四抽样 B 样条双三次采样（放大时看不到数据图的纹素边）、单层稀疏雨滴涟漪的斜率",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "AR",
    "name": "APRON_WET_MAP_FRAG",
    "kind": "shader",
-   "module": "src/world/ground/asphalt.js",
+   "module": "src/content/ground/asphalt.js",
    "doc": "湿滑停机坪的表面片元体：沥青与混凝土底色、6 米伸缩缝加焦油灌缝、裂缝、标线剥落与轮胎橡胶、油污，以及积水—浸湿—潮湿的连续梯度、粗糙度与法线斜率",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "RR",
    "name": "APRON_WET_REFLECT_FRAG",
    "kind": "shader",
-   "module": "src/world/ground/asphalt.js",
+   "module": "src/content/ground/asphalt.js",
    "doc": "把平面反射图按粗糙度与掠射角取多级模糊 lod 混合进 radiance：积水是锐利镜面，湿沥青只是被纵向拉伸的柔光，避免变成第二面镜子",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ib",
    "name": "createWetApron",
    "kind": "function",
-   "module": "src/world/ground/asphalt.js",
+   "module": "src/content/ground/asphalt.js",
    "doc": "创建停机坪地面（190×320 单面 plane）与注入了湿滑/反射着色器的 MeshStandardMaterial，返回材质、uniforms 和网格供地面系统每帧驱动",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "zb",
    "name": "createPlanarReflectionPass",
    "kind": "function",
-   "module": "src/world/ground/asphalt.js",
+   "module": "src/content/ground/asphalt.js",
    "doc": "用镜像相机把场景再渲染一次得到平面反射贴图：含斜裁剪近平面修正与纹理矩阵、按画质档位缩放分辨率、渲染时临时隐藏自身相关网格，作为 prepass 挂在主循环上",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "B1",
    "name": "SEA_WAVE_MAIN",
    "kind": "table",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "海面主波浪谱：4 条方向/波长/振幅/相速的正弦波（方向已归一化并补出角频率与 ω），CPU 高度计算与顶点位移共用同一组参数",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Db",
    "name": "SEA_WAVE_DETAIL",
    "kind": "table",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "海面细节波浪谱：7 条更短的波，只参与片元法线斜率计算，让远处海面不显得平滑呆板",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "fi",
    "name": "formatGlslFloat",
    "kind": "function",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "把波浪参数格式化成 GLSL float 字面量（整数补小数点、其余保留 5 位），保证模板拼出的着色器数值类型合法可读",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Lb",
    "name": "seaHeightAt",
    "kind": "function",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "按主波浪谱解析求某点海面高度，近岸 50 米内平滑衰减到 0，供漂浮物与浪花贴合水面用",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "CR",
    "name": "SEA_WAVE_DISPLACE_VERT",
    "kind": "shader",
-   "module": "src/world/ground/water.js",
+   "module": "src/content/ground/water.js",
    "doc": "按主波浪谱逐波生成的顶点位移代码：沿波向正弦抬升，并附加 60% 幅度的水平轨道位移让浪形倾斜",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "PR",
    "name": "SEA_WAVE_MAIN_SLOPE_FRAG",
    "kind": "shader",
-   "module": "src/world/ground/water.js",
+   "module": "src/content/ground/water.js",
    "doc": "主波浪的逐波斜率（解析导数）累加代码，供片元法线使用，远处也不依赖贴图分辨率",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "IR",
    "name": "SEA_WAVE_DETAIL_SLOPE_FRAG",
    "kind": "shader",
-   "module": "src/world/ground/water.js",
+   "module": "src/content/ground/water.js",
    "doc": "细节波浪的斜率累加代码，只按近处权重参与法线，避免远处高频噪点闪烁",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "zR",
    "name": "SEA_SURF_DECL",
    "kind": "shader",
-   "module": "src/world/ground/water.js",
+   "module": "src/content/ground/water.js",
    "doc": "海面片元的 uniform 与全局变量声明（粗糙度、法线斜率 gNxz、遮蔽、到相机距离、太阳闪光强度），是表面体与后续 include 之间的契约",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "DR",
    "name": "SEA_SURF_FRAG",
    "kind": "shader",
-   "module": "src/world/ground/water.js",
+   "module": "src/content/ground/water.js",
    "doc": "海面表面体：深色水体底色、码头墙与船体周围的泡沫和浮渣、风斑（cat's-paw）与长涌浪明暗、粗糙度随距离与风斑变化、岸边遮蔽",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "LR",
    "name": "SEA_HAZE_FRAG",
    "kind": "shader",
-   "module": "src/world/ground/water.js",
+   "module": "src/content/ground/water.js",
    "doc": "海面远处与雾霾融合：按视线方位与太阳方向在两种霾色之间插值，让海平线不再是一条硬边",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "gv",
    "name": "buildSeaGridSteps",
    "kind": "function",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "生成海面网格的一维坐标序列：步长按比例几何递增并设上限，近处顶点密远处疏，在顶点预算内保住近处浪形",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "kb",
    "name": "createSeaSurface",
    "kind": "function",
-   "module": "src/world/ground/water.js",
+   "module": "src/content/ground/water.js",
    "doc": "创建海面网格（分级网格加外围补片填满可视范围）、海面材质与码头裙板，含浪高位移、泡沫、太阳闪光与远雾融合着色",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ub",
    "name": "RAIN_COMMON_VERT",
    "kind": "shader",
-   "module": "src/world/ground/water.js",
+   "module": "src/content/ground/water.js",
    "doc": "雨系顶点着色器的公共部分：室内盒体包含判定与 Henyey-Greenstein 相函数（逆光时雨丝边缘发亮）",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "kR",
    "name": "RAIN_STREAK_VERT",
    "kind": "shader",
-   "module": "src/world/ground/water.js",
+   "module": "src/content/ground/water.js",
    "doc": "雨丝顶点着色器：种子在跟随相机的盒内循环下落，按室内盒体与天窗开口剔除并另有一条屋檐滴水管线，按距离维持最小屏幕宽度",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "FR",
    "name": "RAIN_STREAK_FRAG",
    "kind": "shader",
-   "module": "src/world/ground/water.js",
+   "module": "src/content/ground/water.js",
    "doc": "雨丝片元着色器：横向与纵向双向软化的加色细条，不采样纹理",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "UR",
    "name": "RAIN_SPLASH_VERT",
    "kind": "shader",
-   "module": "src/world/ground/water.js",
+   "module": "src/content/ground/water.js",
    "doc": "溅水顶点着色器：只在积水掩膜处生成、按周期循环的水冠，靠近玩家更密，超出 15 米淡出",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "NR",
    "name": "RAIN_SPLASH_FRAG",
    "kind": "shader",
-   "module": "src/world/ground/water.js",
+   "module": "src/content/ground/water.js",
    "doc": "溅水片元着色器：水冠圆弧加少量飞溅小点的软形状，alpha 随生命周期衰减",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Fb",
    "name": "createRainInstanceGeometry",
    "kind": "function",
-   "module": "src/world/ground/water.js",
+   "module": "src/content/ground/water.js",
    "doc": "构造雨丝与溅水共用的实例化四边形几何，每实例一个随机种子 aSeed；末尾 drips 个实例把种子写成负数，标记为屋檐滴水支线",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Nb",
    "name": "createRainSystem",
    "kind": "function",
-   "module": "src/world/ground/water.js",
+   "module": "src/content/ground/water.js",
    "doc": "创建雨丝与溅水两套加色实例网格及材质，按室内盒体、天窗开口与积水掩膜控制可见性，随画质缩放实例数，并定时发 thunder 事件驱动雷声与闪电",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "O1",
    "name": "createGround",
    "kind": "function",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "装配整套地面系统（标线、积水掩膜、细节图与法线图、湿滑停机坪、海面、雨、平面反射 prepass），并暴露海水高度、积水深度、湿度查询与雨量设置 API",
    "domain": "E-程序化纹理、噪声、贴花",
    "oldName": "createGroundSystem",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "BR",
    "name": "showcaseGround",
    "kind": "function",
-   "module": "src/world/ground/ground.js",
+   "module": "src/content/ground/ground.js",
    "doc": "地面模块的演示场景：先移除占位平面再装配地面系统，摆一组集装箱/油桶/灯柱样张，返回固定机位以便单独观察湿滑地面与反射",
    "domain": "E-程序化纹理、噪声、贴花",
    "oldName": "createGroundShowcase",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Sv",
    "name": "FX_MODULE",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "fx 子模块的对外命名空间：create 惰性取到特效系统构造函数，showcase 取演示场景，供启动流程与场景注册表按名加载",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "yv",
@@ -4074,334 +4074,334 @@
    "compressed": "Wc",
    "name": "SMOKE_ATLAS_COLS",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "烟雾翻页图集的列数（4 列 × 2 行 = 8 帧），纹理生成与 billboard 取帧共用",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "H1",
    "name": "SMOKE_ATLAS_ROWS",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "烟雾翻页图集的行数",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Bb",
    "name": "createSmokeFlipbook",
    "kind": "function",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "程序化生成 4×2 烟雾翻页图集：RG 存翻页法线、B 存遮蔽、A 存密度，并由高度图差分推法线，供受光烟雾/蒸汽 billboard 使用",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Af",
    "name": "SPARK_ATLAS_COLS",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "火花/光斑图集的列数（4 列 × 2 行 = 8 格）",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "bv",
    "name": "SPARK_ATLAS_ROWS",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "火花/光斑图集的行数",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "oo",
    "name": "SPARK_CELL_FLASH",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "火花图集格 0：软径向闪光，最亮的爆点核心",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "_v",
    "name": "SPARK_CELL_STREAK",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "火花图集格 1：沿 x 拉长的光带，用于火花拖尾与曳光断片",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "n0",
    "name": "SPARK_CELL_BURST_A",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "火花图集格 2：带放射状叶瓣的爆闪（随机叶数与角度变体 A）",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "OR",
    "name": "SPARK_CELL_BURST_B",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "火花图集格 3：带放射状叶瓣的爆闪（变体 B），与 A 交替使用避免重复感",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Mv",
    "name": "SPARK_CELL_RING",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "火花图集格 4：一圈细环，用于冲击波与水花外环",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "V1",
    "name": "SPARK_CELL_PUFF",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "火花图集格 5：被噪声侵蚀的软团，用作尘土与碎屑云",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Gc",
    "name": "SPARK_CELL_DISC",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "火花图集格 6：纯软圆盘，最廉价的光斑",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "W1",
    "name": "SPARK_CELL_SPIKE",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "火花图集格 7：带圆顶的锥形光刺，用于枪口焰与火花锥",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ob",
    "name": "createSparkFlipbook",
    "kind": "function",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "程序化生成 4×2 火花/光斑图集（闪光、光带、两种爆闪、环、尘团、圆盘、光刺），灰度值写入 RGB，供加色 billboard 取帧",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "dl",
    "name": "DECAL_ATLAS_COLS",
    "kind": "const",
-   "module": "src/effects/particles.js",
+   "module": "src/render/effects/particles.js",
    "doc": "弹着贴花图集的列数（4 列 × 2 行 = 8 格）",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "xv",
    "name": "DECAL_ATLAS_ROWS",
    "kind": "const",
-   "module": "src/effects/particles.js",
+   "module": "src/render/effects/particles.js",
    "doc": "弹着贴花图集的行数",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "da",
    "name": "DECAL_ATLAS_FRAMES",
    "kind": "table",
-   "module": "src/effects/particles.js",
+   "module": "src/render/effects/particles.js",
    "doc": "贴花类型到图集格索引的映射表：金属 2 格、混凝土 2 格、木 1 格、焦痕 1 格、烟熏 1 格、玻璃 1 格，绘制图集与运行时取 uv 都以它为准",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Hb",
    "name": "createDecalAtlas",
    "kind": "function",
-   "module": "src/effects/particles.js",
+   "module": "src/render/effects/particles.js",
    "doc": "用 canvas 2D 程序化绘制弹孔图集：albedo（RGB 加透明度）、ORM 与由高度图差分求出的法线图，返回三张贴图与按格算 uv 矩形的函数",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "HR",
    "name": "FX_BILLBOARD_VERT",
    "kind": "shader",
-   "module": "src/effects/particles.js",
+   "module": "src/render/effects/particles.js",
    "doc": "特效 billboard 顶点着色器：支持面向相机、速度拉伸、贴面三种模式，图集取帧，并按距离维持最小屏幕宽度以免远处火花消失",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Xb",
    "name": "FX_SOFT_FRAG",
    "kind": "shader",
-   "module": "src/effects/particles.js",
+   "module": "src/render/effects/particles.js",
    "doc": "特效片元共用部分：用深度纹理做软相交淡出，让烟与贴花贴地时不出现硬切边",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "VR",
    "name": "FX_LIT_FRAG",
    "kind": "shader",
-   "module": "src/effects/particles.js",
+   "module": "src/render/effects/particles.js",
    "doc": "受光特效片元：球面法线叠加翻页法线求光、前向散射、薄边透光，并带一条 alpha 混合的火焰分支（热核 / 橙皮 / 下方烟炱）",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "WR",
    "name": "FX_ADD_FRAG",
    "kind": "shader",
-   "module": "src/effects/particles.js",
+   "module": "src/render/effects/particles.js",
    "doc": "加色特效片元：单通道强度乘颜色，最省的路径，用于火花与曳光",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Vb",
    "name": "FX_SCRATCH_SIZE",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "复用的 Vector2，读取 drawingBuffer 尺寸时避免每次渲染都新建对象",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ev",
    "name": "createFxBatch",
    "kind": "function",
-   "module": "src/effects/particles.js",
+   "module": "src/render/effects/particles.js",
    "doc": "创建实例化 billboard 批次：aPos/aAxis/aCol/aMisc 四条实例流，受光与加色两种材质，深度软相交与像素尺寸按相机自动更新，供粒子、曳光、火焰统一提交",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "qc",
    "name": "PARTICLE_FLAG_BOUNCE",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "粒子标志位 1：落到地面高度时反弹并衰减",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Xc",
    "name": "PARTICLE_FLAG_KILL_ON_GROUND",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "粒子标志位 2：触地立即回收，用于不该留在地上的火花",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "GR",
    "name": "PARTICLE_FLAG_STICK",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "粒子标志位 4：触地即停不再运动",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Rf",
    "name": "ParticlePool",
    "kind": "class",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "CPU 粒子池：位置/速度/阻力/重力/风/湍流/淡入淡出/色带/拉伸全字段并行数组，可选按相机距离排序后整批推进 billboard 批次，是烟雾、尘土、火花的共同引擎",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "q1",
    "name": "TracerPool",
    "kind": "class",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "曳光弹池：把每发子弹的线段按弹速推进，画成亮核加淡拖尾的两段加色光带，首帧随机跳跃避免同步",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "qR",
    "name": "TRACER_FIELD_NAMES",
    "kind": "table",
-   "module": "src/effects/particles.js",
+   "module": "src/render/effects/particles.js",
    "doc": "曳光池所有并行数组的字段名清单，交换删除时按此列表整体搬移，避免漏搬某个字段",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ws",
    "name": "FX_SCRATCH_MATRIX",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "复用的临时矩阵，组装碎块与弹壳的实例变换",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Oo",
    "name": "FX_SCRATCH_QUAT",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "复用的临时四元数",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "X1",
    "name": "FX_SCRATCH_POS",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "复用的临时位置向量",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Y1",
    "name": "FX_SCRATCH_SCALE",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "复用的临时缩放向量",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Wb",
    "name": "FX_SCRATCH_AXIS",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "复用的临时旋转轴向量",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "XR",
    "name": "createDebrisGeometry",
    "kind": "function",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "把 1×1×1 盒体的顶点做哈希抖动（角上略缩、各顶点不等量偏移并去索引化），得到看不出是盒子的碎块几何，一次生成全池共用",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "$1",
    "name": "DebrisPool",
    "kind": "class",
-   "module": "src/effects/pools.js",
+   "module": "src/render/effects/pools.js",
    "doc": "碎块池：实例化不规则碎块，带角速度、重力、落地反弹与静止淡出，接收阴影但不投射，用于爆炸与撞击的实心碎片",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "wv",
@@ -4416,248 +4416,248 @@
    "compressed": "YR",
    "name": "RAY_DOWN",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "向下射线方向常量，弹壳拾取地面高度与表面材质用",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Gb",
    "name": "FX_SCRATCH_RAY_ORIGIN",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "复用的射线起点向量",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "qb",
    "name": "FX_SCRATCH_SHELL_QUAT",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "复用的弹壳姿态四元数",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "G1",
    "name": "FX_SCRATCH_EULER",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "复用的欧拉角，用来随机初始姿态与让弹壳侧躺",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "$R",
    "name": "createShellGeometry",
    "kind": "function",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "用车削（LatheGeometry）拼出 5.56 弹壳外形：细颈、锥形壳体与底缘，10 段旋转保低面数",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Z1",
    "name": "ShellPool",
    "kind": "class",
-   "module": "src/effects/pools.js",
+   "module": "src/render/effects/pools.js",
    "doc": "弹壳池：抛壳物理（重力、四元数角速度积分、反弹两次后侧躺），落地前射线查询表面并发 shell:bounce 事件，静止 4.7 秒后回收",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ZR",
    "name": "DECAL_SIZES",
    "kind": "table",
-   "module": "src/effects/particles.js",
+   "module": "src/render/effects/particles.js",
    "doc": "各类贴花的基准世界尺寸（米）：金属 0.25、混凝土 0.34、木 0.24、焦痕 2.4、烟熏 0.3、玻璃 0.3，运行时再乘随机抖动与调用方缩放",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Yb",
    "name": "DECAL_EVICT_FADE_COUNT",
    "kind": "const",
-   "module": "src/effects/particles.js",
+   "module": "src/render/effects/particles.js",
    "doc": "贴花池满时按写入顺序把最旧的 14 枚循环淡出，代价极低且看不出是新贴花挤掉了旧的",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "j1",
    "name": "DecalBatch",
    "kind": "class",
-   "module": "src/effects/pools.js",
+   "module": "src/render/effects/pools.js",
    "doc": "贴花批次：每个贴花一个四边形，按命中法线建切空间、随机转角与图集格、写入顶点色透明度，带 polygonOffset 与关闭深度写以防 z-fighting",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "$b",
    "name": "FX_LIT_PARTICLE_CAP",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "受光粒子池容量上限（烟雾、尘土这类要吃光照的粒子）",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Zb",
    "name": "FX_ADD_PARTICLE_CAP",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "加色粒子池容量上限（火花、光斑这类只做加色的粒子）",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ht",
    "name": "fxRandom",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "fx 模块统一的随机源引用，集中一处便于替换成可复现的伪随机",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ze",
    "name": "randRange",
    "kind": "function",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "区间随机数，特效参数抖动统一走它以便将来换成种子随机",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Et",
    "name": "FX_SCRATCH_VEC_A",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "fx 系统复用的临时向量 A，供 emit 系列避免每帧分配",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "zt",
    "name": "FX_SCRATCH_VEC_B",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "fx 系统复用的临时向量 B（方向类）",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "J1",
    "name": "FX_SCRATCH_VEC_C",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "fx 系统复用的临时向量 C",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "qe",
    "name": "FX_SCRATCH_VEC_D",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "fx 系统复用的临时向量 D",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Es",
    "name": "FX_SCRATCH_VEC_E",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "fx 系统复用的临时向量 E",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ho",
    "name": "FX_SCRATCH_VEC_F",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "fx 系统复用的临时向量 F",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ei",
    "name": "UP_AXIS",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "世界向上轴常量",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "jR",
    "name": "DOWN_AXIS",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "世界向下轴常量（重力方向）",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "K1",
    "name": "FX_SCRATCH_COLOR",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "复用的临时 Color，用于解析十六进制或字符串颜色",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ao",
    "name": "FX_SCRATCH_RGB",
    "kind": "const",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "复用的 RGB 三分量数组，颜色解析结果直接写这里，返回给调用方不再分配",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Yc",
    "name": "toRgbTriple",
    "kind": "function",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "把各种颜色写法（缺省数字三元、数组、THREE.Color、十六进制）统一解析成复用的 RGB 数组，特效 API 的入口参数都靠它归一化",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ro",
    "name": "randomDirectionAround",
    "kind": "function",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "在给定方向上做球面随机抖动并归一化，spread 控制张角，用于碎屑与火花的初速发散",
    "domain": "E-程序化纹理、噪声、贴花",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Cf",
    "name": "createEffects",
    "kind": "function",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "场景特效总线：预分配并批处理烟雾/火花/曳光/枪口焰/爆炸/水花/碎屑/贴花与长寿命发射器（蒸汽、火、余烬、滴漏），并把 impact、player:step、player:land 事件翻译成对应特效；用一次射线决定粒子是否处于遮蔽阴影中，整套特效不依赖外部贴图和 GPU 粒子。",
    "domain": "F-音频引擎与音效",
    "oldName": "createFxSystem",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "JR",
    "name": "showcaseEffects",
    "kind": "function",
-   "module": "src/effects/effects.js",
+   "module": "src/render/effects/effects.js",
    "doc": "特效调参与截图用的独立测试场景：摆放混凝土/铁皮/木托盘三块靶板并循环触发冲击、曳光、抛壳与爆炸，支持 fxshow/fxhold/fxage/fxsize 参数与 window.__setShot 逐帧定格，用于离线比对特效迭代效果。",
    "domain": "F-音频引擎与音效",
    "oldName": "createFxDebugStage",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "vt",
@@ -5682,78 +5682,78 @@
    "compressed": "h_",
    "name": "KEY_BINDINGS",
    "kind": "table",
-   "module": "src/input/input.js",
+   "module": "src/platform/input.js",
    "doc": "键盘 KeyCode 到动作名的映射表（27 项）：WASD/空格/Shift/Ctrl、R/E/F/V/Esc/P/Q/Enter 与方向键、IJKL，所有输入源最终都归一到同一套动作名",
    "domain": "G-玩家、武器视图模型、输入",
    "oldName": "KEY_ACTION_MAP",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "f_",
    "name": "MOUSE_LOOK_SENSITIVITY",
    "kind": "const",
-   "module": "src/input/input.js",
+   "module": "src/platform/input.js",
    "doc": "鼠标每像素转弧度系数，乘用户灵敏度后累加进 look.dx/dy",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "d_",
    "name": "TOUCH_LOOK_SENSITIVITY",
    "kind": "const",
-   "module": "src/input/input.js",
+   "module": "src/platform/input.js",
    "doc": "触屏拖动每像素转弧度系数，比鼠标更大，因为手指位移粗",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "p_",
    "name": "ARROW_TURN_RATE",
    "kind": "const",
-   "module": "src/input/input.js",
+   "module": "src/platform/input.js",
    "doc": "方向键/IJKL 的无鼠标转向角速度（弧度/秒），保证没有指针锁也能玩",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "m_",
    "name": "PAD_LOOK_RATE",
    "kind": "const",
-   "module": "src/input/input.js",
+   "module": "src/platform/input.js",
    "doc": "手柄右摇杆转视角的基础角速度，实际值乘摇杆位移的平方做细调",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "If",
    "name": "TOUCH_STICK_RADIUS",
    "kind": "const",
-   "module": "src/input/input.js",
+   "module": "src/platform/input.js",
    "doc": "虚拟摇杆的最大拖拽半径（像素），超出后位移被夹到圆周上，摇杆输出归一化到 -1..1",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "g_",
    "name": "UNGATED_ACTIONS",
    "kind": "table",
-   "module": "src/input/input.js",
+   "module": "src/platform/input.js",
    "doc": "不需要 gameplay 状态就能响应的动作白名单（只有 pause），用于标题/暂停界面仍能收 Esc",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "v_",
    "name": "createInput",
    "kind": "function",
-   "module": "src/input/input.js",
+   "module": "src/platform/input.js",
    "doc": "输入聚合器：把键鼠、Pointer Lock、拖拽回退模式、触屏摇杆与手柄统一成 move/look/fire/ads/sprint/crouch 状态，并对外暴露 down/pressed 边沿查询与模式切换回调",
    "params": [
     "ctx"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Mt",
@@ -5768,61 +5768,61 @@
    "compressed": "rC",
    "name": "JUMP_SPEED",
    "kind": "const",
-   "module": "src/player/player.js",
+   "module": "src/gameplay/player.js",
    "doc": "由重力与期望跳跃顶点高度反解出的起跳初速度，改 gravity/jumpApex 时自动跟着变",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "x_",
    "name": "createPlayer",
    "kind": "function",
-   "module": "src/player/player.js",
+   "module": "src/gameplay/player.js",
    "doc": "第一人称玩家控制器：胶囊体移动与土狼时间/跳跃缓冲、蹲伏限高、落水救援、脚步事件、镜头 bob/侧倾/后坐力弹簧/受击抖动，并把 ADS 与低血量化成后处理参数写回 render.post",
    "params": [
     "ctx"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "zv",
    "name": "createCombat",
    "kind": "function",
-   "module": "src/combat/combat.js",
+   "module": "src/gameplay/combat.js",
    "doc": "命中判定服务：玩家/敌人射击都走同一条射线，先打敌人骨骼盒再落到场景，负责弱点倍率、弹着点事件与爆炸范围伤害，保证敌我两套伤害口径一致",
    "params": [
     "ctx"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "nm",
    "name": "COMBAT_SCRATCH_POINT",
    "kind": "const",
-   "module": "src/combat/combat.js",
+   "module": "src/gameplay/combat.js",
    "doc": "命中解算复用的临时向量，避免每发子弹都分配 Vector3",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "zf",
    "name": "COMBAT_SCRATCH_DIR",
    "kind": "const",
-   "module": "src/combat/combat.js",
+   "module": "src/gameplay/combat.js",
    "doc": "爆炸/命中方向计算的临时向量，与 COMBAT_SCRATCH_POINT 成对使用",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Xv",
    "name": "weaponModule",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "武器模块的导出壳，用 getter 惰性暴露 create（视图模型装配）与 showcase（武器展示台），便于打包时摇树与外部按名取用",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "im",
@@ -5842,7 +5842,7 @@
    "compressed": "cC",
    "name": "isBevelNormal",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "判断法线是否三个分量都偏离坐标轴，只给倒角/圆角面加磨损亮度，平面保持干净",
    "params": [
     "nx",
@@ -5850,13 +5850,13 @@
     "nz"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "b_",
    "name": "isLateralNormal",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "挤出板的磨损掩码：只让侧壁法线（z 分量居中）吃到磨损，前后端面不脏",
    "params": [
     "nx",
@@ -5864,13 +5864,13 @@
     "nz"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "sm",
    "name": "applyVertexShading",
    "kind": "function",
-   "module": "src/weapons/geometry.js",
+   "module": "src/gameplay/weapons/geometry.js",
    "doc": "给几何体烘 vertex color：基色乘 ±10% 哈希噪声，再按掩码在倒角处叠高光磨损，是整套道具/武器不用贴图也有体积感的关键",
    "params": [
     "geometry",
@@ -5879,31 +5879,31 @@
     "maskFn"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "y_",
    "name": "SCRATCH_EULER",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "buildRoundedBox 旋转复用欧拉角实例，避免每块板都新建",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "uC",
    "name": "SCRATCH_ROTATION_MATRIX",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "buildRoundedBox 里把欧拉角转矩阵的复用 Matrix4",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Rt",
    "name": "buildRoundedBox",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "圆角盒体生成器：把 3×3×3 分段盒体的棱角顶点沿法线内收成圆角（半径会被夹到最短边的一半），再烘顶点色磨损、可选预旋转并平移到位，武器上几十块平板/导轨全靠它",
    "params": [
     "width",
@@ -5918,26 +5918,26 @@
     "rotation"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "hC",
    "name": "createShapeFromPoints",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "把二维点列转成闭合 THREE.Shape，并挂上挖孔路径，供挤出使用",
    "params": [
     "points",
     "holes"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "__",
    "name": "extrudeShape",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "按深度与倒角量把 Shape 挤成实体，倒角段数压到 1 以省面数",
    "params": [
     "points",
@@ -5946,25 +5946,25 @@
     "holes"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "M_",
    "name": "flattenCapNormals",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "修挤出体的端面法线：靠近两端的位置强制轴对齐、其余侧壁去掉轴向分量，避免倒角让平板看起来是圆饼",
    "params": [
     "geometry"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "xr",
    "name": "buildPlateX",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "沿 X 轴方向挤出的侧板（外形轮廓在 YZ 面），挤出后转 90 度对齐机匣侧面",
    "params": [
     "points",
@@ -5976,13 +5976,13 @@
     "holes"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "qo",
    "name": "buildPlateZ",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "沿 Z 轴（枪管方向）挤出的顶板/导轨齿，是 buildPlateX 的未旋转版本",
    "params": [
     "points",
@@ -5994,13 +5994,13 @@
     "holes"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Cn",
    "name": "buildLatheBody",
    "kind": "function",
-   "module": "src/weapons/geometry.js",
+   "module": "src/gameplay/weapons/geometry.js",
    "doc": "把二维半径/轴向截面绕 Z 轴旋成回转体，逐段生成圆环与索引，可带中心偏移和自定义顶点色回调，枪管、弹匣、握把等圆柱件都走它",
    "params": [
     "profile",
@@ -6012,13 +6012,13 @@
     "tintFn"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Fi",
    "name": "buildRoundedTab",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "圆头长条管件（销轴、螺丝座、枪管箍），沿圆角矩形轨迹绕一圈成管，再转到枪身坐标",
    "params": [
     "width",
@@ -6031,13 +6031,13 @@
     "bump"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Dv",
    "name": "roundedSlotOutline",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "生成胶囊形开孔轮廓（两段半圆+直边），用作板件上的减重槽与握把指槽",
    "params": [
     "centerX",
@@ -6047,13 +6047,13 @@
     "segments"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "fC",
    "name": "roundedRectOutline",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "生成切角矩形八点轮廓，用于机匣盖等带倒角的板件外形",
    "params": [
     "x0",
@@ -6063,181 +6063,181 @@
     "corner"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "mi",
    "name": "PAC9_DIMENSIONS",
    "kind": "table",
-   "module": "src/weapons/geometry.js",
+   "module": "src/gameplay/weapons/geometry.js",
    "doc": "PAC-9 Longshore 步枪的关键装配尺寸表（枪口/抛壳口/瞄具高度/镜片焦距/弹匣位/枪机行程/导轨顶/握把与护木位置），几何生成与动画都以它为唯一基准",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "w_",
    "name": "buildPac9Geometry",
    "kind": "function",
-   "module": "src/weapons/geometry.js",
+   "module": "src/gameplay/weapons/geometry.js",
    "doc": "用轮廓+回转体从零手搓整把 PAC-9：机匣、护木、导轨齿、弹匣（带弯曲偏移）、枪机、扳机组、瞄具罩与镜片，按材质分成 ano/gun/poly/plain/bolt/mag/round 七组几何返回",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Kc",
    "name": "triangleCount",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "数几何体三角形数，用于启动日志和武器 debug 信息里的面数统计",
    "params": [
     "geometry"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ti",
    "name": "Vec3",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "THREE.Vector3 的短别名，只在本段几何/手套生成函数里用，减少调用冗长",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "vl",
    "name": "Quat",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "THREE.Quaternion 的短别名，供手指朝向与袖管对齐计算使用",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "rm",
    "name": "Mat4",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "THREE.Matrix4 的短别名，袖口矩阵拼接用",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Bv",
    "name": "GLOVE_TONE_TOP",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "手套顶点色调：朝上/朝外受光面的 HDR 亮度值，与其它 TONE 常量一起充当无贴图 AO 的色阶",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Fv",
    "name": "GLOVE_TONE_BAR",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "手套指节条/织带的中等亮度色调",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Lv",
    "name": "GLOVE_TONE_GUARD",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "掌背护板（guard）的偏暗色调，贴合橡胶护片质感",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "am",
    "name": "GLOVE_TONE_SIDE",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "手指/指缝侧向面的中间调，比顶面暗一档形成圆柱明暗过渡",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "lm",
    "name": "GLOVE_TONE_MID",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "通用中亮色阶，用于过渡环与指节中段",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "dC",
    "name": "GLOVE_TONE_EDGE",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "边缘/凹缝的暗色阶，压出指节之间的阴影线",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "kf",
    "name": "GLOVE_TONE_SEAM",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "缝线与指节褶皱的高亮色阶，用来让缝线在暗部仍能读出来",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "gl",
    "name": "GLOVE_TONE_SOFT",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "袖口褶皱的柔和中间调",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Df",
    "name": "GLOVE_TONE_CUFF",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "袖口主体色阶（偏暗），与褶皱高光形成布料层次",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "pC",
    "name": "GLOVE_TONE_PULLTAB",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "袖口拉环/魔术贴拉片的暖色阶",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "E_",
    "name": "GLOVE_TONE_SLEEVE",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "袖子本体的冷暗色阶，让袖管退到最后面",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "mC",
    "name": "GLOVE_TONE_STRAP",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "腕带主体色阶，配合噪声做织物色差",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "gC",
    "name": "GLOVE_TONE_WATCH",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "腕表表带段色阶，是手套上唯一的金属配件区域",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "um",
@@ -6291,37 +6291,37 @@
    "compressed": "Xo",
    "name": "SCRATCH_VEC3",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "手套生成过程中反复复用的临时向量，避免上万次环采样时分配",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "S_",
    "name": "NEG_Z_DIR",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "手指基准朝向（-Z），每根手指的朝向都由它按四元数旋转得到",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "yl",
    "name": "RingMeshBuilder",
    "kind": "class",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "环形网格累加器：按固定环顶点数逐环推点与顶点色，收尾时统一生成 position/color/uv 与索引、算法线，并可把退化环的接缝法线焊接平滑——手套与袖管的曲面全靠它拼",
    "params": [
     "ringSize"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "I_",
    "name": "buildGridSurface",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "通用参数化网格：对 u/v 两组采样值求位置并回调出顶点色，用于护板、舌片等曲面片",
    "params": [
     "uSamples",
@@ -6329,34 +6329,34 @@
     "project"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Uv",
    "name": "SHEET_SAMPLES",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "曲面片的默认 7 段采样分布（两端加密），让圆角边缘更圆",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "cm",
    "name": "sheetEdgeWeight",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "曲面片边缘权重：最外圈返回 -1（改走暗色/贴合），次外圈 0.82，内部 1，用来压出包边",
    "params": [
     "v"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Lf",
    "name": "buildDrapedSlab",
    "kind": "function",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "贴合曲面的圆角薄片：在矩形采样上按 heightFn 计算贴合高度（可再叠加投影变换），逐点算顶点色，手套的指节条、缝线、魔术贴片都由它生成",
    "params": [
     "x",
@@ -6372,73 +6372,73 @@
     "vSamples"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "om",
    "name": "FINGER_SEGMENTS",
    "kind": "table",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "四根手指的根部坐标、三节长度与四道半径，是手套手指建模的唯一尺寸来源（拇指另有单独参数）",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Nv",
    "name": "RING_ANGLES",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "16 个不均匀的环向采样角（度转弧度）：掌心/掌背两侧加密、指缝处稀疏，让指节截面出现平面与棱角而不是光滑圆柱",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "T_",
    "name": "RING_COUNT",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "每环顶点数（等于 RING_ANGLES 长度），RingMeshBuilder 构造时要用",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "A_",
    "name": "PAD_RING_OFFSET",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "指腹加厚垫的径向外扩量，只在 pad 标记的环上加出去一点点",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "R_",
    "name": "KNUCKLE_RINGS",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "指节之间的过渡环位置（0..1 归一化弧长，6 个），在关节处额外插环让弯曲不塌陷",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "xC",
    "name": "FINGER_BUMP",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "三节的默认凸起系数（指根、中节、指尖），控制指节鼓包强度",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "z_",
    "name": "buildFinger",
    "kind": "function",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "手指曲面生成器：沿三节骨骼逐环推椭圆截面（可加 pad/stitch/saddle/edge 等表面特征），并按朝向做环间裁切，产出带顶点色的管状手指几何",
    "params": [
     "spec"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "yC",
@@ -6466,14 +6466,14 @@
    "compressed": "C_",
    "name": "buildFingerFromSpec",
    "kind": "function",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "把尺寸表里的一行（根部+长度+半径）和四元数姿态装配成 buildFinger 的入参，指尖多一个偏摆量",
    "params": [
     "spec",
     "pose"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "_C",
@@ -6491,389 +6491,389 @@
    "compressed": "MC",
    "name": "buildThumb",
    "kind": "function",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "拇指生成器：把三节方向转成四元数后套用 buildFinger，并开启 saddle/patch/tip 收窄等拇指专属参数",
    "params": [
     "thumbDirs"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Qc",
    "name": "PALM_WRIST_Z",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "掌根（手腕侧）的 Z 基准，掌面截面与贴合高度都以它为零点",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "D_",
    "name": "palmProfileZ",
    "kind": "function",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "掌面沿横向 x 的 Z 轮廓（抛物线），决定掌心是弧形而不是平板",
    "params": [
     "x"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ov",
    "name": "palmProfileZInner",
    "kind": "function",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "掌面轮廓往里偏 6mm 的内层曲线，用于把表面参数归一化到掌根",
    "params": [
     "x"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Hv",
    "name": "palmHalfWidth",
    "kind": "function",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "掌面半宽随掌根到指尖的渐变，指尖处收窄",
    "params": [
     "t"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "L_",
    "name": "palmTopRadius",
    "kind": "function",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "掌背侧的截面半径随长度变化（靠手腕更厚）",
    "params": [
     "t"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "k_",
    "name": "palmBottomRadius",
    "kind": "function",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "掌心侧的截面半径，带正弦起伏表现掌垫，比掌背略鼓",
    "params": [
     "t"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "kv",
    "name": "palmTopY",
    "kind": "function",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "给定(x,z)求掌背表面高度，护板与指节条要贴在这个高度上才不会穿模",
    "params": [
     "x",
     "z"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "wC",
    "name": "palmBottomY",
    "kind": "function",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "给定(x,z)求掌心（下方）表面高度，掌根垫片用它贴合",
    "params": [
     "x",
     "z"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "EC",
    "name": "buildPalm",
    "kind": "function",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "手掌主体：12 个纵向截面 × 24 环推超椭圆截面，指尖端收口，产出带明暗色阶的掌心几何",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "SC",
    "name": "buildThumbWeb",
    "kind": "function",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "拇指与食指之间的虎口连接体：沿拇指方向做 7 段椭圆扫掠并收口，最后按有向体积修正索引朝向",
    "params": [
     "thumbDir"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "P_",
    "name": "mirrorGeometryX",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "沿 X 轴镜像几何并翻转索引绕序（缺索引时补一个），用来从左手直接得到右手手套",
    "params": [
     "geometry"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Vv",
    "name": "buildGloveHand",
    "kind": "function",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "整只战术手套装配：掌、护板、三道指节条、缝线、掌根垫、四指（可给多个索引指姿态用于弯曲）、拇指、虎口、袖口与袖管，输出 fabric/rubber 两组几何加索引姿态",
    "params": [
     "handSpec"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "hm",
    "name": "PAC9_MARK_REGIONS",
    "kind": "table",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "枪身铭文图集的矩形分区表（18 项）：型号、厂标、口径序号、警示语、保险/单发/连发标记、枪架号、瞄具与手电标、6 组距离刻度",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Uf",
    "name": "MARK_ATLAS_WIDTH",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "铭文图集画布宽度（1024），createMarkingsMesh 用它把矩形换算成 UV",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Nf",
    "name": "MARK_ATLAS_HEIGHT",
    "kind": "const",
-   "module": "src/render/materials/textures.js",
+   "module": "src/assets/procedural/textures.js",
    "doc": "铭文图集画布高度（512）",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "TC",
    "name": "buildMarkingsAtlas",
    "kind": "function",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "用 canvas 2D 画出 PAC-9 全部铭文与符号，再用 destination-out 点 2600 个噪点做掉漆磨损，产出 sRGB CanvasTexture（带各向异性与 mipmap）",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "F_",
    "name": "createMarkingsMesh",
    "kind": "function",
-   "module": "src/enemies/models.js",
+   "module": "src/content/models/enemies.js",
    "doc": "把铭文图集按若干矩形片贴到枪身两侧/顶部，生成透明双面 decal 网格并做 polygonOffset 防 z-fighting",
    "params": [
     "decals"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "U_",
    "name": "createOpticLens",
    "kind": "function",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "红点镜片：按镜片多边形建面片，用自定义着色器在同一张面上同时画红点/刻线准星与镀膜反射（含天空与太阳、蓝到琥珀渐变与边缘暗边），越肩视角下也能看到发光点",
    "params": [
     "windowOutline",
     "lensOffset"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "N_",
    "name": "createMuzzleFlash",
    "kind": "function",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "枪口火焰：把花瓣、射流、星芒、光晕、余热五类面片塞进一个几何，用 aType 属性在着色器里分支出不同形状，靠 uSeed/uInt/uHeat/uJet 做每发随机",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Wv",
    "name": "PAC9_RAIN_UNIFORM",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "武器材质共享的淋雨强度 uniform，由武器 setWetness 写入，多个材质 patch 共用同一引用",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "AC",
    "name": "PAC9_DETAIL_COMMON_GLSL",
    "kind": "shader",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "武器表面细节的公共 GLSL 段：三维 value noise、二维哈希、可平铺水滴函数与屏幕空间凹凸求导，被材质补丁注入到 three 标准材质的 common 之后",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "RC",
    "name": "PAC9_DETAIL_ROUGHNESS_GLSL",
    "kind": "shader",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "按材质种类（阳极氧化/磷化/聚合物）扰动粗糙度，并叠加雨水湿润与水珠压暗，替换 roughnessmap_fragment",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "CC",
    "name": "PAC9_DETAIL_NORMAL_GLSL",
    "kind": "shader",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "把上面算出的高度差通过 dBump 转成法线扰动，注入 normal_fragment_maps，让划痕与水珠有真实凹凸",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Bf",
    "name": "patchPac9DetailMaterial",
    "kind": "function",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "给武器材质打 onBeforeCompile 补丁：注入 uKind（0 阳极/1 磷化/2 聚合物）与共享淋雨 uniform，并设置 customProgramCacheKey 让三种种类各自编译一份程序",
    "params": [
     "material",
     "detailKind"
    ],
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "gi",
    "name": "WeaponVec3",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "THREE.Vector3 的短别名，武器视图模型装配与展示台里大量使用",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "fm",
    "name": "WeaponQuat",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "THREE.Quaternion 的短别名，手持姿态与换弹关键帧插值用",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Gv",
    "name": "PAC9_MAG_SIZE",
    "kind": "const",
-   "module": "src/weapons/geometry.js",
+   "module": "src/gameplay/weapons/geometry.js",
    "doc": "弹匣容量（30 发），同时作为初始弹量与 magSize",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "B_",
    "name": "PAC9_RESERVE_AMMO",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "初始备弹数（150 发）",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "O_",
    "name": "PAC9_RPM",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "射速（720 发/分），换算成每发冷却 60/720 秒，决定连发节奏",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "H_",
    "name": "PAC9_DAMAGE",
    "kind": "const",
-   "module": "src/weapons/geometry.js",
+   "module": "src/gameplay/weapons/geometry.js",
    "doc": "单发基础伤害（26），弱点倍率另由战斗模块乘上",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "rule"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "V_",
    "name": "PAC9_RANGE",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "射线最大射程（300 米），也是没命中时的曳光终点距离",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "eu",
    "name": "HIP_POSE",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "腰射基准姿态（位置+欧拉角），ADS 姿态与它按 adsE 插值得到最终视图模型偏移",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "qv",
    "name": "ADS_POSE",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "瞄准姿态：把枪抬到镜片高度并对正屏幕中心，位置与 HIP_POSE 按 adsE 插值",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "tu",
    "name": "SPRINT_POSE",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "冲刺时枪口下压斜持的姿态增量，按 sprintT 权重叠加",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "nu",
    "name": "RELOAD_POSE",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "换弹时把枪压向屏幕下方并侧倾的姿态增量，按 reloadW 权重叠加",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "W_",
    "name": "RELOAD_TIME_TACTICAL",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "弹匣里还有子弹时的换弹时长（2.1 秒），不包含拉栓",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "G_",
    "name": "RELOAD_TIME_EMPTY",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "空仓换弹时长（2.72 秒），多出挂机拉栓一段关键帧",
    "domain": "G-玩家、武器视图模型、输入",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Yo",
@@ -6929,466 +6929,466 @@
    "compressed": "dm",
    "name": "createWeapon",
    "kind": "function",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "构建 pac9 步枪的第一人称视图模型：程序化几何 + 双手手套手指绑定 + 金属铭牌贴花 + 枪口焰，并返回带开火/换弹/ADS/惯性摆动状态的 weapon 对象；整个模型挂在相机下，只走 viewmodel layer 以免被世界裁切",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
    "oldName": "createPac9Viewmodel",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ex",
    "name": "weaponModule",
    "kind": "const",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "武器模块的导出壳，通过 getter 暴露 TUNE 数值表、create 工厂与 showcase 展示场景",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "PC",
    "name": "showcaseWeapon",
    "kind": "function",
-   "module": "src/weapons/weapon.js",
+   "module": "src/gameplay/weapons/weapon.js",
    "doc": "武器模型展示台：把枪摆成 hip/ads/sprint/fire/reload/empty 等固定姿势并锁帧，供截图与调参用；挂 window.__setShot 以便外部脚本切姿势",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "iu",
    "name": "Rig",
    "kind": "class",
-   "module": "src/enemies/models.js",
+   "module": "src/content/models/enemies.js",
    "doc": "骨骼装配器：按名字登记骨骼（记录局部/世界偏移与父索引）、把几何按槽位(shell/metal/glow/lens)贴到骨骼上并写入 skinIndex/skinWeight 与 AO 顶点色，最后合并成单个 SkinnedMesh 的几何",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "pm",
    "name": "buildSkinnedRig",
    "kind": "function",
-   "module": "src/weapons/rig.js",
+   "module": "src/animation/skeleton.js",
    "doc": "把 Rig.build 的产物实例化成 THREE 场景对象：建 Bone 层级、SkinnedMesh、Skeleton，并手工写入包围球/包围盒以免蒙皮动画时被视锥剔除；extra 用于挂不参与蒙皮的附加网格（螺旋桨盘、探照锥）",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "q_",
    "name": "solveLegIK",
    "kind": "function",
-   "module": "src/weapons/rig.js",
+   "module": "src/animation/skeleton.js",
    "doc": "四足机器的两段式腿 IK 解析：由髋部到落足点的差向量反解髋开合角、大腿与小腿角，并把可达距离限幅到腿长范围内，保证脚不打滑也不穿透",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ss",
    "name": "RIG_SHELL_WHITE",
    "kind": "table",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "敌人装甲壳的主色顶点色（亮白），hound 与 gull 共用的机体外壳基色",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "vm",
    "name": "RIG_SHELL_COOL",
    "kind": "table",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "偏冷的装甲壳顶点色，用于通风口、次级面板等与主壳区分的小块",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ts",
    "name": "RIG_SHELL_RUST",
    "kind": "table",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "锈橙色装甲顶点色，用在底座、护边等易磨蚀部位，制造港口机械的旧化感",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "s0",
    "name": "RIG_SHELL_DARK",
    "kind": "table",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "深灰黑装甲顶点色，用于凹陷面板、散热格栅等视觉重量集中的暗部",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ga",
    "name": "RIG_SHELL_SHADOW",
    "kind": "table",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "近黑的软管/缝隙顶点色，给管线与装甲接缝压暗，避免纯黑法线破面",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Of",
    "name": "RIG_SHELL_HAZARD",
    "kind": "table",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "黄黑警示条用的琥珀顶点色，标记危险运动部件（螺旋桨尖、枪口段）",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "As",
    "name": "RIG_METAL_WHITE",
    "kind": "table",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "白色金属顶点色，用于螺栓、法兰等高频小件，保持与暗色机体对比",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Yn",
    "name": "RIG_METAL_BRIGHT",
    "kind": "table",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "过曝级亮金属顶点色，用在液压杆、关节轴等需要高光的传动件上",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "an",
    "name": "RIG_METAL_BASE",
    "kind": "table",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "中灰金属顶点色，是敌人机械结构的默认金属基调",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "IC",
    "name": "RIG_METAL_CHROME",
    "kind": "table",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "近铬的极亮金属顶点色，只用于细钢索/拉杆等单条高光件",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "zC",
    "name": "RIG_METAL_BORE",
    "kind": "table",
-   "module": "src/weapons/rig.js",
+   "module": "src/gameplay/weapons/rig.js",
    "doc": "偏暖的亮金属顶点色，涂在枪管内壁模拟被高温烧灼的膛口",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "va",
    "name": "HALF_PI",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "四分之一圆弧常量，供圆柱绕轴翻转成 X/Z 朝向的几何助手复用，避免到处写 Math.PI/2",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ft",
    "name": "createRoundedBox",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "带倒角的长方体生成器：机械件的边角必须有一致的小圆角才不显得是塑料玩具，默认 8mm 半径对应真实倒角尺度",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ce",
    "name": "transformGeom",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "把已经烘焙进 Rig 骨骼的几何模块平移旋转缩放到位，是骨骼部件摆放的唯一入口（位置+欧拉角+统一缩放）",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ds",
    "name": "createCylinderY",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "沿 Y 轴的圆柱几何（默认朝向），机械件里最常见的轴对称体",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ro",
    "name": "createCylinderX",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "沿 X 轴的圆柱几何，绕 Z 转 -90° 得到，用于横向轴件与枪管",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Si",
    "name": "createCylinderZ",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "沿 Z 轴的圆柱几何，绕 X 转 +90° 得到，用于前后向的轴件与镜头筒",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "mm",
    "name": "strutFrom",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "createStrut 的起点暂存向量，复用以避免每帧新分配",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "gm",
    "name": "strutTo",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "createStrut 的终点暂存向量",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "X_",
    "name": "strutQuat",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "createStrut 的朝向四元数暂存（把圆柱从 Y 轴旋到两点连线方向）",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "DC",
    "name": "AXIS_Y",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "单位 Y 轴常量，作为圆柱默认朝向上的参考方向",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Y_",
    "name": "strutMatrix",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "createStrut 的复合变换矩阵暂存（中点位移 + 朝向 + 单位缩放）",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "LC",
    "name": "UNIT_SCALE",
    "kind": "const",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "单位缩放常量，给矩阵 compose 补位，避免每次 new 一个 Vector3(1,1,1)",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "su",
    "name": "createStrut",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "两点之间的圆柱拉杆生成器：按两点距离决定长度并自动对齐朝向，用于液压杆、天线、钢索这类跨关节的连接件",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Ur",
    "name": "createScaledSphere",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "可非均匀缩放的球体生成器，用一个球做出椭球壳体（浮筒、机头罩），比专门建几何省面",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "$_",
    "name": "makeBoltHexX",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "沿 X 轴的微型六角螺栓头（6 段圆柱），散落在装甲板上提供机械密度",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Yv",
    "name": "makeBoltHexY",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "沿 Y 轴的微型六角螺栓头，用于朝上的安装面",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "kC",
    "name": "makeBoltHexZ",
    "kind": "function",
-   "module": "src/core/geometry.js",
+   "module": "src/assets/procedural/geometry.js",
    "doc": "沿 Z 轴的微型六角螺栓头，用于朝前的安装面",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "$v",
    "name": "HOUND_RIG",
    "kind": "table",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "hound 四足机的骨架尺寸表：站高、大腿/小腿长、髋偏移、四条腿的落足点与内外侧符号、枪口与眼点局部坐标；骨骼与 IK 都以它为唯一尺度来源",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Z_",
    "name": "createWalkerModel",
    "kind": "function",
-   "module": "src/enemies/models.js",
+   "module": "src/content/models/enemies.js",
    "doc": "程序化搭建 hound 的整台机体：head/body/neck/turret/gun/antenna/beacon 加四条腿的 abd-thigh-shin 链，全部装甲板、螺栓、软管、发光线都按槽位塞进 Rig 后合并成一个蒙皮几何",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
    "oldName": "buildHoundRig",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "xm",
    "name": "GULL_RIG",
    "kind": "table",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "gull 四旋翼机的锚点表：四个旋翼位置、云台/球机/机炮/枪口/探照灯的局部坐标，骨骼与部件摆放都引这张表",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "FC",
    "name": "createRotorBellGeometry",
    "kind": "function",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "用旋转体轮廓生成旋翼桨毂外罩（lathe），比堆圆柱更贴合曲线外壳，四个旋翼共用同一份几何",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "j_",
    "name": "createDroneModel",
    "kind": "function",
-   "module": "src/enemies/models.js",
+   "module": "src/content/models/enemies.js",
    "doc": "程序化搭建 gull 无人机：机身、四旋翼、云台球机、探照灯、三色航行灯，并额外构建第二个 Rig 放不参与蒙皮的旋翼盘与探照锥（disc/cone 槽位）",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
    "oldName": "buildGullRig",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Zv",
    "name": "GULL_TUNE",
    "kind": "table",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "gull 的战斗数值：血量、电浆弹伤害/弹速、三连发间隔、预警时长、冷却区间、环绕半径/高度范围、散布与爆炸参数",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Pn",
    "name": "GULL_TUNE_ALIAS",
    "kind": "const",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "GULL_TUNE 在 gull AI 作用域内的短别名，所有数值读取都走它，改表即改行为",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "$o",
    "name": "gullScratch",
    "kind": "const",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "gull 每帧复用的临时向量（视线差、爆点、火花方向），避免在 AI 循环里分配对象",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "iz",
    "name": "gullSpareA",
    "kind": "const",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "gull 域预留的临时向量，当前代码里未被引用，保号以免后续改动破坏声明顺序",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Bs",
    "name": "gullDir",
    "kind": "const",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "gull 的临时方向向量（射线方向、射击方向），每帧复用",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Co",
    "name": "gullSteer",
    "kind": "const",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "gull 的期望加速度蓄水池：把悬停、环绕、闪避、受伤抖动全部累加后再限幅成加速度，是飞行手感的核心中间量",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "sz",
    "name": "gullSpareB",
    "kind": "const",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "gull 域预留的临时向量，当前代码里未被引用",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ou",
    "name": "gullAimPoint",
    "kind": "const",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "gull 云台要看向的世界点（玩家、可疑点或巡逻扫视点），云台偏航/俯仰都朝它收敛",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Hf",
    "name": "AXIS_UP",
    "kind": "const",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "单位 Y 轴常量，用于把局部偏移按偏航角旋转到世界方向（applyAxisAngle）",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "J_",
    "name": "AXIS_DOWN",
    "kind": "const",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "单位 -Y 轴常量，作为向下探测（防撞天花板/地面）的射线方向",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ym",
    "name": "GULL_LENS_IDLE",
    "kind": "table",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "gull 镜头在非交战态的 RGB 发光色，冷白光表示还在巡逻",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "UC",
    "name": "GULL_LENS_ENGAGED",
    "kind": "table",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "gull 镜头在交战态的 RGB 发光色，炽白偏红作为攻击预警的视觉语言",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "K_",
@@ -7411,129 +7411,129 @@
    "compressed": "Q_",
    "name": "createWalker",
    "kind": "function",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "gull 敌机的完整实体工厂：装配蒙皮、注册 damage/_activate/_deactivate/_raycast/_update 接口，内部实现三态（巡逻/调查/交战）飞行 AI、云台瞄准、三连发点射与击落螺旋坠毁；对象池复用，不 new",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
    "oldName": "createGull",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Kv",
    "name": "HOUND_TUNE",
    "kind": "table",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "hound 的战斗数值：血量、单发伤害、四连发节奏、预警时长、奔跑/潜行/巡逻速度、转向率、散布、扑咬距离与冷却、重寻路间隔",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Gt",
    "name": "HOUND_TUNE_ALIAS",
    "kind": "const",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "HOUND_TUNE 在 hound AI 作用域内的短别名",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ni",
    "name": "HOUND_RIG_ALIAS",
    "kind": "const",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "HOUND_RIG 在 hound AI 作用域内的别名，用于读取站高、髋偏移、腿长等骨骼尺度",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ps",
    "name": "houndBodyStart",
    "kind": "const",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "hound 受击/特效用的临时向量：机体质心一侧端点，兼作烟雾火花发射点",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "ru",
    "name": "houndBodyEnd",
    "kind": "const",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "hound 受击判定胶囊的另一端点，与 houndBodyStart 组成两条水平胶囊做身体命中测试",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Po",
    "name": "houndDir",
    "kind": "const",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "hound 的临时方向向量（前进探测方向、射击方向）",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Io",
    "name": "houndScratch",
    "kind": "const",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "hound 的多用途临时向量（探路射线起点、枪口世界坐标、候选开火点）",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "eM",
    "name": "houndTracerEnd",
    "kind": "const",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "hound 曳光弹的终点，由射线命中距离截断后传入特效",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Vf",
    "name": "houndAimPoint",
    "kind": "const",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "hound 射击时瞄准的玩家胸口点，兼作视线测试的端点",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "jv",
    "name": "HOUND_UP",
    "kind": "const",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "单位 Y 轴常量，用于以向上方向发射火花/尘土粒子",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "bm",
    "name": "LEG_IK_OUT",
    "kind": "table",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "腿 IK 的输出复用对象：一次解算写入 abd/hip/knee 三个关节角与 reach 伸展比，随后直接赋给骨骼 rotation，避免每帧新建结果对象",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "_m",
    "name": "HOUND_LENS_IDLE",
    "kind": "table",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "hound 传感器在非交战态的 RGB 发光色",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "NC",
    "name": "HOUND_LENS_ENGAGED",
    "kind": "table",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "hound 传感器在交战态的 RGB 发光色，比巡逻态更红更亮，作为开火前兆",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Mm",
@@ -7555,10 +7555,10 @@
    "compressed": "wm",
    "name": "HOUND_GAIT_PAIRS",
    "kind": "table",
-   "module": "src/enemies/walker.js",
+   "module": "src/gameplay/enemies/walker.js",
    "doc": "四足步态的对角腿分组（[0,3] 与 [1,2]），步态机每次只抬起其中一组，保证移动时始终有两点着地",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "xa",
@@ -7572,12 +7572,12 @@
    "compressed": "iM",
    "name": "createDrone",
    "kind": "function",
-   "module": "src/enemies/drone.js",
+   "module": "src/gameplay/enemies/drone.js",
    "doc": "hound 四足机的完整实体工厂：装配蒙皮与脚步 IK、注册 damage/_activate/_deactivate/_raycast/_update，内部实现巡逻/调查/交战状态机、A* 寻路跟随、掩体选点、预警-点射-扑咬三套攻击、程序化步态与死亡垮塌",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
    "oldName": "createHound",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "sM",
@@ -7623,120 +7623,120 @@
    "compressed": "Ui",
    "name": "AI_TUNE",
    "kind": "table",
-   "module": "src/enemies/enemies.js",
+   "module": "src/gameplay/enemies/enemies.js",
    "doc": "敌人 AI 的共用调度参数：视野距离与视锥角、失去视野宽限、搜索时长、听觉半径、同时开火令牌上限与间隔、暴露度增减速率、各类型对象池容量与曳光弹/残骸上限",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "BC",
    "name": "SIGHT_COS_HALF",
    "kind": "const",
-   "module": "src/enemies/enemies.js",
+   "module": "src/gameplay/enemies/enemies.js",
    "doc": "视锥半角的余弦阈值，与玩家方向点乘直接比较即可判定是否在视野内（省掉逐帧 acos）",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "oM",
    "name": "boltEndPoint",
    "kind": "const",
-   "module": "src/enemies/enemies.js",
+   "module": "src/gameplay/enemies/enemies.js",
    "doc": "gull 电浆弹本帧终点，用于与玩家胶囊做距离平方判定",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "pz",
    "name": "boltSpare",
    "kind": "const",
-   "module": "src/enemies/enemies.js",
+   "module": "src/gameplay/enemies/enemies.js",
    "doc": "AI 域预留的临时向量，当前代码里未被引用",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Qv",
    "name": "gullLightDir",
    "kind": "const",
-   "module": "src/enemies/enemies.js",
+   "module": "src/gameplay/enemies/enemies.js",
    "doc": "gull 探照灯的方向向量，由云台偏航/俯仰推出，用来把共享点光源投到地面或玩家身上",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "rM",
    "name": "boltQuat",
    "kind": "const",
-   "module": "src/enemies/enemies.js",
+   "module": "src/gameplay/enemies/enemies.js",
    "doc": "电浆弹实例化时的朝向四元数暂存（把 +Z 对齐到弹道方向）",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "aM",
    "name": "boltMatrix",
    "kind": "const",
-   "module": "src/enemies/enemies.js",
+   "module": "src/gameplay/enemies/enemies.js",
    "doc": "电浆弹写入 InstancedMesh 的变换矩阵暂存",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "lM",
    "name": "boltScale",
    "kind": "const",
-   "module": "src/enemies/enemies.js",
+   "module": "src/gameplay/enemies/enemies.js",
    "doc": "电浆弹实例的缩放暂存，Z 分量随生成后的飞行长度拉伸，做出拖尾",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "OC",
    "name": "AXIS_Z",
    "kind": "const",
-   "module": "src/enemies/enemies.js",
+   "module": "src/gameplay/enemies/enemies.js",
    "doc": "单位 Z 轴常量，作为电浆弹几何默认朝向的参考轴",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "mz",
    "name": "DOWN_SPARE",
    "kind": "const",
-   "module": "src/enemies/enemies.js",
+   "module": "src/gameplay/enemies/enemies.js",
    "doc": "AI 域预留的向下单位向量，当前代码里未被引用",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "cM",
    "name": "playerCapsuleLow",
    "kind": "const",
-   "module": "src/enemies/enemies.js",
+   "module": "src/gameplay/enemies/enemies.js",
    "doc": "玩家受击胶囊的下端点（脚踝高度），与上端点组成竖直胶囊",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "uM",
    "name": "playerCapsuleHigh",
    "kind": "const",
-   "module": "src/enemies/enemies.js",
+   "module": "src/gameplay/enemies/enemies.js",
    "doc": "玩家受击胶囊的上端点，蹲下时从 1.5m 收到 1.0m，让蹲伏真的能躲低飞的弹",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Em",
    "name": "createEnemies",
    "kind": "function",
-   "module": "src/enemies/enemies.js",
+   "module": "src/gameplay/enemies/enemies.js",
    "doc": "敌人系统总装：按池容量预生成 gull/hound、统一调度开火令牌与警戒集结、维护电浆弹实例池与共享探照点光源，并对外提供 spawn/raycast/alert/clear/update 接口",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
    "oldName": "createEnemySystem",
    "source": "original",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "o0",
@@ -7774,10 +7774,10 @@
    "compressed": "VC",
    "name": "showcaseEnemies",
    "kind": "function",
-   "module": "src/enemies/enemies.js",
+   "module": "src/gameplay/enemies/enemies.js",
    "doc": "敌人展示台：按 eshow 参数(gull/hound/both/fight/dead)摆出对应阵容并快进若干帧，让截图能直接看到飞行/行走/交火/击毁姿态",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "tx",
@@ -7917,73 +7917,73 @@
    "compressed": "Yi",
    "name": "MISSION_FLOW",
    "kind": "table",
-   "module": "src/game/flow.js",
+   "module": "src/app/flow.js",
    "doc": "任务节奏表：开场时长、重生开场时长、交互距离与朝向阈值、切断中继耗时、开场巡逻数量、三波敌人配置、同时存活上限、刷怪间隔与远距离阈值、全暗后的追击强度、标题镜头速度与 FOV",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "jC",
    "name": "COMPASS_NAMES",
    "kind": "table",
-   "module": "src/game/flow.js",
+   "module": "src/app/flow.js",
    "doc": "八个方位的英文全称，用于把刷怪方向换算成无线电/警示里的口语方位",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "_l",
    "name": "CONTROL_RADIO_LINES",
    "kind": "table",
-   "module": "src/game/flow.js",
+   "module": "src/app/flow.js",
    "doc": "Control 的无线电台词表：开场简报、首次接敌、切断一/二中继、全暗撤离、重伤、通关，是唯一的剧情文本源",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "mM",
    "name": "createGameFlow",
    "kind": "function",
-   "module": "src/game/flow.js",
+   "module": "src/app/flow.js",
    "doc": "游戏主流程状态机：title/intro/playing/paused/dead/complete 六态推进，串联标题镜头、中继交互与切断、按镜头方向刷怪、全暗后的追击压力、音频强度与后处理淡入淡出，并输出胜负结算",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "gM",
    "name": "SHOWCASE_REGISTRY",
    "kind": "table",
-   "module": "src/game.js",
+   "module": "src/app/showcase.js",
    "doc": "展示场景注册表：把 ?show= 的参数名映射到各模块的 showcase 入口（材质/关卡/背景/地面/特效/武器/敌人/道具/渲染），是调参与截图的总开关",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "vM",
    "name": "bootScreenEl",
    "kind": "const",
-   "module": "src/app/boot-screen.js",
+   "module": "src/app/boot.js",
    "doc": "启动遮罩元素（#boot），进度走完后加 done 类再隐藏，避免白屏闪烁",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "xM",
    "name": "bootMessageEl",
    "kind": "const",
-   "module": "src/app/boot-screen.js",
+   "module": "src/app/boot.js",
    "doc": "启动遮罩上的状态文案节点，逐阶段显示当前在做什么",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "yM",
    "name": "bootProgressEl",
    "kind": "const",
-   "module": "src/app/boot-screen.js",
+   "module": "src/app/boot.js",
    "doc": "启动遮罩上的进度条填充节点",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "original"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "bM",
@@ -7998,19 +7998,19 @@
    "compressed": "KC",
    "name": "yieldToPaint",
    "kind": "function",
-   "module": "src/app/boot-screen.js",
+   "module": "src/app/boot.js",
    "doc": "把控制权让给浏览器一帧（setTimeout 0），让启动进度条真的能重绘，否则同步阻塞的初始化阶段进度条会卡住不动",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "Nr",
    "name": "setBootProgress",
    "kind": "function",
-   "module": "src/app/boot-screen.js",
+   "module": "src/app/boot.js",
    "doc": "更新启动文案与进度并按需让出一帧，是 boot 序列里每个阶段之间的标准停顿点",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fingerprint"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "QC",
@@ -8038,19 +8038,19 @@
    "compressed": "tP",
    "name": "createStubInput",
    "kind": "function",
-   "module": "src/input/input.js",
+   "module": "src/platform/input.js",
    "doc": "空输入桩：展示模式下没有真实输入系统时顶替，保持字段形状一致，所有按键查询恒为 false",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   },
   {
    "compressed": "nP",
    "name": "createStubPlayer",
    "kind": "function",
-   "module": "src/player/player.js",
+   "module": "src/gameplay/player.js",
    "doc": "空玩家桩：展示模式没有真实玩家控制器时顶替，提供位置/朝向/血量等只读字段与空实现方法，让武器、HUD、敌人系统仍能正常运行",
    "domain": "H-骨骼、敌人 AI、主流程与 UI",
-   "moduleSource": "fallback"
+   "moduleSource": "relayout"
   }
  ],
  "params": {

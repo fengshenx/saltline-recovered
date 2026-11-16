@@ -2,7 +2,7 @@
 
 import * as THREE from 'three';
 
-import { createTiledPlane, createTiledSphere } from '../../core/geometry.js';
+import { createTiledPlane, createTiledSphere } from '../../assets/procedural/geometry.js';
 
 /**
  * 用世界坐标三平面投影的材质名集合：枪械、手套、装甲、橡胶这些小件没有合理 uv，改三平面采样可避免贴图拉伸与接缝
