@@ -137,7 +137,36 @@ dev 构建补了一个机械检查：
 
 也可在控制台手动调用：`window.__checkProp('forklift', 0.01)`。容差默认 1cm，贴面接触算接上。
 
-## 七、已知限制
+## 七、离屏出图（没有前台浏览器时）
+
+后台标签页的 rAF 会被暂停，`frames` 恒为 0，也截不到图。`tools/shot.mjs` 用 Chrome
+DevTools Protocol 起一个 headless 实例（swiftshader 软件光栅），轮询 `window.__ready`
+与 `window.__frames`，等场景真的跑起来再抓图：
+
+```bash
+node tools/shot.mjs "http://127.0.0.1:8766/dist/saltline.dev.html?show=props&names=abandoned_sedan&cam=5.4,1.8,5.2,0,0.78,0" /tmp/car.png 60000 40
+```
+
+参数依次是 `<url> [输出路径] [超时ms] [最少帧数]`。页面 `fatal` 或 `__errors` 非空会打印到
+stderr，改完立刻能看到报错原文（比在 snapshot 里翻 JSON 快）。
+
+注意：headless + swiftshader 比真机慢 5-10 倍，三角形多的场景要多给超时。
+
+## 八、几何原语补充（本项目）
+
+- `catmullRomPath(points, samplesPerSegment, closed)`（`assets/procedural/geometry.js`）
+  把控制点加密成光滑折线，2D 用于截面与纵向剖面，3D 用于空间路径。车身这类"沿长度连续变形"
+  的形体靠它 + `loftProfileSurface` 的 `project` 回调实现，每站独立取尺寸，不再是同一截面拉伸。
+- 倒角在两条路径上产生：profile 转折处插圆角点（截面倒角）、关键帧纵向用样条插值（棱线倒角）。
+- CSG 布尔（`three-bvh-csg`）：`new Brush(geometry)` 包住两块几何，`Evaluator.evaluate(a, b, SUBTRACTION)`。
+  车身轮拱就是这么挖的——圆柱沿 X 轴贯穿车身做差集。**注意**：结果几何会丢顶点属性，需要
+  按位置重新算顶点色；单次差集在几千三角形量级约几十毫秒，配 `buildCachedPropClone` 只在首建时算。
+- `tools/link.mjs` 会把 `src/` 里所有非相对路径的 import 重建到 bundle 顶部（原先只硬编码 three，
+  用别的包会被静默丢掉）。
+
+## 九、已知限制
 
 - 后台标签页的 `requestAnimationFrame` 会被浏览器暂停（`frames` 恒为 0），要在可见窗口里看效果
 - `?show=` 模式下 `hud` / `audio` / `weapon` / `enemies` 等都是 stub，想同时看这些就别用 showcase，走 `?autostart=1`
+- `transmission` 材质（玻璃）在没有场景背景时会折射出黑色：showcase 里 `backdrop`/`sky` 被 stub，
+  玻璃看起来发黑是环境问题，不是材质问题，用 `?show=backdrop&bshow=sky` 或完整游戏里看

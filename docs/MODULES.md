@@ -68,12 +68,20 @@ src/
     level/buildings.js     仓库、车间、办公楼的构造
     props/registry.js      道具注册表（PROP_SIZES + 生成入口）
     props/geometry.js      道具通用几何
-    props/basic-builders.js    基础道具（护栏、锥桶、托盘、电缆盘、沙袋、轮胎…）
+    props/containers.js    集装箱箱体与部件（角件、波纹板、门锁杆、铭牌）
+    props/barriers.js      围栏类（水马、铁丝网、道闸、岗亭）
+    props/fixtures.js      杆件与灯具（灯杆、泛光灯、标志牌、照明架）
+    props/mooring.js       系泊件（系缆桩、立柱）
+    props/structures.js    通行结构（钢梯、检修通道）
+    props/storage.js       仓储件（托盘垛、货架、冷藏机组）
+    props/relay.js         中继节点设备
+    props/parts-geometry.js 零件级几何原语（油桶轮廓、轮胎、沙袋）
+    props/vehicles.js      车辆（手推车、被遗弃轿车）
     props/cargo-builders.js    集装箱、IBC 吨桶、冷藏机组
     props/detailed-builders.js 细节道具（叉车、灯杆、岗亭、楼梯、货架…）
     props/character-builders.js 人物相关道具
     props/detail-geometry.js   道具细节几何
-    props/props.js         道具模块聚合导出
+    props/props.js         道具模块聚合导出（原 basic-builders.js 5000+ 行，已按职责拆为上面 9 个文件）
     models/enemies.js      敌人模型（Walker / Drone 的网格与材质）
 
   gameplay/                玩法规则

@@ -109,6 +109,31 @@ export var makeSurfaceSpec = (set, e = {}) => ({
 /**
  * 把表面系统的 8 段 GLSL 按锚点注入 MeshStandardMaterial 的 onBeforeCompile 钩子并挂上 uniforms；这是所有自定义表面进入 three 标准光照的唯一入口，锚点一旦对不上就会静默失效
  */
+/**
+ * 物理材质扩展字段：命中任一键即改用 MeshPhysicalMaterial，未声明的保持 MeshStandardMaterial（不影响原有 48 条材质）
+ */
+const PHYSICAL_EXTRA_KEYS = [
+  'clearcoat',
+  'clearcoatRoughness',
+  'transmission',
+  'thickness',
+  'ior',
+  'sheen',
+  'sheenColor',
+  'sheenRoughness',
+  'specularIntensity',
+  'reflectivity',
+];
+
+/** 把规格里的物理扩展字段搬到材质实例上（three 的默认值不写，省 uniform） */
+function applyPhysicalExtras(material, spec) {
+  for (const key of PHYSICAL_EXTRA_KEYS) if (spec[key] !== undefined) material[key] = spec[key];
+  material.sheenColor instanceof THREE.Color &&
+    spec.sheenColor !== undefined &&
+    material.sheenColor.set(spec.sheenColor);
+  return material;
+}
+
 export function patchMaterialShader(shader, uniforms) {
   (Object.assign(shader.uniforms, uniforms),
     (shader.vertexShader = shader.vertexShader
@@ -352,21 +377,37 @@ export async function createMaterials(app) {
     }
     let G = !!q.triplanar,
       j = !D.transparent && !D.alphaCut;
-    ((T = new THREE.MeshStandardMaterial({
-      map: C.albedo,
-      normalMap: C.normal,
-      roughnessMap: C.orm,
-      metalnessMap: C.orm,
-      aoMap: C.orm,
-      color: q.color !== void 0 ? q.color : D.color,
-      roughness: D.rough,
-      metalness: D.metal,
-      vertexColors: !!q.vertexColors,
-    })),
+    (PHYSICAL_EXTRA_KEYS.some((key) => D[key] !== undefined)
+      ? ((T = applyPhysicalExtras(
+          new THREE.MeshPhysicalMaterial({
+            map: C.albedo,
+            normalMap: C.normal,
+            roughnessMap: C.orm,
+            metalnessMap: C.orm,
+            aoMap: C.orm,
+            color: q.color !== void 0 ? q.color : D.color,
+            roughness: D.rough,
+            metalness: D.metal,
+            vertexColors: !!q.vertexColors,
+          }),
+          D,
+        )),
+        D.transmission !== undefined && (T.transparent = !1))
+      : (T = new THREE.MeshStandardMaterial({
+          map: C.albedo,
+          normalMap: C.normal,
+          roughnessMap: C.orm,
+          metalnessMap: C.orm,
+          aoMap: C.orm,
+          color: q.color !== void 0 ? q.color : D.color,
+          roughness: D.rough,
+          metalness: D.metal,
+          vertexColors: !!q.vertexColors,
+        })),
       T.normalScale.set(D.nrm, D.nrm),
       (T.name = O),
       (q.doubleSide || D.side === 2) && (T.side = THREE.DoubleSide),
-      D.transparent && ((T.transparent = !0), (T.depthWrite = !1), (T.envMapIntensity = 1.4)),
+      D.transparent && D.transmission === undefined && ((T.transparent = !0), (T.depthWrite = !1), (T.envMapIntensity = 1.4)),
       D.alphaCut && (T.alphaTest = 0.5),
       (T.defines = {
         ...T.defines,

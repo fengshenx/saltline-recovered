@@ -18,7 +18,7 @@ import { applyTransform, clampValue, composePropTransform } from '../../audio/au
 
 import { resolvePaintColorAlias } from '../level/buildings.js';
 
-import { barrelProfile } from './basic-builders.js';
+import { barrelProfile } from './parts-geometry.js';
 
 import { PROP_SIZES } from './registry.js';
 

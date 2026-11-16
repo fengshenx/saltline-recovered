@@ -213,6 +213,9 @@ var makePaintSpec = (color) =>
     color: color,
     wet: WET_PAINT,
     macro: [0.2, 0.16, 0.4, 0.45],
+    clearcoat: 1,
+    clearcoatRoughness: 0.12,
+    specularIntensity: 0.85,
   });
 
 /**
@@ -404,12 +407,22 @@ export var SURFACE_LIB = {
     transparent: !0,
     wet: WET_NONE,
     macro: MACRO_NONE,
+    transmission: 0.92,
+    thickness: 0.012,
+    ior: 1.52,
+    roughness: 0.06,
+    metalness: 0,
   }),
   glass_dirty: makeSurfaceSpec('glass_dirty', {
     tint: 3,
     transparent: !0,
     wet: WET_NONE,
     macro: MACRO_NONE,
+    transmission: 0.5,
+    thickness: 0.03,
+    ior: 1.5,
+    roughness: 0.42,
+    metalness: 0,
   }),
   hull_paint: makeSurfaceSpec('hull', {
     tint: 1,

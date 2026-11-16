@@ -12,23 +12,28 @@ import {
 
 import { createLevel, showcaseLevel } from './content/level/level.js';
 
+import { buildBasicContainer } from './content/props/containers.js';
+
 import {
-  buildBasicContainer,
-  buildBollardPost,
-  buildCatwalk,
   buildFencePanel,
-  buildFloodlightStand,
   buildGateArm,
   buildGuardBooth,
   buildJerseyBarrier,
+} from './content/props/barriers.js';
+
+import { buildCatwalk, buildMetalStairs } from './content/props/structures.js';
+
+import {
+  buildFloodlightStand,
   buildLightMast,
-  buildMetalStairs,
-  buildMooringBollard,
-  buildReeferUnit,
-  buildRelayNode,
-  buildShelfRack,
   buildSignPost,
-} from './content/props/basic-builders.js';
+} from './content/props/fixtures.js';
+
+import { buildBollardPost, buildMooringBollard } from './content/props/mooring.js';
+
+import { buildReeferUnit, buildShelfRack } from './content/props/storage.js';
+
+import { buildRelayNode } from './content/props/relay.js';
 
 import { registerCargoProps } from './content/props/cargo-builders.js';
 

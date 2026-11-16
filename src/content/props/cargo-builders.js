@@ -21,7 +21,7 @@ import { clampValue } from '../../audio/audio.js';
 
 import { resolvePaintColorAlias } from '../level/buildings.js';
 
-import { createTireProfileGeometry } from './basic-builders.js';
+import { createTireProfileGeometry } from './parts-geometry.js';
 
 import {
   PropAssembler,

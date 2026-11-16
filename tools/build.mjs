@@ -125,7 +125,7 @@ setInterval(function () {
       var m = /[?&]check=([^&]+)/.exec(location.search);
       if (!m || !window.__checkProp) return null;
       var r = window.__checkProp(decodeURIComponent(m[1]));
-      return r && r.ok === false ? r : r && r.error ? r : 'ok';
+      return r && r.error ? r : { ok: r.ok, parts: r.parts, clusters: r.clusters, bounds: r.bounds, orphan: r.ok ? undefined : r.orphan };
     })(),
     modules: window.__G ? Object.keys(window.__G).filter(function (k) {
       return window.__G[k] && typeof window.__G[k] === 'object';

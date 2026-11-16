@@ -41,13 +41,42 @@ const walk = (dir) => {
 walk(SRC);
 
 const buckets = new Map(); // mod(相对 src 的 'src/x.js') -> { named: Map, anon: [] }
+// 外部包 import 原先被固定写成只保留 three，声明用的包（如 three-bvh-csg）会被丢掉，这里按需重建
+const externalImports = new Map();
+const rebuildImport = (node) => {
+  const defaultBinding = [];
+  const namespaceBinding = [];
+  const namedBindings = [];
+  for (const spec of node.specifiers) {
+    if (t.isImportDefaultSpecifier(spec)) defaultBinding.push(spec.local.name);
+    else if (t.isImportNamespaceSpecifier(spec)) namespaceBinding.push(`* as ${spec.local.name}`);
+    else
+      namedBindings.push(
+        spec.imported.name === spec.local.name
+          ? spec.imported.name
+          : `${spec.imported.name} as ${spec.local.name}`,
+      );
+  }
+  const clause = [
+    defaultBinding[0],
+    namespaceBinding[0],
+    namedBindings.length ? `{ ${namedBindings.join(', ')} }` : null,
+  ]
+    .filter(Boolean)
+    .join(', ');
+  return `import ${clause} from '${node.source.value}';`;
+};
 for (const file of files) {
   const rel = relative(resolve('.'), file).split('\\').join('/');
   const ast = parser.parse(readFileSync(file, 'utf8'), { sourceType: 'module' });
   const bucket = { named: new Map(), anon: [], leftover: [] };
   for (const node of ast.program.body) {
     let stmt = node;
-    if (t.isImportDeclaration(node)) continue;
+    if (t.isImportDeclaration(node)) {
+      if (!node.source.value.startsWith('.'))
+        externalImports.set(node.source.value, rebuildImport(node));
+      continue;
+    }
     if (t.isExportAllDeclaration(node)) continue;
     if (t.isExportNamedDeclaration(node)) {
       if (!node.declaration) continue; // export { a, b } 之类
@@ -98,7 +127,10 @@ const chunks = ordered.map((node) =>
 
 const code = `// 由 tools/link.mjs 生成——不要直接编辑，改 src/ 后跑 npm run build。
 // 语句顺序 = 原始 bundle 的书写顺序（src/.manifest.json 记录），保证 var 初始化顺序不变。
-import * as THREE from 'three';
+${[...externalImports.entries()]
+  .sort(([a], [b]) => (a === 'three' ? -1 : b === 'three' ? 1 : a.localeCompare(b)))
+  .map(([, line]) => line)
+  .join('\n')}
 
 ${chunks.join('\n\n')}
 `;

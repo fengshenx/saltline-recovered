@@ -15,7 +15,7 @@ import {
 
 import { clampValue } from '../../audio/audio.js';
 
-import { createSandbagGeometry, smoothstepRangeAlt2 } from './basic-builders.js';
+import { createSandbagGeometry, smoothstepRangeAlt2 } from './parts-geometry.js';
 
 import {
   PropAssembler,

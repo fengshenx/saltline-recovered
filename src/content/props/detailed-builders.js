@@ -26,7 +26,9 @@ import { buildPalletStack } from '../level/placement.js';
 
 import { createCableReelDiscGeometries } from '../models/enemies.js';
 
-import { buildAbandonedSedan, buildHandTruck, createTireProfileGeometry } from './basic-builders.js';
+import { buildAbandonedSedan, buildHandTruck } from './vehicles.js';
+
+import { createTireProfileGeometry } from './parts-geometry.js';
 
 import {
   PropAssembler,

@@ -590,6 +590,39 @@ function orientTrianglesOutward(positions, uvs, start, end, center, inward) {
 }
 
 /**
+ * Catmull-Rom 样条采样：把控制点加密成光滑折线，维度由首点长度决定（2D 用于截面与纵向剖面，3D 用于空间路径）；closed 时首尾相接循环
+ */
+export function catmullRomPath(points, samplesPerSegment = 6, closed = !1) {
+  let pointCount = points.length;
+  if (pointCount < 3) return points.map((point) => point.slice());
+  let dims = points[0].length,
+    wrap = (index) => points[closed ? ((index % pointCount) + pointCount) % pointCount : Math.min(pointCount - 1, Math.max(0, index))],
+    result = [],
+    segmentCount = closed ? pointCount : pointCount - 1;
+  for (let segIndex = 0; segIndex < segmentCount; segIndex++) {
+    let p0 = wrap(segIndex - 1),
+      p1 = wrap(segIndex),
+      p2 = wrap(segIndex + 1),
+      p3 = wrap(segIndex + 2);
+    for (let step = 0; step < samplesPerSegment; step++) {
+      let t = step / samplesPerSegment,
+        t2 = t * t,
+        t3 = t2 * t,
+        point = [];
+      for (let axis = 0; axis < dims; axis++) {
+        let a = p0[axis], b = p1[axis], c = p2[axis], d = p3[axis];
+        point.push(
+          0.5 * (2 * b + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t2 + (-a + 3 * b - 3 * c + d) * t3),
+        );
+      }
+      result.push(point);
+    }
+  }
+  closed || result.push(points[pointCount - 1].slice());
+  return result;
+}
+
+/**
  * 截面放样：把二维截面对照着站点序列逐段投影成带状曲面（集装箱波纹板、天沟、包边都靠它），可选首尾封盖并统一朝外绕序
  */
 export function loftProfileSurface(
