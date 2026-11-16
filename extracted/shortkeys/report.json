@@ -1,0 +1,6341 @@
+[
+ {
+  "name": "x",
+  "defs": 32,
+  "reads": 580,
+  "moduleCount": 38,
+  "modules": [
+   "src/app/benchmark.js",
+   "src/app/flow.js",
+   "src/app/runtime.js",
+   "src/assets/procedural/geometry.js",
+   "src/audio/audio.js",
+   "src/content/backdrop/backdrop.js",
+   "src/content/backdrop/cranes.js",
+   "src/content/backdrop/ships.js",
+   "src/content/backdrop/sky.js",
+   "src/content/ground/asphalt.js",
+   "src/content/ground/ground.js",
+   "src/content/ground/water.js",
+   "src/content/level/buildings.js",
+   "src/content/level/level.js",
+   "src/content/level/placement.js",
+   "src/content/models/enemies.js",
+   "src/content/props/basic-builders.js",
+   "src/content/props/cargo-builders.js",
+   "src/content/props/character-builders.js",
+   "src/content/props/detail-geometry.js",
+   "src/content/props/detailed-builders.js",
+   "src/core/math.js",
+   "src/gameplay/combat.js",
+   "src/gameplay/enemies/drone.js",
+   "src/gameplay/enemies/enemies.js",
+   "src/gameplay/enemies/walker.js",
+   "src/gameplay/player.js",
+   "src/gameplay/weapons/geometry.js",
+   "src/gameplay/weapons/weapon.js",
+   "src/physics/collision.js",
+   "src/platform/input.js",
+   "src/render/effects/effects.js",
+   "src/render/effects/particles.js",
+   "src/render/effects/pools.js",
+   "src/render/materials/showcase.js",
+   "src/render/postprocessing.js",
+   "src/render/renderer.js",
+   "src/ui/hud.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 474,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 574,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 925,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1078,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1461,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1470,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/app/benchmark.js",
+    "line": 75
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 203
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 203
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 205
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 206
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 231
+   }
+  ]
+ },
+ {
+  "name": "z",
+  "defs": 21,
+  "reads": 497,
+  "moduleCount": 33,
+  "modules": [
+   "src/app/flow.js",
+   "src/app/runtime.js",
+   "src/assets/procedural/geometry.js",
+   "src/audio/audio.js",
+   "src/content/backdrop/backdrop.js",
+   "src/content/backdrop/cranes.js",
+   "src/content/backdrop/ships.js",
+   "src/content/backdrop/sky.js",
+   "src/content/ground/asphalt.js",
+   "src/content/ground/ground.js",
+   "src/content/ground/water.js",
+   "src/content/level/buildings.js",
+   "src/content/level/level.js",
+   "src/content/models/enemies.js",
+   "src/content/props/basic-builders.js",
+   "src/content/props/cargo-builders.js",
+   "src/content/props/character-builders.js",
+   "src/content/props/detail-geometry.js",
+   "src/content/props/detailed-builders.js",
+   "src/core/math.js",
+   "src/gameplay/combat.js",
+   "src/gameplay/enemies/drone.js",
+   "src/gameplay/enemies/enemies.js",
+   "src/gameplay/enemies/walker.js",
+   "src/gameplay/player.js",
+   "src/gameplay/weapons/geometry.js",
+   "src/gameplay/weapons/rig.js",
+   "src/gameplay/weapons/weapon.js",
+   "src/physics/collision.js",
+   "src/render/effects/effects.js",
+   "src/render/effects/pools.js",
+   "src/render/renderer.js",
+   "src/ui/hud.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 476,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 576,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 927,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1080,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1463,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1472,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/app/flow.js",
+    "line": 203
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 203
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 205
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 206
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 231
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 231
+   }
+  ]
+ },
+ {
+  "name": "y",
+  "defs": 22,
+  "reads": 471,
+  "moduleCount": 35,
+  "modules": [
+   "src/app/benchmark.js",
+   "src/app/flow.js",
+   "src/app/runtime.js",
+   "src/assets/procedural/geometry.js",
+   "src/audio/audio.js",
+   "src/content/backdrop/backdrop.js",
+   "src/content/backdrop/cranes.js",
+   "src/content/backdrop/ships.js",
+   "src/content/ground/asphalt.js",
+   "src/content/ground/ground.js",
+   "src/content/ground/water.js",
+   "src/content/level/buildings.js",
+   "src/content/level/level.js",
+   "src/content/models/enemies.js",
+   "src/content/props/basic-builders.js",
+   "src/content/props/cargo-builders.js",
+   "src/content/props/character-builders.js",
+   "src/content/props/detail-geometry.js",
+   "src/content/props/detailed-builders.js",
+   "src/core/math.js",
+   "src/gameplay/combat.js",
+   "src/gameplay/enemies/drone.js",
+   "src/gameplay/enemies/enemies.js",
+   "src/gameplay/enemies/walker.js",
+   "src/gameplay/player.js",
+   "src/gameplay/weapons/geometry.js",
+   "src/gameplay/weapons/weapon.js",
+   "src/physics/collision.js",
+   "src/platform/input.js",
+   "src/render/effects/effects.js",
+   "src/render/effects/particles.js",
+   "src/render/effects/pools.js",
+   "src/render/postprocessing.js",
+   "src/render/renderer.js",
+   "src/ui/hud.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 475,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 575,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 926,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1079,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1462,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1471,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/app/benchmark.js",
+    "line": 75
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 231
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 231
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 231
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 231
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 243
+   }
+  ]
+ },
+ {
+  "name": "r",
+  "defs": 368,
+  "reads": 65,
+  "moduleCount": 15,
+  "modules": [
+   "src/assets/procedural/geometry.js",
+   "src/audio/audio.js",
+   "src/content/backdrop/backdrop.js",
+   "src/content/backdrop/ships.js",
+   "src/content/backdrop/sky.js",
+   "src/content/level/buildings.js",
+   "src/content/level/placement.js",
+   "src/content/props/basic-builders.js",
+   "src/content/props/cargo-builders.js",
+   "src/content/props/character-builders.js",
+   "src/content/props/detail-geometry.js",
+   "src/content/props/detailed-builders.js",
+   "src/gameplay/weapons/weapon.js",
+   "src/render/effects/effects.js",
+   "src/render/postprocessing.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 2071,
+    "shorthand": false
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 2086,
+    "shorthand": false
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 2094,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/backdrop/ships.js",
+    "line": 380,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/backdrop/ships.js",
+    "line": 798,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/backdrop/sky.js",
+    "line": 381,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 880
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 882
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 922
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 924
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 30,
+    "destructured": true
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 63,
+    "destructured": true
+   }
+  ]
+ },
+ {
+  "name": "p",
+  "defs": 308,
+  "reads": 51,
+  "moduleCount": 14,
+  "modules": [
+   "src/assets/procedural/geometry.js",
+   "src/audio/audio.js",
+   "src/content/level/buildings.js",
+   "src/content/level/placement.js",
+   "src/content/props/cargo-builders.js",
+   "src/content/props/character-builders.js",
+   "src/content/props/detail-geometry.js",
+   "src/content/props/detailed-builders.js",
+   "src/gameplay/enemies/drone.js",
+   "src/gameplay/weapons/geometry.js",
+   "src/gameplay/weapons/weapon.js",
+   "src/render/effects/effects.js",
+   "src/render/materials/catalog.js",
+   "src/render/materials/materials.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 2070,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 85,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 110,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 165,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 1617,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 1622,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 30,
+    "destructured": true
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 62,
+    "destructured": true
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 75
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 75
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 75
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 75
+   }
+  ]
+ },
+ {
+  "name": "PI",
+  "defs": 0,
+  "reads": 184,
+  "moduleCount": 33,
+  "modules": [
+   "src/animation/skeleton.js",
+   "src/app/flow.js",
+   "src/app/runtime.js",
+   "src/assets/procedural/geometry.js",
+   "src/assets/procedural/textures.js",
+   "src/audio/library.js",
+   "src/audio/synthesis.js",
+   "src/content/backdrop/backdrop.js",
+   "src/content/backdrop/cranes.js",
+   "src/content/backdrop/ships.js",
+   "src/content/ground/asphalt.js",
+   "src/content/ground/geometry.js",
+   "src/content/ground/water.js",
+   "src/content/level/buildings.js",
+   "src/content/level/placement.js",
+   "src/content/props/basic-builders.js",
+   "src/content/props/character-builders.js",
+   "src/core/math.js",
+   "src/gameplay/enemies/drone.js",
+   "src/gameplay/enemies/enemies.js",
+   "src/gameplay/enemies/walker.js",
+   "src/gameplay/player.js",
+   "src/gameplay/weapons/geometry.js",
+   "src/gameplay/weapons/rig.js",
+   "src/gameplay/weapons/weapon.js",
+   "src/init-order.js",
+   "src/misc.js",
+   "src/render/effects/effects.js",
+   "src/render/effects/particles.js",
+   "src/render/effects/pools.js",
+   "src/render/materials/showcase.js",
+   "src/render/renderer.js",
+   "src/ui/hud.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/animation/skeleton.js",
+    "line": 102
+   },
+   {
+    "mod": "src/animation/skeleton.js",
+    "line": 102
+   },
+   {
+    "mod": "src/animation/skeleton.js",
+    "line": 102
+   },
+   {
+    "mod": "src/animation/skeleton.js",
+    "line": 102
+   },
+   {
+    "mod": "src/animation/skeleton.js",
+    "line": 113
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 468
+   }
+  ]
+ },
+ {
+  "name": "n",
+  "defs": 59,
+  "reads": 35,
+  "moduleCount": 6,
+  "modules": [
+   "src/audio/audio.js",
+   "src/audio/library.js",
+   "src/gameplay/weapons/geometry.js",
+   "src/render/effects/effects.js",
+   "src/render/effects/particles.js",
+   "src/render/renderer.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/library.js",
+    "line": 3105,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3115,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3125,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3135,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3145,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3154,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 294
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 533
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 533
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 534
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3689
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3707
+   }
+  ]
+ },
+ {
+  "name": "M",
+  "defs": 2,
+  "reads": 92,
+  "moduleCount": 5,
+  "modules": [
+   "src/content/level/buildings.js",
+   "src/content/level/placement.js",
+   "src/content/props/basic-builders.js",
+   "src/render/effects/effects.js",
+   "src/render/effects/particles.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 390,
+    "shorthand": false
+   },
+   {
+    "mod": "src/render/effects/particles.js",
+    "line": 891,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 596,
+    "destructured": true
+   },
+   {
+    "mod": "src/content/level/placement.js",
+    "line": 85
+   },
+   {
+    "mod": "src/content/level/placement.js",
+    "line": 86
+   },
+   {
+    "mod": "src/content/level/placement.js",
+    "line": 141
+   },
+   {
+    "mod": "src/content/level/placement.js",
+    "line": 165
+   },
+   {
+    "mod": "src/content/level/placement.js",
+    "line": 173
+   }
+  ]
+ },
+ {
+  "name": "h",
+  "defs": 10,
+  "reads": 68,
+  "moduleCount": 9,
+  "modules": [
+   "src/audio/audio.js",
+   "src/content/backdrop/backdrop.js",
+   "src/content/backdrop/ships.js",
+   "src/content/ground/asphalt.js",
+   "src/content/ground/geometry.js",
+   "src/content/ground/ground.js",
+   "src/content/level/buildings.js",
+   "src/physics/collision.js",
+   "src/render/postprocessing.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 836,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 929,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/backdrop/ships.js",
+    "line": 378,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/backdrop/ships.js",
+    "line": 796,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/ground/ground.js",
+    "line": 266,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 451,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 848
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 848
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 884
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 885
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 892
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 892
+   }
+  ]
+ },
+ {
+  "name": "hp",
+  "defs": 49,
+  "reads": 21,
+  "moduleCount": 5,
+  "modules": [
+   "src/audio/library.js",
+   "src/audio/synthesis.js",
+   "src/gameplay/enemies/drone.js",
+   "src/gameplay/enemies/walker.js",
+   "src/ui/hud.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/library.js",
+    "line": 47,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 56,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 73,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 95,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 201,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 274,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 221
+   },
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 221
+   },
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 316
+   },
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 316
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 193
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 285
+   }
+  ]
+ },
+ {
+  "name": "sr",
+  "defs": 59,
+  "reads": 8,
+  "moduleCount": 3,
+  "modules": [
+   "src/audio/audio.js",
+   "src/audio/library.js",
+   "src/audio/music.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/library.js",
+    "line": 3106,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3116,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3126,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3136,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3146,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3155,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 267
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3593
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3601
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3609
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3617
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3625
+   }
+  ]
+ },
+ {
+  "name": "t",
+  "defs": 11,
+  "reads": 50,
+  "moduleCount": 8,
+  "modules": [
+   "src/app/flow.js",
+   "src/app/runtime.js",
+   "src/gameplay/enemies/drone.js",
+   "src/gameplay/enemies/enemies.js",
+   "src/gameplay/enemies/walker.js",
+   "src/gameplay/weapons/weapon.js",
+   "src/render/effects/effects.js",
+   "src/render/renderer.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/app/flow.js",
+    "line": 193,
+    "shorthand": false
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 286,
+    "shorthand": false
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 618,
+    "shorthand": false
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 628,
+    "shorthand": false
+   },
+   {
+    "mod": "src/app/runtime.js",
+    "line": 76,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/enemies/enemies.js",
+    "line": 181,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/app/flow.js",
+    "line": 235
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 235
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 235
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 236
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 239
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 254
+   }
+  ]
+ },
+ {
+  "name": "v",
+  "defs": 9,
+  "reads": 50,
+  "moduleCount": 7,
+  "modules": [
+   "src/audio/audio.js",
+   "src/core/math.js",
+   "src/gameplay/enemies/drone.js",
+   "src/gameplay/player.js",
+   "src/gameplay/weapons/geometry.js",
+   "src/gameplay/weapons/rig.js",
+   "src/gameplay/weapons/weapon.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 300,
+    "shorthand": false
+   },
+   {
+    "mod": "src/core/math.js",
+    "line": 290,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 241,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 245,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 249,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 253,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 319
+   },
+   {
+    "mod": "src/core/math.js",
+    "line": 302
+   },
+   {
+    "mod": "src/core/math.js",
+    "line": 302
+   },
+   {
+    "mod": "src/core/math.js",
+    "line": 303
+   },
+   {
+    "mod": "src/core/math.js",
+    "line": 339
+   },
+   {
+    "mod": "src/core/math.js",
+    "line": 339
+   }
+  ]
+ },
+ {
+  "name": "b",
+  "defs": 8,
+  "reads": 44,
+  "moduleCount": 6,
+  "modules": [
+   "src/assets/procedural/geometry.js",
+   "src/content/backdrop/backdrop.js",
+   "src/content/props/detail-geometry.js",
+   "src/gameplay/weapons/weapon.js",
+   "src/render/effects/effects.js",
+   "src/render/postprocessing.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 248,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 259,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 277,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 304,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 321,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 336,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1577
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1599
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1605
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1611
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1617
+   },
+   {
+    "mod": "src/content/backdrop/backdrop.js",
+    "line": 173
+   }
+  ]
+ },
+ {
+  "name": "g",
+  "defs": 4,
+  "reads": 46,
+  "moduleCount": 5,
+  "modules": [
+   "src/assets/procedural/textures.js",
+   "src/audio/audio.js",
+   "src/content/backdrop/backdrop.js",
+   "src/render/effects/effects.js",
+   "src/render/postprocessing.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/textures.js",
+    "line": 1618,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 456,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 639,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 721,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/assets/procedural/textures.js",
+    "line": 1647
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 465
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 466
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 561
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 587
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 643
+   }
+  ]
+ },
+ {
+  "name": "w",
+  "defs": 7,
+  "reads": 30,
+  "moduleCount": 10,
+  "modules": [
+   "src/assets/procedural/textures.js",
+   "src/content/ground/asphalt.js",
+   "src/content/ground/geometry.js",
+   "src/content/ground/ground.js",
+   "src/content/ground/water.js",
+   "src/content/level/buildings.js",
+   "src/content/props/basic-builders.js",
+   "src/physics/collision.js",
+   "src/render/effects/pools.js",
+   "src/render/postprocessing.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/textures.js",
+    "line": 1617,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/ground/ground.js",
+    "line": 265,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 450,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 1056,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 115,
+    "shorthand": false
+   },
+   {
+    "mod": "src/physics/collision.js",
+    "line": 419,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/assets/procedural/textures.js",
+    "line": 1648
+   },
+   {
+    "mod": "src/assets/procedural/textures.js",
+    "line": 1648
+   },
+   {
+    "mod": "src/content/ground/asphalt.js",
+    "line": 250
+   },
+   {
+    "mod": "src/content/ground/asphalt.js",
+    "line": 420
+   },
+   {
+    "mod": "src/content/ground/asphalt.js",
+    "line": 425
+   },
+   {
+    "mod": "src/content/ground/geometry.js",
+    "line": 15
+   }
+  ]
+ },
+ {
+  "name": "on",
+  "defs": 2,
+  "reads": 34,
+  "moduleCount": 9,
+  "modules": [
+   "src/app/flow.js",
+   "src/audio/audio.js",
+   "src/content/props/basic-builders.js",
+   "src/gameplay/combat.js",
+   "src/gameplay/enemies/enemies.js",
+   "src/gameplay/player.js",
+   "src/render/effects/effects.js",
+   "src/render/renderer.js",
+   "src/ui/hud.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 705,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/enemies/enemies.js",
+    "line": 337,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/app/flow.js",
+    "line": 383
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 579
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 585
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 588
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 673
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 709
+   }
+  ]
+ },
+ {
+  "name": "q",
+  "defs": 22,
+  "reads": 13,
+  "moduleCount": 5,
+  "modules": [
+   "src/app/runtime.js",
+   "src/audio/library.js",
+   "src/audio/synthesis.js",
+   "src/gameplay/weapons/weapon.js",
+   "src/ui/menus.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/library.js",
+    "line": 85,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 124,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 150,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 431,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 554,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 685,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/app/runtime.js",
+    "line": 81
+   },
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 223
+   },
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 318
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 855
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 937
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 937
+   }
+  ]
+ },
+ {
+  "name": "fx",
+  "defs": 2,
+  "reads": 32,
+  "moduleCount": 8,
+  "modules": [
+   "src/app/flow.js",
+   "src/app/runtime.js",
+   "src/app/showcase.js",
+   "src/core/fallbacks.js",
+   "src/gameplay/enemies/drone.js",
+   "src/gameplay/enemies/walker.js",
+   "src/gameplay/weapons/weapon.js",
+   "src/render/effects/effects.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/app/showcase.js",
+    "line": 27,
+    "shorthand": false
+   },
+   {
+    "mod": "src/core/fallbacks.js",
+    "line": 24,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/app/flow.js",
+    "line": 260
+   },
+   {
+    "mod": "src/app/runtime.js",
+    "line": 163
+   },
+   {
+    "mod": "src/app/runtime.js",
+    "line": 165
+   },
+   {
+    "mod": "src/app/runtime.js",
+    "line": 165
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 812
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 818
+   }
+  ]
+ },
+ {
+  "name": "lp",
+  "defs": 28,
+  "reads": 4,
+  "moduleCount": 2,
+  "modules": [
+   "src/audio/library.js",
+   "src/audio/synthesis.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/library.js",
+    "line": 57,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 74,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 202,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 275,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 404,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 479,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 222
+   },
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 222
+   },
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 317
+   },
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 317
+   }
+  ]
+ },
+ {
+  "name": "fn",
+  "defs": 29,
+  "reads": 3,
+  "moduleCount": 2,
+  "modules": [
+   "src/render/materials/catalog.js",
+   "src/render/materials/materials.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/render/materials/catalog.js",
+    "line": 23,
+    "shorthand": false
+   },
+   {
+    "mod": "src/render/materials/catalog.js",
+    "line": 30,
+    "shorthand": false
+   },
+   {
+    "mod": "src/render/materials/catalog.js",
+    "line": 36,
+    "shorthand": false
+   },
+   {
+    "mod": "src/render/materials/catalog.js",
+    "line": 42,
+    "shorthand": false
+   },
+   {
+    "mod": "src/render/materials/catalog.js",
+    "line": 48,
+    "shorthand": false
+   },
+   {
+    "mod": "src/render/materials/catalog.js",
+    "line": 55,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 244
+   },
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 247
+   },
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 260
+   }
+  ]
+ },
+ {
+  "name": "x0",
+  "defs": 3,
+  "reads": 26,
+  "moduleCount": 5,
+  "modules": [
+   "src/content/ground/asphalt.js",
+   "src/content/ground/geometry.js",
+   "src/content/ground/ground.js",
+   "src/content/ground/water.js",
+   "src/content/level/buildings.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/ground/ground.js",
+    "line": 48,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/ground/ground.js",
+    "line": 263,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 567,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/ground/asphalt.js",
+    "line": 244
+   },
+   {
+    "mod": "src/content/ground/asphalt.js",
+    "line": 248
+   },
+   {
+    "mod": "src/content/ground/geometry.js",
+    "line": 17
+   },
+   {
+    "mod": "src/content/ground/ground.js",
+    "line": 138,
+    "destructured": true
+   },
+   {
+    "mod": "src/content/ground/ground.js",
+    "line": 170
+   },
+   {
+    "mod": "src/content/ground/ground.js",
+    "line": 397
+   }
+  ]
+ },
+ {
+  "name": "z0",
+  "defs": 4,
+  "reads": 25,
+  "moduleCount": 5,
+  "modules": [
+   "src/content/ground/asphalt.js",
+   "src/content/ground/geometry.js",
+   "src/content/ground/ground.js",
+   "src/content/ground/water.js",
+   "src/content/level/buildings.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/ground/ground.js",
+    "line": 49,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/ground/ground.js",
+    "line": 264,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 576,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 823,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/ground/asphalt.js",
+    "line": 244
+   },
+   {
+    "mod": "src/content/ground/asphalt.js",
+    "line": 249
+   },
+   {
+    "mod": "src/content/ground/geometry.js",
+    "line": 17
+   },
+   {
+    "mod": "src/content/ground/ground.js",
+    "line": 138,
+    "destructured": true
+   },
+   {
+    "mod": "src/content/ground/ground.js",
+    "line": 171
+   },
+   {
+    "mod": "src/content/ground/ground.js",
+    "line": 399
+   }
+  ]
+ },
+ {
+  "name": "id",
+  "defs": 14,
+  "reads": 14,
+  "moduleCount": 9,
+  "modules": [
+   "src/app/benchmark.js",
+   "src/app/diagnostics.js",
+   "src/app/flow.js",
+   "src/audio/audio.js",
+   "src/content/level/level.js",
+   "src/content/props/basic-builders.js",
+   "src/gameplay/enemies/drone.js",
+   "src/gameplay/enemies/enemies.js",
+   "src/gameplay/enemies/walker.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/app/flow.js",
+    "line": 284,
+    "shorthand": false
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 313,
+    "shorthand": false
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 322,
+    "shorthand": false
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 617,
+    "shorthand": false
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 627,
+    "shorthand": false
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 651,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/app/benchmark.js",
+    "line": 10
+   },
+   {
+    "mod": "src/app/diagnostics.js",
+    "line": 11
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 276
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 284
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 313
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 617
+   }
+  ]
+ },
+ {
+  "name": "uv",
+  "defs": 1,
+  "reads": 27,
+  "moduleCount": 10,
+  "modules": [
+   "src/assets/procedural/geometry.js",
+   "src/content/backdrop/ships.js",
+   "src/content/level/buildings.js",
+   "src/content/models/enemies.js",
+   "src/content/props/basic-builders.js",
+   "src/content/props/detail-geometry.js",
+   "src/content/props/detailed-builders.js",
+   "src/gameplay/weapons/rig.js",
+   "src/render/effects/particles.js",
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/render/effects/particles.js",
+    "line": 609,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 239
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 265
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 328
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 360
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 422
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 530
+   }
+  ]
+ },
+ {
+  "name": "vy",
+  "defs": 1,
+  "reads": 27,
+  "moduleCount": 3,
+  "modules": [
+   "src/gameplay/enemies/drone.js",
+   "src/render/effects/effects.js",
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 274,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 1017
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 1055
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 1056
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 1059
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 1068
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 1068
+   }
+  ]
+ },
+ {
+  "name": "bp",
+  "defs": 20,
+  "reads": 4,
+  "moduleCount": 2,
+  "modules": [
+   "src/audio/library.js",
+   "src/audio/synthesis.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/library.js",
+    "line": 84,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 123,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 149,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 430,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 553,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 684,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 223
+   },
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 223
+   },
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 318
+   },
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 318
+   }
+  ]
+ },
+ {
+  "name": "py",
+  "defs": 1,
+  "reads": 22,
+  "moduleCount": 3,
+  "modules": [
+   "src/audio/audio.js",
+   "src/render/effects/effects.js",
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 632,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 656
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 657
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 658
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 658
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 855
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 129
+   }
+  ]
+ },
+ {
+  "name": "x1",
+  "defs": 1,
+  "reads": 22,
+  "moduleCount": 1,
+  "modules": [
+   "src/content/level/buildings.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 568,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 640
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 796
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 801
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 911
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 923
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 1288
+   }
+  ]
+ },
+ {
+  "name": "px",
+  "defs": 2,
+  "reads": 20,
+  "moduleCount": 5,
+  "modules": [
+   "src/assets/procedural/geometry.js",
+   "src/audio/audio.js",
+   "src/content/props/detailed-builders.js",
+   "src/render/effects/effects.js",
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1490,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 631,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 656
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 657
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 658
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 658
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 855
+   },
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 425
+   }
+  ]
+ },
+ {
+  "name": "pz",
+  "defs": 2,
+  "reads": 18,
+  "moduleCount": 4,
+  "modules": [
+   "src/assets/procedural/geometry.js",
+   "src/audio/audio.js",
+   "src/render/effects/effects.js",
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1488,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 633,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 656
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 657
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 658
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 658
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 855
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 130
+   }
+  ]
+ },
+ {
+  "name": "es",
+  "defs": 1,
+  "reads": 19,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/enemies/drone.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 220,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 333
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 502
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 541
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 559
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 559
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 560
+   }
+  ]
+ },
+ {
+  "name": "d",
+  "defs": 5,
+  "reads": 14,
+  "moduleCount": 5,
+  "modules": [
+   "src/audio/audio.js",
+   "src/content/ground/water.js",
+   "src/content/level/buildings.js",
+   "src/content/props/basic-builders.js",
+   "src/content/props/cargo-builders.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 842,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 1057,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/cargo-builders.js",
+    "line": 77,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/cargo-builders.js",
+    "line": 87,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/cargo-builders.js",
+    "line": 97,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 855
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 857
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 857
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 859
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 877
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 880
+   }
+  ]
+ },
+ {
+  "name": "G",
+  "defs": 2,
+  "reads": 16,
+  "moduleCount": 10,
+  "modules": [
+   "src/assets/procedural/geometry.js",
+   "src/content/level/buildings.js",
+   "src/content/props/basic-builders.js",
+   "src/content/props/character-builders.js",
+   "src/content/props/detail-geometry.js",
+   "src/content/props/detailed-builders.js",
+   "src/gameplay/enemies/drone.js",
+   "src/gameplay/enemies/enemies.js",
+   "src/gameplay/enemies/walker.js",
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 381,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/enemies/enemies.js",
+    "line": 178,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 840
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 847
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 605,
+    "destructured": true
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 3067
+   },
+   {
+    "mod": "src/content/props/character-builders.js",
+    "line": 379
+   },
+   {
+    "mod": "src/content/props/detail-geometry.js",
+    "line": 258
+   }
+  ]
+ },
+ {
+  "name": "z1",
+  "defs": 2,
+  "reads": 16,
+  "moduleCount": 2,
+  "modules": [
+   "src/audio/synthesis.js",
+   "src/content/level/buildings.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 577,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 824,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 106
+   },
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 122
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 654
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 827
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 828
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 829
+   }
+  ]
+ },
+ {
+  "name": "a",
+  "defs": 9,
+  "reads": 8,
+  "moduleCount": 3,
+  "modules": [
+   "src/assets/procedural/textures.js",
+   "src/gameplay/weapons/weapon.js",
+   "src/render/effects/effects.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/textures.js",
+    "line": 1615,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 247,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 258,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 276,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 303,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 320,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/assets/procedural/textures.js",
+    "line": 1642
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 229
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 229
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 144
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 189
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 280
+   }
+  ]
+ },
+ {
+  "name": "dx",
+  "defs": 3,
+  "reads": 13,
+  "moduleCount": 6,
+  "modules": [
+   "src/content/level/buildings.js",
+   "src/content/level/placement.js",
+   "src/gameplay/player.js",
+   "src/gameplay/weapons/weapon.js",
+   "src/platform/input.js",
+   "src/render/effects/effects.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/level/placement.js",
+    "line": 1120,
+    "shorthand": false
+   },
+   {
+    "mod": "src/platform/input.js",
+    "line": 96,
+    "shorthand": false
+   },
+   {
+    "mod": "src/platform/input.js",
+    "line": 572,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 333
+   },
+   {
+    "mod": "src/gameplay/player.js",
+    "line": 228
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1323
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1378
+   },
+   {
+    "mod": "src/platform/input.js",
+    "line": 236
+   },
+   {
+    "mod": "src/platform/input.js",
+    "line": 382
+   }
+  ]
+ },
+ {
+  "name": "m",
+  "defs": 1,
+  "reads": 13,
+  "moduleCount": 2,
+  "modules": [
+   "src/assets/procedural/geometry.js",
+   "src/content/level/buildings.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 448,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 843
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 851
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 852
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 852
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 852
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 857
+   }
+  ]
+ },
+ {
+  "name": "P",
+  "defs": 4,
+  "reads": 10,
+  "moduleCount": 4,
+  "modules": [
+   "src/assets/procedural/geometry.js",
+   "src/content/props/basic-builders.js",
+   "src/content/props/cargo-builders.js",
+   "src/render/effects/particles.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/props/cargo-builders.js",
+    "line": 76,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/cargo-builders.js",
+    "line": 86,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/cargo-builders.js",
+    "line": 96,
+    "shorthand": false
+   },
+   {
+    "mod": "src/render/effects/particles.js",
+    "line": 888,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1948
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1951
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1954
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1972
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1976
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 358
+   }
+  ]
+ },
+ {
+  "name": "dy",
+  "defs": 2,
+  "reads": 12,
+  "moduleCount": 4,
+  "modules": [
+   "src/gameplay/player.js",
+   "src/gameplay/weapons/weapon.js",
+   "src/platform/input.js",
+   "src/render/effects/effects.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/platform/input.js",
+    "line": 97,
+    "shorthand": false
+   },
+   {
+    "mod": "src/platform/input.js",
+    "line": 573,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/player.js",
+    "line": 230
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1323
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1379
+   },
+   {
+    "mod": "src/platform/input.js",
+    "line": 237
+   },
+   {
+    "mod": "src/platform/input.js",
+    "line": 383
+   },
+   {
+    "mod": "src/platform/input.js",
+    "line": 509
+   }
+  ]
+ },
+ {
+  "name": "vx",
+  "defs": 0,
+  "reads": 14,
+  "moduleCount": 2,
+  "modules": [
+   "src/render/effects/effects.js",
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 131
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 176
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 209,
+    "destructured": true
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 51
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 82
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 127
+   }
+  ]
+ },
+ {
+  "name": "vz",
+  "defs": 0,
+  "reads": 14,
+  "moduleCount": 2,
+  "modules": [
+   "src/render/effects/effects.js",
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 133
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 178
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 209,
+    "destructured": true
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 53
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 84
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 129
+   }
+  ]
+ },
+ {
+  "name": "L1",
+  "defs": 1,
+  "reads": 12,
+  "moduleCount": 3,
+  "modules": [
+   "src/content/models/enemies.js",
+   "src/gameplay/enemies/drone.js",
+   "src/gameplay/enemies/walker.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/walker.js",
+    "line": 29,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 313
+   },
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 912
+   },
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 914
+   },
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 923
+   },
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 925
+   },
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 945
+   }
+  ]
+ },
+ {
+  "name": "ao",
+  "defs": 9,
+  "reads": 4,
+  "moduleCount": 4,
+  "modules": [
+   "src/core/config.js",
+   "src/gameplay/weapons/weapon.js",
+   "src/render/postprocessing.js",
+   "src/render/renderer.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/core/config.js",
+    "line": 68,
+    "shorthand": false
+   },
+   {
+    "mod": "src/core/config.js",
+    "line": 81,
+    "shorthand": false
+   },
+   {
+    "mod": "src/core/config.js",
+    "line": 94,
+    "shorthand": false
+   },
+   {
+    "mod": "src/core/config.js",
+    "line": 107,
+    "shorthand": false
+   },
+   {
+    "mod": "src/core/config.js",
+    "line": 120,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 249,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 217
+   },
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1177
+   },
+   {
+    "mod": "src/render/renderer.js",
+    "line": 298
+   },
+   {
+    "mod": "src/render/renderer.js",
+    "line": 298
+   }
+  ]
+ },
+ {
+  "name": "up",
+  "defs": 2,
+  "reads": 10,
+  "moduleCount": 4,
+  "modules": [
+   "src/content/backdrop/cranes.js",
+   "src/content/backdrop/sky.js",
+   "src/content/ground/asphalt.js",
+   "src/render/postprocessing.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/backdrop/sky.js",
+    "line": 673,
+    "shorthand": false
+   },
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 624,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/backdrop/cranes.js",
+    "line": 1811,
+    "destructured": true
+   },
+   {
+    "mod": "src/content/ground/asphalt.js",
+    "line": 394
+   },
+   {
+    "mod": "src/content/ground/asphalt.js",
+    "line": 395
+   },
+   {
+    "mod": "src/content/ground/asphalt.js",
+    "line": 395
+   },
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 638
+   },
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 964
+   }
+  ]
+ },
+ {
+  "name": "sY",
+  "defs": 1,
+  "reads": 11,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/enemies/drone.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 239,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 301
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 350
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 391
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 779
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 871
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 942
+   }
+  ]
+ },
+ {
+  "name": "dz",
+  "defs": 1,
+  "reads": 10,
+  "moduleCount": 5,
+  "modules": [
+   "src/assets/procedural/geometry.js",
+   "src/content/backdrop/cranes.js",
+   "src/content/backdrop/sky.js",
+   "src/content/level/buildings.js",
+   "src/render/effects/effects.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/backdrop/sky.js",
+    "line": 659,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1577
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1594
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1594
+   },
+   {
+    "mod": "src/content/backdrop/cranes.js",
+    "line": 130
+   },
+   {
+    "mod": "src/content/backdrop/cranes.js",
+    "line": 177
+   },
+   {
+    "mod": "src/content/backdrop/cranes.js",
+    "line": 1672
+   }
+  ]
+ },
+ {
+  "name": "sk",
+  "defs": 0,
+  "reads": 11,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/effects.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 138
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 183
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 278
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 774
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 792
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 825
+   }
+  ]
+ },
+ {
+  "name": "sw",
+  "defs": 1,
+  "reads": 9,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/enemies/drone.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 233,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 340
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 877
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 904
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 929
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 935
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 943
+   }
+  ]
+ },
+ {
+  "name": "sP",
+  "defs": 1,
+  "reads": 9,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/enemies/drone.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 243,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 300
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 350
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 672
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 694
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 870
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 964
+   }
+  ]
+ },
+ {
+  "name": "el",
+  "defs": 2,
+  "reads": 8,
+  "moduleCount": 1,
+  "modules": [
+   "src/ui/hud.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/ui/hud.js",
+    "line": 101,
+    "shorthand": false
+   },
+   {
+    "mod": "src/ui/hud.js",
+    "line": 370,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/ui/hud.js",
+    "line": 226
+   },
+   {
+    "mod": "src/ui/hud.js",
+    "line": 374
+   },
+   {
+    "mod": "src/ui/hud.js",
+    "line": 406
+   },
+   {
+    "mod": "src/ui/hud.js",
+    "line": 549
+   },
+   {
+    "mod": "src/ui/hud.js",
+    "line": 556
+   },
+   {
+    "mod": "src/ui/hud.js",
+    "line": 558
+   }
+  ]
+ },
+ {
+  "name": "o",
+  "defs": 1,
+  "reads": 8,
+  "moduleCount": 1,
+  "modules": [
+   "src/app/flow.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/app/flow.js",
+    "line": 283,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/app/flow.js",
+    "line": 315
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 316
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 596
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 597
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 600
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 614
+   }
+  ]
+ },
+ {
+  "name": "k",
+  "defs": 3,
+  "reads": 6,
+  "moduleCount": 3,
+  "modules": [
+   "src/audio/audio.js",
+   "src/content/props/basic-builders.js",
+   "src/core/math.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 301,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 116,
+    "shorthand": false
+   },
+   {
+    "mod": "src/core/math.js",
+    "line": 291,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 315
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 324
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 328
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 345
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 407
+   },
+   {
+    "mod": "src/core/math.js",
+    "line": 302
+   }
+  ]
+ },
+ {
+  "name": "c",
+  "defs": 2,
+  "reads": 7,
+  "moduleCount": 3,
+  "modules": [
+   "src/audio/audio.js",
+   "src/core/math.js",
+   "src/gameplay/weapons/geometry.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 723,
+    "shorthand": false
+   },
+   {
+    "mod": "src/core/math.js",
+    "line": 292,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1429
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1429
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1429
+   },
+   {
+    "mod": "src/core/math.js",
+    "line": 302
+   },
+   {
+    "mod": "src/gameplay/weapons/geometry.js",
+    "line": 23
+   },
+   {
+    "mod": "src/gameplay/weapons/geometry.js",
+    "line": 29
+   }
+  ]
+ },
+ {
+  "name": "Z1",
+  "defs": 2,
+  "reads": 7,
+  "moduleCount": 4,
+  "modules": [
+   "src/content/backdrop/backdrop.js",
+   "src/content/level/buildings.js",
+   "src/content/level/level.js",
+   "src/content/level/placement.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/backdrop/backdrop.js",
+    "line": 40,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 551,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 611,
+    "destructured": true
+   },
+   {
+    "mod": "src/content/level/level.js",
+    "line": 260
+   },
+   {
+    "mod": "src/content/level/placement.js",
+    "line": 593,
+    "destructured": true
+   },
+   {
+    "mod": "src/content/level/placement.js",
+    "line": 1615
+   },
+   {
+    "mod": "src/content/level/placement.js",
+    "line": 1620
+   },
+   {
+    "mod": "src/content/level/placement.js",
+    "line": 1621
+   }
+  ]
+ },
+ {
+  "name": "sl",
+  "defs": 3,
+  "reads": 6,
+  "moduleCount": 3,
+  "modules": [
+   "src/content/props/basic-builders.js",
+   "src/content/props/cargo-builders.js",
+   "src/render/materials/materials.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/props/cargo-builders.js",
+    "line": 79,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/cargo-builders.js",
+    "line": 89,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/cargo-builders.js",
+    "line": 99,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 361
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 455
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 484
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 530
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 918
+   },
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 393
+   }
+  ]
+ },
+ {
+  "name": "gy",
+  "defs": 1,
+  "reads": 8,
+  "moduleCount": 3,
+  "modules": [
+   "src/gameplay/enemies/enemies.js",
+   "src/gameplay/enemies/walker.js",
+   "src/render/effects/effects.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/walker.js",
+    "line": 136,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/enemies/enemies.js",
+    "line": 450
+   },
+   {
+    "mod": "src/gameplay/enemies/walker.js",
+    "line": 507
+   },
+   {
+    "mod": "src/gameplay/enemies/walker.js",
+    "line": 507
+   },
+   {
+    "mod": "src/gameplay/enemies/walker.js",
+    "line": 509
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 155
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 200
+   }
+  ]
+ },
+ {
+  "name": "wx",
+  "defs": 4,
+  "reads": 5,
+  "moduleCount": 2,
+  "modules": [
+   "src/gameplay/weapons/weapon.js",
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 281,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 323,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 338,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 354,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 226
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 192
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 235
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 259
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 293
+   }
+  ]
+ },
+ {
+  "name": "wy",
+  "defs": 4,
+  "reads": 5,
+  "moduleCount": 2,
+  "modules": [
+   "src/gameplay/weapons/weapon.js",
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 282,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 324,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 339,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 355,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 227
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 193
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 236
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 260
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 294
+   }
+  ]
+ },
+ {
+  "name": "s",
+  "defs": 5,
+  "reads": 3,
+  "moduleCount": 5,
+  "modules": [
+   "src/assets/procedural/geometry.js",
+   "src/audio/audio.js",
+   "src/content/backdrop/cranes.js",
+   "src/content/backdrop/sky.js",
+   "src/content/props/detailed-builders.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 2072,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 722,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/backdrop/sky.js",
+    "line": 672,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 1347,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 1482,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 30,
+    "destructured": true
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 64,
+    "destructured": true
+   },
+   {
+    "mod": "src/content/backdrop/cranes.js",
+    "line": 1811,
+    "destructured": true
+   }
+  ]
+ },
+ {
+  "name": "fo",
+  "defs": 3,
+  "reads": 5,
+  "moduleCount": 2,
+  "modules": [
+   "src/content/props/basic-builders.js",
+   "src/content/props/cargo-builders.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/props/cargo-builders.js",
+    "line": 78,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/cargo-builders.js",
+    "line": 88,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/cargo-builders.js",
+    "line": 98,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 360
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 454
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 483
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 529
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 917
+   }
+  ]
+ },
+ {
+  "name": "wp",
+  "defs": 1,
+  "reads": 7,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/enemies/drone.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 227,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 449
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 453
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 462
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 463
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 463
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 466
+   }
+  ]
+ },
+ {
+  "name": "f",
+  "defs": 2,
+  "reads": 6,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/weapons/weapon.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1097,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1205,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1213
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1214
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1223
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1223
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1230
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1230
+   }
+  ]
+ },
+ {
+  "name": "ir",
+  "defs": 2,
+  "reads": 5,
+  "moduleCount": 2,
+  "modules": [
+   "src/audio/audio.js",
+   "src/audio/library.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/library.js",
+    "line": 3635,
+    "shorthand": false
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3642,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 282
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 529
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1691
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3670
+   },
+   {
+    "mod": "src/audio/library.js",
+    "line": 3670
+   }
+  ]
+ },
+ {
+  "name": "sR",
+  "defs": 1,
+  "reads": 6,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/enemies/drone.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 247,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 299
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 350
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 965
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 971
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 1022
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 1070
+   }
+  ]
+ },
+ {
+  "name": "gp",
+  "defs": 1,
+  "reads": 6,
+  "moduleCount": 2,
+  "modules": [
+   "src/gameplay/enemies/enemies.js",
+   "src/gameplay/enemies/walker.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/walker.js",
+    "line": 137,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/enemies/enemies.js",
+    "line": 451
+   },
+   {
+    "mod": "src/gameplay/enemies/enemies.js",
+    "line": 455
+   },
+   {
+    "mod": "src/gameplay/enemies/walker.js",
+    "line": 508
+   },
+   {
+    "mod": "src/gameplay/enemies/walker.js",
+    "line": 508
+   },
+   {
+    "mod": "src/gameplay/enemies/walker.js",
+    "line": 510
+   },
+   {
+    "mod": "src/gameplay/enemies/walker.js",
+    "line": 511
+   }
+  ]
+ },
+ {
+  "name": "kP",
+  "defs": 3,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/weapons/weapon.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 337,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 353,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 992,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 216
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1168
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1395
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1440
+   }
+  ]
+ },
+ {
+  "name": "dt",
+  "defs": 2,
+  "reads": 4,
+  "moduleCount": 3,
+  "modules": [
+   "src/app/runtime.js",
+   "src/render/postprocessing.js",
+   "src/render/renderer.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/app/runtime.js",
+    "line": 77,
+    "shorthand": false
+   },
+   {
+    "mod": "src/render/renderer.js",
+    "line": 460,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/app/runtime.js",
+    "line": 282
+   },
+   {
+    "mod": "src/app/runtime.js",
+    "line": 282
+   },
+   {
+    "mod": "src/app/runtime.js",
+    "line": 283
+   },
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1148,
+    "destructured": true
+   }
+  ]
+ },
+ {
+  "name": "pC",
+  "defs": 1,
+  "reads": 5,
+  "moduleCount": 1,
+  "modules": [
+   "src/audio/audio.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 637,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 691
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1437
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1438
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1438
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1438
+   }
+  ]
+ },
+ {
+  "name": "L2",
+  "defs": 1,
+  "reads": 5,
+  "moduleCount": 3,
+  "modules": [
+   "src/content/models/enemies.js",
+   "src/gameplay/enemies/drone.js",
+   "src/gameplay/enemies/walker.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/walker.js",
+    "line": 30,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 997
+   },
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 999
+   },
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 1025
+   },
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 1034
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 1005
+   }
+  ]
+ },
+ {
+  "name": "th",
+  "defs": 2,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/content/props/detailed-builders.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 465,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 483,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 471
+   },
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 487
+   },
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 505
+   },
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 506
+   }
+  ]
+ },
+ {
+  "name": "to",
+  "defs": 1,
+  "reads": 5,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/enemies/drone.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 185,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 912
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 918
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 919
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 920
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 931
+   }
+  ]
+ },
+ {
+  "name": "sL",
+  "defs": 1,
+  "reads": 5,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/enemies/drone.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 251,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 298
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 350
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 966
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 968
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 1071
+   }
+  ]
+ },
+ {
+  "name": "qx",
+  "defs": 0,
+  "reads": 6,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 188
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 231
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 262
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 272
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 286
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 310
+   }
+  ]
+ },
+ {
+  "name": "qy",
+  "defs": 0,
+  "reads": 6,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 189
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 232
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 263
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 272
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 287
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 310
+   }
+  ]
+ },
+ {
+  "name": "qz",
+  "defs": 0,
+  "reads": 6,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 190
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 233
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 264
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 272
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 288
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 310
+   }
+  ]
+ },
+ {
+  "name": "qw",
+  "defs": 0,
+  "reads": 6,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 191
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 234
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 265
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 272
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 289
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 310
+   }
+  ]
+ },
+ {
+  "name": "hw",
+  "defs": 1,
+  "reads": 5,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/postprocessing.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 648,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1085
+   },
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1104
+   },
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1105
+   },
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1175
+   },
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1222
+   }
+  ]
+ },
+ {
+  "name": "hh",
+  "defs": 1,
+  "reads": 5,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/postprocessing.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 649,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1086
+   },
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1104
+   },
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1106
+   },
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1176
+   },
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1222
+   }
+  ]
+ },
+ {
+  "name": "at",
+  "defs": 2,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/app/flow.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/app/flow.js",
+    "line": 512,
+    "shorthand": false
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 555,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/app/flow.js",
+    "line": 523
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 525
+   },
+   {
+    "mod": "src/app/flow.js",
+    "line": 536
+   }
+  ]
+ },
+ {
+  "name": "r2",
+  "defs": 3,
+  "reads": 2,
+  "moduleCount": 3,
+  "modules": [
+   "src/assets/procedural/geometry.js",
+   "src/assets/procedural/textures.js",
+   "src/content/props/basic-builders.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/textures.js",
+    "line": 1725,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 1453,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 4306,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 905
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 905
+   }
+  ]
+ },
+ {
+  "name": "ch",
+  "defs": 1,
+  "reads": 4,
+  "moduleCount": 2,
+  "modules": [
+   "src/audio/audio.js",
+   "src/audio/library.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/library.js",
+    "line": 3677,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 267
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 267
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 268
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 268
+   }
+  ]
+ },
+ {
+  "name": "gC",
+  "defs": 1,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/audio/audio.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 635,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 672
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1434
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1434
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1435
+   }
+  ]
+ },
+ {
+  "name": "sp",
+  "defs": 1,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/audio/audio.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 841,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 900
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 900
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 904
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 906
+   }
+  ]
+ },
+ {
+  "name": "Z0",
+  "defs": 2,
+  "reads": 3,
+  "moduleCount": 4,
+  "modules": [
+   "src/content/backdrop/backdrop.js",
+   "src/content/level/buildings.js",
+   "src/content/level/level.js",
+   "src/content/level/placement.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/backdrop/backdrop.js",
+    "line": 39,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 550,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 610,
+    "destructured": true
+   },
+   {
+    "mod": "src/content/level/level.js",
+    "line": 259
+   },
+   {
+    "mod": "src/content/level/placement.js",
+    "line": 593,
+    "destructured": true
+   }
+  ]
+ },
+ {
+  "name": "kZ",
+  "defs": 1,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/weapons/weapon.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 991,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1167
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1240
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1394
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1429
+   }
+  ]
+ },
+ {
+  "name": "kR",
+  "defs": 1,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/weapons/weapon.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 994,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1170
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1388
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1397
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1461
+   }
+  ]
+ },
+ {
+  "name": "jY",
+  "defs": 1,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/weapons/weapon.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 997,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1384
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1388
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1392
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1422
+   }
+  ]
+ },
+ {
+  "name": "jP",
+  "defs": 1,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/weapons/weapon.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 998,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1384
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1388
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1393
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1439
+   }
+  ]
+ },
+ {
+  "name": "op",
+  "defs": 1,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/ui/hud.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/ui/hud.js",
+    "line": 104,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/ui/hud.js",
+    "line": 549
+   },
+   {
+    "mod": "src/ui/hud.js",
+    "line": 549
+   },
+   {
+    "mod": "src/ui/hud.js",
+    "line": 558
+   },
+   {
+    "mod": "src/ui/hud.js",
+    "line": 558
+   }
+  ]
+ },
+ {
+  "name": "C",
+  "defs": 1,
+  "reads": 3,
+  "moduleCount": 2,
+  "modules": [
+   "src/assets/procedural/geometry.js",
+   "src/render/effects/particles.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/render/effects/particles.js",
+    "line": 890,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1948
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1951
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1973
+   }
+  ]
+ },
+ {
+  "name": "vC",
+  "defs": 1,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/audio/audio.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 630,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1433
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1433
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1434
+   }
+  ]
+ },
+ {
+  "name": "pT",
+  "defs": 1,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/audio/audio.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 636,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 664
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1437
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1438
+   }
+  ]
+ },
+ {
+  "name": "lx",
+  "defs": 1,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/audio/audio.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 838,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 886
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 899
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 902
+   }
+  ]
+ },
+ {
+  "name": "ly",
+  "defs": 1,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/audio/audio.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 839,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 886
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 899
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 902
+   }
+  ]
+ },
+ {
+  "name": "lz",
+  "defs": 1,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/audio/audio.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 840,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 886
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 899
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 902
+   }
+  ]
+ },
+ {
+  "name": "y0",
+  "defs": 1,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/content/level/buildings.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 825,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 829
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 836
+   },
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 849
+   }
+  ]
+ },
+ {
+  "name": "i",
+  "defs": 1,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/content/models/enemies.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 231,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 228
+   },
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 233
+   },
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 254
+   }
+  ]
+ },
+ {
+  "name": "cu",
+  "defs": 3,
+  "reads": 1,
+  "moduleCount": 2,
+  "modules": [
+   "src/content/props/basic-builders.js",
+   "src/content/props/geometry.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/props/geometry.js",
+    "line": 137,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/geometry.js",
+    "line": 145,
+    "shorthand": false
+   },
+   {
+    "mod": "src/content/props/geometry.js",
+    "line": 153,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 835
+   }
+  ]
+ },
+ {
+  "name": "sA",
+  "defs": 1,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/enemies/drone.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 255,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 350
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 978
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 980
+   }
+  ]
+ },
+ {
+  "name": "kY",
+  "defs": 1,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/weapons/weapon.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 993,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1169
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1396
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1450
+   }
+  ]
+ },
+ {
+  "name": "T",
+  "defs": 2,
+  "reads": 2,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/weapons/weapon.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1095,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1203,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1254
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1257
+   }
+  ]
+ },
+ {
+  "name": "wt",
+  "defs": 0,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/weapons/weapon.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1520
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1520
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1531
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1531
+   }
+  ]
+ },
+ {
+  "name": "s0",
+  "defs": 0,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/effects.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 136
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 181
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 279
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 279
+   }
+  ]
+ },
+ {
+  "name": "fy",
+  "defs": 0,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/effects.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 343
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 373
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 418
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 444
+   }
+  ]
+ },
+ {
+  "name": "fz",
+  "defs": 0,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/effects.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 344
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 374
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 419
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 445
+   }
+  ]
+ },
+ {
+  "name": "sx",
+  "defs": 0,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 59
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 94
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 131
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 146
+   }
+  ]
+ },
+ {
+  "name": "sy",
+  "defs": 0,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 60
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 95
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 131
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 146
+   }
+  ]
+ },
+ {
+  "name": "sz",
+  "defs": 0,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 61
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 96
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 131
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 146
+   }
+  ]
+ },
+ {
+  "name": "wz",
+  "defs": 0,
+  "reads": 4,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 194
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 237
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 261
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 295
+   }
+  ]
+ },
+ {
+  "name": "N",
+  "defs": 0,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/assets/procedural/geometry.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1948
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1954
+   },
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1960
+   }
+  ]
+ },
+ {
+  "name": "vT",
+  "defs": 1,
+  "reads": 2,
+  "moduleCount": 1,
+  "modules": [
+   "src/audio/audio.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 629,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 859
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1433
+   }
+  ]
+ },
+ {
+  "name": "gT",
+  "defs": 1,
+  "reads": 2,
+  "moduleCount": 1,
+  "modules": [
+   "src/audio/audio.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 634,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 661
+   },
+   {
+    "mod": "src/audio/audio.js",
+    "line": 1434
+   }
+  ]
+ },
+ {
+  "name": "MI",
+  "defs": 1,
+  "reads": 2,
+  "moduleCount": 2,
+  "modules": [
+   "src/content/level/buildings.js",
+   "src/content/level/level.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 391,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 597,
+    "destructured": true
+   },
+   {
+    "mod": "src/content/level/level.js",
+    "line": 72
+   }
+  ]
+ },
+ {
+  "name": "X0",
+  "defs": 1,
+  "reads": 2,
+  "moduleCount": 2,
+  "modules": [
+   "src/content/level/buildings.js",
+   "src/content/level/level.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 548,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 608,
+    "destructured": true
+   },
+   {
+    "mod": "src/content/level/level.js",
+    "line": 259
+   }
+  ]
+ },
+ {
+  "name": "X1",
+  "defs": 1,
+  "reads": 2,
+  "moduleCount": 2,
+  "modules": [
+   "src/content/level/buildings.js",
+   "src/content/level/level.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 549,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 609,
+    "destructured": true
+   },
+   {
+    "mod": "src/content/level/level.js",
+    "line": 260
+   }
+  ]
+ },
+ {
+  "name": "l0",
+  "defs": 1,
+  "reads": 2,
+  "moduleCount": 3,
+  "modules": [
+   "src/content/models/enemies.js",
+   "src/gameplay/enemies/drone.js",
+   "src/gameplay/enemies/walker.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/enemies/walker.js",
+    "line": 31,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/models/enemies.js",
+    "line": 312
+   },
+   {
+    "mod": "src/gameplay/enemies/drone.js",
+    "line": 1003
+   }
+  ]
+ },
+ {
+  "name": "W",
+  "defs": 1,
+  "reads": 2,
+  "moduleCount": 1,
+  "modules": [
+   "src/content/props/detailed-builders.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 467,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 473
+   },
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 505
+   }
+  ]
+ },
+ {
+  "name": "u",
+  "defs": 0,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/weapons/geometry.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/geometry.js",
+    "line": 23
+   },
+   {
+    "mod": "src/gameplay/weapons/geometry.js",
+    "line": 28
+   },
+   {
+    "mod": "src/gameplay/weapons/geometry.js",
+    "line": 42
+   }
+  ]
+ },
+ {
+  "name": "qs",
+  "defs": 2,
+  "reads": 1,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/weapons/weapon.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 385,
+    "shorthand": false
+   },
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 406,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 178,
+    "destructured": true
+   }
+  ]
+ },
+ {
+  "name": "s1",
+  "defs": 0,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/effects.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 137
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 182
+   },
+   {
+    "mod": "src/render/effects/effects.js",
+    "line": 279
+   }
+  ]
+ },
+ {
+  "name": "ax",
+  "defs": 0,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 54
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 89
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 143
+   }
+  ]
+ },
+ {
+  "name": "ay",
+  "defs": 0,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 55
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 90
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 143
+   }
+  ]
+ },
+ {
+  "name": "az",
+  "defs": 0,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/pools.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 56
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 91
+   },
+   {
+    "mod": "src/render/effects/pools.js",
+    "line": 143
+   }
+  ]
+ },
+ {
+  "name": "ms",
+  "defs": 1,
+  "reads": 2,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/materials/materials.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 158,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 305
+   },
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 430
+   }
+  ]
+ },
+ {
+  "name": "tA",
+  "defs": 1,
+  "reads": 2,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/materials/materials.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 194,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 277
+   },
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 280
+   }
+  ]
+ },
+ {
+  "name": "xr",
+  "defs": 0,
+  "reads": 3,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/materials/materials.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 268
+   },
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 271
+   },
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 289
+   }
+  ]
+ },
+ {
+  "name": "ca",
+  "defs": 1,
+  "reads": 2,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/postprocessing.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 597,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1001
+   },
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1313
+   }
+  ]
+ },
+ {
+  "name": "sc",
+  "defs": 0,
+  "reads": 2,
+  "moduleCount": 1,
+  "modules": [
+   "src/app/runtime.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/app/runtime.js",
+    "line": 306
+   },
+   {
+    "mod": "src/app/runtime.js",
+    "line": 307
+   }
+  ]
+ },
+ {
+  "name": "nx",
+  "defs": 1,
+  "reads": 1,
+  "moduleCount": 2,
+  "modules": [
+   "src/assets/procedural/geometry.js",
+   "src/content/props/detailed-builders.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1491,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 431
+   }
+  ]
+ },
+ {
+  "name": "l",
+  "defs": 1,
+  "reads": 1,
+  "moduleCount": 1,
+  "modules": [
+   "src/assets/procedural/textures.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/textures.js",
+    "line": 1616,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/assets/procedural/textures.js",
+    "line": 1649
+   }
+  ]
+ },
+ {
+  "name": "z2",
+  "defs": 0,
+  "reads": 2,
+  "moduleCount": 1,
+  "modules": [
+   "src/audio/synthesis.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 106
+   },
+   {
+    "mod": "src/audio/synthesis.js",
+    "line": 122
+   }
+  ]
+ },
+ {
+  "name": "X",
+  "defs": 1,
+  "reads": 1,
+  "moduleCount": 2,
+  "modules": [
+   "src/content/backdrop/backdrop.js",
+   "src/content/level/placement.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/backdrop/backdrop.js",
+    "line": 36,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/level/placement.js",
+    "line": 593,
+    "destructured": true
+   }
+  ]
+ },
+ {
+  "name": "ZR",
+  "defs": 1,
+  "reads": 1,
+  "moduleCount": 1,
+  "modules": [
+   "src/content/level/buildings.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 554,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 614,
+    "destructured": true
+   }
+  ]
+ },
+ {
+  "name": "L",
+  "defs": 1,
+  "reads": 1,
+  "moduleCount": 1,
+  "modules": [
+   "src/content/props/detailed-builders.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 466,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/content/props/detailed-builders.js",
+    "line": 473
+   }
+  ]
+ },
+ {
+  "name": "kD",
+  "defs": 1,
+  "reads": 1,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/weapons/weapon.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 278,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 215
+   }
+  ]
+ },
+ {
+  "name": "tH",
+  "defs": 1,
+  "reads": 1,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/materials/materials.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 183,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 283
+   }
+  ]
+ },
+ {
+  "name": "uK",
+  "defs": 1,
+  "reads": 1,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/materials/materials.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 186,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 285
+   }
+  ]
+ },
+ {
+  "name": "uP",
+  "defs": 1,
+  "reads": 1,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/materials/materials.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 249,
+    "shorthand": false
+   }
+  ],
+  "readSites": [
+   {
+    "mod": "src/render/materials/materials.js",
+    "line": 262
+   }
+  ]
+ },
+ {
+  "name": "nz",
+  "defs": 1,
+  "reads": 0,
+  "moduleCount": 1,
+  "modules": [
+   "src/assets/procedural/geometry.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/geometry.js",
+    "line": 1489,
+    "shorthand": false
+   }
+  ],
+  "readSites": []
+ },
+ {
+  "name": "r4",
+  "defs": 1,
+  "reads": 0,
+  "moduleCount": 1,
+  "modules": [
+   "src/assets/procedural/textures.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/textures.js",
+    "line": 1726,
+    "shorthand": false
+   }
+  ],
+  "readSites": []
+ },
+ {
+  "name": "r6",
+  "defs": 1,
+  "reads": 0,
+  "moduleCount": 1,
+  "modules": [
+   "src/assets/procedural/textures.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/textures.js",
+    "line": 1727,
+    "shorthand": false
+   }
+  ],
+  "readSites": []
+ },
+ {
+  "name": "r8",
+  "defs": 1,
+  "reads": 0,
+  "moduleCount": 1,
+  "modules": [
+   "src/assets/procedural/textures.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/assets/procedural/textures.js",
+    "line": 1728,
+    "shorthand": false
+   }
+  ],
+  "readSites": []
+ },
+ {
+  "name": "Q",
+  "defs": 0,
+  "reads": 1,
+  "moduleCount": 1,
+  "modules": [
+   "src/audio/audio.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 385
+   }
+  ]
+ },
+ {
+  "name": "t0",
+  "defs": 0,
+  "reads": 1,
+  "moduleCount": 1,
+  "modules": [
+   "src/audio/audio.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/audio/audio.js",
+    "line": 726
+   }
+  ]
+ },
+ {
+  "name": "tf",
+  "defs": 0,
+  "reads": 1,
+  "moduleCount": 1,
+  "modules": [
+   "src/content/level/buildings.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 139,
+    "destructured": true
+   }
+  ]
+ },
+ {
+  "name": "tw",
+  "defs": 0,
+  "reads": 1,
+  "moduleCount": 1,
+  "modules": [
+   "src/content/level/buildings.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 140,
+    "destructured": true
+   }
+  ]
+ },
+ {
+  "name": "hc",
+  "defs": 1,
+  "reads": 0,
+  "moduleCount": 1,
+  "modules": [
+   "src/content/level/buildings.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/level/buildings.js",
+    "line": 315,
+    "shorthand": false
+   }
+  ],
+  "readSites": []
+ },
+ {
+  "name": "em",
+  "defs": 1,
+  "reads": 0,
+  "moduleCount": 1,
+  "modules": [
+   "src/content/props/basic-builders.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/content/props/basic-builders.js",
+    "line": 3815,
+    "shorthand": false
+   }
+  ],
+  "readSites": []
+ },
+ {
+  "name": "nw",
+  "defs": 1,
+  "reads": 0,
+  "moduleCount": 1,
+  "modules": [
+   "src/gameplay/weapons/weapon.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/gameplay/weapons/weapon.js",
+    "line": 1483,
+    "shorthand": false
+   }
+  ],
+  "readSites": []
+ },
+ {
+  "name": "A",
+  "defs": 1,
+  "reads": 0,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/effects/particles.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/render/effects/particles.js",
+    "line": 889,
+    "shorthand": false
+   }
+  ],
+  "readSites": []
+ },
+ {
+  "name": "rt",
+  "defs": 1,
+  "reads": 0,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/postprocessing.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [
+   {
+    "mod": "src/render/postprocessing.js",
+    "line": 1381,
+    "shorthand": false
+   }
+  ],
+  "readSites": []
+ },
+ {
+  "name": "mb",
+  "defs": 0,
+  "reads": 1,
+  "moduleCount": 1,
+  "modules": [
+   "src/render/renderer.js"
+  ],
+  "shorthandDefs": 0,
+  "defSites": [],
+  "readSites": [
+   {
+    "mod": "src/render/renderer.js",
+    "line": 301
+   }
+  ]
+ }
+]
