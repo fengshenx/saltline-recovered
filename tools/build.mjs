@@ -57,6 +57,53 @@ if (location.search.indexOf('auto=1') >= 0) {
     if (btn) btn.click();
   }, 2500);
 }
+// ?check=<prop> 道具接合检查：取每个子 mesh 的世界包围盒，用并查集合并相交的部件，
+// 簇数 > 1 说明有部件悬空（原 bundle 没有任何几何连通性校验，这里补上）
+window.__checkProp = function (name, tol) {
+  var T = window.__G && window.__G.THREE;
+  if (!T || !window.__G.props) return { error: 'props 未加载' };
+  var root;
+  try {
+    root = window.__G.props.build(name, { seed: 7 });
+  } catch (e) {
+    return { error: 'build 失败: ' + ((e && e.message) || e) };
+  }
+  root.updateMatrixWorld(true);
+  var pads = tol === undefined ? 0.01 : tol;
+  var boxes = [];
+  root.traverse(function (o) {
+    if (!o.isMesh) return;
+    var b = new T.Box3().setFromObject(o);
+    boxes.push({ name: (o.material && o.material.name) || '?', box: b, c: b.getCenter(new T.Vector3()) });
+  });
+  var parent = boxes.map(function (_, i) { return i; });
+  function find(i) { while (parent[i] !== i) { parent[i] = parent[parent[i]]; i = parent[i]; } return i; }
+  function union(a, b) { a = find(a); b = find(b); if (a !== b) parent[b] = a; }
+  for (var i = 0; i < boxes.length; i++)
+    for (var j = i + 1; j < boxes.length; j++) {
+      var a = boxes[i].box.clone().expandByScalar(pads),
+        b = boxes[j].box.clone().expandByScalar(pads);
+      if (a.intersectsBox(b)) union(i, j);
+    }
+  var groups = {};
+  boxes.forEach(function (bx, i) { var r = find(i); (groups[r] = groups[r] || []).push(bx); });
+  var clusters = Object.keys(groups).map(function (k) { return groups[k]; }).sort(function (a, b) { return b.length - a.length; });
+  var orphan = [];
+  for (var c = 1; c < clusters.length; c++)
+    orphan.push(clusters[c].map(function (bx) {
+      return bx.name + '@(' + bx.c.x.toFixed(2) + ',' + bx.c.y.toFixed(2) + ',' + bx.c.z.toFixed(2) + ')';
+    }));
+  var bb = new T.Box3().setFromObject(root), sz = bb.getSize(new T.Vector3());
+  return {
+    prop: name,
+    parts: boxes.length,
+    clusters: clusters.length,
+    ok: clusters.length === 1,
+    orphan: orphan,
+    bounds: [+sz.x.toFixed(2), +sz.y.toFixed(2), +sz.z.toFixed(2)],
+  };
+};
+
 setInterval(function () {
   var d = document.getElementById('diag');
   if (!d) return;
@@ -72,6 +119,12 @@ setInterval(function () {
     renderer: window.__G && window.__G.renderer ? (window.__G.renderer.constructor && window.__G.renderer.constructor.name) : null,
     hasLoop: !!(window.__G && window.__G.renderer && typeof window.__G.renderer.setAnimationLoop === 'function'),
     state: window.__G && window.__G.game ? window.__G.game.state : null,
+    propCheck: (function () {
+      var m = /[?&]check=([^&]+)/.exec(location.search);
+      if (!m || !window.__checkProp) return null;
+      var r = window.__checkProp(decodeURIComponent(m[1]));
+      return r && r.ok === false ? r : r && r.error ? r : 'ok';
+    })(),
     modules: window.__G ? Object.keys(window.__G).filter(function (k) {
       return window.__G[k] && typeof window.__G[k] === 'object';
     }).join(',') : null

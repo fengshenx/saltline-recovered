@@ -4716,3 +4716,69 @@ export function createSandbagGeometry(width, height, depth, rand) {
     recomputeSmoothNormals(bagGeo)
   );
 }
+
+/**
+ * 两轮手推车：底部承托板 + 后倾双竖梁 + 三道横梁 + 顶部手柄 + 橡胶车轮。
+ * 竖梁后倾约 8°，让重心落在轮轴上方，与实物一致；承托板前缘上卷 8mm 便于铲进托盘。
+ */
+export function buildHandTruck(ctx, truckOpts = {}) {
+  let builder = new PartBuilder(ctx),
+    yellowPaint = builder.M('paint_yellow'),
+    galvSteel = builder.M('steel_galv'),
+    darkSteel = builder.M('steel_dark'),
+    rubberMat = builder.M('rubber'),
+    halfWidth = 0.2,
+    railHeight = 1.2,
+    railBaseY = 0.05,
+    tilt = 0.14,
+    baseZ = 0.06,
+    railZ = (height) => baseZ - (height - railBaseY) * Math.tan(tilt);
+  builder.box(yellowPaint, 0.5, 0.028, 0.28, 0, 0.034, 0.17, { r: 0.008 });
+  builder.box(galvSteel, 0.44, 0.012, 0.02, 0, 0.05, 0.035, { r: 0.004 });
+  for (let sideSign of [-1, 1]) {
+    let railMidY = railBaseY + railHeight / 2;
+    (builder.cyl(yellowPaint, 0.019, 0.019, railHeight, sideSign * halfWidth, railMidY, railZ(railMidY), {
+      seg: 12,
+      rot: [-tilt, 0, 0],
+    }),
+      builder.cyl(darkSteel, 0.023, 0.023, 0.035, sideSign * halfWidth, railBaseY, railZ(railBaseY), {
+        seg: 12,
+        rot: [-tilt, 0, 0],
+      }));
+  }
+  for (let braceY of [0.34, 0.72, 1.08])
+    builder.cyl(yellowPaint, 0.015, 0.015, halfWidth * 2, 0, braceY, railZ(braceY), {
+      seg: 10,
+      rot: [0, 0, HALF_PI],
+    });
+  let handleY = railBaseY + railHeight + 0.02;
+  builder.cyl(galvSteel, 0.02, 0.02, halfWidth * 2 + 0.06, 0, handleY, railZ(handleY), {
+    seg: 12,
+    rot: [0, 0, HALF_PI],
+  });
+  for (let sideSign of [-1, 1])
+    builder.cyl(rubberMat, 0.027, 0.027, 0.1, sideSign * (halfWidth - 0.03), handleY, railZ(handleY), {
+      seg: 12,
+      rot: [0, 0, HALF_PI],
+    });
+  let axleY = 0.17,
+    axleZ = railZ(axleY) - 0.02;
+  builder.cyl(darkSteel, 0.013, 0.013, 0.52, 0, axleY, axleZ, { seg: 10, rot: [0, 0, HALF_PI] });
+  for (let sideSign of [-1, 1]) {
+    (builder.cyl(rubberMat, 0.165, 0.165, 0.05, sideSign * 0.238, axleY, axleZ, {
+      seg: 20,
+      rot: [0, 0, HALF_PI],
+    }),
+      builder.cyl(galvSteel, 0.075, 0.075, 0.055, sideSign * 0.238, axleY, axleZ, {
+        seg: 14,
+        rot: [0, 0, HALF_PI],
+      }));
+  }
+  return tagPropUserData(builder.group(), 'hand_truck', getPropSize3('hand_truck'), [
+    {
+      min: [-0.28, 0, -0.17],
+      max: [0.28, 1.27, 0.31],
+      surface: 'metal',
+    },
+  ]);
+}
