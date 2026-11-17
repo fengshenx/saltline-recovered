@@ -25,7 +25,8 @@ three.js 换成 npm 依赖。`src/` 改完能重新构建成单文件，行为�
 （把压缩 bundle 展开成可读源码），不改变、不新增游戏内容，全部逻辑、美术与音效仍源自原作品，版权归原作者。
 
 因此本仓库的还原工程以 MIT 授权，但**游戏内容本身仍属原作者**，详见下方 License 一节。
-`dist/saltline.html` 双击即可在浏览器打开游玩，无需本地服务器（three.js 已打包在内，仅字体走 Google Fonts）。
+成品从 [Releases](../../releases) 下载（单文件 HTML，双击即可游玩，无需本地服务器——three.js 已打包在内，仅字体走 Google Fonts）；
+`dist/` 是构建产物不入库，本地 `npm run build` 可复现。
 
 ## License
 
