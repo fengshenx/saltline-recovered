@@ -36,6 +36,7 @@ src/
     shaders/post/bloom.js  降采样 / 升采样 / 模糊 / 拖影
     shaders/post/output.js 运动模糊 / 自适应曝光 / 镜头污渍 / 调色 / 最终输出
     shadows.js             阴影贴图与 PCF 配置
+    shadow-frustum.js      平行光阴影相机与太阳方向的对齐（正交范围贴合场景）
     sky.js                 天空与云
     materials/materials.js 表面材质定义表与材质缓存
     materials/catalog.js   材质清单与预设

@@ -1337,7 +1337,7 @@
     "order": 45
   },
   {
-    "mod": "src/render/renderer.js",
+    "mod": "src/render/shadow-frustum.js",
     "names": [
       "fitSunShadowFrustum"
     ],
