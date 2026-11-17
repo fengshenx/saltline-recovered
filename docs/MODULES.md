@@ -31,6 +31,10 @@ src/
   render/                  渲染子系统
     renderer.js            WebGLRenderer 创建、能力自检、三级降级、室内 probe 与环境捕获
     postprocessing.js      后处理链编排（prepass → 世界 → 各 pass 合成）
+    shaders/post/common.js 后处理公共 GLSL（全屏顶点、抖动噪声、曝光取值）
+    shaders/post/depth.js  深度复制 / 半分辨率深度 / SSAO / 体积光 / 场景合成
+    shaders/post/bloom.js  降采样 / 升采样 / 模糊 / 拖影
+    shaders/post/output.js 运动模糊 / 自适应曝光 / 镜头污渍 / 调色 / 最终输出
     shadows.js             阴影贴图与 PCF 配置
     sky.js                 天空与云
     materials/materials.js 表面材质定义表与材质缓存

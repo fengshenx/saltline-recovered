@@ -1330,7 +1330,7 @@
     "order": 34
   },
   {
-    "mod": "src/render/renderer.js",
+    "mod": "src/render/shadows.js",
     "names": [
       "stockShadowChunk"
     ],
@@ -1344,7 +1344,7 @@
     "order": 46
   },
   {
-    "mod": "src/render/renderer.js",
+    "mod": "src/render/shadows.js",
     "names": [
       "restoreStockShadowChunk"
     ],
@@ -1768,133 +1768,133 @@
     "order": 50
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/common.js",
     "names": [
       "GLSL_RAW_DEPTH_NEAR_EPS"
     ],
     "order": 51
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/common.js",
     "names": [
       "GLSL_LINEAR_DEPTH_NEAR_EPS"
     ],
     "order": 52
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/common.js",
     "names": [
       "SALTLINE_POST_VERT"
     ],
     "order": 53
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/common.js",
     "names": [
       "SALTLINE_POST_COMMON"
     ],
     "order": 54
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/common.js",
     "names": [
       "SALTLINE_EXPOSURE_GLSL"
     ],
     "order": 55
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/depth.js",
     "names": [
       "SALTLINE_DEPTHCOPY_FRAG"
     ],
     "order": 56
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/depth.js",
     "names": [
       "SALTLINE_DEPTHHALF_FRAG"
     ],
     "order": 57
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/depth.js",
     "names": [
       "SALTLINE_AO_FRAG"
     ],
     "order": 58
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/depth.js",
     "names": [
       "SALTLINE_VOLUMETRIC_FRAG"
     ],
     "order": 59
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/bloom.js",
     "names": [
       "SALTLINE_BLUR_FRAG"
     ],
     "order": 60
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/depth.js",
     "names": [
       "SALTLINE_COMPOSITE_FRAG"
     ],
     "order": 61
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/output.js",
     "names": [
       "SALTLINE_MOTIONBLUR_FRAG"
     ],
     "order": 62
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/bloom.js",
     "names": [
       "SALTLINE_DOWN_FRAG"
     ],
     "order": 63
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/bloom.js",
     "names": [
       "SALTLINE_UP_FRAG"
     ],
     "order": 64
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/bloom.js",
     "names": [
       "SALTLINE_STREAK_FRAG"
     ],
     "order": 65
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/output.js",
     "names": [
       "SALTLINE_ADAPT_FRAG"
     ],
     "order": 66
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/output.js",
     "names": [
       "SALTLINE_LENS_DIRT_FRAG"
     ],
     "order": 67
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/output.js",
     "names": [
       "SALTLINE_GRADE_FRAG"
     ],
     "order": 68
   },
   {
-    "mod": "src/render/postprocessing.js",
+    "mod": "src/render/shaders/post/output.js",
     "names": [
       "SALTLINE_FINAL_FRAG"
     ],
@@ -1915,84 +1915,84 @@
     "order": 75
   },
   {
-    "mod": "src/render/materials/materials.js",
+    "mod": "src/render/materials/surface-params.js",
     "names": [
       "WET_DEFAULT"
     ],
     "order": 126
   },
   {
-    "mod": "src/render/materials/materials.js",
+    "mod": "src/render/materials/surface-params.js",
     "names": [
       "WET_PAINT"
     ],
     "order": 127
   },
   {
-    "mod": "src/render/materials/materials.js",
+    "mod": "src/render/materials/surface-params.js",
     "names": [
       "WET_METAL"
     ],
     "order": 128
   },
   {
-    "mod": "src/render/materials/materials.js",
+    "mod": "src/render/materials/surface-params.js",
     "names": [
       "WET_RUST"
     ],
     "order": 129
   },
   {
-    "mod": "src/render/materials/materials.js",
+    "mod": "src/render/materials/surface-params.js",
     "names": [
       "WET_PLASTIC"
     ],
     "order": 130
   },
   {
-    "mod": "src/render/materials/materials.js",
+    "mod": "src/render/materials/surface-params.js",
     "names": [
       "WET_WOOD"
     ],
     "order": 131
   },
   {
-    "mod": "src/render/materials/materials.js",
+    "mod": "src/render/materials/surface-params.js",
     "names": [
       "WET_NONE"
     ],
     "order": 132
   },
   {
-    "mod": "src/render/materials/materials.js",
+    "mod": "src/render/materials/surface-params.js",
     "names": [
       "MACRO_COARSE"
     ],
     "order": 133
   },
   {
-    "mod": "src/render/materials/materials.js",
+    "mod": "src/render/materials/surface-params.js",
     "names": [
       "MACRO_DEFAULT"
     ],
     "order": 134
   },
   {
-    "mod": "src/render/materials/materials.js",
+    "mod": "src/render/materials/surface-params.js",
     "names": [
       "MACRO_FINE"
     ],
     "order": 135
   },
   {
-    "mod": "src/render/materials/materials.js",
+    "mod": "src/render/materials/surface-params.js",
     "names": [
       "MACRO_NONE"
     ],
     "order": 136
   },
   {
-    "mod": "src/render/materials/materials.js",
+    "mod": "src/render/materials/surface-params.js",
     "names": [
       "makeSurfaceSpec"
     ],
@@ -3651,21 +3651,21 @@
     "order": 471
   },
   {
-    "mod": "src/content/ground/ground.js",
+    "mod": "src/content/ground/sea-waves.js",
     "names": [
       "SEA_WAVE_MAIN"
     ],
     "order": 478
   },
   {
-    "mod": "src/content/ground/ground.js",
+    "mod": "src/content/ground/sea-waves.js",
     "names": [
       "SEA_WAVE_DETAIL"
     ],
     "order": 479
   },
   {
-    "mod": "src/content/ground/ground.js",
+    "mod": "src/content/ground/sea-waves.js",
     "names": [
       "formatGlslFloat"
     ],
@@ -5884,7 +5884,7 @@
     "order": 832
   },
   {
-    "mod": "src/gameplay/enemies/drone.js",
+    "mod": "src/gameplay/enemies/walker.js",
     "names": [
       "createWalker"
     ],
@@ -6087,7 +6087,7 @@
     "order": 848
   },
   {
-    "mod": "src/gameplay/enemies/walker.js",
+    "mod": "src/gameplay/enemies/drone.js",
     "names": [
       "createDrone"
     ],

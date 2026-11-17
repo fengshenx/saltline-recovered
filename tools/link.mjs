@@ -98,6 +98,7 @@ for (const file of files) {
 //------------------------------------------------------------- 按 order 重排
 const ordered = [];
 const used = new Set();
+const usedEntries = new Set();
 let matched = 0;
 const sorted = [...manifest].sort((a, b) => a.order - b.order);
 for (const entry of sorted) {
@@ -112,7 +113,12 @@ for (const entry of sorted) {
   } else if (bucket.anon.length) {
     stmt = bucket.anon.shift();
   }
-  if (stmt && !used.has(stmt)) { ordered.push(stmt); used.add(stmt); matched++; }
+  if (stmt && !used.has(stmt)) {
+    ordered.push(stmt);
+    used.add(stmt);
+    matched++;
+    usedEntries.add(entry);
+  }
 }
 
 // 用户新增的语句（manifest 里没有）：按模块顺序附在末尾，保证不会凭空消失
@@ -143,4 +149,8 @@ writeFileSync(OUT, code);
 console.log(
   `build/bundle.js  ${ordered.length} 条语句（manifest ${sorted.length}，新增 ${extra.length}）`
 );
-if (matched !== sorted.length) console.log(`未匹配到的 manifest 条目 ${sorted.length - matched}`);
+if (matched !== sorted.length) {
+  console.log(`未匹配到的 manifest 条目 ${sorted.length - matched}`);
+  for (const entry of sorted)
+    if (!usedEntries.has(entry)) console.log(`  ${entry.mod} ${JSON.stringify(entry.names)}`);
+}
