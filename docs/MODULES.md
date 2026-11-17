@@ -91,8 +91,8 @@ src/
     weapons/geometry.js    武器几何（机匣、弹匣、枪管、导轨、瞄具）
     weapons/rig.js         视图模型（手套、镜片、枪口焰、材质、骨骼挂点）
     enemies/enemies.js     AI 共用（感知、状态、群体调度）
-    enemies/walker.js      地面敌人 Hound
-    enemies/drone.js       飞行敌人 Gull
+    enemies/walker.js      地面敌人 Hound（四足机，createWalker）
+    enemies/drone.js       飞行敌人 Gull（四旋翼无人机，createDrone）
 
   ui/                      DOM 界面
     hud.js                 罗盘、任务、准星、血条、弹药、击杀播报

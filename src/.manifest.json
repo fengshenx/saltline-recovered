@@ -5884,7 +5884,7 @@
     "order": 832
   },
   {
-    "mod": "src/gameplay/enemies/walker.js",
+    "mod": "src/gameplay/enemies/drone.js",
     "names": [
       "createWalker"
     ],
@@ -6087,7 +6087,7 @@
     "order": 848
   },
   {
-    "mod": "src/gameplay/enemies/drone.js",
+    "mod": "src/gameplay/enemies/walker.js",
     "names": [
       "createDrone"
     ],

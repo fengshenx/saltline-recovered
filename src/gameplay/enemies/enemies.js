@@ -324,11 +324,11 @@ export async function createEnemies(ctx) {
     gullPool = [],
     houndPool = [];
   for (let enemyUnit = 0; enemyUnit < AI_TUNE.poolGulls; enemyUnit++) {
-    let deltaTime = createWalker(shared, gullDef, materials, enemyUnit);
+    let deltaTime = createDrone(shared, gullDef, materials, enemyUnit);
     (gullPool.push(deltaTime), group.add(deltaTime.rig.group));
   }
   for (let enemyUnit = 0; enemyUnit < AI_TUNE.poolHounds; enemyUnit++) {
-    let deltaTime = createDrone(shared, houndDef, materials, enemyUnit);
+    let deltaTime = createWalker(shared, houndDef, materials, enemyUnit);
     (houndPool.push(deltaTime), group.add(deltaTime.rig.group));
   }
   let bolts = [];
