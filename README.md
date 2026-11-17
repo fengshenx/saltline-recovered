@@ -3,8 +3,8 @@
 > 项目: saltline-recovered
 > 类型: 工程
 > 状态: active
-> 最后活动: 2026-11-16
-> 摘要: 把 Saltline 单文件 3D 游戏（esbuild 压缩产物）反混淆还原为可维护的模块化源码工程，并重建出等价可运行产物
+> 最后活动: 2026-11-17
+> 摘要: 把 Saltline 单文件 3D 游戏（esbuild 压缩产物）反混淆还原为可维护的模块化源码工程，并重建出等价可运行产物；2026-11 完成真 ESM 化（构建直接 bundle src/index.js，link.mjs 退役）
 
 ## 这是什么
 

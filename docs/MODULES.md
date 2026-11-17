@@ -126,6 +126,12 @@ src/
 `init-order.js` 与 `misc.js` 不是设计出来的模块，是反推工程的债：
 
 - 原 bundle 依赖严格书写顺序，`var X = f(Y)` 跨"模块"取值时必须保证 `Y` 已初始化。
-  ESM 的求值顺序由依赖图决定，遇循环依赖必然踩 TDZ，所以所有非声明语句集中到
+  ESM 的求值顺序由依赖图决定，遇循环依赖必然踩 TDZ，所以当年所有非声明语句集中到
   `init-order.js` 按原始 order 执行，构建时由 `tools/link.mjs` 重排。
-- 消掉它需要把 930 条语句的依赖关系做成完整 DAG 后重排，属于独立工程，收益是可维护性而非功能。
+- **2026-11 真 ESM 化后**：构建直接 bundle `src/index.js`，link.mjs 退役。`init-order.js`
+  被入口首个 import，其顶层副作用在全部模块求值后、`startGame()` 前执行，消费全在运行期，
+  语义自动正确（`tools/check-order.mjs` 审计零违规）。把 930 条语句按依赖归位到各模块
+  仍是可选的内聚优化，收益是可维护性而非功能。
+- 真 ESM 化同时新增两个零依赖叶子模块收编跨模块顶层常量：
+  `render/materials/surface-params.js`（材质预设参数）、`content/ground/sea-waves.js`
+  （波浪谱，归一化终值预写成全精度字面量）。

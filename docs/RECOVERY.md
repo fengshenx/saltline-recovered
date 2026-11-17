@@ -28,8 +28,9 @@ input/saltline.original.html
   │ （8 个子代理分域命名）     顶层符号 + 参数 + 局部变量 + JSDoc          → extracted/names/A-H.json
   │ tools/apply-names.mjs    阶段2：babel scope-aware 重命名（零行为变更）  → extracted/stage2.js
   │ tools/split.mjs          阶段3：按归属切成 ES 模块 + 自动 import/export → src/
-  │ tools/link.mjs           按原始书写顺序拼接（见下"为什么不用 ESM 打包"）→ build/bundle.js
-  │ tools/build.mjs          esbuild 打包 three + 注入原始 HTML 外壳       → dist/
+  │ （tools/link.mjs        【已退役】按原始书写顺序拼接 → build/bundle.js，
+  │                          2026-11 真 ESM 化后构建不再经过此步）
+  │ tools/build.mjs          esbuild 直接 bundle src/index.js + 注入原始 HTML 外壳 → dist/
 ```
 
 ### three.js 为什么能整个换掉
@@ -39,19 +40,33 @@ bundle 开头有 `br(lt,{ACESFilmicToneMapping:()=>xc, ...})` —— 这是 esbu
 `THREE.ACESFilmicToneMapping`、`THREE.Vector3`、`THREE.Mesh`，于是 three 那 690KB 可以整段丢弃，
 用 npm 包替代。这一步把需要人工还原的代码量砍掉一半。
 
-### 为什么不用 esbuild 的 ESM 打包
+### 为什么（曾经）不用 esbuild 的 ESM 打包 —— 2026-11 已完成真 ESM 化
 
 原 bundle 是"一个 IIFE 里从上到下顺序执行的一大段代码"，大量 `var X = f(Y)` 依赖严格的书写顺序。
 ES 模块的求值顺序由依赖图决定，遇到循环依赖就会读到还没赋值的 `var` / 进 TDZ。
-实际踩到的两个坑：
+当年踩到的两个坑：
 
 1. `assets/geometry.js` 的 `Vec3/Quat/Mat4` 别名与 `core/math.js` 互相引用 → 求值时 undefined
    （已下沉到零依赖的 `core/three-types.js`）。
 2. `var SEA_WAVE_DISPLACE_VERT = SEA_WAVE_MAIN.map(...)` 跨模块引用，模块先求值就崩。
 
-所以最终结构是：**src/ 保持正常 import/export（可编辑、IDE 可分析），构建时由 `tools/link.mjs`
-按 `src/.manifest.json` 记录的顺序重新排列语句**，恢复原有求值语义。改 src/ 仍然生效，
-只是打包器换成了仓库内的 100 行链接器。
+当时的解法（**已退役**）：src/ 保持正常 import/export，构建时由 `tools/link.mjs`
+按 `src/.manifest.json` 记录的顺序重新排列语句拼成 `build/bundle.js`，恢复原有求值语义。
+
+**2026-11 真 ESM 化**：把上述求值序问题在源码层面逐一修复后，构建直接走
+`esbuild --bundle src/index.js`，link.mjs 退役（文件保留作反推历史记录）。修复内容：
+
+- 循环依赖中的**顶层立即求值数据边**下沉到零依赖叶子模块（`surface-params.js`、`sea-waves.js`，
+  后者把归一化终值预写成全精度字面量，与原双精度结果逐位一致）；
+- 纯函数值改惰性缓存（ships.js 的 `SHIP_STERN_TOP_Y`）；
+- 跨模块顶层常量改同值字面量（geometry.js 的 `FACE_ROTATIONS.nz` 原引用 math.js 的
+  `PI_TWO`，循环依赖下会读到 undefined，产生 NaN 顶点——这是全 bundle 唯一一处静默漂移）；
+- `init-order.js` 不需归位：真 ESM 下它被 index.js 首个 import，顶层副作用在全部模块
+  求值后、startGame() 前执行，消费全在运行期，语义自动正确。
+
+配套审计工具（构建后运行）：
+`tools/check-order.mjs`（对 bundle 产物做"顶层引用早于赋值"审计，零违规才算干净）、
+`tools/check-free-vars.mjs`（未绑定引用扫描）。
 
 ## 用参考仓库做 ground truth（可选环节）
 
