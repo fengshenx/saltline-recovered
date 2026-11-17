@@ -12,7 +12,11 @@ import { LAYER_VIEWMODEL, LAYER_WORLD, PLAYER_SPEC, QUALITY_PRESETS, SUN } from 
 
 import { SALTLINE_POST_MARKER, createPostprocessing } from './postprocessing.js';
 
-import { SALTLINE_SHADOW_MARKER, installSoftShadows } from './shadows.js';
+import {
+  SALTLINE_SHADOW_MARKER,
+  installSoftShadows,
+  restoreStockShadowChunk,
+} from './shadows.js';
 
 import { captureSkyEnvironment, createNoiseTexture, createSkyDome } from './sky.js';
 
@@ -20,11 +24,6 @@ import { captureSkyEnvironment, createNoiseTexture, createSkyDome } from './sky.
  * 渲染模块的惰性导出表（create 取 createRendererApi、showcase 取 showcase 版本），用 getter 延迟绑定，使入口能先按名字拿到渲染模块再真正求值，断开与主启动流程的循环依赖
  */
 export var rendererModule = {};
-
-/**
- * 首次修补时缓存的三原生 shadowmap_pars_fragment 源码：必须只备份一次，才能在补丁失效或需要降级时无损还原
- */
-export var stockShadowChunk = null;
 
 /**
  * 把平行光阴影相机对到太阳方向并贴合场景：沿光轴 lookAt 区域中点，把两组包围盒的 8 个角投到光空间取 min/max 定正交范围，第二组（更高更远）的角只用来收紧近平面以免楼顶被裁
@@ -87,13 +86,6 @@ function fitSunShadowFrustum(sunLight, boundsMin, boundsMax, casterMin, casterMa
       depth: shadowCam.far - shadowCam.near,
     }
   );
-}
-
-/**
- * 把缓存的原始 shadowmap chunk 写回 three，用于软阴影补丁失效或降级时恢复原生 PCF
- */
-function restoreStockShadowChunk() {
-  stockShadowChunk !== null && (THREE.ShaderChunk.shadowmap_pars_fragment = stockShadowChunk);
 }
 
 /**

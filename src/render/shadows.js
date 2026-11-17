@@ -2,7 +2,8 @@
 
 import * as THREE from 'three';
 
-import { stockShadowChunk } from './renderer.js';
+// 首次修补时缓存的三原生 shadowmap_pars_fragment 源码：必须只备份一次，才能在补丁失效或需要降级时无损还原
+var stockShadowChunk = null;
 
 /**
  * 注入软阴影 chunk 时打上的 GLSL 注释标记，用于在着色器编译失败时识别「错误来自软阴影补丁」，从而回退到原生 PCF
@@ -91,4 +92,11 @@ export function installSoftShadows(
       chunkSource.slice(0, getShadowStart) + patchedChunk + chunkSource.slice(injectAt)),
     !0
   );
+}
+
+/**
+ * 把缓存的原始 shadowmap chunk 写回 three，用于软阴影补丁失效或降级时恢复原生 PCF
+ */
+export function restoreStockShadowChunk() {
+  stockShadowChunk !== null && (THREE.ShaderChunk.shadowmap_pars_fragment = stockShadowChunk);
 }

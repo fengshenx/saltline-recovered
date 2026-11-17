@@ -13,7 +13,7 @@ import {
   WET_RUST,
   WET_WOOD,
   makeSurfaceSpec,
-} from './materials.js';
+} from './surface-params.js';
 
 /**
  * 29 种表面纹理的烘焙参数表：fn 指向 SURFACE_SHADERS 的 surf 键，size 是相对 uv 尺度，tile 是该表面一格的物理尺寸（米，可为 [u,v]），bump 是转法线的凹凸强度，hero 表示关键表面允许烘到 2048，p/seed 原样透传给 shader 的 uP/uSeed
