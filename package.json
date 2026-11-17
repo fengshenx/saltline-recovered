@@ -9,7 +9,6 @@
     "deob": "node tools/deobfuscate.mjs",
     "apply": "node tools/apply-names.mjs",
     "split": "node tools/split.mjs",
-    "link": "node tools/link.mjs",
     "build": "node tools/build.mjs --minify",
     "build:dev": "node tools/build.mjs --dev",
     "pipeline": "npm run deob && npm run apply && npm run split && npm run build"

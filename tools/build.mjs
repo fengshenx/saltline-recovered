@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 // 重新构建：把 src/ 打包回单文件 HTML。
+// src/ 已是真 ESM：esbuild 直接以 src/index.js 为入口，按模块依赖求值顺序打包
+// （历史上先经 link.mjs 按 .manifest.json 的原始语句序拼成 build/bundle.js 再打包，
+// 该路径已退役，src 的求值序问题已全部修复并通过 tools/check-order.mjs 审计）。
 // 外壳（head / CSS / DOM 骨架）沿用原件，只替换 <script> 里的内容——UI 样式与 HUD 骨架
 // 本来就是手写未压缩的，没必要重构。
 //
-// 用法: node tools/build.mjs [--minify]
-import './link.mjs';
+// 用法: node tools/build.mjs [--minify] [--dev]
 import esbuild from 'esbuild';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 
@@ -13,7 +15,7 @@ const dev = process.argv.includes('--dev');
 const SHELL = 'input/saltline.original.html';
 
 const result = await esbuild.build({
-  entryPoints: ['build/bundle.js'],
+  entryPoints: ['src/index.js'],
   bundle: true,
   format: 'iife',
   target: 'es2020',
@@ -32,18 +34,17 @@ const open = shell.indexOf('<script>');
 const close = shell.lastIndexOf('</script>') + '</script>'.length;
 if (open < 0 || close < open) throw new Error('外壳里没找到 <script> 区块');
 
-// dev 诊断块：把启动期状态与致命错误堆栈写进 DOM，方便无头环境通过快照读取。
-// 只在 --dev 时注入，正式产物不含。捕获脚本必须在游戏脚本之前注册，否则拿不到启动期异常。
-const diagHead = dev
-  ? `<script>
+// 错误捕获头：无条件注入（游戏自带 __fatal 机制，捕获头只补 uncaught/rejection 两类，
+// 无 UI 副作用），否则 minify 版启动失败时无头环境拿不到任何线索。
+// 诊断 UI 与 auto 点击等展示块仍仅 --dev 注入。
+const diagHead = `<script>
 window.addEventListener('error', function (e) {
   window.__fatal = (window.__fatal || '') + '\\n[uncaught] ' + ((e.error && e.error.stack) || e.message);
 });
 window.addEventListener('unhandledrejection', function (e) {
   window.__fatal = (window.__fatal || '') + '\\n[rejection] ' + ((e.reason && e.reason.stack) || e.reason);
 });
-</script>`
-  : '';
+</script>`;
 
 const diagTail = dev
   ? `<pre id="diag" style="position:fixed;left:0;bottom:0;max-width:100%;max-height:60%;overflow:auto;font:11px/1.3 monospace;color:#f66;background:#000c;z-index:9999;margin:0;padding:8px;white-space:pre-wrap">DIAG...</pre>
