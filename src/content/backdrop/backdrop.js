@@ -15,7 +15,9 @@ import { createBlinkerBatch } from './geometry.js';
 
 import { SHIP_DECK_Y, SHIP_LENGTH, buildContainerShip, buildMooringBoat } from './ships.js';
 
-import { buildHarborSkyline, createGullFlock } from './sky.js';
+import { buildHarborSkyline } from './harbor-skyline.js';
+
+import { createGullFlock } from './gulls.js';
 
 import { newVec3, toVec3 } from '../../core/math.js';
 

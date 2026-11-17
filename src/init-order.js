@@ -62,7 +62,7 @@ import {
   patchMaterialShader,
 } from './render/materials/materials.js';
 
-import { showcaseMaterials } from './render/materials/showcase.js';
+import { showcaseMaterials } from './render/materials/gallery.js';
 
 import { SALTLINE_PAINT_BODY, SURFACE_SHADERS } from './render/materials/surface-shaders.js';
 

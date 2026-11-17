@@ -2615,7 +2615,7 @@
     "order": 151
   },
   {
-    "mod": "src/render/materials/showcase.js",
+    "mod": "src/render/materials/gallery.js",
     "names": [
       "showcaseMaterials"
     ],
@@ -3952,21 +3952,21 @@
     "order": 326
   },
   {
-    "mod": "src/content/backdrop/sky.js",
+    "mod": "src/content/backdrop/harbor-skyline.js",
     "names": [
       "SHED_SKYLIGHT_HOLES"
     ],
     "order": 352
   },
   {
-    "mod": "src/content/backdrop/sky.js",
+    "mod": "src/content/backdrop/harbor-skyline.js",
     "names": [
       "buildHarborSkyline"
     ],
     "order": 448
   },
   {
-    "mod": "src/content/backdrop/sky.js",
+    "mod": "src/content/backdrop/gulls.js",
     "names": [
       "createGullFlock"
     ],

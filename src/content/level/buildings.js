@@ -12,7 +12,7 @@ import {
 
 import { LABEL_ATLAS_GUTTER } from '../../assets/procedural/textures.js';
 
-import { SHED_SKYLIGHT_HOLES } from '../backdrop/sky.js';
+import { SHED_SKYLIGHT_HOLES } from '../backdrop/harbor-skyline.js';
 
 import { PAINT_COLOR_ALIASES } from '../ground/ground.js';
 

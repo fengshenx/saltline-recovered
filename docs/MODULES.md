@@ -40,7 +40,7 @@ src/
     materials/materials.js 表面材质定义表与材质缓存
     materials/catalog.js   材质清单与预设
     materials/surface-shaders.js  表面着色器 surf 函数注入
-    materials/showcase.js  材质展示场景（?show=mats）
+    materials/gallery.js   材质画廊场景（?show=mats）
     effects/effects.js     VFX 系统（爆炸、火花、烟、雨丝）与各发射器
     effects/particle-pool.js CPU 粒子池与曳光池（并行数组物理、排序、批推进）
     effects/fx-geometry.js  碎屑与弹壳几何工厂
@@ -64,7 +64,8 @@ src/
     backdrop/backdrop.js   堆场背景装配
     backdrop/cranes.js     岸桥（SATLINE 84 等）
     backdrop/ships.js      集装箱船、船体、泊位
-    backdrop/sky.js        天际线、云层、地平线
+    backdrop/harbor-skyline.js  海港天际线与厂房天窗洞口
+    backdrop/gulls.js       海鸥群
     backdrop/geometry.js   背景专用几何工具
     ground/ground.js       地形、海平面、边界
     ground/asphalt.js      沥青路面材质与斑驳

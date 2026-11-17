@@ -1,4 +1,4 @@
-// render/materials/showcase.js — 反混淆还原自 saltline.original.html（esbuild 产物），命名与注释为还原产物。
+// render/materials/gallery.js — 材质画廊场景（?show=mats）：原名 showcase.js 与 app/showcase.js 的场景注册表同名不同义，故改名。
 
 import * as THREE from 'three';
 
