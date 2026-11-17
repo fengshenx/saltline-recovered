@@ -4169,35 +4169,35 @@
     "order": 526
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/particle-pool.js",
     "names": [
       "PARTICLE_FLAG_BOUNCE"
     ],
     "order": 528
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/particle-pool.js",
     "names": [
       "PARTICLE_FLAG_KILL_ON_GROUND"
     ],
     "order": 529
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/particle-pool.js",
     "names": [
       "PARTICLE_FLAG_STICK"
     ],
     "order": 530
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/particle-pool.js",
     "names": [
       "ParticlePool"
     ],
     "order": 531
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/particle-pool.js",
     "names": [
       "TracerPool"
     ],
@@ -4239,7 +4239,7 @@
     "order": 538
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/fx-geometry.js",
     "names": [
       "createDebrisGeometry"
     ],
@@ -4274,7 +4274,7 @@
     "order": 545
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/fx-geometry.js",
     "names": [
       "createShellGeometry"
     ],
@@ -4295,56 +4295,56 @@
     "order": 552
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/particle-pool.js",
     "names": [
       "fxRandom"
     ],
     "order": 553
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/particle-pool.js",
     "names": [
       "randRange"
     ],
     "order": 554
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/particle-pool.js",
     "names": [
       "FX_SCRATCH_VEC_A"
     ],
     "order": 555
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/particle-pool.js",
     "names": [
       "FX_SCRATCH_VEC_B"
     ],
     "order": 556
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/particle-pool.js",
     "names": [
       "FX_SCRATCH_VEC_C"
     ],
     "order": 557
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/particle-pool.js",
     "names": [
       "FX_SCRATCH_VEC_D"
     ],
     "order": 558
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/particle-pool.js",
     "names": [
       "FX_SCRATCH_VEC_E"
     ],
     "order": 559
   },
   {
-    "mod": "src/render/effects/effects.js",
+    "mod": "src/render/effects/particle-pool.js",
     "names": [
       "FX_SCRATCH_VEC_F"
     ],

@@ -14,9 +14,9 @@ import {
   FX_SCRATCH_SCALE,
   FX_SCRATCH_SHELL_QUAT,
   RAY_DOWN,
-  createDebrisGeometry,
-  createShellGeometry,
 } from './effects.js';
+
+import { createDebrisGeometry, createShellGeometry } from './fx-geometry.js';
 
 import {
   DECAL_ATLAS_FRAMES,

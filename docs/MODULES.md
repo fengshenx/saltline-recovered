@@ -41,7 +41,9 @@ src/
     materials/catalog.js   材质清单与预设
     materials/surface-shaders.js  表面着色器 surf 函数注入
     materials/showcase.js  材质展示场景（?show=mats）
-    effects/effects.js     VFX 系统（爆炸、火花、烟、雨丝）
+    effects/effects.js     VFX 系统（爆炸、火花、烟、雨丝）与各发射器
+    effects/particle-pool.js CPU 粒子池与曳光池（并行数组物理、排序、批推进）
+    effects/fx-geometry.js  碎屑与弹壳几何工厂
     effects/decal-atlas.js   弹着贴花图集（canvas 烘焙 + 图集帧表）
     effects/fx-batch.js      GPU 粒子批（四种 billboard shader + 批次构建）
     effects/pools.js       碎片/弹壳/贴花三类对象池
