@@ -6,7 +6,7 @@ import { smoothstepRange } from '../../audio/audio.js';
 import { getDecalMaterial, getLabelMaterial } from '../backdrop/cranes.js';
 import { PROP_SIZES } from './registry.js';
 import { PI_RELAY, valueNoise2D } from '../../core/math.js';
-import { createRoundedRectFanGeometry } from '../../render/effects/particles.js';
+import { createRoundedRectFanGeometry } from '../../assets/procedural/geometry.js';
 
 /**
  * 中继节点「通电」状态的青色电光颜色，是任务目标的常态色

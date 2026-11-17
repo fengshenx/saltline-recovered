@@ -29,7 +29,7 @@ import { SKY_COLORS, SUN } from '../../core/config.js';
 
 import { Ei } from '../../misc.js';
 
-import { TRACER_FIELD_NAMES, createFxBatch } from './particles.js';
+import { TRACER_FIELD_NAMES, createFxBatch } from './fx-batch.js';
 
 import { DebrisPool, DecalBatch, ShellPool } from './pools.js';
 

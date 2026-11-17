@@ -23,7 +23,7 @@ import {
   DECAL_EVICT_FADE_COUNT,
   DECAL_SIZES,
   createDecalAtlas,
-} from './particles.js';
+} from './decal-atlas.js';
 
 /**
  * 碎块池：实例化不规则碎块，带角速度、重力、落地反弹与静止淡出，接收阴影但不投射，用于爆炸与撞击的实心碎片

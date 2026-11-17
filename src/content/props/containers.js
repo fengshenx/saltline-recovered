@@ -11,7 +11,7 @@ import { CONTAINER_OWNER_CODES, CONTAINER_SPECS } from './geometry.js';
 import { PROP_SIZES } from './registry.js';
 import { lerpVec3, valueNoise2D } from '../../core/math.js';
 import { $a } from '../../misc.js';
-import { createRoundedRectFanGeometry } from '../../render/effects/particles.js';
+import { createRoundedRectFanGeometry } from '../../assets/procedural/geometry.js';
 
 /**
  * 生成一个集装箱的全部几何与碰撞盒：角件/角柱、三面波纹板（带凹陷与锈迹顶点色）、门板（可开到指定角度并带锁杆）、内衬与铭牌贴花；结果按参数缓存复用

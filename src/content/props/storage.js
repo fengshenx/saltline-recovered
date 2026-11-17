@@ -6,7 +6,7 @@ import { getDecalMaterial, getLabelMaterial } from '../backdrop/cranes.js';
 import { getPropSize3Later } from './registry.js';
 import { PI_LATER, valueNoise2D } from '../../core/math.js';
 import { $a } from '../../misc.js';
-import { createRoundedRectFanGeometry } from '../../render/effects/particles.js';
+import { createRoundedRectFanGeometry } from '../../assets/procedural/geometry.js';
 
 /**
  * 在一个位置上拼出标准木托盘的上中下三层板条与垫块，货架上的货垛底座复用它

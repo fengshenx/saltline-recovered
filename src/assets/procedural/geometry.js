@@ -2194,3 +2194,43 @@ export var makeBoltHexY = (x, y, z) =>
  */
 export var makeBoltHexZ = (x, y, z) =>
   transformGeom(createCylinderZ(0.0075, 0.0075, 0.006, 6), x, y, z);
+
+/**
+ * 圆角矩形（跑道形）三角扇面：四段四分之一圆弧拼出的平面片，用来做舷窗盖、圆形开孔的贴面而不是实体
+ */
+export function createRoundedRectFanGeometry(width, height, t = 5) {
+  let arcPts = [],
+    radius = Math.min(width, height) / 2,
+    halfSpanX = width / 2 - radius,
+    halfSpanY = height / 2 - radius;
+  for (let quad = 0; quad < 4; quad++)
+    for (let segIdx = 0; segIdx <= t; segIdx++) {
+      let angle = ((quad + segIdx / t) * Math.PI) / 2;
+      arcPts.push([
+        Math.cos(angle) * radius + (quad === 0 || quad === 3 ? halfSpanX : -halfSpanX),
+        Math.sin(angle) * radius + (quad < 2 ? halfSpanY : -halfSpanY),
+      ]);
+    }
+  let positions = [],
+    uvs = [];
+  for (let quad = 0; quad < arcPts.length; quad++) {
+    let segIdx = arcPts[quad],
+      angle = arcPts[(quad + 1) % arcPts.length];
+    (positions.push(0, 0, 0, segIdx[0], segIdx[1], 0, angle[0], angle[1], 0),
+      uvs.push(
+        0.5,
+        0.5,
+        segIdx[0] / width + 0.5,
+        segIdx[1] / height + 0.5,
+        angle[0] / width + 0.5,
+        angle[1] / height + 0.5,
+      ));
+  }
+  let fanGeo = new THREE.BufferGeometry();
+  return (
+    fanGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3)),
+    fanGeo.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(uvs), 2)),
+    fanGeo.computeVertexNormals(),
+    fanGeo
+  );
+}

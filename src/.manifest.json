@@ -2916,91 +2916,91 @@
     "order": 297
   },
   {
-    "mod": "src/render/effects/particles.js",
+    "mod": "src/assets/procedural/geometry.js",
     "names": [
       "createRoundedRectFanGeometry"
     ],
     "order": 184
   },
   {
-    "mod": "src/render/effects/particles.js",
+    "mod": "src/render/effects/decal-atlas.js",
     "names": [
       "DECAL_ATLAS_COLS"
     ],
     "order": 518
   },
   {
-    "mod": "src/render/effects/particles.js",
+    "mod": "src/render/effects/decal-atlas.js",
     "names": [
       "DECAL_ATLAS_ROWS"
     ],
     "order": 519
   },
   {
-    "mod": "src/render/effects/particles.js",
+    "mod": "src/render/effects/decal-atlas.js",
     "names": [
       "DECAL_ATLAS_FRAMES"
     ],
     "order": 520
   },
   {
-    "mod": "src/render/effects/particles.js",
+    "mod": "src/render/effects/decal-atlas.js",
     "names": [
       "createDecalAtlas"
     ],
     "order": 521
   },
   {
-    "mod": "src/render/effects/particles.js",
+    "mod": "src/render/effects/fx-batch.js",
     "names": [
       "FX_BILLBOARD_VERT"
     ],
     "order": 522
   },
   {
-    "mod": "src/render/effects/particles.js",
+    "mod": "src/render/effects/fx-batch.js",
     "names": [
       "FX_SOFT_FRAG"
     ],
     "order": 523
   },
   {
-    "mod": "src/render/effects/particles.js",
+    "mod": "src/render/effects/fx-batch.js",
     "names": [
       "FX_LIT_FRAG"
     ],
     "order": 524
   },
   {
-    "mod": "src/render/effects/particles.js",
+    "mod": "src/render/effects/fx-batch.js",
     "names": [
       "FX_ADD_FRAG"
     ],
     "order": 525
   },
   {
-    "mod": "src/render/effects/particles.js",
+    "mod": "src/render/effects/fx-batch.js",
     "names": [
       "createFxBatch"
     ],
     "order": 527
   },
   {
-    "mod": "src/render/effects/particles.js",
+    "mod": "src/render/effects/fx-batch.js",
     "names": [
       "TRACER_FIELD_NAMES"
     ],
     "order": 533
   },
   {
-    "mod": "src/render/effects/particles.js",
+    "mod": "src/render/effects/decal-atlas.js",
     "names": [
       "DECAL_SIZES"
     ],
     "order": 548
   },
   {
-    "mod": "src/render/effects/particles.js",
+    "mod": "src/render/effects/decal-atlas.js",
     "names": [
       "DECAL_EVICT_FADE_COUNT"
     ],

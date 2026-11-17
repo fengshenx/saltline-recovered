@@ -8,7 +8,7 @@ import { PI } from '../level/placement.js';
 import { getPropSize3 } from './registry.js';
 import { lerpVec3, valueNoise2D } from '../../core/math.js';
 import { $a } from '../../misc.js';
-import { createRoundedRectFanGeometry } from '../../render/effects/particles.js';
+import { createRoundedRectFanGeometry } from '../../assets/procedural/geometry.js';
 
 /**
  * 新泽西混凝土隔离墩：12 点梯形剖面放样 + 凿痕/污渍/缺角顶点色、顶部吊装孔与反光片，可选黄色警示带；碰撞盒分成底座与墙体两段
