@@ -57522,6 +57522,24 @@ vec2 gRipple(vec2 p, float t, float cell, float seed){
     return texture.flipY = false, texture.colorSpace = NoColorSpace, texture.wrapS = texture.wrapT = ClampToEdgeWrapping, texture.minFilter = LinearMipmapLinearFilter, texture.magFilter = LinearFilter, texture.generateMipmaps = true, texture.anisotropy = anisotropy, texture.needsUpdate = true, texture;
   }
 
+  // src/content/ground/sea-waves.js
+  var SEA_WAVE_MAIN = [
+    [-0.9206907772215877, 0.39029282947436866, 9.5, 0.06, 0.6613879270715354, 2.54719759040632],
+    [-0.7507135169227555, -0.6606278948920248, 5.7, 0.04, 1.1023132117858923, 3.2884179490477794],
+    [-0.9927337820337083, 0.12033136751923737, 3.3, 0.026, 1.9039955476301778, 4.321827891327007],
+    [-0.4982838758534585, 0.8670139439850177, 2, 0.016, 3.141592653589793, 5.551488442905729]
+  ];
+  var SEA_WAVE_DETAIL = [
+    [-0.8, 0.6, 1.31, 0.02, 4.79632466196915, 6.859442027885167],
+    [-0.9506656990656241, -0.31021722811615104, 0.83, 0.014, 7.570102779734442, 8.617581346827825],
+    [-0.34893735911823875, -0.9371460502032698, 0.57, 0.01, 11.023132117858925, 10.398890617570514],
+    [-0.6, 0.8, 0.39, 7e-3, 16.110731556870732, 12.571645738442596],
+    [-0.9987523388778446, 0.04993761694389223, 0.27, 5e-3, 23.271056693257727, 15.109237775641043],
+    [0.3011313679370974, 0.9535826651341417, 0.47, 6e-3, 13.368479376977843, 11.45184625674623],
+    [-0.8601290290322582, -0.5100765172168044, 0.21, 35e-4, 29.919930034188507, 17.13226528032383]
+  ];
+  var formatGlslFloat = (value) => Number.isInteger(value) ? value.toFixed(1) : value.toFixed(5);
+
   // src/content/ground/water.js
   var SEA_WAVE_DISPLACE_VERT = SEA_WAVE_MAIN.map(
     (i) => `  { float ph = ${formatGlslFloat(i[4])} * dot(vec2(${formatGlslFloat(i[0])}, ${formatGlslFloat(i[1])}), swp.xz) - ${formatGlslFloat(i[5])} * uTime; sdisp.y += ${formatGlslFloat(i[3])} * sin(ph); sdisp.xz += vec2(${formatGlslFloat(i[0])}, ${formatGlslFloat(i[1])}) * (${formatGlslFloat(i[3] * 0.6)} * cos(ph)); }`
@@ -58050,22 +58068,6 @@ void main(){
     w: 70,
     h: 60
   };
-  var SEA_WAVE_MAIN = [
-    [-0.92, 0.39, 9.5, 0.06],
-    [-0.75, -0.66, 5.7, 0.04],
-    [-0.99, 0.12, 3.3, 0.026],
-    [-0.5, 0.87, 2, 0.016]
-  ];
-  var SEA_WAVE_DETAIL = [
-    [-0.8, 0.6, 1.31, 0.02],
-    [-0.95, -0.31, 0.83, 0.014],
-    [-0.35, -0.94, 0.57, 0.01],
-    [-0.6, 0.8, 0.39, 7e-3],
-    [-1, 0.05, 0.27, 5e-3],
-    [0.3, 0.95, 0.47, 6e-3],
-    [-0.86, -0.51, 0.21, 35e-4]
-  ];
-  var formatGlslFloat = (value) => Number.isInteger(value) ? value.toFixed(1) : value.toFixed(5);
   function seaHeightAt(posX, posZ, time) {
     let shoreFade = 1 - MathUtils.smoothstep(Math.hypot(posX - 30, posZ), 50, 220), heightSum = 0;
     for (let wave of SEA_WAVE_MAIN)
@@ -87882,10 +87884,6 @@ void surf(vec2 uv){
       enumerable: true
     }
   });
-  for (let i of SEA_WAVE_MAIN.concat(SEA_WAVE_DETAIL)) {
-    let e = Math.hypot(i[0], i[1]);
-    i[0] /= e, i[1] /= e, i[4] = 2 * Math.PI / i[2], i[5] = Math.sqrt(9.81 * i[4]);
-  }
   Object.defineProperties(FX_MODULE, {
     create: {
       get: () => createEffects,

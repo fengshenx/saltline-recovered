@@ -3,8 +3,6 @@
 import { backdropModule, createBackdrop, showcaseBackdrop } from './content/backdrop/backdrop.js';
 
 import {
-  SEA_WAVE_DETAIL,
-  SEA_WAVE_MAIN,
   createGround,
   groundModule,
   showcaseGround,
@@ -657,11 +655,6 @@ Object.defineProperties(groundModule, {
     enumerable: true,
   },
 });
-
-for (let i of SEA_WAVE_MAIN.concat(SEA_WAVE_DETAIL)) {
-  let e = Math.hypot(i[0], i[1]);
-  ((i[0] /= e), (i[1] /= e), (i[4] = (2 * Math.PI) / i[2]), (i[5] = Math.sqrt(9.81 * i[4])));
-}
 
 Object.defineProperties(FX_MODULE, {
   create: {

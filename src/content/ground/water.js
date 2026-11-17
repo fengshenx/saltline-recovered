@@ -2,13 +2,9 @@
 
 import * as THREE from 'three';
 
-import {
-  SEA_WAVE_DETAIL,
-  SEA_WAVE_MAIN,
-  TERRAIN_BOUNDS,
-  buildSeaGridSteps,
-  formatGlslFloat,
-} from './ground.js';
+import { SEA_WAVE_DETAIL, SEA_WAVE_MAIN, formatGlslFloat } from './sea-waves.js';
+
+import { TERRAIN_BOUNDS, buildSeaGridSteps } from './ground.js';
 
 import { SKY_COLORS, SUN, WORLD_BOUNDS } from '../../core/config.js';
 

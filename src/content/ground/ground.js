@@ -10,6 +10,8 @@ import { createRainSystem, createSeaSurface } from './water.js';
 
 import { WORLD_BOUNDS } from '../../core/config.js';
 
+import { SEA_WAVE_MAIN } from './sea-waves.js';
+
 import { fbm2, smoothstepClamped, valueNoise2 } from '../../core/math.js';
 
 import { So } from '../../misc.js';
@@ -265,35 +267,6 @@ export var MARKING_BOUNDS = {
   w: 70,
   h: 60,
 };
-
-/**
- * 海面主波浪谱：4 条方向/波长/振幅/相速的正弦波（方向已归一化并补出角频率与 ω），CPU 高度计算与顶点位移共用同一组参数
- */
-export var SEA_WAVE_MAIN = [
-  [-0.92, 0.39, 9.5, 0.06],
-  [-0.75, -0.66, 5.7, 0.04],
-  [-0.99, 0.12, 3.3, 0.026],
-  [-0.5, 0.87, 2, 0.016],
-];
-
-/**
- * 海面细节波浪谱：7 条更短的波，只参与片元法线斜率计算，让远处海面不显得平滑呆板
- */
-export var SEA_WAVE_DETAIL = [
-  [-0.8, 0.6, 1.31, 0.02],
-  [-0.95, -0.31, 0.83, 0.014],
-  [-0.35, -0.94, 0.57, 0.01],
-  [-0.6, 0.8, 0.39, 0.007],
-  [-1, 0.05, 0.27, 0.005],
-  [0.3, 0.95, 0.47, 0.006],
-  [-0.86, -0.51, 0.21, 0.0035],
-];
-
-/**
- * 把波浪参数格式化成 GLSL float 字面量（整数补小数点、其余保留 5 位），保证模板拼出的着色器数值类型合法可读
- */
-export var formatGlslFloat = (value) =>
-  Number.isInteger(value) ? value.toFixed(1) : value.toFixed(5);
 
 /**
  * 按主波浪谱解析求某点海面高度，近岸 50 米内平滑衰减到 0，供漂浮物与浪花贴合水面用
