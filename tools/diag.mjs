@@ -5,8 +5,9 @@ import { spawn } from 'node:child_process';
 
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const [, , url, waitArg = '15000'] = process.argv;
+const exprArg = process.argv.find((a) => a.startsWith('--expr='));
 if (!url) {
-  console.error('用法: node tools/diag.mjs <url> [轮询ms]');
+  console.error('用法: node tools/diag.mjs <url> [轮询ms] [--expr=<js表达式>]');
   process.exit(2);
 }
 
@@ -62,7 +63,9 @@ try {
   await send('Page.navigate', { url });
   await sleep(2000);
 
-  const expr = `(function(){
+  const expr = exprArg
+    ? `JSON.stringify(eval(${JSON.stringify(exprArg.slice(7))}))`
+    : `(function(){
     var g = window.__G || {};
     return JSON.stringify({
       ready: window.__ready, frames: window.__frames,

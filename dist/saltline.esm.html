@@ -353,6 +353,13 @@ kbd { display: inline-block; font: 500 10px/1 var(--f-mono); color: var(--bone);
   </div>
 </div>
 <script>
+window.addEventListener('error', function (e) {
+  window.__fatal = (window.__fatal || '') + '\n[uncaught] ' + ((e.error && e.error.stack) || e.message);
+});
+window.addEventListener('unhandledrejection', function (e) {
+  window.__fatal = (window.__fatal || '') + '\n[rejection] ' + ((e.reason && e.reason.stack) || e.reason);
+});
+</script><script>
 (() => {
   var __defProp = Object.defineProperty;
   var __export = (target, all) => {
@@ -54760,8 +54767,9 @@ vObjP = position; vONrm = normal; vWNrm = normalize(mat3(modelMatrix) * normal);
   var SHIP_KEEL_Y = -4.4;
   var SHIP_DECK_Y = 13;
   var SHIP_WATERLINE_Y = -1.6;
-  var SHIP_STERN_TOP_Y = bulwarkTopAt(0);
+  var SHIP_STERN_TOP_Y = null;
   function hullPoint(station, height, side) {
+    SHIP_STERN_TOP_Y === null && (SHIP_STERN_TOP_Y = bulwarkTopAt(0));
     let rakeOffset = (SHIP_STERN_TOP_Y - height) * 0.22, rakeFalloff = Math.max(0, 1 - station / 22), hullZ = SHIP_STERN_Z - station - rakeOffset * rakeFalloff, heightFrac = Math.min(
       1,
       Math.max(0, (height - SHIP_WATERLINE_Y) / (SHIP_DECK_Y - SHIP_WATERLINE_Y))
@@ -69679,6 +69687,83 @@ void main() {
   }
   var PROPS_MODULE_EXPORTS = {};
 
+  // src/content/props/parts-geometry.js
+  function barrelProfile(open) {
+    let profilePts = [
+      [0, 0.016],
+      [0.262, 0.016],
+      [0.262, 0.016],
+      [0.268, 2e-3],
+      [0.288, 0],
+      [0.295, 8e-3],
+      [0.295, 0.022],
+      [0.284, 0.034]
+    ];
+    for (let hoopY of [0.305, 0.595])
+      profilePts.push(
+        [0.283, hoopY - 0.03],
+        [0.291, hoopY - 0.018],
+        [0.297, hoopY],
+        [0.291, hoopY + 0.018],
+        [0.283, hoopY + 0.03]
+      );
+    return profilePts.push([0.284, 0.866], [0.295, 0.878], [0.295, 0.892], [0.288, 0.9], [0.268, 0.898]), open ? profilePts.push([0.268, 0.898], [0.272, 0.888], [0.272, 0.03], [0.272, 0.03], [0, 0.03]) : profilePts.push([0.262, 0.884], [0.262, 0.884], [0, 0.884]), profilePts;
+  }
+  function createTireProfileGeometry(outerRadius, width, rimRadius, radialSegs = 20) {
+    let sidewallH = outerRadius - rimRadius, grooveDepth = Math.min(0.011, sidewallH * 0.08), profilePts = [
+      [rimRadius, width * 0.18],
+      [rimRadius + sidewallH * 0.45, width * 0.035],
+      [outerRadius - sidewallH * 0.2, width * 0.02],
+      [outerRadius - sidewallH * 0.06, width * 0.07],
+      [outerRadius, width * 0.17],
+      [outerRadius, width * 0.17],
+      [outerRadius, width * 0.355],
+      [outerRadius - grooveDepth, width * 0.385],
+      [outerRadius, width * 0.415],
+      [outerRadius, width * 0.585],
+      [outerRadius - grooveDepth, width * 0.615],
+      [outerRadius, width * 0.645],
+      [outerRadius, width * 0.83],
+      [outerRadius, width * 0.83],
+      [outerRadius - sidewallH * 0.06, width * 0.93],
+      [outerRadius - sidewallH * 0.2, width * 0.98],
+      [rimRadius + sidewallH * 0.45, width * 0.965],
+      [rimRadius, width * 0.82],
+      [rimRadius, width * 0.82],
+      [rimRadius, width * 0.18]
+    ], tireGeo = revolveProfileGeometry(profilePts, radialSegs), uvAttr = tireGeo.attributes.uv, ptCount = profilePts.length, arcLens = [0];
+    for (let ptIdx = 1; ptIdx < ptCount; ptIdx++)
+      arcLens.push(
+        arcLens[ptIdx - 1] + Math.hypot(
+          profilePts[ptIdx][0] - profilePts[ptIdx - 1][0],
+          profilePts[ptIdx][1] - profilePts[ptIdx - 1][1]
+        )
+      );
+    let treadMid = (arcLens[8] + arcLens[9]) / 2, treadHalf = treadMid - arcLens[4], innerHalf = arcLens[4] - arcLens[0], uTiles = Math.max(1, Math.round(2 * PI_TWO * outerRadius / 0.5)) * 0.5;
+    for (let ptIdx = 0; ptIdx < ptCount; ptIdx++) {
+      let uOffset = ptIdx >= ptCount - 2 ? -(treadHalf + innerHalf) : arcLens[ptIdx] - treadMid, absOff = Math.abs(uOffset), vCoord = Math.sign(uOffset) * (absOff <= treadHalf + 1e-6 ? absOff / treadHalf * 0.126 : 0.126 + Math.min(1, (absOff - treadHalf) / innerHalf) * 0.022);
+      for (let segIdx = 0; segIdx <= radialSegs; segIdx++)
+        uvAttr.setXY(ptIdx * (radialSegs + 1) + segIdx, segIdx / radialSegs * uTiles, vCoord);
+    }
+    return tireGeo;
+  }
+  var smoothstepRangeAlt2 = (edge0, edge1, x) => {
+    let n = clampValue((x - edge0) / (edge1 - edge0), 0, 1);
+    return n * n * (3 - 2 * n);
+  };
+  function createSandbagGeometry(width, height, depth, rand) {
+    let bagGeo = removeGeometryGroup(
+      roundedBoxGeometryGrid(width, height, depth, Math.min(height * 0.46, 0.075), 3, 3, 3),
+      3
+    ), noiseOff = rand() * 9, skew = rand.range(-0.05, 0.05), sag = rand.range(0.4, 1);
+    return mapVertices(bagGeo, (vert) => {
+      let normX = vert.x / (width / 2), normZ = vert.z / (depth / 2), normY = vert.y / (height / 2), taper = 1 - 0.22 * Math.pow(Math.abs(normX), 2.5);
+      vert.z *= taper * (normY < 0 ? 1.05 : 1), vert.y = (vert.y + height / 2) * (1 - 0.3 * Math.pow(Math.abs(normX), 3)) - height / 2, normY > 0 && (vert.y += 0.016 * Math.cos(HALF_PI * normX) * Math.cos(HALF_PI * normZ)), vert.y -= sag * 0.018 * Math.abs(normX) * Math.abs(normX) * (normY > -0.9 ? 1 : 0) + skew * vert.x * 0.3;
+      let noise = valueNoise3D(vert.x * 9 + noiseOff, vert.y * 9, vert.z * 9 + noiseOff) - 0.5;
+      vert.x += noise * 0.014, vert.z += noise * 0.016, normY > -0.9 && (vert.y += noise * 0.014);
+    }), recomputeSmoothNormals(bagGeo);
+  }
+
   // src/content/props/vehicles.js
   function buildHandTruck(ctx, truckOpts = {}) {
     let builder = new PartBuilder(ctx), yellowPaint = builder.M("paint_yellow"), galvSteel = builder.M("steel_galv"), darkSteel = builder.M("steel_dark"), rubberMat = builder.M("rubber"), halfWidth = 0.2, railHeight = 1.2, railBaseY = 0.05, tilt = 0.14, baseZ = 0.06, railZ = (height) => baseZ - (height - railBaseY) * Math.tan(tilt);
@@ -69918,83 +70003,6 @@ void main() {
         surface: "metal"
       }
     ]);
-  }
-
-  // src/content/props/parts-geometry.js
-  function barrelProfile(open) {
-    let profilePts = [
-      [0, 0.016],
-      [0.262, 0.016],
-      [0.262, 0.016],
-      [0.268, 2e-3],
-      [0.288, 0],
-      [0.295, 8e-3],
-      [0.295, 0.022],
-      [0.284, 0.034]
-    ];
-    for (let hoopY of [0.305, 0.595])
-      profilePts.push(
-        [0.283, hoopY - 0.03],
-        [0.291, hoopY - 0.018],
-        [0.297, hoopY],
-        [0.291, hoopY + 0.018],
-        [0.283, hoopY + 0.03]
-      );
-    return profilePts.push([0.284, 0.866], [0.295, 0.878], [0.295, 0.892], [0.288, 0.9], [0.268, 0.898]), open ? profilePts.push([0.268, 0.898], [0.272, 0.888], [0.272, 0.03], [0.272, 0.03], [0, 0.03]) : profilePts.push([0.262, 0.884], [0.262, 0.884], [0, 0.884]), profilePts;
-  }
-  function createTireProfileGeometry2(outerRadius, width, rimRadius, radialSegs = 20) {
-    let sidewallH = outerRadius - rimRadius, grooveDepth = Math.min(0.011, sidewallH * 0.08), profilePts = [
-      [rimRadius, width * 0.18],
-      [rimRadius + sidewallH * 0.45, width * 0.035],
-      [outerRadius - sidewallH * 0.2, width * 0.02],
-      [outerRadius - sidewallH * 0.06, width * 0.07],
-      [outerRadius, width * 0.17],
-      [outerRadius, width * 0.17],
-      [outerRadius, width * 0.355],
-      [outerRadius - grooveDepth, width * 0.385],
-      [outerRadius, width * 0.415],
-      [outerRadius, width * 0.585],
-      [outerRadius - grooveDepth, width * 0.615],
-      [outerRadius, width * 0.645],
-      [outerRadius, width * 0.83],
-      [outerRadius, width * 0.83],
-      [outerRadius - sidewallH * 0.06, width * 0.93],
-      [outerRadius - sidewallH * 0.2, width * 0.98],
-      [rimRadius + sidewallH * 0.45, width * 0.965],
-      [rimRadius, width * 0.82],
-      [rimRadius, width * 0.82],
-      [rimRadius, width * 0.18]
-    ], tireGeo = revolveProfileGeometry(profilePts, radialSegs), uvAttr = tireGeo.attributes.uv, ptCount = profilePts.length, arcLens = [0];
-    for (let ptIdx = 1; ptIdx < ptCount; ptIdx++)
-      arcLens.push(
-        arcLens[ptIdx - 1] + Math.hypot(
-          profilePts[ptIdx][0] - profilePts[ptIdx - 1][0],
-          profilePts[ptIdx][1] - profilePts[ptIdx - 1][1]
-        )
-      );
-    let treadMid = (arcLens[8] + arcLens[9]) / 2, treadHalf = treadMid - arcLens[4], innerHalf = arcLens[4] - arcLens[0], uTiles = Math.max(1, Math.round(2 * PI_TWO * outerRadius / 0.5)) * 0.5;
-    for (let ptIdx = 0; ptIdx < ptCount; ptIdx++) {
-      let uOffset = ptIdx >= ptCount - 2 ? -(treadHalf + innerHalf) : arcLens[ptIdx] - treadMid, absOff = Math.abs(uOffset), vCoord = Math.sign(uOffset) * (absOff <= treadHalf + 1e-6 ? absOff / treadHalf * 0.126 : 0.126 + Math.min(1, (absOff - treadHalf) / innerHalf) * 0.022);
-      for (let segIdx = 0; segIdx <= radialSegs; segIdx++)
-        uvAttr.setXY(ptIdx * (radialSegs + 1) + segIdx, segIdx / radialSegs * uTiles, vCoord);
-    }
-    return tireGeo;
-  }
-  var smoothstepRangeAlt2 = (edge0, edge1, x) => {
-    let n = clampValue((x - edge0) / (edge1 - edge0), 0, 1);
-    return n * n * (3 - 2 * n);
-  };
-  function createSandbagGeometry(width, height, depth, rand) {
-    let bagGeo = removeGeometryGroup(
-      roundedBoxGeometryGrid(width, height, depth, Math.min(height * 0.46, 0.075), 3, 3, 3),
-      3
-    ), noiseOff = rand() * 9, skew = rand.range(-0.05, 0.05), sag = rand.range(0.4, 1);
-    return mapVertices(bagGeo, (vert) => {
-      let normX = vert.x / (width / 2), normZ = vert.z / (depth / 2), normY = vert.y / (height / 2), taper = 1 - 0.22 * Math.pow(Math.abs(normX), 2.5);
-      vert.z *= taper * (normY < 0 ? 1.05 : 1), vert.y = (vert.y + height / 2) * (1 - 0.3 * Math.pow(Math.abs(normX), 3)) - height / 2, normY > 0 && (vert.y += 0.016 * Math.cos(HALF_PI * normX) * Math.cos(HALF_PI * normZ)), vert.y -= sag * 0.018 * Math.abs(normX) * Math.abs(normX) * (normY > -0.9 ? 1 : 0) + skew * vert.x * 0.3;
-      let noise = valueNoise3D(vert.x * 9 + noiseOff, vert.y * 9, vert.z * 9 + noiseOff) - 0.5;
-      vert.x += noise * 0.014, vert.z += noise * 0.016, normY > -0.9 && (vert.y += noise * 0.014);
-    }), recomputeSmoothNormals(bagGeo);
   }
 
   // src/content/props/geometry.js
@@ -70904,7 +70912,7 @@ void main() {
   function buildTireStack(ctx, opts) {
     let assembler = new PropAssembler(ctx, "tire_stack", opts.seed || 0), rand = assembler.rng, tireCount = clampValue(opts.count | 0 || 4, 1, 5);
     for (let tireIndex = 0; tireIndex < tireCount; tireIndex++) {
-      let tireGeo = createTireProfileGeometry2(0.39, 0.25, 0.215, tireCount > 4 ? 16 : 20), tireTransform = {
+      let tireGeo = createTireProfileGeometry(0.39, 0.25, 0.215, tireCount > 4 ? 16 : 20), tireTransform = {
         p: [
           tireIndex ? rand.range(-0.022, 0.022) : 0,
           tireIndex * 0.25 - (tireIndex ? 4e-3 : 0),
@@ -74245,7 +74253,9 @@ void main() {
   }
   var FACE_ROTATIONS = {
     pz: [0, 0, 0],
-    nz: [0, PI_TWO, 0],
+    // nz 用 Math.PI 字面量而非 math.js 的 PI_TWO（同值）：本表在模块求值期构造，
+    // 循环依赖下 math.js 可能晚于本模块求值，import 的常量会读到 undefined
+    nz: [0, Math.PI, 0],
     px: [0, HALF_PI, 0],
     nx: [0, -HALF_PI, 0]
   };
@@ -80824,7 +80834,7 @@ ${fe}`,
     sl: 0.06
   };
   function addForkliftWheel(builder, wheelX, radius, width, trackZ, side, rimRadius, segments, unused, rand) {
-    let tireGeo = createTireProfileGeometry2(radius, width, rimRadius, segments);
+    let tireGeo = createTireProfileGeometry(radius, width, rimRadius, segments);
     builder.push({
       p: [wheelX, radius, side > 0 ? trackZ - width / 2 : -(trackZ - width / 2)],
       r: [side > 0 ? HALF_PI : -HALF_PI, 0, 0]
@@ -87942,4 +87952,26 @@ void surf(vec2 uv){
   startGame().catch((i) => showFatalError(i && i.stack || i));
 })();
 
+</script><pre id="diag" style="position:fixed;left:0;bottom:0;max-width:100%;max-height:60%;overflow:auto;font:11px/1.3 monospace;color:#f66;background:#000c;z-index:9999;margin:0;padding:8px;white-space:pre-wrap">DIAG...</pre>
+<script>
+if (location.search.indexOf('auto=1') >= 0) {
+  setTimeout(function () {
+    var btn = [].slice.call(document.querySelectorAll('button')).filter(function (b) {
+      return /DEPLOY/i.test(b.textContent || '');
+    })[0];
+    if (btn) btn.click();
+  }, 2500);
+}
+var wantDiag = /[?&](diag=1|check=)/.test(location.search);
+setInterval(function () {
+  var d = document.getElementById('diag');
+  if (!d || !wantDiag) return;
+  d.style.display = 'block';
+  d.textContent = JSON.stringify({
+    ready: window.__ready,
+    frames: window.__frames,
+    fatal: window.__fatal,
+    errors: (window.__errors || []).slice(0, 5),
+  }, null, 1);
+}, 1000);
 </script>

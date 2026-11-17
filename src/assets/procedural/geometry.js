@@ -1519,7 +1519,9 @@ export function createPlaneGeometryOffsetUV(width, height, offsetU = 0, offsetV 
  */
 export var FACE_ROTATIONS = {
   pz: [0, 0, 0],
-  nz: [0, PI_TWO, 0],
+  // nz 用 Math.PI 字面量而非 math.js 的 PI_TWO（同值）：本表在模块求值期构造，
+  // 循环依赖下 math.js 可能晚于本模块求值，import 的常量会读到 undefined
+  nz: [0, Math.PI, 0],
   px: [0, HALF_PI, 0],
   nx: [0, -HALF_PI, 0],
 };

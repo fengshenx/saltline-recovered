@@ -67,14 +67,16 @@ export var SHIP_DECK_Y = 13;
 var SHIP_WATERLINE_Y = -1.6;
 
 /**
- * 船尾舷墙顶高度，作为船体放样时首尾收束的基准值
+ * 船尾舷墙顶高度，作为船体放样时首尾收束的基准值；ships ↔ backdrop 互相 import，
+ * 模块求值期 bulwarkTopAt 未必就绪，延迟到首次放样时求值一次（纯函数，结果恒定）
  */
-var SHIP_STERN_TOP_Y = bulwarkTopAt(0);
+var SHIP_STERN_TOP_Y = null;
 
 /**
  * 船体放样函数：给（站号、高度、左右舷）返回船壳表面点；宽度沿船长按 sin 幂次收束，是整条船几何的唯一真源
  */
 export function hullPoint(station, height, side) {
+  SHIP_STERN_TOP_Y === null && (SHIP_STERN_TOP_Y = bulwarkTopAt(0));
   let rakeOffset = (SHIP_STERN_TOP_Y - height) * 0.22,
     rakeFalloff = Math.max(0, 1 - station / 22),
     hullZ = SHIP_STERN_Z - station - rakeOffset * rakeFalloff,

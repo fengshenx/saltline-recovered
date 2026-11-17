@@ -6,6 +6,7 @@ import { HALF_PI, PartBuilder, catmullRomPath, je, loftProfileSurface, revolvePr
 import { clampValue, smoothstepRange } from '../../audio/audio.js';
 import { PI } from '../level/placement.js';
 import { getPropSize3 } from './registry.js';
+import { createTireProfileGeometry } from './parts-geometry.js';
 import { valueNoise3D } from '../../core/math.js';
 
 /**
