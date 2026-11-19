@@ -71,7 +71,7 @@ extracted/  stage1/stage2 反混淆稿、符号表、分域命名、ground-truth
 src/        还原后的模块化源码（改这里）：platform core assets render audio
             physics animation content gameplay ui app
 dist/       saltline.html（生产）/ saltline.dev.html（带启动诊断，支持 ?autostart=1）
-docs/       RECOVERY.md 还原方法 · MODULES.md 模块契约
+docs/       RECOVERY.md 还原方法 · MODULES.md 模块契约 · PRIMITIVES.md 几何/建模/纹理/渲染原语
 ```
 
 ## 命令
